@@ -1,0 +1,115 @@
+@startuml
+
+    ' Config
+    hide empty members
+    ' skinparam nodesep 20
+    ' skinparam ranksep 1
+    ' skinparam linetype polyline
+    ' left to right direction
+
+    ' Classes
+    interface State {
+        {abstract} +getValidActions() : ValidAction[]
+        {abstract} +getPlayerAt(position) : Player | null
+        {abstract} +getEncodedState() : EncodedState
+        {abstract} +setPlayerAt(player, position) : void
+        {abstract} +checkWin(action) : boolean
+        {abstract} +performAction(action, player) : void
+        {abstract} +changePerspective(currentPlayer, opponentPlayer) : void
+    }
+
+    interface Game {
+        {abstract} +getActionSize() : number
+        {abstract} +getInitialState() : State
+        {abstract} +getOpponent(player): Player
+        {static} +getActionOutcome(state, action): ActionOutcome
+    }
+
+    class ResNet {
+        -model : tf.LayersModel
+        +train(trainingMemory, ...) : void
+        +predict(encodedState) : [tf.Tensor2D, tf.Tensor2D]
+    }
+
+    class MonteCarloTreeSearch {
+        -params : MCTSParams
+        +search(state) : number[]
+    }
+    MonteCarloTreeSearch "0..n" --> "1" Game : Uses rules from
+    MonteCarloTreeSearch "0..n" --> "1" ResNet : Make predictions via
+
+    class MonteCarloNode {
+        -params : MCTSParams
+        -actionTaken : Action | null
+        -priorProbability : number
+        -visitCount : number
+        -valueSum : number
+        +isFullyExpanded() : boolean
+        -getChildUcb(child) : number
+        +selectBestChild() : MonteCarloNode
+        +expand(policy) : void
+        +backpropagate(outcomeValue) : void
+    }
+    MonteCarloNode "0..n" -d-> "1" Game : Uses rules from
+    MonteCarloNode "0..1" -d-> "1" State : Keeps
+    MonteCarloNode "0..1" --> "0..n" MonteCarloNode : Is parent of
+
+    class AlphaZero {
+        -selfPlay() : TrainingMemory
+        +buildTrainingMemory(...) : TrainingMemory
+        -train(trainingMemory, ...) : tf.Logs[]
+        +learn(trainingMemoryBatches, ...) : void
+    }
+    AlphaZero "0..n" --> "1" Game : Uses rules from
+    AlphaZero "0..n" --> "1" ResNet : Make predictions via
+    AlphaZero "0..n" --> "1" MonteCarloTreeSearch : Searches via
+
+
+    ' Definitions
+    annotation "Type Definitions" as TypeDefinitions {
+        EncodedState : number[][][]
+        Action : number
+        ValidAction : boolean
+        TrainingMemory : TrainMemoryBlock[]
+    }
+
+    together {
+        enum Player {
+            None = 0
+            X = 1
+            O = -1
+        }
+
+        struct ActionOutcome <<Type>> {
+            isTerminal : boolean
+            outcomeValue : number
+        }
+    }
+
+    struct TrainMemoryBlock <<Type>> {
+        encodedState : EncodedState
+        actionProbabilities : number[]
+        outcomeValue : number
+    }
+
+    struct TrainingMemory {
+        encodedStates : EncodedState[]
+	    policyTargets: number[][]
+	    valueTargets: number[]
+    }
+
+
+    ' Style
+    ' remove State
+    ' remove Game
+    ' remove ResNet
+    ' remove MonteCarloTreeSearch
+    ' remove MonteCarloNode
+    ' remove AlphaZero
+    ' remove TypeDefinitions
+    ' remove Player
+    ' remove ActionOutcome
+    ' remove TrainMemoryBlock
+    ' remove TrainingMemory
+
+@enduml
