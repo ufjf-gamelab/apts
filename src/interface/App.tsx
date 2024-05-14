@@ -10,7 +10,7 @@ export default function App() {
 			},
 		],
 		{
-			basename: "/apts",
+			basename: import.meta.env.BASE_URL,
 		},
 	);
 
