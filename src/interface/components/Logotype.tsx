@@ -1,19 +1,19 @@
-import { Link } from "react-aria-components";
-import { useHref } from "react-router-dom";
+import clsx from "clsx/lite";
+import { Link } from "react-router-dom";
 
 export default function Logotype() {
-	const rootUrl = useHref("/");
-
-	const className = "transition duration-300";
-	const firstColor = `${className} fill-accent-common group-hover:fill-accent-dark`;
-	const secondColor = `${className} fill-accent-dark group-hover:fill-accent-common`;
+	const transition = clsx("transition duration-300");
+	const firstColor = clsx(
+		transition,
+		"fill-accent-common group-hover:fill-accent-dark",
+	);
+	const secondColor = clsx(
+		transition,
+		"fill-accent-dark group-hover:fill-accent-common",
+	);
 
 	return (
-		<Link
-			className="border-dark border-r-8"
-			href={rootUrl}
-			aria-label="APTS logotype"
-		>
+		<Link to={"/"} aria-label="APTS logotype" className="size-full">
 			<svg
 				width="96"
 				height="96"
@@ -25,7 +25,7 @@ export default function Logotype() {
 				inkscape:export-ydpi="96"
 				xmlnsXlink="http://www.w3.org/1999/xlink"
 				xmlns="http://www.w3.org/2000/svg"
-				className="group"
+				className={"group aspect-square h-full w-auto"}
 			>
 				<g id="square-a">
 					<rect

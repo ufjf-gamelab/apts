@@ -3,8 +3,22 @@
 @tailwind utilities;
 
 @layer base {
+	*,
+	::before,
+	::after {
+		@apply divide-dark border-dark;
+	}
+
 	html {
-		@apply font-common;
+		@apply h-full bg-background font-common text-base;
+	}
+
+	body {
+		@apply h-full;
+	}
+
+	article {
+		@apply h-full;
 	}
 }
 
@@ -15,18 +29,4 @@
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-}
-
-html {
-	display: block;
-	height: 100%;
-	margin: 0;
-}
-
-body {
-	height: 100%;
-}
-
-#root {
-	height: 100%;
 }

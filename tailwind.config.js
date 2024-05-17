@@ -42,6 +42,10 @@ export default {
 				dark: colors.neutral["600"],
 			},
 		},
+		boxShadow: {
+			"outer-2": "0.125rem 0.125rem",
+			"outer-4": "0.25rem 0.25rem",
+		},
 		fontFamily: {
 			common: ["Open Sans", ...fontFamily.sans],
 			heading: ["Georama", ...fontFamily.sans],
