@@ -1,22 +1,28 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+	Navigate,
+	Route,
+	RouterProvider,
+	createBrowserRouter,
+	createRoutesFromElements,
+} from "react-router-dom";
 import Error from "./pages/Error/Error";
-import Home from "./pages/Home/Home";
+import GameAdd from "./pages/Game/Add";
+import GameList from "./pages/Game/List";
+import Root from "./pages/Root/Root";
 
 export default function App() {
 	const router = createBrowserRouter(
-		[
-			{
-				path: "/",
-				element: <Home />,
-				errorElement: <Error />,
-				children: [
-					{
-						errorElement: <Error />,
-						children: [],
-					},
-				],
-			},
-		],
+		createRoutesFromElements(
+			<Route path="/" element={<Root />} errorElement={<Error />}>
+				<Route errorElement={<Error />}>
+					<Route path="games">
+						<Route index element={<GameList />}  />
+						<Route path="add" element={<GameAdd />} />
+					</Route>
+					<Route index element={<Navigate replace={true} to="games" />} />
+				</Route>
+			</Route>,
+		),
 		{
 			basename: import.meta.env.BASE_URL,
 		},

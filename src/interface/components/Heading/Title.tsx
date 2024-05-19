@@ -1,22 +1,22 @@
 import { clsx } from "clsx/lite";
-import { Element } from "../ui";
+import { Element } from "../../ui";
 
 const enum Size {
 	small = "small",
 	large = "large",
 }
 
-export interface HeadingTextProps {
+export interface Title {
 	text: string;
 	element?: Element.h1 | Element.h2 | Element.p;
 	size?: `${Size.small}` | `${Size.large}`;
 }
 
-export default function HeadingText({
+export default function Title({
 	text,
 	element = Element.p,
 	size = Size.small,
-}: HeadingTextProps) {
+}: Title) {
 	const sizeClasses = (() => {
 		switch (size) {
 			case Size.large:
