@@ -36,7 +36,7 @@ export default function Title({
 			return <h1 className={className}>{text}</h1>;
 		case Element.h2:
 			return <h2 className={className}>{text}</h2>;
-		case Element.p:
+		default:
 			return <p className={className}>{text}</p>;
 	}
 }

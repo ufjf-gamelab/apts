@@ -1,18 +1,18 @@
 import clsx from "clsx/lite";
 import type { PropsWithChildren } from "react";
 
-interface BoxProps {
+interface PillProps {
 	id?: React.ComponentProps<"section">["id"];
 	"aria-label"?: React.ComponentProps<"section">["aria-label"];
 	className?: React.ComponentProps<"section">["className"];
 }
 
-export default function Box({
+export default function Pill({
 	children,
 	id,
 	"aria-label": ariaLabel,
 	className,
-}: PropsWithChildren<BoxProps>) {
+}: PropsWithChildren<PillProps>) {
 	return (
 		<section
 			id={id}

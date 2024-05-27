@@ -9,7 +9,7 @@ import { capitalizeFirstLetter } from "../../../formatting";
 import { Element } from "../../ui";
 import Title from "./Title";
 
-const enum PageAction {
+export const enum PageAction {
 	list = "list",
 	add = "add",
 	edit = "edit",
@@ -17,11 +17,7 @@ const enum PageAction {
 }
 
 export interface ActionPillProps {
-	pageAction:
-		| `${PageAction.list}`
-		| `${PageAction.add}`
-		| `${PageAction.edit}`
-		| `${PageAction.view}`;
+	pageAction: PageAction;
 }
 
 export default function ActionPill({ pageAction }: ActionPillProps) {
@@ -33,10 +29,6 @@ export default function ActionPill({ pageAction }: ActionPillProps) {
 
 	const icon = (() => {
 		switch (pageAction) {
-			case PageAction.list:
-				return (
-					<IconListSearch aria-disabled stroke={2} className={iconClassname} />
-				);
 			case PageAction.add:
 				return (
 					<IconPlus
@@ -53,8 +45,12 @@ export default function ActionPill({ pageAction }: ActionPillProps) {
 						className={clsx(iconClassname, "pl-[0.1875rem] pr-[0.0625rem]")}
 					/>
 				);
-			default:
+			case PageAction.view:
 				return <IconFrame aria-disabled stroke={2} className={iconClassname} />;
+			default:
+				return (
+					<IconListSearch aria-disabled stroke={2} className={iconClassname} />
+				);
 		}
 	})();
 

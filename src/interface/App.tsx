@@ -5,6 +5,7 @@ import {
 	createBrowserRouter,
 	createRoutesFromElements,
 } from "react-router-dom";
+import { PageAction } from "./components/Heading/ActionPill";
 import Error from "./pages/Error/Error";
 import GameAdd from "./pages/Game/Add";
 import GameList from "./pages/Game/List";
@@ -15,9 +16,17 @@ export default function App() {
 		createRoutesFromElements(
 			<Route path="/" element={<Root />} errorElement={<Error />}>
 				<Route errorElement={<Error />}>
-					<Route path="games">
-						<Route index element={<GameList />}  />
-						<Route path="add" element={<GameAdd />} />
+					<Route path="games" handle={{ crumb: "Game" }}>
+						<Route
+							index
+							element={<GameList />}
+							handle={{ action: PageAction.list }}
+						/>
+						<Route
+							path="add"
+							element={<GameAdd />}
+							handle={{ action: PageAction.add }}
+						/>
 					</Route>
 					<Route index element={<Navigate replace={true} to="games" />} />
 				</Route>
