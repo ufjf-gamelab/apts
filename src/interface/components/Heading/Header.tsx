@@ -14,9 +14,8 @@ export default function Header({ pageTitle, pageAction }: HeaderProps) {
 	return (
 		<header
 			className={clsx(
-				"flex items-center border-b-4 bg-primary-common",
-				"sm:h-14",
-				"md:h-16 md:border-b-[6px]",
+				"flex h-14 items-center border-b-4 bg-primary-common",
+				"md:border-b-6 md:h-16",
 				"lg:h-[5.5rem] lg:border-b-8",
 			)}
 		>
@@ -25,7 +24,7 @@ export default function Header({ pageTitle, pageAction }: HeaderProps) {
 				className={clsx(
 					"hidden h-full",
 					"sm:block sm:border-r-4",
-					"md:border-r-[6px]",
+					"md:border-r-6",
 					"lg:border-r-8",
 				)}
 			>
@@ -34,7 +33,7 @@ export default function Header({ pageTitle, pageAction }: HeaderProps) {
 			<div
 				id="header-contents"
 				className={clsx(
-					"flex grow items-end gap-2 p-2",
+					"flex grow items-end gap-2 pl-2",
 					"sm:px-4",
 					"md:gap-4 md:px-6",
 				)}
@@ -50,7 +49,7 @@ export default function Header({ pageTitle, pageAction }: HeaderProps) {
 					<ActionPill pageAction={pageAction} />
 				</Pill>
 			</div>
-			<div className="h-full items-end">
+			<div className="flex h-full items-center pr-2">
 				<Button icon="add" color="accent" aria-label="Add" />
 			</div>
 		</header>

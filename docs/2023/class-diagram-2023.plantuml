@@ -54,15 +54,15 @@
     MonteCarloNode "0..1" -d-> "1" State : Keeps
     MonteCarloNode "0..1" --> "0..n" MonteCarloNode : Is parent of
 
-    class AlphaZero {
+    class Trainer {
         -selfPlay() : TrainingMemory
         +buildTrainingMemory(...) : TrainingMemory
         -train(trainingMemory, ...) : tf.Logs[]
         +learn(trainingMemoryBatches, ...) : void
     }
-    AlphaZero "0..n" --> "1" Game : Uses rules from
-    AlphaZero "0..n" --> "1" ResNet : Make predictions via
-    AlphaZero "0..n" --> "1" MonteCarloTreeSearch : Searches via
+    Trainer "0..n" --> "1" Game : Uses rules from
+    Trainer "0..n" --> "1" ResNet : Make predictions via
+    Trainer "0..n" --> "1" MonteCarloTreeSearch : Searches via
 
 
     ' Definitions
@@ -70,7 +70,6 @@
         EncodedState : number[][][]
         Action : number
         ValidAction : boolean
-        TrainingMemory : TrainMemoryBlock[]
     }
 
     together {
@@ -86,16 +85,22 @@
         }
     }
 
-    struct TrainMemoryBlock <<Type>> {
-        encodedState : EncodedState
+    struct GameMemoryBlock <<Type>> {
+        state : State
         actionProbabilities : number[]
-        outcomeValue : number
+        player : Player
     }
 
-    struct TrainingMemory {
+    ' struct TrainMemoryBlock <<Type>> {
+    '     encodedState : EncodedState
+    '     actionProbabilities : number[]
+    '     outcomeValue : number
+    ' }
+
+    struct TrainingMemory <<Type>> {
         encodedStates : EncodedState[]
-	    policyTargets: number[][]
-	    valueTargets: number[]
+	    policyTargets : number[][]
+	    valueTargets : number[]
     }
 
 
@@ -105,11 +110,11 @@
     ' remove ResNet
     ' remove MonteCarloTreeSearch
     ' remove MonteCarloNode
-    ' remove AlphaZero
+    ' remove Trainer
     ' remove TypeDefinitions
     ' remove Player
     ' remove ActionOutcome
-    ' remove TrainMemoryBlock
+    ' remove GameMemoryBlock
     ' remove TrainingMemory
 
 @enduml

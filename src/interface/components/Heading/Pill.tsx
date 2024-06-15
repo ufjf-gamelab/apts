@@ -19,7 +19,8 @@ export default function Pill({
 			aria-label={ariaLabel}
 			className={clsx(
 				"rounded-full border-2 bg-light shadow-outer-2",
-				"md:shadow-outer-4",
+				"md:shadow-outer-3",
+				"lg:shadow-outer-4",
 				className,
 			)}
 		>
