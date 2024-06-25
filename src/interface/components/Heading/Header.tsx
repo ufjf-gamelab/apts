@@ -1,4 +1,4 @@
-import clsx from "clsx/lite";
+import { cx } from "class-variance-authority";
 import { Element } from "../../ui";
 import Button from "../Button";
 import ActionPill, { type ActionPillProps } from "./ActionPill";
@@ -13,15 +13,15 @@ interface HeaderProps extends ActionPillProps {
 export default function Header({ pageTitle, pageAction }: HeaderProps) {
 	return (
 		<header
-			className={clsx(
+			className={cx(
 				"flex h-14 items-center border-b-4 bg-primary-common",
-				"md:border-b-6 md:h-16",
+				"md:h-16 md:border-b-6",
 				"lg:h-[5.5rem] lg:border-b-8",
 			)}
 		>
 			<div
 				id="logotype"
-				className={clsx(
+				className={cx(
 					"hidden h-full",
 					"sm:block sm:border-r-4",
 					"md:border-r-6",
@@ -32,7 +32,7 @@ export default function Header({ pageTitle, pageAction }: HeaderProps) {
 			</div>
 			<div
 				id="header-contents"
-				className={clsx(
+				className={cx(
 					"flex grow items-end gap-2 pl-2",
 					"sm:px-4",
 					"md:gap-4 md:px-6",
@@ -50,7 +50,7 @@ export default function Header({ pageTitle, pageAction }: HeaderProps) {
 				</Pill>
 			</div>
 			<div className="flex h-full items-center pr-2">
-				<Button icon="add" color="accent" aria-label="Add" />
+				<Button icon="add" aria-label="Add" intent="accent" size="large" />
 			</div>
 		</header>
 	);

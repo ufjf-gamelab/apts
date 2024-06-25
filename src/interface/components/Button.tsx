@@ -1,5 +1,6 @@
 import { IconArrowBackUp, IconPencil, IconPlus } from "@tabler/icons-react";
-import clsx from "clsx/lite";
+import { cva, cx, type VariantProps } from "class-variance-authority";
+import type { FC } from "react";
 import { Button as ReactAriaButton } from "react-aria-components";
 
 const enum Icon {
@@ -8,135 +9,40 @@ const enum Icon {
 	return = "return",
 }
 
-const enum Size {
-	small = "small",
-	large = "large",
-}
-
-const enum Color {
-	primary = "primary",
-	secondary = "secondary",
-	accent = "accent",
-	danger = "danger",
-	warning = "warning",
-	success = "success",
-	inactive = "inactive",
-}
-
-interface ButtonProps {
+interface ButtonProps extends VariantProps<typeof buttonStyle> {
 	icon?: `${Icon.add}` | `${Icon.edit}` | `${Icon.return}`;
-	size?: `${Size.small}` | `${Size.large}`;
-	color?:
-		| `${Color.primary}`
-		| `${Color.secondary}`
-		| `${Color.accent}`
-		| `${Color.danger}`
-		| `${Color.warning}`
-		| `${Color.success}`
-		| `${Color.inactive}`;
+	text?: string;
 	"aria-label": React.ComponentProps<"button">["aria-label"];
 }
 
-export default function Button({
+const Button: FC<ButtonProps> = ({
+	intent,
+	size,
 	icon,
-	size = Size.small,
-	color = Color.primary,
+	text,
 	"aria-label": ariaLabel,
-}: ButtonProps) {
-	const { buttonColorClassName, iconColorClassName } = (() => {
-		switch (color) {
-			case Color.secondary:
-				return {
-					buttonColorClassName: clsx(
-						"bg-secondary-light",
-						"hover:bg-secondary-common",
-						"active:bg-secondary-dark",
-						"data-[pressed]:bg-secondary-dark",
-					),
-					iconColorClassName: clsx(),
-				};
-			case Color.accent:
-				return {
-					buttonColorClassName: clsx(
-						"bg-accent-light",
-						"hover:bg-accent-common",
-						"active:bg-accent-dark",
-						"data-[pressed]:bg-accent-dark",
-					),
-					iconColorClassName: clsx(),
-				};
-			case Color.danger:
-				return {
-					buttonColorClassName: clsx(
-						"bg-danger-light",
-						"hover:bg-danger-common",
-						"active:bg-danger-dark",
-						"data-[pressed]:bg-danger-dark",
-					),
-					iconColorClassName: clsx(),
-				};
-			case Color.warning:
-				return {
-					buttonColorClassName: clsx(
-						"bg-warning-light",
-						"hover:bg-warning-common",
-						"active:bg-warning-dark",
-						"data-[pressed]:bg-warning-dark",
-					),
-					iconColorClassName: clsx(),
-				};
-			case Color.success:
-				return {
-					buttonColorClassName: clsx(
-						"bg-success-light",
-						"hover:bg-success-common",
-						"active:bg-success-dark",
-						"data-[pressed]:bg-success-dark",
-					),
-					iconColorClassName: clsx(),
-				};
-			case Color.inactive:
-				return {
-					buttonColorClassName: clsx(
-						"bg-inactive-light",
-						"hover:bg-inactive-common",
-						"active:bg-inactive-dark",
-						"data-[pressed]:bg-inactive-dark",
-					),
-					iconColorClassName: clsx(),
-				};
-			default:
-				return {
-					buttonColorClassName: clsx(
-						"bg-primary-light",
-						"hover:bg-primary-common",
-						"active:bg-primary-dark",
-						"data-[pressed]:bg-primary-dark",
-					),
-					iconColorClassName: clsx(),
-				};
-		}
-	})();
-
-	const buttonClassName = clsx(
-		buttonColorClassName,
-		"rounded-full border-2 shadow-outer-2",
-		"md:shadow-outer-3",
-		"lg:shadow-outer-4",
-	);
-	const iconClassName = clsx(iconColorClassName, "size-full");
-
+}: ButtonProps) => {
 	const iconComponent = (() => {
 		switch (icon) {
 			case Icon.add:
-				return <IconPlus stroke={2} aria-disabled className={iconClassName} />;
+				return (
+					<IconPlus stroke={2} aria-disabled className={iconStyle({ size })} />
+				);
 			case Icon.edit:
 				return (
-					<IconPencil stroke={2} aria-disabled className={iconClassName} />
+					<IconPencil
+						stroke={2}
+						aria-disabled
+						className={iconStyle({ size })}
+					/>
 				);
 			case Icon.return:
 				return (
-					<IconArrowBackUp stroke={2} aria-disabled className={iconClassName} />
+					<IconArrowBackUp
+						stroke={2}
+						aria-disabled
+						className={iconStyle({ size })}
+					/>
 				);
 			default:
 				return null;
@@ -144,8 +50,90 @@ export default function Button({
 	})();
 
 	return (
-		<ReactAriaButton aria-label={ariaLabel} className={buttonClassName}>
+		<ReactAriaButton
+			aria-label={ariaLabel}
+			className={buttonStyle({ intent, size })}
+		>
 			{iconComponent}
+			<p>{text}</p>
 		</ReactAriaButton>
 	);
-}
+};
+
+export default Button;
+
+const iconStyle = cva("", {
+	variants: {
+		size: {
+			small: cx("size-5"),
+			large: cx("size-8"),
+		},
+	},
+	defaultVariants: {
+		size: "small",
+	},
+});
+
+const buttonStyle = cva(
+	cx(
+		"flex items-center rounded-full border-2 px-2 font-semibold shadow-outer-2 shadow-dark",
+		"md:shadow-outer-3",
+		"lg:shadow-outer-4",
+	),
+	{
+		variants: {
+			intent: {
+				primary: cx(
+					"light bg-primary-light text-light *:stroke-light",
+					"hover:bg-primary-common",
+					"active:bg-primary-dark",
+					"data-[pressed]:bg-primary-dark",
+				),
+				secondary: cx(
+					"bg-secondary-light text-light *:stroke-light",
+					"hover:bg-secondary-common",
+					"active:bg-secondary-dark",
+					"data-[pressed]:bg-secondary-dark",
+				),
+				accent: cx(
+					"bg-accent-light text-dark *:stroke-dark",
+					"hover:bg-accent-common",
+					"active:bg-accent-dark",
+					"data-[pressed]:bg-accent-dark",
+				),
+				danger: cx(
+					"bg-danger-light text-light *:stroke-light",
+					"hover:bg-danger-common",
+					"active:bg-danger-dark",
+					"data-[pressed]:bg-danger-dark",
+				),
+				warning: cx(
+					"bg-warning-light text-dark *:stroke-dark",
+					"hover:bg-warning-common",
+					"active:bg-warning-dark",
+					"data-[pressed]:bg-warning-dark",
+				),
+				success: cx(
+					"bg-success-light text-light *:stroke-light",
+					"hover:bg-success-common",
+					"active:bg-success-dark",
+					"data-[pressed]:bg-success-dark",
+				),
+				inactive: cx(
+					"bg-inactive-light text-light *:stroke-light",
+					"hover:bg-inactive-common",
+					"active:bg-inactive-dark",
+					"data-[pressed]:bg-inactive-dark",
+				),
+			},
+			size: {
+				small: cx("text-lg"),
+				large: cx("py-1 text-2xl"),
+			},
+		},
+		defaultVariants: {
+			intent: "primary",
+			size: "small",
+		},
+	},
+);

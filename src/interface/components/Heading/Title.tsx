@@ -1,4 +1,4 @@
-import { clsx } from "clsx/lite";
+import { cx } from "class-variance-authority";
 import { Element } from "../../ui";
 
 const enum Size {
@@ -20,16 +20,16 @@ export default function Title({
 	const sizeClasses = (() => {
 		switch (size) {
 			case Size.large:
-				return clsx(
-					"py-[0.125rem] text-2xl px-2 md:px-3 lg:px-4 md:py-1 lg:py-2 md:text-3xl lg:text-5xl",
+				return cx(
+					"px-2 py-[0.125rem] text-2xl md:px-3 md:py-1 md:text-3xl lg:px-4 lg:py-2 lg:text-5xl",
 				);
 			default:
-				return clsx(
-					"py-[0.0625rem] md:px-[0.375rem] lg:px-2 text-base lg:text-3xl md:text-lg px-1",
+				return cx(
+					"px-1 py-[0.0625rem] text-base md:px-[0.375rem] md:text-lg lg:px-2 lg:text-3xl",
 				);
 		}
 	})();
-	const className = clsx("font-heading font-semibold text-center", sizeClasses);
+	const className = cx("text-center font-heading font-semibold", sizeClasses);
 
 	switch (element) {
 		case Element.h1:

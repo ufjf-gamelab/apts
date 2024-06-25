@@ -1,4 +1,4 @@
-import clsx from "clsx/lite";
+import { cx } from "class-variance-authority";
 import type { PropsWithChildren } from "react";
 
 interface PillProps {
@@ -17,7 +17,7 @@ export default function Pill({
 		<section
 			id={id}
 			aria-label={ariaLabel}
-			className={clsx(
+			className={cx(
 				"rounded-full border-2 bg-light shadow-outer-2",
 				"md:shadow-outer-3",
 				"lg:shadow-outer-4",

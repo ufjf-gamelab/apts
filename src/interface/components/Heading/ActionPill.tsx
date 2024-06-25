@@ -4,7 +4,7 @@ import {
 	IconPencil,
 	IconPlus,
 } from "@tabler/icons-react";
-import clsx from "clsx/lite";
+import { cx } from "class-variance-authority";
 import { capitalizeFirstLetter } from "../../../formatting";
 import { Element } from "../../ui";
 import Title from "./Title";
@@ -21,8 +21,8 @@ export interface ActionPillProps {
 }
 
 export default function ActionPill({ pageAction }: ActionPillProps) {
-	const iconClassname = clsx(
-		"size-[1.625rem] border-r-2 p-[0.125rem] bg-secondary-common stroke-light",
+	const iconClassName = cx(
+		"size-[1.625rem] border-r-2 bg-secondary-common stroke-light p-[0.125rem]",
 		"md:size-[1.875rem]",
 		"lg:size-[2.375rem]",
 	);
@@ -34,7 +34,7 @@ export default function ActionPill({ pageAction }: ActionPillProps) {
 					<IconPlus
 						aria-disabled
 						stroke={2}
-						className={clsx(iconClassname, "p-0")}
+						className={cx(iconClassName, "p-0")}
 					/>
 				);
 			case PageAction.edit:
@@ -42,14 +42,14 @@ export default function ActionPill({ pageAction }: ActionPillProps) {
 					<IconPencil
 						aria-disabled
 						stroke={2}
-						className={clsx(iconClassname, "pl-[0.1875rem] pr-[0.0625rem]")}
+						className={cx(iconClassName, "pl-[0.1875rem] pr-[0.0625rem]")}
 					/>
 				);
 			case PageAction.view:
-				return <IconFrame aria-disabled stroke={2} className={iconClassname} />;
+				return <IconFrame aria-disabled stroke={2} className={iconClassName} />;
 			default:
 				return (
-					<IconListSearch aria-disabled stroke={2} className={iconClassname} />
+					<IconListSearch aria-disabled stroke={2} className={iconClassName} />
 				);
 		}
 	})();

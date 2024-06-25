@@ -1,13 +1,13 @@
-import clsx from "clsx/lite";
+import { cx } from "class-variance-authority";
 import { Link } from "react-router-dom";
 
 export default function Logotype() {
-	const transition = clsx("transition duration-300");
-	const firstColor = clsx(
+	const transition = cx("transition duration-300");
+	const firstColor = cx(
 		transition,
 		"fill-accent-common group-hover:fill-accent-dark",
 	);
-	const secondColor = clsx(
+	const secondColor = cx(
 		transition,
 		"fill-accent-dark group-hover:fill-accent-common",
 	);

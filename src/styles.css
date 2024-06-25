@@ -6,7 +6,7 @@
 	*,
 	::before,
 	::after {
-		@apply divide-dark border-dark;
+		@apply divide-dark border-dark text-dark shadow-dark;
 	}
 
 	html {
