@@ -18,7 +18,8 @@ export default function Pill({
 			id={id}
 			aria-label={ariaLabel}
 			className={cx(
-				"rounded-full border-2 bg-light shadow-outer-2",
+				"rounded-full border-2 bg-light",
+				"shadow-outer-2",
 				"md:shadow-outer-3",
 				"lg:shadow-outer-4",
 				className,

@@ -1,10 +1,10 @@
 import { cx } from "class-variance-authority";
 import { Element } from "../../ui";
 import Button from "../Button";
+import Text from "../Text";
 import ActionPill, { type ActionPillProps } from "./ActionPill";
 import Logotype from "./Logotype";
 import Pill from "./Pill";
-import Title from "./Title";
 
 interface HeaderProps extends ActionPillProps {
 	pageTitle: string;
@@ -39,7 +39,12 @@ export default function Header({ pageTitle, pageAction }: HeaderProps) {
 				)}
 			>
 				<Pill id="header-page-name" aria-label="Page">
-					<Title text={pageTitle} element={Element.h1} size="large" />
+					<Text
+						content={pageTitle}
+						element={Element.h1}
+						font-family="heading"
+						size="large"
+					/>
 				</Pill>
 				<Pill
 					id="header-page-action"
@@ -50,7 +55,13 @@ export default function Header({ pageTitle, pageAction }: HeaderProps) {
 				</Pill>
 			</div>
 			<div className="flex h-full items-end py-1 pr-2">
-				<Button icon="add" aria-label="Add" intent="secondary" size="small" />
+				<Button
+					icon="add"
+					aria-label="Add"
+					intent="secondary"
+					size="small"
+					text="Add"
+				/>
 			</div>
 		</header>
 	);

@@ -22,6 +22,7 @@ export default {
 			"outer-4": "0.25rem 0.25rem",
 		},
 		colors: {
+			inherit: colors.inherit,
 			light: colors.neutral["50"],
 			dark: colors.neutral["950"],
 			background: colors.orange["50"],

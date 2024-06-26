@@ -7,7 +7,7 @@ import {
 import { cx } from "class-variance-authority";
 import { capitalizeFirstLetter } from "../../../formatting";
 import { Element } from "../../ui";
-import Title from "./Title";
+import Text from "../Text";
 
 export const enum PageAction {
 	list = "list",
@@ -57,9 +57,10 @@ export default function ActionPill({ pageAction }: ActionPillProps) {
 	return (
 		<>
 			{icon}
-			<Title
-				text={capitalizeFirstLetter(pageAction)}
+			<Text
+				content={capitalizeFirstLetter(pageAction)}
 				element={Element.p}
+				font-family="heading"
 				size="small"
 			/>
 		</>

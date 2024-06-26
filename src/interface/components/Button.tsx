@@ -55,28 +55,16 @@ const Button: FC<ButtonProps> = ({
 			className={buttonStyle({ intent, size })}
 		>
 			{iconComponent}
-			<p>{text}</p>
+			{text}
 		</ReactAriaButton>
 	);
 };
 
 export default Button;
 
-const iconStyle = cva("", {
-	variants: {
-		size: {
-			small: cx("size-5"),
-			large: cx("size-8"),
-		},
-	},
-	defaultVariants: {
-		size: "small",
-	},
-});
-
 const buttonStyle = cva(
 	cx(
-		"flex items-center rounded-full border-2 px-2 font-semibold outline-offset-2",
+		"flex items-center rounded-full border-2 font-semibold",
 		"shadow-outer-2 shadow-dark",
 		"md:shadow-outer-3 md:shadow-dark",
 		"lg:shadow-outer-4 lg:shadow-dark",
@@ -91,7 +79,7 @@ const buttonStyle = cva(
 					"bg-primary-common text-light",
 					"hover:bg-primary-dark",
 					"active:bg-primary-dark",
-					"focus-visible:outline-primary-light",
+					"focus-visible:outline-primary-light/50",
 					"data-[pressed]:bg-primary-dark",
 					"*:stroke-light",
 				),
@@ -99,7 +87,7 @@ const buttonStyle = cva(
 					"bg-secondary-common text-light",
 					"hover:bg-secondary-dark",
 					"active:bg-secondary-dark",
-					"focus-visible:outline-secondary-light",
+					"focus-visible:outline-secondary-light/50",
 					"data-[pressed]:bg-secondary-dark",
 					"*:stroke-light",
 				),
@@ -107,7 +95,7 @@ const buttonStyle = cva(
 					"bg-accent-common text-dark",
 					"hover:bg-accent-dark",
 					"active:bg-accent-dark",
-					"focus-visible:outline-accent-light",
+					"focus-visible:outline-accent-light/50",
 					"data-[pressed]:bg-accent-dark",
 					"*:stroke-dark",
 				),
@@ -115,7 +103,7 @@ const buttonStyle = cva(
 					"bg-danger-common text-light",
 					"hover:bg-danger-dark",
 					"active:bg-danger-dark",
-					"focus-visible:outline-danger-light",
+					"focus-visible:outline-danger-light/50",
 					"data-[pressed]:bg-danger-dark",
 					"*:stroke-light",
 				),
@@ -123,7 +111,7 @@ const buttonStyle = cva(
 					"bg-warning-common text-dark",
 					"hover:bg-warning-dark",
 					"active:bg-warning-dark",
-					"focus-visible:outline-warning-light",
+					"focus-visible:outline-warning-light/50",
 					"data-[pressed]:bg-warning-dark",
 					"*:stroke-dark",
 				),
@@ -131,7 +119,7 @@ const buttonStyle = cva(
 					"bg-success-common text-light",
 					"hover:bg-success-dark",
 					"active:bg-success-dark",
-					"focus-visible:outline-success-light",
+					"focus-visible:outline-success-light/50",
 					"data-[pressed]:bg-success-dark",
 					"*:stroke-light",
 				),
@@ -139,13 +127,13 @@ const buttonStyle = cva(
 					"bg-inactive-common text-light",
 					"hover:bg-inactive-dark",
 					"active:bg-inactive-dark",
-					"focus-visible:outline-inactive-light",
+					"focus-visible:outline-inactive-light/50",
 					"data-[pressed]:bg-inactive-dark",
 					"*:stroke-light",
 				),
 			},
 			size: {
-				small: cx("text-lg", "md:text"),
+				small: cx("text-lg", "md:text-xl"),
 				large: cx("py-1 text-2xl"),
 			},
 		},
@@ -155,3 +143,15 @@ const buttonStyle = cva(
 		},
 	},
 );
+
+const iconStyle = cva("", {
+	variants: {
+		size: {
+			small: cx("size-5", "md:size-6"),
+			large: cx("size-8"),
+		},
+	},
+	defaultVariants: {
+		size: "small",
+	},
+});
