@@ -33,7 +33,7 @@ export default function Header({ pageTitle, pageAction }: HeaderProps) {
 			<div
 				id="header-contents"
 				className={cx(
-					"flex grow items-end gap-2 pl-2",
+					"flex h-full grow items-end gap-2 py-1 pl-2",
 					"sm:px-4",
 					"md:gap-4 md:px-6",
 				)}
@@ -49,8 +49,8 @@ export default function Header({ pageTitle, pageAction }: HeaderProps) {
 					<ActionPill pageAction={pageAction} />
 				</Pill>
 			</div>
-			<div className="flex h-full items-center pr-2">
-				<Button icon="add" aria-label="Add" intent="accent" size="large" />
+			<div className="flex h-full items-end py-1 pr-2">
+				<Button icon="add" aria-label="Add" intent="secondary" size="small" />
 			</div>
 		</header>
 	);
