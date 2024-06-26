@@ -63,7 +63,7 @@ const textStyle = cva("text-inherit text-center font-semibold", {
 			large: cx(
 				"px-2 py-[0.125rem] text-2xl",
 				"md:px-3 md:py-1 md:text-3xl",
-				"lg:px-4 lg:py-2 lg:text-5xl",
+				"lg:px-4 lg:py-2 lg:text-4xl",
 			),
 		},
 	},

@@ -14,18 +14,19 @@ export default function Header({ pageTitle, pageAction }: HeaderProps) {
 	return (
 		<header
 			className={cx(
-				"flex h-14 items-center border-b-4 bg-primary-common",
-				"md:h-16 md:border-b-6",
-				"lg:h-[5.5rem] lg:border-b-8",
+				"grid min-h-14 grid-cols-[min-content_auto_min-content] items-center bg-primary-common",
+				"border-b-4",
+				"md:border-b-6",
+				"lg:border-b-8",
 			)}
 		>
 			<div
 				id="logotype"
 				className={cx(
-					"hidden h-full",
-					"sm:block sm:border-r-4",
-					"md:border-r-6",
-					"lg:border-r-8",
+					"box-content hidden",
+					"sm:block sm:size-14 sm:border-r-4",
+					"md:size-16 md:border-r-6",
+					"lg:size-[4.5rem] lg:border-r-8",
 				)}
 			>
 				<Logotype />
@@ -33,7 +34,8 @@ export default function Header({ pageTitle, pageAction }: HeaderProps) {
 			<div
 				id="header-contents"
 				className={cx(
-					"flex h-full grow items-end gap-2 py-1 pl-2",
+					"flex items-end",
+					"gap-2 pl-2",
 					"sm:px-4",
 					"md:gap-4 md:px-6",
 				)}
@@ -54,14 +56,15 @@ export default function Header({ pageTitle, pageAction }: HeaderProps) {
 					<ActionPill pageAction={pageAction} />
 				</Pill>
 			</div>
-			<div className="flex h-full items-end py-1 pr-2">
-				<Button
-					icon="add"
-					aria-label="Add"
-					intent="secondary"
-					size="small"
-					text="Add"
-				/>
+			<div
+				className={cx(
+					"flex items-end justify-end",
+					"pr-2",
+					"sm:pr-4",
+					"md:px-6",
+				)}
+			>
+				<Button icon="add" aria-label="Add" intent="accent" size="large" />
 			</div>
 		</header>
 	);
