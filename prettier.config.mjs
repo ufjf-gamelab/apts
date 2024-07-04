@@ -5,7 +5,7 @@ const config = {
     importOrderSeparation: true,
     importOrderSortSpecifiers: true,
     singleAttributePerLine: false,
-    tabWidth: 4,
+    tabWidth: 2,
     useTabs: false,
     tailwindFunctions: ["cva", "clsx", "cx"],
     tailwindConfig: "tailwind.config.js",

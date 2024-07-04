@@ -1,16 +1,21 @@
-import { type VariantProps, cva } from "class-variance-authority";
-import type { PropsWithChildren } from "react";
+import { cx } from "class-variance-authority";
+import type { HTMLAttributes, PropsWithChildren } from "react";
 
-interface BoxProps extends VariantProps<typeof boxStyle>, PropsWithChildren {}
+interface BoxProps
+  extends Pick<HTMLAttributes<HTMLDivElement>, "className">,
+    PropsWithChildren {}
 
-const Box = ({ children }: BoxProps) => {
-    return (
-        <div className="shadow-outer-8 flex flex-grow flex-col rounded-30 border border-dark bg-light">
-            {children}
-        </div>
-    );
+const Box = ({ className, children }: BoxProps) => {
+  return (
+    <div
+      className={cx(
+        className,
+        "flex flex-col rounded-30 border border-dark bg-light p-2 shadow-outer-8",
+      )}
+    >
+      {children}
+    </div>
+  );
 };
-
-const boxStyle = cva();
 
 export default Box;
