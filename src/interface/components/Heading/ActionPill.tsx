@@ -23,8 +23,10 @@ const ActionPill = ({ pageAction }: ActionPillProps) => {
 
   return (
     <div className="flex">
-      <Icon symbol={symbol} className="border-r-2 border-dark" />
-      <div className="px-1">
+      <div className="flex border-r-2 border-dark bg-secondary-common">
+        <Icon symbol={symbol} />
+      </div>
+      <div className="flex items-center px-1">
         <Text
           content={capitalizeFirstLetter(pageAction)}
           fontFamily="heading"

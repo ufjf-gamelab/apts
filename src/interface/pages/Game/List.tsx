@@ -17,12 +17,12 @@ const List = ({}: ListProps) => {
       }
       final={
         <div className={cx("flex flex-grow flex-col", "sm:mr-4")}>
-          <Box className="mb-4">
+          <Box>
             <Content title="Connect4">
               <Text element="p" size="small" content="Howard Wexler" />
             </Content>
           </Box>
-          <Box className="">
+          <Box className="mt-2">
             <Content title="Information">
               <Text
                 element="p"

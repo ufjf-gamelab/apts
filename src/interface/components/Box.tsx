@@ -10,7 +10,7 @@ const Box = ({ className, children }: BoxProps) => {
     <div
       className={cx(
         className,
-        "flex flex-col rounded-30 border border-dark bg-light p-2 shadow-outer-8",
+        "mb-2 mr-2 flex flex-col rounded-30 border-2 border-dark bg-light p-3 shadow-outer-8",
       )}
     >
       {children}
