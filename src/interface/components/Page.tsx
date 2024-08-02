@@ -9,7 +9,7 @@ interface PageProps {
 }
 
 const Page = ({ initial, final }: PageProps) => {
-  const [currentPage, setCurrentPage] = useState<CurrentPage>("final");
+  const [currentPage, setCurrentPage] = useState<CurrentPage>("initial");
 
   const showColumn = (currentPage: CurrentPage, thisPage: CurrentPage) => {
     return cx(currentPage === thisPage ? "flex" : "max-md:hidden");
