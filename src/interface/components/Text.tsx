@@ -74,7 +74,8 @@ const textStyle = cva("text-center font-semibold text-inherit", {
     },
     size: {
       small: cx("text-lg", "md:text-xl", "lg:text-xl"),
-      large: cx("text-2xl", "md:text-3xl", "lg:text-4xl"),
+      medium: cx("text-xl", "md:text-2xl", "lg:text-2xl"),
+      large: cx("text-2xl", "md:text-3xl", "lg:text-3xl"),
     },
   },
   defaultVariants: {

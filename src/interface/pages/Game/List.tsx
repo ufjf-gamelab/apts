@@ -3,26 +3,46 @@ import { useState } from "react";
 
 import Box from "../../components/Box";
 import Content from "../../components/Content";
-import Input from "../../components/Input";
+import type { Item } from "../../components/List/Item";
+import ListComponent from "../../components/List/List";
 import Page from "../../components/Page";
 import Text from "../../components/Text";
+import type { Game } from "../../types/interfaceTypes";
 
 interface ListProps {}
 
 const List = ({}: ListProps) => {
-  const [searchText, setSearchText] = useState("");
+
+  const games: Game[] = [
+    {
+      id: "1",
+      title: "Tic-tac-toe",
+    },
+    {
+      id: "2",
+      title: "Connect Four",
+    },
+    {
+      id: "3",
+      title: "Book",
+    },
+  ];
+
+  const selectedKey = "2";
+
+  const items: Item[] = games.map((game) => {
+    return {
+      key: game.id,
+      value: game.title,
+      selected: game.id === selectedKey,
+    };
+  });
 
   return (
     <Page
       initial={
-        <div className={cx(columnStyle, "md:ml-4")}>
-          <Input
-            label="Search"
-            hiddenLabel={true}
-            value={searchText}
-            setValue={setSearchText}
-            className=""
-          />
+        <div className={cx(columnStyle, "gap-4", "md:ml-4")}>
+          <ListComponent items={items} />
         </div>
       }
       final={
