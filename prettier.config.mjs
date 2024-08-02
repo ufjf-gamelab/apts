@@ -8,7 +8,7 @@ const config = {
     tabWidth: 2,
     useTabs: false,
     tailwindFunctions: ["cva", "clsx", "cx"],
-    tailwindConfig: "tailwind.config.js",
+    tailwindConfig: "tailwind.config.ts",
     plugins: [
         "@trivago/prettier-plugin-sort-imports",
         "prettier-plugin-tailwindcss",
