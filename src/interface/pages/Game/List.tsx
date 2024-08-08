@@ -2,6 +2,7 @@ import { cx } from "class-variance-authority";
 import { useState } from "react";
 
 import Box from "../../components/Box";
+import Button from "../../components/Button";
 import Content from "../../components/Content";
 import type { Item } from "../../components/List/Item";
 import ListComponent from "../../components/List/List";
@@ -12,7 +13,6 @@ import type { Game } from "../../types/interfaceTypes";
 interface ListProps {}
 
 const List = ({}: ListProps) => {
-
   const games: Game[] = [
     {
       id: "1",
@@ -61,6 +61,10 @@ const List = ({}: ListProps) => {
               />
             </Content>
           </Box>
+
+          <Button icon="return" text="Return" />
+          <Button icon="edit" text="Return" />
+          <Button icon="return" text="Return" />
         </div>
       }
     />
