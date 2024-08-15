@@ -99,7 +99,7 @@ const Button = ({
 
 const buttonStyle = cva(
   cx(
-    "flex items-center gap-1 rounded-full border-2 font-semibold",
+    "flex h-max items-center justify-center gap-1 rounded-full border-2 font-semibold",
     "shadow-outer-2 shadow-dark",
     "md:shadow-outer-3 md:shadow-dark",
     "lg:shadow-outer-4 lg:shadow-dark",
@@ -161,8 +161,9 @@ const buttonStyle = cva(
         ),
       },
       size: {
-        small: cx("p-2 text-lg", "md:text-xl"),
-        large: cx("p-3 text-2xl"),
+        small: cx("px-2 py-0 text-lg", "md:px-3 md:text-xl"),
+        medium: cx("px-2 py-1 text-xl", "md:px-3 md:text-2xl"),
+        large: cx("px-3 py-2 text-2xl", "md:px-4 md:text-3xl"),
       },
     },
     defaultVariants: {

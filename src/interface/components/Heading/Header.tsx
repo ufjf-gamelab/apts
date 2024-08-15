@@ -1,6 +1,7 @@
 import { cx } from "class-variance-authority";
 
 import Button from "../Button/Button";
+import ButtonGroup from "../Button/ButtonGroup";
 import Text from "../Text";
 import ActionPill, { type ActionPillProps } from "./ActionPill";
 import Logotype from "./Logotype";
@@ -60,7 +61,9 @@ export default function Header({ pageTitle, pageAction }: HeaderProps) {
           "md:px-6",
         )}
       >
-        <Button icon="add" aria-label="Add" intent="accent" size="large" />
+        <ButtonGroup intent="header">
+          <Button icon="add" aria-label="Add" intent="accent" size="medium" />
+        </ButtonGroup>
       </div>
     </header>
   );

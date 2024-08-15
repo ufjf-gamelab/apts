@@ -4,7 +4,8 @@ const iconStyle = cva("", {
   variants: {
     size: {
       small: cx("size-5", "md:size-6"),
-      large: cx("size-8"),
+      medium: cx("size-7", "md:size-8"),
+      large: cx("size-8", "md:size-9"),
     },
     color: {
       light: "",
