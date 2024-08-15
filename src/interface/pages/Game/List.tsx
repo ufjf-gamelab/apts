@@ -1,6 +1,8 @@
 import { cx } from "class-variance-authority";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
+import { GameStore } from "../../../database/database";
+import { Game, type GameType } from "../../../model/game";
 import Box from "../../components/Box";
 import Button from "../../components/Button/Button";
 import ButtonGroup from "../../components/Button/ButtonGroup";
@@ -10,7 +12,6 @@ import type { Item } from "../../components/List/Item";
 import ListComponent from "../../components/List/List";
 import Page, { type CurrentColumn } from "../../components/Page";
 import Text from "../../components/Text";
-import type { Game } from "../../types/interfaceTypes";
 
 interface ListProps {}
 
@@ -41,28 +42,37 @@ const columnStyle = "flex flex-grow flex-col";
 const FirstColumn = () => {
   const setCurrentColumn = useContext(PageContext);
 
-  const games: Game[] = [
-    {
-      id: "1",
-      title: "Tic-tac-toe",
-    },
-    {
-      id: "2",
-      title: "Connect Four",
-    },
-    {
-      id: "3",
-      title: "Book",
-    },
-  ];
+  // retrieve all games from GameStore using localForage
+  const [games, setGames] = useState<Game[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchGames = async () => {
+      const games = await GameStore.keys();
+      // setGames(games);
+      GameStore.iterate((value: GameType, id) => {
+        setGames((games) => [
+          ...games,
+          new Game(id, value.title, value.authors, value.information),
+        ]);
+      });
+      setLoading(false);
+    };
+
+    fetchGames();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   const selectedKey = "2";
 
   const items: Item[] = games.map((game) => {
     return {
-      identifier: game.id,
-      value: game.title,
-      selected: game.id === selectedKey,
+      identifier: game.getId(),
+      value: game.getTitle(),
+      selected: game.getId() === selectedKey,
     };
   });
 
