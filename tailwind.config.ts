@@ -74,9 +74,7 @@ export default {
     },
   },
   plugins: [
-    "prettier-plugin-tailwindcss",
     "tailwindcss-react-aria-components",
-    "prettier-plugin-tailwindcss",
     "tailwindcss-animate",
     require("@tailwindcss/forms"),
   ],

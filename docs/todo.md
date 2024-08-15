@@ -71,6 +71,18 @@
       - [ ] Gerar mais de um modelo em diferentes gerações
     - [ ] Editar
 
+## Implantação da UI
+
+- [ ] Componentes
+  - [X] Ícone
+  - [X] Texto
+  - [-] Campo de texto
+  - [-] Botão
+  - [X] Caixa
+  - [-] Pesquisa
+    - [-] Barra
+    - [-] Itens
+
 ## Descrição de jogos
 
 - [ ] Definir linguagem de descrição de jogos

@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import Box from "../../components/Box";
 import Button from "../../components/Button";
+import ButtonGroup from "../../components/Button/ButtonGroup";
 import Content from "../../components/Content";
 import type { Item } from "../../components/List/Item";
 import ListComponent from "../../components/List/List";
@@ -46,25 +47,41 @@ const List = ({}: ListProps) => {
         </div>
       }
       final={
-        <div className={cx(columnStyle, "sm:mr-4")}>
-          <Box>
-            <Content title="Connect4">
-              <Text element="p" size="small" content="Howard Wexler" />
-            </Content>
-          </Box>
-          <Box className="mt-2">
-            <Content title="Information">
-              <Text
-                element="p"
-                size="small"
-                content="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laborum numquam esse enim molestias quos dicta dolores, inventore, commodi error explicabo aliquam distinctio eos ipsum aliquid minus vitae mollitia sapiente soluta!"
-              />
-            </Content>
-          </Box>
+        <div className={cx(columnStyle, "gap-6 sm:mr-4")}>
+          <div className="flex flex-col gap-2">
+            <Box>
+              <Content title="Connect4">
+                <Text element="p" size="small" content="Howard Wexler" />
+              </Content>
+            </Box>
+            <Box>
+              <Content title="Information">
+                <Text
+                  element="p"
+                  size="small"
+                  content="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laborum numquam esse enim molestias quos dicta dolores, inventore, commodi error explicabo aliquam distinctio eos ipsum aliquid minus vitae mollitia sapiente soluta!"
+                />
+              </Content>
+            </Box>
+          </div>
 
-          <Button icon="return" text="Return" />
-          <Button icon="edit" text="Return" />
-          <Button icon="return" text="Return" />
+          <div className="mr-2 flex flex-col">
+            <ButtonGroup intent="page-navigation">
+              <Button
+                icon="previous"
+                size="large"
+                intent="accent"
+                text="Previous"
+              />
+              <Button icon="edit" size="large" intent="warning" text="Edit" />
+              <Button
+                icon="next"
+                size="large"
+                intent="secondary"
+                text="Select"
+              />
+            </ButtonGroup>
+          </div>
         </div>
       }
     />
