@@ -2,14 +2,14 @@ import { cx } from "class-variance-authority";
 import { createContext, useContext, useEffect, useState } from "react";
 
 import { GameStore } from "../../../database/database";
-import { Game, type GameType } from "../../../model/game";
+import { type GameType } from "../../../model/game";
 import Box from "../../components/Box";
 import Button from "../../components/Button/Button";
 import ButtonGroup from "../../components/Button/ButtonGroup";
 import ColumnNavigator from "../../components/Button/ColumnNavigator";
 import Content from "../../components/Content";
-import type { Item } from "../../components/List/Item";
-import ListComponent from "../../components/List/List";
+import ListComponent, { type Item } from "../../components/List";
+import Loading from "../../components/Loading";
 import Page, { type CurrentColumn } from "../../components/Page";
 import Text from "../../components/Text";
 
@@ -42,43 +42,43 @@ const columnStyle = "flex flex-grow flex-col";
 const FirstColumn = () => {
   const setCurrentColumn = useContext(PageContext);
 
-  // retrieve all games from GameStore using localForage
-  const [games, setGames] = useState<Game[]>([]);
+  const [gameItems, setGameItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const selectedGameId = "2";
 
   useEffect(() => {
     const fetchGames = async () => {
-      const games = await GameStore.keys();
-      // setGames(games);
+      let gameItems: Item[] = [];
       GameStore.iterate((value: GameType, id) => {
-        setGames((games) => [
-          ...games,
-          new Game(id, value.title, value.authors, value.information),
-        ]);
-      });
-      setLoading(false);
+        gameItems = [
+          ...gameItems,
+          {
+            id,
+            value: value.title,
+            selected: id === selectedGameId,
+          },
+        ];
+      })
+        .then(() => {
+          setGameItems(gameItems);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     };
 
     fetchGames();
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
-
-  const selectedKey = "2";
-
-  const items: Item[] = games.map((game) => {
-    return {
-      identifier: game.getId(),
-      value: game.getTitle(),
-      selected: game.getId() === selectedKey,
-    };
-  });
 
   return (
     <div className={cx(columnStyle, "gap-4", "md:ml-4")}>
-      <ListComponent items={items} />
+      <ListComponent items={gameItems} />
 
       <div className="mr-2 flex justify-end">
         <ButtonGroup intent="page-navigation">
@@ -104,13 +104,12 @@ const SecondColumn = () => {
       <div className="flex flex-col gap-2">
         <Box>
           <Content title="Connect4">
-            <Text element="p" size="small" content="Howard Wexler" />
+            <Text size="small" content="Howard Wexler" />
           </Content>
         </Box>
         <Box>
           <Content title="Information">
             <Text
-              element="p"
               size="small"
               content="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laborum numquam esse enim molestias quos dicta dolores, inventore, commodi error explicabo aliquam distinctio eos ipsum aliquid minus vitae mollitia sapiente soluta!"
             />

@@ -1,7 +1,7 @@
 import { type VariantProps, cva, cx } from "class-variance-authority";
 import { Text as AriaText } from "react-aria-components";
 
-type Element = "h1" | "h2" | "p" | "text";
+type Element = "h1" | "h2" | "text";
 
 interface TextProps extends VariantProps<typeof textStyle> {
   element?: Element;
@@ -34,18 +34,6 @@ const Text = ({ align, fontFamily, size, element, content }: TextProps) => {
           {content}
         </h2>
       );
-    case "p":
-      return (
-        <p
-          className={textStyle({
-            align,
-            fontFamily,
-            size,
-          })}
-        >
-          {content}
-        </p>
-      );
     default:
       return (
         <AriaText
@@ -54,6 +42,7 @@ const Text = ({ align, fontFamily, size, element, content }: TextProps) => {
             fontFamily,
             size,
           })}
+          slot="label"
         >
           {content}
         </AriaText>
