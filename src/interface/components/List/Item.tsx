@@ -3,16 +3,16 @@ import { cva } from "class-variance-authority";
 import Text from "../Text";
 
 export type Item = {
-  key: string;
+  identifier: string;
   value: string;
   selected?: boolean;
 };
 
-interface ListItemProps extends Item {}
+interface ListItemProps extends Pick<Item, "value" | "selected"> {}
 
-const ListItem = ({ key, value, selected = false }: ListItemProps) => {
+const ListItem = ({ value, selected = false }: ListItemProps) => {
   return (
-    <div className={itemStyle({ selected })} key={key}>
+    <div className={itemStyle({ selected })}>
       <Text content={value} fontFamily="heading" size="medium" />
     </div>
   );

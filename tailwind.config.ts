@@ -72,6 +72,11 @@ export default {
       common: ["Open Sans", ...defaultTheme.fontFamily.sans],
       heading: ["Georama", ...defaultTheme.fontFamily.sans],
     },
+    extend: {
+      screens: {
+        split: defaultTheme.screens.lg,
+      },
+    },
   },
   plugins: [
     "tailwindcss-react-aria-components",

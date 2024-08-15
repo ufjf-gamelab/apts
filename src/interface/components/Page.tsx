@@ -1,32 +1,31 @@
 import { cx } from "class-variance-authority";
-import { type ReactNode, useState } from "react";
+import { type ReactNode } from "react";
 
-type CurrentPage = "initial" | "final";
+export type CurrentColumn = "first" | "second";
 
 interface PageProps {
-  initial: ReactNode;
-  final: ReactNode;
+  first: ReactNode;
+  second: ReactNode;
+  current: CurrentColumn;
 }
 
-const Page = ({ initial, final }: PageProps) => {
-  const [currentPage, setCurrentPage] = useState<CurrentPage>("initial");
-
-  const showColumn = (currentPage: CurrentPage, thisPage: CurrentPage) => {
-    return cx(currentPage === thisPage ? "flex" : "max-md:hidden");
+const Page = ({ first, second, current }: PageProps) => {
+  const showColumn = (currentPage: CurrentColumn, thisPage: CurrentColumn) => {
+    return cx(currentPage === thisPage ? "flex" : "max-split:hidden");
   };
 
   return (
     <div className="m-4 flex flex-grow gap-8">
-      <div className={cx(columnStyle, showColumn(currentPage, "initial"))}>
-        {initial}
+      <div className={cx(columnStyle, showColumn(current, "first"))}>
+        {first}
       </div>
-      <div className={cx(columnStyle, showColumn(currentPage, "final"))}>
-        {final}
+      <div className={cx(columnStyle, showColumn(current, "second"))}>
+        {second}
       </div>
     </div>
   );
 };
 
-const columnStyle = "flex flex-grow basis-[50%] flex-col";
-
 export default Page;
+
+const columnStyle = cx("flex-grow flex-col", "split:basis-[50%]");

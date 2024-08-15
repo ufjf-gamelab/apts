@@ -1,6 +1,6 @@
 import { cx } from "class-variance-authority";
 
-import Button from "../Button";
+import Button from "../Button/Button";
 import Text from "../Text";
 import ActionPill, { type ActionPillProps } from "./ActionPill";
 import Logotype from "./Logotype";

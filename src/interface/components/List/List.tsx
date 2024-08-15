@@ -1,6 +1,6 @@
 import { type HTMLAttributes, useState } from "react";
 
-import Input from "../Input";
+import Input from "../Field";
 import ListItem, { type Item } from "./Item";
 
 interface ListProps extends Pick<HTMLAttributes<HTMLDivElement>, "aria-label"> {
@@ -15,14 +15,13 @@ const List = ({ "aria-label": ariaLabel, items }: ListProps) => {
       <Input
         label="Search"
         hiddenLabel={true}
-        value={searchText}
+        fontFamily="heading"
         setValue={setSearchText}
-        className=""
       />
       <div className="ml-4 flex flex-col gap-4">
         {items.map((item) => (
           <ListItem
-            key={item.key}
+            key={item.identifier}
             value={item.value}
             selected={item.selected}
           />

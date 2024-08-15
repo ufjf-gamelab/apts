@@ -9,11 +9,11 @@ import { type VariantProps, cva, cx } from "class-variance-authority";
 import { type AriaButtonProps } from "react-aria";
 import { Button as ReactAriaButton } from "react-aria-components";
 
-import { iconStyle } from "./Icon";
+import { iconStyle } from "../Icon";
 
 type Icon = "add" | "edit" | "return" | "previous" | "next";
 
-interface ButtonProps
+export interface ButtonProps
   extends VariantProps<typeof buttonStyle>,
     Pick<AriaButtonProps, "aria-label" | "onPress"> {
   icon?: Icon;
@@ -26,6 +26,7 @@ const Button = ({
   icon,
   text,
   "aria-label": ariaLabel,
+  onPress,
 }: ButtonProps) => {
   const iconColor = (() => {
     switch (intent) {
@@ -88,6 +89,7 @@ const Button = ({
     <ReactAriaButton
       aria-label={ariaLabel}
       className={buttonStyle({ intent, size })}
+      onPress={onPress}
     >
       {iconComponent}
       {text}
