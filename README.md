@@ -8,8 +8,8 @@ It is intended to offer an interface for representing various types of games and
 This project is written in Typescript, and runs on Node.js.
 To install the project, you must have the following dependencies installed:
 
-- [pnpm](https://pnpm.io/)
-- [Node.js](https://nodejs.org/)
+-   [pnpm](https://pnpm.io/)
+-   [Node.js](https://nodejs.org/)
 
 `Pnpm` can be installed with the following command:
 
@@ -27,14 +27,14 @@ pnpm env use --global lts
 
 If you use the `Visual Studio Code` editor, we recommend installing the following extensions:
 
-- [Git Graph](https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph)
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- [Error Lens](https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens)
-- [Pretty TypeScript Errors](https://marketplace.visualstudio.com/items?itemName=yoavbls.pretty-ts-errors)
-- [Todo Tree](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree)
-- [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker)
-- [Brazilian Portuguese - Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker-portuguese-brazilian)
+-   [Git Graph](https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph)
+-   [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+-   [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+-   [Error Lens](https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens)
+-   [Pretty TypeScript Errors](https://marketplace.visualstudio.com/items?itemName=yoavbls.pretty-ts-errors)
+-   [Todo Tree](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree)
+-   [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker)
+-   [Brazilian Portuguese - Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker-portuguese-brazilian)
 
 ## Installing
 

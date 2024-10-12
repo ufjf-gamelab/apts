@@ -1,32 +1,36 @@
 {
-  "name": "apts",
-  "version": "4.0.0",
-  "description": "Engine to simulate tabletop games, inspired by AlphaZero algorithm",
-  "author": "Gabriel Malosto",
-  "main": "src/index.ts",
-  "type": "module",
-  "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "build": "esbuild src/index.ts --bundle --packages=external --platform=node --format=esm --outdir=dist --sourcemap",
-    "lint": "pnpm exec eslint ./src/** --fix",
-    "format": "pnpm exec prettier . -w",
-    "typecheck": "pnpm exec tsc"
-  },
-  "keywords": [],
-  "license": "AGPL-3.0-only",
-  "devDependencies": {
-    "@eslint/js": "^9.12.0",
-    "@types/eslint-config-prettier": "^6.11.3",
-    "@types/eslint__js": "^8.42.3",
-    "@types/node": "^22.7.5",
-    "esbuild": "^0.24.0",
-    "eslint": "^9.12.0",
-    "eslint-config-prettier": "^9.1.0",
-    "globals": "^15.11.0",
-    "prettier": "^3.3.3",
-    "prettier-plugin-organize-imports": "^4.1.0",
-    "tsx": "^4.19.1",
-    "typescript": "^5.6.3",
-    "typescript-eslint": "^8.8.1"
-  }
+    "name": "apts",
+    "version": "4.0.0",
+    "description": "Engine to simulate tabletop games, inspired by AlphaZero algorithm",
+    "author": "Gabriel Malosto",
+    "main": "src/index.ts",
+    "type": "module",
+    "scripts": {
+        "dev": "tsx watch src/index.ts",
+        "build": "esbuild src/index.ts --bundle --packages=external --platform=node --format=esm --outdir=dist --sourcemap",
+        "lint": "pnpm exec eslint ./src/** --fix",
+        "format": "pnpm exec prettier . -w",
+        "typecheck": "pnpm exec tsc"
+    },
+    "keywords": [],
+    "license": "AGPL-3.0-only",
+    "devDependencies": {
+        "@eslint/js": "^9.12.0",
+        "@types/eslint-config-prettier": "^6.11.3",
+        "@types/eslint__js": "^8.42.3",
+        "@types/node": "^22.7.5",
+        "esbuild": "^0.24.0",
+        "eslint": "^9.12.0",
+        "eslint-config-prettier": "^9.1.0",
+        "globals": "^15.11.0",
+        "prettier": "^3.3.3",
+        "prettier-plugin-organize-imports": "^4.1.0",
+        "tsx": "^4.19.1",
+        "typescript": "^5.6.3",
+        "typescript-eslint": "^8.8.1"
+    },
+    "dependencies": {
+        "@paralleldrive/cuid2": "^2.2.2",
+        "@tensorflow/tfjs": "^4.21.0"
+    }
 }
