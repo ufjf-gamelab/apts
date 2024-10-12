@@ -10,21 +10,25 @@ import ColumnNavigator from "../../components/Button/ColumnNavigator";
 import Content from "../../components/Content";
 import ListComponent, { type Item } from "../../components/List";
 import Loading from "../../components/Loading";
-import Page, { type CurrentColumn } from "../../components/Page";
 import Text from "../../components/Text";
+import Page, { type CurrentColumn } from "../../layouts/Page";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface ListProps {}
 
 const PageContext = createContext<(target: CurrentColumn) => void>(
   () => "first",
 );
 
+// eslint-disable-next-line no-empty-pattern
 const List = ({}: ListProps) => {
   const [currentColumn, setCurrentColumn] = useState<CurrentColumn>("first");
 
   return (
     <PageContext.Provider
-      value={(targetColumn) => setCurrentColumn(targetColumn)}
+      value={(targetColumn) => {
+        setCurrentColumn(targetColumn);
+      }}
     >
       <Page
         first={<FirstColumn />}
@@ -37,7 +41,7 @@ const List = ({}: ListProps) => {
 
 export default List;
 
-const columnStyle = "flex flex-grow flex-col";
+const columnStyle = "flex-grow";
 
 const FirstColumn = () => {
   const setCurrentColumn = useContext(PageContext);
@@ -80,7 +84,7 @@ const FirstColumn = () => {
     <div className={cx(columnStyle, "gap-4", "md:ml-4")}>
       <ListComponent items={gameItems} />
 
-      <div className="mr-2 flex justify-end">
+      <div className="mr-2 flex-row justify-end">
         <ButtonGroup intent="page-navigation">
           <ColumnNavigator
             icon="next"

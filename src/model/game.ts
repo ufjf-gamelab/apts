@@ -7,12 +7,27 @@ export type GameType = {
 } & BaseType;
 
 export class Game {
-  constructor(
-    private id: GameType["id"] | null,
-    private title: GameType["title"],
-    private authors: GameType["authors"],
-    private information: GameType["information"],
-  ) {}
+  private id: GameType["id"] | null;
+  private title: GameType["title"];
+  private authors: GameType["authors"];
+  private information: GameType["information"];
+
+  constructor({
+    id,
+    title,
+    authors,
+    information,
+  }: {
+    id: GameType["id"] | null;
+    title: GameType["title"];
+    authors: GameType["authors"];
+    information: GameType["information"];
+  }) {
+    this.id = id;
+    this.title = title;
+    this.authors = authors;
+    this.information = information;
+  }
 
   /* Getters */
 
@@ -54,10 +69,10 @@ export class Game {
   /* Methods */
   serialize(): GameType {
     return {
-      id: this.getId(),
-      title: this.getTitle(),
       authors: this.getAuthors(),
+      id: this.getId(),
       information: this.getInformation(),
+      title: this.getTitle(),
     };
   }
 }

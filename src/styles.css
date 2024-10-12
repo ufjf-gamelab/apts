@@ -3,34 +3,56 @@
 @tailwind utilities;
 
 @layer base {
-	*,
-	::before,
-	::after {
-		@apply divide-dark border-dark text-dark shadow-dark;
-	}
+  *,
+  ::before,
+  ::after {
+    @apply divide-dark border-dark text-dark shadow-dark;
+  }
 
-	html {
-		@apply h-full bg-background font-common text-base;
-	}
+  html {
+    @apply h-full bg-background font-common text-base;
+  }
 
-	body {
-		@apply h-full;
-	}
+  body {
+    @apply h-full;
+  }
 
-	article {
-		@apply h-full;
-	}
+  article {
+    @apply h-full;
+  }
+
+  div,
+  section,
+  article,
+  header,
+  footer,
+  nav,
+  aside,
+  main,
+  form,
+  menu {
+    @apply flex flex-col;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading;
+  }
 }
 
 :root {
-	line-height: 1.5;
-	font-weight: 400;
-	font-synthesis: none;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
-	height: 100%;
+  height: 100%;
 }

@@ -14,11 +14,13 @@ const ButtonGroup = ({ children, intent }: ButtonGroupProps) => {
         return "Header actions";
       case "page-navigation":
         return "Page navigation";
+      default:
+        return "Actions";
     }
   })();
   return (
     <Group
-      className={cx("flex flex-wrap justify-end gap-2 place-self-end")}
+      className={cx("flex-row flex-wrap justify-end gap-2 place-self-end")}
       aria-label={ariaLabel}
     >
       {children}

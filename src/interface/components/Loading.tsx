@@ -1,7 +1,3 @@
-interface LoadingProps {}
-
-const Loading = ({}: LoadingProps) => {
-  return <div className="">Loading...</div>;
-};
+const Loading = () => <div className="">Loading...</div>;
 
 export default Loading;

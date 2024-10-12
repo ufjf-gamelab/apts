@@ -3,6 +3,30 @@ import { Text as AriaText } from "react-aria-components";
 
 type Element = "h1" | "h2" | "text";
 
+const textStyle = cva("text-center font-semibold text-inherit", {
+  defaultVariants: {
+    align: "start",
+    fontFamily: "common",
+    size: "small",
+  },
+  variants: {
+    align: {
+      center: "text-center",
+      end: "text-end",
+      start: "text-start",
+    },
+    fontFamily: {
+      common: "font-common",
+      heading: "font-heading",
+    },
+    size: {
+      large: cx("text-2xl", "md:text-3xl", "lg:text-3xl"),
+      medium: cx("text-xl", "md:text-2xl", "lg:text-2xl"),
+      small: cx("text-lg", "md:text-xl", "lg:text-xl"),
+    },
+  },
+});
+
 interface TextProps extends VariantProps<typeof textStyle> {
   element?: Element;
   content: string;
@@ -49,29 +73,5 @@ const Text = ({ align, fontFamily, size, element, content }: TextProps) => {
       );
   }
 };
-
-const textStyle = cva("text-center font-semibold text-inherit", {
-  variants: {
-    align: {
-      start: "text-start",
-      center: "text-center",
-      end: "text-end",
-    },
-    fontFamily: {
-      common: "font-common",
-      heading: "font-heading",
-    },
-    size: {
-      small: cx("text-lg", "md:text-xl", "lg:text-xl"),
-      medium: cx("text-xl", "md:text-2xl", "lg:text-2xl"),
-      large: cx("text-2xl", "md:text-3xl", "lg:text-3xl"),
-    },
-  },
-  defaultVariants: {
-    align: "start",
-    fontFamily: "common",
-    size: "small",
-  },
-});
 
 export default Text;

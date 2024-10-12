@@ -10,12 +10,19 @@ import { capitalizeFirstLetter } from "../../../formatting";
 import type { PageAction } from "../../ui";
 import Text from "../Text";
 
+const iconStyle = cx(
+  "stroke-light p-[0.125rem]",
+  "size-[1.625rem]",
+  "md:size-[1.875rem]",
+  "lg:size-[2.375rem]",
+);
+
 export interface ActionPillProps {
   pageAction: PageAction;
 }
 
 const ActionPill = ({ pageAction }: ActionPillProps) => {
-  const icon = ((): JSX.Element => {
+  const icon = (() => {
     switch (pageAction) {
       case "add":
         return (
@@ -39,11 +46,11 @@ const ActionPill = ({ pageAction }: ActionPillProps) => {
   })();
 
   return (
-    <div className="flex">
-      <div className="flex border-r-2 border-dark bg-secondary-common">
+    <div className="flex-row">
+      <div className="flex-row border-r-2 border-dark bg-secondary-common">
         {icon}
       </div>
-      <div className="flex items-center px-2">
+      <div className="flex-row items-center px-2">
         <Text
           content={capitalizeFirstLetter(pageAction)}
           fontFamily="heading"
@@ -53,12 +60,5 @@ const ActionPill = ({ pageAction }: ActionPillProps) => {
     </div>
   );
 };
-
-const iconStyle = cx(
-  "stroke-light p-[0.125rem]",
-  "size-[1.625rem]",
-  "md:size-[1.875rem]",
-  "lg:size-[2.375rem]",
-);
 
 export default ActionPill;

@@ -1,17 +1,20 @@
-export function capitalizeFirstLetter(str: string) {
-	return str.charAt(0).toUpperCase() + str.slice(1);
-}
+const firstCharIndex = 0,
+  secondCharIndex = 1;
+const capitalizeFirstLetter = (str: string) =>
+  str.charAt(firstCharIndex).toUpperCase() + str.slice(secondCharIndex);
 
-function padTwoDigits(num: number) {
-	return num.toString().padStart(2, "0");
-}
+const padLength = 2;
+const padTwoDigits = (num: number) => num.toString().padStart(padLength, "0");
 
-export function getFormattedDate(date: Date) {
-	const year = padTwoDigits(date.getFullYear());
-	const month = padTwoDigits(date.getMonth() + 1);
-	const day = padTwoDigits(date.getDate());
-	const hour = padTwoDigits(date.getHours());
-	const minutes = padTwoDigits(date.getMinutes());
-	const seconds = padTwoDigits(date.getSeconds());
-	return `${year}-${month}-${day} ${hour}:${minutes}:${seconds}`;
-}
+const getFormattedDate = (date: Date) => {
+  const dayOffset = 1;
+  const day = padTwoDigits(date.getDate()),
+    hour = padTwoDigits(date.getHours()),
+    minutes = padTwoDigits(date.getMinutes()),
+    month = padTwoDigits(date.getMonth() + dayOffset),
+    seconds = padTwoDigits(date.getSeconds()),
+    year = padTwoDigits(date.getFullYear());
+  return `${year}-${month}-${day} ${hour}:${minutes}:${seconds}`;
+};
+
+export { capitalizeFirstLetter, getFormattedDate };

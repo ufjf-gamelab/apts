@@ -1,42 +1,42 @@
 {
-	"compilerOptions": {
-		"target": "ES2022",
-		"useDefineForClassFields": true,
-		"lib": ["ES2022", "DOM", "DOM.Iterable"],
-		"module": "ESNext",
-		"skipLibCheck": true,
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    // "skipLibCheck": true,
 
-		/* Bundler mode */
-		"moduleResolution": "Bundler",
-		"allowImportingTsExtensions": true,
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"noEmit": true,
-		"jsx": "react-jsx",
+    /* Bundler mode */
+    "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
 
-		/* Type checking */
-		"allowUnreachableCode": false,
-		"allowUnusedLabels": false,
-		"alwaysStrict": true,
-		// "exactOptionalPropertyTypes": true,
-		"noFallthroughCasesInSwitch": true,
-		"noImplicitAny": true,
-		"noImplicitOverride": true,
-		"noImplicitReturns": true,
-		"noImplicitThis": true,
-		"noPropertyAccessFromIndexSignature": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
-		"strict": true,
+    /* Type checking */
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "alwaysStrict": true,
+    // "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
 
-		/* Javascript support */
-		"allowJs": false,
+    /* Javascript support */
+    "allowJs": false,
 
-		/* Interop constraints */
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"verbatimModuleSyntax": true
-	},
-	"include": ["src"],
-	"references": [{ "path": "./tsconfig.node.json" }]
+    /* Interop constraints */
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "verbatimModuleSyntax": true
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

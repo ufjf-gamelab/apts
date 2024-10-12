@@ -1,4 +1,15 @@
 {
+  "cSpell.words": [
+    "apts",
+    "inkscape",
+    "localforage",
+    "predeploy",
+    "tabler",
+    "tailwindcss",
+    "tensorflow",
+    "tfjs",
+    "tseslint"
+  ],
   "css.validate": false,
   "editor.inlineSuggest.enabled": true,
   "editor.quickSuggestions": {

@@ -2,40 +2,40 @@
 
 ## Prototipação da UI
 
-- [X] Estabelecer tipografia
-- [X] Definir paleta de cores
-- [X] Definir sombras
-- [X] Definir bordas
-- [X] Escolher biblioteca de ícones
+- [x] Estabelecer tipografia
+- [x] Definir paleta de cores
+- [x] Definir sombras
+- [x] Definir bordas
+- [x] Escolher biblioteca de ícones
 - [ ] Componentes
-  - [X] Ícone
-  - [X] Texto
-  - [X] Campo de texto
-  - [X] Botão
-  - [X] Caixa
-  - [X] Pesquisa
-    - [X] Barra
-    - [X] Itens
+  - [x] Ícone
+  - [x] Texto
+  - [x] Campo de texto
+  - [x] Botão
+  - [x] Caixa
+  - [x] Pesquisa
+    - [x] Barra
+    - [x] Itens
 - [ ] Terminal
 - [ ] Peças
   - [ ] Cabeçalho
     - [ ] Breadcrumb
       - [ ] Retrato
       - [ ] Paisagem
-    - [X] Título da página
-    - [X] Subtítulo para ação
+    - [x] Título da página
+    - [x] Subtítulo para ação
     - [ ] Botões de ação
       - [ ] Retrato
-      - [X] Paisagem
-  - [X] Conteúdo de texto
+      - [x] Paisagem
+  - [x] Conteúdo de texto
   - [ ] Formulário
   - [ ] Descrição do jogo
 - [ ] Páginas
-  - [X] Regras do Jogo (JS)
-    - [X] Listar
-    - [X] Visualizar
-    - [X] Criar
-    - [X] Editar
+  - [x] Regras do Jogo (JS)
+    - [x] Listar
+    - [x] Visualizar
+    - [x] Criar
+    - [x] Editar
   - [ ] Implementação estrutural do jogo (Arquitetura da Rede)
     - [ ] Listar
     - [ ] Filtrar
@@ -74,11 +74,11 @@
 ## Implantação da UI
 
 - [ ] Componentes
-  - [X] Ícone
-  - [X] Texto
+  - [x] Ícone
+  - [x] Texto
   - [-] Campo de texto
   - [-] Botão
-  - [X] Caixa
+  - [x] Caixa
   - [-] Pesquisa
     - [-] Barra
     - [-] Itens
@@ -93,23 +93,23 @@
 
 ## Engine AlphaZero
 
-- [X] Estabelecer diagrama dos dados voláteis
+- [x] Estabelecer diagrama dos dados voláteis
 - [ ] ResNet
-  - [X] Estabelecer forma de entrada
-  - [X] Implementar construção
+  - [x] Estabelecer forma de entrada
+  - [x] Implementar construção
   - [ ] Estudar implementação de mais de três canais
-- [X] MCTS
-  - [X] Implementar nó
-  - [X] Implementar processo de busca
-  - [X] Implementar MCTS + ResNet
-- [X] Processo de treinamento
-  - [X] Estabelecer forma de entrada
-  - [X] Estabelecer etapas
-    - [X] Transformação inicial
-    - [X] Backbone
-    - [X] Heads
-      - [X] Policy
-      - [X] Value
+- [x] MCTS
+  - [x] Implementar nó
+  - [x] Implementar processo de busca
+  - [x] Implementar MCTS + ResNet
+- [x] Processo de treinamento
+  - [x] Estabelecer forma de entrada
+  - [x] Estabelecer etapas
+    - [x] Transformação inicial
+    - [x] Backbone
+    - [x] Heads
+      - [x] Policy
+      - [x] Value
 - [ ] Container para o modelo de ResNet
   - [ ] Estabelecer dados relevantes
 

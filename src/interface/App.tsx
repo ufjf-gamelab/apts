@@ -21,12 +21,12 @@ export default function App() {
             <Route
               index
               element={<GameList />}
-              handle={{ action: pageActions["List"] }}
+              handle={{ action: pageActions.List }}
             />
             <Route
               path="add"
               element={<GameAdd />}
-              handle={{ action: pageActions["Add"] }}
+              handle={{ action: pageActions.Add }}
             />
           </Route>
           <Route index element={<Navigate replace={true} to="games" />} />

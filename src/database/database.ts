@@ -1,14 +1,19 @@
+/* eslint-disable no-console */
 import localForage from "localforage";
 
 import { Game } from "../model/game";
 
 // Configure LocalForage
 localForage.config({
-  name: "apts_database", // Name of the database
-  version: 1.0, // Database version
-  description: "Local storage for APTS", // Description for the database
-  // size: 5 * Math.pow(1024, 2), // Size of the database in bytes (5 MB in this example)
-  driver: [localForage.INDEXEDDB, localForage.LOCALSTORAGE], // Preferred storage drivers in order
+  // Description for the database
+  description: "Local storage for APTS",
+  // Preferred storage drivers in order
+  driver: [localForage.INDEXEDDB, localForage.LOCALSTORAGE],
+  // Name of the database
+  name: "apts_database",
+  // Database version
+  version: 1.0,
+  // Size: 5 * Math.pow(1024, 2), // Size of the database in bytes (5 MB in this example)
 });
 
 // This code runs once localForage has fully initialized the selected driver.
@@ -17,8 +22,8 @@ localForage
   .then(() => {
     console.log(localForage.driver());
   })
-  .catch((e) => {
-    console.log(e);
+  .catch((error: unknown) => {
+    console.log(error);
   });
 
 // Stores
@@ -27,48 +32,50 @@ export const GameStore = localForage.createInstance({
   storeName: "GameStore",
 });
 
-const ticTacToe: Game = new Game(
-  "1",
-  "Tic-tac-toe",
-  ["Unknown"],
-  "A simple game",
-);
-const connectFour: Game = new Game(
-  "2",
-  "Connect Four",
-  ["Unknown"],
-  "Another simple game",
-);
-const chess: Game = new Game("3", "Chess", ["Unknown"], "A complex game");
+const ticTacToe: Game = new Game({
+  authors: ["Unknown"],
+  id: "1",
+  information: "A simple game",
+  title: "Tic-tac-toe",
+});
+const connectFour: Game = new Game({
+  authors: ["Unknown"],
+  id: "2",
+  information: "Another simple game",
+  title: "Connect Four",
+});
+const chess: Game = new Game({
+  authors: ["Unknown"],
+  id: "3",
+  information: "A complex game",
+  title: "Chess",
+});
 
 // Store data
 try {
-  const result = GameStore.setItem(ticTacToe.getId(), ticTacToe.serialize());
+  await GameStore.setItem(ticTacToe.getId(), ticTacToe.serialize());
 } catch (error) {
   console.error("Error storing data:", error);
 }
 
 try {
-  const result = GameStore.setItem(
-    connectFour.getId(),
-    connectFour.serialize(),
-  );
+  await GameStore.setItem(connectFour.getId(), connectFour.serialize());
 } catch (error) {
   console.error("Error storing data:", error);
 }
 
 try {
-  const result = GameStore.setItem(chess.getId(), chess.serialize());
+  await GameStore.setItem(chess.getId(), chess.serialize());
 } catch (error) {
   console.error("Error storing data:", error);
 }
 
 // // Retrieve data
-// localForage
+// LocalForage
 //   .getItem("userConfig")
 //   .then((data) => {
-//     console.log("Retrieved data:", data);
+//     Console.log("Retrieved data:", data);
 //   })
 //   .catch((error) => {
-//     console.error("Error retrieving data:", error);
+//     Console.error("Error retrieving data:", error);
 //   });

@@ -1,2 +1,8 @@
-export const pageActions = <const> {List: "list", Add:"add", Edit:"edit", View:"view"};
-export type PageAction = typeof pageActions[keyof typeof pageActions];
+export const pageActions = {
+  Add: "add",
+  Edit: "edit",
+  List: "list",
+  View: "view",
+} as const;
+
+export type PageAction = (typeof pageActions)[keyof typeof pageActions];
