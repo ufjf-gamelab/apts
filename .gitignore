@@ -1,0 +1,10 @@
+# Development
+.envrc
+.direnv
+
+# Build
+node_modules
+dist
+
+# Runtime
+.env
