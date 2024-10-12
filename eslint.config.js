@@ -41,6 +41,7 @@ export default [
       "no-warning-comments": "warn",
       "one-var": "off",
       "sort-imports": "off",
+      "no-console": "off",
     },
   },
   eslintConfigPrettier,
