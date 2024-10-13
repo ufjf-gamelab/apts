@@ -1,5 +1,9 @@
+/* eslint-disable max-statements */
 import State, { EncodedState, Player, ValidAction } from "src/Game/State";
 import ConnectFourGame from "./Game";
+
+const MINIMUM_INDEX = 0;
+const ADJUST_INDEX = 1;
 
 export class ConnectFourState extends State {
   private readonly rowCount: number;
@@ -62,20 +66,6 @@ export class ConnectFourState extends State {
   }
 
   /* Setters */
-
-  private setStatePosition({
-    rowIndex,
-    columnIndex,
-    player,
-  }: {
-    rowIndex: number;
-    columnIndex: number;
-    player: Player;
-  }) {
-    const row = this.table[rowIndex];
-    if (!row) return;
-    row[columnIndex] = player;
-  }
 
   private static setEncodedStatePosition({
     rowIndex,
@@ -144,16 +134,13 @@ export class ConnectFourState extends State {
     columnIndex: number,
     player: Player,
   ): boolean {
-    const MINIMUM_INDEX = 0;
-    const ADJUST_WINDOW = 1;
-
     const columnOfTheFirstWindow = Math.max(
       MINIMUM_INDEX,
-      columnIndex - ConnectFourGame.WINDOW_SIZE + ADJUST_WINDOW,
+      columnIndex - ConnectFourGame.WINDOW_SIZE + ADJUST_INDEX,
     );
     const columnOfTheLastWindow = Math.min(
-      this.columnCount - ADJUST_WINDOW,
-      columnIndex + ConnectFourGame.WINDOW_SIZE - ADJUST_WINDOW,
+      this.columnCount - ADJUST_INDEX,
+      columnIndex + ConnectFourGame.WINDOW_SIZE - ADJUST_INDEX,
     );
 
     for (
@@ -217,12 +204,9 @@ export class ConnectFourState extends State {
     correspondingInitialRow: number;
     correspondingFinalRow: number;
   } {
-    const MINIMUM_INDEX = 0;
-    const ADJUST_WINDOW = 1;
-
     let firstWindowColumn = Math.max(
       MINIMUM_INDEX,
-      columnIndex - ConnectFourGame.WINDOW_SIZE + ADJUST_WINDOW,
+      columnIndex - ConnectFourGame.WINDOW_SIZE + ADJUST_INDEX,
     );
     const xInitialOffset = columnIndex - firstWindowColumn;
     let correspondingInitialRow = rowIndex - xInitialOffset;
@@ -232,14 +216,14 @@ export class ConnectFourState extends State {
     }
 
     let lastWindowColumn = Math.min(
-      this.columnCount - ADJUST_WINDOW,
-      columnIndex + ConnectFourGame.WINDOW_SIZE - ADJUST_WINDOW,
+      this.columnCount - ADJUST_INDEX,
+      columnIndex + ConnectFourGame.WINDOW_SIZE - ADJUST_INDEX,
     );
     const xFinalOffset = lastWindowColumn - columnIndex;
     let correspondingFinalRow = rowIndex + xFinalOffset;
     if (correspondingFinalRow >= this.rowCount) {
-      lastWindowColumn -= correspondingFinalRow - this.rowCount + ADJUST_WINDOW;
-      correspondingFinalRow = this.rowCount - ADJUST_WINDOW;
+      lastWindowColumn -= correspondingFinalRow - this.rowCount + ADJUST_INDEX;
+      correspondingFinalRow = this.rowCount - ADJUST_INDEX;
     }
 
     return {
@@ -250,12 +234,17 @@ export class ConnectFourState extends State {
     };
   }
 
-  private checkWinOnPrimaryDiagonal(
-    rowIndex: number,
-    columnIndex: number,
-    player: Player,
-  ): boolean {
-    const ADJUST_WINDOW = 1;
+  private checkWinOnDiagonal({
+    direction,
+    rowIndex,
+    columnIndex,
+    player,
+  }: {
+    direction: "primary" | "secondary";
+    rowIndex: number;
+    columnIndex: number;
+    player: Player;
+  }) {
     const indexes = this.calculateIndexesForCheckingDiagonals(
       rowIndex,
       columnIndex,
@@ -266,12 +255,13 @@ export class ConnectFourState extends State {
 
     if (
       correspondingFinalRow - correspondingInitialRow <
-      ConnectFourGame.WINDOW_SIZE - ADJUST_WINDOW
+      ConnectFourGame.WINDOW_SIZE - ADJUST_INDEX
     )
       return false;
     for (
       let currentColumnIndex = firstWindowColumn;
-      currentColumnIndex < lastWindowColumn - ConnectFourGame.WINDOW_SIZE;
+      currentColumnIndex <=
+      lastWindowColumn - ConnectFourGame.WINDOW_SIZE + ADJUST_INDEX;
       currentColumnIndex++
     ) {
       // For each window of X cells...
@@ -283,14 +273,19 @@ export class ConnectFourState extends State {
 
         // Check if all the cells in the window are from the same player
         for (
-          let playerIndex = ADJUST_WINDOW;
+          let playerIndex = 1;
           playerIndex < ConnectFourGame.WINDOW_SIZE;
           playerIndex++
         ) {
           const currentRow = this.table[correspondingInitialRow + playerIndex];
           if (!currentRow) return false;
 
-          const currentCell = currentRow[currentColumnIndex + playerIndex];
+          const currentCell =
+            currentRow[
+              direction === "primary"
+                ? currentColumnIndex + playerIndex
+                : currentColumnIndex - playerIndex
+            ];
           if (currentCell !== player) {
             win = false;
             break;
@@ -303,79 +298,26 @@ export class ConnectFourState extends State {
     return false;
   }
 
-  private checkWinOnSecondaryDiagonal(
-    row: number,
-    column: number,
-    player: Player,
-  ): boolean {
-    let firstWindowColumn = Math.max(
-      0,
-      column - ConnectFourGame.WINDOW_SIZE + 1,
-    );
-    const xInitialOffset = column - firstWindowColumn;
-    let correspondingInitialRow = row + xInitialOffset;
-    if (correspondingInitialRow >= this.rowCount) {
-      firstWindowColumn += correspondingInitialRow - this.rowCount + 1;
-      correspondingInitialRow = this.rowCount - 1;
-    }
-    let lastWindowColumn = Math.min(
-      this.columnCount - 1,
-      column + ConnectFourGame.WINDOW_SIZE - 1,
-    );
-    const xFinalOffset = lastWindowColumn - column;
-    let correspondingFinalRow = row - xFinalOffset;
-    if (correspondingFinalRow < 0) {
-      lastWindowColumn += correspondingFinalRow;
-      correspondingFinalRow = 0;
-    }
-
-    if (
-      correspondingInitialRow - correspondingFinalRow <
-      ConnectFourGame.WINDOW_SIZE - 1
-    )
-      return false;
-    for (
-      let j = firstWindowColumn;
-      j <= lastWindowColumn - ConnectFourGame.WINDOW_SIZE + 1;
-      j++
-    ) {
-      // For each window of X cells...
-      if (this.table[correspondingInitialRow]![j] === player) {
-        let win = true;
-        // Check if all the cells in the window are from the same player
-        for (
-          let playerIndex = 1;
-          playerIndex < ConnectFourGame.WINDOW_SIZE;
-          playerIndex++
-        ) {
-          if (
-            this.table[correspondingInitialRow - playerIndex]![
-              j + playerIndex
-            ] !== player
-          ) {
-            win = false;
-            break;
-          }
-        }
-        if (win) return true;
-      }
-      correspondingInitialRow--;
-    }
-    return false;
-  }
-
   public checkWin(action: number): boolean {
     // Get who played the action, and its position
     const columnIndex = action;
-    let rowIndex = -1;
-    for (let i = this.rowCount - 1; i >= 0; i--) {
-      if (this.table[i]![columnIndex] === Player.None) {
-        rowIndex = i;
+    let rowIndex = -ADJUST_INDEX;
+    for (
+      let currentRowIndex = this.rowCount - ADJUST_INDEX;
+      currentRowIndex >= MINIMUM_INDEX;
+      currentRowIndex--
+    ) {
+      const row = this.table[currentRowIndex];
+      if (!row) return false;
+      if (row[columnIndex] === Player.None) {
+        rowIndex = currentRowIndex;
         break;
       }
     }
-    rowIndex += 1; // The row where the action was played
-    if (rowIndex > this.rowCount - 1) return false;
+
+    // The row where the action was played
+    rowIndex += ADJUST_INDEX;
+    if (rowIndex > this.rowCount - ADJUST_INDEX) return false;
     const row = this.table[rowIndex];
     if (!row) return false;
     const player = row[columnIndex];
@@ -383,9 +325,23 @@ export class ConnectFourState extends State {
 
     if (this.checkWinOnColumn(rowIndex, columnIndex, player)) return true;
     if (this.checkWinOnRow(rowIndex, columnIndex, player)) return true;
-    if (this.checkWinOnPrimaryDiagonal(rowIndex, columnIndex, player))
+    if (
+      this.checkWinOnDiagonal({
+        columnIndex,
+        direction: "primary",
+        player,
+        rowIndex,
+      })
+    )
       return true;
-    if (this.checkWinOnSecondaryDiagonal(rowIndex, columnIndex, player))
+    if (
+      this.checkWinOnDiagonal({
+        columnIndex,
+        direction: "secondary",
+        player,
+        rowIndex,
+      })
+    )
       return true;
     // No win
     return false;
@@ -393,17 +349,24 @@ export class ConnectFourState extends State {
 
   public performAction(action: number, player: Player): void {
     const columnIndex = action;
-    let rowIndex = -1;
-    for (let i = this.rowCount - 1; i >= 0; i--) {
-      if (this.table[i]![columnIndex] === Player.None) {
-        rowIndex = i; // The row where the action will be played
+    let rowIndex = -ADJUST_INDEX;
+    for (
+      let currentRowIndex = this.rowCount - ADJUST_INDEX;
+      currentRowIndex >= MINIMUM_INDEX;
+      currentRowIndex--
+    ) {
+      const row = this.table[currentRowIndex];
+      if (!row) return;
+      if (row[columnIndex] === Player.None) {
+        // The row where the action will be played
+        rowIndex = currentRowIndex;
         break;
       }
     }
     // Play the action on the given state
     const row = this.table[rowIndex];
     if (!row) return;
-    if (rowIndex !== -1) row[columnIndex] = player;
+    if (rowIndex !== -ADJUST_INDEX) row[columnIndex] = player;
   }
 
   /// Static methods
@@ -411,11 +374,22 @@ export class ConnectFourState extends State {
     currentPlayer: Player,
     opponentPlayer: Player,
   ): void {
-    for (let i = 0; i < this.rowCount; i++) {
-      for (let j = 0; j < this.columnCount; j++) {
-        const cell = this.table[i]![j];
-        if (cell === currentPlayer) this.table[i]![j] = opponentPlayer;
-        else if (cell === opponentPlayer) this.table[i]![j] = currentPlayer;
+    for (
+      let currentRowIndex = MINIMUM_INDEX;
+      currentRowIndex < this.rowCount;
+      currentRowIndex++
+    ) {
+      for (
+        let currentColumnIndex = MINIMUM_INDEX;
+        currentColumnIndex < this.columnCount;
+        currentColumnIndex++
+      ) {
+        const row = this.table[currentRowIndex];
+        if (!row) return;
+        const cell = row[currentColumnIndex];
+        if (cell === currentPlayer) row[currentColumnIndex] = opponentPlayer;
+        else if (cell === opponentPlayer)
+          row[currentColumnIndex] = currentPlayer;
       }
     }
   }

@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import Game, { ActionOutcome } from "src/Game/Game";
 import State, { Player } from "src/Game/State";
 import { GameName } from "src/types";
@@ -59,6 +60,6 @@ export default class ConnectFourGame extends Game {
   public getOpponentValue(
     value: ActionOutcome["value"],
   ): ActionOutcome["value"] {
-    return -value + 0;
+    return -value;
   }
 }

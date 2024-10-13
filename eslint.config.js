@@ -48,13 +48,19 @@ export default [
       "no-plusplus": "off",
       "no-continue": "off",
       "max-statements": ["error", 20],
-      "max-lines": ["warn", 300],
+      "max-lines": "off",
       "max-lines-per-function": ["warn", 70],
       "@typescript-eslint/no-magic-numbers": [
         "error",
         {
           ignoreEnums: true,
-          ignoreReadonlyClassProperties: false,
+          ignoreReadonlyClassProperties: true,
+        },
+      ],
+      "@typescript-eslint/restrict-template-expressions": [
+        "error",
+        {
+          allowNumber: true,
         },
       ],
     },
