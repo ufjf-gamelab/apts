@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 /** @type {import("eslint").Linter.Config} */
 import eslint from "@eslint/js";
 import eslintConfigPrettier from "eslint-config-prettier";
@@ -9,7 +10,7 @@ export default [
     files: ["src/**/*.{js,mjs,cjs,ts}"],
   },
   {
-    ignores: ["prettier.config.js"],
+    ignores: ["prettier.config.js", "dist/**/*"],
   },
 
   eslint.configs.all,
@@ -30,32 +31,15 @@ export default [
         ...globals.nodeBuiltin,
       },
       parserOptions: {
-        projectService: true,
-        tsconfigRootDir: import.meta.dirname,
-        sourceType: "module",
         ecmaVersion: "latest",
+        projectService: true,
+        sourceType: "module",
+        tsconfigRootDir: import.meta.dirname,
       },
     },
   },
   {
     rules: {
-      "no-ternary": "off",
-      "no-warning-comments": "warn",
-      "one-var": "off",
-      "sort-imports": "off",
-      "no-console": "off",
-      "no-plusplus": "off",
-      "no-continue": "off",
-      "max-statements": ["error", 20],
-      "max-lines": "off",
-      "max-lines-per-function": ["warn", 70],
-      "no-use-before-define": [
-        "off",
-        {
-          classes: false,
-        },
-      ],
-      "no-magic-numbers": "off",
       "@typescript-eslint/no-magic-numbers": [
         "error",
         {
@@ -63,13 +47,30 @@ export default [
           ignoreReadonlyClassProperties: true,
         },
       ],
-      "restrict-template-expressions": "off",
       "@typescript-eslint/restrict-template-expressions": [
         "error",
         {
           allowNumber: true,
         },
       ],
+      "max-lines": "off",
+      "max-lines-per-function": ["warn", 70],
+      "max-statements": ["error", 20],
+      "no-console": "off",
+      "no-continue": "off",
+      "no-magic-numbers": "off",
+      "no-plusplus": "off",
+      "no-ternary": "off",
+      "no-use-before-define": [
+        "off",
+        {
+          classes: false,
+        },
+      ],
+      "no-warning-comments": "warn",
+      "one-var": "off",
+      "restrict-template-expressions": "off",
+      "sort-imports": "off",
     },
   },
   eslintConfigPrettier,

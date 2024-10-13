@@ -1,11 +1,11 @@
 import { createId } from "@paralleldrive/cuid2";
 import * as tf from "@tensorflow/tfjs";
-import Game, { ActionOutcome } from "./Game/Game.js";
-import State, { EncodedState, Player } from "./Game/State.js";
-import MonteCarloTreeSearch from "./MonteCarloTreeSearch/MonteCarloTreeSearch.js";
-import { actionFromProbabilities } from "./ResNet/predict.js";
-import ResNet from "./ResNet/ResNet.js";
-import { LogMessage } from "./types.js";
+import Game, { ActionOutcome } from "./Game/Game";
+import State, { EncodedState, Player } from "./Game/State";
+import MonteCarloTreeSearch from "./MonteCarloTreeSearch/Search";
+import { actionFromProbabilities } from "./ResNet/predict";
+import ResNet from "./ResNet/ResNet";
+import { LogMessage } from "./types";
 
 const ADJUST_INDEX = 1;
 const DEFAULT_PROGRESS_STEP = 25;
@@ -44,14 +44,15 @@ export default class Trainer {
     this.game = game;
     this.resNet = resNet;
     this.mcts = new MonteCarloTreeSearch({
-      game: this.game,
-      resNet: this.resNet,
-      numSearches,
       explorationConstant,
+      game: this.game,
+      numSearches,
+      resNet: this.resNet,
     });
   }
 
-  /// Methods
+  /* Methods */
+
   /**
    * Performs self-play to generate training data for the Trainer algorithm.
    * @returns A promise that resolves to a TrainingMemory object containing the generated training data, composed by encoded states, policy targets, and value targets.
@@ -96,7 +97,7 @@ export default class Trainer {
     }
   }
 
-  // Transpose the game memory to a format that can be used to train the model
+  /// Transpose the game memory to a format that can be used to train the model.
   private convertGameMemoryToTrainingMemory(
     gameMemory: GameMemory,
     lastPlayer: Player,
