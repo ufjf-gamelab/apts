@@ -44,12 +44,18 @@ export default [
       "one-var": "off",
       "sort-imports": "off",
       "no-console": "off",
-      "no-magic-numbers": "off",
       "no-plusplus": "off",
       "no-continue": "off",
       "max-statements": ["error", 20],
       "max-lines": "off",
       "max-lines-per-function": ["warn", 70],
+      "no-use-before-define": [
+        "off",
+        {
+          classes: false,
+        },
+      ],
+      "no-magic-numbers": "off",
       "@typescript-eslint/no-magic-numbers": [
         "error",
         {
@@ -57,6 +63,7 @@ export default [
           ignoreReadonlyClassProperties: true,
         },
       ],
+      "restrict-template-expressions": "off",
       "@typescript-eslint/restrict-template-expressions": [
         "error",
         {

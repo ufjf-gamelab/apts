@@ -43,12 +43,12 @@ export default class Trainer {
   }) {
     this.game = game;
     this.resNet = resNet;
-    this.mcts = new MonteCarloTreeSearch(
-      this.game,
-      this.resNet,
+    this.mcts = new MonteCarloTreeSearch({
+      game: this.game,
+      resNet: this.resNet,
       numSearches,
       explorationConstant,
-    );
+    });
   }
 
   /// Methods

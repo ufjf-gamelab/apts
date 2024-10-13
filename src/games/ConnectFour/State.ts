@@ -1,4 +1,3 @@
-/* eslint-disable max-statements */
 import State, { EncodedState, Player, ValidAction } from "src/Game/State";
 import ConnectFourGame from "./Game";
 

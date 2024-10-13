@@ -291,7 +291,6 @@ export default class ResNet {
    * @param logMessage - The function to use for logging progress (optional, default is console.log).
    * @returns A promise that resolves to an array of training logs.
    */
-  // eslint-disable-next-line max-lines-per-function
   public async train({
     inputsBatch,
     policyOutputsBatch,
