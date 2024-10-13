@@ -1,7 +1,7 @@
 import * as tf from "@tensorflow/tfjs";
 import Game, { ActionOutcome } from "src/Game/Game.js";
 import State, { Action, Player } from "src/Game/State.js";
-import ResNet from "src/ResNet.js";
+import ResNet from "src/ResNet/ResNet.js";
 import { getPredictionDataFromState_Value_Probabilities } from "../util.js";
 
 export class MonteCarloNode {

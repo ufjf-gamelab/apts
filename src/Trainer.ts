@@ -3,22 +3,25 @@ import * as tf from "@tensorflow/tfjs";
 import Game, { ActionOutcome } from "./Game/Game.js";
 import State, { EncodedState, Player } from "./Game/State.js";
 import MonteCarloTreeSearch from "./MonteCarloTreeSearch/MonteCarloTreeSearch.js";
-import ResNet from "./ResNet.js";
+import { actionFromProbabilities } from "./ResNet/predict.js";
+import ResNet from "./ResNet/ResNet.js";
 import { LogMessage } from "./types.js";
-import { getActionFromProbabilities } from "./util.js";
 
-type GameMemoryBlock = {
+const ADJUST_INDEX = 1;
+const DEFAULT_PROGRESS_STEP = 25;
+
+interface GameMemoryBlock {
   state: State;
   actionProbabilities: number[];
   player: Player;
-};
+}
 type GameMemory = GameMemoryBlock[];
 
-export type TrainingMemory = {
+export interface TrainingMemory {
   encodedStates: EncodedState[];
   policyTargets: number[][];
   valueTargets: ActionOutcome["value"][];
-};
+}
 
 export default class Trainer {
   /// Attributes
@@ -27,12 +30,17 @@ export default class Trainer {
   private mcts: MonteCarloTreeSearch;
 
   /// Constructor
-  constructor(
-    game: Game,
-    resNet: ResNet,
-    numSearches: number,
-    explorationConstant: number,
-  ) {
+  constructor({
+    game,
+    resNet,
+    numSearches,
+    explorationConstant,
+  }: {
+    game: Game;
+    resNet: ResNet;
+    numSearches: number;
+    explorationConstant: number;
+  }) {
     this.game = game;
     this.resNet = resNet;
     this.mcts = new MonteCarloTreeSearch(
@@ -48,25 +56,25 @@ export default class Trainer {
    * Performs self-play to generate training data for the Trainer algorithm.
    * @returns A promise that resolves to a TrainingMemory object containing the generated training data, composed by encoded states, policy targets, and value targets.
    */
-  private async selfPlay(): Promise<TrainingMemory> {
+  private selfPlay(): TrainingMemory {
     let player = Player.X;
     const state = this.game.getInitialState();
     const gameMemory: GameMemory = [];
 
-    while (true) {
+    for (;;) {
       // Get the state from the perspective of the current player and save it in the game memory
       const neutralState = state.clone();
       neutralState.changePerspective(player, this.game.getOpponent(player));
       const actionProbabilities = this.mcts.search(neutralState);
       gameMemory.push({
-        state: neutralState,
         actionProbabilities,
         player,
+        state: neutralState,
       });
 
       // Pick an action based on the probabilities from the MCTS
       const probabilitiesTensor = tf.tensor(actionProbabilities) as tf.Tensor1D;
-      const pickedAction = getActionFromProbabilities(probabilitiesTensor);
+      const pickedAction = actionFromProbabilities(probabilitiesTensor);
       tf.dispose(probabilitiesTensor);
       const validActions = state.getValidActions();
       if (!validActions[pickedAction]) throw new Error("Invalid action picked");
@@ -120,9 +128,9 @@ export default class Trainer {
    * @param logMessage The optional log message function (default is console.log).
    * @returns A promise that resolves to the TrainingMemory object containing encoded states, policy targets, and value targets.
    */
-  public async buildTrainingMemory({
+  public buildTrainingMemory({
     numSelfPlayIterations,
-    progressStep = 25,
+    progressStep = DEFAULT_PROGRESS_STEP,
     showMemorySize = false,
     logMessage = console.log,
   }: {
@@ -134,17 +142,30 @@ export default class Trainer {
     const encodedStates = [];
     const policyTargets = [];
     const valueTargets = [];
+
+    const MINIMUM_PROGRESS_STEP = 0;
+    const SHOULD_LOG_MESSAGE = 0;
+
     // Construct the training memory from self-playing the game
-    for (let j = 0; j < numSelfPlayIterations; j++) {
-      if (progressStep > 0 && (j + 1) % progressStep === 0)
-        logMessage(`Self-play iteration ${j + 1}/${numSelfPlayIterations}`);
-      const selfPlayMemory = await this.selfPlay();
+    for (
+      let currentStep = 0;
+      currentStep < numSelfPlayIterations;
+      currentStep++
+    ) {
+      if (
+        progressStep > MINIMUM_PROGRESS_STEP &&
+        (currentStep + ADJUST_INDEX) % progressStep === SHOULD_LOG_MESSAGE
+      )
+        logMessage(
+          `Self-play iteration ${currentStep + ADJUST_INDEX}/${numSelfPlayIterations}`,
+        );
+      const selfPlayMemory = this.selfPlay();
       encodedStates.push(...selfPlayMemory.encodedStates);
       policyTargets.push(...selfPlayMemory.policyTargets);
       valueTargets.push(...selfPlayMemory.valueTargets);
     }
     if (showMemorySize) logMessage(`Memory size: ${encodedStates.length}`);
-    return { encodedStates, policyTargets, valueTargets };
+    return Promise.resolve({ encodedStates, policyTargets, valueTargets });
   }
 
   /**
@@ -174,21 +195,23 @@ export default class Trainer {
     const { encodedStates, policyTargets, valueTargets } = trainingMemory;
     const encodedStatesTensor = tf.tensor(encodedStates) as tf.Tensor4D;
     const policyTargetsTensor = tf.tensor(policyTargets) as tf.Tensor2D;
+
     //TODO: Check if this reshape is necessary
-    const valueTargetsTensor = tf
+    const DIMENSION = 1;
+    const valueTargetsTensor: tf.Tensor2D = tf
       .tensor(valueTargets)
-      .reshape([-1, 1]) as tf.Tensor2D;
+      .reshape([-DIMENSION, DIMENSION]);
 
     // Train the model
     const trainingLog = await this.resNet.train({
-      inputsBatch: encodedStatesTensor,
-      policyOutputsBatch: policyTargetsTensor,
-      valueOutputsBatch: valueTargetsTensor,
       batchSize,
-      numEpochs,
+      inputsBatch: encodedStatesTensor,
       learningRate,
-      validationSplit: 0.1,
       logMessage,
+      numEpochs,
+      policyOutputsBatch: policyTargetsTensor,
+      validationSplit: 0.1,
+      valueOutputsBatch: valueTargetsTensor,
     });
 
     // Dispose the tensors
@@ -199,7 +222,6 @@ export default class Trainer {
 
   // Train the model multiple times
   public async learn({
-    fileSystemProtocol,
     logMessage = console.log,
     maxNumIterations,
     numEpochs,
@@ -217,18 +239,29 @@ export default class Trainer {
   }): Promise<void> {
     const baseId = createId();
     const maxIterations = Math.min(maxNumIterations, trainingMemories.length);
-    for (let i = 0; i < maxIterations; i++) {
-      const trainingMemory = trainingMemories[i];
+    const trainingPromises = [];
+    for (
+      let currentIteration = 0;
+      currentIteration < maxIterations;
+      currentIteration++
+    ) {
+      const trainingMemory = trainingMemories[currentIteration];
       if (!trainingMemory) continue;
-      logMessage(`ITERATION ${i + 1}/${maxIterations}`);
-      await this.train({
-        trainingMemory,
-        batchSize,
-        numEpochs,
-        learningRate,
-        logMessage,
-      });
-      this.resNet.save(`/trained/${baseId}/${i}`);
+      logMessage(
+        `ITERATION ${currentIteration + ADJUST_INDEX}/${maxIterations}`,
+      );
+      trainingPromises.push(
+        this.train({
+          batchSize,
+          learningRate,
+          logMessage,
+          numEpochs,
+          trainingMemory,
+        }).then(() =>
+          this.resNet.save(`/trained/${baseId}/${currentIteration}`),
+        ),
+      );
     }
+    await Promise.all(trainingPromises);
   }
 }

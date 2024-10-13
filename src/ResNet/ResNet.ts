@@ -1,7 +1,7 @@
 import * as tf from "@tensorflow/tfjs";
-import Game from "./Game/Game.js";
-import { GameName, LogMessage, TensorLikeArray } from "./types.js";
-import { fullModelPath } from "./util.js";
+import Game from "../Game/Game.js";
+import { GameName, LogMessage, TensorLikeArray } from "../types.js";
+import { fullModelPath } from "../util.js";
 
 const INPUT_CHANNELS = 3;
 const BACKBONE_CHANNELS = 32;
