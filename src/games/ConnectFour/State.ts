@@ -54,7 +54,7 @@ export class ConnectFourState extends State {
         if (!row) continue;
         const player = row[columnIndex];
         if (!player) continue;
-        ConnectFourState.setEncodedStatePosition({
+        State.setEncodedStatePosition({
           columnIndex,
           encodedState,
           player,
@@ -66,30 +66,6 @@ export class ConnectFourState extends State {
   }
 
   /* Setters */
-
-  private static setEncodedStatePosition({
-    rowIndex,
-    columnIndex,
-    player,
-    encodedState,
-  }: {
-    rowIndex: number;
-    columnIndex: number;
-    player: Player;
-    encodedState: EncodedState;
-  }) {
-    const PLAYER_X_INDEX = 2;
-    const PLAYER_O_INDEX = 0;
-    const PLAYER_NONE_INDEX = 1;
-
-    if (encodedState[rowIndex]?.[columnIndex]) {
-      if (player === Player.X)
-        encodedState[rowIndex][columnIndex][PLAYER_X_INDEX] = 1;
-      else if (player === Player.O)
-        encodedState[rowIndex][columnIndex][PLAYER_O_INDEX] = 1;
-      else encodedState[rowIndex][columnIndex][PLAYER_NONE_INDEX] = 1;
-    }
-  }
 
   public setPlayerAt(player: Player, position: number): void {
     const rowIndex = Math.floor(position / this.columnCount);

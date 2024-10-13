@@ -21,6 +21,30 @@ export default abstract class State {
 
   public abstract setPlayerAt(player: Player, position: number): void;
 
+  public static setEncodedStatePosition({
+    rowIndex,
+    columnIndex,
+    player,
+    encodedState,
+  }: {
+    rowIndex: number;
+    columnIndex: number;
+    player: Player;
+    encodedState: EncodedState;
+  }) {
+    const PLAYER_X_INDEX = 2;
+    const PLAYER_O_INDEX = 0;
+    const PLAYER_NONE_INDEX = 1;
+
+    if (encodedState[rowIndex]?.[columnIndex]) {
+      if (player === Player.X)
+        encodedState[rowIndex][columnIndex][PLAYER_X_INDEX] = 1;
+      else if (player === Player.O)
+        encodedState[rowIndex][columnIndex][PLAYER_O_INDEX] = 1;
+      else encodedState[rowIndex][columnIndex][PLAYER_NONE_INDEX] = 1;
+    }
+  }
+
   /* Methods */
 
   public abstract toString(): string;
