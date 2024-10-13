@@ -3,6 +3,9 @@ import State, { Action } from "./Game/State";
 import ResNet from "./ResNet";
 import { GameName } from "./types";
 
+const LIMIT_FOR_SEED = 1000000;
+const SEED = Math.floor(Math.random() * LIMIT_FOR_SEED);
+
 const firstPosition = 0,
   secondPosition = 1;
 export const capitalizedFirstLetter = (str: string) =>
@@ -42,48 +45,49 @@ export const getRandomValidAction = (state: State): Action | null => {
 };
 
 // Returns the masked policy and value as Tensors
-function getMaskedPrediction(
+const maskedPrediction = (
   state: State,
   resNet: ResNet,
 ): {
   policy: tf.Tensor1D;
   value: tf.Scalar;
-} {
-  return tf.tidy(() => {
+} =>
+  tf.tidy(() => {
     // Calculate the policy and value from the neural network
     const encodedState = state.getEncodedState();
-    const tensorState = tf.tensor(encodedState).expandDims(0);
+    const tensorState: tf.Tensor4D = tf.tensor(encodedState).expandDims();
     const [policy, value] = resNet.predict(tensorState);
-    const squeezedValue = value.squeeze().squeeze();
+    const squeezedValue: tf.Scalar = value.squeeze().squeeze();
     const squeezedSoftMaxPolicy = tf.softmax(policy).squeeze();
     // Mask the policy to only allow valid actions
     const validActions = state.getValidActions();
-    const maskedPolicy = squeezedSoftMaxPolicy.mul(tf.tensor(validActions));
+    const maskedPolicy: tf.Tensor1D = squeezedSoftMaxPolicy.mul(
+      tf.tensor(validActions),
+    );
     return {
       policy: maskedPolicy,
       value: squeezedValue,
     };
   });
-}
 
 // Returns the action probabilities from a policy Tensor as another Tensor
-function getProbabilitiesFromPolicy(policy: tf.Tensor1D): tf.Tensor1D {
-  return tf.tidy(() => {
+const probabilitiesFromPolicy = (policy: tf.Tensor1D): tf.Tensor1D =>
+  tf.tidy(() => {
     const sum = policy.sum();
     return policy.div(sum);
   });
-}
 
 // Returns the action as a common integer. Probabilities must be normalized
-export function getActionFromProbabilities(probabilities: tf.Tensor1D): Action {
+export const actionFromProbabilities = (probabilities: tf.Tensor1D): Action => {
+  const SAMPLES = 1;
   return tf.tidy(
     () =>
       tf
-        .multinomial(probabilities, 1, undefined, true)
+        .multinomial(probabilities, SAMPLES, SEED, true)
         .squeeze()
         .arraySync() as Action,
   );
-}
+};
 
 type DesiredData =
   | {
@@ -118,53 +122,56 @@ interface ReturnedData {
   action?: Action;
 }
 
-function getPredictionDataFromState(
+const predictDataFromState = (
   state: State,
   resNet: ResNet,
   desiredData: DesiredData,
-) {
-  return tf.tidy(() => {
-    const data: ReturnedData = {};
-    const { policy, value } = getMaskedPrediction(state, resNet);
+) => {
+  const data: ReturnedData = {};
+  tf.tidy(() => {
+    const { policy, value } = maskedPrediction(state, resNet);
     if (desiredData.policy) data.policy = policy;
     if (desiredData.value) data.value = value;
     if (desiredData.probabilities || desiredData.action) {
-      const probabilities = getProbabilitiesFromPolicy(policy);
+      const probabilities = probabilitiesFromPolicy(policy);
       if (desiredData.probabilities) data.probabilities = probabilities;
       if (desiredData.action)
-        data.action = getActionFromProbabilities(probabilities);
+        data.action = actionFromProbabilities(probabilities);
     }
-    return data;
   });
-}
+  return data;
+};
 
-export function getPredictionDataFromState_Action(
+export const predictActionFromState = (
   state: State,
   resNet: ResNet,
-): { action: Action } {
-  const data = getPredictionDataFromState(state, resNet, {
-    policy: false,
-    value: false,
-    probabilities: false,
+): { action: Action } => {
+  const data = predictDataFromState(state, resNet, {
     action: true,
+    policy: false,
+    probabilities: false,
+    value: false,
   });
-  return { action: data.action! };
-}
+  if (!data.action) throw new Error("No action was predicted");
+  return { action: data.action };
+};
 
-export function getPredictionDataFromState_Value_Probabilities(
+export const predictValueAndProbabilitiesFromState = (
   state: State,
   resNet: ResNet,
-): { value: tf.Scalar; probabilities: tf.Tensor1D } {
-  const data = getPredictionDataFromState(state, resNet, {
-    policy: false,
-    value: true,
-    probabilities: true,
+): { value: tf.Scalar; probabilities: tf.Tensor1D } => {
+  const data = predictDataFromState(state, resNet, {
     action: false,
+    policy: false,
+    probabilities: true,
+    value: true,
   });
-  return { value: data.value!, probabilities: data.probabilities! };
-}
+  if (!data.value) throw new Error("No value was predicted");
+  if (!data.probabilities) throw new Error("No probabilities were predicted");
+  return { probabilities: data.probabilities, value: data.value };
+};
 
-export function getPredictionDataFromState_Policy_Value_Probabilities_Action(
+export const predictPolicyAndValueAndProbabilitiesAndActionFromState = (
   state: State,
   resNet: ResNet,
 ): {
@@ -172,17 +179,21 @@ export function getPredictionDataFromState_Policy_Value_Probabilities_Action(
   value: tf.Scalar;
   probabilities: tf.Tensor1D;
   action: Action;
-} {
-  const data = getPredictionDataFromState(state, resNet, {
-    policy: true,
-    value: true,
-    probabilities: true,
+} => {
+  const data = predictDataFromState(state, resNet, {
     action: true,
+    policy: true,
+    probabilities: true,
+    value: true,
   });
+  if (!data.value) throw new Error("No value was predicted");
+  if (!data.probabilities) throw new Error("No probabilities were predicted");
+  if (!data.action) throw new Error("No action was predicted");
+  if (!data.policy) throw new Error("No policy was predicted");
   return {
-    policy: data.policy!,
-    value: data.value!,
-    probabilities: data.probabilities!,
-    action: data.action!,
+    action: data.action,
+    policy: data.policy,
+    probabilities: data.probabilities,
+    value: data.value,
   };
-}
+};
