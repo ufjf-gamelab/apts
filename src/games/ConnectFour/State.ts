@@ -1,20 +1,22 @@
-import State, {
-  EncodedState,
-  Player,
-  ValidAction,
-} from "../../engine/Game/State";
+import State, { EncodedState, ValidAction } from "../../engine/Game/State";
 import ConnectFourGame from "./Game";
+
+enum Player {
+  None = 0,
+  X = 1,
+  O = -1,
+}
 
 const MINIMUM_INDEX = 0;
 const ADJUST_INDEX = 1;
 
-export class ConnectFourState extends State {
+export class ConnectFourState extends State<ConnectFourGame> {
   private readonly rowCount: number;
   private readonly columnCount: number;
   private table: Player[][];
 
-  constructor(rowCount: number, columnCount: number) {
-    super();
+  constructor(game: ConnectFourGame, rowCount: number, columnCount: number) {
+    super(game);
     this.rowCount = rowCount;
     this.columnCount = columnCount;
     this.table = Array.from(Array(rowCount), () =>
@@ -57,7 +59,7 @@ export class ConnectFourState extends State {
         if (!row) continue;
         const player = row[columnIndex];
         if (!player) continue;
-        State.setEncodedStatePosition({
+        this.setPositionInEncodedState({
           columnIndex,
           encodedState,
           player,
@@ -78,7 +80,32 @@ export class ConnectFourState extends State {
     row[columnIndex] = player;
   }
 
-  /// Methods
+  public setPositionInEncodedState({
+    rowIndex,
+    columnIndex,
+    player,
+    encodedState,
+  }: {
+    rowIndex: number;
+    columnIndex: number;
+    player: Player;
+    encodedState: EncodedState;
+  }) {
+    const PLAYER_X_INDEX = 2;
+    const PLAYER_O_INDEX = 0;
+    const PLAYER_NONE_INDEX = 1;
+
+    if (encodedState[rowIndex]?.[columnIndex]) {
+      if (player === Player.X)
+        encodedState[rowIndex][columnIndex][PLAYER_X_INDEX] = 1;
+      else if (player === Player.O)
+        encodedState[rowIndex][columnIndex][PLAYER_O_INDEX] = 1;
+      else encodedState[rowIndex][columnIndex][PLAYER_NONE_INDEX] = 1;
+    }
+  }
+
+  /* Methods */
+
   public toString(): string {
     let boardString = "";
     for (const row of this.table) {
@@ -102,8 +129,12 @@ export class ConnectFourState extends State {
     return "-";
   }
 
-  public clone(): State {
-    const clonedState = new ConnectFourState(this.rowCount, this.columnCount);
+  public clone(): State<ConnectFourGame> {
+    const clonedState = new ConnectFourState(
+      this.game,
+      this.rowCount,
+      this.columnCount,
+    );
     clonedState.table = this.table.map(row => row.slice());
     return clonedState;
   }
@@ -348,7 +379,8 @@ export class ConnectFourState extends State {
     if (rowIndex !== -ADJUST_INDEX) row[columnIndex] = player;
   }
 
-  /// Static methods
+  /* Static methods */
+
   public changePerspective(
     currentPlayer: Player,
     opponentPlayer: Player,

@@ -1,11 +1,15 @@
-/* eslint-disable class-methods-use-this */
 import Game, { ActionOutcome } from "../../engine/Game/Game";
-import State, { Player } from "../../engine/Game/State";
+import State from "../../engine/Game/State";
 import { GameName } from "../../engine/types";
 import { ConnectFourState } from "./State";
 
+export enum Player {
+  None = 0,
+  X = 1,
+  O = -1,
+}
+
 export default class ConnectFourGame extends Game {
-  /// Attributes
   public static readonly WINDOW_SIZE = 4;
   private readonly rowCount: number;
   private readonly columnCount: number;
@@ -25,7 +29,8 @@ export default class ConnectFourGame extends Game {
     this.actionSize = columnCount;
   }
 
-  /// Getters
+  /* Getters */
+
   public getName(): GameName {
     return GameName.ConnectFour;
   }
@@ -42,8 +47,12 @@ export default class ConnectFourGame extends Game {
     return this.actionSize;
   }
 
-  public getInitialState(): State {
-    return new ConnectFourState(this.rowCount, this.columnCount);
+  public getInitialState(): State<ConnectFourGame> {
+    return new ConnectFourState(this, this.rowCount, this.columnCount);
+  }
+
+  public getInitialPlayer(): Player {
+    return Player.X;
   }
 
   public getPlayerName(player: Player): string {
@@ -56,7 +65,7 @@ export default class ConnectFourGame extends Game {
     return player === Player.X ? Player.O : Player.X;
   }
 
-  // Return the outcome value, considering that the opponent is the one playing
+  /// Return the outcome value, considering that the opponent is the one playing.
   public getOpponentValue(
     value: ActionOutcome["value"],
   ): ActionOutcome["value"] {

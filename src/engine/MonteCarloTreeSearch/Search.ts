@@ -5,8 +5,8 @@ import { predictPolicyAndValueAndProbabilitiesAndActionFromState } from "../ResN
 import ResNet from "../ResNet/ResNet";
 import { MINIMUM_PROBABILITY, Node } from "./Node";
 
-export default class Search {
-  private game: Game;
+export default class Search<G extends Game> {
+  private game: G;
   private resNet: ResNet;
   private numSearches: number;
   private explorationConstant: number;
@@ -17,7 +17,7 @@ export default class Search {
     numSearches,
     explorationConstant,
   }: {
-    game: Game;
+    game: G;
     resNet: ResNet;
     numSearches: number;
     explorationConstant: number;
@@ -49,7 +49,7 @@ export default class Search {
     return actionProbabilities.map(probability => probability / sum);
   }
 
-  private getProbabilitiesFromNode(node: Node): number[] {
+  private getProbabilitiesFromNode(node: Node<G>): number[] {
     const actionProbabilities = new Array<number>(
       this.game.getActionSize(),
     ).fill(MINIMUM_PROBABILITY);
@@ -68,7 +68,7 @@ export default class Search {
   }
 
   // Search for the best action to take
-  public search(state: State): number[] {
+  public search(state: State<G>): number[] {
     // If no deep search is performed, return a distribution based on the valid actions.
     const ONLY_ONE_SEARCH = 1;
     if (this.numSearches <= ONLY_ONE_SEARCH) {

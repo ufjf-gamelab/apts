@@ -1,13 +1,14 @@
 import * as tf from "@tensorflow/tfjs";
+import Game from "../Game/Game";
 import State, { Action } from "../Game/State";
 import ResNet from "./ResNet";
 
 const LIMIT_FOR_SEED = 1000000;
 const SEED = Math.floor(Math.random() * LIMIT_FOR_SEED);
 
-// Returns the masked policy and value as Tensors
-const maskedPrediction = (
-  state: State,
+/// Returns the masked policy and value as Tensors.
+const maskedPrediction = <G extends Game>(
+  state: State<G>,
   resNet: ResNet,
 ): {
   policy: tf.Tensor1D;
@@ -83,8 +84,8 @@ interface ReturnedData {
   action?: Action;
 }
 
-const predictDataFromState = (
-  state: State,
+const predictDataFromState = <G extends Game>(
+  state: State<G>,
   resNet: ResNet,
   desiredData: DesiredData,
 ) => {
@@ -103,8 +104,8 @@ const predictDataFromState = (
   return data;
 };
 
-export const predictActionFromState = (
-  state: State,
+export const predictActionFromState = <G extends Game>(
+  state: State<G>,
   resNet: ResNet,
 ): { action: Action } => {
   const data = predictDataFromState(state, resNet, {
@@ -117,8 +118,8 @@ export const predictActionFromState = (
   return { action: data.action };
 };
 
-export const predictValueAndProbabilitiesFromState = (
-  state: State,
+export const predictValueAndProbabilitiesFromState = <G extends Game>(
+  state: State<G>,
   resNet: ResNet,
 ): { value: tf.Scalar; probabilities: tf.Tensor1D } => {
   const data = predictDataFromState(state, resNet, {
@@ -132,8 +133,10 @@ export const predictValueAndProbabilitiesFromState = (
   return { probabilities: data.probabilities, value: data.value };
 };
 
-export const predictPolicyAndValueAndProbabilitiesAndActionFromState = (
-  state: State,
+export const predictPolicyAndValueAndProbabilitiesAndActionFromState = <
+  G extends Game,
+>(
+  state: State<G>,
   resNet: ResNet,
 ): {
   policy: tf.Tensor1D;

@@ -1,24 +1,24 @@
 import Game, { ActionOutcome } from "../Game/Game";
-import State, { Action, Player } from "../Game/State";
+import State, { Action } from "../Game/State";
 
-const MINIMUM_VISIT_COUNT = 0;
-const MINIMUM_VALUE_SUM = 0;
-export const MINIMUM_PROBABILITY = 0;
 const EMPTY_CHILDREN_LIST = 0;
+const MINIMUM_VALUE_SUM = 0;
+const MINIMUM_VISIT_COUNT = 0;
+export const MINIMUM_PROBABILITY = 0;
 
-export class Node {
-  private game: Game;
+export class Node<G extends Game> {
+  private game: G;
   // State of the game at this node
-  private state: State;
+  private state: State<G>;
   private numSearches: number;
   private explorationConstant: number;
-  private parent: Node | null;
+  private parent: Node<G> | null;
   // Action that led to this node
   private actionTaken: Action | null;
   // Probability of taking the action that led to this node
   private priorProbability: number;
 
-  private children: Node[] = [];
+  private children: Node<G>[] = [];
   private visitCount = MINIMUM_VISIT_COUNT;
   private valueSum = MINIMUM_VALUE_SUM;
 
@@ -31,11 +31,11 @@ export class Node {
     actionTaken,
     priorProbability,
   }: {
-    game: Game;
-    state: State;
+    game: G;
+    state: State<G>;
     numSearches: number;
     explorationConstant: number;
-    parent?: Node;
+    parent?: Node<G>;
     actionTaken?: Action;
     priorProbability?: number;
   }) {
@@ -52,7 +52,7 @@ export class Node {
 
   /* Getters */
 
-  public getState(): State {
+  public getState(): State<G> {
     return this.state;
   }
 
@@ -60,7 +60,7 @@ export class Node {
     return this.actionTaken;
   }
 
-  public getChildren(): Node[] {
+  public getChildren(): Node<G>[] {
     return this.children;
   }
 
@@ -76,7 +76,7 @@ export class Node {
   }
 
   /// Get the UCB value of a given child.
-  private getChildUcb(child: Node): number {
+  private getChildUcb(child: Node<G>): number {
     let exploitation = 0;
     if (this.visitCount > MINIMUM_VISIT_COUNT)
       // Privileges the child with the lowest exploitation, as it means the opponent will have the lowest chance of winning
@@ -91,7 +91,7 @@ export class Node {
   }
 
   /// Select the best node among children, i.e. the one with the highest UCB.
-  public selectBestChild(): Node {
+  public selectBestChild(): Node<G> {
     if (this.children.length === EMPTY_CHILDREN_LIST)
       throw new Error("No children to select from!");
 

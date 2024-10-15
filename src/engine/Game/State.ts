@@ -1,13 +1,17 @@
-export enum Player {
-  None = 0,
-  X = 1,
-  O = -1,
-}
+import Game from "./Game";
+
 export type Action = number;
 export type EncodedState = Action[][][];
+export type Player = number;
 export type ValidAction = boolean;
 
-export default abstract class State {
+export default abstract class State<G extends Game> {
+  protected readonly game: G;
+
+  constructor(game: G) {
+    this.game = game;
+  }
+
   /* Getters */
 
   public abstract getValidActions(): ValidAction[];
@@ -21,7 +25,7 @@ export default abstract class State {
 
   public abstract setPlayerAt(player: Player, position: number): void;
 
-  public static setEncodedStatePosition({
+  public abstract setPositionInEncodedState({
     rowIndex,
     columnIndex,
     player,
@@ -31,25 +35,13 @@ export default abstract class State {
     columnIndex: number;
     player: Player;
     encodedState: EncodedState;
-  }) {
-    const PLAYER_X_INDEX = 2;
-    const PLAYER_O_INDEX = 0;
-    const PLAYER_NONE_INDEX = 1;
-
-    if (encodedState[rowIndex]?.[columnIndex]) {
-      if (player === Player.X)
-        encodedState[rowIndex][columnIndex][PLAYER_X_INDEX] = 1;
-      else if (player === Player.O)
-        encodedState[rowIndex][columnIndex][PLAYER_O_INDEX] = 1;
-      else encodedState[rowIndex][columnIndex][PLAYER_NONE_INDEX] = 1;
-    }
-  }
+  }): void;
 
   /* Methods */
 
   public abstract toString(): string;
 
-  public abstract clone(): State;
+  public abstract clone(): State<G>;
 
   public abstract checkWin(action: Action): boolean;
 

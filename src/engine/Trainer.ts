@@ -10,12 +10,12 @@ import { LogMessage } from "./types";
 const ADJUST_INDEX = 1;
 const DEFAULT_PROGRESS_STEP = 25;
 
-interface GameMemoryBlock {
-  state: State;
+interface GameMemoryBlock<G extends Game> {
+  state: State<G>;
   actionProbabilities: number[];
   player: Player;
 }
-type GameMemory = GameMemoryBlock[];
+type GameMemory<G extends Game> = GameMemoryBlock<G>[];
 
 export interface TrainingMemory {
   encodedStates: EncodedState[];
@@ -23,10 +23,10 @@ export interface TrainingMemory {
   valueTargets: ActionOutcome["value"][];
 }
 
-export default class Trainer {
-  private game: Game;
+export default class Trainer<G extends Game> {
+  private game: G;
   private resNet: ResNet;
-  private mcts: MonteCarloTreeSearch;
+  private mcts: MonteCarloTreeSearch<G>;
 
   constructor({
     game,
@@ -34,14 +34,14 @@ export default class Trainer {
     numSearches,
     explorationConstant,
   }: {
-    game: Game;
+    game: G;
     resNet: ResNet;
     numSearches: number;
     explorationConstant: number;
   }) {
     this.game = game;
     this.resNet = resNet;
-    this.mcts = new MonteCarloTreeSearch({
+    this.mcts = new MonteCarloTreeSearch<G>({
       explorationConstant,
       game: this.game,
       numSearches,
@@ -58,7 +58,7 @@ export default class Trainer {
   private selfPlay(): TrainingMemory {
     let player = Player.X;
     const state = this.game.getInitialState();
-    const gameMemory: GameMemory = [];
+    const gameMemory: GameMemory<G> = [];
 
     for (;;) {
       // Get the state from the perspective of the current player and save it in the game memory
@@ -97,7 +97,7 @@ export default class Trainer {
 
   /// Transpose the game memory to a format that can be used to train the model.
   private convertGameMemoryToTrainingMemory(
-    gameMemory: GameMemory,
+    gameMemory: GameMemory<G>,
     lastPlayer: Player,
     lastActionValue: ActionOutcome["value"],
   ): TrainingMemory {

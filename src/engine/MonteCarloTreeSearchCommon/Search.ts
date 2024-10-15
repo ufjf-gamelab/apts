@@ -4,15 +4,15 @@ import { MonteCarloTreeSearchParams, Node } from "./Node";
 
 const MINIMUM_PROBABILITY = 0;
 
-export default class MonteCarloTreeSearch {
-  private game: Game;
+export default class MonteCarloTreeSearch<G extends Game> {
+  private game: G;
   private params: MonteCarloTreeSearchParams;
 
   constructor({
     game,
     params,
   }: {
-    game: Game;
+    game: G;
     params: MonteCarloTreeSearchParams;
   }) {
     this.game = game;
@@ -22,7 +22,7 @@ export default class MonteCarloTreeSearch {
   /* Methods */
 
   /// Search for the best action to take.
-  public search(state: State): number[] {
+  public search(state: State<G>): number[] {
     const root = new Node({ game: this.game, params: this.params, state });
 
     for (

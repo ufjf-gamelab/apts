@@ -1,19 +1,15 @@
-import State, {
-  EncodedState,
-  Player,
-  ValidAction,
-} from "../../engine/Game/State";
+import State, { EncodedState, ValidAction } from "../../engine/Game/State";
+import TicTacToeGame, { Player } from "./Game";
 
 const ADJUST_INDEX = 1;
 
-export class TicTacToeState extends State {
-  /// Attributes
+export class TicTacToeState extends State<TicTacToeGame> {
   private readonly rowCount: number;
   private readonly columnCount: number;
   private table: Player[][];
 
-  constructor(rowCount: number, columnCount: number) {
-    super();
+  constructor(game: TicTacToeGame, rowCount: number, columnCount: number) {
+    super(game);
     this.rowCount = rowCount;
     this.columnCount = columnCount;
     this.table = Array.from(Array(rowCount), () =>
@@ -21,7 +17,8 @@ export class TicTacToeState extends State {
     );
   }
 
-  /// Getters
+  /* Getters */
+
   public getValidActions(): ValidAction[] {
     const validActions: ValidAction[] = [];
     for (
@@ -73,7 +70,7 @@ export class TicTacToeState extends State {
         if (!row) continue;
         const player = row[currentColumnIndex];
         if (!player) continue;
-        State.setEncodedStatePosition({
+        this.setPositionInEncodedState({
           columnIndex: currentColumnIndex,
           encodedState,
           player,
@@ -84,7 +81,8 @@ export class TicTacToeState extends State {
     return encodedState;
   }
 
-  /// Setters
+  /* Setters */
+
   public setPlayerAt(player: Player, position: number): void {
     const rowIndex = Math.floor(position / this.columnCount);
     const columnIndex = position % this.columnCount;
@@ -93,7 +91,32 @@ export class TicTacToeState extends State {
     row[columnIndex] = player;
   }
 
-  /// Methods
+  public setPositionInEncodedState({
+    rowIndex,
+    columnIndex,
+    player,
+    encodedState,
+  }: {
+    rowIndex: number;
+    columnIndex: number;
+    player: Player;
+    encodedState: EncodedState;
+  }) {
+    const PLAYER_X_INDEX = 2;
+    const PLAYER_O_INDEX = 0;
+    const PLAYER_NONE_INDEX = 1;
+
+    if (encodedState[rowIndex]?.[columnIndex]) {
+      if (player === Player.X)
+        encodedState[rowIndex][columnIndex][PLAYER_X_INDEX] = 1;
+      else if (player === Player.O)
+        encodedState[rowIndex][columnIndex][PLAYER_O_INDEX] = 1;
+      else encodedState[rowIndex][columnIndex][PLAYER_NONE_INDEX] = 1;
+    }
+  }
+
+  /* Methods */
+
   public toString(): string {
     let boardString = "";
     for (const row of this.table) {
@@ -111,7 +134,11 @@ export class TicTacToeState extends State {
   }
 
   public clone(): TicTacToeState {
-    const clonedState = new TicTacToeState(this.rowCount, this.columnCount);
+    const clonedState = new TicTacToeState(
+      this.game,
+      this.rowCount,
+      this.columnCount,
+    );
     clonedState.table = this.table.map(row => row.slice());
     return clonedState;
   }
@@ -159,7 +186,8 @@ export class TicTacToeState extends State {
     row[columnIndex] = player;
   }
 
-  /// Static methods
+  /* Static methods */
+
   public changePerspective(
     currentPlayer: Player,
     opponentPlayer: Player,

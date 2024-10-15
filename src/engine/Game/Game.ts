@@ -22,7 +22,9 @@ export default abstract class Game {
 
   public abstract getActionSize(): number;
 
-  public abstract getInitialState(): State;
+  public abstract getInitialState(): State<Game>;
+
+  public abstract getInitialPlayer(): Player;
 
   public abstract getPlayerName(player: Player): string;
 
@@ -37,7 +39,7 @@ export default abstract class Game {
 
   /// Returns whether the game is over and the player has won.
   public static getActionOutcome(
-    state: State,
+    state: State<Game>,
     action: Action | null,
   ): ActionOutcome {
     // Check if the player has won

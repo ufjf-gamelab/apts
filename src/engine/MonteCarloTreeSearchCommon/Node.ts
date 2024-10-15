@@ -1,24 +1,24 @@
 import Game, { ActionOutcome } from "../Game/Game";
-import State, { Action, Player, ValidAction } from "../Game/State";
+import State, { Action, ValidAction } from "../Game/State";
 
-const MINIMUM_VISIT_COUNT = 0;
-const MINIMUM_VALUE_SUM = 0;
-const MINIMUM_VALID_ACTIONS = 0;
 const EMPTY_CHILDREN_LIST = 0;
+const MINIMUM_VALID_ACTIONS = 0;
+const MINIMUM_VALUE_SUM = 0;
+const MINIMUM_VISIT_COUNT = 0;
 
 export interface MonteCarloTreeSearchParams {
   searches: number;
   explorationConstant: number;
 }
 
-export class Node {
+export class Node<G extends Game> {
   private params: MonteCarloTreeSearchParams;
   private game: Game;
-  private state: State;
-  private parent: Node | null;
+  private state: State<G>;
+  private parent: Node<G> | null;
   private actionTaken: Action | null;
 
-  private children: Node[] = [];
+  private children: Node<G>[] = [];
   private expandableActions: ValidAction[] = [];
 
   private visitCount: number = MINIMUM_VISIT_COUNT;
@@ -33,8 +33,8 @@ export class Node {
   }: {
     params: MonteCarloTreeSearchParams;
     game: Game;
-    state: State;
-    parent?: Node;
+    state: State<G>;
+    parent?: Node<G>;
     actionTaken?: Action;
   }) {
     this.params = params;
@@ -47,7 +47,7 @@ export class Node {
 
   /* Getters */
 
-  public getState(): State {
+  public getState(): State<G> {
     return this.state;
   }
 
@@ -55,7 +55,7 @@ export class Node {
     return this.actionTaken;
   }
 
-  public getChildren(): Node[] {
+  public getChildren(): Node<G>[] {
     return this.children;
   }
 
@@ -81,7 +81,7 @@ export class Node {
   }
 
   /// Get the UCB value of a given child.
-  private getChildUcb(child: Node): number {
+  private getChildUcb(child: Node<G>): number {
     // Privileges the child with the lowest exploitation, as it means the opponent will have the lowest chance of winning
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const exploitation = 1 - (child.valueSum / child.visitCount + 1) / 2;
@@ -92,7 +92,7 @@ export class Node {
   }
 
   /// Select the best node among children, i.e. the one with the highest UCB.
-  public selectBestChild(): Node {
+  public selectBestChild(): Node<G> {
     if (this.children.length === EMPTY_CHILDREN_LIST)
       throw new Error("No children to select from!");
 
@@ -131,7 +131,7 @@ export class Node {
   }
 
   /// Pick a random action and perform it, returning the outcome state as a child node.
-  public expand(): Node {
+  public expand(): Node<G> {
     const selectedAction = this.pickRandomAction();
     this.expandableActions[selectedAction] = false;
 
