@@ -1,5 +1,5 @@
-import Game, { ActionOutcome } from "src/Game/Game";
-import State, { Action, Player, ValidAction } from "src/Game/State";
+import Game, { ActionOutcome } from "../Game/Game";
+import State, { Action, Player, ValidAction } from "../Game/State";
 
 const MINIMUM_VISIT_COUNT = 0;
 const MINIMUM_VALUE_SUM = 0;

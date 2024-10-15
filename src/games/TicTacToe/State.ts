@@ -1,4 +1,8 @@
-import State, { EncodedState, Player, ValidAction } from "src/Game/State";
+import State, {
+  EncodedState,
+  Player,
+  ValidAction,
+} from "../../engine/Game/State";
 
 const ADJUST_INDEX = 1;
 

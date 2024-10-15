@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
-import Game, { ActionOutcome } from "src/Game/Game";
-import State, { Player } from "src/Game/State";
-import { GameName } from "src/types";
+import Game, { ActionOutcome } from "../../engine/Game/Game";
+import State, { Player } from "../../engine/Game/State";
+import { GameName } from "../../engine/types";
 import { TicTacToeState } from "./State";
 
 export default class TicTacToeGame extends Game {

@@ -1,5 +1,5 @@
 import * as tf from "@tensorflow/tfjs";
-import State, { Action } from "src/Game/State";
+import State, { Action } from "../Game/State";
 import ResNet from "./ResNet";
 
 const LIMIT_FOR_SEED = 1000000;

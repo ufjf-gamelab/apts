@@ -1,4 +1,8 @@
-import State, { EncodedState, Player, ValidAction } from "src/Game/State";
+import State, {
+  EncodedState,
+  Player,
+  ValidAction,
+} from "../../engine/Game/State";
 import ConnectFourGame from "./Game";
 
 const MINIMUM_INDEX = 0;

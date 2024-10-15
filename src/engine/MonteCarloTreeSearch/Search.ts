@@ -1,8 +1,8 @@
 import * as tf from "@tensorflow/tfjs";
-import Game from "src/Game/Game";
-import State from "src/Game/State";
-import { predictPolicyAndValueAndProbabilitiesAndActionFromState } from "src/ResNet/predict";
-import ResNet from "src/ResNet/ResNet";
+import Game from "../Game/Game";
+import State from "../Game/State";
+import { predictPolicyAndValueAndProbabilitiesAndActionFromState } from "../ResNet/predict";
+import ResNet from "../ResNet/ResNet";
 import { MINIMUM_PROBABILITY, Node } from "./Node";
 
 export default class Search {

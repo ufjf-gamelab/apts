@@ -1,5 +1,5 @@
-import Game from "src/Game/Game";
-import State from "src/Game/State";
+import Game from "../Game/Game";
+import State from "../Game/State";
 import { MonteCarloTreeSearchParams, Node } from "./Node";
 
 const MINIMUM_PROBABILITY = 0;

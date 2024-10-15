@@ -24,12 +24,10 @@ export interface TrainingMemory {
 }
 
 export default class Trainer {
-  /// Attributes
   private game: Game;
   private resNet: ResNet;
   private mcts: MonteCarloTreeSearch;
 
-  /// Constructor
   constructor({
     game,
     resNet,
