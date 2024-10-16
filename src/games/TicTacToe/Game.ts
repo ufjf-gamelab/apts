@@ -1,66 +1,57 @@
-import Game, { ActionOutcome } from "../../engine/Game/Game";
+import { Integer } from "src/types";
+import Game from "../../engine/Game/Game";
 import State from "../../engine/Game/State";
-import { GameName } from "../../engine/types";
-import { TicTacToeState } from "./State";
+import { Player, Slot, TicTacToeState } from "./State";
 
-export enum Player {
-  None = 0,
-  X = 1,
-  O = -1,
+interface TicTacToeGameParams {
+  quantityOfRows: Integer;
+  quantityOfColumns: Integer;
 }
 
 export default class TicTacToeGame extends Game {
-  private readonly rowCount: number;
-  private readonly columnCount: number;
-  private readonly actionSize: number;
+  private readonly quantityOfRows: TicTacToeGameParams["quantityOfRows"];
+  private readonly quantityOfColumns: TicTacToeGameParams["quantityOfColumns"];
+  private readonly quantityOfPlayers = 2;
 
-  constructor(rowCount: number, columnCount: number) {
-    super();
-    this.rowCount = rowCount;
-    this.columnCount = columnCount;
-    this.actionSize = rowCount * columnCount;
+  constructor({ quantityOfColumns, quantityOfRows }: TicTacToeGameParams) {
+    const quantityOfPositions: Integer = quantityOfColumns * quantityOfRows;
+    super({
+      name: "Tic Tac Toe",
+      players: new Map([
+        [Player.X, { name: "Player X", symbol: "X" }],
+        [Player.O, { name: "Player O", symbol: "O" }],
+      ]),
+      quantityOfPositions,
+    });
+    this.quantityOfColumns = quantityOfColumns;
+    this.quantityOfRows = quantityOfRows;
   }
 
   /* Getters */
 
-  public getName(): GameName {
-    return GameName.TicTacToe;
+  public getQuantityOfColumns(): Integer {
+    return this.quantityOfColumns;
   }
 
-  public getRowCount(): number {
-    return this.rowCount;
+  public getQuantityOfPlayers(): Integer {
+    return this.quantityOfPlayers;
   }
 
-  public getColumnCount(): number {
-    return this.columnCount;
-  }
-
-  public getActionSize(): number {
-    return this.actionSize;
+  public getQuantityOfRows(): Integer {
+    return this.quantityOfRows;
   }
 
   public getInitialState(): State<TicTacToeGame> {
-    return new TicTacToeState(this, this.rowCount, this.columnCount);
+    const slots = Array<Slot>(this.getQuantityOfPositions()).fill(Slot.Empty);
+    return new TicTacToeState({
+      game: this,
+      lastPlayer: null,
+      lastTakenMove: null,
+      slots,
+    });
   }
 
   public getInitialPlayer(): Player {
     return Player.X;
-  }
-
-  public getPlayerName(player: Player): string {
-    if (player === Player.None) return "N";
-    return player === Player.X ? "X" : "O";
-  }
-
-  public getOpponent(player: Player): Player {
-    if (player === Player.None) return Player.None;
-    return player === Player.X ? Player.O : Player.X;
-  }
-
-  /// Return the outcome value, considering that the opponent is the one playing.
-  public getOpponentValue(
-    value: ActionOutcome["value"],
-  ): ActionOutcome["value"] {
-    return -value;
   }
 }

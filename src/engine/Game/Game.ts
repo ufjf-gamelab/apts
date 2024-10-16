@@ -1,5 +1,5 @@
-import { Char, Integer } from "../types";
-import State, { Move, Player, Position } from "./State";
+import { Char, Integer } from "../../types";
+import State, { Move, Player } from "./State";
 
 export enum Outcome {
   Win = 1,
@@ -27,7 +27,7 @@ interface GameParams {
 
 export default abstract class Game {
   private readonly name: GameParams["name"];
-  protected readonly players: GameParams["players"];
+  private readonly players: GameParams["players"];
   protected readonly quantityOfPositions: GameParams["quantityOfPositions"];
 
   constructor({ name, players, quantityOfPositions }: GameParams) {
@@ -44,11 +44,18 @@ export default abstract class Game {
     return this.name;
   }
 
-  public abstract getPositions(): Position[];
+  public getPlayerData(player: Player) {
+    const playerData = this.players.get(player);
+    if (typeof playerData === "undefined")
+      throw Error(`Player ${player} does not exist`);
+    return playerData;
+  }
 
   public abstract getQuantityOfPlayers(): number;
 
-  public abstract getQuantityOfPositions(): number;
+  public getQuantityOfPositions() {
+    return this.quantityOfPositions;
+  }
 
   /* Static methods */
 

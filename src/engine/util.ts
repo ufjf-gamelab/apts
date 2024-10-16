@@ -1,3 +1,4 @@
+import { INCREMENT_ONE } from "src/types";
 import State, { Action } from "./Game/State";
 import { GameName } from "./types";
 
@@ -27,11 +28,10 @@ export const fullModelPath = (gameName: GameName, innerPath: string) =>
 export const getRandomValidAction = (state: State): Action | null => {
   const encodedValidActions = state.getValidActions();
   const validActions = [];
-  const incrementOne = 1;
   for (
     let index = 0;
     index < encodedValidActions.length;
-    index += incrementOne
+    index += INCREMENT_ONE
   ) {
     if (encodedValidActions[index]) validActions.push(index);
   }

@@ -28,7 +28,7 @@ export default class MonteCarloTreeSearch<G extends Game> {
     for (
       let currentSearchIndex = 0;
       currentSearchIndex < this.params.searches;
-      currentSearchIndex++
+      currentSearchIndex += INCREMENT_ONE
     ) {
       let node = root;
 

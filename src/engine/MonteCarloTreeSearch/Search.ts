@@ -4,8 +4,8 @@ import State from "../Game/State";
 import { predictPolicyAndValueAndProbabilitiesAndActionFromState } from "../ResNet/predict";
 import ResNet from "../ResNet/ResNet";
 import { MINIMUM_PROBABILITY, Node } from "./Node";
+import { INCREMENT_ONE } from "src/types";
 
-const INCREMENT_ONE = 1;
 
 interface MonteCarloTreeSearchParams<G extends Game> {
   explorationConstant: number;

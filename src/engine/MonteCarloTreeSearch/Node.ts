@@ -1,7 +1,7 @@
+import { INCREMENT_ONE } from "src/types";
 import Game from "../Game/Game";
 import State, { Move } from "../Game/State";
 
-const INCREMENT_ONE = 1;
 const EMPTY_CHILDREN_LIST = 0;
 const MINIMUM_VALUE_SUM = 0;
 const MINIMUM_VISIT_COUNT = 0;

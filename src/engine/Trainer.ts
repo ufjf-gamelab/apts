@@ -149,7 +149,7 @@ export default class Trainer<G extends Game> {
     for (
       let currentStep = 0;
       currentStep < numSelfPlayIterations;
-      currentStep++
+      currentStep += INCREMENT_ONE
     ) {
       if (
         progressStep > MINIMUM_PROGRESS_STEP &&
@@ -242,7 +242,7 @@ export default class Trainer<G extends Game> {
     for (
       let currentIteration = 0;
       currentIteration < maxIterations;
-      currentIteration++
+      currentIteration += INCREMENT_ONE
     ) {
       const trainingMemory = trainingMemories[currentIteration];
       if (!trainingMemory) continue;

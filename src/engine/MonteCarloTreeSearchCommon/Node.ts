@@ -104,7 +104,7 @@ export class Node<G extends Game> {
     for (
       let currentChildIndex = 1;
       currentChildIndex < this.children.length;
-      currentChildIndex++
+      currentChildIndex += INCREMENT_ONE
     ) {
       const child = this.children[currentChildIndex];
       if (!child) throw new Error("No children to select from!");
@@ -187,7 +187,7 @@ export class Node<G extends Game> {
   /// Backpropagate the outcome value to the root node.
   public backpropagate(outcomeValue: ActionOutcome["value"]) {
     this.valueSum += outcomeValue;
-    this.visitCount++;
+    this.visitCount += INCREMENT_ONE;
     const opponentValue = this.game.getOpponentValue(outcomeValue);
     if (this.parent) this.parent.backpropagate(opponentValue);
   }

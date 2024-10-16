@@ -48,6 +48,7 @@ export default [
           ignoreReadonlyClassProperties: true,
         },
       ],
+      "@typescript-eslint/prefer-literal-enum-member": "off",
       "@typescript-eslint/restrict-template-expressions": [
         "error",
         {
@@ -55,6 +56,7 @@ export default [
         },
       ],
       "class-methods-use-this": "off",
+      "id-length": ["error", { exceptions: ["_"] }],
       "max-lines": "off",
       "max-lines-per-function": ["warn", 70],
       "max-statements": ["error", 20],

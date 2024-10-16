@@ -11,7 +11,12 @@
     "tfjs",
     "tseslint"
   ],
-  "editor.inlineSuggest.enabled": true,
   "editor.formatOnSave": true,
-  "editor.tabSize": 2
+  "editor.inlineSuggest.enabled": true,
+  "editor.tabSize": 2,
+  "search.exclude": {
+    "**/dist": true,
+    "**/node_modules": true,
+    "pnpm-lock.yaml": true
+  }
 }

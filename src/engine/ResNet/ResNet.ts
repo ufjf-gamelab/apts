@@ -117,7 +117,11 @@ const buildResNetModel = (
 
   // Apply the residual blocks to the tensor
   let backboneOutputTensor = startBlockOutputTensor;
-  for (let blockIndex = 0; blockIndex < numResBlocks; blockIndex++) {
+  for (
+    let blockIndex = 0;
+    blockIndex < numResBlocks;
+    blockIndex += INCREMENT_ONE
+  ) {
     backboneOutputTensor = applyResBlock({
       currentInputTensor: backboneOutputTensor,
       dim1Size: game.getRowCount(),

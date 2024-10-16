@@ -28,7 +28,7 @@ export class ConnectFourState extends State<ConnectFourGame> {
 
   public getValidActions(): ValidAction[] {
     const validActions: ValidAction[] = [];
-    for (let index = 0; index < this.columnCount; index++) {
+    for (let index = 0; index < this.columnCount; index += INCREMENT_ONE) {
       const [firstRow] = this.table;
       if (!firstRow) return [];
       const cell = firstRow[index];
@@ -53,8 +53,16 @@ export class ConnectFourState extends State<ConnectFourGame> {
         Player.None,
       ]),
     );
-    for (let rowIndex = 0; rowIndex < this.rowCount; rowIndex++) {
-      for (let columnIndex = 0; columnIndex < this.columnCount; columnIndex++) {
+    for (
+      let rowIndex = 0;
+      rowIndex < this.rowCount;
+      rowIndex += INCREMENT_ONE
+    ) {
+      for (
+        let columnIndex = 0;
+        columnIndex < this.columnCount;
+        columnIndex += INCREMENT_ONE
+      ) {
         const row = this.table[rowIndex];
         if (!row) continue;
         const player = row[columnIndex];
@@ -156,7 +164,7 @@ export class ConnectFourState extends State<ConnectFourGame> {
     for (
       let currentColumnIndex = columnOfTheFirstWindow;
       currentColumnIndex < columnOfTheLastWindow - ConnectFourGame.WINDOW_SIZE;
-      currentColumnIndex++
+      currentColumnIndex += INCREMENT_ONE
     ) {
       // For each window of X cells...
       const row = this.table[rowIndex];
@@ -169,7 +177,7 @@ export class ConnectFourState extends State<ConnectFourGame> {
         for (
           let playerIndex = 1;
           playerIndex < ConnectFourGame.WINDOW_SIZE;
-          playerIndex++
+          playerIndex += INCREMENT_ONE
         ) {
           if (row[currentColumnIndex + playerIndex] !== player) {
             win = false;
@@ -195,7 +203,7 @@ export class ConnectFourState extends State<ConnectFourGame> {
     for (
       let currentRowIndex = rowIndex;
       currentRowIndex < rowIndex + ConnectFourGame.WINDOW_SIZE;
-      currentRowIndex++
+      currentRowIndex += INCREMENT_ONE
     ) {
       const row = this.table[currentRowIndex];
       if (!row) return false;
@@ -272,7 +280,7 @@ export class ConnectFourState extends State<ConnectFourGame> {
       let currentColumnIndex = firstWindowColumn;
       currentColumnIndex <=
       lastWindowColumn - ConnectFourGame.WINDOW_SIZE + ADJUST_INDEX;
-      currentColumnIndex++
+      currentColumnIndex += INCREMENT_ONE
     ) {
       // For each window of X cells...
       const row = this.table[correspondingInitialRow];
@@ -285,7 +293,7 @@ export class ConnectFourState extends State<ConnectFourGame> {
         for (
           let playerIndex = 1;
           playerIndex < ConnectFourGame.WINDOW_SIZE;
-          playerIndex++
+          playerIndex += INCREMENT_ONE
         ) {
           const currentRow = this.table[correspondingInitialRow + playerIndex];
           if (!currentRow) return false;
@@ -303,7 +311,7 @@ export class ConnectFourState extends State<ConnectFourGame> {
         }
         if (win) return true;
       }
-      correspondingInitialRow++;
+      correspondingInitialRow += INCREMENT_ONE;
     }
     return false;
   }
@@ -388,12 +396,12 @@ export class ConnectFourState extends State<ConnectFourGame> {
     for (
       let currentRowIndex = MINIMUM_INDEX;
       currentRowIndex < this.rowCount;
-      currentRowIndex++
+      currentRowIndex += INCREMENT_ONE
     ) {
       for (
         let currentColumnIndex = MINIMUM_INDEX;
         currentColumnIndex < this.columnCount;
-        currentColumnIndex++
+        currentColumnIndex += INCREMENT_ONE
       ) {
         const row = this.table[currentRowIndex];
         if (!row) return;

@@ -1,15 +1,20 @@
-import { Integer } from "../types";
+import { Integer } from "../../types";
 import Game from "./Game";
 
 export type EncodedState = Pixel[][][];
 export type Move = Integer;
-export type Pixel = 0 | 1;
+export enum Pixel {
+  Off = 0,
+  On = 1,
+}
 export type Player = Integer;
 export type Position = Integer;
 export type Slot = number;
 export type ValidMove = boolean;
 
-interface StateParams<G extends Game> {
+const MINIMUM_POSITION = 0;
+
+export interface StateParams<G extends Game> {
   game: G;
   lastPlayer: Player | null;
   lastTakenMove: Move | null;
@@ -18,7 +23,7 @@ interface StateParams<G extends Game> {
 
 export default abstract class State<G extends Game> {
   protected readonly game: StateParams<G>["game"];
-  protected readonly slots: StateParams<G>["slots"];
+  private readonly slots: StateParams<G>["slots"];
 
   // The player that played the last move, which resulted in the current state.
   protected readonly lastPlayer: StateParams<G>["lastPlayer"];
@@ -45,15 +50,24 @@ export default abstract class State<G extends Game> {
     return this.game;
   }
 
-  public abstract getSlotAt(position: Position): Player | null;
+  /// Return a copy of the slots.
+  public getSlots(): Slot[] {
+    return this.slots.slice();
+  }
+
+  public getSlotAt(position: Position): Slot {
+    if (position < MINIMUM_POSITION || position >= this.slots.length)
+      throw Error(`Position ${position} is out of bounds`);
+    const slot = this.slots[position];
+
+    if (typeof slot === "undefined")
+      throw Error(`Slot ${position} is undefined`);
+    return slot;
+  }
 
   public abstract getValidMoves(): ValidMove[];
 
   public abstract getWinner(move: Move): Player | null;
-
-  /* Setters */
-
-  public abstract setPlayerAtPosition(player: Player, position: Position): void;
 
   /* Methods */
 
