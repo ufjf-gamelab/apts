@@ -5,27 +5,31 @@ import { predictPolicyAndValueAndProbabilitiesAndActionFromState } from "../ResN
 import ResNet from "../ResNet/ResNet";
 import { MINIMUM_PROBABILITY, Node } from "./Node";
 
+const INCREMENT_ONE = 1;
+
+interface MonteCarloTreeSearchParams<G extends Game> {
+  explorationConstant: number;
+  game: G;
+  quantityOfSearches: number;
+  resNet: ResNet;
+}
+
 export default class Search<G extends Game> {
-  private game: G;
-  private resNet: ResNet;
-  private numSearches: number;
-  private explorationConstant: number;
+  private explorationConstant: MonteCarloTreeSearchParams<G>["explorationConstant"];
+  private game: MonteCarloTreeSearchParams<G>["game"];
+  private quantityOfSearches: MonteCarloTreeSearchParams<G>["quantityOfSearches"];
+  private resNet: MonteCarloTreeSearchParams<G>["resNet"];
 
   constructor({
-    game,
-    resNet,
-    numSearches,
     explorationConstant,
-  }: {
-    game: G;
-    resNet: ResNet;
-    numSearches: number;
-    explorationConstant: number;
-  }) {
-    this.game = game;
-    this.resNet = resNet;
-    this.numSearches = numSearches;
+    game,
+    quantityOfSearches,
+    resNet,
+  }: MonteCarloTreeSearchParams<G>) {
     this.explorationConstant = explorationConstant;
+    this.game = game;
+    this.quantityOfSearches = quantityOfSearches;
+    this.resNet = resNet;
   }
 
   /* Methods */
@@ -39,11 +43,11 @@ export default class Search<G extends Game> {
     for (
       let currentAction = 0;
       currentAction < validActions.length;
-      currentAction++
+      currentAction += INCREMENT_ONE
     ) {
       if (validActions[currentAction]) {
         actionProbabilities[currentAction] = 1;
-        sum++;
+        sum += INCREMENT_ONE;
       }
     }
     return actionProbabilities.map(probability => probability / sum);
@@ -71,7 +75,7 @@ export default class Search<G extends Game> {
   public search(state: State<G>): number[] {
     // If no deep search is performed, return a distribution based on the valid actions.
     const ONLY_ONE_SEARCH = 1;
-    if (this.numSearches <= ONLY_ONE_SEARCH) {
+    if (this.quantityOfSearches <= ONLY_ONE_SEARCH) {
       return this.getProbabilityDistribution(state.getValidActions());
     }
 
@@ -80,14 +84,14 @@ export default class Search<G extends Game> {
     const root = new Node({
       explorationConstant: this.explorationConstant,
       game: this.game,
-      numSearches: this.numSearches,
+      quantityOfSearches: this.quantityOfSearches,
       state: neutralState,
     });
 
     for (
       let currentSearchIndex = 0;
-      currentSearchIndex < this.numSearches;
-      currentSearchIndex++
+      currentSearchIndex < this.quantityOfSearches;
+      currentSearchIndex += INCREMENT_ONE
     ) {
       let node = root;
 

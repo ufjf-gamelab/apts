@@ -6,17 +6,18 @@ const MINIMUM_VALID_ACTIONS = 0;
 const MINIMUM_VALUE_SUM = 0;
 const MINIMUM_VISIT_COUNT = 0;
 
-export interface MonteCarloTreeSearchParams {
-  searches: number;
+interface MonteCarloTreeSearchParams<G extends Game> {
   explorationConstant: number;
+  quantityOfSearches: number;
+  state: State<G>;
+  parent: Node<G> | null;
 }
 
 export class Node<G extends Game> {
   private params: MonteCarloTreeSearchParams;
-  private game: Game;
   private state: State<G>;
   private parent: Node<G> | null;
-  private actionTaken: Action | null;
+  private takenMove: Action | null;
 
   private children: Node<G>[] = [];
   private expandableActions: ValidAction[] = [];
@@ -132,13 +133,16 @@ export class Node<G extends Game> {
 
   /// Pick a random action and perform it, returning the outcome state as a child node.
   public expand(): Node<G> {
+    const initialPlayer = this.game.getInitialPlayer();
+    const nextPlayer = this.game.getOpponent(initialPlayer);
+
     const selectedAction = this.pickRandomAction();
     this.expandableActions[selectedAction] = false;
 
     // Copy the state and play the action on the copy
     const childState = this.state.clone();
-    childState.performAction(selectedAction, Player.X);
-    childState.changePerspective(Player.X, Player.O);
+    childState.performAction(selectedAction, initialPlayer);
+    childState.changePerspective(initialPlayer, nextPlayer);
 
     const child = new Node({
       actionTaken: selectedAction,
@@ -153,6 +157,9 @@ export class Node<G extends Game> {
 
   /// Simulate a game from the current state, returning the outcome value.
   public simulate(): ActionOutcome["value"] {
+    const initialPlayer = this.game.getInitialPlayer();
+    const nextPlayer = this.game.getOpponent(initialPlayer);
+
     let { isTerminal, value } = Game.getActionOutcome(
       this.state,
       this.actionTaken,
@@ -162,14 +169,14 @@ export class Node<G extends Game> {
 
     // Copy the state and play random actions, with alternate players, until the game is over
     const rolloutState = this.state.clone();
-    let rolloutPlayer = Player.X;
+    let rolloutPlayer = initialPlayer;
     for (;;) {
       const selectedAction = this.pickRandomAction();
       rolloutState.performAction(selectedAction, rolloutPlayer);
       const actionOutcome = Game.getActionOutcome(rolloutState, selectedAction);
       ({ isTerminal, value } = actionOutcome);
       if (isTerminal) {
-        if (rolloutPlayer === Player.O)
+        if (rolloutPlayer === nextPlayer)
           value = this.game.getOpponentValue(value);
         return value;
       }

@@ -44,6 +44,7 @@ export default [
         "error",
         {
           ignoreEnums: true,
+          ignoreNumericLiteralTypes: true,
           ignoreReadonlyClassProperties: true,
         },
       ],

@@ -1,56 +1,74 @@
-import { GameName } from "../types";
-import State, { Action, Player } from "./State";
+import { Char, Integer } from "../types";
+import State, { Move, Player, Position } from "./State";
 
 export enum Outcome {
   Win = 1,
-  Loss = 0,
+  Draw = 0,
+  Loss = -1,
 }
 
-export interface ActionOutcome {
-  isTerminal: boolean;
-  value: number;
+export interface OutcomeOfMove {
+  gameHasEnded: boolean;
+  // Points achieved or lost by the player who made the move.
+  points: number;
+  winner: Player | null;
+}
+
+export interface PlayerData {
+  symbol: Char;
+  name: string;
+}
+
+interface GameParams {
+  name: string;
+  players: Map<Player, PlayerData>;
+  quantityOfPositions: Integer;
 }
 
 export default abstract class Game {
+  private readonly name: GameParams["name"];
+  protected readonly players: GameParams["players"];
+  protected readonly quantityOfPositions: GameParams["quantityOfPositions"];
+
+  constructor({ name, players, quantityOfPositions }: GameParams) {
+    this.name = name;
+    this.players = players;
+    this.quantityOfPositions = quantityOfPositions;
+  }
+
   /* Getters */
-
-  public abstract getName(): GameName;
-
-  public abstract getRowCount(): number;
-
-  public abstract getColumnCount(): number;
-
-  public abstract getActionSize(): number;
 
   public abstract getInitialState(): State<Game>;
 
-  public abstract getInitialPlayer(): Player;
+  public getName() {
+    return this.name;
+  }
 
-  public abstract getPlayerName(player: Player): string;
+  public abstract getPositions(): Position[];
 
-  public abstract getOpponent(player: Player): Player;
+  public abstract getQuantityOfPlayers(): number;
 
-  /// Return the outcome value, considering that the opponent is the one playing.
-  public abstract getOpponentValue(
-    value: ActionOutcome["value"],
-  ): ActionOutcome["value"];
+  public abstract getQuantityOfPositions(): number;
 
   /* Static methods */
 
-  /// Returns whether the game is over and the player has won.
-  public static getActionOutcome(
+  /// Returns whether the game is over and the quality of the victory (or loss).
+  public static getOutcomeOfMove(
     state: State<Game>,
-    action: Action | null,
-  ): ActionOutcome {
+    move: Move,
+  ): OutcomeOfMove {
     // Check if the player has won
-    if (action === null ? false : state.checkWin(action))
-      return { isTerminal: true, value: Outcome.Win };
+    const winner = state.getWinner(move);
+
+    if (winner !== null)
+      return { gameHasEnded: true, points: Outcome.Win, winner };
 
     // Check if the game is a draw
-    if (!state.getValidActions().some(validAction => validAction))
-      return { isTerminal: true, value: Outcome.Loss };
+    const validMoves = state.getValidMoves();
+    if (validMoves.some(validMove => validMove))
+      return { gameHasEnded: true, points: Outcome.Draw, winner: null };
 
     // No terminal state
-    return { isTerminal: false, value: Outcome.Loss };
+    return { gameHasEnded: false, points: Outcome.Draw, winner: null };
   }
 }

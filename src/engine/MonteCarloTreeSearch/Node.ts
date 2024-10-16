@@ -1,20 +1,31 @@
-import Game, { ActionOutcome } from "../Game/Game";
-import State, { Action } from "../Game/State";
+import Game from "../Game/Game";
+import State, { Move } from "../Game/State";
 
+const INCREMENT_ONE = 1;
 const EMPTY_CHILDREN_LIST = 0;
 const MINIMUM_VALUE_SUM = 0;
 const MINIMUM_VISIT_COUNT = 0;
 export const MINIMUM_PROBABILITY = 0;
 
+interface NodeParams<G extends Game> {
+  explorationConstant: number;
+  quantityOfSearches: number;
+  state: State<G>;
+  parent?: Node<G>;
+  takenMove?: Move;
+  priorProbability?: number;
+}
+
 export class Node<G extends Game> {
-  private game: G;
   // State of the game at this node
   private state: State<G>;
-  private numSearches: number;
+
+  private quantityOfSearches: number;
   private explorationConstant: number;
+
   private parent: Node<G> | null;
-  // Action that led to this node
-  private actionTaken: Action | null;
+  // Move that led to this node
+  private takenMove: Move | null;
   // Probability of taking the action that led to this node
   private priorProbability: number;
 
@@ -23,28 +34,18 @@ export class Node<G extends Game> {
   private valueSum = MINIMUM_VALUE_SUM;
 
   constructor({
-    game,
     state,
-    numSearches,
+    quantityOfSearches,
     explorationConstant,
     parent,
-    actionTaken,
+    takenMove,
     priorProbability,
-  }: {
-    game: G;
-    state: State<G>;
-    numSearches: number;
-    explorationConstant: number;
-    parent?: Node<G>;
-    actionTaken?: Action;
-    priorProbability?: number;
-  }) {
-    this.game = game;
+  }: NodeParams<G>) {
     this.state = state;
-    this.numSearches = numSearches;
+    this.quantityOfSearches = quantityOfSearches;
     this.explorationConstant = explorationConstant;
     this.parent = parent ? parent : null;
-    this.actionTaken = typeof actionTaken === "number" ? actionTaken : null;
+    this.takenMove = typeof takenMove === "number" ? takenMove : null;
     this.priorProbability = priorProbability
       ? priorProbability
       : MINIMUM_PROBABILITY;
@@ -52,36 +53,39 @@ export class Node<G extends Game> {
 
   /* Getters */
 
+  public getChildren(): Node<G>[] {
+    return this.children;
+  }
+
   public getState(): State<G> {
     return this.state;
   }
 
-  public getActionTaken(): Action | null {
-    return this.actionTaken;
-  }
-
-  public getChildren(): Node<G>[] {
-    return this.children;
+  public getTakenMove(): Move | null {
+    return this.takenMove;
   }
 
   public getVisitCount(): number {
     return this.visitCount;
   }
 
-  /* Methods */
-
   /// Check if the node is fully expanded, i.e. all valid actions have been explored.
   public isFullyExpanded(): boolean {
     return this.children.length > EMPTY_CHILDREN_LIST;
   }
 
+  /* Methods */
+
   /// Get the UCB value of a given child.
   private getChildUcb(child: Node<G>): number {
     let exploitation = 0;
-    if (this.visitCount > MINIMUM_VISIT_COUNT)
+
+    if (this.visitCount > MINIMUM_VISIT_COUNT) {
       // Privileges the child with the lowest exploitation, as it means the opponent will have the lowest chance of winning
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       exploitation = 1 - child.valueSum / (child.visitCount + 1) / 2;
+    }
+
     const exploration =
       this.explorationConstant *
       child.priorProbability *
@@ -102,10 +106,11 @@ export class Node<G extends Game> {
     for (
       let currentChildIndex = 1;
       currentChildIndex < this.children.length;
-      currentChildIndex++
+      currentChildIndex += INCREMENT_ONE
     ) {
       const child = this.children[currentChildIndex];
       if (!child) throw new Error("No children to select from!");
+
       const ucb = this.getChildUcb(child);
       if (ucb > bestUcb) {
         bestChild = child;
@@ -117,18 +122,21 @@ export class Node<G extends Game> {
 
   /// Pick a random action and perform it, returning the outcome state as a child node.
   public expand(policy: number[]) {
+    const initialPlayer = this.state.getGame().getInitialPlayer();
+    const nextPlayer = this.state.getNextPlayer(initialPlayer);
+
     policy.forEach((probability, action) => {
       if (probability > MINIMUM_PROBABILITY) {
         // Copy the state and play the action on the copy
         const childState = this.state.clone();
-        childState.performAction(action, Player.X);
-        childState.changePerspective(Player.X, Player.O);
+        childState.performAction(action, initialPlayer);
+        childState.changePerspective(initialPlayer, nextPlayer);
 
         const child = new Node({
-          actionTaken: action,
+          takenMove: action,
           explorationConstant: this.explorationConstant,
           game: this.game,
-          numSearches: this.numSearches,
+          quantityOfSearches: this.quantityOfSearches,
           parent: this,
           priorProbability: probability,
           state: childState,
@@ -141,7 +149,7 @@ export class Node<G extends Game> {
   /// Backpropagate the outcome value to the root node.
   public backpropagate(outcomeValue: ActionOutcome["value"]) {
     this.valueSum += outcomeValue;
-    this.visitCount++;
+    this.visitCount += INCREMENT_ONE;
     const opponentValue = this.game.getOpponentValue(outcomeValue);
     if (this.parent !== null) this.parent.backpropagate(opponentValue);
   }

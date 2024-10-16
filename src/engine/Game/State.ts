@@ -1,55 +1,68 @@
+import { Integer } from "../types";
 import Game from "./Game";
 
-export type Action = number;
-export type EncodedState = Action[][][];
-export type Player = number;
-export type ValidAction = boolean;
+export type EncodedState = Pixel[][][];
+export type Move = Integer;
+export type Pixel = 0 | 1;
+export type Player = Integer;
+export type Position = Integer;
+export type Slot = number;
+export type ValidMove = boolean;
+
+interface StateParams<G extends Game> {
+  game: G;
+  lastPlayer: Player | null;
+  lastTakenMove: Move | null;
+  slots: Slot[];
+}
 
 export default abstract class State<G extends Game> {
-  protected readonly game: G;
+  protected readonly game: StateParams<G>["game"];
+  protected readonly slots: StateParams<G>["slots"];
 
-  constructor(game: G) {
+  // The player that played the last move, which resulted in the current state.
+  protected readonly lastPlayer: StateParams<G>["lastPlayer"];
+  protected readonly lastTakenMove: StateParams<G>["lastTakenMove"];
+
+  constructor({ game, lastPlayer, lastTakenMove, slots }: StateParams<G>) {
     this.game = game;
+    this.lastPlayer = lastPlayer ? lastPlayer : null;
+    this.lastTakenMove = lastTakenMove ? lastTakenMove : null;
+    const quantityOfPositions = this.game.getQuantityOfPositions();
+    if (slots.length !== quantityOfPositions)
+      throw Error(`The quantity of slots given must be ${quantityOfPositions}`);
+    this.slots = slots;
   }
 
   /* Getters */
 
-  public abstract getValidActions(): ValidAction[];
-
-  public abstract getPlayerAt(position: number): Player | null;
+  public abstract getCurrentPlayer(): Player;
 
   /// Return three 2D-arrays. Each one represents a player. The value is 1 if the cell is occupied by the player, or 0 otherwise. The order of the matrices is: O, None, X.
   public abstract getEncodedState(): EncodedState;
 
+  public getGame(): G {
+    return this.game;
+  }
+
+  public abstract getSlotAt(position: Position): Player | null;
+
+  public abstract getValidMoves(): ValidMove[];
+
+  public abstract getWinner(move: Move): Player | null;
+
   /* Setters */
 
-  public abstract setPlayerAt(player: Player, position: number): void;
-
-  public abstract setPositionInEncodedState({
-    rowIndex,
-    columnIndex,
-    player,
-    encodedState,
-  }: {
-    rowIndex: number;
-    columnIndex: number;
-    player: Player;
-    encodedState: EncodedState;
-  }): void;
+  public abstract setPlayerAtPosition(player: Player, position: Position): void;
 
   /* Methods */
 
-  public abstract toString(): string;
+  /// Return the state with the perspective changed relative to the informed player.
+  public abstract changePerspective(player: Player): State<G>;
 
   public abstract clone(): State<G>;
 
-  public abstract checkWin(action: Action): boolean;
+  public abstract playMove(move: Move): State<G>;
 
-  public abstract performAction(action: Action, player: Player): void;
-
-  /// Return the state with the perspective changed, i.e. the opponent is now the player.
-  public abstract changePerspective(
-    currentPlayer: Player,
-    opponentPlayer: Player,
-  ): void;
+  public abstract toString(): string;
 }
