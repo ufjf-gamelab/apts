@@ -198,11 +198,9 @@ const buildResNetModel = (
  * It is important to dispose the model when it is no longer needed.
  */
 export default class ResNet {
-  /// Attributes
   private model: tf.LayersModel;
   private game: Game;
 
-  /// Constructor
   constructor(game: Game, params: ResNetParams) {
     this.game = game;
     if ("model" in params) {
@@ -216,7 +214,8 @@ export default class ResNet {
     }
   }
 
-  /// Getters
+  /* Getters */
+
   public getModel(): tf.LayersModel {
     return this.model;
   }

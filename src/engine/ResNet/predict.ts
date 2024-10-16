@@ -90,17 +90,17 @@ const predictDataFromState = <G extends Game>(
   desiredData: DesiredData,
 ) => {
   const data: ReturnedData = {};
-  tf.tidy(() => {
-    const { policy, value } = maskedPrediction(state, resNet);
-    if (desiredData.policy) data.policy = policy;
-    if (desiredData.value) data.value = value;
-    if (desiredData.probabilities || desiredData.action) {
-      const probabilities = probabilitiesFromPolicy(policy);
-      if (desiredData.probabilities) data.probabilities = probabilities;
-      if (desiredData.action)
-        data.action = actionFromProbabilities(probabilities);
-    }
-  });
+  const { policy, value } = maskedPrediction(state, resNet);
+  if (desiredData.policy) data.policy = policy;
+  if (desiredData.value) data.value = value;
+  if (desiredData.probabilities || desiredData.action) {
+    const probabilities = probabilitiesFromPolicy(policy);
+    if (desiredData.probabilities) data.probabilities = probabilities;
+    if (desiredData.action)
+      data.action = actionFromProbabilities(probabilities);
+  }
+  if (!desiredData.policy) tf.dispose(policy);
+  if (!desiredData.value) tf.dispose(value);
   return data;
 };
 
