@@ -1,4 +1,5 @@
-import State, { EncodedState, ValidAction } from "../../engine/Game/State";
+import { INCREMENT_ONE } from "src/types";
+import State, { EncodedState } from "../../engine/Game/State";
 import ConnectFourGame from "./Game";
 
 enum Player {

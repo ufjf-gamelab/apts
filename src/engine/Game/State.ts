@@ -1,6 +1,7 @@
 import { Integer } from "../../types";
 import Game from "./Game";
 
+type Channel = Integer;
 export type EncodedState = Pixel[][][];
 export type Move = Integer;
 export enum Pixel {
@@ -43,11 +44,21 @@ export default abstract class State<G extends Game> {
 
   public abstract getCurrentPlayer(): Player;
 
-  /// Return three 2D-arrays. Each one represents a player. The value is 1 if the cell is occupied by the player, or 0 otherwise. The order of the matrices is: O, None, X.
+  /**
+   * Creates a representation of the state as many perspectives of its slots.
+   * Each perspective is encoded as a channel, similar to an RGB image.
+   * Each cell of the matrix is called a Pixel. If a pixel is on, it means that the respective slot is filled in that perspective.
+   *
+   * @returns {EncodedState} A series of 2D-arrays representing the state.
+   */
   public abstract getEncodedState(): EncodedState;
 
   public getGame(): G {
     return this.game;
+  }
+
+  public getLastPlayer(): Player | null {
+    return this.lastPlayer;
   }
 
   /// Return a copy of the slots.
@@ -67,7 +78,7 @@ export default abstract class State<G extends Game> {
 
   public abstract getValidMoves(): ValidMove[];
 
-  public abstract getWinner(move: Move): Player | null;
+  public abstract getWinner(): Player | null;
 
   /* Methods */
 
@@ -79,4 +90,26 @@ export default abstract class State<G extends Game> {
   public abstract playMove(move: Move): State<G>;
 
   public abstract toString(): string;
+
+  /* Static methods */
+
+  public static setSlotInEncodedState({
+    rowIndex,
+    columnIndex,
+    channel,
+    encodedState,
+  }: {
+    rowIndex: number;
+    columnIndex: number;
+    channel: Channel;
+    encodedState: EncodedState;
+  }) {
+    const row = encodedState[rowIndex];
+    if (typeof row === "undefined") return;
+
+    const column = row[columnIndex];
+    if (typeof column === "undefined") return;
+
+    column[channel] = Pixel.On;
+  }
 }

@@ -1,7 +1,8 @@
+import State from "src/engine/Game/State";
 import { Integer } from "src/types";
 import Game from "../../engine/Game/Game";
-import State from "../../engine/Game/State";
-import { Player, Slot, TicTacToeState } from "./State";
+import { TicTacToeState } from "./State";
+import { Player, Slot } from "./types";
 
 interface TicTacToeGameParams {
   quantityOfRows: Integer;
