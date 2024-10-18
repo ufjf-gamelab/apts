@@ -5,12 +5,12 @@
   "properties": {
     "quantityOfColumns": {
       "description": "The quantity of columns in the board.",
-      "exclusiveMinimum": 3,
+      "inclusiveMinimum": 3,
       "type": "integer"
     },
     "quantityOfRows": {
       "description": "The quantity of rows in the board.",
-      "exclusiveMinimum": 3,
+      "inclusiveMinimum": 3,
       "type": "integer"
     }
   },
