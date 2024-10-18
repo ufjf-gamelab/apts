@@ -1,7 +1,7 @@
 {
-  "name": "apts",
-  "version": "4.0.0",
-  "description": "Engine to simulate tabletop games, inspired by AlphaZero algorithm",
+  "name": "apts-engine",
+  "version": "4.2.0",
+  "description": "Engine to simulate and create AI models for tabletop games, inspired by the AlphaZero algorithm.",
   "author": "Gabriel Malosto",
   "main": "src/index.ts",
   "type": "module",
@@ -31,7 +31,8 @@
   },
   "dependencies": {
     "@paralleldrive/cuid2": "^2.2.2",
-    "@tensorflow/tfjs": "^4.21.0"
+    "@tensorflow/tfjs": "^4.21.0",
+    "commander": "^12.1.0"
   },
   "include": [
     "src"
