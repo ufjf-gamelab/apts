@@ -1,4 +1,4 @@
-import { INCREMENT_ONE } from "src/types";
+import { INCREMENT_ONE, Integer } from "src/types";
 import Game from "../Game/Game";
 import State, { Move } from "../Game/State";
 
@@ -9,7 +9,7 @@ export const MINIMUM_PROBABILITY = 0;
 
 interface NodeParams<G extends Game> {
   explorationConstant: number;
-  quantityOfSearches: number;
+  quantityOfSearches: Integer;
   state: State<G>;
   parent?: Node<G>;
   takenMove?: Move;

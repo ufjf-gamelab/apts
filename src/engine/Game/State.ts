@@ -4,11 +4,18 @@ import Game from "./Game";
 type Channel = Integer;
 export type EncodedState = Pixel[][][];
 export type Move = Integer;
+export interface TurnOutcome {
+  gameHasEnded: boolean;
+  winner: Player | null;
+  // Points achieved by each player after this turn.
+  points: Map<Player, Points>;
+}
 export enum Pixel {
   Off = 0,
   On = 1,
 }
 export type Player = Integer;
+export type Points = number;
 export type Position = Integer;
 export type Slot = number;
 export type ValidMove = boolean;
@@ -19,6 +26,7 @@ export interface StateParams<G extends Game> {
   game: G;
   lastPlayer: Player | null;
   lastTakenMove: Move | null;
+  lastPlayersPoints: Map<Player, Points>;
   slots: Slot[];
 }
 
@@ -29,11 +37,20 @@ export default abstract class State<G extends Game> {
   // The player that played the last move, which resulted in the current state.
   protected readonly lastPlayer: StateParams<G>["lastPlayer"];
   protected readonly lastTakenMove: StateParams<G>["lastTakenMove"];
+  protected readonly lastPlayersPoints: StateParams<G>["lastPlayersPoints"];
 
-  constructor({ game, lastPlayer, lastTakenMove, slots }: StateParams<G>) {
+  constructor({
+    game,
+    lastPlayer,
+    lastTakenMove,
+    lastPlayersPoints,
+    slots,
+  }: StateParams<G>) {
     this.game = game;
-    this.lastPlayer = lastPlayer ? lastPlayer : null;
-    this.lastTakenMove = lastTakenMove ? lastTakenMove : null;
+    this.lastPlayer = lastPlayer;
+    this.lastTakenMove = lastTakenMove;
+    this.lastPlayersPoints = lastPlayersPoints;
+
     const quantityOfPositions = this.game.getQuantityOfPositions();
     if (slots.length !== quantityOfPositions)
       throw Error(`The quantity of slots given must be ${quantityOfPositions}`);
@@ -60,6 +77,8 @@ export default abstract class State<G extends Game> {
   public getLastPlayer(): Player | null {
     return this.lastPlayer;
   }
+
+  public abstract getTurnOutcome(): TurnOutcome;
 
   /// Return a copy of the slots.
   public getSlots(): Slot[] {

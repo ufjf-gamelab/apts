@@ -1,57 +1,72 @@
+import { INCREMENT_ONE, Integer } from "src/types";
 import Game from "../Game/Game";
 import State from "../Game/State";
-import { MonteCarloTreeSearchParams, Node } from "./Node";
+import { Node } from "./Node";
 
 const MINIMUM_PROBABILITY = 0;
 
-export default class MonteCarloTreeSearch<G extends Game> {
-  private game: G;
-  private params: MonteCarloTreeSearchParams;
+interface SearchParams<G extends Game> {
+  game: G;
+  explorationConstant: number;
+  quantityOfSearches: Integer;
+}
+
+export default class Search<G extends Game> {
+  private game: SearchParams<G>["game"];
+  private explorationConstant: SearchParams<G>["explorationConstant"];
+  private quantityOfSearches: SearchParams<G>["quantityOfSearches"];
 
   constructor({
     game,
-    params,
-  }: {
-    game: G;
-    params: MonteCarloTreeSearchParams;
-  }) {
+    explorationConstant,
+    quantityOfSearches,
+  }: SearchParams<G>) {
     this.game = game;
-    this.params = params;
+    this.explorationConstant = explorationConstant;
+    this.quantityOfSearches = quantityOfSearches;
   }
 
   /* Methods */
 
   /// Search for the best action to take.
+  // eslint-disable-next-line max-statements
   public search(state: State<G>): number[] {
-    const root = new Node({ game: this.game, params: this.params, state });
+    const root = new Node({
+      explorationConstant: this.explorationConstant,
+      parent: null,
+      state,
+      takenMove: null,
+    });
+    const currentPlayerOnTheGivenState = state.getCurrentPlayer();
 
     for (
       let currentSearchIndex = 0;
-      currentSearchIndex < this.params.searches;
+      currentSearchIndex < this.quantityOfSearches;
       currentSearchIndex += INCREMENT_ONE
     ) {
-      let node = root;
+      let currentNode = root;
 
-      // Selection phase
-      while (node.isFullyExpanded()) node = node.selectBestChild();
+      // Select a node which is not fully expanded
+      while (currentNode.isFullyExpanded())
+        currentNode = currentNode.selectBestChild();
 
-      const actionOutcome = Game.getActionOutcome(
-        node.getState(),
-        node.getTakenAction(),
-      );
-      // Flip the value, as the action was taken by the opponent
-      let outcomeValue = this.game.getOpponentValue(actionOutcome.value);
+      const turnOutcome = state.getTurnOutcome();
+      const { gameHasEnded } = turnOutcome;
+      let { points } = turnOutcome;
 
-      if (!actionOutcome.isTerminal) {
+      if (!gameHasEnded) {
         // Expansion phase
-        node = node.expand();
+        currentNode = currentNode.expand();
 
         // Simulation phase
-        outcomeValue = node.simulate();
+        points = currentNode.simulate();
       }
 
+      const lastPlayer = currentNode.getState().getLastPlayer();
+      if (lastPlayer === null) continue;
+
       // Backpropagation phase
-      node.backpropagate(outcomeValue);
+      currentNode.backpropagate(outcomeValue);
     }
 
     /// Get the action probabilities from the root node.

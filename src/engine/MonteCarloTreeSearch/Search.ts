@@ -1,13 +1,12 @@
 import * as tf from "@tensorflow/tfjs";
+import { INCREMENT_ONE } from "src/types";
 import Game from "../Game/Game";
 import State from "../Game/State";
 import { predictPolicyAndValueAndProbabilitiesAndActionFromState } from "../ResNet/predict";
 import ResNet from "../ResNet/ResNet";
 import { MINIMUM_PROBABILITY, Node } from "./Node";
-import { INCREMENT_ONE } from "src/types";
 
-
-interface MonteCarloTreeSearchParams<G extends Game> {
+interface SearchParams<G extends Game> {
   explorationConstant: number;
   game: G;
   quantityOfSearches: number;
@@ -15,17 +14,17 @@ interface MonteCarloTreeSearchParams<G extends Game> {
 }
 
 export default class Search<G extends Game> {
-  private explorationConstant: MonteCarloTreeSearchParams<G>["explorationConstant"];
-  private game: MonteCarloTreeSearchParams<G>["game"];
-  private quantityOfSearches: MonteCarloTreeSearchParams<G>["quantityOfSearches"];
-  private resNet: MonteCarloTreeSearchParams<G>["resNet"];
+  private explorationConstant: SearchParams<G>["explorationConstant"];
+  private game: SearchParams<G>["game"];
+  private quantityOfSearches: SearchParams<G>["quantityOfSearches"];
+  private resNet: SearchParams<G>["resNet"];
 
   constructor({
     explorationConstant,
     game,
     quantityOfSearches,
     resNet,
-  }: MonteCarloTreeSearchParams<G>) {
+  }: SearchParams<G>) {
     this.explorationConstant = explorationConstant;
     this.game = game;
     this.quantityOfSearches = quantityOfSearches;

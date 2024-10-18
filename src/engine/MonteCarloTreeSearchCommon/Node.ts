@@ -1,49 +1,51 @@
-import Game, { ActionOutcome } from "../Game/Game";
-import State, { Action, ValidAction } from "../Game/State";
+import { INCREMENT_ONE, Integer } from "src/types";
+import Game from "../Game/Game";
+import State, { Move, Player, TurnOutcome, ValidMove } from "../Game/State";
 
 const EMPTY_CHILDREN_LIST = 0;
 const MINIMUM_VALID_ACTIONS = 0;
-const MINIMUM_VALUE_SUM = 0;
-const MINIMUM_VISIT_COUNT = 0;
+const MINIMUM_VICTORY_QUALITY = 0;
+const MINIMUM_QUANTITY_OF_VISITS = 0;
 
-interface MonteCarloTreeSearchParams<G extends Game> {
-  explorationConstant: number;
-  quantityOfSearches: number;
+interface NodeParams<G extends Game> {
   state: State<G>;
+  takenMove: Move | null;
+  explorationConstant: number;
   parent: Node<G> | null;
 }
 
 export class Node<G extends Game> {
-  private params: MonteCarloTreeSearchParams;
-  private state: State<G>;
-  private parent: Node<G> | null;
-  private takenMove: Action | null;
+  private readonly state: NodeParams<G>["state"];
+  private readonly takenMove: NodeParams<G>["takenMove"];
+  private readonly explorationConstant: NodeParams<G>["explorationConstant"];
+  private readonly parent: NodeParams<G>["parent"];
 
-  private children: Node<G>[] = [];
-  private expandableActions: ValidAction[] = [];
+  private readonly children: Node<G>[] = [];
+  // Marks whether the move has been explored
+  private readonly expandableMoves: ValidMove[] = [];
 
-  private visitCount: number = MINIMUM_VISIT_COUNT;
-  private valueSum: number = MINIMUM_VALUE_SUM;
+  private quantityOfVisits: Integer = MINIMUM_QUANTITY_OF_VISITS;
+  private victoryQuality: Integer = MINIMUM_VICTORY_QUALITY;
+
+  private readonly game: G;
+  private readonly initialState: State<G>;
+  private readonly initialPlayer: Player;
 
   constructor({
-    params,
-    game,
-    state,
+    explorationConstant,
     parent,
-    actionTaken,
-  }: {
-    params: MonteCarloTreeSearchParams;
-    game: Game;
-    state: State<G>;
-    parent?: Node<G>;
-    actionTaken?: Action;
-  }) {
-    this.params = params;
-    this.game = game;
+    state,
+    takenMove,
+  }: NodeParams<G>) {
     this.state = state;
+    this.takenMove = takenMove;
+    this.explorationConstant = explorationConstant;
     this.parent = parent ? parent : null;
-    this.actionTaken = typeof actionTaken === "number" ? actionTaken : null;
-    this.expandableActions = this.state.getValidActions();
+
+    this.expandableMoves = this.state.getValidMoves();
+    this.game = this.state.getGame();
+    this.initialState = this.game.getInitialState();
+    this.initialPlayer = this.initialState.getCurrentPlayer();
   }
 
   /* Getters */
@@ -52,43 +54,38 @@ export class Node<G extends Game> {
     return this.state;
   }
 
-  public getTakenAction(): Action | null {
-    return this.actionTaken;
-  }
+  // public getChildren(): Node<G>[] {
+  //   return this.children;
+  // }
 
-  public getChildren(): Node<G>[] {
-    return this.children;
-  }
-
-  public getVisitCount(): number {
-    return this.visitCount;
-  }
+  // public getVisitCount(): number {
+  //   return this.quantityOfVisits;
+  // }
 
   /* Methods */
 
   /// Check if the node is fully expanded, i.e. all valid actions have been explored.
   public isFullyExpanded(): boolean {
-    const INCREMENT_ACTION_COUNTER = 1;
-    const numValidActions = this.expandableActions.reduce(
-      (counter, actionIsValid) =>
-        counter +
-        (actionIsValid ? INCREMENT_ACTION_COUNTER : MINIMUM_VALID_ACTIONS),
+    const expandedMoves = this.expandableMoves.reduce<Integer>(
+      (count, currentIsValid) =>
+        currentIsValid ? count + INCREMENT_ONE : count,
       MINIMUM_VALID_ACTIONS,
     );
-    return (
-      numValidActions === MINIMUM_VALID_ACTIONS &&
-      this.children.length > MINIMUM_VALID_ACTIONS
-    );
+    return this.children.length === expandedMoves;
   }
 
   /// Get the UCB value of a given child.
   private getChildUcb(child: Node<G>): number {
     // Privileges the child with the lowest exploitation, as it means the opponent will have the lowest chance of winning
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    const exploitation = 1 - (child.valueSum / child.visitCount + 1) / 2;
+
+    const exploitation =
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      1 - (child.victoryQuality / child.quantityOfVisits + 1) / 2;
+
     const exploration =
-      this.params.explorationConstant *
-      Math.sqrt(Math.log(this.visitCount) / child.visitCount);
+      this.explorationConstant *
+      Math.sqrt(Math.log(this.quantityOfVisits) / child.quantityOfVisits);
+
     return exploitation + exploration;
   }
 
@@ -117,77 +114,61 @@ export class Node<G extends Game> {
     return bestChild;
   }
 
-  /// Pick a random action from the list of valid actions.
-  private pickRandomAction(): Action {
-    const validActions: Action[] = this.expandableActions.reduce<Action[]>(
+  /// Pick a random move from the list of valid moves.
+  private pickRandomMove(): Move {
+    const validMoves: Move[] = this.expandableMoves.reduce<Move[]>(
       (actions, currentIsValid, index) =>
         currentIsValid ? [...actions, index] : actions,
       [],
     );
-    const randomIndex = Math.floor(Math.random() * validActions.length);
-    const selectedAction = validActions[randomIndex];
-    if (typeof selectedAction !== "number")
+
+    const randomIndex = Math.floor(Math.random() * validMoves.length);
+    const selectedMove = validMoves[randomIndex];
+
+    if (typeof selectedMove !== "number")
       throw new Error("No valid actions to pick from!");
-    return selectedAction;
+    return selectedMove;
   }
 
   /// Pick a random action and perform it, returning the outcome state as a child node.
   public expand(): Node<G> {
-    const initialPlayer = this.game.getInitialPlayer();
-    const nextPlayer = this.game.getOpponent(initialPlayer);
-
-    const selectedAction = this.pickRandomAction();
-    this.expandableActions[selectedAction] = false;
+    const selectedMove = this.pickRandomMove();
+    this.expandableMoves[selectedMove] = false;
 
     // Copy the state and play the action on the copy
-    const childState = this.state.clone();
-    childState.performAction(selectedAction, initialPlayer);
-    childState.changePerspective(initialPlayer, nextPlayer);
+    const newState = this.state.playMove(selectedMove);
+    const newStateInTheInitialPlayerPerspective = newState.changePerspective(
+      this.initialPlayer,
+    );
 
     const child = new Node({
-      actionTaken: selectedAction,
-      game: this.game,
-      params: this.params,
+      explorationConstant: this.explorationConstant,
       parent: this,
-      state: childState,
+      state: newStateInTheInitialPlayerPerspective,
+      takenMove: selectedMove,
     });
     this.children.push(child);
     return child;
   }
 
   /// Simulate a game from the current state, returning the outcome value.
-  public simulate(): ActionOutcome["value"] {
-    const initialPlayer = this.game.getInitialPlayer();
-    const nextPlayer = this.game.getOpponent(initialPlayer);
-
-    let { isTerminal, value } = Game.getActionOutcome(
-      this.state,
-      this.actionTaken,
-    );
-    value = this.game.getOpponentValue(value);
-    if (isTerminal) return value;
-
+  public simulate(): TurnOutcome["points"] {
     // Copy the state and play random actions, with alternate players, until the game is over
-    const rolloutState = this.state.clone();
-    let rolloutPlayer = initialPlayer;
+    let rolloutState = this.state.clone();
     for (;;) {
-      const selectedAction = this.pickRandomAction();
-      rolloutState.performAction(selectedAction, rolloutPlayer);
-      const actionOutcome = Game.getActionOutcome(rolloutState, selectedAction);
-      ({ isTerminal, value } = actionOutcome);
-      if (isTerminal) {
-        if (rolloutPlayer === nextPlayer)
-          value = this.game.getOpponentValue(value);
-        return value;
-      }
-      rolloutPlayer = this.game.getOpponent(rolloutPlayer);
+      const { points, gameHasEnded } = rolloutState.getTurnOutcome();
+      if (gameHasEnded) return points;
+
+      const selectedMove = this.pickRandomMove();
+      rolloutState = rolloutState.playMove(selectedMove);
     }
   }
 
   /// Backpropagate the outcome value to the root node.
-  public backpropagate(outcomeValue: ActionOutcome["value"]) {
-    this.valueSum += outcomeValue;
-    this.visitCount += INCREMENT_ONE;
+  public backpropagate(points: TurnOutcome["points"]) {
+    const 
+    this.victoryQuality += initialPlayerPoints;
+    this.quantityOfVisits += INCREMENT_ONE;
     const opponentValue = this.game.getOpponentValue(outcomeValue);
     if (this.parent) this.parent.backpropagate(opponentValue);
   }
