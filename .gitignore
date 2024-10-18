@@ -1,4 +1,5 @@
 # Development
+.args
 .envrc
 .direnv
 
@@ -7,4 +8,4 @@ node_modules
 dist
 
 # Runtime
-.env
+.env.local

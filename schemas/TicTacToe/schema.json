@@ -1,0 +1,20 @@
+{
+  "$id": "/TicTacToe/schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Description file for crating an instance of the TicTacToe game.",
+  "properties": {
+    "quantityOfColumns": {
+      "description": "The quantity of columns in the board.",
+      "exclusiveMinimum": 3,
+      "type": "integer"
+    },
+    "quantityOfRows": {
+      "description": "The quantity of rows in the board.",
+      "exclusiveMinimum": 3,
+      "type": "integer"
+    }
+  },
+  "required": ["quantityOfRows", "quantityOfColumns"],
+  "title": "TicTacToe arguments",
+  "type": "object"
+}
