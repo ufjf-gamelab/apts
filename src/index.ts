@@ -1,3 +1,3 @@
-import play from "./interface/play";
+import predict from "./interface/predict";
 
-play();
+predict();

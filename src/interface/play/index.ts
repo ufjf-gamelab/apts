@@ -9,7 +9,7 @@ const playMove = (state: State<TicTacToeGame>, move: Move) => {
   }
 
   const newState = state.playMove(move);
-  console.log(newState.toString());
+  console.log(newState);
   if (newState.getWinner()) {
     console.log(`Player ${newState.getWinner()} won!`);
   }
@@ -22,6 +22,7 @@ const play = () => {
     quantityOfRows: 3,
   });
   let state = ticTacToe.getInitialState();
+  console.log(state);
 
   state = playMove(state, Move.Northwest);
   state = playMove(state, Move.Center);
@@ -29,7 +30,8 @@ const play = () => {
   state = playMove(state, Move.West);
   state = playMove(state, Move.Southwest);
   state = playMove(state, Move.East);
-  playMove(state, Move.South);
+  console.log(state);
+  console.log(state.getTurnOutcome());
 };
 
 export default play;

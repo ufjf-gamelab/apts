@@ -1,22 +1,26 @@
 import { INCREMENT_ONE, Integer } from "src/types";
 import Game from "../Game/Game";
-import State, { Move, Player, TurnOutcome, ValidMove } from "../Game/State";
+import State, {
+  Move,
+  Player,
+  Points,
+  TurnOutcome,
+  ValidMove,
+} from "../Game/State";
 
 const EMPTY_CHILDREN_LIST = 0;
-const MINIMUM_VALID_ACTIONS = 0;
+const MINIMUM_VALID_MOVES = 0;
 const MINIMUM_VICTORY_QUALITY = 0;
 const MINIMUM_QUANTITY_OF_VISITS = 0;
 
 interface NodeParams<G extends Game> {
   state: State<G>;
-  takenMove: Move | null;
   explorationConstant: number;
   parent: Node<G> | null;
 }
 
 export class Node<G extends Game> {
   private readonly state: NodeParams<G>["state"];
-  private readonly takenMove: NodeParams<G>["takenMove"];
   private readonly explorationConstant: NodeParams<G>["explorationConstant"];
   private readonly parent: NodeParams<G>["parent"];
 
@@ -27,51 +31,41 @@ export class Node<G extends Game> {
   private quantityOfVisits: Integer = MINIMUM_QUANTITY_OF_VISITS;
   private victoryQuality: Integer = MINIMUM_VICTORY_QUALITY;
 
-  private readonly game: G;
-  private readonly initialState: State<G>;
   private readonly initialPlayer: Player;
 
-  constructor({
-    explorationConstant,
-    parent,
-    state,
-    takenMove,
-  }: NodeParams<G>) {
+  constructor({ explorationConstant, parent, state }: NodeParams<G>) {
     this.state = state;
-    this.takenMove = takenMove;
     this.explorationConstant = explorationConstant;
     this.parent = parent ? parent : null;
 
     this.expandableMoves = this.state.getValidMoves();
-    this.game = this.state.getGame();
-    this.initialState = this.game.getInitialState();
-    this.initialPlayer = this.initialState.getCurrentPlayer();
+    this.initialPlayer = state.getCurrentPlayer();
   }
 
   /* Getters */
+
+  public getChildren(): Node<G>[] {
+    return this.children;
+  }
+
+  public getQuantityOfVisits(): Integer {
+    return this.quantityOfVisits;
+  }
 
   public getState(): State<G> {
     return this.state;
   }
 
-  // public getChildren(): Node<G>[] {
-  //   return this.children;
-  // }
-
-  // public getVisitCount(): number {
-  //   return this.quantityOfVisits;
-  // }
-
   /* Methods */
 
   /// Check if the node is fully expanded, i.e. all valid actions have been explored.
   public isFullyExpanded(): boolean {
-    const expandedMoves = this.expandableMoves.reduce<Integer>(
+    const expandableMoves = this.expandableMoves.reduce<Integer>(
       (count, currentIsValid) =>
         currentIsValid ? count + INCREMENT_ONE : count,
-      MINIMUM_VALID_ACTIONS,
+      MINIMUM_VALID_MOVES,
     );
-    return this.children.length === expandedMoves;
+    return expandableMoves === MINIMUM_VALID_MOVES;
   }
 
   /// Get the UCB value of a given child.
@@ -145,7 +139,6 @@ export class Node<G extends Game> {
       explorationConstant: this.explorationConstant,
       parent: this,
       state: newStateInTheInitialPlayerPerspective,
-      takenMove: selectedMove,
     });
     this.children.push(child);
     return child;
@@ -165,11 +158,15 @@ export class Node<G extends Game> {
   }
 
   /// Backpropagate the outcome value to the root node.
-  public backpropagate(points: TurnOutcome["points"]) {
-    const 
-    this.victoryQuality += initialPlayerPoints;
+  public backpropagate(pointsAfterTheLastTurn: Map<Player, Points>) {
+    const initialPlayerPoints = pointsAfterTheLastTurn.get(this.initialPlayer);
+
+    this.victoryQuality += initialPlayerPoints
+      ? initialPlayerPoints
+      : MINIMUM_VICTORY_QUALITY;
+
     this.quantityOfVisits += INCREMENT_ONE;
-    const opponentValue = this.game.getOpponentValue(outcomeValue);
-    if (this.parent) this.parent.backpropagate(opponentValue);
+
+    if (this.parent) this.parent.backpropagate(pointsAfterTheLastTurn);
   }
 }

@@ -1,8 +1,10 @@
+import { Outcome } from "src/engine/Game/Game";
 import { INCREMENT_ONE } from "src/types";
 import State, {
   EncodedState,
   Pixel,
   StateParams,
+  TurnOutcome,
   ValidMove,
 } from "../../engine/Game/State";
 import TicTacToeGame from "./Game";
@@ -21,9 +23,10 @@ export class TicTacToeState extends State<TicTacToeGame> {
     game,
     lastPlayer,
     lastTakenMove,
+    lastPlayersPoints,
     slots,
   }: TicTacToeStateParams) {
-    super({ game, lastPlayer, lastTakenMove, slots });
+    super({ game, lastPlayer, lastPlayersPoints, lastTakenMove, slots });
     this.quantityOfColumns = game.getQuantityOfColumns();
     this.quantityOfRows = game.getQuantityOfRows();
   }
@@ -81,6 +84,35 @@ export class TicTacToeState extends State<TicTacToeGame> {
     }
 
     return encodedState;
+  }
+
+  public getTurnOutcome(): TurnOutcome {
+    const winner = this.getWinner();
+    
+    if (winner !== null) {
+      const points = new Map<Player, number>([
+        [Player.X, Outcome.Loss],
+        [Player.O, Outcome.Loss],
+      ]);
+      points.set(winner, Outcome.Win);
+      return { gameHasEnded: true, points, winner };
+    }
+
+    const points = new Map<Player, number>([
+      [Player.X, Outcome.Draw],
+      [Player.O, Outcome.Draw],
+    ]);
+
+    const validMoves = this.getValidMoves();
+    if (validMoves.every((validMove: boolean) => !validMove)) {
+      return { gameHasEnded: true, points, winner: null };
+    }
+
+    return {
+      gameHasEnded: false,
+      points,
+      winner: null,
+    };
   }
 
   public getValidMoves(): ValidMove[] {
@@ -162,6 +194,7 @@ export class TicTacToeState extends State<TicTacToeGame> {
     const newState = new TicTacToeState({
       game: this.game,
       lastPlayer: player,
+      lastPlayersPoints: this.lastPlayersPoints,
       lastTakenMove: this.lastTakenMove,
       slots: newSlots,
     });
@@ -172,6 +205,7 @@ export class TicTacToeState extends State<TicTacToeGame> {
     const clonedState = new TicTacToeState({
       game: this.game,
       lastPlayer: this.lastPlayer,
+      lastPlayersPoints: this.lastPlayersPoints,
       lastTakenMove: this.lastTakenMove,
       slots: this.getSlots(),
     });
@@ -182,9 +216,12 @@ export class TicTacToeState extends State<TicTacToeGame> {
     const newSlots = this.getSlots();
     const currentPlayer = this.getCurrentPlayer();
     newSlots[move] = currentPlayer;
+    const { points } = this.getTurnOutcome();
+
     const newState = new TicTacToeState({
       game: this.game,
       lastPlayer: currentPlayer,
+      lastPlayersPoints: points,
       lastTakenMove: move,
       slots: newSlots,
     });

@@ -1,6 +1,6 @@
 import State from "src/engine/Game/State";
 import { Integer } from "src/types";
-import Game from "../../engine/Game/Game";
+import Game, { Outcome } from "../../engine/Game/Game";
 import { TicTacToeState } from "./State";
 import { Player, Slot } from "./types";
 
@@ -15,14 +15,14 @@ export default class TicTacToeGame extends Game {
   private readonly quantityOfPlayers = 2;
 
   constructor({ quantityOfColumns, quantityOfRows }: TicTacToeGameParams) {
-    const quantityOfPositions: Integer = quantityOfColumns * quantityOfRows;
+    const quantityOfSlots: Integer = quantityOfColumns * quantityOfRows;
     super({
       name: "Tic Tac Toe",
       players: new Map([
         [Player.X, { name: "Player X", symbol: "X" }],
         [Player.O, { name: "Player O", symbol: "O" }],
       ]),
-      quantityOfPositions,
+      quantityOfSlots,
     });
     this.quantityOfColumns = quantityOfColumns;
     this.quantityOfRows = quantityOfRows;
@@ -42,14 +42,19 @@ export default class TicTacToeGame extends Game {
     return this.quantityOfRows;
   }
 
-  public getInitialState(): State<TicTacToeGame> {
-    const slots = Array<Slot>(this.getQuantityOfPositions()).fill(Slot.Empty);
-    return new TicTacToeState({
+  public getInitialState(): State<this> {
+    const slots = Array<Slot>(this.getQuantityOfSlots()).fill(Slot.Empty);
+    const initialState = new TicTacToeState({
       game: this,
       lastPlayer: null,
+      lastPlayersPoints: new Map([
+        [Player.X, Outcome.Draw],
+        [Player.O, Outcome.Draw],
+      ]),
       lastTakenMove: null,
       slots,
-    });
+    }) as unknown as State<this>;
+    return initialState;
   }
 
   public getInitialPlayer(): Player {

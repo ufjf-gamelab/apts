@@ -1,9 +1,10 @@
 import { INCREMENT_ONE, Integer } from "src/types";
 import Game from "../Game/Game";
-import State from "../Game/State";
+import State, { Player, Points } from "../Game/State";
 import { Node } from "./Node";
 
 const MINIMUM_PROBABILITY = 0;
+const MINIMUM_POINTS = 0;
 
 interface SearchParams<G extends Game> {
   game: G;
@@ -29,15 +30,13 @@ export default class Search<G extends Game> {
   /* Methods */
 
   /// Search for the best action to take.
-  // eslint-disable-next-line max-statements
+  // eslint-disable-next-line max-statements, max-lines-per-function
   public search(state: State<G>): number[] {
     const root = new Node({
       explorationConstant: this.explorationConstant,
       parent: null,
       state,
-      takenMove: null,
     });
-    const currentPlayerOnTheGivenState = state.getCurrentPlayer();
 
     for (
       let currentSearchIndex = 0;
@@ -47,12 +46,21 @@ export default class Search<G extends Game> {
       let currentNode = root;
 
       // Select a node which is not fully expanded
-      while (currentNode.isFullyExpanded())
+      while (currentNode.isFullyExpanded()) {
+        // TODO: Fix
         currentNode = currentNode.selectBestChild();
+      }
 
       const turnOutcome = state.getTurnOutcome();
       const { gameHasEnded } = turnOutcome;
       let { points } = turnOutcome;
+
+      const totalPoints = new Map<Player, Points>(
+        Array.from(points.keys()).map(player => {
+          const playerPoints = points.get(player);
+          return [player, playerPoints ? playerPoints : MINIMUM_POINTS];
+        }),
+      );
 
       if (!gameHasEnded) {
         // Expansion phase
@@ -60,26 +68,34 @@ export default class Search<G extends Game> {
 
         // Simulation phase
         points = currentNode.simulate();
+
+        points.forEach((playerPoints, player) => {
+          const currentPoints = totalPoints.get(player);
+          totalPoints.set(
+            player,
+            currentPoints ? currentPoints + playerPoints : playerPoints,
+          );
+        });
       }
 
       const lastPlayer = currentNode.getState().getLastPlayer();
       if (lastPlayer === null) continue;
 
       // Backpropagation phase
-      currentNode.backpropagate(outcomeValue);
+      currentNode.backpropagate(totalPoints);
     }
 
     /// Get the action probabilities from the root node.
-    let actionProbabilities = new Array<number>(this.game.getActionSize()).fill(
-      MINIMUM_PROBABILITY,
-    );
+    let actionProbabilities = new Array<number>(
+      this.game.getQuantityOfSlots(),
+    ).fill(MINIMUM_PROBABILITY);
 
     for (const child of root.getChildren()) {
-      const takenAction = child.getTakenAction();
-      if (takenAction === null) {
+      const lastTakenMove = child.getState().getLastTakenMove();
+      if (lastTakenMove === null) {
         continue;
       }
-      actionProbabilities[takenAction] = child.getVisitCount();
+      actionProbabilities[lastTakenMove] = child.getQuantityOfVisits();
     }
 
     const sum = actionProbabilities.reduce(

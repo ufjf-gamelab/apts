@@ -51,9 +51,9 @@ export default abstract class State<G extends Game> {
     this.lastTakenMove = lastTakenMove;
     this.lastPlayersPoints = lastPlayersPoints;
 
-    const quantityOfPositions = this.game.getQuantityOfPositions();
-    if (slots.length !== quantityOfPositions)
-      throw Error(`The quantity of slots given must be ${quantityOfPositions}`);
+    const quantityOfSlots = this.game.getQuantityOfSlots();
+    if (slots.length !== quantityOfSlots)
+      throw Error(`The quantity of slots given must be ${quantityOfSlots}`);
     this.slots = slots;
   }
 
@@ -76,6 +76,10 @@ export default abstract class State<G extends Game> {
 
   public getLastPlayer(): Player | null {
     return this.lastPlayer;
+  }
+
+  public getLastTakenMove(): Move | null {
+    return this.lastTakenMove;
   }
 
   public abstract getTurnOutcome(): TurnOutcome;

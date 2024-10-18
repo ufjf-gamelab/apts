@@ -15,18 +15,18 @@ export interface PlayerData {
 interface GameParams {
   name: string;
   players: Map<Player, PlayerData>;
-  quantityOfPositions: Integer;
+  quantityOfSlots: Integer;
 }
 
 export default abstract class Game {
   private readonly name: GameParams["name"];
   private readonly players: GameParams["players"];
-  protected readonly quantityOfPositions: GameParams["quantityOfPositions"];
+  protected readonly quantityOfSlots: GameParams["quantityOfSlots"];
 
-  constructor({ name, players, quantityOfPositions }: GameParams) {
+  constructor({ name, players, quantityOfSlots }: GameParams) {
     this.name = name;
     this.players = players;
-    this.quantityOfPositions = quantityOfPositions;
+    this.quantityOfSlots = quantityOfSlots;
   }
 
   /* Getters */
@@ -50,7 +50,7 @@ export default abstract class Game {
 
   public abstract getQuantityOfPlayers(): number;
 
-  public getQuantityOfPositions() {
-    return this.quantityOfPositions;
+  public getQuantityOfSlots() {
+    return this.quantityOfSlots;
   }
 }
