@@ -14,6 +14,9 @@ importers:
       '@tensorflow/tfjs':
         specifier: ^4.21.0
         version: 4.21.0(seedrandom@3.0.5)
+      '@viz-js/viz':
+        specifier: ^3.9.0
+        version: 3.9.0
       commander:
         specifier: ^12.1.0
         version: 12.1.0
@@ -545,6 +548,9 @@ packages:
   '@typescript-eslint/visitor-keys@8.9.0':
     resolution: {integrity: sha512-Ht4y38ubk4L5/U8xKUBfKNYGmvKvA1CANoxiTRMM+tOLk3lbF3DvzZCxJCRSE+2GdCMSh6zq9VZJc3asc1XuAA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@viz-js/viz@3.9.0':
+    resolution: {integrity: sha512-bwm18uYf1T7xQPkSzi0yiLS/abykB23PKyMPUKnGUxbUZSIclwBWNb0ywhG26XL2j+GAyvNy0AlOht/mIrY/dA==}
 
   '@webgpu/types@0.1.38':
     resolution: {integrity: sha512-7LrhVKz2PRh+DD7+S+PVaFd5HxaWQvoMqBbsV9fNJO1pjUs1P8bM2vQVNfk+3URTqbuTI7gkXi0rfsN0IadoBA==}
@@ -1473,6 +1479,8 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.9.0
       eslint-visitor-keys: 3.4.3
+
+  '@viz-js/viz@3.9.0': {}
 
   '@webgpu/types@0.1.38': {}
 

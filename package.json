@@ -32,6 +32,7 @@
   "dependencies": {
     "@paralleldrive/cuid2": "^2.2.2",
     "@tensorflow/tfjs": "^4.21.0",
+    "@viz-js/viz": "^3.9.0",
     "commander": "^12.1.0",
     "dotenv": "^16.4.5"
   },

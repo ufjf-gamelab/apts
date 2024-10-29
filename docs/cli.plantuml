@@ -1,0 +1,53 @@
+@startuml cli
+title Command Line Interface
+!pragma useVerticalIf on
+skinparam ConditionEndStyle hline
+
+!$version = "4.2.0"
+!$games = "connect4, tictactoe"
+
+start
+
+switch (apts-engine) 
+  case ([none], -h, --help)
+    :Echo `Usage: apts-engine [options] [command]`;
+
+  case (-V, --version)
+    :Echo `$version`;
+
+  case (desc-file)
+    (A)
+  detach
+
+  ' ========================
+
+  partition desc-file {
+    (A)
+    switch (desc-file)
+
+    case ([none])
+      :Echo `error: missing required argument 'game'`;
+
+    case ([game])
+      :Echo `error: missing required argument 'output'`;  
+
+    case ([game], [output])
+      if ([game] is an implemented game) then(no)
+        :Echo `error: command-argument value 'game' is invalid for argument 'game'. Allowed choices are $games.`;
+        end
+      else (yes)
+        if ([output] is a valid file) then(no)
+          :Echo `error: command-argument value '[output]' is invalid for argument 'output'.`;
+          end
+        else (yes)
+          :Create or update the specified description file with the required arguments to descript the selected game.;
+        endif
+      endif
+
+    endswitch
+  }
+
+endswitch
+stop
+
+@enduml
