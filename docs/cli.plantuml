@@ -5,42 +5,109 @@ skinparam ConditionEndStyle hline
 
 !$version = "4.2.0"
 !$games = "connect4, tictactoe"
+!$help_message = "Display general help information."
 
 start
 
-switch (apts-engine) 
+switch (apts-engine)
+
   case ([none], -h, --help)
-    :Echo `Usage: apts-engine [options] [command]`;
+    :$help_message;
+    stop
 
   case (-V, --version)
     :Echo `$version`;
+    stop
+
+  case (help)
+    (H)
+    detach
+
+  case (play)
+    (P)
+    detach
+
+  case (predict)
+    (R)
+    detach
 
   case (desc-file)
-    (A)
-  detach
+    (D)
+    detach
+
+  ' ========================
+
+  partition Help {
+    (H)
+    switch (help)
+
+    case ([none])
+      :$help_message;
+      stop
+
+    case ([command])
+      if ([command] is an implemented command) then(no)
+        :$help_message;
+        stop
+
+      else (yes)
+        :Display help information for the specified command.;
+        stop
+      endif
+
+    endswitch
+  }
+
+  ' ========================
+
+  partition play {
+    (P)
+    switch (play)
+
+    case ([none])
+      :Echo `error: missing required argument 'game'`;
+      end
+
+    case ([game])
+      if ([game] is an implemented game) then(no)
+        :Echo `error: command-argument value 'game' is invalid for argument 'game'. Allowed choices are $games.`;
+        end
+
+      else (yes)
+        :Play the selected game with the specified arguments.;
+        stop
+      endif
+
+    endswitch
+  }
 
   ' ========================
 
   partition desc-file {
-    (A)
+    (D)
     switch (desc-file)
 
     case ([none])
       :Echo `error: missing required argument 'game'`;
+      end
 
     case ([game])
       :Echo `error: missing required argument 'output'`;  
+      end
 
     case ([game], [output])
       if ([game] is an implemented game) then(no)
         :Echo `error: command-argument value 'game' is invalid for argument 'game'. Allowed choices are $games.`;
         end
+
       else (yes)
         if ([output] is a valid file) then(no)
           :Echo `error: command-argument value '[output]' is invalid for argument 'output'.`;
           end
+
         else (yes)
           :Create or update the specified description file with the required arguments to descript the selected game.;
+          stop
         endif
       endif
 
@@ -48,6 +115,5 @@ switch (apts-engine)
   }
 
 endswitch
-stop
 
 @enduml
