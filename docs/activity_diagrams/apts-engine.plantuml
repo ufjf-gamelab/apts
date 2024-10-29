@@ -1,11 +1,12 @@
-@startuml cli
+@startuml apts-engine
 title Command Line Interface
 !pragma useVerticalIf on
 skinparam ConditionEndStyle hline
 
 !$version = "4.2.0"
-!$games = "connect4, tictactoe"
 !$help_message = "Display general help information."
+!$games = "connect4, tictactoe"
+!$modes = "PvP, PvC, CvC"
 
 start
 
@@ -46,7 +47,7 @@ switch (apts-engine)
       stop
 
     case ([command])
-      if ([command] is an implemented command) then(no)
+      if ([command] is an implemented command?) then(no)
         :$help_message;
         stop
 
@@ -65,17 +66,27 @@ switch (apts-engine)
     switch (play)
 
     case ([none])
-      :Echo `error: missing required argument 'game'`;
+      :Echo `error: missing required argument 'game'`.;
       end
 
     case ([game])
-      if ([game] is an implemented game) then(no)
-        :Echo `error: command-argument value 'game' is invalid for argument 'game'. Allowed choices are $games.`;
+      :Echo `error: missing required argument 'mode'`.;
+      end
+
+    case ([game] [mode])
+      if ([game] is an implemented game?) then(no)
+        :Echo `error: command-argument value 'game' is invalid for argument 'game'. Allowed choices are $games.`.;
         end
 
       else (yes)
+        if ([mode] is valid?) then(no)
+          :Echo `error: command-argument value 'mode' is invalid for argument 'mode'. Allowed choices are $modes.`.;
+          end
+
+        else (yes)
         :Play the selected game with the specified arguments.;
         stop
+        endif
       endif
 
     endswitch
@@ -88,21 +99,21 @@ switch (apts-engine)
     switch (desc-file)
 
     case ([none])
-      :Echo `error: missing required argument 'game'`;
+      :Echo `error: missing required argument 'game'`.;
       end
 
     case ([game])
-      :Echo `error: missing required argument 'output'`;  
+      :Echo `error: missing required argument 'output'`.;
       end
 
-    case ([game], [output])
-      if ([game] is an implemented game) then(no)
-        :Echo `error: command-argument value 'game' is invalid for argument 'game'. Allowed choices are $games.`;
+    case ([game] [output])
+      if ([game] is an implemented game?) then(no)
+        :Echo `error: command-argument value 'game' is invalid for argument 'game'. Allowed choices are $games.`.;
         end
 
       else (yes)
-        if ([output] is a valid file) then(no)
-          :Echo `error: command-argument value '[output]' is invalid for argument 'output'.`;
+        if ([output] is a valid file?) then(no)
+          :Echo `error: command-argument value '[output]' is invalid for argument 'output'`.;
           end
 
         else (yes)
