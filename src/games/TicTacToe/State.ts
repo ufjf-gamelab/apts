@@ -1,4 +1,3 @@
-import { Outcome } from "src/engine/Game/Game";
 import { INCREMENT_ONE } from "src/types";
 import State, {
   EncodedState,
@@ -7,7 +6,7 @@ import State, {
   TurnOutcome,
   ValidMove,
 } from "../../engine/Game/State";
-import TicTacToeGame from "./Game";
+import TicTacToeGame, { Outcome } from "./Game";
 import { Channel, Move, Player, Slot } from "./types";
 
 const ADJUST_INDEX = 1;
@@ -23,10 +22,10 @@ export class TicTacToeState extends State<TicTacToeGame> {
     game,
     lastPlayer,
     lastTakenMove,
-    lastPlayersPoints,
+    lastPoints,
     slots,
   }: TicTacToeStateParams) {
-    super({ game, lastPlayer, lastPlayersPoints, lastTakenMove, slots });
+    super({ game, lastPlayer, lastPoints, lastTakenMove, slots });
     this.quantityOfColumns = game.getQuantityOfColumns();
     this.quantityOfRows = game.getQuantityOfRows();
   }
@@ -88,7 +87,7 @@ export class TicTacToeState extends State<TicTacToeGame> {
 
   public getTurnOutcome(): TurnOutcome {
     const winner = this.getWinner();
-    
+
     if (winner !== null) {
       const points = new Map<Player, number>([
         [Player.X, Outcome.Loss],
@@ -194,7 +193,7 @@ export class TicTacToeState extends State<TicTacToeGame> {
     const newState = new TicTacToeState({
       game: this.game,
       lastPlayer: player,
-      lastPlayersPoints: this.lastPlayersPoints,
+      lastPoints: this.lastPoints,
       lastTakenMove: this.lastTakenMove,
       slots: newSlots,
     });
@@ -205,7 +204,7 @@ export class TicTacToeState extends State<TicTacToeGame> {
     const clonedState = new TicTacToeState({
       game: this.game,
       lastPlayer: this.lastPlayer,
-      lastPlayersPoints: this.lastPlayersPoints,
+      lastPoints: this.lastPoints,
       lastTakenMove: this.lastTakenMove,
       slots: this.getSlots(),
     });
@@ -221,7 +220,7 @@ export class TicTacToeState extends State<TicTacToeGame> {
     const newState = new TicTacToeState({
       game: this.game,
       lastPlayer: currentPlayer,
-      lastPlayersPoints: points,
+      lastPoints: points,
       lastTakenMove: move,
       slots: newSlots,
     });

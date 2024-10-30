@@ -1,8 +1,14 @@
 import State from "src/engine/Game/State";
 import { Integer } from "src/types";
-import Game, { Outcome } from "../../engine/Game/Game";
+import Game from "../../engine/Game/Game";
 import { TicTacToeState } from "./State";
 import { Player, Slot } from "./types";
+
+export enum Outcome {
+  Loss = -1,
+  Draw = 0,
+  Win = 1,
+}
 
 interface TicTacToeGameParams {
   quantityOfRows: Integer;
@@ -47,7 +53,7 @@ export default class TicTacToeGame extends Game {
     const initialState = new TicTacToeState({
       game: this,
       lastPlayer: null,
-      lastPlayersPoints: new Map([
+      lastPoints: new Map([
         [Player.X, Outcome.Draw],
         [Player.O, Outcome.Draw],
       ]),

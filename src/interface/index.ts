@@ -6,10 +6,10 @@ import {
   program,
 } from "commander";
 import { WriteStream } from "fs";
+import prompts from "prompts";
 import TicTacToeGame from "src/games/TicTacToe/Game";
 import { FileOperation, validateFilePath } from "./file";
 import play from "./play";
-
 enum GameName {
   Connect4 = "connect4",
   TicTacToe = "tictactoe",
@@ -26,6 +26,11 @@ interface CommandDefinition {
   arguments?: Argument[];
   options?: Option[];
 }
+
+export type GetInput = (
+  questions: prompts.PromptObject | prompts.PromptObject[],
+) => Promise<prompts.Answers<string>>;
+const getInput: GetInput = async questions => await prompts(questions);
 
 const parseJsonFile = (filePath: string) => {
   const hasJsonExtension = filePath.endsWith(".json");
@@ -55,18 +60,19 @@ const descFileAction = (game: GameName, output: WriteStream) => {
   }
 };
 
-const playAction = (game: string, gameMode: GameMode) => {
+const playAction = async (game: string, gameMode: GameMode) => {
   switch (game as GameName) {
     case GameName.Connect4:
       console.log("Playing Connect 4...");
       break;
     case GameName.TicTacToe:
-      play({
+      await play({
         game: new TicTacToeGame({
           quantityOfColumns: 3,
           quantityOfRows: 3,
         }),
         gameMode,
+        getInput,
       });
       break;
     default:
