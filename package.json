@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "esbuild src/index.ts --bundle --packages=external --platform=node --format=esm --outdir=dist --sourcemap",
+    "build-run": "pnpm run build && node dist/index.js",
     "lint": "pnpm exec eslint ./src/** --fix",
     "format": "pnpm exec prettier . -w",
     "typecheck": "pnpm exec tsc"

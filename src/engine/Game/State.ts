@@ -16,8 +16,10 @@ export enum Pixel {
 }
 export type Player = Integer;
 export type Points = number;
+// Index of a slot in the state.
 export type Position = Integer;
-export type Slot = number;
+// Content of a slot in the state.
+export type Slot = Integer;
 export type ValidMove = boolean;
 
 const MINIMUM_POSITION = 0;
@@ -26,7 +28,7 @@ export interface StateParams<G extends Game> {
   game: G;
   lastPlayer: Player | null;
   lastTakenMove: Move | null;
-  lastPlayersPoints: Map<Player, Points>;
+  lastPoints: Map<Player, Points>;
   slots: Slot[];
 }
 
@@ -37,19 +39,19 @@ export default abstract class State<G extends Game> {
   // The player that played the last move, which resulted in the current state.
   protected readonly lastPlayer: StateParams<G>["lastPlayer"];
   protected readonly lastTakenMove: StateParams<G>["lastTakenMove"];
-  protected readonly lastPlayersPoints: StateParams<G>["lastPlayersPoints"];
+  protected readonly lastPoints: StateParams<G>["lastPoints"];
 
   constructor({
     game,
     lastPlayer,
     lastTakenMove,
-    lastPlayersPoints,
+    lastPoints,
     slots,
   }: StateParams<G>) {
     this.game = game;
     this.lastPlayer = lastPlayer;
     this.lastTakenMove = lastTakenMove;
-    this.lastPlayersPoints = lastPlayersPoints;
+    this.lastPoints = lastPoints;
 
     const quantityOfSlots = this.game.getQuantityOfSlots();
     if (slots.length !== quantityOfSlots)

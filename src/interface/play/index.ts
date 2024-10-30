@@ -1,8 +1,9 @@
+import Game from "src/engine/Game/Game";
 import State from "src/engine/Game/State";
-import TicTacToeGame from "src/games/TicTacToe/Game";
 import { Move } from "src/games/TicTacToe/types";
+import { GameMode } from "..";
 
-const playMove = (state: State<TicTacToeGame>, move: Move) => {
+const playMove = <G extends Game>(state: State<G>, move: Move) => {
   if (state.getWinner()) {
     console.log(`Player ${state.getWinner()} has already won!`);
     return state;
@@ -16,22 +17,42 @@ const playMove = (state: State<TicTacToeGame>, move: Move) => {
   return newState;
 };
 
-const play = () => {
-  const ticTacToe = new TicTacToeGame({
-    quantityOfColumns: 3,
-    quantityOfRows: 3,
-  });
-  let state = ticTacToe.getInitialState();
-  console.log(state, "\n");
-  console.log(state.toString());
+const printValidMoves = <G extends Game>(state: State<G>) => {
+  const validMovesMask = state.getValidMoves();
+  const validMoves = validMovesMask.map((validMove, index) =>
+    validMove ? index : null,
+  );
+  console.log(
+    "Valid moves:",
+    validMoves.filter(move => move !== null),
+  );
+};
 
-  state = playMove(state, Move.Northwest);
-  state = playMove(state, Move.Center);
-  state = playMove(state, Move.North);
-  state = playMove(state, Move.West);
-  state = playMove(state, Move.Southwest);
-  state = playMove(state, Move.East);
-  console.log("\n", state.getTurnOutcome());
+const printContext = <G extends Game>(state: State<G>) => {
+  console.log(state.toString());
+  printValidMoves(state);
+};
+
+interface PlayParams<G extends Game> {
+  game: G;
+  gameMode: GameMode;
+}
+
+const play = <G extends Game>({ game, gameMode }: PlayParams<G>) => {
+  console.log(`Game: ${game.getName()}`);
+  console.log(`Mode: ${gameMode}\n`);
+
+  let state = game.getInitialState();
+  let player = state.getCurrentPlayer();
+  printContext(state);
+
+  // state = playMove(state, Move.Northwest);
+  // state = playMove(state, Move.Center);
+  // state = playMove(state, Move.North);
+  // state = playMove(state, Move.West);
+  // state = playMove(state, Move.Southwest);
+  // state = playMove(state, Move.East);
+  // console.log("\n", state.getTurnOutcome());
 };
 
 export default play;

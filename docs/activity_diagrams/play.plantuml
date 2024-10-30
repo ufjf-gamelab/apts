@@ -11,18 +11,18 @@ repeat
 
   partition Turn {
 
-  :Echo `Player X's turn.`;
+  :Echo `Player X's turn.`.;
   :Print valid moves.;
 
   if(Player X is a human?) then (yes)
     :Read move.;
     while (Player X's move is valid?) is (no)
-      :Echo `Invalid move.`;
+      :Echo `Invalid move.`.;
+      backward:Read move.;
     endwhile (yes)
   else (no)
     :Predict the best move.;
   endif
-
 
   :Play move.;
   :Print updated state of the game.;
