@@ -1,4 +1,5 @@
-import { Char, Integer } from "../../types";
+import { Char, INCREMENT_ONE, Integer } from "../../types";
+import Move from "./Move";
 import State from "./State";
 
 export type Player = Integer;
@@ -8,28 +9,37 @@ export interface PlayerData {
   name: string;
 }
 
-interface GameParams {
+interface GameParams<M extends Move> {
   name: string;
   players: Map<Player, PlayerData>;
   quantityOfSlots: Integer;
+  moves: M[];
 }
 
-export default abstract class Game {
-  private readonly name: GameParams["name"];
-  private readonly players: GameParams["players"];
-  protected readonly quantityOfSlots: GameParams["quantityOfSlots"];
+export default abstract class Game<M extends Move> {
+  private readonly name: GameParams<M>["name"];
+  private readonly players: GameParams<M>["players"];
+  protected readonly quantityOfSlots: GameParams<M>["quantityOfSlots"];
+  protected readonly moves: GameParams<M>["moves"];
 
-  constructor({ name, players, quantityOfSlots }: GameParams) {
+  constructor({ name, players, quantityOfSlots, moves }: GameParams<M>) {
     this.name = name;
     this.players = players;
     this.quantityOfSlots = quantityOfSlots;
+    let lastIndex = -1;
+    for (const move of moves) {
+      if (move.getIndex() !== lastIndex + INCREMENT_ONE)
+        throw Error("Moves must be sorted by their index");
+      lastIndex = move.getIndex();
+    }
+    this.moves = moves;
   }
 
   /* Getters */
 
-  public abstract getInitialState(): State<this>;
+  public abstract getInitialState(): State<this, M>;
 
-  public getName(): string {
+  public getName(): GameParams<M>["name"] {
     return this.name;
   }
 
@@ -40,13 +50,15 @@ export default abstract class Game {
     return { ...playerData };
   }
 
-  public getPlayers(): Map<Player, PlayerData> {
+  public getPlayers(): GameParams<M>["players"] {
     return { ...this.players };
   }
 
-  public abstract getQuantityOfPlayers(): Integer;
-
-  public getQuantityOfSlots(): Integer {
+  public getQuantityOfSlots(): GameParams<M>["quantityOfSlots"] {
     return this.quantityOfSlots;
+  }
+
+  public getMoves(): GameParams<M>["moves"] {
+    return { ...this.moves };
   }
 }

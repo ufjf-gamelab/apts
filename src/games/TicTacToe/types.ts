@@ -15,7 +15,7 @@ export enum Channel {
   X = 2,
 }
 
-export enum Move {
+export enum Position {
   Northwest = 0,
   North = 1,
   Northeast = 2,

@@ -1,9 +1,9 @@
 import { Integer } from "../../types";
 import Game, { Player } from "./Game";
+import Move from "./Move";
 
 type Channel = Integer;
 export type EncodedState = Pixel[][][];
-export type Move = Integer;
 export interface TurnOutcome {
   gameHasEnded: boolean;
   winner: Player | null;
@@ -19,26 +19,25 @@ export type Points = number;
 export type Position = Integer;
 // Content of a slot in the state.
 export type Slot = Integer;
-export type ValidMove = boolean;
 
 const MINIMUM_POSITION = 0;
 
-export interface StateParams<G extends Game> {
+export interface StateParams<G extends Game<M>, M extends Move> {
   game: G;
   lastPlayer: Player | null;
-  lastTakenMove: Move | null;
+  lastTakenMove: M | null;
   lastPoints: Map<Player, Points>;
   slots: Slot[];
 }
 
-export default abstract class State<G extends Game> {
-  protected readonly game: StateParams<G>["game"];
-  private readonly slots: StateParams<G>["slots"];
+export default abstract class State<G extends Game<M>, M extends Move> {
+  protected readonly game: StateParams<G, M>["game"];
+  private readonly slots: StateParams<G, M>["slots"];
 
   // The player that played the last move, which resulted in the current state.
-  protected readonly lastPlayer: StateParams<G>["lastPlayer"];
-  protected readonly lastTakenMove: StateParams<G>["lastTakenMove"];
-  protected readonly lastPoints: StateParams<G>["lastPoints"];
+  protected readonly lastPlayer: StateParams<G, M>["lastPlayer"];
+  protected readonly lastTakenMove: StateParams<G, M>["lastTakenMove"];
+  protected readonly lastPoints: StateParams<G, M>["lastPoints"];
 
   constructor({
     game,
@@ -46,7 +45,7 @@ export default abstract class State<G extends Game> {
     lastTakenMove,
     lastPoints,
     slots,
-  }: StateParams<G>) {
+  }: StateParams<G, M>) {
     this.game = game;
     this.lastPlayer = lastPlayer;
     this.lastTakenMove = lastTakenMove;
@@ -75,18 +74,18 @@ export default abstract class State<G extends Game> {
     return this.game;
   }
 
-  public getLastPlayer(): Player | null {
+  public getLastPlayer(): StateParams<G, M>["lastPlayer"] {
     return this.lastPlayer;
   }
 
-  public getLastTakenMove(): Move | null {
+  public getLastTakenMove(): StateParams<G, M>["lastTakenMove"] {
     return this.lastTakenMove;
   }
 
   public abstract getTurnOutcome(): TurnOutcome;
 
   /// Return a copy of the slots.
-  public getSlots(): Slot[] {
+  public getSlots(): StateParams<G, M>["slots"] {
     return this.slots.slice();
   }
 
@@ -100,18 +99,28 @@ export default abstract class State<G extends Game> {
     return slot;
   }
 
-  public abstract getValidMoves(): ValidMove[];
+  public abstract getValidMoves(): Move[];
+
+  public getMaskFromValidMoves(): boolean[] {
+    const validMoves = this.getValidMoves();
+    const moves = this.game.getMoves();
+    const mask = Array<boolean>(moves.length).fill(false);
+    for (const move of validMoves) {
+      mask[move.getIndex()] = true;
+    }
+    return mask;
+  }
 
   public abstract getWinner(): Player | null;
 
   /* Methods */
 
   /// Return the state with the perspective changed relative to the informed player.
-  public abstract changePerspective(player: Player): State<G>;
+  public abstract changePerspective(player: Player): State<G, M>;
 
-  public abstract clone(): State<G>;
+  public abstract clone(): State<G, M>;
 
-  public abstract playMove(move: Move): State<G>;
+  public abstract playMove(move: Move): State<G, M>;
 
   public abstract toString(): string;
 
