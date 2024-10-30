@@ -1,12 +1,12 @@
-@startuml class_diagram_game_state
-title Class diagram: Game and State
+@startuml class_diagram_base
+title Class diagram: Game, State and Move
 
 hide empty members
 
 !function $type($a)
 !return "struct " + $a + " << (T,lavender) >>"
 !endfunction
-!$G = "<G extends Game>"
+!$G = "<G extends Game<M>, M extends Move>"
 
 package Types << rectangle >> {
 
@@ -28,6 +28,27 @@ package Types << rectangle >> {
 
 }
 
+package move_package as "Move"{
+
+  interface MoveParams {
+    title: string
+    description: string
+  }
+
+  abstract class Move {
+    - index: Integer
+    - title: MoveParams::title
+    - description: MoveParams::description
+    --
+    + getIndex(): Integer
+    + getTitle(): MoveParams::title
+    + getDescription(): MoveParams::description
+  }
+  Move::title --> MoveParams::title
+  Move::description --> MoveParams::description
+
+}
+
 package game_package as "Game" {
 
   package Aliases << rectangle >> {
@@ -42,30 +63,34 @@ package game_package as "Game" {
     name: string
   }
 
-  interface GameParams {
+  interface GameParams <M extends Move> {
     name: string
     players: Map<Player, PlayerData>
     quantityOfSlots: Integer
+    moves: M
   }
   GameParams::players --> Player
   GameParams::players --> PlayerData
+  GameParams::moves --> Move
 
-  abstract class Game {
+  abstract class Game<M extends Move> {
     - name: GameParams::name
     - players: GameParams::players
     # quantityOfSlots: GameParams::quantityOfSlots
+    # moves: GameParams::moves
     --
-    + getName(): string
+    + getName(): GameParams::name
     + getPlayerData(player: Player): PlayerData
-    + getPlayers(): Map<Player, PlayerData>
-    + getQuantityOfSlots(): Integer
+    + getPlayers(): GameParams::players
+    + getQuantityOfSlots(): GameParams::quantityOfSlots
+    + getMoves(): GameParams::moves
     .. abstract ..
     + {abstract} getInitialState(): State<this>
-    + {abstract} getQuantityOfPlayers(): Integer
   }
   Game::name --> GameParams::name
   Game::players --> GameParams::players
   Game::quantityOfSlots --> GameParams::quantityOfSlots
+  Game::moves --> GameParams::moves
   
 }
 
@@ -84,9 +109,6 @@ package state_package as "State" {
 
     $type(Channel)
     Channel [alias] ..> Integer
-
-    $type(Move) 
-    Move [alias] ..> Integer
 
     $type(EncodedState) {
       Pixel[][][]
@@ -120,7 +142,7 @@ package state_package as "State" {
     game: G
     lastPlayer: Player | null
     lastPoints: Map<Player, Points>
-    lastTakenMove: Move | null
+    lastTakenMove: M | null
     slots: Slot[]
   }
   StateParams::game --> Game
@@ -138,20 +160,21 @@ package state_package as "State" {
     # lastPoints: StateParams::lastPoints
     # lastTakenMove: StateParams::lastTakenMove
     --
-    + getGame(): G
-    + getLastPlayer(): Player | null
-    + getLastTakenMove(): Move | null
-    + getTurnOutcome(): TurnOutcome
-    + getSlots(): Slot[]
+    + getGame(): StateParams::game
+    + getLastPlayer(): StateParams::lastPlayer
+    + getLastTakenMove(): StateParams::lastTakenMove
+    + getSlots(): StateParams::slots
     + getSlotAt(position: Position): Slot
+    + getMaskFromValidMoves(): boolean[]
     .. abstract ..
     + {abstract} getCurrentPlayer(): Player
     + {abstract} getEncodedState(): EncodedState
+    + {abstract} getTurnOutcome(): TurnOutcome
     + {abstract} getValidMoves(): ValidMove[]
     + {abstract} getWinner(): Player | null
     + {abstract} changePerspective(player: Player): State<G>
     + {abstract} clone(): State<G>
-    + {abstract} playMove(move: Move): State<G>
+    + {abstract} playMove(move: M): State<G>
     + {abstract} toString(): string
     .. static ..
     + {static} setSlotInEncodedState(rowIndex: Integer, columnIndex: Integer, channel: Channel, encodedState: EncodedState): void

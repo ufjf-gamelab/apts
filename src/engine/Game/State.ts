@@ -70,7 +70,7 @@ export default abstract class State<G extends Game<M>, M extends Move> {
    */
   public abstract getEncodedState(): EncodedState;
 
-  public getGame(): G {
+  public getGame(): StateParams<G, M>["game"] {
     return this.game;
   }
 
@@ -120,7 +120,7 @@ export default abstract class State<G extends Game<M>, M extends Move> {
 
   public abstract clone(): State<G, M>;
 
-  public abstract playMove(move: Move): State<G, M>;
+  public abstract playMove(move: M): State<G, M>;
 
   public abstract toString(): string;
 
