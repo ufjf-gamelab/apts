@@ -1,0 +1,167 @@
+@startuml class_diagram_game_state
+title Class diagram: Game and State
+
+hide empty members
+
+!function $type($a)
+!return "struct " + $a + " << (T,lavender) >>"
+!endfunction
+!$G = "<G extends Game>"
+
+package Types << rectangle >> {
+
+  package Standard << rectangle >>{
+    $type(number)
+    $type(string)
+    $type(boolean)
+  }
+
+  package Aliases << rectangle >> {
+
+    $type(Integer)
+    Integer [alias] ..> number
+
+    $type(Char)
+    Char [alias] ..> string
+
+  }
+
+}
+
+package game_package as "Game" {
+
+  package Aliases << rectangle >> {
+
+    $type(Player)
+    Player [alias] ..> Integer
+
+  }
+
+  interface PlayerData {
+    symbol: Char
+    name: string
+  }
+
+  interface GameParams {
+    name: string
+    players: Map<Player, PlayerData>
+    quantityOfSlots: Integer
+  }
+  GameParams::players --> Player
+  GameParams::players --> PlayerData
+
+  abstract class Game {
+    - name: GameParams::name
+    - players: GameParams::players
+    # quantityOfSlots: GameParams::quantityOfSlots
+    --
+    + getName(): string
+    + getPlayerData(player: Player): PlayerData
+    + getPlayers(): Map<Player, PlayerData>
+    + getQuantityOfSlots(): Integer
+    .. abstract ..
+    + {abstract} getInitialState(): State<this>
+    + {abstract} getQuantityOfPlayers(): Integer
+  }
+  Game::name --> GameParams::name
+  Game::players --> GameParams::players
+  Game::quantityOfSlots --> GameParams::quantityOfSlots
+  
+}
+
+package state_package as "State" {
+
+  package Enums << rectangle >> {
+    
+    enum Pixel {
+      Off = 0
+      On = 1
+    }
+
+  }
+
+  package Aliases <<rectangle >> {
+
+    $type(Channel)
+    Channel [alias] ..> Integer
+
+    $type(Move) 
+    Move [alias] ..> Integer
+
+    $type(EncodedState) {
+      Pixel[][][]
+    }
+    EncodedState::Pixel [alias] ..> Pixel
+
+    $type(Points)
+    Points [alias] ..> number
+
+    $type(Position)
+    Position [alias] ..> Integer
+
+    $type(Slot)
+    Slot [alias] ..> Integer
+
+    $type(ValidMove)
+    ValidMove [alias] ..> boolean
+
+  }
+
+  interface TurnOutcome {
+    gameHasEnded: boolean
+    winner: Player
+    points: Map<Player, Points>
+  }
+  TurnOutcome::winner --> Player
+  TurnOutcome::points --> Player
+  TurnOutcome::points --> Points
+
+  interface StateParams $G {
+    game: G
+    lastPlayer: Player | null
+    lastPoints: Map<Player, Points>
+    lastTakenMove: Move | null
+    slots: Slot[]
+  }
+  StateParams::game --> Game
+  StateParams::lastPlayer --> Player
+  StateParams::lastPoints --> Player
+  StateParams::lastPoints --> Points
+  StateParams::lastTakenMove --> Move
+  StateParams::slots --> Slot
+
+  abstract class State $G {
+    # game: StateParams::game
+    - slots: StateParams::slots
+    ..
+    # lastPlayer: StateParams::lastPlayer
+    # lastPoints: StateParams::lastPoints
+    # lastTakenMove: StateParams::lastTakenMove
+    --
+    + getGame(): G
+    + getLastPlayer(): Player | null
+    + getLastTakenMove(): Move | null
+    + getTurnOutcome(): TurnOutcome
+    + getSlots(): Slot[]
+    + getSlotAt(position: Position): Slot
+    .. abstract ..
+    + {abstract} getCurrentPlayer(): Player
+    + {abstract} getEncodedState(): EncodedState
+    + {abstract} getValidMoves(): ValidMove[]
+    + {abstract} getWinner(): Player | null
+    + {abstract} changePerspective(player: Player): State<G>
+    + {abstract} clone(): State<G>
+    + {abstract} playMove(move: Move): State<G>
+    + {abstract} toString(): string
+    .. static ..
+    + {static} setSlotInEncodedState(rowIndex: Integer, columnIndex: Integer, channel: Channel, encodedState: EncodedState): void
+  }
+  State::game --> StateParams::game
+  State::slots --> StateParams::slots
+  State::lastPlayer --> StateParams::lastPlayer
+  State::lastPoints --> StateParams::lastPoints
+  State::lastTakenMove --> StateParams::lastTakenMove
+
+}
+
+@enduml

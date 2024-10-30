@@ -6,6 +6,7 @@
 # Build
 node_modules
 dist
+/docs/**/*.svg
 
 # Runtime
 .env.local

@@ -1,5 +1,5 @@
 import { Integer } from "../../types";
-import Game from "./Game";
+import Game, { Player } from "./Game";
 
 type Channel = Integer;
 export type EncodedState = Pixel[][][];
@@ -14,7 +14,6 @@ export enum Pixel {
   Off = 0,
   On = 1,
 }
-export type Player = Integer;
 export type Points = number;
 // Index of a slot in the state.
 export type Position = Integer;
@@ -124,11 +123,11 @@ export default abstract class State<G extends Game> {
     channel,
     encodedState,
   }: {
-    rowIndex: number;
-    columnIndex: number;
+    rowIndex: Integer;
+    columnIndex: Integer;
     channel: Channel;
     encodedState: EncodedState;
-  }) {
+  }): void {
     const row = encodedState[rowIndex];
     if (typeof row === "undefined") return;
 

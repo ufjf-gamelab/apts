@@ -1,11 +1,7 @@
 import { Char, Integer } from "../../types";
-import State, { Player } from "./State";
+import State from "./State";
 
-export enum Outcome {
-  Win = 1,
-  Draw = 0,
-  Loss = -1,
-}
+export type Player = Integer;
 
 export interface PlayerData {
   symbol: Char;
@@ -33,24 +29,24 @@ export default abstract class Game {
 
   public abstract getInitialState(): State<this>;
 
-  public getName() {
+  public getName(): string {
     return this.name;
   }
 
-  public getPlayerData(player: Player) {
+  public getPlayerData(player: Player): PlayerData {
     const playerData = this.players.get(player);
     if (typeof playerData === "undefined")
       throw Error(`Player ${player} does not exist`);
     return { ...playerData };
   }
 
-  public getPlayers() {
+  public getPlayers(): Map<Player, PlayerData> {
     return { ...this.players };
   }
 
-  public abstract getQuantityOfPlayers(): number;
+  public abstract getQuantityOfPlayers(): Integer;
 
-  public getQuantityOfSlots() {
+  public getQuantityOfSlots(): Integer {
     return this.quantityOfSlots;
   }
 }
