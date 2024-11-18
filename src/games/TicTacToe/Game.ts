@@ -16,71 +16,53 @@ interface TicTacToeGameParams {
   quantityOfColumns: Integer;
 }
 
-const moves = new Map<Integer, TicTacToeMove>([
-  [
-    Position.Northwest,
-    new TicTacToeMove({
-      description: "Northwest",
-      title: "NW",
-    }),
-  ],
-  [
-    Position.North,
-    new TicTacToeMove({
-      description: "North",
-      title: "N",
-    }),
-  ],
-  [
-    Position.Northeast,
-    new TicTacToeMove({
-      description: "Northeast",
-      title: "NE",
-    }),
-  ],
-  [
-    Position.West,
-    new TicTacToeMove({
-      description: "West",
-      title: "W",
-    }),
-  ],
-  [
-    Position.Center,
-    new TicTacToeMove({
-      description: "Center",
-      title: "C",
-    }),
-  ],
-  [
-    Position.East,
-    new TicTacToeMove({
-      description: "East",
-      title: "E",
-    }),
-  ],
-  [
-    Position.Southwest,
-    new TicTacToeMove({
-      description: "Southwest",
-      title: "SW",
-    }),
-  ],
-  [
-    Position.South,
-    new TicTacToeMove({
-      description: "South",
-      title: "S",
-    }),
-  ],
-  [
-    Position.Southeast,
-    new TicTacToeMove({
-      description: "Southeast",
-      title: "SE",
-    }),
-  ],
-]);
+const moves = [
+  new TicTacToeMove({
+    description: "Northwest",
+    position: Position.Northwest,
+    title: "NW",
+  }),
+  new TicTacToeMove({
+    description: "North",
+    position: Position.North,
+    title: "N",
+  }),
+  new TicTacToeMove({
+    description: "Northeast",
+    position: Position.Northeast,
+    title: "NE",
+  }),
+  new TicTacToeMove({
+    description: "West",
+    position: Position.West,
+    title: "W",
+  }),
+  new TicTacToeMove({
+    description: "Center",
+    position: Position.Center,
+    title: "C",
+  }),
+  new TicTacToeMove({
+    description: "East",
+    position: Position.East,
+    title: "E",
+  }),
+  new TicTacToeMove({
+    description: "Southwest",
+    position: Position.Southwest,
+    title: "SW",
+  }),
+  new TicTacToeMove({
+    description: "South",
+    position: Position.South,
+    title: "S",
+  }),
+  new TicTacToeMove({
+    description: "Southeast",
+    position: Position.Southeast,
+    title: "SE",
+  }),
+];
 
 export default class TicTacToeGame extends Game<TicTacToeMove> {
   private readonly quantityOfRows: TicTacToeGameParams["quantityOfRows"];
@@ -129,12 +111,5 @@ export default class TicTacToeGame extends Game<TicTacToeMove> {
 
   public getInitialPlayer(): Player {
     return Player.X;
-  }
-
-  public getMoveAt(position: Position): TicTacToeMove {
-    const move = this.moves.get(position);
-    if (typeof move === "undefined")
-      throw Error(`Move at position ${position} does not exist`);
-    return move;
   }
 }

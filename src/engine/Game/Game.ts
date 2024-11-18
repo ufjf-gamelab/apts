@@ -13,25 +13,32 @@ interface GameParams<M extends Move> {
   name: string;
   players: Map<Player, PlayerData>;
   quantityOfSlots: Integer;
-  moves: Map<Integer, M>;
+  moves: M[];
 }
 
 export default abstract class Game<M extends Move> {
   private readonly name: GameParams<M>["name"];
   private readonly players: GameParams<M>["players"];
   protected readonly quantityOfSlots: GameParams<M>["quantityOfSlots"];
-  protected readonly moves: GameParams<M>["moves"];
+  protected readonly moves: Map<Integer, M>;
 
   constructor({ name, players, quantityOfSlots, moves }: GameParams<M>) {
     this.name = name;
     this.players = players;
     this.quantityOfSlots = quantityOfSlots;
-    this.moves = moves;
+    this.moves = new Map(moves.map((move, index) => [index, move]));
   }
 
   /* Getters */
 
   public abstract getInitialState(): State<this, M>;
+
+  public getMove(index: Integer): M {
+    const move = this.moves.get(index);
+    if (typeof move === "undefined")
+      throw Error(`Move with index ${index} does not exist`);
+    return move;
+  }
 
   public getName(): GameParams<M>["name"] {
     return this.name;
@@ -48,11 +55,15 @@ export default abstract class Game<M extends Move> {
     return { ...this.players };
   }
 
+  public getQuantityOfMoves(): Integer {
+    return this.moves.size;
+  }
+
   public getQuantityOfSlots(): GameParams<M>["quantityOfSlots"] {
     return this.quantityOfSlots;
   }
 
-  public getMoves(): GameParams<M>["moves"] {
-    return { ...this.moves };
+  public getMoves(): Map<Integer, M> {
+    return new Map(this.moves);
   }
 }

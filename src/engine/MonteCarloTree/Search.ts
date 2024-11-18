@@ -59,7 +59,7 @@ export default class Search<G extends Game> {
 
     for (const child of node.getChildren()) {
       const action = child.getActionTaken();
-      if (action === null) throw new Error("Action is null!");
+      if (action === null) throw new Error("Action is null");
       actionProbabilities[action] = child.getVisitCount();
     }
 

@@ -23,7 +23,7 @@ export default abstract class Move {
   }
 }
 
-export interface IndexedMove<M extends Move> {
-  index: Integer;
+export interface KeyedMove<M extends Move> {
+  key: Integer;
   move: M;
 }

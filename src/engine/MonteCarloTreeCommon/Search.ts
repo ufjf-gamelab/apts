@@ -1,27 +1,28 @@
 import { INCREMENT_ONE, Integer } from "src/types";
-import Game from "../Game/Game";
+import Game, { Player } from "../Game/Game";
+import Move from "../Game/Move";
 import State, { Points } from "../Game/State";
 import { Node } from "./Node";
 
 const MINIMUM_PROBABILITY = 0;
 const MINIMUM_POINTS = 0;
 
-interface SearchParams<G extends Game> {
+interface SearchParams<G extends Game<M>, M extends Move> {
   game: G;
   explorationConstant: number;
   quantityOfSearches: Integer;
 }
 
-export default class Search<G extends Game> {
-  private game: SearchParams<G>["game"];
-  private explorationConstant: SearchParams<G>["explorationConstant"];
-  private quantityOfSearches: SearchParams<G>["quantityOfSearches"];
+export default class Search<G extends Game<M>, M extends Move> {
+  private game: SearchParams<G, M>["game"];
+  private explorationConstant: SearchParams<G, M>["explorationConstant"];
+  private quantityOfSearches: SearchParams<G, M>["quantityOfSearches"];
 
   constructor({
     game,
     explorationConstant,
     quantityOfSearches,
-  }: SearchParams<G>) {
+  }: SearchParams<G, M>) {
     this.game = game;
     this.explorationConstant = explorationConstant;
     this.quantityOfSearches = quantityOfSearches;
@@ -31,7 +32,7 @@ export default class Search<G extends Game> {
 
   /// Search for the best action to take.
   // eslint-disable-next-line max-statements, max-lines-per-function
-  public search(state: State<G>): number[] {
+  public search(state: State<G, M>): number[] {
     const root = new Node({
       explorationConstant: this.explorationConstant,
       parent: null,
@@ -86,24 +87,26 @@ export default class Search<G extends Game> {
     }
 
     /// Get the action probabilities from the root node.
-    let actionProbabilities = new Array<number>(
-      this.game.getQuantityOfSlots(),
+    let probabilityOfPlayingEachMove = new Array<number>(
+      this.game.getQuantityOfMoves(),
     ).fill(MINIMUM_PROBABILITY);
 
     for (const child of root.getChildren()) {
       const lastTakenMove = child.getState().getLastTakenMove();
-      if (lastTakenMove === null) {
-        continue;
-      }
-      actionProbabilities[lastTakenMove] = child.getQuantityOfVisits();
+      if (lastTakenMove === null) continue;
+
+      probabilityOfPlayingEachMove[lastTakenMove.key] =
+        child.getQuantityOfVisits();
     }
 
-    const sum = actionProbabilities.reduce(
+    const sum = probabilityOfPlayingEachMove.reduce(
       (currentSum, value) => currentSum + value,
       MINIMUM_PROBABILITY,
     );
 
-    actionProbabilities = actionProbabilities.map(value => value / sum);
-    return actionProbabilities;
+    probabilityOfPlayingEachMove = probabilityOfPlayingEachMove.map(
+      value => value / sum,
+    );
+    return probabilityOfPlayingEachMove;
   }
 }

@@ -1,6 +1,6 @@
 import { INCREMENT_ONE, Integer } from "src/types";
 import Game, { Player } from "../Game/Game";
-import Move, { IndexedMove } from "../Game/Move";
+import Move, { KeyedMove } from "../Game/Move";
 import State, { Points, TurnOutcome } from "../Game/State";
 
 const EMPTY_CHILDREN_LIST = 0;
@@ -19,13 +19,7 @@ export class Node<G extends Game<M>, M extends Move> {
   private readonly parent: NodeParams<G, M>["parent"];
 
   private readonly children: Node<G, M>[] = [];
-  private readonly expandableMoves = new Map<
-    IndexedMove<M>["index"],
-    {
-      move: IndexedMove<M>["move"];
-      isExpanded: boolean;
-    }
-  >();
+  private readonly moveInIndexIsExpandable: Map<Integer, boolean>;
 
   private quantityOfVisits: Integer = MINIMUM_QUANTITY_OF_VISITS;
   private victoryQuality: Integer = MINIMUM_VICTORY_QUALITY;
@@ -37,10 +31,12 @@ export class Node<G extends Game<M>, M extends Move> {
     this.explorationConstant = explorationConstant;
     this.parent = parent ? parent : null;
     this.initialPlayer = state.getCurrentPlayer();
-    this.expandableMoves = new Map(
-      Array.from(state.getValidMoves().entries()).map(([index, move]) => [
+
+    const indexesOfValidMoves = Array.from(state.getIndexesOfValidMoves());
+    this.moveInIndexIsExpandable = new Map(
+      indexesOfValidMoves.map((index: number): [Integer, boolean] => [
         index,
-        { isExpanded: false, move },
+        false,
       ]),
     );
   }
@@ -51,10 +47,12 @@ export class Node<G extends Game<M>, M extends Move> {
     return this.children;
   }
 
-  private getNonExpandedMoves(): IndexedMove<M>[] {
-    return Array.from(this.expandableMoves.entries())
-      .filter(([, { isExpanded }]) => !isExpanded)
-      .map(([index, { move }]) => ({ index, move }));
+  private getIndexesOfNonExpandedMoves(): Set<Integer> {
+    return new Set(
+      Array.from(this.moveInIndexIsExpandable.entries())
+        .filter(([, isExpanded]) => !isExpanded)
+        .map(([index]) => index),
+    );
   }
 
   public getQuantityOfVisits(): Integer {
@@ -67,22 +65,21 @@ export class Node<G extends Game<M>, M extends Move> {
 
   /* Setters */
 
-  private setMoveAsExpanded(index: IndexedMove<M>["index"]) {
-    const move = this.expandableMoves.get(index);
-    if (move) {
-      move.isExpanded = true;
-      this.expandableMoves.set(index, move);
+  private setMoveAsExpanded(index: Integer) {
+    if (!this.moveInIndexIsExpandable.has(index)) {
+      throw new Error("Invalid move index");
     }
+
+    this.moveInIndexIsExpandable.set(index, true);
   }
 
   /* Methods */
 
   /// Check if the node is fully expanded, i.e. all valid actions have been explored.
   public isFullyExpanded(): boolean {
-    for (const [, { isExpanded }] of this.expandableMoves.entries()) {
-      if (!isExpanded) return false;
-    }
-    return true;
+    return Array.from(this.moveInIndexIsExpandable.values()).every(
+      isExpanded => isExpanded,
+    );
   }
 
   /// Get the UCB value of a given child.
@@ -103,10 +100,10 @@ export class Node<G extends Game<M>, M extends Move> {
   /// Select the best node among children, i.e. the one with the highest UCB.
   public selectBestChild(): Node<G, M> {
     if (this.children.length === EMPTY_CHILDREN_LIST)
-      throw new Error("No children to select from!");
+      throw new Error("No children to select from");
 
     let [bestChild] = this.children;
-    if (!bestChild) throw new Error("No children to select from!");
+    if (!bestChild) throw new Error("No children to select from");
     let bestUcb = this.getChildUcb(bestChild);
     const quantityOfChildren = this.children.length;
 
@@ -116,7 +113,7 @@ export class Node<G extends Game<M>, M extends Move> {
       currentChildIndex += INCREMENT_ONE
     ) {
       const child = this.children[currentChildIndex];
-      if (!child) throw new Error("No children to select from!");
+      if (!child) throw new Error("No children to select from");
 
       const ucb = this.getChildUcb(child);
       if (ucb > bestUcb) {
@@ -129,8 +126,14 @@ export class Node<G extends Game<M>, M extends Move> {
   }
 
   /// Pick a random move from the list of valid moves.
-  private pickRandomMove(): IndexedMove<M> {
-    const expandableMoves = this.getNonExpandedMoves();
+  private pickRandomMove(): KeyedMove<M> {
+    const indexesOfNonExpandedMoves = this.getIndexesOfNonExpandedMoves();
+    const expandableMoves = Array.from(indexesOfNonExpandedMoves).map(
+      index => ({
+        key: index,
+        move: this.state.getGame().getMove(index),
+      }),
+    );
 
     const randomIndex = Math.floor(Math.random() * expandableMoves.length);
     const selectedMove = expandableMoves[randomIndex];
@@ -143,7 +146,7 @@ export class Node<G extends Game<M>, M extends Move> {
   /// Pick a random action and perform it, returning the outcome state as a child node.
   public expand(): Node<G, M> {
     const selectedMove = this.pickRandomMove();
-    this.setMoveAsExpanded(selectedMove.index);
+    this.setMoveAsExpanded(selectedMove.key);
 
     // Copy the state and play the action on the copy
     const newState = this.state.playMove(selectedMove.move);

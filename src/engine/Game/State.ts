@@ -1,6 +1,6 @@
 import { INCREMENT_ONE, Integer } from "../../types";
 import Game, { Player } from "./Game";
-import Move from "./Move";
+import Move, { KeyedMove } from "./Move";
 
 type Channel = Integer;
 export type EncodedState = Pixel[][][];
@@ -25,7 +25,7 @@ const MINIMUM_POSITION = 0;
 export interface StateParams<G extends Game<M>, M extends Move> {
   game: G;
   lastPlayer: Player | null;
-  lastTakenMove: M | null;
+  lastTakenMove: KeyedMove<M> | null;
   lastPoints: Map<Player, Points>;
   slots: Slot[];
 }
@@ -99,15 +99,15 @@ export default abstract class State<G extends Game<M>, M extends Move> {
     return slot;
   }
 
-  public abstract getValidMoves(): Map<Integer, M>;
+  public abstract getIndexesOfValidMoves(): Set<Integer>;
 
   public getMaskFromValidMoves(): boolean[] {
-    const validMoves = this.getValidMoves();
+    const indexesOfValidMoves = this.getIndexesOfValidMoves();
     const moves = this.game.getMoves();
-    const mask = Array<boolean>(validMoves.size).fill(false);
+    const mask = Array<boolean>(moves.size).fill(false);
     let index = 0;
     moves.forEach((_, key) => {
-      if (validMoves.has(key)) mask[index] = true;
+      if (indexesOfValidMoves.has(key)) mask[index] = true;
       index += INCREMENT_ONE;
     });
     return mask;
@@ -122,7 +122,7 @@ export default abstract class State<G extends Game<M>, M extends Move> {
 
   public abstract clone(): State<G, M>;
 
-  public abstract playMove(move: M): State<G, M>;
+  public abstract playMove(keyedMove: KeyedMove<M>): State<G, M>;
 
   public abstract toString(): string;
 
