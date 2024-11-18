@@ -3,9 +3,15 @@ title Class diagram: Game, State and Move
 
 hide empty members
 
-!function $type($a)
-!return "struct " + $a + " << (T,lavender) >>"
+!function $type($name)
+!return "struct " + $name + " << (T,lavender) >>"
 !endfunction
+
+!function $type($name, $generics)
+!return "struct " + $name + $generics + " << (T,lavender) >>"
+!endfunction
+
+!$M = "<M extends Move>"
 !$G = "<G extends Game<M>, M extends Move>"
 
 package Types << rectangle >> {
@@ -28,7 +34,7 @@ package Types << rectangle >> {
 
 }
 
-package move_package as "Move"{
+package move_package as "Move" {
 
   interface MoveParams {
     title: string
@@ -36,16 +42,19 @@ package move_package as "Move"{
   }
 
   abstract class Move {
-    - index: Integer
     - title: MoveParams::title
     - description: MoveParams::description
     --
-    + getIndex(): Integer
     + getTitle(): MoveParams::title
     + getDescription(): MoveParams::description
   }
   Move::title --> MoveParams::title
   Move::description --> MoveParams::description
+
+  $type(MoveTuple, $M) {
+    [Integer, M]
+  }
+  MoveTuple::0 --> Move
 
 }
 
@@ -63,17 +72,17 @@ package game_package as "Game" {
     name: string
   }
 
-  interface GameParams <M extends Move> {
+  interface GameParams $M {
     name: string
     players: Map<Player, PlayerData>
     quantityOfSlots: Integer
-    moves: M
+    moves: Map<Integer, M>;
   }
   GameParams::players --> Player
   GameParams::players --> PlayerData
   GameParams::moves --> Move
 
-  abstract class Game<M extends Move> {
+  abstract class Game $M {
     - name: GameParams::name
     - players: GameParams::players
     # quantityOfSlots: GameParams::quantityOfSlots
@@ -105,7 +114,7 @@ package state_package as "State" {
 
   }
 
-  package Aliases <<rectangle >> {
+  package Aliases << rectangle >> {
 
     $type(Channel)
     Channel [alias] ..> Integer
@@ -113,7 +122,7 @@ package state_package as "State" {
     $type(EncodedState) {
       Pixel[][][]
     }
-    EncodedState::Pixel [alias] ..> Pixel
+    EncodedState::0 [alias] ..> Pixel
 
     $type(Points)
     Points [alias] ..> number
@@ -170,7 +179,7 @@ package state_package as "State" {
     + {abstract} getCurrentPlayer(): Player
     + {abstract} getEncodedState(): EncodedState
     + {abstract} getTurnOutcome(): TurnOutcome
-    + {abstract} getValidMoves(): ValidMove[]
+    + {abstract} getValidMoves(): Map<Integer, M>
     + {abstract} getWinner(): Player | null
     + {abstract} changePerspective(player: Player): State<G>
     + {abstract} clone(): State<G>
@@ -184,6 +193,37 @@ package state_package as "State" {
   State::lastPlayer --> StateParams::lastPlayer
   State::lastPoints --> StateParams::lastPoints
   State::lastTakenMove --> StateParams::lastTakenMove
+
+}
+
+package monte_carlo_tree_search_common_package as "Monte Carlo Tree Search Common" {
+
+  interface NodeParams $G {
+    state: State<G, M>
+    explorationConstant: number
+    parent: Node<G, M> | null
+  }
+
+  class Node $G {
+    - state: NodeParams::state
+    - explorationConstant: NodeParams::explorationConstant
+    - parent: NodeParams::parent
+    - children: Node<G, M>[]
+    - maskFromExpandedMoves: boolean[]
+    - initialPlayer: Player
+    - quantityOfVisits: Integer
+    - victoryQuality: Integer
+    + getChildren(): Node<G, M>[]
+    + getQuantityOfVisits(): Integer
+    + getState(): State<G, M>
+    + isFullyExpanded(): boolean
+    + getChildUcb(child: Node<G, M>): number
+    + selectBestChild(): Node<G, M>
+    + pickRandomMove(): M
+  }
+  Node::state --> NodeParams::state
+  Node::explorationConstant --> NodeParams::explorationConstant
+  Node::parent --> NodeParams::parent
 
 }
 

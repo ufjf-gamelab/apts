@@ -1,6 +1,6 @@
 import { INCREMENT_ONE, Integer } from "src/types";
 import Game from "../Game/Game";
-import State, { Player, Points } from "../Game/State";
+import State, { Points } from "../Game/State";
 import { Node } from "./Node";
 
 const MINIMUM_PROBABILITY = 0;

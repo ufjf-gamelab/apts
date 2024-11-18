@@ -1,5 +1,5 @@
 import State from "src/engine/Game/State";
-import MonteCarloTreeSearch from "src/engine/MonteCarloTreeSearchCommon/Search";
+import MonteCarloTreeSearch from "src/engine/MonteCarloTreeCommon/Search";
 import TicTacToeGame from "src/games/TicTacToe/Game";
 import { Move } from "src/games/TicTacToe/types";
 

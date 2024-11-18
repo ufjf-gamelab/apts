@@ -1,20 +1,11 @@
 import * as tf from "@tensorflow/tfjs";
 import Game from "../Game/Game.js";
-import { GameName, LogMessage, TensorLikeArray } from "../types.js";
+import { LogMessage, TensorLikeArray } from "../types.js";
 import { fullModelPath } from "../util.js";
 
 const INPUT_CHANNELS = 3;
 const BACKBONE_CHANNELS = 32;
 
-export interface SaveParams {
-  game: GameName;
-  name: string;
-  innerPath: string;
-}
-
-interface retrieveResNetModelParams {
-  model: tf.LayersModel;
-}
 interface BuildResNetParams {
   // Length of the backbone
   numResBlocks: number;
@@ -22,7 +13,7 @@ interface BuildResNetParams {
   numHiddenChannels: number;
 }
 
-export type ResNetParams = retrieveResNetModelParams | BuildResNetParams;
+export type ResNetParams = BuildResNetParams;
 
 // Build and return a residual block
 const applyResBlock = ({

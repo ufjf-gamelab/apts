@@ -1,4 +1,4 @@
-import { Char, INCREMENT_ONE, Integer } from "../../types";
+import { Char, Integer } from "../../types";
 import Move from "./Move";
 import State from "./State";
 
@@ -13,7 +13,7 @@ interface GameParams<M extends Move> {
   name: string;
   players: Map<Player, PlayerData>;
   quantityOfSlots: Integer;
-  moves: M[];
+  moves: Map<Integer, M>;
 }
 
 export default abstract class Game<M extends Move> {
@@ -26,12 +26,6 @@ export default abstract class Game<M extends Move> {
     this.name = name;
     this.players = players;
     this.quantityOfSlots = quantityOfSlots;
-    let lastIndex = -1;
-    for (const move of moves) {
-      if (move.getIndex() !== lastIndex + INCREMENT_ONE)
-        throw Error("Moves must be sorted by their index");
-      lastIndex = move.getIndex();
-    }
     this.moves = moves;
   }
 

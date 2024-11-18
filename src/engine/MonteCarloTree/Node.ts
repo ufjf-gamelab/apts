@@ -7,12 +7,12 @@ const MINIMUM_VALUE_SUM = 0;
 const MINIMUM_VISIT_COUNT = 0;
 export const MINIMUM_PROBABILITY = 0;
 
-interface NodeParams<G extends Game> {
+interface NodeParams<G extends Game<M>, M extends Move> {
   explorationConstant: number;
   quantityOfSearches: Integer;
   state: State<G>;
   parent?: Node<G>;
-  takenMove?: Move;
+  takenMove?: M;
   priorProbability?: number;
 }
 

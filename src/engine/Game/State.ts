@@ -1,4 +1,4 @@
-import { Integer } from "../../types";
+import { INCREMENT_ONE, Integer } from "../../types";
 import Game, { Player } from "./Game";
 import Move from "./Move";
 
@@ -99,15 +99,17 @@ export default abstract class State<G extends Game<M>, M extends Move> {
     return slot;
   }
 
-  public abstract getValidMoves(): Move[];
+  public abstract getValidMoves(): Map<Integer, M>;
 
   public getMaskFromValidMoves(): boolean[] {
     const validMoves = this.getValidMoves();
     const moves = this.game.getMoves();
-    const mask = Array<boolean>(moves.length).fill(false);
-    for (const move of validMoves) {
-      mask[move.getIndex()] = true;
-    }
+    const mask = Array<boolean>(validMoves.size).fill(false);
+    let index = 0;
+    moves.forEach((_, key) => {
+      if (validMoves.has(key)) mask[index] = true;
+      index += INCREMENT_ONE;
+    });
     return mask;
   }
 

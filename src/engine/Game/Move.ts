@@ -6,18 +6,12 @@ export interface MoveParams {
 }
 
 export default abstract class Move {
-  private readonly index: Integer;
   private readonly title: MoveParams["title"];
   private readonly description: MoveParams["description"];
 
-  constructor({ index, title, description }: MoveParams & { index: Integer }) {
-    this.index = index;
+  constructor({ title, description }: MoveParams) {
     this.title = title;
     this.description = description;
-  }
-
-  public getIndex(): Integer {
-    return this.index;
   }
 
   public getTitle(): MoveParams["title"] {
@@ -27,4 +21,9 @@ export default abstract class Move {
   public getDescription(): MoveParams["description"] {
     return this.description;
   }
+}
+
+export interface IndexedMove<M extends Move> {
+  index: Integer;
+  move: M;
 }

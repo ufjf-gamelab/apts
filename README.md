@@ -35,6 +35,7 @@ If you use the `Visual Studio Code` editor, we recommend installing the followin
 - [Todo Tree](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree)
 - [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker)
 - [Brazilian Portuguese - Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker-portuguese-brazilian)
+- [PlantUML](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml)
 
 ## Installing
 

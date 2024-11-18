@@ -2,7 +2,7 @@ import { createId } from "@paralleldrive/cuid2";
 import * as tf from "@tensorflow/tfjs";
 import Game, { ActionOutcome } from "./Game/Game";
 import State, { EncodedState, Player } from "./Game/State";
-import MonteCarloTreeSearch from "./MonteCarloTreeSearch/Search";
+import MonteCarloTreeSearch from "./MonteCarloTree/Search";
 import { actionFromProbabilities } from "./ResNet/predict";
 import ResNet from "./ResNet/ResNet";
 import { LogMessage } from "./types";

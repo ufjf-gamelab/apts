@@ -16,7 +16,7 @@ const printContext = <G extends Game<M>, M extends Move>(
 
 const playMove = <G extends Game<M>, M extends Move>(
   state: State<G, M>,
-  move: Move,
+  move: M,
 ): State<G, M> => {
   const newState = state.playMove(move);
   console.log(newState.toString());
@@ -74,7 +74,7 @@ const main = async <G extends Game<M>, M extends Move>({
       name: "move",
       type: "select",
     });
-    const chosenMove = input.move as Move;
+    const chosenMove = input.move as M;
 
     state = playMove(state, chosenMove);
     player = state.getCurrentPlayer();
