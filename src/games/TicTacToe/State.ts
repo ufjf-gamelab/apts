@@ -1,6 +1,6 @@
-import State, { Position, StateParams } from "../../engine/Game/State";
+import State, { StateParams } from "../../engine/Game/State";
 import TicTacToeGame from "./Game";
-import { TicTacToeMove } from "./Move";
+import { Position, TicTacToeMove } from "./Move";
 import { TicTacToePlayer } from "./Player";
 
 interface TicTacToeStateParams
@@ -10,20 +10,22 @@ interface TicTacToeStateParams
     TicTacToeState,
     TicTacToeGame
   > {
-  lastAssertedPosition: Position | null;
+  readonly lastAssertedPosition: Position | null;
 }
 
 export class TicTacToeState extends State<TicTacToePlayer, TicTacToeMove> {
-  private lastAssertedPosition: TicTacToeStateParams["lastAssertedPosition"];
+  public readonly lastAssertedPosition: TicTacToeStateParams["lastAssertedPosition"];
 
   constructor({
     game,
+    slots,
     nextPlayerKey,
     lastAssertedPosition,
   }: TicTacToeStateParams) {
     super({
       game,
       nextPlayerKey,
+      slots,
     });
     this.lastAssertedPosition = lastAssertedPosition;
   }

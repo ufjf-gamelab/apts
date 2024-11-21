@@ -23,9 +23,9 @@ export default abstract class Game<
   S extends State<P, M>,
 > {
   private readonly name: GameParams<P, M>["name"];
-  protected readonly quantityOfSlots: GameParams<P, M>["quantityOfSlots"];
-  protected readonly players: GameParams<P, M>["players"];
-  protected readonly moves: GameParams<P, M>["moves"];
+  private readonly quantityOfSlots: GameParams<P, M>["quantityOfSlots"];
+  private readonly players: GameParams<P, M>["players"];
+  private readonly moves: GameParams<P, M>["moves"];
 
   constructor({ players, moves, name, quantityOfSlots }: GameParams<P, M>) {
     this.name = name;
@@ -59,6 +59,8 @@ export default abstract class Game<
   public getQuantityOfSlots(): GameParams<P, M>["quantityOfSlots"] {
     return this.quantityOfSlots;
   }
+
+  public abstract isStateFinal(state: S): boolean;
 
   /* Setters */
 

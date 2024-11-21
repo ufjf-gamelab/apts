@@ -1,8 +1,13 @@
 import Move, { MoveParams } from "src/engine/Game/Move";
-import { Position } from "./types";
+import { Integer } from "src/types";
+
+export interface Position {
+  readonly rowIndex: Integer;
+  readonly columnIndex: Integer;
+}
 
 export interface TicTacToeMoveParams extends MoveParams {
-  position: Position;
+  readonly position: Position;
 }
 
 export class TicTacToeMove extends Move {

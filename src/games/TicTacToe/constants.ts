@@ -1,6 +1,5 @@
 import { TicTacToeMove } from "./Move";
 import { TicTacToePlayer } from "./Player";
-import { Position } from "./types";
 
 export enum PlayerKey {
   X,
@@ -27,47 +26,47 @@ export enum MoveKey {
 export const moves: { [key in MoveKey]: TicTacToeMove } = {
   [MoveKey.Northwest]: new TicTacToeMove({
     description: "Northwest",
-    position: Position.Northwest,
+    position: { columnIndex: 0, rowIndex: 0 },
     title: "NW",
   }),
   [MoveKey.North]: new TicTacToeMove({
     description: "North",
-    position: Position.North,
+    position: { columnIndex: 1, rowIndex: 0 },
     title: "N",
   }),
   [MoveKey.Northeast]: new TicTacToeMove({
     description: "Northeast",
-    position: Position.Northeast,
+    position: { columnIndex: 2, rowIndex: 0 },
     title: "NE",
   }),
   [MoveKey.West]: new TicTacToeMove({
     description: "West",
-    position: Position.West,
+    position: { columnIndex: 0, rowIndex: 1 },
     title: "W",
   }),
   [MoveKey.Center]: new TicTacToeMove({
     description: "Center",
-    position: Position.Center,
+    position: { columnIndex: 1, rowIndex: 1 },
     title: "C",
   }),
   [MoveKey.East]: new TicTacToeMove({
     description: "East",
-    position: Position.East,
+    position: { columnIndex: 2, rowIndex: 1 },
     title: "E",
   }),
   [MoveKey.Southwest]: new TicTacToeMove({
     description: "Southwest",
-    position: Position.Southwest,
+    position: { columnIndex: 0, rowIndex: 2 },
     title: "SW",
   }),
   [MoveKey.South]: new TicTacToeMove({
     description: "South",
-    position: Position.South,
+    position: { columnIndex: 1, rowIndex: 2 },
     title: "S",
   }),
   [MoveKey.Southeast]: new TicTacToeMove({
     description: "Southeast",
-    position: Position.Southeast,
+    position: { columnIndex: 2, rowIndex: 2 },
     title: "SE",
   }),
 };
