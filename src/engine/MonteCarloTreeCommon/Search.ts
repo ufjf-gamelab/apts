@@ -1,11 +1,10 @@
 import { INCREMENT_ONE, Integer } from "src/types";
 import Game, { Player } from "../Game/Game";
 import Move from "../Game/Move";
-import State, { Points } from "../Game/State";
+import State from "../Game/State";
 import { Node } from "./Node";
 
 const MINIMUM_PROBABILITY = 0;
-const MINIMUM_POINTS = 0;
 
 interface SearchParams<G extends Game<M>, M extends Move> {
   game: G;
@@ -30,72 +29,54 @@ export default class Search<G extends Game<M>, M extends Move> {
 
   /* Methods */
 
-  /// Search for the best action to take.
-  // eslint-disable-next-line max-statements, max-lines-per-function
-  public search(state: State<G, M>): number[] {
-    const root = new Node({
-      explorationConstant: this.explorationConstant,
-      parent: null,
-      state,
-    });
-
+  private buildTree(root: Node<G, M>): void {
     for (
       let currentSearchIndex = 0;
       currentSearchIndex < this.quantityOfSearches;
       currentSearchIndex += INCREMENT_ONE
     ) {
       let currentNode = root;
+      let lastPlayer: Player | null = null;
 
-      // Select a node which is not fully expanded
-      while (currentNode.isFullyExpanded()) {
-        // TODO: Fix
+      // Goes all the way down to a node that is not fully expanded at the bottom of the tree.
+      while (currentNode.isFullyExpanded())
         currentNode = currentNode.selectBestChild();
-      }
 
-      const turnOutcome = state.getTurnOutcome();
+      const turnOutcome = root.getState().getTurnOutcome();
       const { gameHasEnded } = turnOutcome;
-      let { points } = turnOutcome;
-
-      const totalPoints = new Map<Player, Points>(
-        Array.from(points.keys()).map(player => {
-          const playerPoints = points.get(player);
-          return [player, playerPoints ? playerPoints : MINIMUM_POINTS];
-        }),
-      );
+      let { scoreboard } = turnOutcome;
 
       if (!gameHasEnded) {
-        // Expansion phase
         currentNode = currentNode.expand();
-
-        // Simulation phase
-        points = currentNode.simulate();
-
-        points.forEach((playerPoints, player) => {
-          const currentPoints = totalPoints.get(player);
-          totalPoints.set(
-            player,
-            currentPoints ? currentPoints + playerPoints : playerPoints,
-          );
-        });
+        lastPlayer = currentNode.getState().getPlayer();
+        scoreboard = currentNode.simulate();
       }
 
-      const lastPlayer = currentNode.getState().getLastPlayer();
       if (lastPlayer === null) continue;
 
-      // Backpropagation phase
-      currentNode.backpropagate(totalPoints);
+      currentNode.backpropagate(scoreboard);
     }
+  }
 
-    /// Get the action probabilities from the root node.
+  public getProbabilities(state: State<G, M>): number[] {
+    const root = new Node({
+      explorationConstant: this.explorationConstant,
+      keyOfTheTakenMove: null,
+      parent: null,
+      state,
+    });
+
+    this.buildTree(root);
+
     let probabilityOfPlayingEachMove = new Array<number>(
       this.game.getQuantityOfMoves(),
     ).fill(MINIMUM_PROBABILITY);
 
     for (const child of root.getChildren()) {
-      const lastTakenMove = child.getState().getLastTakenMove();
-      if (lastTakenMove === null) continue;
+      const keyOfTheTakenMove = child.getKeyOfTheTakenMove();
+      if (keyOfTheTakenMove === null) continue;
 
-      probabilityOfPlayingEachMove[lastTakenMove.key] =
+      probabilityOfPlayingEachMove[keyOfTheTakenMove] =
         child.getQuantityOfVisits();
     }
 

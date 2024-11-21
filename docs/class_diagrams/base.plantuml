@@ -36,6 +36,13 @@ package Types << rectangle >> {
 
 package move_package as "Move" {
 
+    package Aliases << rectangle >> {
+
+    $type(MoveKey)
+    MoveKey [alias] ..> Integer
+
+  }
+
   interface MoveParams {
     title: string
     description: string
@@ -51,10 +58,12 @@ package move_package as "Move" {
   Move::title --> MoveParams::title
   Move::description --> MoveParams::description
 
-  $type(MoveTuple, $M) {
-    [Integer, M]
+  interface KeyedMove<M extends Move>  {
+    move: M
+    index: MoveKey
   }
-  MoveTuple::0 --> Move
+  KeyedMove::move --> Move
+  KeyedMove::index --> MoveKey
 
 }
 
@@ -76,7 +85,7 @@ package game_package as "Game" {
     name: string
     players: Map<Player, PlayerData>
     quantityOfSlots: Integer
-    moves: Map<Integer, M>;
+    moves: M[]
   }
   GameParams::players --> Player
   GameParams::players --> PlayerData
@@ -86,20 +95,22 @@ package game_package as "Game" {
     - name: GameParams::name
     - players: GameParams::players
     # quantityOfSlots: GameParams::quantityOfSlots
-    # moves: GameParams::moves
+    # moves: Map<MoveKey, M>
     --
+    + getMove(key: MoveKey): M
+    + getMoves(): Map<MoveKey, M>
     + getName(): GameParams::name
     + getPlayerData(player: Player): PlayerData
     + getPlayers(): GameParams::players
     + getQuantityOfSlots(): GameParams::quantityOfSlots
-    + getMoves(): GameParams::moves
     .. abstract ..
     + {abstract} getInitialState(): State<this>
   }
   Game::name --> GameParams::name
   Game::players --> GameParams::players
   Game::quantityOfSlots --> GameParams::quantityOfSlots
-  Game::moves --> GameParams::moves
+  Game::moves --> MoveKey
+  Game::moves --> Move
   
 }
 
@@ -133,54 +144,51 @@ package state_package as "State" {
     $type(Slot)
     Slot [alias] ..> Integer
 
-    $type(ValidMove)
-    ValidMove [alias] ..> boolean
-
   }
+
+  $type(Scoreboard) {
+    Map<Player, Points>
+  }
+  Scoreboard::0 --> Player
+  Scoreboard::0 --> Points
 
   interface TurnOutcome {
     gameHasEnded: boolean
-    winner: Player
-    points: Map<Player, Points>
+    scoreboard: Scoreboard
+    winner: Player | null
   }
   TurnOutcome::winner --> Player
-  TurnOutcome::points --> Player
-  TurnOutcome::points --> Points
+  TurnOutcome::scoreboard --> Scoreboard
 
   interface StateParams $G {
     game: G
-    lastPlayer: Player | null
-    lastPoints: Map<Player, Points>
-    lastTakenMove: M | null
+    player: Player
+    scoreboard: Scoreboard
     slots: Slot[]
+    keysOfTheValidMoves: Set<MoveKey>
   }
   StateParams::game --> Game
-  StateParams::lastPlayer --> Player
-  StateParams::lastPoints --> Player
-  StateParams::lastPoints --> Points
-  StateParams::lastTakenMove --> Move
+  StateParams::player --> Player
+  StateParams::scoreboard --> Scoreboard
   StateParams::slots --> Slot
+  StateParams::keysOfTheValidMoves --> MoveKey
 
   abstract class State $G {
     # game: StateParams::game
-    - slots: StateParams::slots
+    # slots: StateParams::slots
     ..
-    # lastPlayer: StateParams::lastPlayer
-    # lastPoints: StateParams::lastPoints
-    # lastTakenMove: StateParams::lastTakenMove
+    # player: StateParams::player
+    # scoreboard: StateParams::scoreboard
+    # keysOfTheValidMoves: StateParams::keysOfTheValidMoves
     --
     + getGame(): StateParams::game
-    + getLastPlayer(): StateParams::lastPlayer
-    + getLastTakenMove(): StateParams::lastTakenMove
-    + getSlots(): StateParams::slots
-    + getSlotAt(position: Position): Slot
+    + getKeysOfTheValidMoves(): Set<MoveKey>
     + getMaskFromValidMoves(): boolean[]
+    + getPlayer(): StateParams::lastPlayer
+    + getSlotAt(position: Position): Slot
     .. abstract ..
-    + {abstract} getCurrentPlayer(): Player
     + {abstract} getEncodedState(): EncodedState
     + {abstract} getTurnOutcome(): TurnOutcome
-    + {abstract} getValidMoves(): Map<Integer, M>
-    + {abstract} getWinner(): Player | null
     + {abstract} changePerspective(player: Player): State<G>
     + {abstract} clone(): State<G>
     + {abstract} playMove(move: M): State<G>
@@ -190,40 +198,71 @@ package state_package as "State" {
   }
   State::game --> StateParams::game
   State::slots --> StateParams::slots
-  State::lastPlayer --> StateParams::lastPlayer
-  State::lastPoints --> StateParams::lastPoints
-  State::lastTakenMove --> StateParams::lastTakenMove
+  State::player --> StateParams::player
+  State::scoreboard --> StateParams::scoreboard
 
 }
 
-package monte_carlo_tree_search_common_package as "Monte Carlo Tree Search Common" {
+package monte_carlo_tree_common_package as "Monte Carlo Tree Common" {
 
   interface NodeParams $G {
     state: State<G, M>
+    keyOfTheTakenMove: MoveKey | null
     explorationConstant: number
     parent: Node<G, M> | null
   }
+  NodeParams::state --> State
+  NodeParams::keyOfTheTakenMove --> MoveKey
+  NodeParams::parent --> Node
 
   class Node $G {
     - state: NodeParams::state
+    - keyOfTheTakenMove: NodeParams::keyOfTheTakenMove
     - explorationConstant: NodeParams::explorationConstant
     - parent: NodeParams::parent
     - children: Node<G, M>[]
-    - maskFromExpandedMoves: boolean[]
-    - initialPlayer: Player
+    - moveIsExpandable: Map<MoveKey, boolean>
     - quantityOfVisits: Integer
-    - victoryQuality: Integer
+    - victoryQuality: number
     + getChildren(): Node<G, M>[]
+    + getKeysOfNonExpandedMoves(): Set<MoveKey>
+    + getKeyOfTheTakenMove(): MoveKey | null
     + getQuantityOfVisits(): Integer
     + getState(): State<G, M>
+    + setMoveAsExpanded(index: Integer): void
     + isFullyExpanded(): boolean
     + getChildUcb(child: Node<G, M>): number
     + selectBestChild(): Node<G, M>
-    + pickRandomMove(): M
+    + pickRandomMove(): KeyedMove<M>
+    + expand(): Node<G, M>
+    + simulate(): TurnOutcome["scoreboard"]
+    + backpropagate(scoreboard: TurnOutcome["scoreboard"]): void
   }
   Node::state --> NodeParams::state
+  Node::keyOfTheTakenMove --> NodeParams::keyOfTheTakenMove
   Node::explorationConstant --> NodeParams::explorationConstant
   Node::parent --> NodeParams::parent
+  Node::children --> Node
+  Node::moveIsExpandable --> MoveKey
+
+  interface SearchParams $G {
+    game: G
+    explorationConstant: number
+    quantityOfSearches: Integer
+  }
+  SearchParams::game --> Game
+
+  class Search $G {
+    - game: SearchParams::game
+    - explorationConstant: SearchParams::explorationConstant
+    - quantityOfSearches: SearchParams::quantityOfSearches
+    --
+    - buildTree(root: Node<G, M>): void
+    - getProbabilities(state: State<G, M>): number[]
+  }
+  Search::game --> SearchParams::game
+  Search::explorationConstant --> SearchParams::explorationConstant
+  Search::quantityOfSearches --> SearchParams::quantityOfSearches
 
 }
 

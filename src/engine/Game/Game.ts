@@ -1,5 +1,5 @@
 import { Char, Integer } from "../../types";
-import Move from "./Move";
+import Move, { MoveKey } from "./Move";
 import State from "./State";
 
 export type Player = Integer;
@@ -20,7 +20,7 @@ export default abstract class Game<M extends Move> {
   private readonly name: GameParams<M>["name"];
   private readonly players: GameParams<M>["players"];
   protected readonly quantityOfSlots: GameParams<M>["quantityOfSlots"];
-  protected readonly moves: Map<Integer, M>;
+  protected readonly moves: Map<MoveKey, M>;
 
   constructor({ name, players, quantityOfSlots, moves }: GameParams<M>) {
     this.name = name;
@@ -33,11 +33,17 @@ export default abstract class Game<M extends Move> {
 
   public abstract getInitialState(): State<this, M>;
 
-  public getMove(index: Integer): M {
-    const move = this.moves.get(index);
+  public abstract getKeysOfTheValidMoves(state: State<this, M>): Set<MoveKey>;
+
+  public getMove(key: MoveKey): M {
+    const move = this.moves.get(key);
     if (typeof move === "undefined")
-      throw Error(`Move with index ${index} does not exist`);
+      throw Error(`Move with key ${key} does not exist`);
     return move;
+  }
+
+  public getMoves(): Map<MoveKey, M> {
+    return new Map(this.moves);
   }
 
   public getName(): GameParams<M>["name"] {
@@ -61,9 +67,5 @@ export default abstract class Game<M extends Move> {
 
   public getQuantityOfSlots(): GameParams<M>["quantityOfSlots"] {
     return this.quantityOfSlots;
-  }
-
-  public getMoves(): Map<Integer, M> {
-    return new Map(this.moves);
   }
 }

@@ -1,6 +1,7 @@
 import { INCREMENT_ONE, Integer } from "src/types";
 import Game from "../Game/Game";
-import State, { Move } from "../Game/State";
+import Move from "../Game/Move";
+import State from "../Game/State";
 
 const EMPTY_CHILDREN_LIST = 0;
 const MINIMUM_VALUE_SUM = 0;

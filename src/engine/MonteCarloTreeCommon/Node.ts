@@ -1,7 +1,7 @@
 import { INCREMENT_ONE, Integer } from "src/types";
-import Game, { Player } from "../Game/Game";
-import Move, { KeyedMove } from "../Game/Move";
-import State, { Points, TurnOutcome } from "../Game/State";
+import Game from "../Game/Game";
+import Move, { KeyedMove, MoveKey } from "../Game/Move";
+import State, { TurnOutcome } from "../Game/State";
 
 const EMPTY_CHILDREN_LIST = 0;
 const MINIMUM_VICTORY_QUALITY = 0;
@@ -9,32 +9,37 @@ const MINIMUM_QUANTITY_OF_VISITS = 0;
 
 interface NodeParams<G extends Game<M>, M extends Move> {
   state: State<G, M>;
+  keyOfTheTakenMove: MoveKey | null;
   explorationConstant: number;
   parent: Node<G, M> | null;
 }
 
 export class Node<G extends Game<M>, M extends Move> {
   private readonly state: NodeParams<G, M>["state"];
+  private readonly keyOfTheTakenMove: NodeParams<G, M>["keyOfTheTakenMove"];
   private readonly explorationConstant: NodeParams<G, M>["explorationConstant"];
   private readonly parent: NodeParams<G, M>["parent"];
 
   private readonly children: Node<G, M>[] = [];
-  private readonly moveInIndexIsExpandable: Map<Integer, boolean>;
+  private readonly moveIsExpandable: Map<MoveKey, boolean>;
 
   private quantityOfVisits: Integer = MINIMUM_QUANTITY_OF_VISITS;
-  private victoryQuality: Integer = MINIMUM_VICTORY_QUALITY;
+  private victoryQuality: number = MINIMUM_VICTORY_QUALITY;
 
-  private readonly initialPlayer: Player;
-
-  constructor({ explorationConstant, parent, state }: NodeParams<G, M>) {
+  constructor({
+    state,
+    keyOfTheTakenMove,
+    explorationConstant,
+    parent,
+  }: NodeParams<G, M>) {
     this.state = state;
+    this.keyOfTheTakenMove = keyOfTheTakenMove;
     this.explorationConstant = explorationConstant;
     this.parent = parent ? parent : null;
-    this.initialPlayer = state.getCurrentPlayer();
 
-    const indexesOfValidMoves = Array.from(state.getIndexesOfValidMoves());
-    this.moveInIndexIsExpandable = new Map(
-      indexesOfValidMoves.map((index: number): [Integer, boolean] => [
+    const keysOfTheValidMoves = Array.from(state.getKeysOfTheValidMoves());
+    this.moveIsExpandable = new Map(
+      keysOfTheValidMoves.map((index: number): [MoveKey, boolean] => [
         index,
         false,
       ]),
@@ -47,12 +52,16 @@ export class Node<G extends Game<M>, M extends Move> {
     return this.children;
   }
 
-  private getIndexesOfNonExpandedMoves(): Set<Integer> {
+  private getKeysOfNonExpandedMoves(): Set<MoveKey> {
     return new Set(
-      Array.from(this.moveInIndexIsExpandable.entries())
+      Array.from(this.moveIsExpandable.entries())
         .filter(([, isExpanded]) => !isExpanded)
         .map(([index]) => index),
     );
+  }
+
+  public getKeyOfTheTakenMove(): Integer | null {
+    return this.keyOfTheTakenMove;
   }
 
   public getQuantityOfVisits(): Integer {
@@ -65,19 +74,19 @@ export class Node<G extends Game<M>, M extends Move> {
 
   /* Setters */
 
-  private setMoveAsExpanded(index: Integer) {
-    if (!this.moveInIndexIsExpandable.has(index)) {
-      throw new Error("Invalid move index");
+  private setMoveAsExpanded(key: MoveKey) {
+    if (!this.moveIsExpandable.has(key)) {
+      throw new Error("Invalid move key");
     }
 
-    this.moveInIndexIsExpandable.set(index, true);
+    this.moveIsExpandable.set(key, true);
   }
 
   /* Methods */
 
   /// Check if the node is fully expanded, i.e. all valid actions have been explored.
   public isFullyExpanded(): boolean {
-    return Array.from(this.moveInIndexIsExpandable.values()).every(
+    return Array.from(this.moveIsExpandable.values()).every(
       isExpanded => isExpanded,
     );
   }
@@ -127,7 +136,7 @@ export class Node<G extends Game<M>, M extends Move> {
 
   /// Pick a random move from the list of valid moves.
   private pickRandomMove(): KeyedMove<M> {
-    const indexesOfNonExpandedMoves = this.getIndexesOfNonExpandedMoves();
+    const indexesOfNonExpandedMoves = this.getKeysOfNonExpandedMoves();
     const expandableMoves = Array.from(indexesOfNonExpandedMoves).map(
       index => ({
         key: index,
@@ -151,11 +160,12 @@ export class Node<G extends Game<M>, M extends Move> {
     // Copy the state and play the action on the copy
     const newState = this.state.playMove(selectedMove.move);
     const newStateInTheInitialPlayerPerspective = newState.changePerspective(
-      this.initialPlayer,
+      this.state.getPlayer(),
     );
 
     const child = new Node({
       explorationConstant: this.explorationConstant,
+      keyOfTheTakenMove: selectedMove.key,
       parent: this,
       state: newStateInTheInitialPlayerPerspective,
     });
@@ -164,12 +174,12 @@ export class Node<G extends Game<M>, M extends Move> {
   }
 
   /// Simulate a game from the current state, returning the outcome value.
-  public simulate(): TurnOutcome["points"] {
+  public simulate(): TurnOutcome["scoreboard"] {
     // Copy the state and play random actions, with alternate players, until the game is over
     let rolloutState = this.state.clone();
     for (;;) {
-      const { points, gameHasEnded } = rolloutState.getTurnOutcome();
-      if (gameHasEnded) return points;
+      const { scoreboard, gameHasEnded } = rolloutState.getTurnOutcome();
+      if (gameHasEnded) return scoreboard;
 
       const selectedMove = this.pickRandomMove();
       rolloutState = rolloutState.playMove(selectedMove.move);
@@ -177,15 +187,14 @@ export class Node<G extends Game<M>, M extends Move> {
   }
 
   /// Backpropagate the outcome value to the root node.
-  public backpropagate(pointsAfterTheLastTurn: Map<Player, Points>) {
-    const initialPlayerPoints = pointsAfterTheLastTurn.get(this.initialPlayer);
+  public backpropagate(scoreboard: TurnOutcome["scoreboard"]): void {
+    const pointsEarnedByThePlayer = scoreboard.get(this.state.getPlayer());
+    if (typeof pointsEarnedByThePlayer === "undefined")
+      throw new Error("Invalid player");
 
-    this.victoryQuality += initialPlayerPoints
-      ? initialPlayerPoints
-      : MINIMUM_VICTORY_QUALITY;
-
+    this.victoryQuality += pointsEarnedByThePlayer;
     this.quantityOfVisits += INCREMENT_ONE;
 
-    if (this.parent) this.parent.backpropagate(pointsAfterTheLastTurn);
+    if (this.parent) this.parent.backpropagate(scoreboard);
   }
 }

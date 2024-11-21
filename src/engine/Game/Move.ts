@@ -1,4 +1,17 @@
 import { Integer } from "src/types";
+import { Player } from "./Game";
+
+export type Points = number;
+export type Scoreboard = Map<Player, Points>;
+// Content of a slot in the state.
+export type Slot = Integer;
+
+export interface MoveOutcome {
+  keysOfTheValidMoves: Set<MoveKey>;
+  nextPlayer: Player;
+  scoreboard: Scoreboard;
+  slots: Slot[];
+}
 
 export interface MoveParams {
   title: string;
@@ -23,7 +36,9 @@ export default abstract class Move {
   }
 }
 
+export type MoveKey = Integer;
+
 export interface KeyedMove<M extends Move> {
-  key: Integer;
+  key: MoveKey;
   move: M;
 }

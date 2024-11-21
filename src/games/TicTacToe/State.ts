@@ -1,65 +1,59 @@
-import { KeyedMove } from "src/engine/Game/Move";
-import { INCREMENT_ONE } from "src/types";
+import { INCREMENT_ONE, Integer } from "src/types";
 import State, {
   EncodedState,
   Pixel,
+  Position,
   StateParams,
 } from "../../engine/Game/State";
-import TicTacToeGame, { Outcome } from "./Game";
+import TicTacToeGame from "./Game";
 import { TicTacToeMove } from "./Move";
 import { Channel, Player, Slot } from "./types";
 
 const ADJUST_INDEX = 1;
 const INVERT_SLOTS = -1;
 
-type TicTacToeStateParams = StateParams<TicTacToeGame, TicTacToeMove>;
+interface TicTacToeStateParams
+  extends StateParams<TicTacToeGame, TicTacToeMove> {
+  lastAssertedPosition: Position | null;
+}
 
 export class TicTacToeState extends State<TicTacToeGame, TicTacToeMove> {
-  private readonly quantityOfColumns: TicTacToeGame["quantityOfColumns"];
-  private readonly quantityOfRows: TicTacToeGame["quantityOfRows"];
+  private lastAssertedPosition: TicTacToeStateParams["lastAssertedPosition"];
 
   constructor({
     game,
-    lastPlayer,
-    lastTakenMove,
-    lastPoints,
+    player,
+    scoreboard,
     slots,
+    lastAssertedPosition,
   }: TicTacToeStateParams) {
-    super({ game, lastPlayer, lastPoints, lastTakenMove, slots });
-    this.quantityOfColumns = game.getQuantityOfColumns();
-    this.quantityOfRows = game.getQuantityOfRows();
+    super({ game, player, scoreboard, slots });
+    this.lastAssertedPosition = lastAssertedPosition;
   }
 
   /* Getters */
 
-  public getCurrentPlayer() {
-    const lastPlayer: Player | null = this.getLastPlayer();
-    if (lastPlayer === null) return Player.X;
-    if (lastPlayer === Player.X) return Player.O;
-    return Player.X;
-  }
-
   public getEncodedState() {
     const encodedState: EncodedState = Array.from(
-      Array(this.quantityOfRows),
+      Array(this.getQuantityOfRows()),
       () =>
-        Array.from(Array(this.quantityOfColumns), () =>
-          Array<Pixel>(this.quantityOfColumns).fill(Pixel.Off),
+        Array.from(Array(this.getQuantityOfColumns()), () =>
+          Array<Pixel>(this.getQuantityOfColumns()).fill(Pixel.Off),
         ),
     );
 
     for (
       let currentRowIndex = 0;
-      currentRowIndex < this.quantityOfRows;
+      currentRowIndex < this.getQuantityOfRows();
       currentRowIndex += INCREMENT_ONE
     ) {
       for (
         let currentColumnIndex = 0;
-        currentColumnIndex < this.quantityOfColumns;
+        currentColumnIndex < this.getQuantityOfColumns();
         currentColumnIndex += INCREMENT_ONE
       ) {
         const position =
-          currentRowIndex * this.quantityOfColumns + currentColumnIndex;
+          currentRowIndex * this.getQuantityOfColumns() + currentColumnIndex;
         const slot: Slot = this.getSlotAt(position);
 
         const channel = (() => {
@@ -85,113 +79,57 @@ export class TicTacToeState extends State<TicTacToeGame, TicTacToeMove> {
     return encodedState;
   }
 
-  public getTurnOutcome() {
-    const winner = this.getWinner();
-
-    if (winner !== null) {
-      const points = new Map<Player, number>([
-        [Player.X, Outcome.Loss],
-        [Player.O, Outcome.Loss],
-      ]);
-      points.set(winner, Outcome.Win);
-      return { gameHasEnded: true, points, winner };
-    }
-
-    const points = new Map<Player, number>([
-      [Player.X, Outcome.Draw],
-      [Player.O, Outcome.Draw],
-    ]);
-
-    const maskFromValidMoves = this.getMaskFromValidMoves();
-    if (maskFromValidMoves.every((validMove: boolean) => !validMove)) {
-      return { gameHasEnded: true, points, winner: null };
-    }
-
-    return {
-      gameHasEnded: false,
-      points,
-      winner: null,
-    };
+  public getLastAssertedPosition(): Position | null {
+    return this.lastAssertedPosition;
   }
 
-  public getIndexesOfValidMoves() {
-    const moves = this.game.getMoves();
-    const validMoves = new Set<number>();
-
-    for (
-      let currentRowIndex = 0;
-      currentRowIndex < this.quantityOfRows;
-      currentRowIndex += INCREMENT_ONE
-    ) {
-      for (
-        let currentColumnIndex = 0;
-        currentColumnIndex < this.quantityOfColumns;
-        currentColumnIndex += INCREMENT_ONE
-      ) {
-        const position =
-          currentRowIndex * this.quantityOfColumns + currentColumnIndex;
-        const slot: Slot = this.getSlotAt(position);
-
-        // If the cell is empty, it is a valid move
-        if (slot === Slot.Empty) {
-          const move = moves.get(position);
-          if (typeof move === "undefined")
-            throw Error(`Move ${position} is undefined`);
-
-          validMoves.add(position);
-        }
-      }
-    }
-
-    return validMoves;
+  private getOpponent(): Player {
+    const player: Player = this.getPlayer();
+    return player === Player.X ? Player.O : Player.X;
   }
 
-  public getWinner() {
-    const { lastTakenMove } = this;
-    if (lastTakenMove === null) return null;
+  private getQuantityOfColumns() {
+    return this.getGame().getQuantityOfColumns();
+  }
 
-    const lastPlayerAsSlot: Slot =
-      this.lastPlayer === Player.X ? Slot.X : Slot.O;
+  private getQuantityOfRows() {
+    return this.getGame().getQuantityOfRows();
+  }
 
+  public hasThePlayerWon(rowIndex: Integer, columnIndex: Integer): boolean {
+    const player: Player = this.getPlayer();
+    const playerAsSlot: Slot = player === Player.X ? Slot.X : Slot.O;
     const slots = this.getSlots();
 
-    const rowIndex = Math.floor(
-      lastTakenMove.move.getPosition() / this.quantityOfColumns,
-    );
-    const columnIndex =
-      lastTakenMove.move.getPosition() % this.quantityOfColumns;
-
     const row = slots.slice(
-      rowIndex * this.quantityOfColumns,
-      rowIndex * this.quantityOfColumns + this.quantityOfColumns,
+      rowIndex * this.getQuantityOfColumns(),
+      rowIndex * this.getQuantityOfColumns() + this.getQuantityOfColumns(),
     );
     const column = slots.filter(
-      (_, index) => index % this.quantityOfColumns === columnIndex,
+      (_, index) => index % this.getQuantityOfColumns() === columnIndex,
     );
     const primaryDiagonal = slots.filter(
-      (_, index) => index % this.quantityOfColumns === index,
+      (_, index) => index % this.getQuantityOfColumns() === index,
     );
     const secondaryDiagonal = slots.filter(
       (_, index) =>
-        Math.floor(index / this.quantityOfColumns) +
-          (index % this.quantityOfColumns) ===
-        this.quantityOfColumns - ADJUST_INDEX,
+        Math.floor(index / this.getQuantityOfColumns()) +
+          (index % this.getQuantityOfColumns()) ===
+        this.getQuantityOfColumns() - ADJUST_INDEX,
     );
 
     // Won on the row
-    if (row.every((slot: Slot) => slot === lastPlayerAsSlot))
-      return this.lastPlayer;
+    if (row.every((slot: Slot) => slot === playerAsSlot)) return true;
     // Won on the column
-    if (column.every((slot: Slot) => slot === lastPlayerAsSlot))
-      return this.lastPlayer;
+    if (column.every((slot: Slot) => slot === playerAsSlot)) return true;
     // Won on the primary diagonal
-    if (primaryDiagonal.every((slot: Slot) => slot === lastPlayerAsSlot))
-      return this.lastPlayer;
+    if (primaryDiagonal.every((slot: Slot) => slot === playerAsSlot))
+      return true;
     // Won on the secondary diagonal
-    if (secondaryDiagonal.every((slot: Slot) => slot === lastPlayerAsSlot))
-      return this.lastPlayer;
+    if (secondaryDiagonal.every((slot: Slot) => slot === playerAsSlot))
+      return true;
     // No win
-    return null;
+    return false;
   }
 
   /* Methods */
@@ -199,16 +137,16 @@ export class TicTacToeState extends State<TicTacToeGame, TicTacToeMove> {
   public changePerspective(
     player: Player,
   ): State<TicTacToeGame, TicTacToeMove> {
-    const currentPlayer = this.getCurrentPlayer();
+    const currentPlayer: Player = this.getPlayer();
     if (currentPlayer === player) return this.clone();
 
-    const slots = this.getSlots();
-    const newSlots = slots.map(slot => slot * INVERT_SLOTS);
+    const newSlots = this.getSlots().map(slot => slot * INVERT_SLOTS);
+
     const newState = new TicTacToeState({
-      game: this.game,
-      lastPlayer: player,
-      lastPoints: this.lastPoints,
-      lastTakenMove: this.lastTakenMove,
+      game: this.getGame(),
+      lastAssertedPosition: this.lastAssertedPosition,
+      player,
+      scoreboard: this.getScoreboard(),
       slots: newSlots,
     });
     return newState;
@@ -216,58 +154,54 @@ export class TicTacToeState extends State<TicTacToeGame, TicTacToeMove> {
 
   public clone(): State<TicTacToeGame, TicTacToeMove> {
     const clonedState = new TicTacToeState({
-      game: this.game,
-      lastPlayer: this.lastPlayer,
-      lastPoints: this.lastPoints,
-      lastTakenMove: this.lastTakenMove,
+      game: this.getGame(),
+      lastAssertedPosition: this.lastAssertedPosition,
+      player: this.getPlayer(),
+      scoreboard: this.getScoreboard(),
       slots: this.getSlots(),
     });
     return clonedState;
   }
 
-  public playMove(
-    keyedMove: KeyedMove<TicTacToeMove>,
-  ): State<TicTacToeGame, TicTacToeMove> {
-    const newSlots = this.getSlots();
-    const currentPlayer = this.getCurrentPlayer();
+  // public playMove(move: TicTacToeMove): State<TicTacToeGame, TicTacToeMove> {
+  //   const newSlots = this.getSlots().slice();
+  //   const position = move.getPosition();
+  //   newSlots[position] = this.getPlayer();
 
-    console.log(keyedMove);
-    const position = keyedMove.move.getPosition();
-    console.log(position);
-    newSlots[keyedMove.move.getPosition()] = currentPlayer;
-    const { points } = this.getTurnOutcome();
+  //   // const { scoreboard } = this.getTurnOutcome();
 
-    const newState = new TicTacToeState({
-      game: this.game,
-      lastPlayer: currentPlayer,
-      lastPoints: points,
-      lastTakenMove: keyedMove,
-      slots: newSlots,
-    });
-    return newState;
-  }
+  //   const nextState = new TicTacToeState({
+  //     game: this.getGame(),
+  //     keysOfTheValidMoves: this.getKeysOfTheValidMovesForTheNextState(),
+  //     lastAssertedPosition: position,
+  //     player: this.getOpponent(),
+  //     scoreboard,
+  //     slots: newSlots,
+  //   });
+  //   return nextState;
+  // }
 
   public toString() {
     let boardString = "";
     for (
       let currentRowIndex = 0;
-      currentRowIndex < this.quantityOfRows;
+      currentRowIndex < this.getQuantityOfRows();
       currentRowIndex += INCREMENT_ONE
     ) {
       boardString += "|";
       for (
         let currentColumnIndex = 0;
-        currentColumnIndex < this.quantityOfColumns;
+        currentColumnIndex < this.getQuantityOfColumns();
         currentColumnIndex += INCREMENT_ONE
       ) {
         boardString += " ";
         const position =
-          currentRowIndex * this.quantityOfColumns + currentColumnIndex;
+          currentRowIndex * this.getQuantityOfColumns() + currentColumnIndex;
         const slot: Slot = this.getSlotAt(position);
 
         if (slot === Slot.Empty) boardString += "-";
         else {
-          const playerData = this.game.getPlayerData(slot);
+          const playerData = this.getGame().getPlayerData(slot);
           boardString += playerData.symbol;
         }
 

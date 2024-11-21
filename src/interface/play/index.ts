@@ -18,8 +18,8 @@ const getContext = <G extends Game<M>, M extends Move>(
   player: Player,
 ): KeyedMove<M>[] => {
   printContext(state, player);
-  const indexesOfValidMoves = state.getIndexesOfValidMoves();
-  return Array.from(indexesOfValidMoves).map(index => ({
+  const keysOfTheValidMoves = state.getKeysOfTheValidMoves();
+  return Array.from(keysOfTheValidMoves).map(index => ({
     key: index,
     move: state.getGame().getMove(index),
   }));
@@ -27,11 +27,11 @@ const getContext = <G extends Game<M>, M extends Move>(
 
 const playMove = <G extends Game<M>, M extends Move>(
   state: State<G, M>,
-  keyedMove: KeyedMove<M>,
+  move: M,
 ): State<G, M> => {
-  const newState = state.playMove(keyedMove);
-  console.log(newState.toString());
-  return newState;
+  const nextState = state.playMove(move);
+  console.log(nextState.toString());
+  return nextState;
 };
 
 const hasGameEnded = <G extends Game<M>, M extends Move>(
@@ -64,16 +64,17 @@ const main = async <G extends Game<M>, M extends Move>({
   console.log(`Mode: ${gameMode}\n`);
 
   let state = game.getInitialState();
-  let player = state.getCurrentPlayer();
+  let player = state.getPlayer();
   let gameHasEnded = false;
 
   console.log(state.toString());
 
   while (!gameHasEnded) {
-    const validMoves = getContext(state, player);
+    const validKeyedMoves = getContext(state, player);
+    console.log(state);
 
     const input = await getInput({
-      choices: Array.from(validMoves.values()).map(
+      choices: Array.from(validKeyedMoves.values()).map(
         (keyedMove: KeyedMove<M>) =>
           ({
             description: keyedMove.move.getDescription(),
@@ -85,10 +86,10 @@ const main = async <G extends Game<M>, M extends Move>({
       name: "move",
       type: "select",
     });
-    const chosenMove = input.move as KeyedMove<M>;
+    const chosenKeyedMove = input.move as KeyedMove<M>;
 
-    state = playMove(state, chosenMove);
-    player = state.getCurrentPlayer();
+    state = playMove(state, chosenKeyedMove.move);
+    player = state.getPlayer();
     gameHasEnded = hasGameEnded(state);
   }
 };
