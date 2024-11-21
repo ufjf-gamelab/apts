@@ -1,21 +1,22 @@
 /* eslint-disable no-await-in-loop */
 import { Choice } from "prompts";
-import Game, { Player } from "src/engine/Game/Game";
+import Game from "src/engine/Game/Game";
 import Move, { KeyedMove } from "src/engine/Game/Move";
+import Player from "src/engine/Game/Player";
 import State from "src/engine/Game/State";
 import { GameMode, GetInput } from "..";
 
-const printContext = <G extends Game<M>, M extends Move>(
-  state: State<G, M>,
-  player: Player,
+const printContext = <P extends Player, M extends Move, S extends State<P, M>>(
+  state: S,
+  player: P,
 ): void => {
   const playerData = state.getGame().getPlayerData(player);
   console.log(`${playerData.name}'s turn`);
 };
 
-const getContext = <G extends Game<M>, M extends Move>(
-  state: State<G, M>,
-  player: Player,
+const getContext = <P extends Player, M extends Move, S extends State<P, M>>(
+  state: S,
+  player: P,
 ): KeyedMove<M>[] => {
   printContext(state, player);
   const keysOfTheValidMoves = state.getKeysOfTheValidMoves();
@@ -25,17 +26,17 @@ const getContext = <G extends Game<M>, M extends Move>(
   }));
 };
 
-const playMove = <G extends Game<M>, M extends Move>(
-  state: State<G, M>,
+const playMove = <P extends Player, M extends Move, S extends State<P, M>>(
+  state: S,
   move: M,
-): State<G, M> => {
+): S => {
   const nextState = state.playMove(move);
   console.log(nextState.toString());
   return nextState;
 };
 
-const hasGameEnded = <G extends Game<M>, M extends Move>(
-  state: State<G, M>,
+const hasGameEnded = <P extends Player, M extends Move, S extends State<P, M>>(
+  state: S,
 ): boolean => {
   const turnOutcome = state.getTurnOutcome();
   if (turnOutcome.gameHasEnded) {
@@ -49,22 +50,32 @@ const hasGameEnded = <G extends Game<M>, M extends Move>(
   return false;
 };
 
-interface PlayParams<G extends Game<M>, M extends Move> {
+interface PlayParams<
+  P extends Player,
+  M extends Move,
+  S extends State<P, M>,
+  G extends Game<P, M, S>,
+> {
   getInput: GetInput;
   game: G;
   gameMode: GameMode;
 }
 
-const main = async <G extends Game<M>, M extends Move>({
+const main = async <
+  P extends Player,
+  M extends Move,
+  S extends State<P, M>,
+  G extends Game<P, M, S>,
+>({
   getInput,
   game,
   gameMode,
-}: PlayParams<G, M>) => {
+}: PlayParams<P, M, S, G>) => {
   console.log(`Game: ${game.getName()}`);
   console.log(`Mode: ${gameMode}\n`);
 
   let state = game.getInitialState();
-  let player = state.getPlayer();
+  let player = state.getNextPlayer();
   let gameHasEnded = false;
 
   console.log(state.toString());

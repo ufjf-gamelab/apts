@@ -1,71 +1,84 @@
-import { Char, Integer } from "../../types";
+import { Integer } from "../../types";
 import Move, { MoveKey } from "./Move";
+import Player, { PlayerKey } from "./Player";
 import State from "./State";
 
-export type Player = Integer;
-
-export interface PlayerData {
-  symbol: Char;
-  name: string;
+type Channel = Integer;
+export type EncodedState = Pixel[][][];
+export enum Pixel {
+  Off = 0,
+  On = 1,
 }
 
-interface GameParams<M extends Move> {
-  name: string;
-  players: Map<Player, PlayerData>;
-  quantityOfSlots: Integer;
-  moves: M[];
+export interface GameParams<P extends Player, M extends Move> {
+  readonly name: string;
+  readonly quantityOfSlots: Integer;
+  readonly players: { [key in PlayerKey]: P };
+  readonly moves: { [key in MoveKey]: M };
 }
 
-export default abstract class Game<M extends Move> {
-  private readonly name: GameParams<M>["name"];
-  private readonly players: GameParams<M>["players"];
-  protected readonly quantityOfSlots: GameParams<M>["quantityOfSlots"];
-  protected readonly moves: Map<MoveKey, M>;
+export default abstract class Game<
+  P extends Player,
+  M extends Move,
+  S extends State<P, M>,
+> {
+  private readonly name: GameParams<P, M>["name"];
+  protected readonly quantityOfSlots: GameParams<P, M>["quantityOfSlots"];
+  protected readonly players: GameParams<P, M>["players"];
+  protected readonly moves: GameParams<P, M>["moves"];
 
-  constructor({ name, players, quantityOfSlots, moves }: GameParams<M>) {
+  constructor({ players, moves, name, quantityOfSlots }: GameParams<P, M>) {
     this.name = name;
-    this.players = players;
     this.quantityOfSlots = quantityOfSlots;
-    this.moves = new Map(moves.map((move, index) => [index, move]));
+    this.players = players;
+    this.moves = moves;
   }
 
   /* Getters */
 
-  public abstract getInitialState(): State<this, M>;
-
-  public abstract getKeysOfTheValidMoves(state: State<this, M>): Set<MoveKey>;
+  public abstract getInitialState(): S;
 
   public getMove(key: MoveKey): M {
-    const move = this.moves.get(key);
+    const move = this.moves[key];
     if (typeof move === "undefined")
-      throw Error(`Move with key ${key} does not exist`);
+      throw new Error(`Move with key ${key} not found`);
     return move;
   }
 
-  public getMoves(): Map<MoveKey, M> {
-    return new Map(this.moves);
-  }
-
-  public getName(): GameParams<M>["name"] {
+  public getName(): GameParams<P, M>["name"] {
     return this.name;
   }
 
-  public getPlayerData(player: Player): PlayerData {
-    const playerData = this.players.get(player);
-    if (typeof playerData === "undefined")
-      throw Error(`Player ${player} does not exist`);
-    return { ...playerData };
+  public getPlayer(key: PlayerKey): P {
+    const player = this.players[key];
+    if (typeof player === "undefined")
+      throw new Error(`Player with key ${key} not found`);
+    return player;
   }
 
-  public getPlayers(): GameParams<M>["players"] {
-    return { ...this.players };
-  }
-
-  public getQuantityOfMoves(): Integer {
-    return this.moves.size;
-  }
-
-  public getQuantityOfSlots(): GameParams<M>["quantityOfSlots"] {
+  public getQuantityOfSlots(): GameParams<P, M>["quantityOfSlots"] {
     return this.quantityOfSlots;
+  }
+
+  /* Setters */
+
+  protected static setSlotInEncodedState({
+    rowIndex,
+    columnIndex,
+    channel,
+    encodedState,
+  }: {
+    rowIndex: Integer;
+    columnIndex: Integer;
+    channel: Channel;
+    encodedState: EncodedState;
+  }): void {
+    const row = encodedState[rowIndex];
+    if (typeof row === "undefined") return;
+
+    const column = row[columnIndex];
+    if (typeof column === "undefined") return;
+
+    column[channel] = Pixel.On;
   }
 }

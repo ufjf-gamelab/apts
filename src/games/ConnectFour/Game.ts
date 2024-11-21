@@ -3,12 +3,6 @@ import State from "../../engine/Game/State";
 import { GameName } from "../../engine/types";
 import { ConnectFourState } from "./State";
 
-export enum Player {
-  None = 0,
-  X = 1,
-  O = -1,
-}
-
 export default class ConnectFourGame extends Game {
   public static readonly WINDOW_SIZE = 4;
   private readonly rowCount: number;
