@@ -1,7 +1,7 @@
 import { Integer } from "../../types";
 import Move, { MoveKey } from "./Move";
 import Player, { PlayerKey } from "./Player";
-import State from "./State";
+import State, { Scoreboard } from "./State";
 
 type Channel = Integer;
 export type EncodedState = Pixel[][][];
@@ -18,8 +18,8 @@ export interface GameParams<
 > {
   readonly name: string;
   readonly quantityOfSlots: Integer;
-  readonly players: { readonly [key in PlayerKey]: P };
-  readonly moves: { readonly [key in MoveKey]: M };
+  readonly players: Map<PlayerKey, P>;
+  readonly moves: Map<MoveKey, M>;
 }
 
 export default abstract class Game<
@@ -30,8 +30,8 @@ export default abstract class Game<
 > {
   private readonly name: GameParams<P, M, S, G>["name"];
   private readonly quantityOfSlots: GameParams<P, M, S, G>["quantityOfSlots"];
-  private readonly players: Map<PlayerKey, P>;
-  private readonly moves: Map<MoveKey, M>;
+  private readonly players: GameParams<P, M, S, G>["players"];
+  private readonly moves: GameParams<P, M, S, G>["moves"];
 
   constructor({
     players,
@@ -41,18 +41,18 @@ export default abstract class Game<
   }: GameParams<P, M, S, G>) {
     this.name = name;
     this.quantityOfSlots = quantityOfSlots;
-    this.players = new Map();
-    for (const key in players) {
-      this.players.set(key, players[key]);
-    }
+    this.players = players;
+    this.moves = moves;
   }
 
   /* Getters */
 
+  public abstract getEndGameMessage(state: S): string;
+
   public abstract getInitialState(): S;
 
   public getMove(key: MoveKey): M {
-    const move = this.moves[key];
+    const move = this.moves.get(key);
     if (typeof move === "undefined")
       throw new Error(`Move with key ${key} not found`);
     return move;
@@ -65,17 +65,35 @@ export default abstract class Game<
   public abstract getNextPlayerKey(playerKey: PlayerKey): PlayerKey;
 
   public getPlayer(key: PlayerKey): P {
-    const player = this.players[key];
+    const player = this.players.get(key);
     if (typeof player === "undefined")
       throw new Error(`Player with key ${key} not found`);
     return player;
+  }
+
+  public getPlayers(): GameParams<P, M, S, G>["players"] {
+    return this.players;
   }
 
   public getQuantityOfSlots(): GameParams<P, M, S, G>["quantityOfSlots"] {
     return this.quantityOfSlots;
   }
 
-  public abstract isStateFinal(state: S): boolean;
+  public abstract getScoreboard(state: S): Scoreboard;
+
+  public getPrettyScoreboard(state: S): string {
+    const scoreboard = this.getScoreboard(state);
+    return Array.from(scoreboard.entries())
+      .map(([playerKey, points]) => {
+        const player = this.getPlayer(playerKey);
+        return `${player.getName()}: ${points}`;
+      })
+      .join(", ");
+  }
+
+  public abstract getValidMoves(state: S): M[];
+
+  public abstract isFinal(state: S): boolean;
 
   /* Setters */
 

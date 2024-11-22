@@ -27,7 +27,8 @@ const getContext = <
   player: P,
 ): M[] => {
   printContext(player);
-  return state.getValidMoves();
+  const game = state.getGame();
+  return game.getValidMoves(state);
 };
 
 const playMove = <
@@ -52,13 +53,10 @@ const hasGameEnded = <
 >(
   state: S,
 ): boolean => {
-  if (state.isFinal()) {
-    console.log("Game has ended.");
-    const winner = state.getGame()
-    if (turnOutcome.winner) {
-      const playerData = state.getGame().getPlayerData(turnOutcome.winner);
-      console.log(`${playerData.name} won!`);
-    }
+  const game = state.getGame();
+  if (game.isFinal(state)) {
+    console.log(game.getEndGameMessage(state));
+    console.log(game.getPrettyScoreboard(state));
     return true;
   }
   return false;
@@ -66,9 +64,9 @@ const hasGameEnded = <
 
 interface PlayParams<
   P extends Player,
-  M extends Move,
-  S extends State<P, M>,
-  G extends Game<P, M, S>,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
 > {
   getInput: GetInput;
   game: G;
@@ -77,9 +75,9 @@ interface PlayParams<
 
 const main = async <
   P extends Player,
-  M extends Move,
-  S extends State<P, M>,
-  G extends Game<P, M, S>,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
 >({
   getInput,
   game,
@@ -89,33 +87,31 @@ const main = async <
   console.log(`Mode: ${gameMode}\n`);
 
   let state = game.getInitialState();
-  let player = state.getplayer();
+  let player = game.getPlayer(state.getPlayerKey());
   let gameHasEnded = false;
 
   console.log(state.toString());
 
   while (!gameHasEnded) {
-    const validMoves = getContext(state, player);
-    console.log(state);
+    const validMoves = getContext<P, M, S, G>(state, player);
 
-    const input = await getInput({
-      choices: Array.from(validMoves.values()).map(
-        (move: M) =>
-          ({
-            description: move.getDescription(),
-            title: move.getTitle(),
-            value: move,
-          }) as Choice,
-      ),
+    const choices: Choice[] = validMoves.map(move => ({
+      description: move.getDescription(),
+      title: move.getTitle(),
+      value: move,
+    }));
+
+    const input = (await getInput({
+      choices,
       message: "Enter a move",
       name: "move",
       type: "select",
-    });
-    const chosenKeyedMove = input.move as M;
+    })) as { move: M };
+    const chosenMove = input.move;
 
-    state = playMove(state, chosenKeyedMove);
-    player = state.getPlayer();
-    gameHasEnded = hasGameEnded(state);
+    state = playMove<P, M, S, G>(state, chosenMove);
+    player = game.getPlayer(state.getPlayerKey());
+    gameHasEnded = hasGameEnded<P, M, S, G>(state);
   }
 };
 

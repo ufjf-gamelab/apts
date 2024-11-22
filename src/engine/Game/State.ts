@@ -20,7 +20,6 @@ export interface StateParams<
   readonly game: G;
   readonly slots: Slot[];
   readonly playerKey: PlayerKey;
-  readonly scoreboard: Scoreboard;
 }
 
 export default abstract class State<
@@ -49,15 +48,16 @@ export default abstract class State<
     return this.playerKey;
   }
 
-  public abstract getScoreboard(): Scoreboard;
+  public getSlot(index: SlotIndex): Slot {
+    const slot = this.slots[index];
+    if (typeof slot === "undefined")
+      throw new Error(`Slot with index ${index} not found`);
+    return slot;
+  }
 
   public getSlots(): Slot[] {
     return [...this.slots];
   }
-
-  public abstract getValidMoves(): M[];
-
-  public abstract isFinal(): boolean;
 
   /* Methods */
 

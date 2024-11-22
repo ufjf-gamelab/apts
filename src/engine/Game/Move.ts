@@ -3,12 +3,7 @@ import Game from "./Game";
 import Player from "./Player";
 import State from "./State";
 
-export interface MoveParams<
-  P extends Player,
-  M extends Move<P, M, S, G>,
-  S extends State<P, M, S, G>,
-  G extends Game<P, M, S, G>,
-> {
+export interface MoveParams {
   readonly title: string;
   readonly description: string;
 }
@@ -19,19 +14,19 @@ export default abstract class Move<
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
 > {
-  private readonly title: MoveParams<P, M, S, G>["title"];
-  private readonly description: MoveParams<P, M, S, G>["description"];
+  private readonly title: MoveParams["title"];
+  private readonly description: MoveParams["description"];
 
-  constructor({ title, description }: MoveParams<P, M, S, G>) {
+  constructor({ title, description }: MoveParams) {
     this.title = title;
     this.description = description;
   }
 
-  public getTitle(): MoveParams<P, M, S, G>["title"] {
+  public getTitle(): MoveParams["title"] {
     return this.title;
   }
 
-  public getDescription(): MoveParams<P, M, S, G>["description"] {
+  public getDescription(): MoveParams["description"] {
     return this.description;
   }
 

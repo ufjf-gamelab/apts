@@ -11,13 +11,7 @@ export interface Position {
   readonly columnIndex: Integer;
 }
 
-export interface TicTacToeMoveParams
-  extends MoveParams<
-    TicTacToePlayer,
-    TicTacToeMove,
-    TicTacToeState,
-    TicTacToeGame
-  > {
+export interface TicTacToeMoveParams extends MoveParams {
   readonly position: Position;
 }
 
