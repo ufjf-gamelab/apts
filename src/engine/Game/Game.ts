@@ -10,28 +10,41 @@ export enum Pixel {
   On = 1,
 }
 
-export interface GameParams<P extends Player, M extends Move> {
+export interface GameParams<
+  P extends Player,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
+> {
   readonly name: string;
   readonly quantityOfSlots: Integer;
-  readonly players: { [key in PlayerKey]: P };
-  readonly moves: { [key in MoveKey]: M };
+  readonly players: { readonly [key in PlayerKey]: P };
+  readonly moves: { readonly [key in MoveKey]: M };
 }
 
 export default abstract class Game<
   P extends Player,
-  M extends Move,
-  S extends State<P, M>,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
 > {
-  private readonly name: GameParams<P, M>["name"];
-  private readonly quantityOfSlots: GameParams<P, M>["quantityOfSlots"];
-  private readonly players: GameParams<P, M>["players"];
-  private readonly moves: GameParams<P, M>["moves"];
+  private readonly name: GameParams<P, M, S, G>["name"];
+  private readonly quantityOfSlots: GameParams<P, M, S, G>["quantityOfSlots"];
+  private readonly players: Map<PlayerKey, P>;
+  private readonly moves: Map<MoveKey, M>;
 
-  constructor({ players, moves, name, quantityOfSlots }: GameParams<P, M>) {
+  constructor({
+    players,
+    moves,
+    name,
+    quantityOfSlots,
+  }: GameParams<P, M, S, G>) {
     this.name = name;
     this.quantityOfSlots = quantityOfSlots;
-    this.players = players;
-    this.moves = moves;
+    this.players = new Map();
+    for (const key in players) {
+      this.players.set(key, players[key]);
+    }
   }
 
   /* Getters */
@@ -45,9 +58,11 @@ export default abstract class Game<
     return move;
   }
 
-  public getName(): GameParams<P, M>["name"] {
+  public getName(): GameParams<P, M, S, G>["name"] {
     return this.name;
   }
+
+  public abstract getNextPlayerKey(playerKey: PlayerKey): PlayerKey;
 
   public getPlayer(key: PlayerKey): P {
     const player = this.players[key];
@@ -56,7 +71,7 @@ export default abstract class Game<
     return player;
   }
 
-  public getQuantityOfSlots(): GameParams<P, M>["quantityOfSlots"] {
+  public getQuantityOfSlots(): GameParams<P, M, S, G>["quantityOfSlots"] {
     return this.quantityOfSlots;
   }
 

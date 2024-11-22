@@ -9,7 +9,12 @@ import { Slot } from "./types";
 const ADJUST_INDEX = 1;
 
 interface TicTacToeGameParams
-  extends GameParams<TicTacToePlayer, TicTacToeMove> {
+  extends GameParams<
+    TicTacToePlayer,
+    TicTacToeMove,
+    TicTacToeState,
+    TicTacToeGame
+  > {
   readonly quantityOfRows: Integer;
   readonly quantityOfColumns: Integer;
 }
@@ -17,7 +22,8 @@ interface TicTacToeGameParams
 export default class TicTacToeGame extends Game<
   TicTacToePlayer,
   TicTacToeMove,
-  TicTacToeState
+  TicTacToeState,
+  TicTacToeGame
 > {
   private readonly quantityOfRows: TicTacToeGameParams["quantityOfRows"];
   private readonly quantityOfColumns: TicTacToeGameParams["quantityOfColumns"];
@@ -37,30 +43,23 @@ export default class TicTacToeGame extends Game<
 
   /* Getters */
 
-  public getInitialState(): TicTacToeState {
-    return new TicTacToeState({
-      game: this,
-      lastAssertedPosition: null,
-      nextPlayerKey: PlayerKey.X,
-      slots: Array<Slot>(this.getQuantityOfSlots()).fill(Slot.Empty),
-    });
-  }
-
   private areAllSlotsTheSame(values: Slot[]): boolean {
     const [firstValue] = values;
     if (typeof firstValue === "undefined") return false;
     return values.every(value => value === values[firstValue]);
   }
 
-  private getWinnerOnStripe(slots: Slot[]): TicTacToePlayer | null {
-    if (this.areAllSlotsTheSame(slots)) {
-      const [firstSlot] = slots;
-      if (typeof firstSlot !== "undefined") {
-        const player = this.getPlayerAtSlot(firstSlot);
-        if (player !== null) return player;
-      }
-    }
-    return null;
+  public getInitialState(): TicTacToeState {
+    return new TicTacToeState({
+      game: this,
+      lastAssertedPosition: null,
+      playerKey: PlayerKey.X,
+      slots: Array<Slot>(this.getQuantityOfSlots()).fill(Slot.Empty),
+    });
+  }
+
+  public getNextPlayerKey(playerKey: PlayerKey): PlayerKey {
+    return playerKey === PlayerKey.X ? PlayerKey.O : PlayerKey.X;
   }
 
   private getPlayerAtSlot(slot: Slot): TicTacToePlayer | null {
@@ -70,7 +69,11 @@ export default class TicTacToeGame extends Game<
     return player;
   }
 
-  private getWinner(state: TicTacToeState): TicTacToePlayer | null {
+  public getQuantityOfColumns(): Integer {
+    return this.quantityOfColumns;
+  }
+
+  public getWinner(state: TicTacToeState): TicTacToePlayer | null {
     if (state.lastAssertedPosition === null) return null;
 
     const slots = state.getSlots();
@@ -80,18 +83,18 @@ export default class TicTacToeGame extends Game<
       rowIndex * this.quantityOfColumns,
       rowIndex * this.quantityOfColumns + this.quantityOfColumns,
     );
-    if (this.areAllSlotsTheSame(row)) return this.getWinnerOnStripe(row);
+    if (this.areAllSlotsTheSame(row)) return this.getWinnerOnSection(row);
 
     const column = slots.filter(
       (_, index) => index % this.quantityOfColumns === columnIndex,
     );
-    if (this.areAllSlotsTheSame(column)) return this.getWinnerOnStripe(column);
+    if (this.areAllSlotsTheSame(column)) return this.getWinnerOnSection(column);
 
     const primaryDiagonal = slots.filter(
       (_, index) => index % this.quantityOfColumns === index,
     );
     if (this.areAllSlotsTheSame(primaryDiagonal))
-      return this.getWinnerOnStripe(primaryDiagonal);
+      return this.getWinnerOnSection(primaryDiagonal);
 
     const secondaryDiagonal = slots.filter(
       (_, index) =>
@@ -100,16 +103,19 @@ export default class TicTacToeGame extends Game<
         this.quantityOfColumns - ADJUST_INDEX,
     );
     if (this.areAllSlotsTheSame(secondaryDiagonal))
-      return this.getWinnerOnStripe(secondaryDiagonal);
+      return this.getWinnerOnSection(secondaryDiagonal);
 
     return null;
   }
 
-  public isStateFinal(state: TicTacToeState): boolean {
-    const winner = this.getWinner(state);
-    if (winner !== null) return true;
-    if (state.getSlots().every((slot: Slot) => slot !== Slot.Empty))
-      return true;
-    return false;
+  private getWinnerOnSection(slots: Slot[]): TicTacToePlayer | null {
+    if (this.areAllSlotsTheSame(slots)) {
+      const [firstSlot] = slots;
+      if (typeof firstSlot !== "undefined") {
+        const player = this.getPlayerAtSlot(firstSlot);
+        if (player !== null) return player;
+      }
+    }
+    return null;
   }
 }

@@ -6,24 +6,24 @@ export enum PlayerKey {
   O,
 }
 
-export const players: { [key in PlayerKey]: TicTacToePlayer } = {
+export const players: { readonly [key in PlayerKey]: TicTacToePlayer } = {
   [PlayerKey.X]: new TicTacToePlayer({ name: "Player X", symbol: "X" }),
   [PlayerKey.O]: new TicTacToePlayer({ name: "Player O", symbol: "O" }),
 } as const;
 
 export enum MoveKey {
-  Northwest,
-  North,
-  Northeast,
-  West,
-  Center,
-  East,
-  Southwest,
-  South,
-  Southeast,
+  Northwest = "banana",
+  North = "apple",
+  Northeast = "cherry",
+  West = "date",
+  Center = "elderberry",
+  East = "fig",
+  Southwest = "grape",
+  South = "honeydew",
+  Southeast = "kiwi",
 }
 
-export const moves: { [key in MoveKey]: TicTacToeMove } = {
+export const moves: { readonly [key in MoveKey]: TicTacToeMove } = {
   [MoveKey.Northwest]: new TicTacToeMove({
     description: "Northwest",
     position: { columnIndex: 0, rowIndex: 0 },

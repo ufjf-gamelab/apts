@@ -124,14 +124,14 @@ export class Node<G extends Game> {
   /// Pick a random action and perform it, returning the outcome state as a child node.
   public expand(policy: number[]) {
     const initialPlayer = this.state.getGame().getInitialPlayer();
-    const nextPlayer = this.state.getNextPlayer(initialPlayer);
+    const player = this.state.getplayer(initialPlayer);
 
     policy.forEach((probability, action) => {
       if (probability > MINIMUM_PROBABILITY) {
         // Copy the state and play the action on the copy
         const childState = this.state.clone();
         childState.performAction(action, initialPlayer);
-        childState.changePerspective(initialPlayer, nextPlayer);
+        childState.changePerspective(initialPlayer, player);
 
         const child = new Node({
           takenMove: action,

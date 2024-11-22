@@ -13,46 +13,51 @@ export type Scoreboard = Map<PlayerKey, Points>;
 
 export interface StateParams<
   P extends Player,
-  M extends Move,
-  S extends State<P, M>,
-  G extends Game<P, M, S>,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
 > {
   readonly game: G;
   readonly slots: Slot[];
-  readonly nextPlayerKey: PlayerKey;
+  readonly playerKey: PlayerKey;
+  readonly scoreboard: Scoreboard;
 }
 
-type StateParamsAlias<P extends Player, M extends Move> = StateParams<
-  P,
-  M,
-  State<P, M>,
-  Game<P, M, State<P, M>>
->;
+export default abstract class State<
+  P extends Player,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
+> {
+  private readonly game: StateParams<P, M, S, G>["game"];
+  private readonly slots: StateParams<P, M, S, G>["slots"];
+  private readonly playerKey: StateParams<P, M, S, G>["playerKey"];
 
-export default abstract class State<P extends Player, M extends Move> {
-  private readonly game: StateParamsAlias<P, M>["game"];
-  private readonly slots: StateParamsAlias<P, M>["slots"];
-  private readonly nextPlayerKey: StateParamsAlias<P, M>["nextPlayerKey"];
-
-  constructor({ game, slots, nextPlayerKey }: StateParamsAlias<P, M>) {
+  constructor({ game, slots, playerKey }: StateParams<P, M, S, G>) {
     this.game = game;
     this.slots = slots;
-    this.nextPlayerKey = nextPlayerKey;
+    this.playerKey = playerKey;
   }
 
   /* Getters */
 
-  public getGame(): StateParamsAlias<P, M>["game"] {
+  public getGame(): StateParams<P, M, S, G>["game"] {
     return this.game;
   }
 
-  public getNextPlayer(): P {
-    return this.game.getPlayer(this.nextPlayerKey);
+  public getPlayerKey(): StateParams<P, M, S, G>["playerKey"] {
+    return this.playerKey;
   }
 
-  public getSlots(): StateParamsAlias<P, M>["slots"] {
+  public abstract getScoreboard(): Scoreboard;
+
+  public getSlots(): Slot[] {
     return [...this.slots];
   }
+
+  public abstract getValidMoves(): M[];
+
+  public abstract isFinal(): boolean;
 
   /* Methods */
 

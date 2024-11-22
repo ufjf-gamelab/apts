@@ -24,8 +24,3 @@ export default abstract class Player {
 }
 
 export type PlayerKey = Integer;
-
-export interface KeyedPlayer<P extends Player> {
-  key: PlayerKey;
-  player: P;
-}
