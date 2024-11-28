@@ -85,11 +85,23 @@ export default abstract class State<
     return this.validMovesKeys.map(key => this.game.getMove(key));
   }
 
+  public getValidMovesKeys(): StateParams<P, M, S, G>["validMovesKeys"] {
+    return [...this.validMovesKeys];
+  }
+
   public isFinal(): boolean {
     return this.validMovesKeys.length === NO_REMAINING_VALID_MOVES;
   }
 
   /* Methods */
+
+  public abstract changePerspective(playerKey: PlayerKey): S;
+
+  public clone(): S {
+    const prototype = Object.getPrototypeOf(this) as object | null;
+    const clone = Object.create(prototype) as S;
+    return Object.assign(clone, this);
+  }
 
   public abstract toString(): string;
 }

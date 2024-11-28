@@ -1,11 +1,10 @@
 import { PlayerPair } from "src/engine/Game/Player";
 import { Integer } from "src/types";
 import Game from "../../engine/Game/Game";
-import { moves, PlayerKey, players } from "./constants";
 import { Position, TicTacToeMove } from "./Move";
 import { TicTacToePlayer } from "./Player";
 import { INITIAL_POINTS, TicTacToeState } from "./State";
-import { Slot } from "./types";
+import { moves, PlayerKey, players, Slot } from "./types";
 
 const ADJUST_INDEX = 1;
 

@@ -1,27 +1,38 @@
 import { INCREMENT_ONE, Integer } from "src/types";
-import Game, { Player } from "../Game/Game";
+import Game from "../Game/Game";
 import Move from "../Game/Move";
+import Player from "../Game/Player";
 import State from "../Game/State";
 import { Node } from "./Node";
 
 const MINIMUM_PROBABILITY = 0;
 
-interface SearchParams<G extends Game<M>, M extends Move> {
+interface SearchParams<
+  P extends Player,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
+> {
   game: G;
   explorationConstant: number;
   quantityOfSearches: Integer;
 }
 
-export default class Search<G extends Game<M>, M extends Move> {
-  private game: SearchParams<G, M>["game"];
-  private explorationConstant: SearchParams<G, M>["explorationConstant"];
-  private quantityOfSearches: SearchParams<G, M>["quantityOfSearches"];
+export default class Search<
+  P extends Player,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
+> {
+  private game: SearchParams<P, M, S, G>["game"];
+  private explorationConstant: SearchParams<P, M, S, G>["explorationConstant"];
+  private quantityOfSearches: SearchParams<P, M, S, G>["quantityOfSearches"];
 
   constructor({
     game,
     explorationConstant,
     quantityOfSearches,
-  }: SearchParams<G, M>) {
+  }: SearchParams<P, M, S, G>) {
     this.game = game;
     this.explorationConstant = explorationConstant;
     this.quantityOfSearches = quantityOfSearches;
@@ -29,37 +40,33 @@ export default class Search<G extends Game<M>, M extends Move> {
 
   /* Methods */
 
-  private buildTree(root: Node<G, M>): void {
+  private buildTree(root: Node<P, M, S, G>): void {
     for (
       let currentSearchIndex = 0;
       currentSearchIndex < this.quantityOfSearches;
       currentSearchIndex += INCREMENT_ONE
     ) {
       let currentNode = root;
-      let lastPlayer: Player | null = null;
 
       // Goes all the way down to a node that is not fully expanded at the bottom of the tree.
       while (currentNode.isFullyExpanded())
         currentNode = currentNode.selectBestChild();
 
-      const turnOutcome = root.getState().getTurnOutcome();
-      const { gameHasEnded } = turnOutcome;
-      let { scoreboard } = turnOutcome;
+      const state = currentNode.getState();
+      let scoreboard = state.getScoreboard();
+      const isFinal = state.isFinal();
 
-      if (!gameHasEnded) {
+      if (!isFinal) {
         currentNode = currentNode.expand();
-        lastPlayer = currentNode.getState().getPlayer();
         scoreboard = currentNode.simulate();
       }
-
-      if (lastPlayer === null) continue;
 
       currentNode.backpropagate(scoreboard);
     }
   }
 
-  public getProbabilities(state: State<G, M>): number[] {
-    const root = new Node({
+  public getProbabilities(state: S): number[] {
+    const root = new Node<P, M, S, G>({
       explorationConstant: this.explorationConstant,
       keyOfTheTakenMove: null,
       parent: null,

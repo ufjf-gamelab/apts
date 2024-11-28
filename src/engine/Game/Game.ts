@@ -58,7 +58,7 @@ export default abstract class Game<
     return move;
   }
 
-  protected getMoves(): GameParams<P, M, S, G>["moves"] {
+  public getMoves(): GameParams<P, M, S, G>["moves"] {
     return [...this.moves];
   }
 
@@ -73,6 +73,10 @@ export default abstract class Game<
     if (typeof player === "undefined")
       throw new Error(`Player with key ${key} not found`);
     return player;
+  }
+
+  public getQuantityOfMoves(): Integer {
+    return this.moves.length;
   }
 
   protected getQuantityOfSlots(): GameParams<P, M, S, G>["quantityOfSlots"] {

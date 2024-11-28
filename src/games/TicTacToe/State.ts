@@ -1,3 +1,4 @@
+import { PlayerKey } from "src/engine/Game/Player";
 import { INCREMENT_ONE, Integer } from "src/types";
 import State, { StateParams } from "../../engine/Game/State";
 import TicTacToeGame from "./Game";
@@ -50,6 +51,17 @@ export class TicTacToeState extends State<
   }
 
   /* Methods */
+
+  public changePerspective(playerKey: PlayerKey): TicTacToeState {
+    return new TicTacToeState({
+      game: this.getGame(),
+      lastAssertedPosition: this.lastAssertedPosition,
+      playerKey,
+      scoreboard: this.getScoreboard(),
+      slots: this.getSlots(),
+      validMovesKeys: this.getValidMovesKeys(),
+    });
+  }
 
   public toString(): string {
     const game = this.getGame();

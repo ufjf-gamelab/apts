@@ -5,8 +5,7 @@ import { Integer } from "src/types";
 import TicTacToeGame from "./Game";
 import { TicTacToePlayer } from "./Player";
 import { INITIAL_POINTS, TicTacToeState } from "./State";
-import { PlayerKey } from "./constants";
-import { Slot } from "./types";
+import { PlayerKey, Slot } from "./types";
 
 const INCREMENT_ONE_POINT = 1;
 
@@ -85,12 +84,14 @@ export class TicTacToeMove extends Move<
     return updatedSlots;
   }
 
-  protected getValidMoves(state: TicTacToeState): TicTacToeMovePair[] {
-    const game = state.getGame();
+  protected getValidMoves(
+    game: TicTacToeGame,
+    slots: Slot[],
+  ): TicTacToeMovePair[] {
     const quantityOfColumns = game.getQuantityOfColumns();
     const validMovesPairs: TicTacToeMovePair[] = [];
 
-    state.getSlots().forEach((slot: Slot, index: Integer) => {
+    slots.forEach((slot: Slot, index: Integer) => {
       if (slot === Slot.Empty) {
         const rowIndex = Math.floor(index / quantityOfColumns);
         const columnIndex = index % quantityOfColumns;
@@ -128,7 +129,7 @@ export class TicTacToeMove extends Move<
     const isFinal = this.isFinal(winner !== null, updatedSlots);
     const nextValidMovesKeys = isFinal
       ? []
-      : this.getValidMoves(state).map(({ key }) => key);
+      : this.getValidMoves(game, updatedSlots).map(({ key }) => key);
 
     const updatedScoreboard = this.getScoreboard(
       state.getScoreboard(),

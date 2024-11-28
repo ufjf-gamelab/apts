@@ -1,27 +1,48 @@
 import { INCREMENT_ONE, Integer } from "src/types";
 import Game from "../Game/Game";
-import Move, { KeyedMove, MoveKey } from "../Game/Move";
-import State, { TurnOutcome } from "../Game/State";
+import Move, { MoveKey, MovePair } from "../Game/Move";
+import Player from "../Game/Player";
+import State, { Scoreboard } from "../Game/State";
 
 const EMPTY_CHILDREN_LIST = 0;
 const MINIMUM_VICTORY_QUALITY = 0;
 const MINIMUM_QUANTITY_OF_VISITS = 0;
 
-interface NodeParams<G extends Game<M>, M extends Move> {
-  state: State<G, M>;
+interface NodeParams<
+  P extends Player,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
+> {
+  state: S;
   keyOfTheTakenMove: MoveKey | null;
   explorationConstant: number;
-  parent: Node<G, M> | null;
+  parent: Node<P, M, S, G> | null;
 }
 
-export class Node<G extends Game<M>, M extends Move> {
-  private readonly state: NodeParams<G, M>["state"];
-  private readonly keyOfTheTakenMove: NodeParams<G, M>["keyOfTheTakenMove"];
-  private readonly explorationConstant: NodeParams<G, M>["explorationConstant"];
-  private readonly parent: NodeParams<G, M>["parent"];
+export class Node<
+  P extends Player,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
+> {
+  private readonly state: NodeParams<P, M, S, G>["state"];
+  private readonly keyOfTheTakenMove: NodeParams<
+    P,
+    M,
+    S,
+    G
+  >["keyOfTheTakenMove"];
+  private readonly explorationConstant: NodeParams<
+    P,
+    M,
+    S,
+    G
+  >["explorationConstant"];
+  private readonly parent: NodeParams<P, M, S, G>["parent"];
 
-  private readonly children: Node<G, M>[] = [];
-  private readonly moveIsExpandable: Map<MoveKey, boolean>;
+  private readonly children: Node<P, M, S, G>[] = [];
+  private readonly moveIsExpanded: Map<MoveKey, boolean>;
 
   private quantityOfVisits: Integer = MINIMUM_QUANTITY_OF_VISITS;
   private victoryQuality: number = MINIMUM_VICTORY_QUALITY;
@@ -31,30 +52,27 @@ export class Node<G extends Game<M>, M extends Move> {
     keyOfTheTakenMove,
     explorationConstant,
     parent,
-  }: NodeParams<G, M>) {
+  }: NodeParams<P, M, S, G>) {
     this.state = state;
     this.keyOfTheTakenMove = keyOfTheTakenMove;
     this.explorationConstant = explorationConstant;
     this.parent = parent ? parent : null;
-
-    const keysOfTheValidMoves = Array.from(state.getKeysOfTheValidMoves());
-    this.moveIsExpandable = new Map(
-      keysOfTheValidMoves.map((index: number): [MoveKey, boolean] => [
-        index,
-        false,
-      ]),
+    this.moveIsExpanded = new Map(
+      state
+        .getValidMovesKeys()
+        .map((key: MoveKey): [MoveKey, boolean] => [key, false]),
     );
   }
 
   /* Getters */
 
-  public getChildren(): Node<G, M>[] {
+  public getChildren(): Node<P, M, S, G>[] {
     return this.children;
   }
 
   private getKeysOfNonExpandedMoves(): Set<MoveKey> {
     return new Set(
-      Array.from(this.moveIsExpandable.entries())
+      Array.from(this.moveIsExpanded.entries())
         .filter(([, isExpanded]) => !isExpanded)
         .map(([index]) => index),
     );
@@ -68,31 +86,30 @@ export class Node<G extends Game<M>, M extends Move> {
     return this.quantityOfVisits;
   }
 
-  public getState(): State<G, M> {
-    return this.state.clone();
+  public getState(): S {
+    return this.state;
   }
 
   /* Setters */
 
   private setMoveAsExpanded(key: MoveKey) {
-    if (!this.moveIsExpandable.has(key)) {
+    if (this.moveIsExpanded.has(key)) {
       throw new Error("Invalid move key");
     }
-
-    this.moveIsExpandable.set(key, true);
+    this.moveIsExpanded.set(key, true);
   }
 
   /* Methods */
 
   /// Check if the node is fully expanded, i.e. all valid actions have been explored.
   public isFullyExpanded(): boolean {
-    return Array.from(this.moveIsExpandable.values()).every(
+    return Array.from(this.moveIsExpanded.values()).every(
       isExpanded => isExpanded,
     );
   }
 
   /// Get the UCB value of a given child.
-  private getChildUcb(child: Node<G, M>): number {
+  private getChildUcb(child: Node<P, M, S, G>): number {
     // Privileges the child with the lowest exploitation, as it means the opponent will have the lowest chance of winning
 
     const exploitation =
@@ -107,7 +124,7 @@ export class Node<G extends Game<M>, M extends Move> {
   }
 
   /// Select the best node among children, i.e. the one with the highest UCB.
-  public selectBestChild(): Node<G, M> {
+  public selectBestChild(): Node<P, M, S, G> {
     if (this.children.length === EMPTY_CHILDREN_LIST)
       throw new Error("No children to select from");
 
@@ -135,7 +152,7 @@ export class Node<G extends Game<M>, M extends Move> {
   }
 
   /// Pick a random move from the list of valid moves.
-  private pickRandomMove(): KeyedMove<M> {
+  private pickRandomMove(): MovePair<P, M, S, G> {
     const indexesOfNonExpandedMoves = this.getKeysOfNonExpandedMoves();
     const expandableMoves = Array.from(indexesOfNonExpandedMoves).map(
       index => ({
@@ -153,42 +170,44 @@ export class Node<G extends Game<M>, M extends Move> {
   }
 
   /// Pick a random action and perform it, returning the outcome state as a child node.
-  public expand(): Node<G, M> {
+  public expand(): Node<P, M, S, G> {
     const selectedMove = this.pickRandomMove();
     this.setMoveAsExpanded(selectedMove.key);
 
     // Copy the state and play the action on the copy
-    const newState = this.state.playMove(selectedMove.move);
-    const newStateInTheInitialPlayerPerspective = newState.changePerspective(
-      this.state.getPlayer(),
+    const nextState = selectedMove.move.play(this.state);
+    const nextStateInTheInitialPlayerPerspective = nextState.changePerspective(
+      this.state.getPlayerKey(),
     );
 
     const child = new Node({
       explorationConstant: this.explorationConstant,
       keyOfTheTakenMove: selectedMove.key,
       parent: this,
-      state: newStateInTheInitialPlayerPerspective,
+      state: nextStateInTheInitialPlayerPerspective,
     });
     this.children.push(child);
     return child;
   }
 
   /// Simulate a game from the current state, returning the outcome value.
-  public simulate(): TurnOutcome["scoreboard"] {
+  public simulate(): Scoreboard {
     // Copy the state and play random actions, with alternate players, until the game is over
     let rolloutState = this.state.clone();
     for (;;) {
-      const { scoreboard, gameHasEnded } = rolloutState.getTurnOutcome();
-      if (gameHasEnded) return scoreboard;
+      const scoreboard = rolloutState.getScoreboard();
+      const isFinal = rolloutState.isFinal();
+      if (isFinal) return scoreboard;
 
       const selectedMove = this.pickRandomMove();
-      rolloutState = rolloutState.playMove(selectedMove.move);
+      rolloutState = selectedMove.move.play(rolloutState);
     }
   }
 
   /// Backpropagate the outcome value to the root node.
-  public backpropagate(scoreboard: TurnOutcome["scoreboard"]): void {
-    const pointsEarnedByThePlayer = scoreboard.get(this.state.getPlayer());
+  public backpropagate(scoreboard: Scoreboard): void {
+    const playerKey = this.state.getPlayerKey();
+    const pointsEarnedByThePlayer = scoreboard[playerKey];
     if (typeof pointsEarnedByThePlayer === "undefined")
       throw new Error("Invalid player");
 
