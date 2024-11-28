@@ -14,7 +14,7 @@ export default abstract class Player {
     this.name = name;
   }
 
-  public getSymbol(): PlayerParams["symbol"] {
+  protected getSymbol(): PlayerParams["symbol"] {
     return this.symbol;
   }
 
@@ -25,7 +25,7 @@ export default abstract class Player {
 
 export type PlayerKey = Integer;
 
-export interface KeyedPlayer<P extends Player> {
+export interface PlayerPair {
   key: PlayerKey;
-  player: P;
+  player: Player;
 }

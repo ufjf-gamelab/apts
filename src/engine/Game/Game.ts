@@ -10,33 +10,46 @@ export enum Pixel {
   On = 1,
 }
 
-export interface GameParams<P extends Player, M extends Move> {
+export interface GameParams<
+  P extends Player,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
+> {
   readonly name: string;
   readonly quantityOfSlots: Integer;
-  readonly players: { [key in PlayerKey]: P };
-  readonly moves: { [key in MoveKey]: M };
+  readonly players: P[];
+  readonly moves: M[];
 }
 
 export default abstract class Game<
   P extends Player,
-  M extends Move,
-  S extends State<P, M>,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
 > {
-  private readonly name: GameParams<P, M>["name"];
-  private readonly quantityOfSlots: GameParams<P, M>["quantityOfSlots"];
-  private readonly players: GameParams<P, M>["players"];
-  private readonly moves: GameParams<P, M>["moves"];
+  private readonly name: GameParams<P, M, S, G>["name"];
+  private readonly quantityOfSlots: GameParams<P, M, S, G>["quantityOfSlots"];
+  private readonly players: GameParams<P, M, S, G>["players"];
+  private readonly moves: GameParams<P, M, S, G>["moves"];
 
-  constructor({ players, moves, name, quantityOfSlots }: GameParams<P, M>) {
+  constructor({
+    players,
+    moves,
+    name,
+    quantityOfSlots,
+  }: GameParams<P, M, S, G>) {
     this.name = name;
     this.quantityOfSlots = quantityOfSlots;
-    this.players = players;
-    this.moves = moves;
+    this.players = [...players];
+    this.moves = [...moves];
   }
 
   /* Getters */
 
   public abstract getInitialState(): S;
+
+  public abstract getGameOverMessage(state: S): string;
 
   public getMove(key: MoveKey): M {
     const move = this.moves[key];
@@ -45,9 +58,15 @@ export default abstract class Game<
     return move;
   }
 
-  public getName(): GameParams<P, M>["name"] {
+  protected getMoves(): GameParams<P, M, S, G>["moves"] {
+    return [...this.moves];
+  }
+
+  public getName(): GameParams<P, M, S, G>["name"] {
     return this.name;
   }
+
+  protected abstract getNextPlayerKey(playerKey: PlayerKey): PlayerKey;
 
   public getPlayer(key: PlayerKey): P {
     const player = this.players[key];
@@ -56,11 +75,9 @@ export default abstract class Game<
     return player;
   }
 
-  public getQuantityOfSlots(): GameParams<P, M>["quantityOfSlots"] {
+  protected getQuantityOfSlots(): GameParams<P, M, S, G>["quantityOfSlots"] {
     return this.quantityOfSlots;
   }
-
-  public abstract isStateFinal(state: S): boolean;
 
   /* Setters */
 

@@ -1,31 +1,51 @@
 import { Integer } from "src/types";
+import Game from "./Game";
+import Player from "./Player";
+import State from "./State";
 
-export interface MoveParams {
+export interface MoveParams<
+  P extends Player,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
+> {
   readonly title: string;
   readonly description: string;
 }
 
-export default abstract class Move {
-  private readonly title: MoveParams["title"];
-  private readonly description: MoveParams["description"];
+export default abstract class Move<
+  P extends Player,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
+> {
+  private readonly title: MoveParams<P, M, S, G>["title"];
+  private readonly description: MoveParams<P, M, S, G>["description"];
 
-  constructor({ title, description }: MoveParams) {
+  constructor({ title, description }: MoveParams<P, M, S, G>) {
     this.title = title;
     this.description = description;
   }
 
-  public getTitle(): MoveParams["title"] {
+  public getTitle(): MoveParams<P, M, S, G>["title"] {
     return this.title;
   }
 
-  public getDescription(): MoveParams["description"] {
+  public getDescription(): MoveParams<P, M, S, G>["description"] {
     return this.description;
   }
+
+  public abstract play(state: S): S;
 }
 
 export type MoveKey = Integer;
 
-export interface KeyedMove<M extends Move> {
+export interface MovePair<
+  P extends Player,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
+> {
   key: MoveKey;
   move: M;
 }

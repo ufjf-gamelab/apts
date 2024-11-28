@@ -1,50 +1,60 @@
 /* eslint-disable no-await-in-loop */
 import { Choice } from "prompts";
 import Game from "src/engine/Game/Game";
-import Move, { KeyedMove } from "src/engine/Game/Move";
+import Move from "src/engine/Game/Move";
 import Player from "src/engine/Game/Player";
 import State from "src/engine/Game/State";
 import { GameMode, GetInput } from "..";
 
-const printContext = <P extends Player, M extends Move, S extends State<P, M>>(
-  state: S,
+const printContext = <
+  P extends Player,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
+>(
   player: P,
 ): void => {
-  const playerData = state.getGame().getPlayerData(player);
-  console.log(`${playerData.name}'s turn`);
+  console.log(`${player.getName()}'s turn`);
 };
 
-const getContext = <P extends Player, M extends Move, S extends State<P, M>>(
+const getContext = <
+  P extends Player,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
+>(
   state: S,
   player: P,
-): KeyedMove<M>[] => {
-  printContext(state, player);
-  const keysOfTheValidMoves = state.getKeysOfTheValidMoves();
-  return Array.from(keysOfTheValidMoves).map(index => ({
-    key: index,
-    move: state.getGame().getMove(index),
-  }));
+): M[] => {
+  printContext(player);
+  return state.getValidMoves();
 };
 
-const playMove = <P extends Player, M extends Move, S extends State<P, M>>(
+const playMove = <
+  P extends Player,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
+>(
   state: S,
   move: M,
 ): S => {
-  const nextState = state.playMove(move);
+  const nextState = move.play(state);
   console.log(nextState.toString());
   return nextState;
 };
 
-const hasGameEnded = <P extends Player, M extends Move, S extends State<P, M>>(
+const hasGameEnded = <
+  P extends Player,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
+>(
   state: S,
 ): boolean => {
-  const turnOutcome = state.getTurnOutcome();
-  if (turnOutcome.gameHasEnded) {
+  if (state.isFinal()) {
     console.log("Game has ended.");
-    if (turnOutcome.winner) {
-      const playerData = state.getGame().getPlayerData(turnOutcome.winner);
-      console.log(`${playerData.name} won!`);
-    }
+    console.log(state.getGame().getGameOverMessage(state));
     return true;
   }
   return false;
@@ -52,9 +62,9 @@ const hasGameEnded = <P extends Player, M extends Move, S extends State<P, M>>(
 
 interface PlayParams<
   P extends Player,
-  M extends Move,
-  S extends State<P, M>,
-  G extends Game<P, M, S>,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
 > {
   getInput: GetInput;
   game: G;
@@ -63,9 +73,9 @@ interface PlayParams<
 
 const main = async <
   P extends Player,
-  M extends Move,
-  S extends State<P, M>,
-  G extends Game<P, M, S>,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
 >({
   getInput,
   game,
@@ -75,31 +85,30 @@ const main = async <
   console.log(`Mode: ${gameMode}\n`);
 
   let state = game.getInitialState();
-  let player = state.getNextPlayer();
+  let player = state.getPlayer();
   let gameHasEnded = false;
 
   console.log(state.toString());
 
   while (!gameHasEnded) {
-    const validKeyedMoves = getContext(state, player);
-    console.log(state);
+    const validMoves = getContext<P, M, S, G>(state, player);
 
     const input = await getInput({
-      choices: Array.from(validKeyedMoves.values()).map(
-        (keyedMove: KeyedMove<M>) =>
+      choices: Array.from(validMoves.values()).map(
+        (move: M) =>
           ({
-            description: keyedMove.move.getDescription(),
-            title: keyedMove.move.getTitle(),
-            value: keyedMove,
+            description: move.getDescription(),
+            title: move.getTitle(),
+            value: move,
           }) as Choice,
       ),
       message: "Enter a move",
       name: "move",
       type: "select",
     });
-    const chosenKeyedMove = input.move as KeyedMove<M>;
+    const chosenKeyedMove = input.move as M;
 
-    state = playMove(state, chosenKeyedMove.move);
+    state = playMove(state, chosenKeyedMove);
     player = state.getPlayer();
     gameHasEnded = hasGameEnded(state);
   }
