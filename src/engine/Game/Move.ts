@@ -39,3 +39,13 @@ export default abstract class Move<
 }
 
 export type MoveKey = Integer;
+
+export interface MovePair<
+  P extends Player,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
+> {
+  key: MoveKey;
+  move: M;
+}

@@ -18,8 +18,8 @@ export interface GameParams<
 > {
   readonly name: string;
   readonly quantityOfSlots: Integer;
-  readonly players: { readonly [key in PlayerKey]: P };
-  readonly moves: { readonly [key in MoveKey]: M };
+  readonly players: P[];
+  readonly moves: M[];
 }
 
 export default abstract class Game<
@@ -30,8 +30,8 @@ export default abstract class Game<
 > {
   private readonly name: GameParams<P, M, S, G>["name"];
   private readonly quantityOfSlots: GameParams<P, M, S, G>["quantityOfSlots"];
-  private readonly players: Map<PlayerKey, P>;
-  private readonly moves: Map<MoveKey, M>;
+  private readonly players: GameParams<P, M, S, G>["players"];
+  private readonly moves: GameParams<P, M, S, G>["moves"];
 
   constructor({
     players,
@@ -41,15 +41,15 @@ export default abstract class Game<
   }: GameParams<P, M, S, G>) {
     this.name = name;
     this.quantityOfSlots = quantityOfSlots;
-    this.players = new Map();
-    for (const key in players) {
-      this.players.set(key, players[key]);
-    }
+    this.players = [...players];
+    this.moves = [...moves];
   }
 
   /* Getters */
 
   public abstract getInitialState(): S;
+
+  public abstract getGameOverMessage(state: S): string;
 
   public getMove(key: MoveKey): M {
     const move = this.moves[key];
@@ -58,11 +58,15 @@ export default abstract class Game<
     return move;
   }
 
+  protected getMoves(): GameParams<P, M, S, G>["moves"] {
+    return [...this.moves];
+  }
+
   public getName(): GameParams<P, M, S, G>["name"] {
     return this.name;
   }
 
-  public abstract getNextPlayerKey(playerKey: PlayerKey): PlayerKey;
+  protected abstract getNextPlayerKey(playerKey: PlayerKey): PlayerKey;
 
   public getPlayer(key: PlayerKey): P {
     const player = this.players[key];
@@ -71,11 +75,9 @@ export default abstract class Game<
     return player;
   }
 
-  public getQuantityOfSlots(): GameParams<P, M, S, G>["quantityOfSlots"] {
+  protected getQuantityOfSlots(): GameParams<P, M, S, G>["quantityOfSlots"] {
     return this.quantityOfSlots;
   }
-
-  public abstract isStateFinal(state: S): boolean;
 
   /* Setters */
 

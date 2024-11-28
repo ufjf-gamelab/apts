@@ -54,11 +54,7 @@ const hasGameEnded = <
 ): boolean => {
   if (state.isFinal()) {
     console.log("Game has ended.");
-    const winner = state.getGame()
-    if (turnOutcome.winner) {
-      const playerData = state.getGame().getPlayerData(turnOutcome.winner);
-      console.log(`${playerData.name} won!`);
-    }
+    console.log(state.getGame().getGameOverMessage(state));
     return true;
   }
   return false;
@@ -66,9 +62,9 @@ const hasGameEnded = <
 
 interface PlayParams<
   P extends Player,
-  M extends Move,
-  S extends State<P, M>,
-  G extends Game<P, M, S>,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
 > {
   getInput: GetInput;
   game: G;
@@ -77,9 +73,9 @@ interface PlayParams<
 
 const main = async <
   P extends Player,
-  M extends Move,
-  S extends State<P, M>,
-  G extends Game<P, M, S>,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
 >({
   getInput,
   game,
@@ -89,14 +85,13 @@ const main = async <
   console.log(`Mode: ${gameMode}\n`);
 
   let state = game.getInitialState();
-  let player = state.getplayer();
+  let player = state.getPlayer();
   let gameHasEnded = false;
 
   console.log(state.toString());
 
   while (!gameHasEnded) {
-    const validMoves = getContext(state, player);
-    console.log(state);
+    const validMoves = getContext<P, M, S, G>(state, player);
 
     const input = await getInput({
       choices: Array.from(validMoves.values()).map(

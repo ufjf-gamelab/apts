@@ -6,67 +6,67 @@ export enum PlayerKey {
   O,
 }
 
-export const players: { readonly [key in PlayerKey]: TicTacToePlayer } = {
-  [PlayerKey.X]: new TicTacToePlayer({ name: "Player X", symbol: "X" }),
-  [PlayerKey.O]: new TicTacToePlayer({ name: "Player O", symbol: "O" }),
-} as const;
+export const players: TicTacToePlayer[] = [
+  new TicTacToePlayer({ name: "Player X", symbol: "X" }),
+  new TicTacToePlayer({ name: "Player O", symbol: "O" }),
+];
 
 export enum MoveKey {
-  Northwest = "banana",
-  North = "apple",
-  Northeast = "cherry",
-  West = "date",
-  Center = "elderberry",
-  East = "fig",
-  Southwest = "grape",
-  South = "honeydew",
-  Southeast = "kiwi",
+  Northwest,
+  North,
+  Northeast,
+  West,
+  Center,
+  East,
+  Southwest,
+  South,
+  Southeast,
 }
 
-export const moves: { readonly [key in MoveKey]: TicTacToeMove } = {
-  [MoveKey.Northwest]: new TicTacToeMove({
+export const moves: TicTacToeMove[] = [
+  new TicTacToeMove({
     description: "Northwest",
     position: { columnIndex: 0, rowIndex: 0 },
     title: "NW",
   }),
-  [MoveKey.North]: new TicTacToeMove({
+  new TicTacToeMove({
     description: "North",
     position: { columnIndex: 1, rowIndex: 0 },
     title: "N",
   }),
-  [MoveKey.Northeast]: new TicTacToeMove({
+  new TicTacToeMove({
     description: "Northeast",
     position: { columnIndex: 2, rowIndex: 0 },
     title: "NE",
   }),
-  [MoveKey.West]: new TicTacToeMove({
+  new TicTacToeMove({
     description: "West",
     position: { columnIndex: 0, rowIndex: 1 },
     title: "W",
   }),
-  [MoveKey.Center]: new TicTacToeMove({
+  new TicTacToeMove({
     description: "Center",
     position: { columnIndex: 1, rowIndex: 1 },
     title: "C",
   }),
-  [MoveKey.East]: new TicTacToeMove({
+  new TicTacToeMove({
     description: "East",
     position: { columnIndex: 2, rowIndex: 1 },
     title: "E",
   }),
-  [MoveKey.Southwest]: new TicTacToeMove({
+  new TicTacToeMove({
     description: "Southwest",
     position: { columnIndex: 0, rowIndex: 2 },
     title: "SW",
   }),
-  [MoveKey.South]: new TicTacToeMove({
+  new TicTacToeMove({
     description: "South",
     position: { columnIndex: 1, rowIndex: 2 },
     title: "S",
   }),
-  [MoveKey.Southeast]: new TicTacToeMove({
+  new TicTacToeMove({
     description: "Southeast",
     position: { columnIndex: 2, rowIndex: 2 },
     title: "SE",
   }),
-};
+];

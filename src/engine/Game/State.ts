@@ -3,13 +3,15 @@ import Game from "./Game";
 import Move from "./Move";
 import Player, { PlayerKey } from "./Player";
 
+const NO_REMAINING_VALID_MOVES = 0;
+
 // Content of a slot in the state.
 export type Slot = Integer;
 // Index of a slot in the state.
-export type SlotIndex = Integer;
+export type SlotKey = Integer;
 
 export type Points = number;
-export type Scoreboard = Map<PlayerKey, Points>;
+export type Scoreboard = Points[];
 
 export interface StateParams<
   P extends Player,
@@ -21,6 +23,7 @@ export interface StateParams<
   readonly slots: Slot[];
   readonly playerKey: PlayerKey;
   readonly scoreboard: Scoreboard;
+  readonly validMovesKeys: Integer[];
 }
 
 export default abstract class State<
@@ -32,11 +35,21 @@ export default abstract class State<
   private readonly game: StateParams<P, M, S, G>["game"];
   private readonly slots: StateParams<P, M, S, G>["slots"];
   private readonly playerKey: StateParams<P, M, S, G>["playerKey"];
+  private readonly scoreboard: StateParams<P, M, S, G>["scoreboard"];
+  private readonly validMovesKeys: StateParams<P, M, S, G>["validMovesKeys"];
 
-  constructor({ game, slots, playerKey }: StateParams<P, M, S, G>) {
+  constructor({
+    game,
+    slots,
+    playerKey,
+    scoreboard,
+    validMovesKeys,
+  }: StateParams<P, M, S, G>) {
     this.game = game;
     this.slots = slots;
     this.playerKey = playerKey;
+    this.scoreboard = [...scoreboard];
+    this.validMovesKeys = [...validMovesKeys];
   }
 
   /* Getters */
@@ -45,19 +58,36 @@ export default abstract class State<
     return this.game;
   }
 
+  public getPlayer(): P {
+    return this.game.getPlayer(this.playerKey);
+  }
+
   public getPlayerKey(): StateParams<P, M, S, G>["playerKey"] {
     return this.playerKey;
   }
 
-  public abstract getScoreboard(): Scoreboard;
+  public getScoreboard(): StateParams<P, M, S, G>["scoreboard"] {
+    return [...this.scoreboard];
+  }
 
-  public getSlots(): Slot[] {
+  public getSlot(index: SlotKey): Slot {
+    const slot = this.slots[index];
+    if (typeof slot === "undefined")
+      throw new Error(`Slot with index ${index} not found`);
+    return slot;
+  }
+
+  public getSlots(): StateParams<P, M, S, G>["slots"] {
     return [...this.slots];
   }
 
-  public abstract getValidMoves(): M[];
+  public getValidMoves(): M[] {
+    return this.validMovesKeys.map(key => this.game.getMove(key));
+  }
 
-  public abstract isFinal(): boolean;
+  public isFinal(): boolean {
+    return this.validMovesKeys.length === NO_REMAINING_VALID_MOVES;
+  }
 
   /* Methods */
 

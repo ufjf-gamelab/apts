@@ -1,20 +1,15 @@
+import { PlayerPair } from "src/engine/Game/Player";
 import { Integer } from "src/types";
-import Game, { GameParams } from "../../engine/Game/Game";
+import Game from "../../engine/Game/Game";
 import { moves, PlayerKey, players } from "./constants";
-import { TicTacToeMove } from "./Move";
+import { Position, TicTacToeMove } from "./Move";
 import { TicTacToePlayer } from "./Player";
-import { TicTacToeState } from "./State";
+import { INITIAL_POINTS, TicTacToeState } from "./State";
 import { Slot } from "./types";
 
 const ADJUST_INDEX = 1;
 
-interface TicTacToeGameParams
-  extends GameParams<
-    TicTacToePlayer,
-    TicTacToeMove,
-    TicTacToeState,
-    TicTacToeGame
-  > {
+interface TicTacToeGameParams {
   readonly quantityOfRows: Integer;
   readonly quantityOfColumns: Integer;
 }
@@ -29,12 +24,11 @@ export default class TicTacToeGame extends Game<
   private readonly quantityOfColumns: TicTacToeGameParams["quantityOfColumns"];
 
   constructor({ quantityOfColumns, quantityOfRows }: TicTacToeGameParams) {
-    const quantityOfSlots: Integer = quantityOfColumns * quantityOfRows;
     super({
       moves,
       name: "Tic Tac Toe",
       players,
-      quantityOfSlots,
+      quantityOfSlots: quantityOfColumns * quantityOfRows,
     });
 
     this.quantityOfColumns = quantityOfColumns;
@@ -43,10 +37,18 @@ export default class TicTacToeGame extends Game<
 
   /* Getters */
 
-  private areAllSlotsTheSame(values: Slot[]): boolean {
-    const [firstValue] = values;
-    if (typeof firstValue === "undefined") return false;
-    return values.every(value => value === values[firstValue]);
+  public getGameOverMessage(state: TicTacToeState): string {
+    let message = `Game over! `;
+    const lastAssertedPosition = state.getLastAssertedPosition();
+
+    const winner =
+      lastAssertedPosition === null
+        ? null
+        : this.getWinner(state.getSlots(), lastAssertedPosition);
+
+    if (winner === null) message += `It's a draw!`;
+    else message += `${winner.player.getName()} wins!`;
+    return message;
   }
 
   public getInitialState(): TicTacToeState {
@@ -54,7 +56,9 @@ export default class TicTacToeGame extends Game<
       game: this,
       lastAssertedPosition: null,
       playerKey: PlayerKey.X,
+      scoreboard: [INITIAL_POINTS, INITIAL_POINTS],
       slots: Array<Slot>(this.getQuantityOfSlots()).fill(Slot.Empty),
+      validMovesKeys: this.getMoves().map((_, index) => index),
     });
   }
 
@@ -62,39 +66,45 @@ export default class TicTacToeGame extends Game<
     return playerKey === PlayerKey.X ? PlayerKey.O : PlayerKey.X;
   }
 
-  private getPlayerAtSlot(slot: Slot): TicTacToePlayer | null {
+  private getPlayerAtSlot(slot: Slot): PlayerPair | null {
     if (slot === Slot.Empty) return null;
     const playerKey = slot === Slot.X ? PlayerKey.X : PlayerKey.O;
     const player = this.getPlayer(playerKey);
-    return player;
+    return { key: playerKey, player };
   }
 
   public getQuantityOfColumns(): Integer {
     return this.quantityOfColumns;
   }
 
-  public getWinner(state: TicTacToeState): TicTacToePlayer | null {
-    if (state.lastAssertedPosition === null) return null;
+  public getQuantityOfRows(): Integer {
+    return this.quantityOfRows;
+  }
 
-    const slots = state.getSlots();
-    const { rowIndex, columnIndex } = state.lastAssertedPosition;
+  public getWinner(
+    slots: Slot[],
+    lastAssertedPosition: Position,
+  ): PlayerPair | null {
+    const { rowIndex, columnIndex } = lastAssertedPosition;
 
     const row: Slot[] = slots.slice(
       rowIndex * this.quantityOfColumns,
       rowIndex * this.quantityOfColumns + this.quantityOfColumns,
     );
-    if (this.areAllSlotsTheSame(row)) return this.getWinnerOnSection(row);
+    let winner = this.getWinnerOnSection(row);
+    if (winner !== null) return winner;
 
     const column = slots.filter(
       (_, index) => index % this.quantityOfColumns === columnIndex,
     );
-    if (this.areAllSlotsTheSame(column)) return this.getWinnerOnSection(column);
+    winner = this.getWinnerOnSection(column);
+    if (winner !== null) return winner;
 
     const primaryDiagonal = slots.filter(
       (_, index) => index % this.quantityOfColumns === index,
     );
-    if (this.areAllSlotsTheSame(primaryDiagonal))
-      return this.getWinnerOnSection(primaryDiagonal);
+    winner = this.getWinnerOnSection(primaryDiagonal);
+    if (winner !== null) return winner;
 
     const secondaryDiagonal = slots.filter(
       (_, index) =>
@@ -102,19 +112,17 @@ export default class TicTacToeGame extends Game<
           (index % this.quantityOfColumns) ===
         this.quantityOfColumns - ADJUST_INDEX,
     );
-    if (this.areAllSlotsTheSame(secondaryDiagonal))
-      return this.getWinnerOnSection(secondaryDiagonal);
+    winner = this.getWinnerOnSection(secondaryDiagonal);
+    if (winner !== null) return winner;
 
     return null;
   }
 
-  private getWinnerOnSection(slots: Slot[]): TicTacToePlayer | null {
-    if (this.areAllSlotsTheSame(slots)) {
-      const [firstSlot] = slots;
-      if (typeof firstSlot !== "undefined") {
-        const player = this.getPlayerAtSlot(firstSlot);
-        if (player !== null) return player;
-      }
+  private getWinnerOnSection(slots: Slot[]): PlayerPair | null {
+    const [firstSlot] = slots;
+    if (typeof firstSlot !== "undefined") {
+      const allSlotsAreTheSame = slots.every(slot => slot === firstSlot);
+      if (allSlotsAreTheSame) return this.getPlayerAtSlot(firstSlot);
     }
     return null;
   }
