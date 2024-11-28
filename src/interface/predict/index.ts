@@ -29,8 +29,6 @@ const playMove = async <
   console.log(probabilities, "\n");
 
   const nextState = move.play(state);
-  console.log(nextState.toString());
-
   if (nextState.isFinal()) {
     console.log("Game has ended.");
     console.log(state.getGame().getGameOverMessage(state));
@@ -63,10 +61,9 @@ const main = async <
   let state = ticTacToe.getInitialState();
   console.log(state.toString());
 
-  const validMoves = state.getValidMoves();
-
-  const [firstValidMove] = validMoves;
-  if (typeof firstValidMove === "undefined") {
+  let validMoves = state.getValidMoves();
+  let [validMove] = validMoves;
+  if (typeof validMove === "undefined") {
     console.log("There are no valid moves to play.");
     return;
   }
@@ -76,8 +73,22 @@ const main = async <
     TicTacToeMove,
     TicTacToeState,
     TicTacToeGame
-  >(mcts, state, firstValidMove);
+  >(mcts, state, validMove);
+  console.log(state.toString());
 
+  validMoves = state.getValidMoves();
+  [validMove] = validMoves;
+  if (typeof validMove === "undefined") {
+    console.log("There are no valid moves to play.");
+    return;
+  }
+
+  state = await playMove<
+    TicTacToePlayer,
+    TicTacToeMove,
+    TicTacToeState,
+    TicTacToeGame
+  >(mcts, state, validMove);
   console.log(state.toString());
 };
 

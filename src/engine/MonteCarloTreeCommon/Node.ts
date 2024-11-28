@@ -73,11 +73,12 @@ export class Node<
   }
 
   private getKeysOfNonExpandedMoves(): Set<MoveKey> {
-    return new Set(
+    const nonExpandedMoves = new Set(
       Array.from(this.moveIsExpanded.entries())
         .filter(([, isExpanded]) => !isExpanded)
         .map(([index]) => index),
     );
+    return nonExpandedMoves;
   }
 
   public getKeyOfTheTakenMove(): Integer | null {
@@ -105,9 +106,11 @@ export class Node<
 
   /// Check if the node is fully expanded, i.e. all valid actions have been explored.
   public isFullyExpanded(): boolean {
-    return Array.from(this.moveIsExpanded.values()).every(
+    const maskFromExpandableMoves = Array.from(this.moveIsExpanded.values());
+    const isFullyExpanded = maskFromExpandableMoves.every(
       isExpanded => isExpanded,
     );
+    return isFullyExpanded;
   }
 
   /// Get the UCB value of a given child.
@@ -155,16 +158,21 @@ export class Node<
 
   /// Pick a random move from the list of valid moves.
   private pickRandomMove(): MovePair<P, M, S, G> {
-    const indexesOfNonExpandedMoves = this.getKeysOfNonExpandedMoves();
+    const indexesOfNonExpandedMoves = Array.from(
+      this.getKeysOfNonExpandedMoves(),
+    );
 
     const randomIndex = Math.floor(
-      Math.random() * indexesOfNonExpandedMoves.size,
+      Math.random() * indexesOfNonExpandedMoves.length,
     );
-    const move = this.state.getGame().getMove(randomIndex);
+    const moveKey = indexesOfNonExpandedMoves[randomIndex];
+    if (typeof moveKey === "undefined")
+      throw new Error("No indexes of non-expanded moves to pick from");
 
-    if (typeof move === "undefined") throw Error("No valid moves to pick from");
+    const move = this.state.getGame().getMove(moveKey);
+    if (typeof move === "undefined") throw Error("The picked move is invalid");
     return {
-      key: randomIndex,
+      key: moveKey,
       move,
     };
   }
@@ -215,8 +223,15 @@ export class Node<
   }
 
   public toDot(id: Integer): GraphvizNode {
+    const state = this.getState();
+    const playerKey = state.getPlayerKey();
+    const player = state.getPlayer();
+
+    const label = `${id}: S.${this.quantityOfVisits} Q.${this.victoryQuality}\nP.${playerKey} ${player.getSymbol()} ${player.getName()}\n${state.toString()}`;
+
     return new GraphvizNode(id.toString(), {
-      [_.label]: `${id}. ${this.getState().toString()}`,
+      [_.label]: label,
+      fontname: "Monospace",
     });
   }
 }

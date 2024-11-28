@@ -14,7 +14,7 @@ export default abstract class Player {
     this.name = name;
   }
 
-  protected getSymbol(): PlayerParams["symbol"] {
+  public getSymbol(): PlayerParams["symbol"] {
     return this.symbol;
   }
 

@@ -115,12 +115,12 @@ export default class Search<
   }
 
   private exportTreeAsDotString(root: Node<P, M, S, G>): string {
-    console.log("Exporting tree image...");
     const attributes: GraphAttributesObject = {
+      fontname: "Monospace",
       fontsize: 30,
       labelloc: "t",
       nodesep: 0.5,
-      rankdir: "LR",
+      rankdir: "TB",
       ranksep: 3,
       splines: "true",
     };
@@ -155,7 +155,8 @@ export default class Search<
       if (keyOfTheTakenMove === null) continue;
       const takenMove = this.game.getMove(keyOfTheTakenMove);
       const dotEdge: GraphvizEdge = new GraphvizEdge([dotParent, dotNode], {
-        [_.label]: `${keyOfTheTakenMove}. ${takenMove.getTitle()}`,
+        [_.label]: `${keyOfTheTakenMove}: ${takenMove.getTitle()}\n${takenMove.getDescription()}`,
+        fontname: "Monospace",
       });
       dotGraph.addEdge(dotEdge);
     }
@@ -165,7 +166,8 @@ export default class Search<
 
   private async exportTreeImage(root: Node<P, M, S, G>): Promise<void> {
     const dotString = this.exportTreeAsDotString(root);
-    const fileName = `.images/mcts-common-tree`;
+    const now = new Date().toISOString();
+    const fileName = `.images/mcts-common-tree-${now}`;
     await exportToFile(dotString, fileName, "svg");
   }
 }
