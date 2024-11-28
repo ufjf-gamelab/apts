@@ -10,6 +10,8 @@ import prompts from "prompts";
 import TicTacToeGame from "src/games/TicTacToe/Game";
 import { FileOperation, validateFilePath } from "./file";
 import play from "./play";
+import predict from "./predict";
+
 enum GameName {
   Connect4 = "connect4",
   TicTacToe = "tictactoe",
@@ -81,6 +83,10 @@ const playAction = async (game: string, gameMode: GameMode) => {
   }
 };
 
+const predictAction = async () => {
+  await predict();
+};
+
 const commandsDefinitions: CommandDefinition[] = [
   {
     // Get the description file for implementing a new game
@@ -117,9 +123,7 @@ const commandsDefinitions: CommandDefinition[] = [
       .description(
         "Predict the victory probabilities of each possible next move of a state.",
       )
-      .action(() => {
-        console.log("Predicting...");
-      }),
+      .action(predictAction),
   },
 ];
 

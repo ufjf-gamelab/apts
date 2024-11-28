@@ -8,7 +8,7 @@ import { TicTacToeMove } from "src/games/TicTacToe/Move";
 import { TicTacToePlayer } from "src/games/TicTacToe/Player";
 import { TicTacToeState } from "src/games/TicTacToe/State";
 
-const playMove = <
+const playMove = async <
   P extends Player,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
@@ -17,7 +17,7 @@ const playMove = <
   mcts: Search<P, M, S, G>,
   state: S,
   move: M,
-): S => {
+): Promise<S> => {
   const isFinal = state.isFinal();
 
   if (isFinal) {
@@ -25,7 +25,7 @@ const playMove = <
     return state;
   }
 
-  const probabilities = mcts.getProbabilities(state);
+  const probabilities = await mcts.getProbabilities(state, true);
   console.log(probabilities, "\n");
 
   const nextState = move.play(state);
@@ -38,7 +38,7 @@ const playMove = <
   return nextState;
 };
 
-const predict = <
+const main = async <
   P extends Player,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
@@ -64,7 +64,6 @@ const predict = <
   console.log(state.toString());
 
   const validMoves = state.getValidMoves();
-  console.log(validMoves, "\n");
 
   const [firstValidMove] = validMoves;
   if (typeof firstValidMove === "undefined") {
@@ -72,13 +71,14 @@ const predict = <
     return;
   }
 
-  state = playMove<
+  state = await playMove<
     TicTacToePlayer,
     TicTacToeMove,
     TicTacToeState,
     TicTacToeGame
   >(mcts, state, firstValidMove);
+
   console.log(state.toString());
 };
 
-export default predict;
+export default main;

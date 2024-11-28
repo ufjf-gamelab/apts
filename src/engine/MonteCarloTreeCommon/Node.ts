@@ -1,7 +1,9 @@
 import { INCREMENT_ONE, Integer } from "src/types";
+import { attribute as _, Node as GraphvizNode } from "ts-graphviz";
 import Game from "../Game/Game";
 import Move, { MoveKey, MovePair } from "../Game/Move";
 import Player from "../Game/Player";
+
 import State, { Scoreboard } from "../Game/State";
 
 const EMPTY_CHILDREN_LIST = 0;
@@ -93,7 +95,7 @@ export class Node<
   /* Setters */
 
   private setMoveAsExpanded(key: MoveKey) {
-    if (this.moveIsExpanded.has(key)) {
+    if (!this.moveIsExpanded.has(key)) {
       throw new Error("Invalid move key");
     }
     this.moveIsExpanded.set(key, true);
@@ -154,19 +156,17 @@ export class Node<
   /// Pick a random move from the list of valid moves.
   private pickRandomMove(): MovePair<P, M, S, G> {
     const indexesOfNonExpandedMoves = this.getKeysOfNonExpandedMoves();
-    const expandableMoves = Array.from(indexesOfNonExpandedMoves).map(
-      index => ({
-        key: index,
-        move: this.state.getGame().getMove(index),
-      }),
+
+    const randomIndex = Math.floor(
+      Math.random() * indexesOfNonExpandedMoves.size,
     );
+    const move = this.state.getGame().getMove(randomIndex);
 
-    const randomIndex = Math.floor(Math.random() * expandableMoves.length);
-    const selectedMove = expandableMoves[randomIndex];
-
-    if (typeof selectedMove === "undefined")
-      throw Error("No valid moves to pick from");
-    return selectedMove;
+    if (typeof move === "undefined") throw Error("No valid moves to pick from");
+    return {
+      key: randomIndex,
+      move,
+    };
   }
 
   /// Pick a random action and perform it, returning the outcome state as a child node.
@@ -176,15 +176,12 @@ export class Node<
 
     // Copy the state and play the action on the copy
     const nextState = selectedMove.move.play(this.state);
-    const nextStateInTheInitialPlayerPerspective = nextState.changePerspective(
-      this.state.getPlayerKey(),
-    );
 
     const child = new Node({
       explorationConstant: this.explorationConstant,
       keyOfTheTakenMove: selectedMove.key,
       parent: this,
-      state: nextStateInTheInitialPlayerPerspective,
+      state: nextState,
     });
     this.children.push(child);
     return child;
@@ -215,5 +212,11 @@ export class Node<
     this.quantityOfVisits += INCREMENT_ONE;
 
     if (this.parent) this.parent.backpropagate(scoreboard);
+  }
+
+  public toDot(id: Integer): GraphvizNode {
+    return new GraphvizNode(id.toString(), {
+      [_.label]: `${id}. ${this.getState().toString()}`,
+    });
   }
 }
