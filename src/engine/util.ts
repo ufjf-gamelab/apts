@@ -1,5 +1,3 @@
-import { Format, toFile } from "ts-graphviz/adapter";
-
 // const firstPosition = 0,
 //   secondPosition = 1;
 // export const capitalizedFirstLetter = (str: string) =>
@@ -36,11 +34,3 @@ import { Format, toFile } from "ts-graphviz/adapter";
 //   const randomIndex = Math.floor(Math.random() * validActions.length);
 //   return validActions[randomIndex] ?? null;
 // };
-
-export const exportToFile = async (
-  dotString: string,
-  imageName: string,
-  format: Format,
-): Promise<void> => {
-  await toFile(dotString, `./${imageName}.${format}`, { format });
-};

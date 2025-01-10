@@ -47,7 +47,11 @@ pnpm i
 
 ## Running
 
-To run the project, use the following command:
+You can run the project in different modes:
+
+### Development
+
+To run the project in development mode, use the following command:
 
 ```bash
 pnpm run dev
@@ -59,4 +63,16 @@ To build the project, use the following command:
 
 ```bash
 pnpm run build
+```
+
+You can also build and run the project with the following command:
+
+```bash
+pnpm run build-run
+```
+
+Using this mode, you can pass the arguments at the end of the command, as follows:
+
+```bash
+pnpm run build-run --help
 ```

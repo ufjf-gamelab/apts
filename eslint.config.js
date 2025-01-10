@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-/** @type {import("eslint").Linter.Config} */
 import eslint from "@eslint/js";
-import eslintConfigPrettier from "eslint-config-prettier";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
-export default [
+/** @type {import("eslint").Linter.Config[]} */
+const config = [
   {
     files: ["src/**/*.{js,mjs,cjs,ts}"],
   },
@@ -76,5 +75,6 @@ export default [
       "sort-imports": "off",
     },
   },
-  eslintConfigPrettier,
 ];
+
+export default config;

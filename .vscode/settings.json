@@ -5,6 +5,7 @@
     "Backpropagation",
     "conv",
     "crossentropy",
+    "graphviz",
     "Graphviz",
     "mcts",
     "relu",

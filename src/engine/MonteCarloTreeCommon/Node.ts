@@ -1,5 +1,5 @@
 import { INCREMENT_ONE, Integer } from "src/types";
-import { attribute as _, Node as GraphvizNode } from "ts-graphviz";
+import * as Graphviz from "ts-graphviz";
 import Game from "../Game/Game";
 import Move, { MoveKey, MovePair } from "../Game/Move";
 import Player from "../Game/Player";
@@ -130,11 +130,14 @@ export class Node<
 
   /// Select the best node among children, i.e. the one with the highest UCB.
   public selectBestChild(): Node<P, M, S, G> {
-    if (this.children.length === EMPTY_CHILDREN_LIST)
+    if (this.children.length === EMPTY_CHILDREN_LIST) {
       throw new Error("No children to select from");
+    }
 
     let [bestChild] = this.children;
-    if (!bestChild) throw new Error("No children to select from");
+    if (!bestChild) {
+      throw new Error("No children to select from");
+    }
     let bestUcb = this.getChildUcb(bestChild);
     const quantityOfChildren = this.children.length;
 
@@ -144,7 +147,9 @@ export class Node<
       currentChildIndex += INCREMENT_ONE
     ) {
       const child = this.children[currentChildIndex];
-      if (!child) throw new Error("No children to select from");
+      if (!child) {
+        throw new Error("No children to select from");
+      }
 
       const ucb = this.getChildUcb(child);
       if (ucb > bestUcb) {
@@ -166,11 +171,14 @@ export class Node<
       Math.random() * indexesOfNonExpandedMoves.length,
     );
     const moveKey = indexesOfNonExpandedMoves[randomIndex];
-    if (typeof moveKey === "undefined")
+    if (typeof moveKey === "undefined") {
       throw new Error("No indexes of non-expanded moves to pick from");
+    }
 
     const move = this.state.getGame().getMove(moveKey);
-    if (typeof move === "undefined") throw Error("The picked move is invalid");
+    if (typeof move === "undefined") {
+      throw Error("The picked move is invalid");
+    }
     return {
       key: moveKey,
       move,
@@ -202,7 +210,9 @@ export class Node<
     for (;;) {
       const scoreboard = rolloutState.getScoreboard();
       const isFinal = rolloutState.isFinal();
-      if (isFinal) return scoreboard;
+      if (isFinal) {
+        return scoreboard;
+      }
 
       const selectedMove = this.pickRandomMove();
       rolloutState = selectedMove.move.play(rolloutState);
@@ -213,24 +223,27 @@ export class Node<
   public backpropagate(scoreboard: Scoreboard): void {
     const playerKey = this.state.getPlayerKey();
     const pointsEarnedByThePlayer = scoreboard[playerKey];
-    if (typeof pointsEarnedByThePlayer === "undefined")
+    if (typeof pointsEarnedByThePlayer === "undefined") {
       throw new Error("Invalid player");
+    }
 
     this.victoryQuality += pointsEarnedByThePlayer;
     this.quantityOfVisits += INCREMENT_ONE;
 
-    if (this.parent) this.parent.backpropagate(scoreboard);
+    if (this.parent) {
+      this.parent.backpropagate(scoreboard);
+    }
   }
 
-  public toDot(id: Integer): GraphvizNode {
+  public toGraphvizNode(id: Integer): Graphviz.Node {
     const state = this.getState();
     const playerKey = state.getPlayerKey();
     const player = state.getPlayer();
 
     const label = `${id}: S.${this.quantityOfVisits} Q.${this.victoryQuality}\nP.${playerKey} ${player.getSymbol()} ${player.getName()}\n${state.toString()}`;
 
-    return new GraphvizNode(id.toString(), {
-      [_.label]: label,
+    return new Graphviz.Node(id.toString(), {
+      [Graphviz.attribute.label]: label,
       fontname: "Monospace",
     });
   }
