@@ -95,7 +95,7 @@ export class Node<
 
   /* Setters */
 
-  private setMoveAsExpanded(key: MoveKey) {
+  private setMoveAsExpanded(key: MoveKey): void {
     if (!this.moveIsExpanded.has(key)) {
       throw new Error("Invalid move key");
     }
@@ -131,12 +131,12 @@ export class Node<
   /// Select the best node among children, i.e. the one with the highest UCB.
   public selectBestChild(): Node<P, M, S, G> {
     if (this.children.length === EMPTY_CHILDREN_LIST) {
-      throw new Error("No children to select from");
+      throw new Error("There are no children to select from");
     }
 
     let [bestChild] = this.children;
     if (!bestChild) {
-      throw new Error("No children to select from");
+      throw new Error("No best child could be selected");
     }
     let bestUcb = this.getChildUcb(bestChild);
     const quantityOfChildren = this.children.length;
@@ -148,7 +148,7 @@ export class Node<
     ) {
       const child = this.children[currentChildIndex];
       if (!child) {
-        throw new Error("No children to select from");
+        throw new Error("The specified child does not exist");
       }
 
       const ucb = this.getChildUcb(child);

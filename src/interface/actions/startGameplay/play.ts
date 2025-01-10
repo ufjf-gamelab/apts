@@ -4,7 +4,6 @@ import Game from "src/engine/Game/Game";
 import Move from "src/engine/Game/Move";
 import Player from "src/engine/Game/Player";
 import State from "src/engine/Game/State";
-import { GameMode, GetInput } from "../program";
 
 const printContext = <
   P extends Player,

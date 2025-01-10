@@ -7,7 +7,7 @@
 node_modules
 dist
 /docs/**/*.svg
-/.images/**/*
+/.images/
 
 # Runtime
 .env.local

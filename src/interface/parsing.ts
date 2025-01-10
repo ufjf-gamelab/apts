@@ -1,5 +1,4 @@
 import { InvalidArgumentError } from "commander";
-import { FileOperation, validateFilePath } from "./environments/node/file";
 import { GameMode } from "./types";
 
 export const parseGameMode = (gameMode: string) => {
@@ -13,10 +12,4 @@ export const parseGameMode = (gameMode: string) => {
     default:
       throw new InvalidArgumentError("Invalid game mode.");
   }
-};
-
-export const parseJsonFile = (filePath: string) => {
-  const hasJsonExtension = filePath.endsWith(".json");
-  const formattedPath = hasJsonExtension ? filePath : `${filePath}.json`;
-  return validateFilePath(formattedPath, FileOperation.Write);
 };
