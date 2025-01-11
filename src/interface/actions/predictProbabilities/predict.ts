@@ -7,6 +7,7 @@ import TicTacToeGame from "src/games/TicTacToe/Game";
 import { TicTacToeMove } from "src/games/TicTacToe/Move";
 import { TicTacToePlayer } from "src/games/TicTacToe/Player";
 import { TicTacToeState } from "src/games/TicTacToe/State";
+import { MoveKey } from "src/games/TicTacToe/types";
 import { ProcessGraphvizDotString } from "../actions";
 
 interface MoveOutcome<
@@ -87,7 +88,7 @@ const main = <
 }: {
   processGraphvizDotString: ProcessGraphvizDotString;
 }): void => {
-  const ticTacToe = new TicTacToeGame({
+  const game = new TicTacToeGame({
     quantityOfColumns: 3,
     quantityOfRows: 3,
   });
@@ -99,11 +100,27 @@ const main = <
     TicTacToeGame
   >({
     explorationConstant: 1.41,
-    game: ticTacToe,
-    quantityOfSearches: 1000,
+    game,
+    quantityOfSearches: 10000,
   });
 
-  const state = ticTacToe.getInitialState();
+  let state = game.getInitialState();
+
+  let move = game.getMove(MoveKey.Northwest);
+  state = move.play(state);
+
+  move = game.getMove(MoveKey.North);
+  state = move.play(state);
+
+  move = game.getMove(MoveKey.Center);
+  state = move.play(state);
+
+  move = game.getMove(MoveKey.East);
+  state = move.play(state);
+
+  move = game.getMove(MoveKey.Southeast);
+  state = move.play(state);
+
   console.log(state.toString());
 
   processMove<TicTacToePlayer, TicTacToeMove, TicTacToeState, TicTacToeGame>(

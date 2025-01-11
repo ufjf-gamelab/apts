@@ -30,14 +30,14 @@ export class TicTacToeState extends State<
     game,
     slots,
     playerKey,
-    scoreboard,
+    score,
     validMovesKeys,
     lastAssertedPosition,
   }: TicTacToeStateParams) {
     super({
       game,
       playerKey,
-      scoreboard,
+      score,
       slots,
       validMovesKeys,
     });
@@ -57,7 +57,7 @@ export class TicTacToeState extends State<
       game: this.getGame(),
       lastAssertedPosition: this.lastAssertedPosition,
       playerKey,
-      scoreboard: this.getScoreboard(),
+      score: this.getScore(),
       slots: this.getSlots(),
       validMovesKeys: this.getValidMovesKeys(),
     });

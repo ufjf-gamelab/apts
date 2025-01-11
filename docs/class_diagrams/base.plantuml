@@ -146,30 +146,30 @@ package state_package as "State" {
 
   }
 
-  $type(Scoreboard) {
+  $type(Score) {
     Map<Player, Points>
   }
-  Scoreboard::0 --> Player
-  Scoreboard::0 --> Points
+  Score::0 --> Player
+  Score::0 --> Points
 
   interface TurnOutcome {
     gameHasEnded: boolean
-    scoreboard: Scoreboard
+    score: Score
     winner: Player | null
   }
   TurnOutcome::winner --> Player
-  TurnOutcome::scoreboard --> Scoreboard
+  TurnOutcome::score --> Score
 
   interface StateParams $G {
     game: G
     player: Player
-    scoreboard: Scoreboard
+    score: Score
     slots: Slot[]
     keysOfTheValidMoves: Set<MoveKey>
   }
   StateParams::game --> Game
   StateParams::player --> Player
-  StateParams::scoreboard --> Scoreboard
+  StateParams::score --> Score
   StateParams::slots --> Slot
   StateParams::keysOfTheValidMoves --> MoveKey
 
@@ -178,7 +178,7 @@ package state_package as "State" {
     # slots: StateParams::slots
     ..
     # player: StateParams::player
-    # scoreboard: StateParams::scoreboard
+    # score: StateParams::score
     # keysOfTheValidMoves: StateParams::keysOfTheValidMoves
     --
     + getGame(): StateParams::game
@@ -199,7 +199,7 @@ package state_package as "State" {
   State::game --> StateParams::game
   State::slots --> StateParams::slots
   State::player --> StateParams::player
-  State::scoreboard --> StateParams::scoreboard
+  State::score --> StateParams::score
 
 }
 
@@ -235,8 +235,8 @@ package monte_carlo_tree_common_package as "Monte Carlo Tree Common" {
     + selectBestChild(): Node<G, M>
     + pickRandomMove(): KeyedMove<M>
     + expand(): Node<G, M>
-    + simulate(): TurnOutcome["scoreboard"]
-    + backpropagate(scoreboard: TurnOutcome["scoreboard"]): void
+    + simulate(): TurnOutcome["score"]
+    + backpropagate(score: TurnOutcome["score"]): void
   }
   Node::state --> NodeParams::state
   Node::keyOfTheTakenMove --> NodeParams::keyOfTheTakenMove

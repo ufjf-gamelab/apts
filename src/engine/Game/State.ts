@@ -11,7 +11,7 @@ export type Slot = Integer;
 export type SlotKey = Integer;
 
 export type Points = number;
-export type Scoreboard = Points[];
+export type Score = Points[];
 
 export interface StateParams<
   P extends Player,
@@ -22,7 +22,7 @@ export interface StateParams<
   readonly game: G;
   readonly slots: Slot[];
   readonly playerKey: PlayerKey;
-  readonly scoreboard: Scoreboard;
+  readonly score: Score;
   readonly validMovesKeys: Integer[];
 }
 
@@ -35,20 +35,20 @@ export default abstract class State<
   private readonly game: StateParams<P, M, S, G>["game"];
   private readonly slots: StateParams<P, M, S, G>["slots"];
   private readonly playerKey: StateParams<P, M, S, G>["playerKey"];
-  private readonly scoreboard: StateParams<P, M, S, G>["scoreboard"];
+  private readonly score: StateParams<P, M, S, G>["score"];
   private readonly validMovesKeys: StateParams<P, M, S, G>["validMovesKeys"];
 
   constructor({
     game,
     slots,
     playerKey,
-    scoreboard,
+    score,
     validMovesKeys,
   }: StateParams<P, M, S, G>) {
     this.game = game;
     this.slots = slots;
     this.playerKey = playerKey;
-    this.scoreboard = [...scoreboard];
+    this.score = [...score];
     this.validMovesKeys = [...validMovesKeys];
   }
 
@@ -66,14 +66,15 @@ export default abstract class State<
     return this.playerKey;
   }
 
-  public getScoreboard(): StateParams<P, M, S, G>["scoreboard"] {
-    return [...this.scoreboard];
+  public getScore(): StateParams<P, M, S, G>["score"] {
+    return [...this.score];
   }
 
   public getSlot(index: SlotKey): Slot {
     const slot = this.slots[index];
-    if (typeof slot === "undefined")
+    if (typeof slot === "undefined") {
       throw new Error(`Slot with index ${index} not found`);
+    }
     return slot;
   }
 
@@ -82,6 +83,7 @@ export default abstract class State<
   }
 
   public getValidMoves(): M[] {
+    // If it is final, no move is valid.
     return this.validMovesKeys.map(key => this.game.getMove(key));
   }
 

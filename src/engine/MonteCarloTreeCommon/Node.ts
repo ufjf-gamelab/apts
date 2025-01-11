@@ -4,9 +4,8 @@ import Game from "../Game/Game";
 import Move, { MoveKey, MovePair } from "../Game/Move";
 import Player from "../Game/Player";
 
-import State, { Scoreboard } from "../Game/State";
+import State, { Score } from "../Game/State";
 
-const EMPTY_CHILDREN_LIST = 0;
 const MINIMUM_VICTORY_QUALITY = 0;
 const MINIMUM_QUANTITY_OF_VISITS = 0;
 
@@ -43,8 +42,7 @@ export class Node<
   >["explorationConstant"];
   private readonly parent: NodeParams<P, M, S, G>["parent"];
 
-  private readonly children: Node<P, M, S, G>[] = [];
-  private readonly moveIsExpanded: Map<MoveKey, boolean>;
+  private readonly children: Map<MoveKey, Node<P, M, S, G> | null>;
 
   private quantityOfVisits: Integer = MINIMUM_QUANTITY_OF_VISITS;
   private victoryQuality: number = MINIMUM_VICTORY_QUALITY;
@@ -59,23 +57,29 @@ export class Node<
     this.keyOfTheTakenMove = keyOfTheTakenMove;
     this.explorationConstant = explorationConstant;
     this.parent = parent ? parent : null;
-    this.moveIsExpanded = new Map(
-      state
-        .getValidMovesKeys()
-        .map((key: MoveKey): [MoveKey, boolean] => [key, false]),
+
+    const validMovesKeys = state.getValidMovesKeys();
+    this.children = new Map(
+      validMovesKeys.map((key: MoveKey): [MoveKey, null] => [key, null]),
     );
   }
 
   /* Getters */
 
+  private getQuantityOfExpandedMoves(): Integer {
+    return this.getChildren().length;
+  }
+
   public getChildren(): Node<P, M, S, G>[] {
-    return this.children;
+    return Array.from(this.children.values()).filter(
+      (child): child is Node<P, M, S, G> => child !== null,
+    );
   }
 
   private getKeysOfNonExpandedMoves(): Set<MoveKey> {
     const nonExpandedMoves = new Set(
-      Array.from(this.moveIsExpanded.entries())
-        .filter(([, isExpanded]) => !isExpanded)
+      Array.from(this.children.entries())
+        .filter(([, child]) => child === null)
         .map(([index]) => index),
     );
     return nonExpandedMoves;
@@ -93,24 +97,11 @@ export class Node<
     return this.state;
   }
 
-  /* Setters */
-
-  private setMoveAsExpanded(key: MoveKey): void {
-    if (!this.moveIsExpanded.has(key)) {
-      throw new Error("Invalid move key");
-    }
-    this.moveIsExpanded.set(key, true);
-  }
-
   /* Methods */
 
   /// Check if the node is fully expanded, i.e. all valid actions have been explored.
   public isFullyExpanded(): boolean {
-    const maskFromExpandableMoves = Array.from(this.moveIsExpanded.values());
-    const isFullyExpanded = maskFromExpandableMoves.every(
-      isExpanded => isExpanded,
-    );
-    return isFullyExpanded;
+    return this.getQuantityOfExpandedMoves() === this.children.size;
   }
 
   /// Get the UCB value of a given child.
@@ -129,28 +120,19 @@ export class Node<
   }
 
   /// Select the best node among children, i.e. the one with the highest UCB.
-  public selectBestChild(): Node<P, M, S, G> {
-    if (this.children.length === EMPTY_CHILDREN_LIST) {
-      throw new Error("There are no children to select from");
+  public selectBestChild(): Node<P, M, S, G> | null {
+    if (this.children.size === 0) {
+      console.log("No children to select from");
     }
 
-    let [bestChild] = this.children;
-    if (!bestChild) {
-      throw new Error("No best child could be selected");
-    }
-    let bestUcb = this.getChildUcb(bestChild);
-    const quantityOfChildren = this.children.length;
+    const expandedChildren = Array.from(this.children.values()).filter(
+      (child): child is Node<P, M, S, G> => child !== null,
+    );
 
-    for (
-      let currentChildIndex = 1;
-      currentChildIndex < quantityOfChildren;
-      currentChildIndex += INCREMENT_ONE
-    ) {
-      const child = this.children[currentChildIndex];
-      if (!child) {
-        throw new Error("The specified child does not exist");
-      }
+    let bestChild: Node<P, M, S, G> | null = null;
+    let bestUcb = Number.NEGATIVE_INFINITY;
 
+    for (const child of expandedChildren) {
       const ucb = this.getChildUcb(child);
       if (ucb > bestUcb) {
         bestChild = child;
@@ -188,7 +170,6 @@ export class Node<
   /// Pick a random action and perform it, returning the outcome state as a child node.
   public expand(): Node<P, M, S, G> {
     const selectedMove = this.pickRandomMove();
-    this.setMoveAsExpanded(selectedMove.key);
 
     // Copy the state and play the action on the copy
     const nextState = selectedMove.move.play(this.state);
@@ -199,19 +180,19 @@ export class Node<
       parent: this,
       state: nextState,
     });
-    this.children.push(child);
+    this.children.set(selectedMove.key, child);
     return child;
   }
 
   /// Simulate a game from the current state, returning the outcome value.
-  public simulate(): Scoreboard {
+  public simulate(): Score {
     // Copy the state and play random actions, with alternate players, until the game is over
     let rolloutState = this.state.clone();
     for (;;) {
-      const scoreboard = rolloutState.getScoreboard();
+      const score = rolloutState.getScore();
       const isFinal = rolloutState.isFinal();
       if (isFinal) {
-        return scoreboard;
+        return score;
       }
 
       const selectedMove = this.pickRandomMove();
@@ -220,9 +201,9 @@ export class Node<
   }
 
   /// Backpropagate the outcome value to the root node.
-  public backpropagate(scoreboard: Scoreboard): void {
+  public backpropagate(score: Score): void {
     const playerKey = this.state.getPlayerKey();
-    const pointsEarnedByThePlayer = scoreboard[playerKey];
+    const pointsEarnedByThePlayer = score[playerKey];
     if (typeof pointsEarnedByThePlayer === "undefined") {
       throw new Error("Invalid player");
     }
@@ -231,7 +212,7 @@ export class Node<
     this.quantityOfVisits += INCREMENT_ONE;
 
     if (this.parent) {
-      this.parent.backpropagate(scoreboard);
+      this.parent.backpropagate(score);
     }
   }
 

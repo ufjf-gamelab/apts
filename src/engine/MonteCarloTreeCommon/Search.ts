@@ -107,19 +107,25 @@ export default class Search<
 
       // Goes all the way down to a node that is not fully expanded at the bottom of the tree.
       while (currentNode.isFullyExpanded()) {
-        currentNode = currentNode.selectBestChild();
+        const bestChild = currentNode.selectBestChild();
+
+        if (bestChild === null) {
+          // All the possible moves have been explored in this branch.
+          break;
+        }
+        currentNode = bestChild;
       }
 
       const state = currentNode.getState();
-      let scoreboard = state.getScoreboard();
+      let score = state.getScore();
       const isFinal = state.isFinal();
 
       if (!isFinal) {
         currentNode = currentNode.expand();
-        scoreboard = currentNode.simulate();
+        score = currentNode.simulate();
       }
 
-      currentNode.backpropagate(scoreboard);
+      currentNode.backpropagate(score);
     }
   }
 }

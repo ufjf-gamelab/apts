@@ -45,8 +45,11 @@ export default class TicTacToeGame extends Game<
         ? null
         : this.getWinner(state.getSlots(), lastAssertedPosition);
 
-    if (winner === null) message += `It's a draw!`;
-    else message += `${winner.player.getName()} wins!`;
+    if (winner === null) {
+      message += `It's a draw!`;
+    } else {
+      message += `${winner.player.getName()} wins!`;
+    }
     return message;
   }
 
@@ -55,7 +58,7 @@ export default class TicTacToeGame extends Game<
       game: this,
       lastAssertedPosition: null,
       playerKey: PlayerKey.X,
-      scoreboard: [INITIAL_POINTS, INITIAL_POINTS],
+      score: [INITIAL_POINTS, INITIAL_POINTS],
       slots: Array<Slot>(this.getQuantityOfSlots()).fill(Slot.Empty),
       validMovesKeys: this.getMoves().map((_, index) => index),
     });
@@ -66,7 +69,9 @@ export default class TicTacToeGame extends Game<
   }
 
   private getPlayerAtSlot(slot: Slot): PlayerPair | null {
-    if (slot === Slot.Empty) return null;
+    if (slot === Slot.Empty) {
+      return null;
+    }
     const playerKey = slot === Slot.X ? PlayerKey.X : PlayerKey.O;
     const player = this.getPlayer(playerKey);
     return { key: playerKey, player };
@@ -91,19 +96,25 @@ export default class TicTacToeGame extends Game<
       rowIndex * this.quantityOfColumns + this.quantityOfColumns,
     );
     let winner = this.getWinnerOnSection(row);
-    if (winner !== null) return winner;
+    if (winner !== null) {
+      return winner;
+    }
 
     const column = slots.filter(
       (_, index) => index % this.quantityOfColumns === columnIndex,
     );
     winner = this.getWinnerOnSection(column);
-    if (winner !== null) return winner;
+    if (winner !== null) {
+      return winner;
+    }
 
     const primaryDiagonal = slots.filter(
       (_, index) => index % this.quantityOfColumns === index,
     );
     winner = this.getWinnerOnSection(primaryDiagonal);
-    if (winner !== null) return winner;
+    if (winner !== null) {
+      return winner;
+    }
 
     const secondaryDiagonal = slots.filter(
       (_, index) =>
@@ -112,7 +123,9 @@ export default class TicTacToeGame extends Game<
         this.quantityOfColumns - ADJUST_INDEX,
     );
     winner = this.getWinnerOnSection(secondaryDiagonal);
-    if (winner !== null) return winner;
+    if (winner !== null) {
+      return winner;
+    }
 
     return null;
   }
@@ -121,7 +134,9 @@ export default class TicTacToeGame extends Game<
     const [firstSlot] = slots;
     if (typeof firstSlot !== "undefined") {
       const allSlotsAreTheSame = slots.every(slot => slot === firstSlot);
-      if (allSlotsAreTheSame) return this.getPlayerAtSlot(firstSlot);
+      if (allSlotsAreTheSame) {
+        return this.getPlayerAtSlot(firstSlot);
+      }
     }
     return null;
   }

@@ -1,6 +1,6 @@
 import Move, { MovePair, MoveParams } from "src/engine/Game/Move";
 import { PlayerPair } from "src/engine/Game/Player";
-import { Scoreboard } from "src/engine/Game/State";
+import { Score } from "src/engine/Game/State";
 import { Integer } from "src/types";
 import TicTacToeGame from "./Game";
 import { TicTacToePlayer } from "./Player";
@@ -59,15 +59,12 @@ export class TicTacToeMove extends Move<
     return this.position;
   }
 
-  protected getScoreboard(
-    scoreboard: Scoreboard,
-    winnerKey: PlayerKey | null,
-  ): Scoreboard {
+  protected getScore(score: Score, winnerKey: PlayerKey | null): Score {
     if (winnerKey !== null) {
-      const winnerCurrentPoints = scoreboard[winnerKey] ?? INITIAL_POINTS;
-      scoreboard[winnerKey] = winnerCurrentPoints + INCREMENT_ONE_POINT;
+      const winnerCurrentPoints = score[winnerKey] ?? INITIAL_POINTS;
+      score[winnerKey] = winnerCurrentPoints + INCREMENT_ONE_POINT;
     }
-    return scoreboard;
+    return score;
   }
 
   protected getSlots(state: TicTacToeState): Slot[] {
@@ -131,8 +128,8 @@ export class TicTacToeMove extends Move<
       ? []
       : this.getValidMoves(game, updatedSlots).map(({ key }) => key);
 
-    const updatedScoreboard = this.getScoreboard(
-      state.getScoreboard(),
+    const updatedScore = this.getScore(
+      state.getScore(),
       winner ? winner.key : null,
     );
 
@@ -140,7 +137,7 @@ export class TicTacToeMove extends Move<
       game,
       lastAssertedPosition,
       playerKey: this.getPlayer(game, state.getPlayerKey()).key,
-      scoreboard: updatedScoreboard,
+      score: updatedScore,
       slots: updatedSlots,
       validMovesKeys: nextValidMovesKeys,
     });
