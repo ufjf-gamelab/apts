@@ -91,16 +91,27 @@ const predictDataFromState = <G extends Game>(
 ) => {
   const data: ReturnedData = {};
   const { policy, value } = maskedPrediction(state, resNet);
-  if (desiredData.policy) data.policy = policy;
-  if (desiredData.value) data.value = value;
+  if (desiredData.policy) {
+    data.policy = policy;
+  }
+  if (desiredData.value) {
+    data.value = value;
+  }
   if (desiredData.probabilities || desiredData.action) {
     const probabilities = probabilitiesFromPolicy(policy);
-    if (desiredData.probabilities) data.probabilities = probabilities;
-    if (desiredData.action)
+    if (desiredData.probabilities) {
+      data.probabilities = probabilities;
+    }
+    if (desiredData.action) {
       data.action = actionFromProbabilities(probabilities);
+    }
   }
-  if (!desiredData.policy) tf.dispose(policy);
-  if (!desiredData.value) tf.dispose(value);
+  if (!desiredData.policy) {
+    tf.dispose(policy);
+  }
+  if (!desiredData.value) {
+    tf.dispose(value);
+  }
   return data;
 };
 
@@ -114,7 +125,9 @@ export const predictActionFromState = <G extends Game>(
     probabilities: false,
     value: false,
   });
-  if (!data.action) throw new Error("No action was predicted");
+  if (!data.action) {
+    throw new Error("No action was predicted");
+  }
   return { action: data.action };
 };
 
@@ -128,8 +141,12 @@ export const predictValueAndProbabilitiesFromState = <G extends Game>(
     probabilities: true,
     value: true,
   });
-  if (!data.value) throw new Error("No value was predicted");
-  if (!data.probabilities) throw new Error("No probabilities were predicted");
+  if (!data.value) {
+    throw new Error("No value was predicted");
+  }
+  if (!data.probabilities) {
+    throw new Error("No probabilities were predicted");
+  }
   return { probabilities: data.probabilities, value: data.value };
 };
 
@@ -150,10 +167,18 @@ export const predictPolicyAndValueAndProbabilitiesAndActionFromState = <
     probabilities: true,
     value: true,
   });
-  if (!data.value) throw new Error("No value was predicted");
-  if (!data.probabilities) throw new Error("No probabilities were predicted");
-  if (!data.action) throw new Error("No action was predicted");
-  if (!data.policy) throw new Error("No policy was predicted");
+  if (!data.value) {
+    throw new Error("No value was predicted");
+  }
+  if (!data.probabilities) {
+    throw new Error("No probabilities were predicted");
+  }
+  if (!data.action) {
+    throw new Error("No action was predicted");
+  }
+  if (!data.policy) {
+    throw new Error("No policy was predicted");
+  }
   return {
     action: data.action,
     policy: data.policy,

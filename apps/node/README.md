@@ -1,6 +1,6 @@
-# Quati: automatic play testing
+# Auto Play-Test System: Engine
 
-This is **Quati**, an automatic play-testing system.
+This is the engine of the project **Auto Play-Test System**.
 It is intended to offer an interface for representing various types of games and to generate artificial intelligence (AI) agents to play them.
 
 ## Dependencies
@@ -37,28 +37,6 @@ If you use the `Visual Studio Code` editor, we recommend installing the followin
 - [Brazilian Portuguese - Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker-portuguese-brazilian)
 - [PlantUML](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml)
 
-## What's inside?
-
-This Turborepo includes the following packages and apps:
-
-### Apps and Packages
-
-- `node`: an environment for running the automatic play-testing system using [Node.js](https://nodejs.org)
-- `web`: a [React](https://reactjs.org) with [vite](https://vitejs.dev) TypesCript app
-- `@repo/focinho`: a functionality library shared by both `node` and `web` applications
-- `@repo/eslint-config`: shared `eslint` configurations
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package and app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
 ## Installing
 
 To install the project, run the following command:
@@ -79,13 +57,6 @@ To run the project in development mode, use the following command:
 pnpm run dev
 ```
 
-You can run only the `node` or `web` apps with the following commands:
-
-```bash
-pnpm run dev --filter=node
-pnpm run dev --filter=web
-```
-
 ### Building
 
 To build the project, use the following command:
@@ -94,18 +65,14 @@ To build the project, use the following command:
 pnpm run build
 ```
 
-You can also build only the `node` or `web` apps with the `--filter` flag:
+You can also build and run the project with the following command:
 
 ```bash
-pnpm run build --filter=node
-pnpm run build --filter=web
+pnpm run build-run
 ```
 
-### Previewing
-
-To preview the `node` app, use the `preview` script.
-You can pass the arguments at the end of the command.
+Using this mode, you can pass the arguments at the end of the command, as follows:
 
 ```bash
-pnpm run preview <args>
+pnpm run build-run --help
 ```

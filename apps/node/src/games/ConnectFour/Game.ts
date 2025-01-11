@@ -13,10 +13,11 @@ export default class ConnectFourGame extends Game {
     if (
       rowCount < ConnectFourGame.WINDOW_SIZE ||
       columnCount < ConnectFourGame.WINDOW_SIZE
-    )
+    ) {
       throw new Error(
         `The board must be at least ${ConnectFourGame.WINDOW_SIZE}x${ConnectFourGame.WINDOW_SIZE}`,
       );
+    }
     super();
     this.rowCount = rowCount;
     this.columnCount = columnCount;
@@ -50,12 +51,16 @@ export default class ConnectFourGame extends Game {
   }
 
   public getPlayerName(player: Player): string {
-    if (player === Player.None) return "N";
+    if (player === Player.None) {
+      return "N";
+    }
     return player === Player.X ? "X" : "O";
   }
 
   public getOpponent(player: Player): Player {
-    if (player === Player.None) return Player.None;
+    if (player === Player.None) {
+      return Player.None;
+    }
     return player === Player.X ? Player.O : Player.X;
   }
 

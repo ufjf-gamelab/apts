@@ -31,7 +31,9 @@ export class ConnectFourState extends State<ConnectFourGame> {
     const validActions: ValidAction[] = [];
     for (let index = 0; index < this.columnCount; index += INCREMENT_ONE) {
       const [firstRow] = this.table;
-      if (!firstRow) return [];
+      if (!firstRow) {
+        return [];
+      }
       const cell = firstRow[index];
       validActions.push(cell === Player.None);
     }
@@ -42,7 +44,9 @@ export class ConnectFourState extends State<ConnectFourGame> {
     const rowIndex = Math.floor(position / this.columnCount);
     const columnIndex = position % this.columnCount;
     const row = this.table[rowIndex];
-    if (!row) return null;
+    if (!row) {
+      return null;
+    }
     return row[columnIndex] ?? null;
   }
 
@@ -65,9 +69,13 @@ export class ConnectFourState extends State<ConnectFourGame> {
         columnIndex += INCREMENT_ONE
       ) {
         const row = this.table[rowIndex];
-        if (!row) continue;
+        if (!row) {
+          continue;
+        }
         const player = row[columnIndex];
-        if (!player) continue;
+        if (!player) {
+          continue;
+        }
         this.setPositionInEncodedState({
           columnIndex,
           encodedState,
@@ -85,7 +93,9 @@ export class ConnectFourState extends State<ConnectFourGame> {
     const rowIndex = Math.floor(position / this.columnCount);
     const columnIndex = position % this.columnCount;
     const row = this.table[rowIndex];
-    if (!row) return;
+    if (!row) {
+      return;
+    }
     row[columnIndex] = player;
   }
 
@@ -105,11 +115,13 @@ export class ConnectFourState extends State<ConnectFourGame> {
     const PLAYER_NONE_INDEX = 1;
 
     if (encodedState[rowIndex]?.[columnIndex]) {
-      if (player === Player.X)
+      if (player === Player.X) {
         encodedState[rowIndex][columnIndex][PLAYER_X_INDEX] = 1;
-      else if (player === Player.O)
+      } else if (player === Player.O) {
         encodedState[rowIndex][columnIndex][PLAYER_O_INDEX] = 1;
-      else encodedState[rowIndex][columnIndex][PLAYER_NONE_INDEX] = 1;
+      } else {
+        encodedState[rowIndex][columnIndex][PLAYER_NONE_INDEX] = 1;
+      }
     }
   }
 
@@ -133,8 +145,12 @@ export class ConnectFourState extends State<ConnectFourGame> {
   }
 
   private static formatCell(cell: Player): string {
-    if (cell === Player.X) return "X";
-    if (cell === Player.O) return "O";
+    if (cell === Player.X) {
+      return "X";
+    }
+    if (cell === Player.O) {
+      return "O";
+    }
     return "-";
   }
 
@@ -169,7 +185,9 @@ export class ConnectFourState extends State<ConnectFourGame> {
     ) {
       // For each window of X cells...
       const row = this.table[rowIndex];
-      if (!row) return false;
+      if (!row) {
+        return false;
+      }
 
       if (row[currentColumnIndex] === player) {
         let win = true;
@@ -186,7 +204,9 @@ export class ConnectFourState extends State<ConnectFourGame> {
           }
         }
 
-        if (win) return true;
+        if (win) {
+          return true;
+        }
       }
     }
 
@@ -198,7 +218,9 @@ export class ConnectFourState extends State<ConnectFourGame> {
     columnIndex: number,
     player: Player,
   ): boolean {
-    if (rowIndex > this.rowCount - ConnectFourGame.WINDOW_SIZE) return false;
+    if (rowIndex > this.rowCount - ConnectFourGame.WINDOW_SIZE) {
+      return false;
+    }
 
     // Check if all the cells in the window are from the same player
     for (
@@ -207,9 +229,13 @@ export class ConnectFourState extends State<ConnectFourGame> {
       currentRowIndex += INCREMENT_ONE
     ) {
       const row = this.table[currentRowIndex];
-      if (!row) return false;
+      if (!row) {
+        return false;
+      }
 
-      if (row[columnIndex] !== player) return false;
+      if (row[columnIndex] !== player) {
+        return false;
+      }
     }
     return true;
   }
@@ -275,8 +301,9 @@ export class ConnectFourState extends State<ConnectFourGame> {
     if (
       correspondingFinalRow - correspondingInitialRow <
       ConnectFourGame.WINDOW_SIZE - ADJUST_INDEX
-    )
+    ) {
       return false;
+    }
     for (
       let currentColumnIndex = firstWindowColumn;
       currentColumnIndex <=
@@ -285,7 +312,9 @@ export class ConnectFourState extends State<ConnectFourGame> {
     ) {
       // For each window of X cells...
       const row = this.table[correspondingInitialRow];
-      if (!row) return false;
+      if (!row) {
+        return false;
+      }
 
       if (row[currentColumnIndex] === player) {
         let win = true;
@@ -297,7 +326,9 @@ export class ConnectFourState extends State<ConnectFourGame> {
           playerIndex += INCREMENT_ONE
         ) {
           const currentRow = this.table[correspondingInitialRow + playerIndex];
-          if (!currentRow) return false;
+          if (!currentRow) {
+            return false;
+          }
 
           const currentCell =
             currentRow[
@@ -310,7 +341,9 @@ export class ConnectFourState extends State<ConnectFourGame> {
             break;
           }
         }
-        if (win) return true;
+        if (win) {
+          return true;
+        }
       }
       correspondingInitialRow += INCREMENT_ONE;
     }
@@ -327,7 +360,9 @@ export class ConnectFourState extends State<ConnectFourGame> {
       currentRowIndex--
     ) {
       const row = this.table[currentRowIndex];
-      if (!row) return false;
+      if (!row) {
+        return false;
+      }
       if (row[columnIndex] === Player.None) {
         rowIndex = currentRowIndex;
         break;
@@ -336,14 +371,24 @@ export class ConnectFourState extends State<ConnectFourGame> {
 
     // The row where the action was played
     rowIndex += ADJUST_INDEX;
-    if (rowIndex > this.rowCount - ADJUST_INDEX) return false;
+    if (rowIndex > this.rowCount - ADJUST_INDEX) {
+      return false;
+    }
     const row = this.table[rowIndex];
-    if (!row) return false;
+    if (!row) {
+      return false;
+    }
     const player = row[columnIndex];
-    if (!player) return false;
+    if (!player) {
+      return false;
+    }
 
-    if (this.checkWinOnColumn(rowIndex, columnIndex, player)) return true;
-    if (this.checkWinOnRow(rowIndex, columnIndex, player)) return true;
+    if (this.checkWinOnColumn(rowIndex, columnIndex, player)) {
+      return true;
+    }
+    if (this.checkWinOnRow(rowIndex, columnIndex, player)) {
+      return true;
+    }
     if (
       this.checkWinOnDiagonal({
         columnIndex,
@@ -351,8 +396,9 @@ export class ConnectFourState extends State<ConnectFourGame> {
         player,
         rowIndex,
       })
-    )
+    ) {
       return true;
+    }
     if (
       this.checkWinOnDiagonal({
         columnIndex,
@@ -360,8 +406,9 @@ export class ConnectFourState extends State<ConnectFourGame> {
         player,
         rowIndex,
       })
-    )
+    ) {
       return true;
+    }
     // No win
     return false;
   }
@@ -375,7 +422,9 @@ export class ConnectFourState extends State<ConnectFourGame> {
       currentRowIndex--
     ) {
       const row = this.table[currentRowIndex];
-      if (!row) return;
+      if (!row) {
+        return;
+      }
       if (row[columnIndex] === Player.None) {
         // The row where the action will be played
         rowIndex = currentRowIndex;
@@ -384,8 +433,12 @@ export class ConnectFourState extends State<ConnectFourGame> {
     }
     // Play the action on the given state
     const row = this.table[rowIndex];
-    if (!row) return;
-    if (rowIndex !== -ADJUST_INDEX) row[columnIndex] = player;
+    if (!row) {
+      return;
+    }
+    if (rowIndex !== -ADJUST_INDEX) {
+      row[columnIndex] = player;
+    }
   }
 
   /* Static methods */
@@ -405,11 +458,15 @@ export class ConnectFourState extends State<ConnectFourGame> {
         currentColumnIndex += INCREMENT_ONE
       ) {
         const row = this.table[currentRowIndex];
-        if (!row) return;
+        if (!row) {
+          return;
+        }
         const cell = row[currentColumnIndex];
-        if (cell === currentPlayer) row[currentColumnIndex] = opponentPlayer;
-        else if (cell === opponentPlayer)
+        if (cell === currentPlayer) {
+          row[currentColumnIndex] = opponentPlayer;
+        } else if (cell === opponentPlayer) {
           row[currentColumnIndex] = currentPlayer;
+        }
       }
     }
   }

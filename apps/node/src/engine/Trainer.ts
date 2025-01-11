@@ -76,7 +76,9 @@ export default class Trainer<G extends Game> {
       const pickedAction = actionFromProbabilities(probabilitiesTensor);
       tf.dispose(probabilitiesTensor);
       const validActions = state.getValidActions();
-      if (!validActions[pickedAction]) throw new Error("Invalid action picked");
+      if (!validActions[pickedAction]) {
+        throw new Error("Invalid action picked");
+      }
 
       // Perform the action and check if the game is over
       state.performAction(pickedAction, player);
@@ -154,16 +156,19 @@ export default class Trainer<G extends Game> {
       if (
         progressStep > MINIMUM_PROGRESS_STEP &&
         (currentStep + ADJUST_INDEX) % progressStep === SHOULD_LOG_MESSAGE
-      )
+      ) {
         logMessage(
           `Self-play iteration ${currentStep + ADJUST_INDEX}/${numSelfPlayIterations}`,
         );
+      }
       const selfPlayMemory = this.selfPlay();
       encodedStates.push(...selfPlayMemory.encodedStates);
       policyTargets.push(...selfPlayMemory.policyTargets);
       valueTargets.push(...selfPlayMemory.valueTargets);
     }
-    if (showMemorySize) logMessage(`Memory size: ${encodedStates.length}`);
+    if (showMemorySize) {
+      logMessage(`Memory size: ${encodedStates.length}`);
+    }
     return Promise.resolve({ encodedStates, policyTargets, valueTargets });
   }
 
@@ -245,7 +250,9 @@ export default class Trainer<G extends Game> {
       currentIteration += INCREMENT_ONE
     ) {
       const trainingMemory = trainingMemories[currentIteration];
-      if (!trainingMemory) continue;
+      if (!trainingMemory) {
+        continue;
+      }
       logMessage(
         `ITERATION ${currentIteration + ADJUST_INDEX}/${maxIterations}`,
       );

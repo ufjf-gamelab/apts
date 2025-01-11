@@ -313,13 +313,14 @@ export default class ResNet {
       batchSize,
       callbacks: {
         onEpochEnd: (epoch, logs) => {
-          if (logs)
+          if (logs) {
             ResNet.logProgress({
               epoch,
               logMessage,
               logs,
               trainingLog,
             });
+          }
         },
       },
       // Go over the data N times.

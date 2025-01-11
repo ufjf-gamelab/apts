@@ -53,8 +53,9 @@ export default abstract class Game<
 
   public getMove(key: MoveKey): M {
     const move = this.moves[key];
-    if (typeof move === "undefined")
+    if (typeof move === "undefined") {
       throw new Error(`Move with key ${key} not found`);
+    }
     return move;
   }
 
@@ -70,8 +71,9 @@ export default abstract class Game<
 
   public getPlayer(key: PlayerKey): P {
     const player = this.players[key];
-    if (typeof player === "undefined")
+    if (typeof player === "undefined") {
       throw new Error(`Player with key ${key} not found`);
+    }
     return player;
   }
 
@@ -97,10 +99,14 @@ export default abstract class Game<
     encodedState: EncodedState;
   }): void {
     const row = encodedState[rowIndex];
-    if (typeof row === "undefined") return;
+    if (typeof row === "undefined") {
+      return;
+    }
 
     const column = row[columnIndex];
-    if (typeof column === "undefined") return;
+    if (typeof column === "undefined") {
+      return;
+    }
 
     column[channel] = Pixel.On;
   }

@@ -1,0 +1,14 @@
+# Development
+.args
+.envrc
+.direnv
+
+# Build
+node_modules
+dist
+/docs/**/*.svg
+/.images/
+
+# Runtime
+!.env
+.env.local

@@ -1,0 +1,49 @@
+{
+  "author": "Gabriel Malosto",
+  "dependencies": {
+    "@paralleldrive/cuid2": "^2.2.2",
+    "@tensorflow/tfjs": "^4.22.0",
+    "commander": "^12.1.0",
+    "dotenv": "^16.4.5",
+    "prompts": "^2.4.2",
+    "ts-graphviz": "^2.1.5"
+  },
+  "description": "Engine to simulate and create AI models for tabletop games, inspired by the AlphaZero algorithm.",
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "@types/eslint-config-prettier": "^6.11.3",
+    "@types/eslint__js": "^8.42.3",
+    "@types/node": "^22.10.1",
+    "@types/prompts": "^2.4.9",
+    "esbuild": "^0.24.0",
+    "eslint": "^9.15.0",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.12.0",
+    "prettier": "^3.4.1",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.16.0"
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "include": [
+    "src"
+  ],
+  "keywords": [],
+  "license": "AGPL-3.0-only",
+  "main": "src/index.ts",
+  "name": "node",
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --packages=external --platform=node --format=esm --outdir=dist --sourcemap",
+    "dev": "tsx watch src/index.ts",
+    "format": "pnpm exec prettier . -w",
+    "lint": "pnpm exec eslint ./src/** --fix",
+    "preview": "pnpm run build && node dist/index.js",
+    "typecheck": "pnpm exec tsc"
+  },
+  "type": "module",
+  "version": "4.2.0"
+}

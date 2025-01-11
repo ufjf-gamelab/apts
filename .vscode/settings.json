@@ -17,9 +17,15 @@
   "editor.formatOnSave": true,
   "editor.inlineSuggest.enabled": true,
   "editor.tabSize": 2,
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
   "search.exclude": {
     "**/dist": true,
     "**/node_modules": true,
-    "pnpm-lock.yaml": true
+    "pnpm-lock.yaml": true,
+    "pnpm-workspace.yaml": true
   }
 }

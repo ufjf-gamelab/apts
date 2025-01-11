@@ -1,13 +1,17 @@
-# Development
-.args
-.envrc
-.direnv
-
-# Build
+.DS_Store
 node_modules
+.turbo
+*.log
 dist
-/docs/**/*.svg
-/.images/
+dist-ssr
+*.local
+.env
+.cache
+server/dist
+public/dist
 
-# Runtime
-.env.local
+## Direnv
+.envrc
+.direnv/
+
+.images/

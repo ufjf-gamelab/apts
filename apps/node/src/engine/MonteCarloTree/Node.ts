@@ -97,11 +97,14 @@ export class Node<G extends Game> {
 
   /// Select the best node among children, i.e. the one with the highest UCB.
   public selectBestChild(): Node<G> {
-    if (this.children.length === EMPTY_CHILDREN_LIST)
+    if (this.children.length === EMPTY_CHILDREN_LIST) {
       throw new Error("No children to select from");
+    }
 
     let bestChild = this.children[EMPTY_CHILDREN_LIST];
-    if (!bestChild) throw new Error("No children to select from");
+    if (!bestChild) {
+      throw new Error("No children to select from");
+    }
     let bestUcb = this.getChildUcb(bestChild);
 
     for (
@@ -110,7 +113,9 @@ export class Node<G extends Game> {
       currentChildIndex += INCREMENT_ONE
     ) {
       const child = this.children[currentChildIndex];
-      if (!child) throw new Error("No children to select from");
+      if (!child) {
+        throw new Error("No children to select from");
+      }
 
       const ucb = this.getChildUcb(child);
       if (ucb > bestUcb) {
@@ -152,6 +157,8 @@ export class Node<G extends Game> {
     this.valueSum += outcomeValue;
     this.visitCount += INCREMENT_ONE;
     const opponentValue = this.game.getOpponentValue(outcomeValue);
-    if (this.parent !== null) this.parent.backpropagate(opponentValue);
+    if (this.parent !== null) {
+      this.parent.backpropagate(opponentValue);
+    }
   }
 }

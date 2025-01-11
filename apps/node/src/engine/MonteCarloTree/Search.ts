@@ -59,7 +59,9 @@ export default class Search<G extends Game> {
 
     for (const child of node.getChildren()) {
       const action = child.getActionTaken();
-      if (action === null) throw new Error("Action is null");
+      if (action === null) {
+        throw new Error("Action is null");
+      }
       actionProbabilities[action] = child.getVisitCount();
     }
 
@@ -95,7 +97,9 @@ export default class Search<G extends Game> {
       let node = root;
 
       // Selection phase
-      while (node.isFullyExpanded()) node = node.selectBestChild();
+      while (node.isFullyExpanded()) {
+        node = node.selectBestChild();
+      }
 
       const actionOutcome = Game.getActionOutcome(
         node.getState(),
