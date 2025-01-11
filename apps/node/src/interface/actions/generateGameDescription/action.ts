@@ -1,4 +1,4 @@
-import { GameName } from "src/interface/types";
+import { GameName } from "../../../interface/types";
 
 interface GameDescription {
   $schema?: string;

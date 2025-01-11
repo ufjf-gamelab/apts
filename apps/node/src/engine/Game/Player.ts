@@ -1,4 +1,4 @@
-import { Char, Integer } from "src/types";
+import { Char, Integer } from "../../types";
 
 export interface PlayerParams {
   readonly symbol: Char;

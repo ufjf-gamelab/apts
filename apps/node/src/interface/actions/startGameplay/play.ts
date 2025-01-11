@@ -1,9 +1,9 @@
 /* eslint-disable no-await-in-loop */
 import { Choice } from "prompts";
-import Game from "src/engine/Game/Game";
-import Move from "src/engine/Game/Move";
-import Player from "src/engine/Game/Player";
-import State from "src/engine/Game/State";
+import Game from "../../../engine/Game/Game";
+import Move from "../../../engine/Game/Move";
+import Player from "../../../engine/Game/Player";
+import State from "../../../engine/Game/State";
 
 const printContext = <
   P extends Player,

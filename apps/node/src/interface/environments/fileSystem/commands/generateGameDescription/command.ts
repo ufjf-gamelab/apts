@@ -1,6 +1,6 @@
 import { Argument, Command } from "commander";
-import actions from "src/interface/actions/actions";
-import { GameName } from "src/interface/types";
+import actions from "../../../../actions/actions";
+import { GameName } from "../../../../types";
 import { parseJsonFile } from "../../parsing";
 
 const action = (gameName: GameName): void => {

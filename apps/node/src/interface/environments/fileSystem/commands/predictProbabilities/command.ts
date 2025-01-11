@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import actions from "src/interface/actions/actions";
+import actions from "../../../../actions/actions";
 import { generateGraphvizImage } from "../../graphviz";
 
 const action = (): void => {

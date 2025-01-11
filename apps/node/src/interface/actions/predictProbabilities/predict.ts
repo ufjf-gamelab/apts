@@ -1,13 +1,13 @@
-import Game from "src/engine/Game/Game";
-import Move from "src/engine/Game/Move";
-import Player from "src/engine/Game/Player";
-import State from "src/engine/Game/State";
-import Search from "src/engine/MonteCarloTreeCommon/Search";
-import TicTacToeGame from "src/games/TicTacToe/Game";
-import { TicTacToeMove } from "src/games/TicTacToe/Move";
-import { TicTacToePlayer } from "src/games/TicTacToe/Player";
-import { TicTacToeState } from "src/games/TicTacToe/State";
-import { MoveKey } from "src/games/TicTacToe/types";
+import Game from "../../../engine/Game/Game";
+import Move from "../../../engine/Game/Move";
+import Player from "../../../engine/Game/Player";
+import State from "../../../engine/Game/State";
+import Search from "../../../engine/MonteCarloTreeCommon/Search";
+import TicTacToeGame from "../../../games/TicTacToe/Game";
+import { TicTacToeMove } from "../../../games/TicTacToe/Move";
+import { TicTacToePlayer } from "../../../games/TicTacToe/Player";
+import { TicTacToeState } from "../../../games/TicTacToe/State";
+import { MoveKey } from "../../../games/TicTacToe/types";
 import { ProcessGraphvizDotString } from "../actions";
 
 interface MoveOutcome<

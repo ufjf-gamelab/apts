@@ -1,6 +1,6 @@
-import TicTacToeGame from "src/games/TicTacToe/Game";
-import { getInput } from "src/interface/environments/fileSystem/program";
-import { GameMode, GameName } from "src/interface/types";
+import TicTacToeGame from "../../../games/TicTacToe/Game";
+import { getInput } from "../../../interface/environments/fileSystem/program";
+import { GameMode, GameName } from "../../../interface/types";
 import play from "./play";
 
 const startGameplay = async ({

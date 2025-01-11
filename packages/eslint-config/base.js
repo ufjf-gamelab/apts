@@ -1,7 +1,7 @@
+import eslint from "@eslint/js";
 import eslintConfigPrettier from "eslint-config-prettier";
 import turboPlugin from "eslint-plugin-turbo";
 import tseslint from "typescript-eslint";
-import eslint from "@eslint/js";
 
 /**
  * A shared ESLint configuration for the repository.
@@ -15,10 +15,10 @@ export const config = [
   ...tseslint.configs.stylisticTypeChecked,
 
   {
-    files: ["eslint.config.{js,cjs}"],
     languageOptions: {
       parserOptions: {
-        sourceType: "script",
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
       },
     },
   },
@@ -78,6 +78,6 @@ export const config = [
   },
 
   {
-    ignores: ["dist/**"],
+    ignores: ["dist/**", "eslint.config.{js,cjs}"],
   },
 ];

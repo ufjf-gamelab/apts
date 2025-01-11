@@ -1,5 +1,5 @@
-import { INCREMENT_ONE, Integer } from "src/types";
 import * as Graphviz from "ts-graphviz";
+import { INCREMENT_ONE, Integer } from "../../types";
 import Game from "../Game/Game";
 import Move, { MoveKey, MovePair } from "../Game/Move";
 import Player from "../Game/Player";

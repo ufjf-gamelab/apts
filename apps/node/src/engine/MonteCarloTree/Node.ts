@@ -1,4 +1,4 @@
-import { INCREMENT_ONE, Integer } from "src/types";
+import { INCREMENT_ONE, Integer } from "../../types";
 import Game from "../Game/Game";
 import Move from "../Game/Move";
 import State from "../Game/State";

@@ -1,5 +1,5 @@
 import * as tf from "@tensorflow/tfjs";
-import { INCREMENT_ONE } from "src/types";
+import { INCREMENT_ONE } from "../../types";
 import Game from "../Game/Game";
 import State from "../Game/State";
 import { predictPolicyAndValueAndProbabilitiesAndActionFromState } from "../ResNet/predict";
