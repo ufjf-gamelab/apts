@@ -1,6 +1,6 @@
-import { PlayerPair } from "src/engine/Game/Player";
-import { Integer } from "src/types";
 import Game from "../../engine/Game/Game";
+import { PlayerPair } from "../../engine/Game/Player";
+import { Integer } from "../../types";
 import { Position, TicTacToeMove } from "./Move";
 import { TicTacToePlayer } from "./Player";
 import { INITIAL_POINTS, TicTacToeState } from "./State";

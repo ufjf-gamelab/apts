@@ -1,4 +1,4 @@
-import Player, { PlayerParams } from "src/engine/Game/Player";
+import Player, { PlayerParams } from "../../engine/Game/Player";
 
 export type TicTacToePlayerParams = PlayerParams;
 

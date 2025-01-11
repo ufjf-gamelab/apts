@@ -1,9 +1,10 @@
-/* eslint-disable no-await-in-loop */
 import { Choice } from "prompts";
 import Game from "../../../engine/Game/Game";
 import Move from "../../../engine/Game/Move";
 import Player from "../../../engine/Game/Player";
 import State from "../../../engine/Game/State";
+import { GetInput } from "../../environments/fileSystem/program";
+import { GameMode } from "../../types";
 
 const printContext = <
   P extends Player,
@@ -79,7 +80,7 @@ const main = async <
   getInput,
   game,
   gameMode,
-}: PlayParams<P, M, S, G>) => {
+}: PlayParams<P, M, S, G>): Promise<void> => {
   console.log(`Game: ${game.getName()}`);
   console.log(`Mode: ${gameMode}\n`);
 
@@ -92,6 +93,7 @@ const main = async <
   while (!gameHasEnded) {
     const validMoves = getContext<P, M, S, G>(state, player);
 
+    // eslint-disable-next-line no-await-in-loop
     const input = await getInput({
       choices: Array.from(validMoves.values()).map(
         (move: M) =>

@@ -1,6 +1,6 @@
-import { PlayerKey } from "src/engine/Game/Player";
-import { INCREMENT_ONE, Integer } from "src/types";
+import { PlayerKey } from "../../engine/Game/Player";
 import State, { StateParams } from "../../engine/Game/State";
+import { INCREMENT_ONE, Integer } from "../../types";
 import TicTacToeGame from "./Game";
 import { Position, TicTacToeMove } from "./Move";
 import { TicTacToePlayer } from "./Player";
