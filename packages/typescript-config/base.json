@@ -1,6 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
     "composite": false,
     "declaration": true,
     "declarationMap": true,
@@ -9,12 +11,21 @@
     "inlineSources": false,
     "isolatedModules": true,
     "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
+    "moduleResolution": "bundler",
+    "newLine": "lf",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUncheckedIndexedAccess": true,
+    "noUncheckedSideEffectImports": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "preserveWatchOutput": true,
     "skipLibCheck": true,
-    "strict": true
+    "sourceMap": true,
+    "strict": true,
+    "useDefineForClassFields": true
   },
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

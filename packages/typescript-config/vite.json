@@ -1,16 +1,18 @@
 {
-  "extends": "./base.json",
+  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "lib": ["ESNext"],
     "module": "ESNext",
-    "lib": ["ESNext", "DOM"],
-    "sourceMap": true,
-    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "moduleResolution": "bundler",
     "noEmit": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "target": "ESNext"
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "extends": "./base.json"
 }

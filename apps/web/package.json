@@ -1,22 +1,31 @@
 {
-  "name": "web",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite --clearScreen false",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "lint": "eslint \"src/**/*.ts\""
-  },
   "dependencies": {
-    "@repo/ui": "workspace:*"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.18.0",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "eslint": "^8.57.0",
-    "typescript": "5.5.4",
-    "vite": "^5.1.4"
-  }
+    "@types/react": "^19.0.4",
+    "@types/react-dom": "^19.0.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.18.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "globals": "^15.14.0",
+    "typescript": "~5.7.3",
+    "typescript-eslint": "^8.19.1",
+    "vite": "^6.0.7"
+  },
+  "name": "my-app",
+  "private": true,
+  "scripts": {
+    "build": "tsc -b && vite build",
+    "dev": "vite false",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "type": "module",
+  "version": "0.0.0"
 }
