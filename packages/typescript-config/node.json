@@ -2,7 +2,6 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "allowArbitraryExtensions": true,
-    "allowImportingTsExtensions": true,
     "lib": ["ESNext"],
     "module": "ESNext",
     "moduleDetection": "auto",
