@@ -1,4 +1,4 @@
-import { Integer } from "../../types";
+import { Integer } from "@repo/engine/types";
 import Game from "./Game";
 import Player from "./Player";
 import State from "./State";

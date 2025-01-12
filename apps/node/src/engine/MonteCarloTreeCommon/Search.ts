@@ -1,4 +1,4 @@
-import { INCREMENT_ONE, Integer } from "../../types";
+import { INCREMENT_ONE, Integer } from "@repo/engine/types";
 import Game from "../Game/Game";
 import Move from "../Game/Move";
 import Player from "../Game/Player";

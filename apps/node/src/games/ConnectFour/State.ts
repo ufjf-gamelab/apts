@@ -1,5 +1,5 @@
+import { INCREMENT_ONE } from "@repo/engine/types.ts";
 import State, { EncodedState } from "../../engine/Game/State";
-import { INCREMENT_ONE } from "../../types";
 import ConnectFourGame from "./Game";
 
 enum Player {

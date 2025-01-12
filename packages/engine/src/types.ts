@@ -1,8 +1,8 @@
-export const INCREMENT_ONE = 1;
+const INCREMENT_ONE = 1;
 
-export type Integer = number;
+type Integer = number;
 
-export type Char =
+type Char =
   | "!"
   | '"'
   | "#"
@@ -97,3 +97,6 @@ export type Char =
   | "|"
   | "}"
   | "~";
+
+export { INCREMENT_ONE };
+export type { Char, Integer };
