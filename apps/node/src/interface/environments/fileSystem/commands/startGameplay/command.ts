@@ -14,7 +14,6 @@ const action = async ({
 };
 
 const commandToStartGameplay = {
-  // Play a game
   arguments: [
     new Argument("<game>", "The game to be played.")
       .choices([GameName.Connect4, GameName.TicTacToe])

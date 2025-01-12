@@ -16,7 +16,6 @@ const action = (): void => {
 };
 
 const commandToPredictProbabilities = {
-  // Predict the victory probabilities of each possible next move of a state
   command: new Command("predict")
     .description(
       "Predict the victory probabilities of each possible next move of a state.",

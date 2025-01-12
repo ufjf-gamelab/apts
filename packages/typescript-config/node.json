@@ -2,19 +2,14 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "allowArbitraryExtensions": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "lib": ["ESNext"],
-    "module": "ESNext",
     "moduleDetection": "auto",
-    "moduleResolution": "bundler",
     "outDir": "dist",
     "resolveJsonModule": true,
     "resolvePackageJsonExports": true,
     "resolvePackageJsonImports": true,
-    "target": "ESNext",
-    "allowJs": true,
-    "isolatedModules": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
   },
   "exclude": ["dist", "node_modules"],
   "extends": "./base.json"

@@ -1,0 +1,23 @@
+{
+  "author": "Gabriel Malosto",
+  "dependencies": {},
+  "description": "Engine to simulate and create AI models for tabletop games, inspired by the AlphaZero algorithm.",
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "typescript": "^5.7.3"
+  },
+  "main": "dist/index.js",
+  "license": "AGPL-3.0-only",
+  "name": "@repo/engine",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "format": "pnpm exec prettier . -w",
+    "lint": "pnpm exec eslint ./src/** --fix",
+    "typecheck": "pnpm exec tsc"
+  },
+  "type": "module",
+  "version": "4.3.0"
+}

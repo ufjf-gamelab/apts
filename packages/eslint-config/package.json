@@ -1,12 +1,4 @@
 {
-  "name": "@repo/eslint-config",
-  "version": "0.0.0",
-  "type": "module",
-  "private": true,
-  "exports": {
-    "./base": "./base.js",
-    "./vite": "./vite.js"
-  },
   "devDependencies": {
     "@eslint/js": "^9.18.0",
     "eslint": "^9.18.0",
@@ -17,5 +9,14 @@
     "globals": "^15.14.0",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.19.1"
-  }
+  },
+  "exports": {
+    "./base": "./base.js",
+    "./node": "./node.js",
+    "./vite": "./vite.js"
+  },
+  "name": "@repo/eslint-config",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0"
 }

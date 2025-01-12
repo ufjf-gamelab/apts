@@ -9,7 +9,6 @@ const action = (gameName: GameName): void => {
 };
 
 const generateGameDescription = {
-  // Get the description file for implementing a new game
   arguments: [
     new Argument("<game>", "The game to be implemented.")
       .choices([GameName.Connect4, GameName.TicTacToe])
