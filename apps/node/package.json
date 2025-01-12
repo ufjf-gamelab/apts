@@ -10,20 +10,13 @@
   },
   "description": "Engine to simulate and create AI models for tabletop games, inspired by the AlphaZero algorithm.",
   "devDependencies": {
-    "@eslint/js": "^9.18.0",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/eslint-config-prettier": "^6.11.3",
-    "@types/eslint__js": "^8.42.3",
     "@types/node": "^22.10.5",
     "@types/prompts": "^2.4.9",
     "esbuild": "^0.24.2",
-    "eslint": "^9.18.0",
-    "eslint-config-prettier": "^9.1.0",
-    "globals": "^15.14.0",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.3",
-    "typescript-eslint": "^8.19.1"
+    "typescript": "^5.7.3"
   },
   "exclude": [
     "node_modules",

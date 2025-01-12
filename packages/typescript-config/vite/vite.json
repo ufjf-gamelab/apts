@@ -14,5 +14,5 @@
     "target": "ESNext"
   },
   "exclude": ["node_modules"],
-  "extends": "./base.json"
+  "extends": "../base.json"
 }
