@@ -1,7 +1,7 @@
-import Game from "../../../engine/Game/Game";
-import Move from "../../../engine/Game/Move";
-import Player from "../../../engine/Game/Player";
-import State from "../../../engine/Game/State";
+import Game from "@repo/engine/engine/Game/Game.js";
+import Move from "@repo/engine/engine/Game/Move.js";
+import Player from "@repo/engine/engine/Game/Player.js";
+import State from "@repo/engine/engine/Game/State.js";
 import Search from "../../../engine/MonteCarloTreeCommon/Search";
 import TicTacToeGame from "../../../games/TicTacToe/Game";
 import { TicTacToeMove } from "../../../games/TicTacToe/Move";

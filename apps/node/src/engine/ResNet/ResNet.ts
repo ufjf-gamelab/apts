@@ -1,6 +1,7 @@
+import Game from "@repo/engine/engine/Game/Game.js";
+import { INCREMENT_ONE } from "@repo/engine/types";
 import * as tf from "@tensorflow/tfjs";
-import Game from "../Game/Game.js";
-import { LogMessage, TensorLikeArray } from "../types.js";
+import { LogMessage, TensorLikeArray } from "../types";
 
 const INPUT_CHANNELS = 3;
 const BACKBONE_CHANNELS = 32;

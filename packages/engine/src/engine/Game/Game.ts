@@ -1,4 +1,4 @@
-import { Integer } from "@repo/engine/types";
+import { Integer } from "../../types";
 import Move, { MoveKey } from "./Move";
 import Player, { PlayerKey } from "./Player";
 import State from "./State";

@@ -1,4 +1,4 @@
-import { sayHello as engineSayHello } from "@repo/engine";
+import { sayHello as engineSayHello } from "@repo/engine/index";
 
 const sayHello = (): void => {
   console.log(engineSayHello());

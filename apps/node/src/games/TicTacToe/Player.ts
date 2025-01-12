@@ -1,4 +1,4 @@
-import Player, { PlayerParams } from "../../engine/Game/Player";
+import Player, { PlayerParams } from "@repo/engine/engine/Game/Player.js";
 
 export type TicTacToePlayerParams = PlayerParams;
 

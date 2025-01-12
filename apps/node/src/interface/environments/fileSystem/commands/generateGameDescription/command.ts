@@ -1,6 +1,6 @@
+import { GameName } from "@repo/engine/interface/types.js";
 import { Argument, Command } from "commander";
 import actions from "../../../../actions/actions";
-import { GameName } from "../../../../types";
 import { parseJsonFile } from "../../parsing";
 
 const action = (gameName: GameName): void => {

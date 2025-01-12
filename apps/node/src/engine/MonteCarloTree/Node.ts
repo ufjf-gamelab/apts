@@ -1,7 +1,7 @@
-import { INCREMENT_ONE, Integer } from "../../types";
-import Game from "../Game/Game";
-import Move from "../Game/Move";
-import State from "../Game/State";
+import Game from "@repo/engine/engine/Game/Game.js";
+import Move from "@repo/engine/engine/Game/Move.js";
+import State from "@repo/engine/engine/Game/State.js";
+import { INCREMENT_ONE, Integer } from "@repo/engine/types";
 
 const EMPTY_CHILDREN_LIST = 0;
 const MINIMUM_VALUE_SUM = 0;

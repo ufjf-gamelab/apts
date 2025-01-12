@@ -1,7 +1,7 @@
+import { GameMode, GameName } from "@repo/engine/interface/types.js";
 import { Argument, Command } from "commander";
 import actions from "../../../../actions/actions";
 import { parseGameMode } from "../../../../parsing";
-import { GameMode, GameName } from "../../../../types";
 
 const action = async ({
   game,

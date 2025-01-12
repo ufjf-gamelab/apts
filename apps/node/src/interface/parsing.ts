@@ -1,5 +1,5 @@
+import { GameMode } from "@repo/engine/interface/types.js";
 import { InvalidArgumentError } from "commander";
-import { GameMode } from "./types";
 
 export const parseGameMode = (gameMode: string) => {
   switch (gameMode.toLowerCase()) {

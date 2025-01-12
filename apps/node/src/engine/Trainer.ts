@@ -1,7 +1,10 @@
 import { createId } from "@paralleldrive/cuid2";
+import { EncodedState } from "@repo/engine/engine/Game/Game.js";
+import Player from "@repo/engine/engine/Game/Player.js";
+import State from "@repo/engine/engine/Game/State.js";
+import { INCREMENT_ONE } from "@repo/engine/types";
 import * as tf from "@tensorflow/tfjs";
-import Game, { ActionOutcome } from "./Game/Game";
-import State, { EncodedState, Player } from "./Game/State";
+import Game from "../games/TicTacToe/Game";
 import MonteCarloTreeSearch from "./MonteCarloTree/Search";
 import { actionFromProbabilities } from "./ResNet/predict";
 import ResNet from "./ResNet/ResNet";

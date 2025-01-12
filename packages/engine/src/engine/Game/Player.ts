@@ -1,4 +1,4 @@
-import { Char, Integer } from "@repo/engine/types";
+import { Char, Integer } from "../../types";
 
 export interface PlayerParams {
   readonly symbol: Char;

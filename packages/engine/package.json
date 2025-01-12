@@ -8,11 +8,22 @@
     "typescript": "^5.7.3"
   },
   "exports": {
-    ".": {
-      "types": "./src/index.ts",
-      "default": "./dist/index.js"
+    "./engine/*": {
+      "default": "./dist/engine/*",
+      "types": "./src/engine/*"
     },
-    "./types": "./src/types.ts"
+    "./index": {
+      "default": "./dist/index.js",
+      "types": "./src/index.ts"
+    },
+    "./interface/*": {
+      "default": "./dist/interface/*",
+      "types": "./src/interface/*"
+    },
+    "./types": {
+      "default": "./dist/types.js",
+      "types": "./src/types.ts"
+    }
   },
   "license": "AGPL-3.0-only",
   "name": "@repo/engine",

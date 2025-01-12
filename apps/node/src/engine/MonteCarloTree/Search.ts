@@ -1,7 +1,8 @@
 import * as tf from "@tensorflow/tfjs";
-import { INCREMENT_ONE } from "../../types";
-import Game from "../Game/Game";
-import State from "../Game/State";
+
+import Game from "@repo/engine/engine/Game/Game.js";
+import State from "@repo/engine/engine/Game/State.js";
+import { INCREMENT_ONE } from "@repo/engine/types";
 import { predictPolicyAndValueAndProbabilitiesAndActionFromState } from "../ResNet/predict";
 import ResNet from "../ResNet/ResNet";
 import { MINIMUM_PROBABILITY, Node } from "./Node";

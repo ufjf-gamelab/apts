@@ -1,6 +1,6 @@
+import { PlayerKey } from "@repo/engine/engine/Game/Player.js";
+import State, { StateParams } from "@repo/engine/engine/Game/State.js";
 import { INCREMENT_ONE, Integer } from "@repo/engine/types";
-import { PlayerKey } from "../../engine/Game/Player";
-import State, { StateParams } from "../../engine/Game/State";
 import TicTacToeGame from "./Game";
 import { Position, TicTacToeMove } from "./Move";
 import { TicTacToePlayer } from "./Player";

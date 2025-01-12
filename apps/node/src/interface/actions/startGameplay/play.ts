@@ -1,10 +1,10 @@
+import Game from "@repo/engine/engine/Game/Game.js";
+import Move from "@repo/engine/engine/Game/Move.js";
+import Player from "@repo/engine/engine/Game/Player.js";
+import State from "@repo/engine/engine/Game/State.js";
+import { GameMode } from "@repo/engine/interface/types.js";
 import { Choice } from "prompts";
-import Game from "../../../engine/Game/Game";
-import Move from "../../../engine/Game/Move";
-import Player from "../../../engine/Game/Player";
-import State from "../../../engine/Game/State";
 import { GetInput } from "../../environments/fileSystem/program";
-import { GameMode } from "../../types";
 
 const printContext = <
   P extends Player,
@@ -107,7 +107,7 @@ const main = async <
       name: "move",
       type: "select",
     });
-    const chosenKeyedMove = input.move as M;
+    const chosenKeyedMove = input["move"] as M;
 
     state = playMove(state, chosenKeyedMove);
     state = state.clone();

@@ -1,10 +1,9 @@
+import Game from "@repo/engine/engine/Game/Game.js";
+import Move, { MoveKey, MovePair } from "@repo/engine/engine/Game/Move.js";
+import Player from "@repo/engine/engine/Game/Player.js";
+import State, { Score } from "@repo/engine/engine/Game/State.js";
 import { INCREMENT_ONE, Integer } from "@repo/engine/types";
 import * as Graphviz from "ts-graphviz";
-import Game from "../Game/Game";
-import Move, { MoveKey, MovePair } from "../Game/Move";
-import Player from "../Game/Player";
-
-import State, { Score } from "../Game/State";
 
 const MINIMUM_VICTORY_QUALITY = 0;
 const MINIMUM_QUANTITY_OF_VISITS = 0;

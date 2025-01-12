@@ -1,6 +1,6 @@
+import Game from "@repo/engine/engine/Game/Game.js";
+import { PlayerPair } from "@repo/engine/engine/Game/Player.js";
 import { Integer } from "@repo/engine/types";
-import Game from "../../engine/Game/Game";
-import { PlayerPair } from "../../engine/Game/Player";
 import { Position, TicTacToeMove } from "./Move";
 import { TicTacToePlayer } from "./Player";
 import { INITIAL_POINTS, TicTacToeState } from "./State";

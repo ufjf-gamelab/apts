@@ -1,13 +1,13 @@
+import Game from "@repo/engine/engine/Game/Game.js";
+import State from "@repo/engine/engine/Game/State.js";
 import * as tf from "@tensorflow/tfjs";
-import Game from "../Game/Game";
-import State from "../Game/State";
 import ResNet from "./ResNet";
 
 const LIMIT_FOR_SEED = 1000000;
 const SEED = Math.floor(Math.random() * LIMIT_FOR_SEED);
 
 /// Returns the masked policy and value as Tensors.
-const maskedPrediction = <G extends Game<>>(
+const maskedPrediction = <G extends Game>(
   state: State<G>,
   resNet: ResNet,
 ): {
