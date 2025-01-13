@@ -4,7 +4,7 @@ import Player from "@repo/engine/engine/Game/Player.js";
 import State from "@repo/engine/engine/Game/State.js";
 import { GameMode } from "@repo/engine/interface/types.js";
 import { Choice } from "prompts";
-import { GetInput } from "../../environments/fileSystem/program";
+import { GetInput } from "../../environments/fileSystem/program.js";
 
 const printContext = <
   P extends Player,

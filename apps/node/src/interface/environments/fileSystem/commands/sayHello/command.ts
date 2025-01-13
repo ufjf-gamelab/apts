@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import actions from "../../../../actions/actions";
+import actions from "../../../../actions/actions.js";
 
 const action = (): void => {
   actions.sayHello();

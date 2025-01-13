@@ -1,5 +1,5 @@
-import { TicTacToeMove } from "./Move";
-import { TicTacToePlayer } from "./Player";
+import { TicTacToeMove } from "./Move.js";
+import { TicTacToePlayer } from "./Player.js";
 
 export enum Slot {
   Empty = 0,

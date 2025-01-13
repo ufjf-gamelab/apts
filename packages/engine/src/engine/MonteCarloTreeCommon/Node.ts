@@ -1,12 +1,16 @@
-import Game from "@repo/engine/engine/Game/Game.js";
-import Move, { MoveKey, MovePair } from "@repo/engine/engine/Game/Move.js";
-import Player from "@repo/engine/engine/Game/Player.js";
-import State, { Score } from "@repo/engine/engine/Game/State.js";
-import { INCREMENT_ONE, Integer } from "@repo/engine/types";
-import * as Graphviz from "ts-graphviz";
+import {
+  Node as NodeFromGraphviz,
+  attribute as attributeFromGraphviz,
+} from "ts-graphviz";
+import { INCREMENT_ONE, Integer } from "../../types.js";
+import Game from "../Game/Game.js";
+import Move, { MoveKey, MovePair } from "../Game/Move.js";
+import Player from "../Game/Player.js";
+import State, { Score } from "../Game/State.js";
 
 const MINIMUM_VICTORY_QUALITY = 0;
 const MINIMUM_QUANTITY_OF_VISITS = 0;
+const EMPTY_LIST = 0;
 
 interface NodeParams<
   P extends Player,
@@ -120,7 +124,7 @@ export class Node<
 
   /// Select the best node among children, i.e. the one with the highest UCB.
   public selectBestChild(): Node<P, M, S, G> | null {
-    if (this.children.size === 0) {
+    if (this.children.size === EMPTY_LIST) {
       console.log("No children to select from");
     }
 
@@ -215,15 +219,15 @@ export class Node<
     }
   }
 
-  public toGraphvizNode(id: Integer): Graphviz.Node {
+  public toGraphvizNode(id: Integer): NodeFromGraphviz {
     const state = this.getState();
     const playerKey = state.getPlayerKey();
     const player = state.getPlayer();
 
     const label = `${id}: S.${this.quantityOfVisits} Q.${this.victoryQuality}\nP.${playerKey} ${player.getSymbol()} ${player.getName()}\n${state.toString()}`;
 
-    return new Graphviz.Node(id.toString(), {
-      [Graphviz.attribute.label]: label,
+    return new NodeFromGraphviz(id.toString(), {
+      [attributeFromGraphviz.label]: label,
       fontname: "Monospace",
     });
   }

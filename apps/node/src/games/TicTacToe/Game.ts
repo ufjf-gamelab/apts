@@ -1,10 +1,10 @@
 import Game from "@repo/engine/engine/Game/Game.js";
 import { PlayerPair } from "@repo/engine/engine/Game/Player.js";
 import { Integer } from "@repo/engine/types";
-import { Position, TicTacToeMove } from "./Move";
-import { TicTacToePlayer } from "./Player";
-import { INITIAL_POINTS, TicTacToeState } from "./State";
-import { moves, PlayerKey, players, Slot } from "./types";
+import { Position, TicTacToeMove } from "./Move.js";
+import { TicTacToePlayer } from "./Player.js";
+import { INITIAL_POINTS, TicTacToeState } from "./State.js";
+import { moves, PlayerKey, players, Slot } from "./types.js";
 
 const ADJUST_INDEX = 1;
 

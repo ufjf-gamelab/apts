@@ -1,4 +1,4 @@
-import Game from "@repo/engine/engine/Game/Game.js";
+import Game from "@repo/engine/engine/Game/Game";
 import { INCREMENT_ONE } from "@repo/engine/types";
 import * as tf from "@tensorflow/tfjs";
 import { LogMessage, TensorLikeArray } from "../types";

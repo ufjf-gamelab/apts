@@ -1,6 +1,6 @@
-import Game from "@repo/engine/engine/Game/Game.js";
-import Move from "@repo/engine/engine/Game/Move.js";
-import State from "@repo/engine/engine/Game/State.js";
+import Game from "@repo/engine/engine/Game/Game";
+import Move from "@repo/engine/engine/Game/Move";
+import State from "@repo/engine/engine/Game/State";
 import { INCREMENT_ONE, Integer } from "@repo/engine/types";
 
 const EMPTY_CHILDREN_LIST = 0;

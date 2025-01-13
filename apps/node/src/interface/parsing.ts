@@ -1,7 +1,7 @@
 import { GameMode } from "@repo/engine/interface/types.js";
 import { InvalidArgumentError } from "commander";
 
-export const parseGameMode = (gameMode: string) => {
+export const parseGameMode = (gameMode: string): GameMode => {
   switch (gameMode.toLowerCase()) {
     case "pvp":
       return GameMode.PvP;

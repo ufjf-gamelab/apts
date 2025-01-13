@@ -106,6 +106,9 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      ts-graphviz:
+        specifier: ^2.1.5
+        version: 2.1.5
       typescript:
         specifier: ^5.7.3
         version: 5.7.3

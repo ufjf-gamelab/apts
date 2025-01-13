@@ -1,4 +1,4 @@
-import fs, { PathLike } from "fs";
+import { PathLike, promises as promisesFromFs } from "fs";
 import { toFile } from "ts-graphviz/adapter";
 
 export const generateGraphvizImage = async ({
@@ -13,7 +13,7 @@ export const generateGraphvizImage = async ({
   const fullPath = `${directoryPath.toString()}/${fileName}.svg`;
 
   try {
-    await fs.promises.mkdir(directoryPath, { recursive: true });
+    await promisesFromFs.mkdir(directoryPath, { recursive: true });
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw new Error(`Failed to create directory: ${error.message}`);

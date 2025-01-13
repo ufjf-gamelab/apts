@@ -1,10 +1,10 @@
 import { PlayerKey } from "@repo/engine/engine/Game/Player.js";
 import State, { StateParams } from "@repo/engine/engine/Game/State.js";
 import { INCREMENT_ONE, Integer } from "@repo/engine/types";
-import TicTacToeGame from "./Game";
-import { Position, TicTacToeMove } from "./Move";
-import { TicTacToePlayer } from "./Player";
-import { Slot } from "./types";
+import TicTacToeGame from "./Game.js";
+import { Position, TicTacToeMove } from "./Move.js";
+import { TicTacToePlayer } from "./Player.js";
+import { Slot } from "./types.js";
 
 export const INITIAL_POINTS: Integer = 0;
 

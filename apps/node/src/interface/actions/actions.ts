@@ -1,7 +1,7 @@
-import generateGameDescription from "./generateGameDescription/action";
-import predictProbabilities from "./predictProbabilities/action";
-import sayHello from "./sayHello/action";
-import startGameplay from "./startGameplay/action";
+import generateGameDescription from "./generateGameDescription/action.js";
+import predictProbabilities from "./predictProbabilities/action.js";
+import sayHello from "./sayHello/action.js";
+import startGameplay from "./startGameplay/action.js";
 
 export type ProcessGraphvizDotString = (dotString: string) => void;
 

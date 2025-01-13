@@ -1,5 +1,5 @@
-import { ProcessGraphvizDotString } from "../actions";
-import predict from "./predict";
+import { ProcessGraphvizDotString } from "../actions.js";
+import predict from "./predict.js";
 
 const predictProbabilities = ({
   processGraphvizDotString,

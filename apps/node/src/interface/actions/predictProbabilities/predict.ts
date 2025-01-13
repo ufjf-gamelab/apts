@@ -2,13 +2,13 @@ import Game from "@repo/engine/engine/Game/Game.js";
 import Move from "@repo/engine/engine/Game/Move.js";
 import Player from "@repo/engine/engine/Game/Player.js";
 import State from "@repo/engine/engine/Game/State.js";
-import Search from "../../../engine/MonteCarloTreeCommon/Search";
-import TicTacToeGame from "../../../games/TicTacToe/Game";
-import { TicTacToeMove } from "../../../games/TicTacToe/Move";
-import { TicTacToePlayer } from "../../../games/TicTacToe/Player";
-import { TicTacToeState } from "../../../games/TicTacToe/State";
-import { MoveKey } from "../../../games/TicTacToe/types";
-import { ProcessGraphvizDotString } from "../actions";
+import Search from "@repo/engine/engine/MonteCarloTreeCommon/Search.js";
+import TicTacToeGame from "../../../games/TicTacToe/Game.js";
+import { TicTacToeMove } from "../../../games/TicTacToe/Move.js";
+import { TicTacToePlayer } from "../../../games/TicTacToe/Player.js";
+import { TicTacToeState } from "../../../games/TicTacToe/State.js";
+import { MoveKey } from "../../../games/TicTacToe/types.js";
+import { ProcessGraphvizDotString } from "../actions.js";
 
 interface MoveOutcome<
   P extends Player,

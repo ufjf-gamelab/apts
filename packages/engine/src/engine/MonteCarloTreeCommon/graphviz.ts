@@ -1,15 +1,22 @@
-import Game from "@repo/engine/engine/Game/Game.js";
-import Move from "@repo/engine/engine/Game/Move.js";
-import Player from "@repo/engine/engine/Game/Player.js";
-import State from "@repo/engine/engine/Game/State.js";
-import { INCREMENT_ONE, Integer } from "@repo/engine/types";
-import * as Graphviz from "ts-graphviz";
-import { Node } from "./Node";
+import {
+  Digraph as DigraphFromGraphviz,
+  Edge as EdgeFromGraphviz,
+  GraphAttributesObject as GraphAttributesObjectFromGraphviz,
+  Node as NodeFromGraphviz,
+  attribute as attributeFromGraphviz,
+  toDot as toDotFromGraphviz,
+} from "ts-graphviz";
+import { INCREMENT_ONE, Integer } from "../../types.js";
+import Game from "../Game/Game.js";
+import Move from "../Game/Move.js";
+import Player from "../Game/Player.js";
+import State from "../Game/State.js";
+import { Node } from "./Node.js";
 
 const FIRST_CHILD_ID = 1;
 const ROOT_ID = 0;
 
-const GRAPH_ATTRIBUTES: Graphviz.GraphAttributesObject = {
+const GRAPH_ATTRIBUTES: GraphAttributesObjectFromGraphviz = {
   fontname: "Monospace",
   fontsize: 30,
   labelloc: "t",
@@ -26,7 +33,7 @@ interface NodeTuple<
   G extends Game<P, M, S, G>,
 > {
   node: Node<P, M, S, G>;
-  graphvizParentNode: Graphviz.Node;
+  parentNodeFromGraphviz: NodeFromGraphviz;
 }
 
 const insertGraphvizNodeIntoGraph = <
@@ -35,56 +42,55 @@ const insertGraphvizNodeIntoGraph = <
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
 >({
-  graphvizGraph,
+  graphFromGraphviz,
   currentNode,
   nodeTuples,
   currentNodeId,
 }: {
-  graphvizGraph: Graphviz.Digraph;
+  graphFromGraphviz: DigraphFromGraphviz;
   nodeTuples: NodeTuple<P, M, S, G>[];
   currentNodeId: Integer;
   currentNode: Node<P, M, S, G>;
-}): Graphviz.Node => {
-  const graphvizCurrentNode = currentNode.toGraphvizNode(currentNodeId);
-  graphvizGraph.addNode(graphvizCurrentNode);
+}): NodeFromGraphviz => {
+  const currentNodeFromGraphviz = currentNode.toGraphvizNode(currentNodeId);
+  graphFromGraphviz.addNode(currentNodeFromGraphviz);
 
   currentNode.getChildren().forEach(child => {
     nodeTuples.push({
-      graphvizParentNode: graphvizCurrentNode,
       node: child,
+      parentNodeFromGraphviz: currentNodeFromGraphviz,
     });
   });
 
-  return graphvizCurrentNode;
+  return currentNodeFromGraphviz;
 };
 
-const insertGraphvizEdgeIntoGraph = <
+const insertedgeIntoGraph = <
   P extends Player,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
 >({
   game,
-  graph,
+  graphFromGraphviz,
   parent,
   child,
   keyOfTheTakenMove,
 }: {
   game: G;
-  graph: Graphviz.Digraph;
-  parent: Graphviz.Node;
-  child: Graphviz.Node;
+  graphFromGraphviz: DigraphFromGraphviz;
+  parent: NodeFromGraphviz;
+  child: NodeFromGraphviz;
   keyOfTheTakenMove: number;
 }): void => {
   const takenMove = game.getMove(keyOfTheTakenMove);
 
-  const graphvizEdge = new Graphviz.Edge([parent, child], {
-    [Graphviz.attribute.label]:
-      `${keyOfTheTakenMove}: ${takenMove.getTitle()}\n${takenMove.getDescription()}`,
+  const edgeFromGraphviz = new EdgeFromGraphviz([parent, child], {
+    [attributeFromGraphviz.label]: `${keyOfTheTakenMove}: ${takenMove.getTitle()}\n${takenMove.getDescription()}`,
     fontname: "Monospace",
   });
 
-  graph.addEdge(graphvizEdge);
+  graphFromGraphviz.addEdge(edgeFromGraphviz);
 };
 
 export const generateGraphvizDotStringFromTree = <
@@ -96,14 +102,17 @@ export const generateGraphvizDotStringFromTree = <
   game: G,
   root: Node<P, M, S, G>,
 ): string => {
-  const graphvizGraph = new Graphviz.Digraph("G", GRAPH_ATTRIBUTES);
+  const graphFromGraphviz = new DigraphFromGraphviz("G", GRAPH_ATTRIBUTES);
   const nodeTuples: NodeTuple<P, M, S, G>[] = [];
 
-  const graphvizRootNode = root.toGraphvizNode(ROOT_ID);
-  graphvizGraph.addNode(graphvizRootNode);
+  const rootNodeFromGraphviz = root.toGraphvizNode(ROOT_ID);
+  graphFromGraphviz.addNode(rootNodeFromGraphviz);
 
   root.getChildren().forEach(child => {
-    nodeTuples.push({ graphvizParentNode: graphvizRootNode, node: child });
+    nodeTuples.push({
+      node: child,
+      parentNodeFromGraphviz: rootNodeFromGraphviz,
+    });
   });
 
   // Include every node in the tree in the graph.
@@ -116,12 +125,12 @@ export const generateGraphvizDotStringFromTree = <
     if (typeof nodeTuple === "undefined") {
       break;
     }
-    const { node: currentNode, graphvizParentNode } = nodeTuple;
+    const { node: currentNode, parentNodeFromGraphviz } = nodeTuple;
 
-    const graphvizCurrentNode = insertGraphvizNodeIntoGraph({
+    const currentNodeFromGraphviz = insertGraphvizNodeIntoGraph({
       currentNode,
       currentNodeId,
-      graphvizGraph,
+      graphFromGraphviz,
       nodeTuples,
     });
 
@@ -130,14 +139,14 @@ export const generateGraphvizDotStringFromTree = <
       continue;
     }
 
-    insertGraphvizEdgeIntoGraph({
-      child: graphvizCurrentNode,
+    insertedgeIntoGraph({
+      child: currentNodeFromGraphviz,
       game,
-      graph: graphvizGraph,
+      graphFromGraphviz,
       keyOfTheTakenMove,
-      parent: graphvizParentNode,
+      parent: parentNodeFromGraphviz,
     });
   }
 
-  return Graphviz.toDot(graphvizGraph);
+  return toDotFromGraphviz(graphFromGraphviz);
 };

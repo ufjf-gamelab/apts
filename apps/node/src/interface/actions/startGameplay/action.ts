@@ -1,7 +1,7 @@
 import { GameMode, GameName } from "@repo/engine/interface/types.js";
-import TicTacToeGame from "../../../games/TicTacToe/Game";
-import { getInput } from "../../../interface/environments/fileSystem/program";
-import play from "./play";
+import TicTacToeGame from "../../../games/TicTacToe/Game.js";
+import { getInput } from "../../../interface/environments/fileSystem/program.js";
+import play from "./play.js";
 
 const startGameplay = async ({
   game,

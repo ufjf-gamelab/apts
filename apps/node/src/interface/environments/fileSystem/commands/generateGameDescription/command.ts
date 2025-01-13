@@ -1,7 +1,7 @@
 import { GameName } from "@repo/engine/interface/types.js";
 import { Argument, Command } from "commander";
-import actions from "../../../../actions/actions";
-import { parseJsonFile } from "../../parsing";
+import actions from "../../../../actions/actions.js";
+import { parseJsonFile } from "../../parsing.js";
 
 const action = (gameName: GameName): void => {
   const gameDescription = actions.generateGameDescription(gameName);

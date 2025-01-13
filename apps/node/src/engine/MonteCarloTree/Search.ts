@@ -1,7 +1,7 @@
 import * as tf from "@tensorflow/tfjs";
 
-import Game from "@repo/engine/engine/Game/Game.js";
-import State from "@repo/engine/engine/Game/State.js";
+import Game from "@repo/engine/engine/Game/Game";
+import State from "@repo/engine/engine/Game/State";
 import { INCREMENT_ONE } from "@repo/engine/types";
 import { predictPolicyAndValueAndProbabilitiesAndActionFromState } from "../ResNet/predict";
 import ResNet from "../ResNet/ResNet";

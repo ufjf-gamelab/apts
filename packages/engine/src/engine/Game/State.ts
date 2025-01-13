@@ -1,7 +1,7 @@
-import { Integer } from "../../types";
-import Game from "./Game";
-import Move from "./Move";
-import Player, { PlayerKey } from "./Player";
+import { Integer } from "../../types.js";
+import Game from "./Game.js";
+import Move from "./Move.js";
+import Player, { PlayerKey } from "./Player.js";
 
 const NO_REMAINING_VALID_MOVES = 0;
 

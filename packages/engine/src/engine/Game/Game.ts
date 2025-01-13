@@ -1,7 +1,7 @@
-import { Integer } from "../../types";
-import Move, { MoveKey } from "./Move";
-import Player, { PlayerKey } from "./Player";
-import State from "./State";
+import { Integer } from "../../types.js";
+import Move, { MoveKey } from "./Move.js";
+import Player, { PlayerKey } from "./Player.js";
+import State from "./State.js";
 
 type Channel = Integer;
 export type EncodedState = Pixel[][][];

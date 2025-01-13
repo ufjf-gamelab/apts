@@ -1,5 +1,5 @@
-import Game from "@repo/engine/engine/Game/Game.js";
-import State from "@repo/engine/engine/Game/State.js";
+import Game from "@repo/engine/engine/Game/Game";
+import State from "@repo/engine/engine/Game/State";
 import * as tf from "@tensorflow/tfjs";
 import ResNet from "./ResNet";
 

@@ -1,6 +1,6 @@
 import { Command } from "commander";
-import actions from "../../../../actions/actions";
-import { generateGraphvizImage } from "../../graphviz";
+import actions from "../../../../actions/actions.js";
+import { generateGraphvizImage } from "../../graphviz.js";
 
 const action = (): void => {
   const processGraphvizDotString = (graphvizDotString: string): void => {

@@ -1,6 +1,12 @@
 import { InvalidArgumentError } from "commander";
-import fs, { ReadStream, WriteStream } from "fs";
-import path from "path";
+import {
+  ReadStream,
+  WriteStream,
+  createReadStream as createReadStreamFromFs,
+  existsSync as existsSyncFromFs,
+  writeFileSync as writeFileSyncFromFs,
+} from "fs";
+import * as path from "path";
 
 enum FileOperation {
   Read = "r",
@@ -10,7 +16,7 @@ enum FileOperation {
 
 const createReadStream = (filePath: string): ReadStream => {
   try {
-    return fs.createReadStream(filePath);
+    return createReadStreamFromFs(filePath);
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw new InvalidArgumentError(
@@ -25,7 +31,7 @@ const createReadStream = (filePath: string): ReadStream => {
 
 const createWriteStream = (filePath: string): WriteStream => {
   try {
-    return fs.createWriteStream(filePath);
+    return createWriteStream(filePath);
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw new InvalidArgumentError(
@@ -45,7 +51,7 @@ const validateFilePath = (
   const resolvedPath = path.resolve(filePath);
 
   if (fileOperation === FileOperation.Read) {
-    if (!fs.existsSync(resolvedPath)) {
+    if (!existsSyncFromFs(resolvedPath)) {
       throw new InvalidArgumentError("\n  The file path does not exist.");
     }
     return createReadStream(resolvedPath);
@@ -53,7 +59,7 @@ const validateFilePath = (
 
   // Attempt to create a file to check if it's writable
   try {
-    fs.writeFileSync(resolvedPath, "", { flag: FileOperation.Write });
+    writeFileSyncFromFs(resolvedPath, "", { flag: FileOperation.Write });
     return createWriteStream(resolvedPath);
   } catch (error: unknown) {
     if (error instanceof Error && "code" in (error as NodeJS.ErrnoException)) {

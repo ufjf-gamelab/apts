@@ -1,10 +1,10 @@
-import Game from "@repo/engine/engine/Game/Game.js";
-import Move from "@repo/engine/engine/Game/Move.js";
-import Player from "@repo/engine/engine/Game/Player.js";
-import State from "@repo/engine/engine/Game/State.js";
-import { INCREMENT_ONE, Integer } from "@repo/engine/types";
-import { Node } from "./Node";
-import { generateGraphvizDotStringFromTree } from "./graphviz";
+import { INCREMENT_ONE, Integer } from "../../types.js";
+import Game from "../Game/Game.js";
+import Move from "../Game/Move.js";
+import Player from "../Game/Player.js";
+import State from "../Game/State.js";
+import { Node } from "./Node.js";
+import { generateGraphvizDotStringFromTree } from "./graphviz.js";
 
 const MINIMUM_PROBABILITY = 0;
 

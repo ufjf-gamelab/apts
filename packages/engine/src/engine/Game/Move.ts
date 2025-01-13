@@ -1,7 +1,7 @@
-import { Integer } from "../../types";
-import Game from "./Game";
-import Player from "./Player";
-import State from "./State";
+import { Integer } from "../../types.js";
+import Game from "./Game.js";
+import Player from "./Player.js";
+import State from "./State.js";
 
 export interface MoveParams<
   P extends Player,
