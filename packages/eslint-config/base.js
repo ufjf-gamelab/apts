@@ -28,12 +28,13 @@ export const config = [
       turbo: turboPlugin,
     },
     rules: {
-      "turbo/no-undeclared-env-vars": "warn",
+      "turbo/no-undeclared-env-vars": "error",
     },
   },
 
   {
     rules: {
+      "capitalized-comments": ["off", { ignoreConsecutiveComments: true }],
       "class-methods-use-this": "off",
       "id-length": ["error", { exceptions: ["_"] }],
       "max-lines": "off",

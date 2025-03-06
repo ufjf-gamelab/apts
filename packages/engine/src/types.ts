@@ -98,5 +98,16 @@ type Char =
   | "}"
   | "~";
 
+export type LogMessage = (message: string) => void;
+
+export type TensorLikeArray =
+  | number
+  | number[]
+  | number[][]
+  | number[][][]
+  | number[][][][]
+  | number[][][][][]
+  | number[][][][][][];
+
 export { INCREMENT_ONE };
 export type { Char, Integer };

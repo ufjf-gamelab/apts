@@ -1,15 +1,8 @@
-import { GameMode } from "@repo/engine/interface/types.js";
-import { InvalidArgumentError } from "commander";
+import { ReadStream, WriteStream } from "fs";
+import { FileOperation, validateFilePath } from "./file.js";
 
-export const parseGameMode = (gameMode: string): GameMode => {
-  switch (gameMode.toLowerCase()) {
-    case "pvp":
-      return GameMode.PvP;
-    case "pvc":
-      return GameMode.PvC;
-    case "cvc":
-      return GameMode.CvC;
-    default:
-      throw new InvalidArgumentError("Invalid game mode.");
-  }
+export const parseJsonFile = (filePath: string): ReadStream | WriteStream => {
+  const hasJsonExtension = filePath.endsWith(".json");
+  const formattedPath = hasJsonExtension ? filePath : `${filePath}.json`;
+  return validateFilePath(formattedPath, FileOperation.Write);
 };

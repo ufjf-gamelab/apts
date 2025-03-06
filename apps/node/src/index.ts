@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import program from "./interface/environments/fileSystem/program.js";
+import program from "./interface/program.js";
 
 dotenv.config();
 program.parse();

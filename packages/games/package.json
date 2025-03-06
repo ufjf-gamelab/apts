@@ -1,0 +1,30 @@
+{
+  "author": "Gabriel Malosto",
+  "description": "Collection of tabletop games to be used with the engine.",
+  "dependencies": {
+    "@repo/engine": "workspace:*"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "typescript": "^5.8.2"
+  },
+  "exports": {
+    "./TicTacToe/*": {
+      "default": "./dist/TicTacToe/*",
+      "types": "./src/TicTacToe/*"
+    }
+  },
+  "license": "AGPL-3.0-only",
+  "name": "@repo/games",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "format": "pnpm exec prettier . -w",
+    "lint": "pnpm exec eslint ./src/** --fix",
+    "typecheck": "pnpm exec tsc"
+  },
+  "type": "module",
+  "version": "0.0.1"
+}
