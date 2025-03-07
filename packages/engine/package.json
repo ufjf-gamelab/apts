@@ -5,7 +5,8 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "ts-graphviz": "^2.1.6",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.8"
   },
   "exports": {
     "./Game/*": {
@@ -29,6 +30,8 @@
     "dev": "tsc --watch",
     "format": "pnpm exec prettier . -w",
     "lint": "pnpm exec eslint ./src/** --fix",
+    "test": "vitest run",
+    "test:watch": "vitest --watch",
     "typecheck": "pnpm exec tsc"
   },
   "type": "module",

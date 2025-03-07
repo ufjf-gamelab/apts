@@ -14,7 +14,7 @@ interface GetProbabilitiesReturn {
 }
 
 interface SearchParams<
-  P extends Player,
+  P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
@@ -25,7 +25,7 @@ interface SearchParams<
 }
 
 export default class Search<
-  P extends Player,
+  P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,

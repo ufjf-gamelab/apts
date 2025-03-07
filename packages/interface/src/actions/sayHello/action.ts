@@ -1,5 +1,5 @@
-const sayHello = (): void => {
-  console.log("Hello, World!");
+const sayHello = (print: (message: string) => void): void => {
+  print("Hello, World!");
 };
 
 export default sayHello;

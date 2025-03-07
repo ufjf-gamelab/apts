@@ -4,7 +4,7 @@ import Player from "./Player.js";
 import State from "./State.js";
 
 export interface MoveParams<
-  P extends Player,
+  P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
@@ -14,7 +14,7 @@ export interface MoveParams<
 }
 
 export default abstract class Move<
-  P extends Player,
+  P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
@@ -41,7 +41,7 @@ export default abstract class Move<
 export type MoveKey = Integer;
 
 export interface MovePair<
-  P extends Player,
+  P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,

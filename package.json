@@ -12,6 +12,8 @@
     "dev": "turbo dev",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo lint",
-    "preview": "pnpm --filter=node preview"
+    "preview": "pnpm --filter=node preview",
+    "test": "turbo run test",
+    "test:watch": "turbo run test:watch"
   }
 }

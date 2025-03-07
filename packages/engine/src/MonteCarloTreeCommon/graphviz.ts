@@ -27,7 +27,7 @@ const GRAPH_ATTRIBUTES: GraphAttributesObjectFromGraphviz = {
 };
 
 interface NodeTuple<
-  P extends Player,
+  P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
@@ -37,7 +37,7 @@ interface NodeTuple<
 }
 
 const insertGraphvizNodeIntoGraph = <
-  P extends Player,
+  P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
@@ -66,7 +66,7 @@ const insertGraphvizNodeIntoGraph = <
 };
 
 const insertedgeIntoGraph = <
-  P extends Player,
+  P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
@@ -94,7 +94,7 @@ const insertedgeIntoGraph = <
 };
 
 export const generateGraphvizDotStringFromTree = <
-  P extends Player,
+  P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,

@@ -14,7 +14,7 @@ export type Points = number;
 export type Score = Points[];
 
 export interface StateParams<
-  P extends Player,
+  P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
@@ -27,7 +27,7 @@ export interface StateParams<
 }
 
 export default abstract class State<
-  P extends Player,
+  P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,

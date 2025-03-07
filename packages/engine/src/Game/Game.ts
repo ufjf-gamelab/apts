@@ -11,7 +11,7 @@ export enum Pixel {
 }
 
 export interface GameParams<
-  P extends Player,
+  P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
@@ -23,7 +23,7 @@ export interface GameParams<
 }
 
 export default abstract class Game<
-  P extends Player,
+  P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,

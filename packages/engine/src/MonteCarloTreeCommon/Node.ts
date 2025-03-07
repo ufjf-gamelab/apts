@@ -13,7 +13,7 @@ const MINIMUM_QUANTITY_OF_VISITS = 0;
 const EMPTY_LIST = 0;
 
 interface NodeParams<
-  P extends Player,
+  P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
@@ -25,7 +25,7 @@ interface NodeParams<
 }
 
 export class Node<
-  P extends Player,
+  P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
@@ -59,7 +59,7 @@ export class Node<
     this.state = state;
     this.keyOfTheTakenMove = keyOfTheTakenMove;
     this.explorationConstant = explorationConstant;
-    this.parent = parent ? parent : null;
+    this.parent = parent ?? null;
 
     const validMovesKeys = state.getValidMovesKeys();
     this.children = new Map(
