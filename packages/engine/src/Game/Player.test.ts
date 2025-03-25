@@ -1,39 +1,90 @@
 import { expect, test } from "vitest";
-import { MockGame } from "./Game.test.js";
-import { MockMove } from "./Move.test.js";
-import Player from "./Player.js";
-import { MockState } from "./State.test.js";
 
-// type MockPlayerParams = PlayerParams<MockPlayer, MockMove, MockState, MockGame>;
+import type { Char } from "../types.js";
+import type { MockGame } from "./Game.test.js";
+import type { MockMove } from "./Move.test.js";
+import type { MockState } from "./State.test.js";
+
+import Player, { type PlayerParams } from "./Player.js";
+
+enum PlayerKey {
+  Alice = 0,
+  Bruno = 1,
+}
+
+type MockPlayerParams = PlayerParams<MockPlayer, MockMove, MockState, MockGame>;
 
 class MockPlayer extends Player<MockPlayer, MockMove, MockState, MockGame> {}
 
-const playerAlice = new MockPlayer({
-  name: "Alice",
-  symbol: "X",
-});
+const createPlayerAlice = (name = "Alice", symbol: Char = "X"): MockPlayer =>
+  new MockPlayer({
+    name,
+    symbol,
+  });
 
-const playerBruno = new MockPlayer({
-  name: "Bruno",
-  symbol: "O",
-});
+const createPlayerBruno = (name = "Bruno", symbol: Char = "O"): MockPlayer =>
+  new MockPlayer({
+    name,
+    symbol,
+  });
 
-const players = [playerAlice, playerBruno];
+const createPlayers = (): Map<PlayerKey, MockPlayer> =>
+  new Map<PlayerKey, MockPlayer>([
+    [PlayerKey.Alice, createPlayerAlice()],
+    [PlayerKey.Bruno, createPlayerBruno()],
+  ]);
 
-test("playerAlice name should be {Alice}", () => {
-  expect(playerAlice.getName()).toBe("Alice");
-});
+const testPlayerAlice = (): void => {
+  let name = "Alice";
+  let symbol: Char = "X";
+  const player = createPlayerAlice(name, symbol);
 
-test("playerAlice symbol should be {X}", () => {
-  expect(playerAlice.getSymbol()).toBe("X");
-});
+  test("name of player should be {Alice}", () => {
+    expect(player.getName()).toBe("Alice");
+  });
 
-test("playerBruno name should be {Bruno}", () => {
-  expect(playerBruno.getName()).toBe("Bruno");
-});
+  test("name of player should not change if the external object that defined its name changes", () => {
+    name = "Alice2";
+    expect(player.getName()).toBe("Alice");
+  });
 
-test("playerBruno symbol should be {O}", () => {
-  expect(playerBruno.getSymbol()).toBe("O");
-});
+  test("symbol of player should not change if the external object that defined its symbol changes", () => {
+    symbol = "Z";
+    expect(player.getSymbol()).toBe("X");
+  });
+
+  test("symbol of player should be {X}", () => {
+    expect(player.getSymbol()).toBe("X");
+  });
+};
+
+const testPlayerBruno = (): void => {
+  let name = "Bruno";
+  let symbol: Char = "O";
+  const player = createPlayerBruno(name, symbol);
+
+  test("name of player should be {Bruno}", () => {
+    expect(player.getName()).toBe("Bruno");
+  });
+
+  test("name of player should not change if the external object that defined its name changes", () => {
+    name = "Bruno2";
+    expect(player.getName()).toBe("Bruno");
+  });
+
+  test("symbol of player should not change if the external object that defined its symbol changes", () => {
+    symbol = "Z";
+    expect(player.getSymbol()).toBe("O");
+  });
+
+  test("symbol of player should be {O}", () => {
+    expect(player.getSymbol()).toBe("O");
+  });
+};
+
+testPlayerAlice();
+testPlayerBruno();
+
+const players = createPlayers();
 
 export { MockPlayer, players };

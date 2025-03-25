@@ -1,10 +1,16 @@
-import { expect, test } from "vitest";
-import { MockGame } from "./Game.test.js";
+import { test } from "vitest";
+
+import type { MockGame } from "./Game.test.js";
 import Move from "./Move.js";
-import { MockPlayer } from "./Player.test.js";
-import { MockState } from "./State.test.js";
+import type { MockPlayer } from "./Player.test.js";
+import type { MockState } from "./State.test.js";
 
 // type MockMoveParams = MoveParams<MockPlayer, MockMove, MockState, MockGame>;
+
+enum MoveKey {
+  East = 0,
+  West = 1,
+}
 
 class MockMove extends Move<MockPlayer, MockMove, MockState, MockGame> {
   public override play(state: MockState): MockState {
@@ -22,7 +28,10 @@ const moveWest = new MockMove({
   title: "West",
 });
 
-const moves = [moveEast, moveWest];
+const moves = new Map<MoveKey, MockMove>([
+  [MoveKey.East, moveEast],
+  [MoveKey.West, moveWest],
+]);
 
 test("moveEast title should be {East}", () => {
   expect(moveEast.getTitle()).toBe("East");
@@ -40,4 +49,4 @@ test("moveWest description should be {Place a stone in the west}.", () => {
   expect(moveWest.getDescription()).toBe("Place a stone in the west.");
 });
 
-export { MockMove, moves };
+export { MockMove };

@@ -36,7 +36,7 @@ export default class TicTacToeGame extends Game<
 
   /* Getters */
 
-  public getGameOverMessage(state: TicTacToeState): string {
+  public getEndOfGameMessage(state: TicTacToeState): string {
     let message = `Game over! `;
     const lastAssertedPosition = state.getLastAssertedPosition();
 

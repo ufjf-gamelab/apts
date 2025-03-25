@@ -39,7 +39,7 @@ If you use the `Visual Studio Code` editor, we recommend installing the followin
 
 ## What's inside?
 
-This Turborepo includes the following packages and apps:
+This monorepo includes the following packages and apps:
 
 ### Apps and Packages
 
@@ -53,7 +53,7 @@ Each package and app is 100% [TypeScript](https://www.typescriptlang.org/).
 
 ### Utilities
 
-This Turborepo has some additional tools already setup for you:
+This monorepo has some additional tools already setup for you:
 
 - [TypeScript](https://www.typescriptlang.org/) for static type checking
 - [ESLint](https://eslint.org/) for code linting

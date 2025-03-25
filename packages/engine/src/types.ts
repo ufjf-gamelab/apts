@@ -1,10 +1,28 @@
 const INCREMENT_ONE = 1;
 
-type Integer = number;
+export type LogMessage = (message: string) => void;
+
+export type TensorLikeArray =
+  | number
+  | number[]
+  | number[][]
+  | number[][][]
+  | number[][][][]
+  | number[][][][][]
+  | number[][][][][][];
 
 type Char =
+  | "0"
+  | "1"
+  | "2"
+  | "3"
+  | "4"
+  | "5"
+  | "6"
+  | "7"
+  | "8"
+  | "9"
   | "!"
-  | '"'
   | "#"
   | "$"
   | "%"
@@ -18,16 +36,6 @@ type Char =
   | "-"
   | "."
   | "/"
-  | "0"
-  | "1"
-  | "2"
-  | "3"
-  | "4"
-  | "5"
-  | "6"
-  | "7"
-  | "8"
-  | "9"
   | ":"
   | ";"
   | "<"
@@ -35,79 +43,71 @@ type Char =
   | ">"
   | "?"
   | "@"
-  | "A"
-  | "B"
-  | "C"
-  | "D"
-  | "E"
-  | "F"
-  | "G"
-  | "H"
-  | "I"
-  | "J"
-  | "K"
-  | "L"
-  | "M"
-  | "N"
-  | "O"
-  | "P"
-  | "Q"
-  | "R"
-  | "S"
-  | "T"
-  | "U"
-  | "V"
-  | "W"
-  | "X"
-  | "Y"
-  | "Z"
   | "["
   | "\\"
   | "]"
   | "^"
   | "_"
   | "`"
+  | "A"
   | "a"
+  | "B"
   | "b"
+  | "C"
   | "c"
+  | "D"
   | "d"
+  | "E"
   | "e"
+  | "F"
   | "f"
+  | "G"
   | "g"
+  | "H"
   | "h"
+  | "I"
   | "i"
+  | "J"
   | "j"
+  | "K"
   | "k"
+  | "L"
   | "l"
+  | "M"
   | "m"
+  | "N"
   | "n"
+  | "O"
   | "o"
+  | "P"
   | "p"
+  | "Q"
   | "q"
+  | "R"
   | "r"
+  | "S"
   | "s"
+  | "T"
   | "t"
+  | "U"
   | "u"
+  | "V"
   | "v"
+  | "W"
   | "w"
+  | "X"
   | "x"
+  | "Y"
   | "y"
+  | "Z"
   | "z"
   | "{"
   | "|"
   | "}"
-  | "~";
+  | "~"
+  | '"';
 
-export type LogMessage = (message: string) => void;
-
-export type TensorLikeArray =
-  | number
-  | number[]
-  | number[][]
-  | number[][][]
-  | number[][][][]
-  | number[][][][][]
-  | number[][][][][][];
+type Integer = number;
 
 export { INCREMENT_ONE };
 export type { Char, Integer };

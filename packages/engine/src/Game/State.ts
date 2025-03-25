@@ -1,17 +1,18 @@
-import { Integer } from "../types.js";
-import Game from "./Game.js";
-import Move from "./Move.js";
-import Player, { PlayerKey } from "./Player.js";
+import type { Integer } from "../types.js";
+import type Game from "./Game.js";
+import type Move from "./Move.js";
+import type Player from "./Player.js";
+import type { PlayerKey } from "./Player.js";
 
 const NO_REMAINING_VALID_MOVES = 0;
+
+export type Points = number;
+export type Score = Points[];
 
 // Content of a slot in the state.
 export type Slot = Integer;
 // Index of a slot in the state.
 export type SlotKey = Integer;
-
-export type Points = number;
-export type Score = Points[];
 
 export interface StateParams<
   P extends Player<P, M, S, G>,
@@ -20,9 +21,9 @@ export interface StateParams<
   G extends Game<P, M, S, G>,
 > {
   readonly game: G;
-  readonly slots: Slot[];
   readonly playerKey: PlayerKey;
   readonly score: Score;
+  readonly slots: Slot[];
   readonly validMovesKeys: Integer[];
 }
 
@@ -33,16 +34,16 @@ export default abstract class State<
   G extends Game<P, M, S, G>,
 > {
   private readonly game: StateParams<P, M, S, G>["game"];
-  private readonly slots: StateParams<P, M, S, G>["slots"];
   private readonly playerKey: StateParams<P, M, S, G>["playerKey"];
   private readonly score: StateParams<P, M, S, G>["score"];
+  private readonly slots: StateParams<P, M, S, G>["slots"];
   private readonly validMovesKeys: StateParams<P, M, S, G>["validMovesKeys"];
 
   constructor({
     game,
-    slots,
     playerKey,
     score,
+    slots,
     validMovesKeys,
   }: StateParams<P, M, S, G>) {
     this.game = game;
@@ -54,12 +55,20 @@ export default abstract class State<
 
   /* Getters */
 
-  public getGame(): StateParams<P, M, S, G>["game"] {
-    return this.game;
+  public abstract changePerspective(playerKey: PlayerKey): S;
+
+  // public getPlayer(): P {
+  //   return this.game.getPlayer(this.playerKey);
+  // }
+
+  public clone(): S {
+    const prototype = Object.getPrototypeOf(this) as null | object;
+    const clone = Object.create(prototype) as S;
+    return Object.assign(clone, this);
   }
 
-  public getPlayer(): P {
-    return this.game.getPlayer(this.playerKey);
+  public getGame(): StateParams<P, M, S, G>["game"] {
+    return this.game;
   }
 
   public getPlayerKey(): StateParams<P, M, S, G>["playerKey"] {
@@ -70,6 +79,15 @@ export default abstract class State<
     return [...this.score];
   }
 
+  // public getValidMoves(): M[] {
+  //   // If it is final, no move is valid.
+  //   return this.validMovesKeys.map(key => this.game.getMove(key));
+  // }
+
+  // public getValidMovesKeys(): StateParams<P, M, S, G>["validMovesKeys"] {
+  //   return [...this.validMovesKeys];
+  // }
+
   public getSlot(index: SlotKey): Slot {
     const slot = this.slots[index];
     if (typeof slot === "undefined") {
@@ -78,31 +96,14 @@ export default abstract class State<
     return slot;
   }
 
+  /* Methods */
+
   public getSlots(): StateParams<P, M, S, G>["slots"] {
     return [...this.slots];
   }
 
-  public getValidMoves(): M[] {
-    // If it is final, no move is valid.
-    return this.validMovesKeys.map(key => this.game.getMove(key));
-  }
-
-  public getValidMovesKeys(): StateParams<P, M, S, G>["validMovesKeys"] {
-    return [...this.validMovesKeys];
-  }
-
   public isFinal(): boolean {
     return this.validMovesKeys.length === NO_REMAINING_VALID_MOVES;
-  }
-
-  /* Methods */
-
-  public abstract changePerspective(playerKey: PlayerKey): S;
-
-  public clone(): S {
-    const prototype = Object.getPrototypeOf(this) as object | null;
-    const clone = Object.create(prototype) as S;
-    return Object.assign(clone, this);
   }
 
   public abstract toString(): string;

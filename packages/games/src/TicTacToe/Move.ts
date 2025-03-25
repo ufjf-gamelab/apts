@@ -1,9 +1,8 @@
 import Move, { MovePair, MoveParams } from "@repo/engine/Game/Move.js";
-import { PlayerPair } from "@repo/engine/Game/Player.js";
 import { Score } from "@repo/engine/Game/State.js";
 import { Integer } from "@repo/engine/types";
 import TicTacToeGame from "./Game.js";
-import TicTacToePlayer from "./Player.js";
+import TicTacToePlayer, { TicTacToePlayerPair } from "./Player.js";
 import TicTacToeState, { INITIAL_POINTS } from "./State.js";
 import { PlayerKey, Slot } from "./types.js";
 
@@ -46,7 +45,10 @@ export default class TicTacToeMove extends Move<
 
   /* Getters */
 
-  protected getPlayer(game: TicTacToeGame, playerKey: PlayerKey): PlayerPair {
+  protected getPlayer(
+    game: TicTacToeGame,
+    playerKey: PlayerKey,
+  ): TicTacToePlayerPair {
     const nextPlayerKey = game.getNextPlayerKey(playerKey);
     const player = game.getPlayer(nextPlayerKey);
     return {

@@ -1,26 +1,28 @@
-import { Integer } from "../types.js";
-import Move, { MoveKey } from "./Move.js";
-import Player, { PlayerKey } from "./Player.js";
-import State from "./State.js";
+import type { Integer } from "../types.js";
+import type Move from "./Move.js";
+import type { MoveKey } from "./Move.js";
+import type Player from "./Player.js";
+import type { PlayerKey } from "./Player.js";
+import type State from "./State.js";
 
-type Channel = Integer;
-export type EncodedState = Pixel[][][];
 export enum Pixel {
   Off = 0,
   On = 1,
 }
-
+export type EncodedState = Pixel[][][];
 export interface GameParams<
   P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
 > {
-  readonly name: string;
-  readonly quantityOfSlots: Integer;
-  readonly players: P[];
   readonly moves: M[];
+  readonly name: string;
+  readonly players: P[];
+  readonly quantityOfSlots: Integer;
 }
+
+type Channel = Integer;
 
 export default abstract class Game<
   P extends Player<P, M, S, G>,
@@ -28,15 +30,15 @@ export default abstract class Game<
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
 > {
-  private readonly name: GameParams<P, M, S, G>["name"];
-  private readonly quantityOfSlots: GameParams<P, M, S, G>["quantityOfSlots"];
-  private readonly players: GameParams<P, M, S, G>["players"];
   private readonly moves: GameParams<P, M, S, G>["moves"];
+  private readonly name: GameParams<P, M, S, G>["name"];
+  private readonly players: GameParams<P, M, S, G>["players"];
+  private readonly quantityOfSlots: GameParams<P, M, S, G>["quantityOfSlots"];
 
   constructor({
-    players,
     moves,
     name,
+    players,
     quantityOfSlots,
   }: GameParams<P, M, S, G>) {
     this.name = name;
@@ -47,9 +49,33 @@ export default abstract class Game<
 
   /* Getters */
 
-  public abstract getInitialState(): S;
+  protected static setSlotInEncodedState({
+    channel,
+    columnIndex,
+    encodedState,
+    rowIndex,
+  }: {
+    channel: Channel;
+    columnIndex: Integer;
+    encodedState: EncodedState;
+    rowIndex: Integer;
+  }): void {
+    const row = encodedState[rowIndex];
+    if (typeof row === "undefined") {
+      return;
+    }
 
-  public abstract getGameOverMessage(state: S): string;
+    const column = row[columnIndex];
+    if (typeof column === "undefined") {
+      return;
+    }
+
+    column[channel] = Pixel.On;
+  }
+
+  public abstract getEndOfGameMessage(state: S): string;
+
+  public abstract getInitialState(): S;
 
   public getMove(key: MoveKey): M {
     const move = this.moves[key];
@@ -67,8 +93,6 @@ export default abstract class Game<
     return this.name;
   }
 
-  protected abstract getNextPlayerKey(playerKey: PlayerKey): PlayerKey;
-
   public getPlayer(key: PlayerKey): P {
     const player = this.players[key];
     if (typeof player === "undefined") {
@@ -81,33 +105,11 @@ export default abstract class Game<
     return this.moves.length;
   }
 
-  protected getQuantityOfSlots(): GameParams<P, M, S, G>["quantityOfSlots"] {
-    return this.quantityOfSlots;
-  }
+  protected abstract getNextPlayerKey(playerKey: PlayerKey): PlayerKey;
 
   /* Setters */
 
-  protected static setSlotInEncodedState({
-    rowIndex,
-    columnIndex,
-    channel,
-    encodedState,
-  }: {
-    rowIndex: Integer;
-    columnIndex: Integer;
-    channel: Channel;
-    encodedState: EncodedState;
-  }): void {
-    const row = encodedState[rowIndex];
-    if (typeof row === "undefined") {
-      return;
-    }
-
-    const column = row[columnIndex];
-    if (typeof column === "undefined") {
-      return;
-    }
-
-    column[channel] = Pixel.On;
+  protected getQuantityOfSlots(): GameParams<P, M, S, G>["quantityOfSlots"] {
+    return this.quantityOfSlots;
   }
 }

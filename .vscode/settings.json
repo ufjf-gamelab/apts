@@ -1,4 +1,22 @@
 {
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[mdx]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "cSpell.words": [
     "apts",
     "backpropagate",
@@ -14,6 +32,17 @@
     "tfjs",
     "tseslint"
   ],
+  "editor.codeActionsOnSave": {
+    "source.addMissingImports.ts": "never",
+    "source.fixAll.eslint": "always",
+    "source.fixAll.markdownlint": "explicit",
+    "source.fixAll.ts": "always",
+    "source.organizeImports": "never",
+    "source.organizeLinkDefinitions": "always",
+    "source.removeUnused.ts": "never",
+    "source.removeUnusedImports": "never",
+    "source.sortImports": "never"
+  },
   "editor.formatOnSave": true,
   "editor.inlineSuggest.enabled": true,
   "editor.tabSize": 2,
@@ -27,5 +56,6 @@
     "**/node_modules": true,
     "pnpm-lock.yaml": true,
     "pnpm-workspace.yaml": true
-  }
+  },
+  "svg.preview.mode": "img"
 }

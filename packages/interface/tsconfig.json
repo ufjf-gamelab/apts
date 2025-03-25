@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "."
   },
   "exclude": ["node_modules", "dist"],
   "extends": "@repo/typescript-config/library.json",
