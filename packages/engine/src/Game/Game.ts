@@ -1,8 +1,6 @@
 import type { Integer } from "../types.js";
-import type Move from "./Move.js";
-import type { MoveKey } from "./Move.js";
-import type Player from "./Player.js";
-import type { PlayerKey } from "./Player.js";
+import type { default as Move, MoveKey } from "./Move.js";
+import type { default as Player, PlayerKey } from "./Player.js";
 import type State from "./State.js";
 
 export enum Pixel {
@@ -16,9 +14,9 @@ export interface GameParams<
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
 > {
-  readonly moves: M[];
+  readonly moves: Map<MoveKey, M>;
   readonly name: string;
-  readonly players: P[];
+  readonly players: Map<PlayerKey, P>;
   readonly quantityOfSlots: Integer;
 }
 
@@ -43,11 +41,9 @@ export default abstract class Game<
   }: GameParams<P, M, S, G>) {
     this.name = name;
     this.quantityOfSlots = quantityOfSlots;
-    this.players = [...players];
-    this.moves = [...moves];
+    this.players = new Map(players);
+    this.moves = new Map(moves);
   }
-
-  /* Getters */
 
   protected static setSlotInEncodedState({
     channel,
@@ -73,41 +69,29 @@ export default abstract class Game<
     column[channel] = Pixel.On;
   }
 
+  public abstract clone(): G;
+
   public abstract getEndOfGameMessage(state: S): string;
 
   public abstract getInitialState(): S;
 
-  public getMove(key: MoveKey): M {
-    const move = this.moves[key];
-    if (typeof move === "undefined") {
-      throw new Error(`Move with key ${key} not found`);
-    }
-    return move;
-  }
-
   public getMoves(): GameParams<P, M, S, G>["moves"] {
-    return [...this.moves];
+    return new Map(this.moves);
   }
 
   public getName(): GameParams<P, M, S, G>["name"] {
     return this.name;
   }
 
-  public getPlayer(key: PlayerKey): P {
-    const player = this.players[key];
-    if (typeof player === "undefined") {
-      throw new Error(`Player with key ${key} not found`);
-    }
-    return player;
+  public getPlayers(): GameParams<P, M, S, G>["players"] {
+    return new Map(this.players);
   }
 
   public getQuantityOfMoves(): Integer {
-    return this.moves.length;
+    return this.moves.size;
   }
 
   protected abstract getNextPlayerKey(playerKey: PlayerKey): PlayerKey;
-
-  /* Setters */
 
   protected getQuantityOfSlots(): GameParams<P, M, S, G>["quantityOfSlots"] {
     return this.quantityOfSlots;

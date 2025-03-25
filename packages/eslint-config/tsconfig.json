@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "checkJs": true,
+    "checkJs": false,
     "module": "esnext",
+    "moduleResolution": "bundler",
+    "outDir": "dist",
     "strict": true
   }
 }

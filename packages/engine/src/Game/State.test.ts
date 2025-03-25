@@ -1,54 +1,92 @@
-import type { MockGame } from "./Game.test.js";
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+import { expect, test } from "vitest";
+
+import { game, type MockGame } from "./Game.test.js";
 import type { MockMove } from "./Move.test.js";
 import type { PlayerKey } from "./Player.js";
-import type { MockPlayer } from "./Player.test.js";
-import State from "./State.js";
+import { type MockPlayer, PlayerKey as MockPlayerKey } from "./Player.test.js";
+import State, { type StateParams } from "./State.js";
 
-// type MockStateParams = StateParams<MockPlayer, MockMove, MockState, MockGame>;
+type MockStateParams = StateParams<MockPlayer, MockMove, MockState, MockGame>;
 
 class MockState extends State<MockPlayer, MockMove, MockState, MockGame> {
   public override changePerspective(playerKey: PlayerKey): MockState {
     throw new Error("Method not implemented.");
   }
-  public override toString(): string {
+
+  public override isFinal(): boolean {
     throw new Error("Method not implemented.");
+  }
+
+  public override toString(): string {
+    return `| ${this.getSlots().join(" | ")} |`;
   }
 }
 
-// const playerKey = 0;
-// const score = [0, 0];
-// const slots = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-// const validMovesKeys = [0, 1];
+const testState = (): MockState => {
+  const state = new MockState({
+    game,
+    playerKey: MockPlayerKey.Alice,
+    score: new Map([
+      [MockPlayerKey.Alice, 0],
+      [MockPlayerKey.Bruno, 0],
+    ]),
+    slots: [0, 0, 0, 0, 0],
+  });
 
-// const state = new MockState({
-//   game,
-//   playerKey,
-//   score,
-//   slots,
-//   validMovesKeys,
-// });
+  test("state should be an instance of MockState", () => {
+    expect(state).toBeInstanceOf(MockState);
+  });
 
-// test("state game should be {game}", () => {
-//   expect(state.getGame()).toBe(game);
-// });
+  test("game of state should be {game}", () => {
+    expect(state.getGame()).not.toBe(game);
+    expect(state.getGame()).toEqual(game);
+  });
 
-// test("state playerKey should be {0}", () => {
-//   expect(state.getPlayerKey()).toBe(playerKey);
-// });
+  test("playerKey of state should be {MockPlayerKey.Alice}", () => {
+    expect(state.getPlayerKey()).toBe(MockPlayerKey.Alice);
+  });
 
-// test("state score should be {[0, 0]}", () => {
-//   expect(state.getScore()).toStrictEqual([0, 0]);
-//   expect(state.getScore()).not.toBe(score);
-// });
+  test("score of state should be {[[MockPlayerKey.Alice, 0], [MockPlayerKey.Bruno, 0]]}", () => {
+    const score = new Map([
+      [MockPlayerKey.Alice, 0],
+      [MockPlayerKey.Bruno, 0],
+    ]);
 
-// test("state slots should be {[0, 0, 0, 0, 0, 0, 0, 0, 0]}", () => {
-//   expect(state.getSlots()).toStrictEqual([0, 0, 0, 0, 0, 0, 0, 0, 0]);
-//   expect(state.getSlots()).not.toBe(slots);
-// });
+    expect(state.getScore()).not.toBe(score);
+    expect(state.getScore()).toStrictEqual(score);
 
-// test("state validMovesKeys should be {[0, 1]}", () => {
-//   expect(state.getValidMovesKeys()).toStrictEqual([0, 1]);
-//   expect(state.getValidMovesKeys()).not.toBe(validMovesKeys);
-// });
+    const oldScore = new Map(score);
+    score.set(MockPlayerKey.Alice, 1);
 
-export { MockState };
+    expect(state.getScore()).not.toBe(oldScore);
+    expect(state.getScore()).toStrictEqual(oldScore);
+    expect(state.getScore()).not.toBe(score);
+    expect(state.getScore()).not.toEqual(score);
+  });
+
+  test("slots of state should be {[0, 0, 0, 0, 0]}", () => {
+    const slots = [0, 0, 0, 0, 0];
+
+    expect(state.getSlots()).not.toBe(slots);
+    expect(state.getSlots()).toStrictEqual(slots);
+
+    const oldSlots = [...slots];
+    slots[0] = 1;
+
+    expect(state.getSlots()).not.toBe(oldSlots);
+    expect(state.getSlots()).toStrictEqual(oldSlots);
+    expect(state.getSlots()).not.toBe(slots);
+    expect(state.getSlots()).not.toEqual(slots);
+  });
+
+  test('toString() should return {"| 0 | 0 | 0 | 0 | 0 |"}', () => {
+    expect(state.toString()).toBe("| 0 | 0 | 0 | 0 | 0 |");
+  });
+
+  return state;
+};
+
+const state = testState();
+
+export { MockState, state };

@@ -151,6 +151,20 @@ export const config = [
         "error",
         {
           fallbackSort: { type: "alphabetical" },
+          groups: [
+            ["builtin", "external"],
+            ["internal-type", "internal"],
+            [
+              "parent-type",
+              "parent",
+              "sibling-type",
+              "sibling",
+              "index-type",
+              "index",
+            ],
+            ["object"],
+            "unknown",
+          ],
           ignoreCase: false,
           order: "asc",
           type: "natural",

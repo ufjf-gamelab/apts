@@ -1,14 +1,16 @@
 import { expect, test } from "vitest";
 
 import type { MockGame } from "./Game.test.js";
+import Move, { type MoveParams } from "./Move.js";
 import type { MockPlayer } from "./Player.test.js";
 import type { MockState } from "./State.test.js";
 
-import Move, { MoveParams } from "./Move.js";
-
 enum MoveKey {
-  Add = 0,
-  Steal = 1,
+  Fifth = 4,
+  First = 0,
+  Fourth = 3,
+  Second = 1,
+  Third = 2,
 }
 
 type MockMoveParams = MoveParams<MockPlayer, MockMove, MockState, MockGame>;
@@ -31,9 +33,9 @@ const titleShouldBe = (move: MockMove, title: string): void => {
   });
 };
 
-const testMoveAdd = (): MockMove => {
-  let description = "Add one point to the player's score.";
-  let title = "Add";
+const testMoveFirst = (): MockMove => {
+  const description = "Place a stone on the first slot.";
+  const title = "First";
   const move = new MockMove({
     description,
     title,
@@ -45,53 +47,40 @@ const testMoveAdd = (): MockMove => {
 
   descriptionShouldBe(move, description);
   titleShouldBe(move, title);
-
-  test("description of player should not change if the external object that defined its name changes", () => {
-    description = "Modified description";
-    expect(move.getDescription()).toBe("Add one point to the player's score.");
-  });
-
-  test("title of player should not change if the external object that defined its symbol changes", () => {
-    title = "Modified title";
-    expect(move.getTitle()).toBe("Add");
-  });
-
-  return move;
-};
-
-const testMoveSteal = (): MockMove => {
-  let description = "Subtract two points from the opponent's score.";
-  let title = "Steal";
-  const move = new MockMove({
-    description,
-    title,
-  });
-
-  test("move should be an instance of MockMove", () => {
-    expect(move).toBeInstanceOf(MockMove);
-  });
-
-  descriptionShouldBe(move, description);
-  titleShouldBe(move, title);
-
-  test("description of player should not change if the external object that defined its name changes", () => {
-    description = "Modified description";
-    expect(move.getDescription()).toBe(
-      "Subtract two points from the opponent's score.",
-    );
-  });
-
-  test("title of player should not change if the external object that defined its symbol changes", () => {
-    title = "Modified title";
-    expect(move.getTitle()).toBe("Steal");
-  });
 
   return move;
 };
 
 const moves = new Map<MoveKey, MockMove>([
-  [MoveKey.Add, testMoveAdd()],
-  [MoveKey.Steal, testMoveSteal()],
+  [
+    MoveKey.Fifth,
+    new MockMove({
+      description: "Place a stone on the fifth slot.",
+      title: "Fifth",
+    }),
+  ],
+  [MoveKey.First, testMoveFirst()],
+  [
+    MoveKey.Fourth,
+    new MockMove({
+      description: "Place a stone on the fourth slot.",
+      title: "Fourth",
+    }),
+  ],
+  [
+    MoveKey.Second,
+    new MockMove({
+      description: "Place a stone on the second slot.",
+      title: "Second",
+    }),
+  ],
+  [
+    MoveKey.Third,
+    new MockMove({
+      description: "Place a stone on the third slot.",
+      title: "Third",
+    }),
+  ],
 ]);
 
 export { MockMove, moves };

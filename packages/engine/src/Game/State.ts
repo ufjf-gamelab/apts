@@ -1,13 +1,12 @@
 import type { Integer } from "../types.js";
 import type Game from "./Game.js";
 import type Move from "./Move.js";
-import type Player from "./Player.js";
-import type { PlayerKey } from "./Player.js";
+import type { default as Player, PlayerKey } from "./Player.js";
 
 const NO_REMAINING_VALID_MOVES = 0;
 
 export type Points = number;
-export type Score = Points[];
+export type Score = Map<PlayerKey, Points>;
 
 // Content of a slot in the state.
 export type Slot = Integer;
@@ -24,7 +23,6 @@ export interface StateParams<
   readonly playerKey: PlayerKey;
   readonly score: Score;
   readonly slots: Slot[];
-  readonly validMovesKeys: Integer[];
 }
 
 export default abstract class State<
@@ -37,20 +35,12 @@ export default abstract class State<
   private readonly playerKey: StateParams<P, M, S, G>["playerKey"];
   private readonly score: StateParams<P, M, S, G>["score"];
   private readonly slots: StateParams<P, M, S, G>["slots"];
-  private readonly validMovesKeys: StateParams<P, M, S, G>["validMovesKeys"];
 
-  constructor({
-    game,
-    playerKey,
-    score,
-    slots,
-    validMovesKeys,
-  }: StateParams<P, M, S, G>) {
-    this.game = game;
-    this.slots = slots;
+  constructor({ game, playerKey, score, slots }: StateParams<P, M, S, G>) {
+    this.game = game.clone();
+    this.slots = [...slots];
     this.playerKey = playerKey;
-    this.score = [...score];
-    this.validMovesKeys = [...validMovesKeys];
+    this.score = new Map(score);
   }
 
   /* Getters */
@@ -61,6 +51,7 @@ export default abstract class State<
   //   return this.game.getPlayer(this.playerKey);
   // }
 
+  // TODO: is it necessary yet?
   public clone(): S {
     const prototype = Object.getPrototypeOf(this) as null | object;
     const clone = Object.create(prototype) as S;
@@ -68,7 +59,7 @@ export default abstract class State<
   }
 
   public getGame(): StateParams<P, M, S, G>["game"] {
-    return this.game;
+    return this.game.clone();
   }
 
   public getPlayerKey(): StateParams<P, M, S, G>["playerKey"] {
@@ -76,7 +67,7 @@ export default abstract class State<
   }
 
   public getScore(): StateParams<P, M, S, G>["score"] {
-    return [...this.score];
+    return new Map(this.score);
   }
 
   // public getValidMoves(): M[] {
@@ -88,12 +79,8 @@ export default abstract class State<
   //   return [...this.validMovesKeys];
   // }
 
-  public getSlot(index: SlotKey): Slot {
-    const slot = this.slots[index];
-    if (typeof slot === "undefined") {
-      throw new Error(`Slot with index ${index} not found`);
-    }
-    return slot;
+  public getSlot(index: SlotKey): null | Slot {
+    return this.slots[index] ?? null;
   }
 
   /* Methods */
@@ -102,9 +89,7 @@ export default abstract class State<
     return [...this.slots];
   }
 
-  public isFinal(): boolean {
-    return this.validMovesKeys.length === NO_REMAINING_VALID_MOVES;
-  }
+  public abstract isFinal(): boolean;
 
   public abstract toString(): string;
 }
