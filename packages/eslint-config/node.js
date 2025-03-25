@@ -1,4 +1,5 @@
 import globals from "globals";
+
 import { config as baseConfig } from "./base.js";
 
 /**

@@ -1,7 +1,7 @@
 import esLint from "@eslint/js";
+import perfectionistPlugin from "eslint-plugin-perfectionist";
 import turboPlugin from "eslint-plugin-turbo";
 import tsEsLint from "typescript-eslint";
-import perfectionistPlugin from "eslint-plugin-perfectionist";
 
 /**
  * A shared ESLint configuration for the repository.
@@ -41,9 +41,12 @@ export const config = [
       "no-warning-comments": "warn",
       "one-var": "off",
       "restrict-template-expressions": "off",
-      "sort-imports": "off", // Use perfectionist/sort-imports
-      "sort-keys": "off", // Use perfectionist/sort-object-types
-      "sort-vars": "off", // Use perfectionist/sort-variable-declarations
+      // Use perfectionist/sort-imports
+      "sort-imports": "off",
+      // Use perfectionist/sort-object-types
+      "sort-keys": "off",
+      // Use perfectionist/sort-variable-declarations
+      "sort-vars": "off",
     },
   },
 
@@ -52,6 +55,8 @@ export const config = [
   ...tsEsLint.configs.stylisticTypeChecked,
   {
     rules: {
+      "@typescript-eslint/consistent-type-exports": "error",
+      "@typescript-eslint/consistent-type-imports": "error",
       "@typescript-eslint/explicit-function-return-type": "error",
       "@typescript-eslint/no-magic-numbers": [
         "error",
@@ -91,187 +96,187 @@ export const config = [
       "perfectionist/sort-array-includes": [
         "error",
         {
-          type: "natural",
-          order: "asc",
-          ignoreCase: false,
           fallbackSort: { type: "alphabetical" },
+          ignoreCase: false,
+          order: "asc",
+          type: "natural",
         },
       ],
       "perfectionist/sort-classes": [
         "error",
         {
-          type: "natural",
-          order: "asc",
-          ignoreCase: false,
           fallbackSort: { type: "alphabetical" },
+          ignoreCase: false,
+          order: "asc",
+          type: "natural",
         },
       ],
       "perfectionist/sort-decorators": [
         "error",
         {
-          type: "natural",
-          order: "asc",
-          ignoreCase: false,
           fallbackSort: { type: "alphabetical" },
+          ignoreCase: false,
+          order: "asc",
+          type: "natural",
         },
       ],
       "perfectionist/sort-enums": [
         "error",
         {
-          type: "natural",
-          order: "asc",
-          ignoreCase: false,
           fallbackSort: { type: "alphabetical" },
+          ignoreCase: false,
+          order: "asc",
+          type: "natural",
         },
       ],
       "perfectionist/sort-exports": [
         "error",
         {
-          type: "natural",
-          order: "asc",
-          ignoreCase: false,
           fallbackSort: { type: "alphabetical" },
-        },
-      ],
-      "perfectionist/sort-imports": [
-        "error",
-        {
-          type: "natural",
-          order: "asc",
           ignoreCase: false,
-          fallbackSort: { type: "alphabetical" },
+          order: "asc",
+          type: "natural",
         },
       ],
       "perfectionist/sort-heritage-clauses": [
         "error",
         {
-          type: "natural",
-          order: "asc",
-          ignoreCase: false,
           fallbackSort: { type: "alphabetical" },
+          ignoreCase: false,
+          order: "asc",
+          type: "natural",
+        },
+      ],
+      "perfectionist/sort-imports": [
+        "error",
+        {
+          fallbackSort: { type: "alphabetical" },
+          ignoreCase: false,
+          order: "asc",
+          type: "natural",
         },
       ],
       "perfectionist/sort-interfaces": [
         "error",
         {
-          type: "natural",
-          order: "asc",
-          ignoreCase: false,
           fallbackSort: { type: "alphabetical" },
+          ignoreCase: false,
+          order: "asc",
+          type: "natural",
         },
       ],
       "perfectionist/sort-intersection-types": [
         "error",
         {
-          type: "natural",
-          order: "asc",
-          ignoreCase: false,
           fallbackSort: { type: "alphabetical" },
+          ignoreCase: false,
+          order: "asc",
+          type: "natural",
         },
       ],
       "perfectionist/sort-jsx-props": [
         "error",
         {
-          type: "natural",
-          order: "asc",
-          ignoreCase: false,
           fallbackSort: { type: "alphabetical" },
+          ignoreCase: false,
+          order: "asc",
+          type: "natural",
         },
       ],
       "perfectionist/sort-maps": [
         "error",
         {
-          type: "natural",
-          order: "asc",
-          ignoreCase: false,
           fallbackSort: { type: "alphabetical" },
+          ignoreCase: false,
+          order: "asc",
+          type: "natural",
         },
       ],
       "perfectionist/sort-modules": [
         "error",
         {
-          type: "natural",
-          order: "asc",
-          ignoreCase: false,
           fallbackSort: { type: "alphabetical" },
-        },
-      ],
-      "perfectionist/sort-named-imports": [
-        "error",
-        {
-          type: "natural",
-          order: "asc",
           ignoreCase: false,
-          fallbackSort: { type: "alphabetical" },
+          order: "asc",
+          type: "natural",
         },
       ],
       "perfectionist/sort-named-exports": [
         "error",
         {
-          type: "natural",
-          order: "asc",
-          ignoreCase: false,
           fallbackSort: { type: "alphabetical" },
+          ignoreCase: false,
+          order: "asc",
+          type: "natural",
+        },
+      ],
+      "perfectionist/sort-named-imports": [
+        "error",
+        {
+          fallbackSort: { type: "alphabetical" },
+          ignoreCase: false,
+          order: "asc",
+          type: "natural",
         },
       ],
       "perfectionist/sort-object-types": [
         "error",
         {
-          type: "natural",
-          order: "asc",
-          ignoreCase: false,
           fallbackSort: { type: "alphabetical" },
+          ignoreCase: false,
+          order: "asc",
+          type: "natural",
         },
       ],
       "perfectionist/sort-objects": [
         "error",
         {
-          type: "natural",
-          order: "asc",
-          ignoreCase: false,
           fallbackSort: { type: "alphabetical" },
+          ignoreCase: false,
+          order: "asc",
+          type: "natural",
         },
       ],
       "perfectionist/sort-sets": [
         "error",
         {
-          type: "natural",
-          order: "asc",
-          ignoreCase: false,
           fallbackSort: { type: "alphabetical" },
+          ignoreCase: false,
+          order: "asc",
+          type: "natural",
         },
       ],
       "perfectionist/sort-switch-case": [
         "error",
         {
-          type: "natural",
-          order: "asc",
-          ignoreCase: false,
           fallbackSort: { type: "alphabetical" },
+          ignoreCase: false,
+          order: "asc",
+          type: "natural",
         },
       ],
       "perfectionist/sort-union-types": [
         "error",
         {
-          type: "natural",
-          order: "asc",
-          ignoreCase: false,
           fallbackSort: { type: "alphabetical" },
+          ignoreCase: false,
+          order: "asc",
+          type: "natural",
         },
       ],
       "perfectionist/sort-variable-declarations": [
         "error",
         {
-          type: "natural",
-          order: "asc",
-          ignoreCase: false,
           fallbackSort: { type: "alphabetical" },
+          ignoreCase: false,
+          order: "asc",
+          type: "natural",
         },
       ],
     },
   },
 
   {
-    ignores: ["dist/**", "eslint.config.{js,cjs}"],
+    ignores: ["dist/**"],
   },
 ];

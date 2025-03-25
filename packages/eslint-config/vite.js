@@ -1,7 +1,8 @@
-import pluginReactHooks from "eslint-plugin-react-hooks";
 import pluginReact from "eslint-plugin-react";
-import globals from "globals";
+import pluginReactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
+import globals from "globals";
+
 import { config as baseConfig } from "./base.js";
 
 /**
@@ -26,16 +27,16 @@ export const viteConfig = [
     plugins: {
       "react-hooks": pluginReactHooks,
     },
-    settings: { react: { version: "detect" } },
     rules: {
       ...pluginReactHooks.configs.recommended.rules,
-      // React scope no longer necessary with new JSX transform.
-      "react/react-in-jsx-scope": "off",
       "react-refresh/only-export-components": [
         "warn",
         { allowConstantExport: true },
       ],
+      // React scope no longer necessary with new JSX transform.
+      "react/react-in-jsx-scope": "off",
     },
+    settings: { react: { version: "detect" } },
   },
 
   {
