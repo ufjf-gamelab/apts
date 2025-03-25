@@ -16,32 +16,25 @@ type MockPlayerParams = PlayerParams<MockPlayer, MockMove, MockState, MockGame>;
 
 class MockPlayer extends Player<MockPlayer, MockMove, MockState, MockGame> {}
 
-const createPlayerAlice = (name = "Alice", symbol: Char = "X"): MockPlayer =>
-  new MockPlayer({
-    name,
-    symbol,
+const nameShouldBe = (player: MockPlayer, name: string): void => {
+  test(`name of player should be {${name}}`, () => {
+    expect(player.getName()).toBe(name);
   });
+};
 
-const createPlayerBruno = (name = "Bruno", symbol: Char = "O"): MockPlayer =>
-  new MockPlayer({
-    name,
-    symbol,
+const symbolShouldBe = (player: MockPlayer, symbol: Char): void => {
+  test(`symbol of player should be {${symbol}}`, () => {
+    expect(player.getSymbol()).toBe(symbol);
   });
+};
 
-const createPlayers = (): Map<PlayerKey, MockPlayer> =>
-  new Map<PlayerKey, MockPlayer>([
-    [PlayerKey.Alice, createPlayerAlice()],
-    [PlayerKey.Bruno, createPlayerBruno()],
-  ]);
-
-const testPlayerAlice = (): void => {
+const testPlayerAlice = (): MockPlayer => {
   let name = "Alice";
   let symbol: Char = "X";
-  const player = createPlayerAlice(name, symbol);
+  const player = new MockPlayer({ name, symbol });
 
-  test("name of player should be {Alice}", () => {
-    expect(player.getName()).toBe("Alice");
-  });
+  nameShouldBe(player, "Alice");
+  symbolShouldBe(player, "X");
 
   test("name of player should not change if the external object that defined its name changes", () => {
     name = "Alice2";
@@ -53,19 +46,16 @@ const testPlayerAlice = (): void => {
     expect(player.getSymbol()).toBe("X");
   });
 
-  test("symbol of player should be {X}", () => {
-    expect(player.getSymbol()).toBe("X");
-  });
+  return player;
 };
 
-const testPlayerBruno = (): void => {
+const testPlayerBruno = (): MockPlayer => {
   let name = "Bruno";
   let symbol: Char = "O";
-  const player = createPlayerBruno(name, symbol);
+  const player = new MockPlayer({ name, symbol });
 
-  test("name of player should be {Bruno}", () => {
-    expect(player.getName()).toBe("Bruno");
-  });
+  nameShouldBe(player, "Bruno");
+  symbolShouldBe(player, "O");
 
   test("name of player should not change if the external object that defined its name changes", () => {
     name = "Bruno2";
@@ -77,14 +67,12 @@ const testPlayerBruno = (): void => {
     expect(player.getSymbol()).toBe("O");
   });
 
-  test("symbol of player should be {O}", () => {
-    expect(player.getSymbol()).toBe("O");
-  });
+  return player;
 };
 
-testPlayerAlice();
-testPlayerBruno();
-
-const players = createPlayers();
+const players = new Map<PlayerKey, MockPlayer>([
+  [PlayerKey.Alice, testPlayerAlice()],
+  [PlayerKey.Bruno, testPlayerBruno()],
+]);
 
 export { MockPlayer, players };

@@ -1,16 +1,17 @@
-import { test } from "vitest";
+import { expect, test } from "vitest";
 
 import type { MockGame } from "./Game.test.js";
-import Move from "./Move.js";
 import type { MockPlayer } from "./Player.test.js";
 import type { MockState } from "./State.test.js";
 
-// type MockMoveParams = MoveParams<MockPlayer, MockMove, MockState, MockGame>;
+import Move, { MoveParams } from "./Move.js";
 
 enum MoveKey {
-  East = 0,
-  West = 1,
+  Add = 0,
+  Steal = 1,
 }
+
+type MockMoveParams = MoveParams<MockPlayer, MockMove, MockState, MockGame>;
 
 class MockMove extends Move<MockPlayer, MockMove, MockState, MockGame> {
   public override play(state: MockState): MockState {
@@ -18,35 +19,79 @@ class MockMove extends Move<MockPlayer, MockMove, MockState, MockGame> {
   }
 }
 
-const moveEast = new MockMove({
-  description: "Place a stone in the east.",
-  title: "East",
-});
+const descriptionShouldBe = (move: MockMove, description: string): void => {
+  test(`description of move should be {${description}}.`, {}, () => {
+    expect(move.getDescription()).toBe(description);
+  });
+};
 
-const moveWest = new MockMove({
-  description: "Place a stone in the west.",
-  title: "West",
-});
+const titleShouldBe = (move: MockMove, title: string): void => {
+  test(`title of move should be {${title}}`, {}, () => {
+    expect(move.getTitle()).toBe(title);
+  });
+};
+
+const testMoveAdd = (): MockMove => {
+  let description = "Add one point to the player's score.";
+  let title = "Add";
+  const move = new MockMove({
+    description,
+    title,
+  });
+
+  test("move should be an instance of MockMove", () => {
+    expect(move).toBeInstanceOf(MockMove);
+  });
+
+  descriptionShouldBe(move, description);
+  titleShouldBe(move, title);
+
+  test("description of player should not change if the external object that defined its name changes", () => {
+    description = "Modified description";
+    expect(move.getDescription()).toBe("Add one point to the player's score.");
+  });
+
+  test("title of player should not change if the external object that defined its symbol changes", () => {
+    title = "Modified title";
+    expect(move.getTitle()).toBe("Add");
+  });
+
+  return move;
+};
+
+const testMoveSteal = (): MockMove => {
+  let description = "Subtract two points from the opponent's score.";
+  let title = "Steal";
+  const move = new MockMove({
+    description,
+    title,
+  });
+
+  test("move should be an instance of MockMove", () => {
+    expect(move).toBeInstanceOf(MockMove);
+  });
+
+  descriptionShouldBe(move, description);
+  titleShouldBe(move, title);
+
+  test("description of player should not change if the external object that defined its name changes", () => {
+    description = "Modified description";
+    expect(move.getDescription()).toBe(
+      "Subtract two points from the opponent's score.",
+    );
+  });
+
+  test("title of player should not change if the external object that defined its symbol changes", () => {
+    title = "Modified title";
+    expect(move.getTitle()).toBe("Steal");
+  });
+
+  return move;
+};
 
 const moves = new Map<MoveKey, MockMove>([
-  [MoveKey.East, moveEast],
-  [MoveKey.West, moveWest],
+  [MoveKey.Add, testMoveAdd()],
+  [MoveKey.Steal, testMoveSteal()],
 ]);
 
-test("moveEast title should be {East}", () => {
-  expect(moveEast.getTitle()).toBe("East");
-});
-
-test("moveEast description should be {Place a stone in the east}.", () => {
-  expect(moveEast.getDescription()).toBe("Place a stone in the east.");
-});
-
-test("moveWest title should be {West}", () => {
-  expect(moveWest.getTitle()).toBe("West");
-});
-
-test("moveWest description should be {Place a stone in the west}.", () => {
-  expect(moveWest.getDescription()).toBe("Place a stone in the west.");
-});
-
-export { MockMove };
+export { MockMove, moves };

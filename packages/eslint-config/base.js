@@ -94,9 +94,7 @@ export const config = [
           type: "natural",
           order: "asc",
           ignoreCase: false,
-          specialCharacters: "keep",
-          partitionByNewLine: false,
-          newlinesBetween: "ignore",
+          fallbackSort: { type: "alphabetical" },
         },
       ],
       "perfectionist/sort-classes": [
@@ -104,6 +102,8 @@ export const config = [
         {
           type: "natural",
           order: "asc",
+          ignoreCase: false,
+          fallbackSort: { type: "alphabetical" },
         },
       ],
       "perfectionist/sort-decorators": [
@@ -111,6 +111,8 @@ export const config = [
         {
           type: "natural",
           order: "asc",
+          ignoreCase: false,
+          fallbackSort: { type: "alphabetical" },
         },
       ],
       "perfectionist/sort-enums": [
@@ -118,6 +120,8 @@ export const config = [
         {
           type: "natural",
           order: "asc",
+          ignoreCase: false,
+          fallbackSort: { type: "alphabetical" },
         },
       ],
       "perfectionist/sort-exports": [
@@ -125,6 +129,8 @@ export const config = [
         {
           type: "natural",
           order: "asc",
+          ignoreCase: false,
+          fallbackSort: { type: "alphabetical" },
         },
       ],
       "perfectionist/sort-imports": [
@@ -132,6 +138,8 @@ export const config = [
         {
           type: "natural",
           order: "asc",
+          ignoreCase: false,
+          fallbackSort: { type: "alphabetical" },
         },
       ],
       "perfectionist/sort-heritage-clauses": [
@@ -139,6 +147,8 @@ export const config = [
         {
           type: "natural",
           order: "asc",
+          ignoreCase: false,
+          fallbackSort: { type: "alphabetical" },
         },
       ],
       "perfectionist/sort-interfaces": [
@@ -146,6 +156,8 @@ export const config = [
         {
           type: "natural",
           order: "asc",
+          ignoreCase: false,
+          fallbackSort: { type: "alphabetical" },
         },
       ],
       "perfectionist/sort-intersection-types": [
@@ -153,6 +165,8 @@ export const config = [
         {
           type: "natural",
           order: "asc",
+          ignoreCase: false,
+          fallbackSort: { type: "alphabetical" },
         },
       ],
       "perfectionist/sort-jsx-props": [
@@ -160,6 +174,8 @@ export const config = [
         {
           type: "natural",
           order: "asc",
+          ignoreCase: false,
+          fallbackSort: { type: "alphabetical" },
         },
       ],
       "perfectionist/sort-maps": [
@@ -167,6 +183,8 @@ export const config = [
         {
           type: "natural",
           order: "asc",
+          ignoreCase: false,
+          fallbackSort: { type: "alphabetical" },
         },
       ],
       "perfectionist/sort-modules": [
@@ -174,6 +192,8 @@ export const config = [
         {
           type: "natural",
           order: "asc",
+          ignoreCase: false,
+          fallbackSort: { type: "alphabetical" },
         },
       ],
       "perfectionist/sort-named-imports": [
@@ -181,6 +201,17 @@ export const config = [
         {
           type: "natural",
           order: "asc",
+          ignoreCase: false,
+          fallbackSort: { type: "alphabetical" },
+        },
+      ],
+      "perfectionist/sort-named-exports": [
+        "error",
+        {
+          type: "natural",
+          order: "asc",
+          ignoreCase: false,
+          fallbackSort: { type: "alphabetical" },
         },
       ],
       "perfectionist/sort-object-types": [
@@ -188,6 +219,8 @@ export const config = [
         {
           type: "natural",
           order: "asc",
+          ignoreCase: false,
+          fallbackSort: { type: "alphabetical" },
         },
       ],
       "perfectionist/sort-objects": [
@@ -195,6 +228,8 @@ export const config = [
         {
           type: "natural",
           order: "asc",
+          ignoreCase: false,
+          fallbackSort: { type: "alphabetical" },
         },
       ],
       "perfectionist/sort-sets": [
@@ -202,6 +237,8 @@ export const config = [
         {
           type: "natural",
           order: "asc",
+          ignoreCase: false,
+          fallbackSort: { type: "alphabetical" },
         },
       ],
       "perfectionist/sort-switch-case": [
@@ -209,6 +246,8 @@ export const config = [
         {
           type: "natural",
           order: "asc",
+          ignoreCase: false,
+          fallbackSort: { type: "alphabetical" },
         },
       ],
       "perfectionist/sort-union-types": [
@@ -216,6 +255,8 @@ export const config = [
         {
           type: "natural",
           order: "asc",
+          ignoreCase: false,
+          fallbackSort: { type: "alphabetical" },
         },
       ],
       "perfectionist/sort-variable-declarations": [
@@ -223,6 +264,8 @@ export const config = [
         {
           type: "natural",
           order: "asc",
+          ignoreCase: false,
+          fallbackSort: { type: "alphabetical" },
         },
       ],
     },
