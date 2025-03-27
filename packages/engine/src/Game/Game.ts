@@ -14,9 +14,9 @@ export interface GameParams<
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
 > {
-  readonly moves: Map<MoveKey, M>;
+  readonly moves: M[];
   readonly name: string;
-  readonly players: Map<PlayerKey, P>;
+  readonly players: P[];
   readonly quantityOfSlots: Integer;
 }
 
@@ -28,9 +28,9 @@ export default abstract class Game<
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
 > {
-  private readonly moves: GameParams<P, M, S, G>["moves"];
+  private readonly moves: Map<MoveKey, M>;
   private readonly name: GameParams<P, M, S, G>["name"];
-  private readonly players: GameParams<P, M, S, G>["players"];
+  private readonly players: Map<PlayerKey, P>;
   private readonly quantityOfSlots: GameParams<P, M, S, G>["quantityOfSlots"];
 
   constructor({
@@ -39,10 +39,10 @@ export default abstract class Game<
     players,
     quantityOfSlots,
   }: GameParams<P, M, S, G>) {
+    this.moves = new Map(moves.map((move, index) => [index, move]));
     this.name = name;
+    this.players = new Map(players.map((player, index) => [index, player]));
     this.quantityOfSlots = quantityOfSlots;
-    this.players = new Map(players);
-    this.moves = new Map(moves);
   }
 
   protected static setSlotInEncodedState({
@@ -76,7 +76,8 @@ export default abstract class Game<
   public abstract getInitialState(): S;
 
   public getMoves(): GameParams<P, M, S, G>["moves"] {
-    return new Map(this.moves);
+    // TODO: Possibly, each entry should be cloned.
+    return [...this.moves.values()];
   }
 
   public getName(): GameParams<P, M, S, G>["name"] {
@@ -84,7 +85,8 @@ export default abstract class Game<
   }
 
   public getPlayers(): GameParams<P, M, S, G>["players"] {
-    return new Map(this.players);
+    // TODO: Possibly, each entry should be cloned.
+    return [...this.players.values()];
   }
 
   public getQuantityOfMoves(): Integer {

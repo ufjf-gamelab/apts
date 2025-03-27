@@ -47,16 +47,7 @@ export default abstract class State<
 
   public abstract changePerspective(playerKey: PlayerKey): S;
 
-  // public getPlayer(): P {
-  //   return this.game.getPlayer(this.playerKey);
-  // }
-
-  // TODO: is it necessary yet?
-  public clone(): S {
-    const prototype = Object.getPrototypeOf(this) as null | object;
-    const clone = Object.create(prototype) as S;
-    return Object.assign(clone, this);
-  }
+  public abstract clone(): S;
 
   public getGame(): StateParams<P, M, S, G>["game"] {
     return this.game.clone();
@@ -70,6 +61,10 @@ export default abstract class State<
     return new Map(this.score);
   }
 
+  public getSlot(index: SlotKey): null | Slot {
+    return this.slots[index] ?? null;
+  }
+
   // public getValidMoves(): M[] {
   //   // If it is final, no move is valid.
   //   return this.validMovesKeys.map(key => this.game.getMove(key));
@@ -79,17 +74,17 @@ export default abstract class State<
   //   return [...this.validMovesKeys];
   // }
 
-  public getSlot(index: SlotKey): null | Slot {
-    return this.slots[index] ?? null;
-  }
-
-  /* Methods */
-
   public getSlots(): StateParams<P, M, S, G>["slots"] {
     return [...this.slots];
   }
 
+  /* Methods */
+
   public abstract isFinal(): boolean;
 
   public abstract toString(): string;
+
+  protected getQuantityOfSlots(): Integer {
+    return this.slots.length;
+  }
 }

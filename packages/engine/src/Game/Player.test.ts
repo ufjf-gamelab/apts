@@ -1,65 +1,88 @@
 import { expect, test } from "vitest";
 
 import type { Char } from "../types.js";
-import type { MockGame } from "./Game.test.js";
-import type { MockMove } from "./Move.test.js";
+import type { TestingGame } from "./Game.test.js";
+import type { TestingMove } from "./Move.test.js";
 import Player, { type PlayerParams } from "./Player.js";
-import type { MockState } from "./State.test.js";
+import type { TestingState } from "./State.test.js";
 
 enum PlayerKey {
-  Alice = 0,
-  Bruno = 1,
+  Alice,
+  Bruno,
 }
 
-type MockPlayerParams = PlayerParams<MockPlayer, MockMove, MockState, MockGame>;
+type TestingPlayerParams = PlayerParams<
+  TestingPlayer,
+  TestingMove,
+  TestingState,
+  TestingGame
+>;
 
-class MockPlayer extends Player<MockPlayer, MockMove, MockState, MockGame> {}
+class TestingPlayer extends Player<
+  TestingPlayer,
+  TestingMove,
+  TestingState,
+  TestingGame
+> {}
 
-const nameShouldBe = (player: MockPlayer, name: string): void => {
+const nameShouldBe = (player: TestingPlayer, name: string): void => {
   test(`name of player should be {${name}}`, () => {
     expect(player.getName()).toBe(name);
   });
 };
 
-const symbolShouldBe = (player: MockPlayer, symbol: Char): void => {
+const symbolShouldBe = (player: TestingPlayer, symbol: Char): void => {
   test(`symbol of player should be {${symbol}}`, () => {
     expect(player.getSymbol()).toBe(symbol);
   });
 };
 
-const testPlayerAlice = (): MockPlayer => {
-  const name = "Alice";
-  const symbol: Char = "X";
-  const player = new MockPlayer({ name, symbol });
-
-  test("player should be an instance of MockPlayer", () => {
-    expect(player).toBeInstanceOf(MockPlayer);
+const testPlayer = ({
+  expectedName,
+  expectedSymbol,
+  player,
+}: {
+  expectedName: string;
+  expectedSymbol: Char;
+  player: TestingPlayer;
+}): void => {
+  test("player should be an instance of TestingPlayer", () => {
+    expect(player).toBeInstanceOf(TestingPlayer);
   });
 
-  nameShouldBe(player, "Alice");
-  symbolShouldBe(player, "X");
-
-  return player;
+  nameShouldBe(player, expectedName);
+  symbolShouldBe(player, expectedSymbol);
 };
 
-const testPlayerBruno = (): MockPlayer => {
-  const name = "Bruno";
-  const symbol: Char = "O";
-  const player = new MockPlayer({ name, symbol });
+const getNameOfPlayerKey = (playerKey: PlayerKey): string =>
+  String(PlayerKey[playerKey as unknown as keyof typeof PlayerKey]);
 
-  test("player should be an instance of MockPlayer", () => {
-    expect(player).toBeInstanceOf(MockPlayer);
+const createPlayers = (): TestingPlayer[] => {
+  const alice = new TestingPlayer({
+    name: getNameOfPlayerKey(PlayerKey.Alice),
+    symbol: "A",
   });
 
-  nameShouldBe(player, "Bruno");
-  symbolShouldBe(player, "O");
+  const bruno = new TestingPlayer({
+    name: getNameOfPlayerKey(PlayerKey.Bruno),
+    symbol: "B",
+  });
 
-  return player;
+  testPlayer({
+    expectedName: getNameOfPlayerKey(PlayerKey.Alice),
+    expectedSymbol: "A",
+    player: alice,
+  });
+
+  testPlayer({
+    expectedName: getNameOfPlayerKey(PlayerKey.Bruno),
+    expectedSymbol: "B",
+    player: bruno,
+  });
+
+  return [alice, bruno];
 };
 
-const players = new Map<PlayerKey, MockPlayer>([
-  [PlayerKey.Alice, testPlayerAlice()],
-  [PlayerKey.Bruno, testPlayerBruno()],
-]);
+const players = createPlayers();
 
-export { MockPlayer, PlayerKey, players };
+export { PlayerKey, players, TestingPlayer };

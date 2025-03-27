@@ -1,16 +1,26 @@
 import { expect, test } from "vitest";
 
 import Game, { type GameParams } from "./Game.js";
-import { type MockMove, moves } from "./Move.test.js";
+import { type TestingMove, moves } from "./Move.test.js";
 import type { PlayerKey } from "./Player.js";
-import { type MockPlayer, players } from "./Player.test.js";
-import type { MockState } from "./State.test.js";
+import { type TestingPlayer, players } from "./Player.test.js";
+import type { TestingState } from "./State.test.js";
 
-type MockGameParams = GameParams<MockPlayer, MockMove, MockState, MockGame>;
+type TestingGameParams = GameParams<
+  TestingPlayer,
+  TestingMove,
+  TestingState,
+  TestingGame
+>;
 
-class MockGame extends Game<MockPlayer, MockMove, MockState, MockGame> {
-  public override clone(): MockGame {
-    return new MockGame({
+class TestingGame extends Game<
+  TestingPlayer,
+  TestingMove,
+  TestingState,
+  TestingGame
+> {
+  public override clone(): TestingGame {
+    return new TestingGame({
       moves: this.getMoves(),
       name: this.getName(),
       players: this.getPlayers(),
@@ -18,11 +28,11 @@ class MockGame extends Game<MockPlayer, MockMove, MockState, MockGame> {
     });
   }
 
-  public override getEndOfGameMessage(state: MockState): string {
+  public override getEndOfGameMessage(state: TestingState): string {
     throw new Error("Method not implemented.");
   }
 
-  public override getInitialState(): MockState {
+  public override getInitialState(): TestingState {
     throw new Error("Method not implemented.");
   }
 
@@ -31,22 +41,22 @@ class MockGame extends Game<MockPlayer, MockMove, MockState, MockGame> {
   }
 }
 
-const testGame = (): MockGame => {
-  const name = "Single pile Nim";
+const testGame = (): TestingGame => {
+  const name = "Single pile Testing";
   const quantityOfSlots = 5;
-  const game = new MockGame({
+  const game = new TestingGame({
     moves,
     name,
     players,
     quantityOfSlots,
   });
 
-  test("game should be an instance of MockGame", () => {
-    expect(game).toBeInstanceOf(MockGame);
+  test("game should be an instance of TestingGame", () => {
+    expect(game).toBeInstanceOf(TestingGame);
   });
 
-  test("game name should be {Single pile Nim}", () => {
-    expect(game.getName()).toBe("Single pile Nim");
+  test("game name should be {Single pile Testing}", () => {
+    expect(game.getName()).toBe("Single pile Testing");
   });
 
   return game;
@@ -54,4 +64,4 @@ const testGame = (): MockGame => {
 
 const game = testGame();
 
-export { game, MockGame };
+export { game, TestingGame };
