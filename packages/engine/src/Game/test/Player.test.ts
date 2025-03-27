@@ -1,29 +1,7 @@
 import { expect, test } from "vitest";
 
-import type { Char } from "../types.js";
-import type { TestingGame } from "./Game.test.js";
-import type { TestingMove } from "./Move.test.js";
-import Player, { type PlayerParams } from "./Player.js";
-import type { TestingState } from "./State.test.js";
-
-enum TestingPlayerKey {
-  Alice,
-  Bruno,
-}
-
-type TestingPlayerParams = PlayerParams<
-  TestingPlayer,
-  TestingMove,
-  TestingState,
-  TestingGame
->;
-
-class TestingPlayer extends Player<
-  TestingPlayer,
-  TestingMove,
-  TestingState,
-  TestingGame
-> {}
+import type { Char } from "../../types.js";
+import TestingPlayer, { TestingPlayerKey } from "./Player.js";
 
 const nameShouldBe = (player: TestingPlayer, name: string): void => {
   test(`name of player should be {${name}}`, () => {
@@ -85,6 +63,6 @@ const createPlayers = (): TestingPlayer[] => {
   return [alice, bruno];
 };
 
-const players = createPlayers();
+const testingPlayers = createPlayers();
 
-export { players, TestingPlayer, TestingPlayerKey };
+export { TestingPlayer, TestingPlayerKey, testingPlayers };

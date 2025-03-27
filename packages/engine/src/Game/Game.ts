@@ -84,9 +84,17 @@ export default abstract class Game<
     return this.name;
   }
 
-  public getPlayers(): GameParams<P, M, S, G>["players"] {
+  public getPlayer(playerKey: PlayerKey): null | P {
+    const player = this.players.get(playerKey);
+    if (typeof player === "undefined") {
+      return null;
+    }
+    return player;
+  }
+
+  public getPlayers(): typeof this.players {
     // TODO: Possibly, each entry should be cloned.
-    return [...this.players.values()];
+    return new Map(this.players);
   }
 
   public getQuantityOfMoves(): Integer {

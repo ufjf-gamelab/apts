@@ -31,6 +31,7 @@ export const config = [
       "no-console": "off",
       "no-continue": "off",
       "no-magic-numbers": "off",
+      "no-shadow": "off",
       "no-ternary": "off",
       "no-use-before-define": [
         "off",
@@ -64,6 +65,15 @@ export const config = [
           ignoreEnums: true,
           ignoreNumericLiteralTypes: true,
           ignoreReadonlyClassProperties: true,
+        },
+      ],
+      "@typescript-eslint/no-shadow": [
+        "error",
+        {
+          builtinGlobals: true,
+          hoist: "all",
+          ignoreFunctionTypeParameterNameValueShadow: false,
+          ignoreTypeValueShadow: false,
         },
       ],
       "@typescript-eslint/no-unused-vars": "warn",

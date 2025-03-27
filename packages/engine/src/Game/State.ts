@@ -21,7 +21,6 @@ export interface StateParams<
 > {
   readonly game: G;
   readonly playerKey: PlayerKey;
-  readonly score: Score;
   readonly slots: Slot[];
 }
 
@@ -33,23 +32,22 @@ export default abstract class State<
 > {
   private readonly game: StateParams<P, M, S, G>["game"];
   private readonly playerKey: StateParams<P, M, S, G>["playerKey"];
-  private readonly score: StateParams<P, M, S, G>["score"];
+  private readonly score: Map<P, Points>;
   private readonly slots: StateParams<P, M, S, G>["slots"];
 
-  constructor({ game, playerKey, score, slots }: StateParams<P, M, S, G>) {
+  constructor({ game, playerKey, slots }: StateParams<P, M, S, G>) {
     this.game = game.clone();
     this.slots = [...slots];
     this.playerKey = playerKey;
-    this.score = new Map(score);
+    this.score = new Map();
+    this.initializeScore();
   }
-
-  /* Getters */
 
   public abstract changePerspective(playerKey: PlayerKey): S;
 
   public abstract clone(): S;
 
-  public getGame(): StateParams<P, M, S, G>["game"] {
+  public getGame(): typeof this.game {
     return this.game.clone();
   }
 
@@ -57,7 +55,7 @@ export default abstract class State<
     return this.playerKey;
   }
 
-  public getScore(): StateParams<P, M, S, G>["score"] {
+  public getScore(): typeof this.score {
     return new Map(this.score);
   }
 
@@ -65,20 +63,9 @@ export default abstract class State<
     return this.slots[index] ?? null;
   }
 
-  // public getValidMoves(): M[] {
-  //   // If it is final, no move is valid.
-  //   return this.validMovesKeys.map(key => this.game.getMove(key));
-  // }
-
-  // public getValidMovesKeys(): StateParams<P, M, S, G>["validMovesKeys"] {
-  //   return [...this.validMovesKeys];
-  // }
-
   public getSlots(): StateParams<P, M, S, G>["slots"] {
     return [...this.slots];
   }
-
-  /* Methods */
 
   public abstract isFinal(): boolean;
 
@@ -86,5 +73,16 @@ export default abstract class State<
 
   protected getQuantityOfSlots(): Integer {
     return this.slots.length;
+  }
+
+  protected abstract initializeScore(): void;
+
+  protected setScore(playerKey: PlayerKey, points: Points): void {
+    const player = this.game.getPlayer(playerKey);
+    if (player === null) {
+      throw new Error(`Player with key ${playerKey} not found.`);
+    } else {
+      this.score.set(player, points);
+    }
   }
 }
