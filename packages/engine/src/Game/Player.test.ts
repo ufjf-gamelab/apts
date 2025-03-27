@@ -6,7 +6,7 @@ import type { TestingMove } from "./Move.test.js";
 import Player, { type PlayerParams } from "./Player.js";
 import type { TestingState } from "./State.test.js";
 
-enum PlayerKey {
+enum TestingPlayerKey {
   Alice,
   Bruno,
 }
@@ -54,28 +54,30 @@ const testPlayer = ({
   symbolShouldBe(player, expectedSymbol);
 };
 
-const getNameOfPlayerKey = (playerKey: PlayerKey): string =>
-  String(PlayerKey[playerKey as unknown as keyof typeof PlayerKey]);
+const getNameOfPlayerKey = (playerKey: TestingPlayerKey): string =>
+  String(
+    TestingPlayerKey[playerKey as unknown as keyof typeof TestingPlayerKey],
+  );
 
 const createPlayers = (): TestingPlayer[] => {
   const alice = new TestingPlayer({
-    name: getNameOfPlayerKey(PlayerKey.Alice),
+    name: getNameOfPlayerKey(TestingPlayerKey.Alice),
     symbol: "A",
   });
 
   const bruno = new TestingPlayer({
-    name: getNameOfPlayerKey(PlayerKey.Bruno),
+    name: getNameOfPlayerKey(TestingPlayerKey.Bruno),
     symbol: "B",
   });
 
   testPlayer({
-    expectedName: getNameOfPlayerKey(PlayerKey.Alice),
+    expectedName: getNameOfPlayerKey(TestingPlayerKey.Alice),
     expectedSymbol: "A",
     player: alice,
   });
 
   testPlayer({
-    expectedName: getNameOfPlayerKey(PlayerKey.Bruno),
+    expectedName: getNameOfPlayerKey(TestingPlayerKey.Bruno),
     expectedSymbol: "B",
     player: bruno,
   });
@@ -85,4 +87,4 @@ const createPlayers = (): TestingPlayer[] => {
 
 const players = createPlayers();
 
-export { PlayerKey, players, TestingPlayer };
+export { players, TestingPlayer, TestingPlayerKey };

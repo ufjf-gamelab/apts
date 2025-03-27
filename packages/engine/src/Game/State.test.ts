@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import { expect, test } from "vitest";
 
+import { INCREMENT_ONE } from "../types.js";
 import { game, type TestingGame } from "./Game.test.js";
 import type { TestingMove } from "./Move.test.js";
-import {
-  type TestingPlayer,
-  PlayerKey as TestingPlayerKey,
-} from "./Player.test.js";
+import { type TestingPlayer, TestingPlayerKey } from "./Player.test.js";
 import State, { type StateParams } from "./State.js";
 
-enum Slot {
-  Empty = 0,
-  Filled = 1,
+enum TestingSlot {
+  Alice,
+  Bruno,
+  Empty,
 }
 
 type TestingStateParams = StateParams<
@@ -27,6 +26,12 @@ class TestingState extends State<
   TestingState,
   TestingGame
 > {
+  private AMOUNT_OF_POINTS_TO_FINISH_MATCH = 15;
+  private AMOUNT_OF_SLOTS_TO_FINISH_MATCH = 49;
+  private COLUMN_LENGTH = 9;
+  private INITIAL_SLOT_INDEX = 0;
+  private ROW_LENGTH = 9;
+
   public override changePerspective(): TestingState {
     return this.clone();
   }
@@ -48,10 +53,20 @@ class TestingState extends State<
    * @returns {boolean} `true` if all slots are empty, indicating the final state; otherwise, `false`.
    */
   public override isFinal(): boolean {
-    const quantityOfEmptySlots = this.getSlots().filter(
-      (slot: Slot) => slot === Slot.Empty,
+    const amountOfFilledSlots = this.getSlots().filter(
+      (slot: TestingSlot) => slot !== TestingSlot.Empty,
     ).length;
-    return quantityOfEmptySlots === this.getQuantityOfSlots();
+    if (amountOfFilledSlots === this.AMOUNT_OF_SLOTS_TO_FINISH_MATCH) {
+      return true;
+    }
+
+    for (const [, points] of this.getScore()) {
+      if (points >= this.AMOUNT_OF_POINTS_TO_FINISH_MATCH) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   /**
@@ -60,9 +75,32 @@ class TestingState extends State<
    * @returns A string formatted as a row of slots separated by vertical bars.
    */
   public override toString(): string {
-    return `| ${this.getSlots().join(" | ")} |`;
+    let board = "";
+    for (let row = this.INITIAL_SLOT_INDEX; row < this.ROW_LENGTH; row += 1) {
+      board += "|";
+      for (
+        let column = this.INITIAL_SLOT_INDEX;
+        column < this.COLUMN_LENGTH;
+        column += INCREMENT_ONE
+      ) {
+        board += " ";
+        const slot = this.getSlots()[row * this.ROW_LENGTH + column];
+        if (slot === TestingSlot.Empty) {
+          board += "-";
+        } else if (slot === TestingSlot.Alice) {
+          board += `${TestingPlayerKey.Alice}`;
+        } else if (slot === TestingSlot.Bruno) {
+          board += `${TestingPlayerKey.Bruno}`;
+        }
+        board += " |";
+      }
+      board += "\n";
+    }
+    return board;
   }
 }
+
+const INITIAL_AMOUNT_OF_POINTS = 0;
 
 // eslint-disable-next-line max-lines-per-function
 const testState = (): TestingState => {
@@ -70,10 +108,10 @@ const testState = (): TestingState => {
     game,
     playerKey: TestingPlayerKey.Alice,
     score: new Map([
-      [TestingPlayerKey.Alice, 0],
-      [TestingPlayerKey.Bruno, 0],
+      [TestingPlayerKey.Alice, INITIAL_AMOUNT_OF_POINTS],
+      [TestingPlayerKey.Bruno, INITIAL_AMOUNT_OF_POINTS],
     ]),
-    slots: [Slot.Filled, Slot.Filled, Slot.Filled, Slot.Filled, Slot.Filled],
+    slots: new Array<TestingSlot>(81).fill(TestingSlot.Empty),
   });
 
   test("state should be an instance of TestingState", () => {
@@ -107,20 +145,14 @@ const testState = (): TestingState => {
     expect(state.getScore()).not.toEqual(score);
   });
 
-  test("slots of state should be {[1, 1, 1, 1, 1]}", () => {
-    const slots = [
-      Slot.Filled,
-      Slot.Filled,
-      Slot.Filled,
-      Slot.Filled,
-      Slot.Filled,
-    ];
+  test("all slots should be empty", () => {
+    const slots = new Array<TestingSlot>(81).fill(TestingSlot.Empty);
 
     expect(state.getSlots()).not.toBe(slots);
     expect(state.getSlots()).toStrictEqual(slots);
 
     const oldSlots = [...slots];
-    slots[0] = Slot.Empty;
+    slots[0] = TestingSlot.Alice;
 
     expect(state.getSlots()).not.toBe(oldSlots);
     expect(state.getSlots()).toStrictEqual(oldSlots);
@@ -128,11 +160,13 @@ const testState = (): TestingState => {
     expect(state.getSlots()).not.toEqual(slots);
   });
 
-  test('toString() should return {"| 1 | 1 | 1 | 1 | 1 |"}', () => {
-    expect(state.toString()).toBe("| 1 | 1 | 1 | 1 | 1 |");
+  test('toString() should return a matrix of 9x9 in which each slot is surrounded by "|" and its value is shown as "-"', () => {
+    expect(state.toString()).toBe(
+      "| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n",
+    );
   });
 
-  test("isFinal() should return false for slots {1, 1, 1, 1, 1]}", () => {
+  test("isFinal() should return false", () => {
     expect(state.isFinal()).toBe(false);
   });
 
@@ -152,6 +186,4 @@ const testState = (): TestingState => {
   return state;
 };
 
-const state = testState();
-
-export { state, TestingState };
+testState();
