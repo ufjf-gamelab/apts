@@ -25,19 +25,45 @@ const formatMoveKeyName = (name: string): string => {
   return `${direction} of ${quadrant} quadrant`;
 };
 
-const descriptionShouldBe = (move: TestingMove, description: string): void => {
+const moveShouldBeAnInstanceOfItsClass = ({
+  move,
+}: {
+  move: TestingMove;
+}): void => {
+  test("move should be an instance of its class", () => {
+    expect(move).toBeInstanceOf(TestingMove);
+  });
+};
+
+const descriptionShouldBe = ({
+  description,
+  move,
+}: {
+  description: TestingMove["description"];
+  move: TestingMove;
+}): void => {
   test(`description of move should be {${description}}.`, {}, () => {
     expect(move.getDescription()).toBe(description);
   });
 };
 
-const titleShouldBe = (move: TestingMove, title: string): void => {
+const titleShouldBe = ({
+  move,
+  title,
+}: {
+  move: TestingMove;
+  title: TestingMove["title"];
+}): void => {
   test(`title of move should be {${title}}`, {}, () => {
     expect(move.getTitle()).toBe(title);
   });
 };
 
-const cloneShouldCreateANewInstance = (move: TestingMove): void => {
+const cloneShouldCreateANewInstance = ({
+  move,
+}: {
+  move: TestingMove;
+}): void => {
   test("clone() should return a new instance of TestingMove", () => {
     const clone = move.clone();
     expect(clone).toBeInstanceOf(TestingMove);
@@ -45,22 +71,41 @@ const cloneShouldCreateANewInstance = (move: TestingMove): void => {
   });
 };
 
-const testMove = ({
-  expectedDescription,
-  expectedTitle,
-  move,
+const createMove = ({
+  moveKey,
 }: {
-  expectedDescription: string;
-  expectedTitle: string;
+  moveKey: string;
+}): {
+  description: TestingMove["description"];
   move: TestingMove;
-}): void => {
-  test("move should be an instance of TestingMove", () => {
-    expect(move).toBeInstanceOf(TestingMove);
-  });
+  title: TestingMove["title"];
+} => {
+  const nameOfKey = String(MoveKey[moveKey as keyof typeof MoveKey]);
+  const formattedNameOfKey = formatMoveKeyName(nameOfKey);
 
-  descriptionShouldBe(move, expectedDescription);
-  titleShouldBe(move, expectedTitle);
-  cloneShouldCreateANewInstance(move);
+  const description = `Control the slot on ${formattedNameOfKey}`;
+  const title = formattedNameOfKey;
+
+  const move = new TestingMove({
+    description,
+    title,
+  });
+  return { description, move, title };
+};
+
+const testMove = ({
+  description,
+  move,
+  title,
+}: {
+  description: TestingMove["description"];
+  move: TestingMove;
+  title: TestingMove["description"];
+}): void => {
+  moveShouldBeAnInstanceOfItsClass({ move });
+  descriptionShouldBe({ description, move });
+  titleShouldBe({ move, title });
+  cloneShouldCreateANewInstance({ move });
 };
 
 const createMoves = (): TestingMove[] => {
@@ -69,24 +114,22 @@ const createMoves = (): TestingMove[] => {
     if (isNaN(Number(moveKey))) {
       continue;
     }
-
-    const nameOfKey = String(MoveKey[moveKey as keyof typeof MoveKey]);
-    const formattedNameOfKey = formatMoveKeyName(nameOfKey);
-
-    const move = new TestingMove({
-      description: `Control the slot on ${formattedNameOfKey}`,
-      title: formattedNameOfKey,
-    });
-
-    testMove({
-      expectedDescription: `Control the slot on ${formattedNameOfKey}`,
-      expectedTitle: formattedNameOfKey,
-      move,
-    });
-
+    const { move } = createMove({ moveKey });
     moves.push(move);
   }
   return moves;
 };
+
+const testMoves = (): void => {
+  for (const moveKey in MoveKey) {
+    if (isNaN(Number(moveKey))) {
+      continue;
+    }
+    const { description, move, title } = createMove({ moveKey });
+    testMove({ description, move, title });
+  }
+};
+
+testMoves();
 
 export { createMoves, TestingMove as default };
