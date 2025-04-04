@@ -1,16 +1,3 @@
-const INCREMENT_ONE = 1;
-
-export type LogMessage = (message: string) => void;
-
-export type TensorLikeArray =
-  | number
-  | number[]
-  | number[][]
-  | number[][][]
-  | number[][][][]
-  | number[][][][][]
-  | number[][][][][][];
-
 type Char =
   | "0"
   | "1"
@@ -109,5 +96,15 @@ type Char =
 
 type Integer = number;
 
-export { INCREMENT_ONE };
+type LogMessage = (message: string) => void;
+
+type TensorLikeArray =
+  | number
+  | number[]
+  | number[][]
+  | number[][][]
+  | number[][][][]
+  | number[][][][][]
+  | number[][][][][][];
+
 export type { Char, Integer };

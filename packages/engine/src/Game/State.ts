@@ -3,8 +3,6 @@ import type Game from "./Game.js";
 import type Move from "./Move.js";
 import type { default as Player, PlayerKey } from "./Player.js";
 
-const NO_REMAINING_VALID_MOVES = 0;
-
 export type Points = number;
 export type Score = Map<PlayerKey, Points>;
 
@@ -74,7 +72,6 @@ export default abstract class State<
   protected getQuantityOfSlots(): Integer {
     return this.slots.length;
   }
-
   protected abstract initializeScore(): void;
 
   protected setScore(playerKey: PlayerKey, points: Points): void {

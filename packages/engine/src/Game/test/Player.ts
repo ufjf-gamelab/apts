@@ -20,6 +20,13 @@ class TestingPlayer extends Player<
   TestingMove,
   TestingState,
   TestingGame
-> {}
+> {
+  public override clone(): TestingPlayer {
+    return new TestingPlayer({
+      name: this.getName(),
+      symbol: this.getSymbol(),
+    });
+  }
+}
 
 export { TestingPlayer as default, TestingPlayerKey };

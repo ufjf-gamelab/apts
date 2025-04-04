@@ -39,9 +39,11 @@ export default abstract class Game<
     players,
     quantityOfSlots,
   }: GameParams<P, M, S, G>) {
-    this.moves = new Map(moves.map((move, index) => [index, move]));
+    this.moves = new Map(moves.map((move, index) => [index, move.clone()]));
     this.name = name;
-    this.players = new Map(players.map((player, index) => [index, player]));
+    this.players = new Map(
+      players.map((player, index) => [index, player.clone()]),
+    );
     this.quantityOfSlots = quantityOfSlots;
   }
 
@@ -75,12 +77,24 @@ export default abstract class Game<
 
   public abstract getInitialState(): S;
 
-  public getMoves(): GameParams<P, M, S, G>["moves"] {
-    // TODO: Possibly, each entry should be cloned.
-    return [...this.moves.values()];
+  public getMove(moveKey: MoveKey): M | null {
+    const move = this.moves.get(moveKey);
+    if (typeof move === "undefined") {
+      return null;
+    }
+    return move.clone();
   }
 
-  public getName(): GameParams<P, M, S, G>["name"] {
+  public getMoves(): typeof this.moves {
+    return new Map(
+      Array.from(this.moves.entries()).map(([key, move]) => [
+        key,
+        move.clone(),
+      ]),
+    );
+  }
+
+  public getName(): typeof this.name {
     return this.name;
   }
 
@@ -89,12 +103,16 @@ export default abstract class Game<
     if (typeof player === "undefined") {
       return null;
     }
-    return player;
+    return player.clone();
   }
 
   public getPlayers(): typeof this.players {
-    // TODO: Possibly, each entry should be cloned.
-    return new Map(this.players);
+    return new Map(
+      Array.from(this.players.entries()).map(([key, player]) => [
+        key,
+        player.clone(),
+      ]),
+    );
   }
 
   public getQuantityOfMoves(): Integer {
@@ -103,7 +121,7 @@ export default abstract class Game<
 
   protected abstract getNextPlayerKey(playerKey: PlayerKey): PlayerKey;
 
-  protected getQuantityOfSlots(): GameParams<P, M, S, G>["quantityOfSlots"] {
+  protected getQuantityOfSlots(): typeof this.quantityOfSlots {
     return this.quantityOfSlots;
   }
 }

@@ -1,4 +1,5 @@
-import { INCREMENT_ONE, type Integer } from "../../types.js";
+import { INCREMENT_ONE } from "../../constants.js";
+import { type Integer } from "../../types.js";
 import State, { type StateParams } from "../State.js";
 import type TestingGame from "./Game.js";
 import type TestingMove from "./Move.js";

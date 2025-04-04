@@ -1,8 +1,12 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import { expect, test } from "vitest";
 
-import { testingGame } from "./Game.test.js";
-import { TestingPlayerKey, testingPlayers } from "./Player.test.js";
+import { createGame } from "./Game.test.js";
+import {
+  createPlayers,
+  type TestingPlayer,
+  TestingPlayerKey,
+} from "./Player.test.js";
 import TestingState, { TestingSlot } from "./State.js";
 
 const stateShouldBeAnInstanceOfItsClass = (state: TestingState): void => {
@@ -11,36 +15,27 @@ const stateShouldBeAnInstanceOfItsClass = (state: TestingState): void => {
   });
 };
 
-const gameOfSateShouldBeEqualToTheOnePassedAsParameter = (
+const gameOfStateShouldBeEqualToTheOnePassedAsParameterWithDifferentReference =
+  (state: TestingState, game: TestingState["game"]): void => {
+    test("game of state should be equal to the one passed as parameter with different reference", () => {
+      expect(state.getGame()).not.toBe(game);
+      expect(state.getGame()).toEqual(game);
+    });
+  };
+
+const getPlayerKeyShouldBe = (
   state: TestingState,
-  game: TestingState["game"],
+  playerKey: TestingPlayerKey,
 ): void => {
-  test("game of state should be equal to the one passed as parameter", () => {
-    expect(state.getGame()).not.toBe(game);
-    expect(state.getGame()).toEqual(game);
+  test(`playerKey of state should be {${playerKey}}`, () => {
+    expect(state.getPlayerKey()).toBe(playerKey);
   });
 };
 
-// eslint-disable-next-line max-lines-per-function
-const testState = (): TestingState => {
-  const state = new TestingState({
-    game: testingGame,
-    playerKey: TestingPlayerKey.Alice,
-    slots: new Array<TestingSlot>(81).fill(TestingSlot.Empty),
-  });
-
-  stateShouldBeAnInstanceOfItsClass(state);
-  gameOfSateShouldBeEqualToTheOnePassedAsParameter(state, testingGame);
-
-  test("game of state should be {game}", () => {
-    expect(state.getGame()).not.toBe(testingGame);
-    expect(state.getGame()).toEqual(testingGame);
-  });
-
-  test("playerKey of state should be {TestingPlayerKey.Alice}", () => {
-    expect(state.getPlayerKey()).toBe(TestingPlayerKey.Alice);
-  });
-
+const getScoreShouldBe = (
+  state: TestingState,
+  testingPlayers: TestingPlayer[],
+): void => {
   test("score of state should be {[[TestingPlayerKey.Alice, 0], [TestingPlayerKey.Bruno, 0]]}", () => {
     const score = new Map([
       [testingPlayers[0], 0],
@@ -58,6 +53,25 @@ const testState = (): TestingState => {
     expect(state.getScore()).not.toBe(score);
     expect(state.getScore()).not.toEqual(score);
   });
+};
+
+const testState = (): TestingState => {
+  const testingPlayers = createPlayers();
+
+  const state = new TestingState({
+    game: testingGame,
+    playerKey: TestingPlayerKey.Alice,
+    slots: new Array<TestingSlot>(81).fill(TestingSlot.Empty),
+  });
+
+  stateShouldBeAnInstanceOfItsClass(state);
+  gameOfStateShouldBeEqualToTheOnePassedAsParameterWithDifferentReference(
+    state,
+    testingGame,
+  );
+
+  getPlayerKeyShouldBe(state, TestingPlayerKey.Alice);
+  getScoreShouldBe(state);
 
   test("all slots should be empty", () => {
     const slots = new Array<TestingSlot>(81).fill(TestingSlot.Empty);

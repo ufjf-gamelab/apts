@@ -39,6 +39,8 @@ export default abstract class Move<
     this.description = description;
   }
 
+  public abstract clone(): M;
+
   public getDescription(): MoveParams<P, M, S, G>["description"] {
     return this.description;
   }

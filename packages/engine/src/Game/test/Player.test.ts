@@ -15,6 +15,14 @@ const symbolShouldBe = (player: TestingPlayer, symbol: Char): void => {
   });
 };
 
+const cloneShouldCreateANewInstance = (player: TestingPlayer): void => {
+  test("clone() should return a new instance of TestingMove", () => {
+    const clone = player.clone();
+    expect(clone).toBeInstanceOf(TestingPlayer);
+    expect(clone).not.toBe(player);
+  });
+};
+
 const testPlayer = ({
   expectedName,
   expectedSymbol,
@@ -30,6 +38,7 @@ const testPlayer = ({
 
   nameShouldBe(player, expectedName);
   symbolShouldBe(player, expectedSymbol);
+  cloneShouldCreateANewInstance(player);
 };
 
 const getNameOfPlayerKey = (playerKey: TestingPlayerKey): string =>
@@ -63,6 +72,4 @@ const createPlayers = (): TestingPlayer[] => {
   return [alice, bruno];
 };
 
-const testingPlayers = createPlayers();
-
-export { TestingPlayer, TestingPlayerKey, testingPlayers };
+export { createPlayers, TestingPlayer, TestingPlayerKey };

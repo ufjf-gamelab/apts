@@ -37,6 +37,14 @@ const titleShouldBe = (move: TestingMove, title: string): void => {
   });
 };
 
+const cloneShouldCreateANewInstance = (move: TestingMove): void => {
+  test("clone() should return a new instance of TestingMove", () => {
+    const clone = move.clone();
+    expect(clone).toBeInstanceOf(TestingMove);
+    expect(clone).not.toBe(move);
+  });
+};
+
 const testMove = ({
   expectedDescription,
   expectedTitle,
@@ -52,6 +60,7 @@ const testMove = ({
 
   descriptionShouldBe(move, expectedDescription);
   titleShouldBe(move, expectedTitle);
+  cloneShouldCreateANewInstance(move);
 };
 
 const createMoves = (): TestingMove[] => {
@@ -80,6 +89,4 @@ const createMoves = (): TestingMove[] => {
   return moves;
 };
 
-const testingMoves = createMoves();
-
-export { TestingMove as default, testingMoves };
+export { createMoves, TestingMove as default };

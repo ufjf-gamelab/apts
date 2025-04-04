@@ -108,6 +108,13 @@ class TestingMove extends Move<
   TestingState,
   TestingGame
 > {
+  public override clone(): TestingMove {
+    return new TestingMove({
+      description: this.getDescription(),
+      title: this.getTitle(),
+    });
+  }
+
   public override play(state: TestingState): TestingState {
     throw new Error("Method not implemented.");
   }

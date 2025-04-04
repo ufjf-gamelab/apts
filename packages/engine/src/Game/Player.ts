@@ -39,6 +39,8 @@ export default abstract class Player<
     this.name = name;
   }
 
+  public abstract clone(): P;
+
   public getName(): PlayerParams<P, M, S, G>["name"] {
     return this.name;
   }
