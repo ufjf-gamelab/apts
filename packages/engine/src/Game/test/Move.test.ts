@@ -26,9 +26,9 @@ const formatMoveKeyName = (name: string): string => {
 };
 
 const createMove = ({
-  moveKey,
+  valueOfMoveKey,
 }: {
-  moveKey: string;
+  valueOfMoveKey: string;
 }): {
   description: TestingMove["description"];
   move: TestingMove;
@@ -36,19 +36,20 @@ const createMove = ({
   title: TestingMove["title"];
 } => {
   const nameOfKey = String(
-    TestingMoveKey[moveKey as keyof typeof TestingMoveKey],
+    TestingMoveKey[valueOfMoveKey as keyof typeof TestingMoveKey],
   );
   const formattedNameOfKey = formatMoveKeyName(nameOfKey);
 
   const description = `Control the slot on ${formattedNameOfKey}`;
   const title = formattedNameOfKey;
-  const positionWherePlacePlayerKey = Number(moveKey);
+  const positionWherePlacePlayerKey = Number(valueOfMoveKey);
 
   const move = new TestingMove({
     description,
     positionWherePlacePlayerKey,
     title,
   });
+
   return { description, move, positionWherePlacePlayerKey, title };
 };
 
@@ -58,7 +59,7 @@ const createMoves = (): TestingMove[] => {
     if (isNaN(Number(moveKey))) {
       continue;
     }
-    const { move } = createMove({ moveKey });
+    const { move } = createMove({ valueOfMoveKey: moveKey });
     moves.push(move);
   }
   return moves;
@@ -87,63 +88,63 @@ const cloneShouldCreateANewInstance = ({
 };
 
 const getDescriptionShouldReturn = ({
-  description,
+  expectedDescription,
   move,
 }: {
-  description: TestingMove["description"];
+  expectedDescription: TestingMove["description"];
   move: TestingMove;
 }): void => {
-  test(`getDescription() should return {${description}}.`, {}, () => {
-    expect(move.getDescription()).toBe(description);
+  test(`getDescription() should return {${expectedDescription}}.`, {}, () => {
+    expect(move.getDescription()).toBe(expectedDescription);
   });
 };
 
 const getTitleShouldReturn = ({
+  expectedTitle,
   move,
-  title,
 }: {
+  expectedTitle: TestingMove["title"];
   move: TestingMove;
-  title: TestingMove["title"];
 }): void => {
-  test(`getTitle() should return {${title}}`, {}, () => {
-    expect(move.getTitle()).toBe(title);
+  test(`getTitle() should return {${expectedTitle}}`, {}, () => {
+    expect(move.getTitle()).toBe(expectedTitle);
   });
 };
 
 const getPositionWherePlacePlayerKeyShouldReturn = ({
+  expectedPositionWherePlacePlayerKey,
   move,
-  positionWherePlacePlayerKey,
 }: {
+  expectedPositionWherePlacePlayerKey: TestingMove["positionWherePlacePlayerKey"];
   move: TestingMove;
-  positionWherePlacePlayerKey: TestingMove["positionWherePlacePlayerKey"];
 }): void => {
-  test(`getPositionWherePlacePlayerKey() should return {${positionWherePlacePlayerKey}}`, () => {
+  test(`getPositionWherePlacePlayerKey() should return {${expectedPositionWherePlacePlayerKey}}`, () => {
     expect(move.getPositionWherePlacePlayerKey()).toBe(
-      positionWherePlacePlayerKey,
+      expectedPositionWherePlacePlayerKey,
     );
   });
 };
 
 const testMove = ({
-  description,
+  expectedDescription,
+  expectedPositionWherePlacePlayerKey,
+  expectedTitle,
   move,
-  positionWherePlacePlayerKey,
-  title,
 }: {
-  description: TestingMove["description"];
+  expectedDescription: TestingMove["description"];
+  expectedPositionWherePlacePlayerKey: TestingMove["positionWherePlacePlayerKey"];
+  expectedTitle: TestingMove["description"];
   move: TestingMove;
-  positionWherePlacePlayerKey: TestingMove["positionWherePlacePlayerKey"];
-  title: TestingMove["description"];
 }): void => {
   shouldBeAnInstanceOfItsClass({ move });
   cloneShouldCreateANewInstance({ move });
 
-  getDescriptionShouldReturn({ description, move });
+  getDescriptionShouldReturn({ expectedDescription, move });
   getPositionWherePlacePlayerKeyShouldReturn({
+    expectedPositionWherePlacePlayerKey,
     move,
-    positionWherePlacePlayerKey,
   });
-  getTitleShouldReturn({ move, title });
+  getTitleShouldReturn({ expectedTitle, move });
 };
 
 const testMoves = (): void => {
@@ -152,8 +153,13 @@ const testMoves = (): void => {
       continue;
     }
     const { description, move, positionWherePlacePlayerKey, title } =
-      createMove({ moveKey });
-    testMove({ description, move, positionWherePlacePlayerKey, title });
+      createMove({ valueOfMoveKey: moveKey });
+    testMove({
+      expectedDescription: description,
+      expectedPositionWherePlacePlayerKey: positionWherePlacePlayerKey,
+      expectedTitle: title,
+      move,
+    });
   }
 };
 

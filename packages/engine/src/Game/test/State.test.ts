@@ -50,27 +50,27 @@ const cloneShouldCreateANewInstance = ({
 };
 
 const getGameShouldReturn = ({
-  game,
+  expectedGame,
   state,
 }: {
-  game: TestingState["game"];
+  expectedGame: TestingState["game"];
   state: TestingState;
 }): void => {
   test("getGame() should return an object equal to the one passed as parameter, but as a different reference", () => {
-    expect(state.getGame()).not.toBe(game);
-    expect(state.getGame()).toStrictEqual(game);
+    expect(state.getGame()).not.toBe(expectedGame);
+    expect(state.getGame()).toStrictEqual(expectedGame);
   });
 };
 
 const getPlayerKeyShouldReturn = ({
-  playerKey,
+  expectedPlayerKey,
   state,
 }: {
-  playerKey: TestingState["playerKey"];
+  expectedPlayerKey: TestingState["playerKey"];
   state: TestingState;
 }): void => {
-  test(`getPlayerKey() should return {${playerKey}}`, () => {
-    expect(state.getPlayerKey()).toBe(playerKey);
+  test(`getPlayerKey() should return {${expectedPlayerKey}}`, () => {
+    expect(state.getPlayerKey()).toBe(expectedPlayerKey);
   });
 };
 
@@ -118,23 +118,23 @@ const getScoreShouldReturn = ({
 };
 
 const getSlotsShouldReturn = ({
-  slots,
+  expectedSlots,
   state,
 }: {
-  slots: TestingState["slots"];
+  expectedSlots: TestingState["slots"];
   state: TestingState;
 }): void => {
   test("all slots should be empty", () => {
-    expect(state.getSlots()).not.toBe(slots);
-    expect(state.getSlots()).toStrictEqual(slots);
+    expect(state.getSlots()).not.toBe(expectedSlots);
+    expect(state.getSlots()).toStrictEqual(expectedSlots);
   });
 
   test("modifying the object slots passed via constructor should not change the internal attribute", () => {
-    const slotsBeforeUpdate = [...slots];
-    slots[0] = TestingSlot.PlayerOne;
+    const slotsBeforeUpdate = [...expectedSlots];
+    expectedSlots[0] = TestingSlot.PlayerOne;
 
-    expect(state.getSlots()).not.toBe(slots);
-    expect(state.getSlots()).not.toEqual(slots);
+    expect(state.getSlots()).not.toBe(expectedSlots);
+    expect(state.getSlots()).not.toEqual(expectedSlots);
     expect(state.getSlots()).not.toBe(slotsBeforeUpdate);
     expect(state.getSlots()).toStrictEqual(slotsBeforeUpdate);
   });
@@ -185,12 +185,12 @@ const testState = (): TestingState => {
   cloneShouldCreateANewInstance({ state });
 
   getGameShouldReturn({
-    game,
+    expectedGame: game,
     state,
   });
-  getPlayerKeyShouldReturn({ playerKey: TestingPlayerKey.One, state });
+  getPlayerKeyShouldReturn({ expectedPlayerKey: TestingPlayerKey.One, state });
   getScoreShouldReturn({ players, state });
-  getSlotsShouldReturn({ slots, state });
+  getSlotsShouldReturn({ expectedSlots: slots, state });
   toStringShouldReturn({ state });
   isFinalShouldReturn({ state });
 

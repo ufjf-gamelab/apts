@@ -33,7 +33,11 @@ const shouldBeAnInstanceOfItsClass = ({
   });
 };
 
-const cloneShouldCreateANewInstance = (player: TestingPlayer): void => {
+const cloneShouldCreateANewInstance = ({
+  player,
+}: {
+  player: TestingPlayer;
+}): void => {
   test("clone() should return a new instance of {TestingPlayer}", () => {
     const clone = player.clone();
     expect(clone).toBeInstanceOf(TestingPlayer);
@@ -41,15 +45,27 @@ const cloneShouldCreateANewInstance = (player: TestingPlayer): void => {
   });
 };
 
-const getNameShouldReturn = (player: TestingPlayer, name: string): void => {
-  test(`getName() should return {${name}}`, () => {
-    expect(player.getName()).toBe(name);
+const getNameShouldReturn = ({
+  expectedName,
+  player,
+}: {
+  expectedName: string;
+  player: TestingPlayer;
+}): void => {
+  test(`getName() should return {${expectedName}}`, () => {
+    expect(player.getName()).toBe(expectedName);
   });
 };
 
-const getSymbolShouldReturn = (player: TestingPlayer, symbol: Char): void => {
-  test(`getSymbol() should return {${symbol}}`, () => {
-    expect(player.getSymbol()).toBe(symbol);
+const getSymbolShouldReturn = ({
+  expectedSymbol,
+  player,
+}: {
+  expectedSymbol: Char;
+  player: TestingPlayer;
+}): void => {
+  test(`getSymbol() should return {${expectedSymbol}}`, () => {
+    expect(player.getSymbol()).toBe(expectedSymbol);
   });
 };
 
@@ -63,9 +79,9 @@ const testPlayer = ({
   player: TestingPlayer;
 }): void => {
   shouldBeAnInstanceOfItsClass({ player });
-  cloneShouldCreateANewInstance(player);
-  getNameShouldReturn(player, expectedName);
-  getSymbolShouldReturn(player, expectedSymbol);
+  cloneShouldCreateANewInstance({ player });
+  getNameShouldReturn({ expectedName, player });
+  getSymbolShouldReturn({ expectedSymbol, player });
 };
 
 const testPlayers = (): void => {

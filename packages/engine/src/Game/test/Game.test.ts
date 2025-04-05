@@ -83,7 +83,7 @@ const getPlayersShouldReturn = ({
   expectedPlayers,
   game,
 }: {
-  expectedPlayers: TestingGameParams["players"];
+  expectedPlayers: TestingPlayer[];
   game: TestingGame;
 }): void => {
   test("getPlayers() should return an object equal to the one passed as parameter, but as a different reference", () => {
@@ -149,7 +149,7 @@ const getMovesShouldReturn = ({
   expectedMoves,
   game,
 }: {
-  expectedMoves: TestingGameParams["moves"];
+  expectedMoves: TestingMove[];
   game: TestingGame;
 }): void => {
   test("getMoves() should return an object equal to the one passed as parameter, but as a different reference", () => {
