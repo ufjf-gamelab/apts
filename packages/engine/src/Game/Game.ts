@@ -98,7 +98,7 @@ export default abstract class Game<
     return this.name;
   }
 
-  public abstract getNextPlayerKey(playerKey: PlayerKey): PlayerKey;
+  public abstract getNextPlayerKey(state: S): PlayerKey;
 
   public getPlayer(playerKey: PlayerKey): null | P {
     const player = this.players.get(playerKey);

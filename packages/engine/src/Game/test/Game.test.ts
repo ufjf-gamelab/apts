@@ -29,7 +29,7 @@ const shouldBeAnInstanceOfItsClass = ({
 }: {
   game: TestingGame;
 }): void => {
-  test("game should be an instance of its class", () => {
+  test("game should be an instance of the class {TestingGame}", () => {
     expect(game).toBeInstanceOf(TestingGame);
   });
 };
@@ -39,7 +39,7 @@ const cloneShouldCreateANewInstance = ({
 }: {
   game: TestingGame;
 }): void => {
-  test("clone() should return a new instance of TestingGame", () => {
+  test("clone() should return a new instance of {TestingGame}", () => {
     const clone = game.clone();
     expect(clone).toBeInstanceOf(TestingGame);
     expect(clone).not.toBe(game);
@@ -49,19 +49,19 @@ const cloneShouldCreateANewInstance = ({
   });
 };
 
-const getNameShouldBe = ({
+const getNameShouldReturn = ({
   game,
   name,
 }: {
   game: TestingGame;
   name: TestingGame["name"];
 }): void => {
-  test(`name of game should be {${name}}`, () => {
+  test(`getName() should return {${name}}`, () => {
     expect(game.getName()).toBe(name);
   });
 };
 
-const getPlayerShouldBe = ({
+const getPlayerShouldReturn = ({
   game,
   player,
   playerKey,
@@ -70,7 +70,7 @@ const getPlayerShouldBe = ({
   player: TestingPlayer;
   playerKey: TestingPlayerKey;
 }): void => {
-  test(`player of game should be equal to the one passed as parameter, but as a different reference`, () => {
+  test(`getPlayer(${playerKey}) should return an object equal to the one passed as parameter, but as a different reference`, () => {
     const playerFromGame = game.getPlayer(playerKey);
     expect(playerFromGame).toBeDefined();
     expect(playerFromGame).toBeInstanceOf(TestingPlayer);
@@ -79,14 +79,14 @@ const getPlayerShouldBe = ({
   });
 };
 
-const getPlayersShouldBe = ({
+const getPlayersShouldReturn = ({
   game,
   players,
 }: {
   game: TestingGame;
   players: TestingGameParams["players"];
 }): void => {
-  test("players of game should be equal to the one passed as parameter, but as a different reference", () => {
+  test("getPlayers() should return an object equal to the one passed as parameter, but as a different reference", () => {
     const playersFromGame = game.getPlayers();
     const playersFromGameAsArray = Array.from(playersFromGame.values());
 
@@ -110,7 +110,7 @@ const getPlayersShouldBe = ({
     }
   });
 
-  test("changing the players object received by the game should not change the internal attribute", () => {
+  test("modifying the object players received by the game should not change its internal attribute", () => {
     const newPlayer = new TestingPlayer({
       name: "Carlos",
       symbol: "C",
@@ -127,7 +127,7 @@ const getPlayersShouldBe = ({
   });
 };
 
-const getMoveShouldBe = ({
+const getMoveShouldReturn = ({
   game,
   move,
   moveKey,
@@ -136,7 +136,7 @@ const getMoveShouldBe = ({
   move: TestingMove;
   moveKey: TestingMoveKey;
 }): void => {
-  test(`move of game should be equal to the one passed as parameter, but as a different reference`, () => {
+  test(`getMove(${moveKey}) should return an object equal to the one passed as parameter, but as a different reference`, () => {
     const moveFromGame = game.getMove(moveKey);
     expect(moveFromGame).toBeDefined();
     expect(moveFromGame).toBeInstanceOf(TestingMove);
@@ -145,14 +145,14 @@ const getMoveShouldBe = ({
   });
 };
 
-const getMovesShouldBe = ({
+const getMovesShouldReturn = ({
   game,
   moves,
 }: {
   game: TestingGame;
   moves: TestingGameParams["moves"];
 }): void => {
-  test("move of game should be equal to the one passed as parameter, but as a different reference", () => {
+  test("getMoves() should return an object equal to the one passed as parameter, but as a different reference", () => {
     const movesFromGame = game.getMoves();
     const movesFromGameAsArray = Array.from(movesFromGame.values());
 
@@ -176,7 +176,7 @@ const getMovesShouldBe = ({
     }
   });
 
-  test("changing the moves object received by the game should not change the internal attribute", () => {
+  test("modifying the object moves received by the game should not change its internal attribute", () => {
     const newMove = new TestingMove({
       description: "This is a nowhere move",
       positionWherePlacePlayerKey: 0,
@@ -194,17 +194,32 @@ const getMovesShouldBe = ({
   });
 };
 
-const getInitialStateShouldBe = ({
+const getInitialStateShouldReturn = ({
   game,
   state,
 }: {
   game: TestingGame;
   state: TestingState;
 }): void => {
-  test("initial state of game should be equal to the one passed as parameter, but as a different reference", () => {
+  test("getInitialState() should return an object equal to the one passed as parameter, but as a different reference", () => {
     const initialStateFromGame = game.getInitialState();
     expect(initialStateFromGame).not.toBe(state);
     expect(initialStateFromGame).toStrictEqual(state);
+  });
+};
+
+const getNextPlayerKeyShouldReturn = ({
+  game,
+  playerKey,
+  state,
+}: {
+  game: TestingGame;
+  playerKey: TestingPlayerKey;
+  state: TestingState;
+}): void => {
+  test(`getNextPlayerKey() should return {${playerKey}}`, () => {
+    const nextPlayerKey = game.getNextPlayerKey(state);
+    expect(nextPlayerKey).toBe(playerKey);
   });
 };
 
@@ -219,36 +234,42 @@ const testGame = (): void => {
   shouldBeAnInstanceOfItsClass({ game });
   cloneShouldCreateANewInstance({ game });
 
-  getNameShouldBe({ game, name: "Testing game" });
+  getNameShouldReturn({ game, name: "Testing game" });
 
   const [playerOne] = players;
   if (typeof playerOne === "undefined") {
     throw new Error("Player One is undefined");
   }
-  getPlayerShouldBe({
+  getPlayerShouldReturn({
     game,
     player: playerOne,
     playerKey: TestingPlayerKey.One,
   });
-  getPlayersShouldBe({ game, players });
+  getPlayersShouldReturn({ game, players });
 
   const [moveToNorthwestOfNorthwest] = moves;
   if (typeof moveToNorthwestOfNorthwest === "undefined") {
     throw new Error("Move to Northwest of Northwest is undefined");
   }
-  getMoveShouldBe({
+  getMoveShouldReturn({
     game,
     move: moveToNorthwestOfNorthwest,
     moveKey: TestingMoveKey.NorthwestOfNorthwest,
   });
-  getMovesShouldBe({ game, moves });
+  getMovesShouldReturn({ game, moves });
 
   const initialState = new TestingState({
     game,
     playerKey: TestingPlayerKey.One,
     slots: new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(TestingSlot.Empty),
   });
-  getInitialStateShouldBe({ game, state: initialState });
+  getInitialStateShouldReturn({ game, state: initialState });
+
+  getNextPlayerKeyShouldReturn({
+    game,
+    playerKey: TestingPlayerKey.Two,
+    state: initialState,
+  });
 };
 
 testGame();

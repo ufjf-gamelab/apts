@@ -1,7 +1,7 @@
 import Game, { type GameParams } from "../Game.js";
 import type { PlayerKey } from "../Player.js";
 import type TestingMove from "./Move.js";
-import type TestingPlayer from "./Player.js";
+import { type default as TestingPlayer, TestingPlayerKey } from "./Player.js";
 import TestingState, { TestingSlot } from "./State.js";
 
 type TestingGameParams = GameParams<
@@ -47,8 +47,18 @@ class TestingGame extends Game<
     });
   }
 
-  public override getNextPlayerKey(playerKey: PlayerKey): PlayerKey {
-    throw new Error("Method not implemented.");
+  public override getNextPlayerKey(state: TestingState): PlayerKey {
+    const currentPlayerKey = state.getPlayerKey();
+    switch (currentPlayerKey as TestingPlayerKey) {
+      case TestingPlayerKey.One:
+        return TestingPlayerKey.Two;
+      case TestingPlayerKey.Two:
+        return TestingPlayerKey.One;
+      default:
+        throw new Error(
+          `Invalid player key: ${currentPlayerKey}. Expected ${TestingPlayerKey.One} or ${TestingPlayerKey.Two}`,
+        );
+    }
   }
 }
 
