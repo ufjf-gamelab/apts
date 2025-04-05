@@ -69,46 +69,8 @@ const shouldBeAnInstanceOfItsClass = ({
 }: {
   move: TestingMove;
 }): void => {
-  test("move should be an instance of its class", () => {
+  test("move should be an instance of the class {TestingMove}", () => {
     expect(move).toBeInstanceOf(TestingMove);
-  });
-};
-
-const getDescriptionShouldBe = ({
-  description,
-  move,
-}: {
-  description: TestingMove["description"];
-  move: TestingMove;
-}): void => {
-  test(`description of move should be {${description}}.`, {}, () => {
-    expect(move.getDescription()).toBe(description);
-  });
-};
-
-const getTitleShouldBe = ({
-  move,
-  title,
-}: {
-  move: TestingMove;
-  title: TestingMove["title"];
-}): void => {
-  test(`title of move should be {${title}}`, {}, () => {
-    expect(move.getTitle()).toBe(title);
-  });
-};
-
-const getPositionWherePlacePlayerKeyShouldBe = ({
-  move,
-  positionWherePlacePlayerKey,
-}: {
-  move: TestingMove;
-  positionWherePlacePlayerKey: TestingMove["positionWherePlacePlayerKey"];
-}): void => {
-  test(`positionWherePlacePlayerKey of move should be {${positionWherePlacePlayerKey}}`, () => {
-    expect(move.getPositionWherePlacePlayerKey()).toBe(
-      positionWherePlacePlayerKey,
-    );
   });
 };
 
@@ -117,16 +79,49 @@ const cloneShouldCreateANewInstance = ({
 }: {
   move: TestingMove;
 }): void => {
-  test("clone() should return a new instance of TestingMove", () => {
+  test("clone() should return a new instance of {TestingMove}", () => {
     const clone = move.clone();
     expect(clone).toBeInstanceOf(TestingMove);
     expect(clone).not.toBe(move);
   });
 };
 
-const playShouldBe = (): void => {
-  // TODO: Implement this test
-  throw new Error("Method not implemented.");
+const getDescriptionShouldReturn = ({
+  description,
+  move,
+}: {
+  description: TestingMove["description"];
+  move: TestingMove;
+}): void => {
+  test(`getDescription() should return {${description}}.`, {}, () => {
+    expect(move.getDescription()).toBe(description);
+  });
+};
+
+const getTitleShouldReturn = ({
+  move,
+  title,
+}: {
+  move: TestingMove;
+  title: TestingMove["title"];
+}): void => {
+  test(`getTitle() should return {${title}}`, {}, () => {
+    expect(move.getTitle()).toBe(title);
+  });
+};
+
+const getPositionWherePlacePlayerKeyShouldReturn = ({
+  move,
+  positionWherePlacePlayerKey,
+}: {
+  move: TestingMove;
+  positionWherePlacePlayerKey: TestingMove["positionWherePlacePlayerKey"];
+}): void => {
+  test(`getPositionWherePlacePlayerKey() should return {${positionWherePlacePlayerKey}}`, () => {
+    expect(move.getPositionWherePlacePlayerKey()).toBe(
+      positionWherePlacePlayerKey,
+    );
+  });
 };
 
 const testMove = ({
@@ -143,12 +138,12 @@ const testMove = ({
   shouldBeAnInstanceOfItsClass({ move });
   cloneShouldCreateANewInstance({ move });
 
-  getDescriptionShouldBe({ description, move });
-  getPositionWherePlacePlayerKeyShouldBe({
+  getDescriptionShouldReturn({ description, move });
+  getPositionWherePlacePlayerKeyShouldReturn({
     move,
     positionWherePlacePlayerKey,
   });
-  getTitleShouldBe({ move, title });
+  getTitleShouldReturn({ move, title });
 };
 
 const testMoves = (): void => {

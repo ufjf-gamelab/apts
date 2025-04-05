@@ -48,6 +48,4 @@ export default abstract class Move<
   public getTitle(): MoveParams<P, M, S, G>["title"] {
     return this.title;
   }
-
-  public abstract play(state: S): S;
 }

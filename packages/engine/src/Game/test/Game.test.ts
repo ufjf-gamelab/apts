@@ -50,58 +50,58 @@ const cloneShouldCreateANewInstance = ({
 };
 
 const getNameShouldReturn = ({
+  expectedName,
   game,
-  name,
 }: {
+  expectedName: TestingGame["name"];
   game: TestingGame;
-  name: TestingGame["name"];
 }): void => {
-  test(`getName() should return {${name}}`, () => {
-    expect(game.getName()).toBe(name);
+  test(`getName() should return {${expectedName}}`, () => {
+    expect(game.getName()).toBe(expectedName);
   });
 };
 
 const getPlayerShouldReturn = ({
+  expectedPlayer,
   game,
-  player,
   playerKey,
 }: {
+  expectedPlayer: TestingPlayer;
   game: TestingGame;
-  player: TestingPlayer;
   playerKey: TestingPlayerKey;
 }): void => {
   test(`getPlayer(${playerKey}) should return an object equal to the one passed as parameter, but as a different reference`, () => {
     const playerFromGame = game.getPlayer(playerKey);
     expect(playerFromGame).toBeDefined();
     expect(playerFromGame).toBeInstanceOf(TestingPlayer);
-    expect(playerFromGame).not.toBe(player);
-    expect(playerFromGame).toStrictEqual(player);
+    expect(playerFromGame).not.toBe(expectedPlayer);
+    expect(playerFromGame).toStrictEqual(expectedPlayer);
   });
 };
 
 const getPlayersShouldReturn = ({
+  expectedPlayers,
   game,
-  players,
 }: {
+  expectedPlayers: TestingGameParams["players"];
   game: TestingGame;
-  players: TestingGameParams["players"];
 }): void => {
   test("getPlayers() should return an object equal to the one passed as parameter, but as a different reference", () => {
     const playersFromGame = game.getPlayers();
     const playersFromGameAsArray = Array.from(playersFromGame.values());
 
-    expect(playersFromGameAsArray).not.toBe(players);
-    expect(playersFromGameAsArray).toStrictEqual(players);
+    expect(playersFromGameAsArray).not.toBe(expectedPlayers);
+    expect(playersFromGameAsArray).toStrictEqual(expectedPlayers);
 
     for (
       let currentPlayerIndex = 0;
-      currentPlayerIndex < players.length;
+      currentPlayerIndex < expectedPlayers.length;
       currentPlayerIndex += INCREMENT_ONE
     ) {
       const playerFromGame = playersFromGameAsArray[currentPlayerIndex];
       expect(playerFromGame).toBeDefined();
 
-      const player = players[currentPlayerIndex];
+      const player = expectedPlayers[currentPlayerIndex];
       expect(player).toBeDefined();
 
       expect(playerFromGame).toBeInstanceOf(TestingPlayer);
@@ -110,7 +110,7 @@ const getPlayersShouldReturn = ({
     }
   });
 
-  test("modifying the object players received by the game should not change its internal attribute", () => {
+  test("modifying the object players received by the getter should not change its internal attribute", () => {
     const newPlayer = new TestingPlayer({
       name: "Carlos",
       symbol: "C",
@@ -128,46 +128,46 @@ const getPlayersShouldReturn = ({
 };
 
 const getMoveShouldReturn = ({
+  expectedMove,
   game,
-  move,
   moveKey,
 }: {
+  expectedMove: TestingMove;
   game: TestingGame;
-  move: TestingMove;
   moveKey: TestingMoveKey;
 }): void => {
   test(`getMove(${moveKey}) should return an object equal to the one passed as parameter, but as a different reference`, () => {
     const moveFromGame = game.getMove(moveKey);
     expect(moveFromGame).toBeDefined();
     expect(moveFromGame).toBeInstanceOf(TestingMove);
-    expect(moveFromGame).not.toBe(move);
-    expect(moveFromGame).toStrictEqual(move);
+    expect(moveFromGame).not.toBe(expectedMove);
+    expect(moveFromGame).toStrictEqual(expectedMove);
   });
 };
 
 const getMovesShouldReturn = ({
+  expectedMoves,
   game,
-  moves,
 }: {
+  expectedMoves: TestingGameParams["moves"];
   game: TestingGame;
-  moves: TestingGameParams["moves"];
 }): void => {
   test("getMoves() should return an object equal to the one passed as parameter, but as a different reference", () => {
     const movesFromGame = game.getMoves();
     const movesFromGameAsArray = Array.from(movesFromGame.values());
 
-    expect(movesFromGameAsArray).not.toBe(moves);
-    expect(movesFromGameAsArray).toStrictEqual(moves);
+    expect(movesFromGameAsArray).not.toBe(expectedMoves);
+    expect(movesFromGameAsArray).toStrictEqual(expectedMoves);
 
     for (
       let currentMoveIndex = 0;
-      currentMoveIndex < moves.length;
+      currentMoveIndex < expectedMoves.length;
       currentMoveIndex += INCREMENT_ONE
     ) {
       const moveFromGame = movesFromGameAsArray[currentMoveIndex];
       expect(moveFromGame).toBeDefined();
 
-      const move = moves[currentMoveIndex];
+      const move = expectedMoves[currentMoveIndex];
       expect(move).toBeDefined();
 
       expect(moveFromGame).toBeInstanceOf(TestingMove);
@@ -176,7 +176,7 @@ const getMovesShouldReturn = ({
     }
   });
 
-  test("modifying the object moves received by the game should not change its internal attribute", () => {
+  test("modifying the object moves received by the getter should not change its internal attribute", () => {
     const newMove = new TestingMove({
       description: "This is a nowhere move",
       positionWherePlacePlayerKey: 0,
@@ -195,34 +195,54 @@ const getMovesShouldReturn = ({
 };
 
 const getInitialStateShouldReturn = ({
+  expectedState,
   game,
-  state,
 }: {
+  expectedState: TestingState;
   game: TestingGame;
-  state: TestingState;
 }): void => {
   test("getInitialState() should return an object equal to the one passed as parameter, but as a different reference", () => {
     const initialStateFromGame = game.getInitialState();
-    expect(initialStateFromGame).not.toBe(state);
-    expect(initialStateFromGame).toStrictEqual(state);
+    expect(initialStateFromGame).not.toBe(expectedState);
+    expect(initialStateFromGame).toStrictEqual(expectedState);
   });
 };
 
 const getNextPlayerKeyShouldReturn = ({
+  expectedPlayerKey,
   game,
-  playerKey,
   state,
 }: {
+  expectedPlayerKey: TestingPlayerKey;
   game: TestingGame;
-  playerKey: TestingPlayerKey;
   state: TestingState;
 }): void => {
-  test(`getNextPlayerKey() should return {${playerKey}}`, () => {
+  test(`getNextPlayerKey() should return {${expectedPlayerKey}}`, () => {
     const nextPlayerKey = game.getNextPlayerKey(state);
-    expect(nextPlayerKey).toBe(playerKey);
+    expect(nextPlayerKey).toBe(expectedPlayerKey);
   });
 };
 
+const playShouldReturn = ({
+  expectedState,
+  game,
+  move,
+  state,
+}: {
+  expectedState: TestingState;
+  game: TestingGame;
+  move: TestingMove;
+  state: TestingState;
+}): void => {
+  test("play() should return an object equal to the one passed as parameter, but as a different reference", () => {
+    const nextState = game.play(move, state);
+    expect(nextState).toBeInstanceOf(TestingState);
+    expect(nextState).not.toBe(state);
+    expect(nextState).toStrictEqual(expectedState);
+  });
+};
+
+// eslint-disable-next-line max-statements
 const testGame = (): void => {
   const players = createPlayers();
   const moves = createMoves();
@@ -234,40 +254,58 @@ const testGame = (): void => {
   shouldBeAnInstanceOfItsClass({ game });
   cloneShouldCreateANewInstance({ game });
 
-  getNameShouldReturn({ game, name: "Testing game" });
+  getNameShouldReturn({ expectedName: "Testing game", game });
 
   const [playerOne] = players;
   if (typeof playerOne === "undefined") {
     throw new Error("Player One is undefined");
   }
   getPlayerShouldReturn({
+    expectedPlayer: playerOne,
     game,
-    player: playerOne,
     playerKey: TestingPlayerKey.One,
   });
-  getPlayersShouldReturn({ game, players });
+  getPlayersShouldReturn({ expectedPlayers: players, game });
 
   const [moveToNorthwestOfNorthwest] = moves;
   if (typeof moveToNorthwestOfNorthwest === "undefined") {
     throw new Error("Move to Northwest of Northwest is undefined");
   }
   getMoveShouldReturn({
+    expectedMove: moveToNorthwestOfNorthwest,
     game,
-    move: moveToNorthwestOfNorthwest,
     moveKey: TestingMoveKey.NorthwestOfNorthwest,
   });
-  getMovesShouldReturn({ game, moves });
+  getMovesShouldReturn({ expectedMoves: moves, game });
 
   const initialState = new TestingState({
     game,
     playerKey: TestingPlayerKey.One,
     slots: new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(TestingSlot.Empty),
   });
-  getInitialStateShouldReturn({ game, state: initialState });
+  getInitialStateShouldReturn({ expectedState: initialState, game });
 
   getNextPlayerKeyShouldReturn({
+    expectedPlayerKey: TestingPlayerKey.Two,
+    game,
+    state: initialState,
+  });
+
+  const expectedNextSlots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(
+    TestingSlot.Empty,
+  );
+  expectedNextSlots[
+    moveToNorthwestOfNorthwest.getPositionWherePlacePlayerKey()
+  ] = TestingState.getSlotThatRepresentsPlayerKey(TestingPlayerKey.One);
+  const expectedNextState = new TestingState({
     game,
     playerKey: TestingPlayerKey.Two,
+    slots: expectedNextSlots,
+  });
+  playShouldReturn({
+    expectedState: expectedNextState,
+    game,
+    move: moveToNorthwestOfNorthwest,
     state: initialState,
   });
 };

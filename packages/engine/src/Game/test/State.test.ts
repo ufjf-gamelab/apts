@@ -25,7 +25,7 @@ const shouldBeAnInstanceOfItsClass = ({
 }: {
   state: TestingState;
 }): void => {
-  test("state should be an instance of its class", () => {
+  test("state should be an instance of the class {TestingState}", () => {
     expect(state).toBeInstanceOf(TestingState);
   });
 };
@@ -35,7 +35,7 @@ const cloneShouldCreateANewInstance = ({
 }: {
   state: TestingState;
 }): void => {
-  test("clone() should return a new instance of TestingState", () => {
+  test("clone() should return a new instance of {TestingState}", () => {
     const clone = state.clone();
     expect(clone).toBeInstanceOf(TestingState);
     expect(clone).not.toBe(state);
@@ -49,39 +49,39 @@ const cloneShouldCreateANewInstance = ({
   });
 };
 
-const getGameShouldBe = ({
+const getGameShouldReturn = ({
   game,
   state,
 }: {
   game: TestingState["game"];
   state: TestingState;
 }): void => {
-  test("game of state should be equal to the one passed as parameter, but as a different reference", () => {
+  test("getGame() should return an object equal to the one passed as parameter, but as a different reference", () => {
     expect(state.getGame()).not.toBe(game);
-    expect(state.getGame()).toEqual(game);
+    expect(state.getGame()).toStrictEqual(game);
   });
 };
 
-const getPlayerKeyShouldBe = ({
+const getPlayerKeyShouldReturn = ({
   playerKey,
   state,
 }: {
   playerKey: TestingState["playerKey"];
   state: TestingState;
 }): void => {
-  test(`playerKey of state should be {${playerKey}}`, () => {
+  test(`getPlayerKey() should return {${playerKey}}`, () => {
     expect(state.getPlayerKey()).toBe(playerKey);
   });
 };
 
-const getScoreShouldBe = ({
+const getScoreShouldReturn = ({
   players,
   state,
 }: {
   players: TestingPlayer[];
   state: TestingState;
 }): void => {
-  test("score of state should be {[[TestingPlayerKey.Alice, 0], [TestingPlayerKey.Bruno, 0]]}", () => {
+  test("getScore should return {[[TestingPlayerKey.Alice, 0], [TestingPlayerKey.Bruno, 0]]}", () => {
     const score = new Map([
       [players[0], 0],
       [players[1], 0],
@@ -99,7 +99,7 @@ const getScoreShouldBe = ({
     expect(state.getScore()).not.toEqual(score);
   });
 
-  test("changing the score object received by the getter should not change the internal attribute", () => {
+  test("modifying the object score received by the getter should not change the internal attribute", () => {
     const scoreBeforeUpdate = state.getScore();
 
     const [playerOne] = scoreBeforeUpdate.keys();
@@ -117,7 +117,7 @@ const getScoreShouldBe = ({
   });
 };
 
-const getSlotsShouldBe = ({
+const getSlotsShouldReturn = ({
   slots,
   state,
 }: {
@@ -129,7 +129,7 @@ const getSlotsShouldBe = ({
     expect(state.getSlots()).toStrictEqual(slots);
   });
 
-  test("changing the slots object passed as parameter should not change the internal attribute", () => {
+  test("modifying the object slots passed via constructor should not change the internal attribute", () => {
     const slotsBeforeUpdate = [...slots];
     slots[0] = TestingSlot.PlayerOne;
 
@@ -139,7 +139,7 @@ const getSlotsShouldBe = ({
     expect(state.getSlots()).toStrictEqual(slotsBeforeUpdate);
   });
 
-  test("changing the slots object received by the getter should not change the internal attribute", () => {
+  test("modifying the object slots received by the getter should not change the internal attribute", () => {
     const slotsBeforeUpdate = state.getSlots();
     const updatedSlots = state.getSlots();
     updatedSlots[0] = TestingSlot.PlayerTwo;
@@ -151,7 +151,7 @@ const getSlotsShouldBe = ({
   });
 };
 
-const toStringShouldBe = ({ state }: { state: TestingState }): void => {
+const toStringShouldReturn = ({ state }: { state: TestingState }): void => {
   test('toString() should return a matrix of 9x9 in which each slot is surrounded by "|" and its value is shown as "-"', () => {
     expect(state.toString()).toBe(
       "| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n",
@@ -159,8 +159,8 @@ const toStringShouldBe = ({ state }: { state: TestingState }): void => {
   });
 };
 
-const isFinalShouldBe = ({ state }: { state: TestingState }): void => {
-  test("isFinal() should return false", () => {
+const isFinalShouldReturn = ({ state }: { state: TestingState }): void => {
+  test("isFinal() should return {false}", () => {
     expect(state.isFinal()).toBe(false);
   });
 };
@@ -184,15 +184,15 @@ const testState = (): TestingState => {
   shouldBeAnInstanceOfItsClass({ state });
   cloneShouldCreateANewInstance({ state });
 
-  getGameShouldBe({
+  getGameShouldReturn({
     game,
     state,
   });
-  getPlayerKeyShouldBe({ playerKey: TestingPlayerKey.One, state });
-  getScoreShouldBe({ players, state });
-  getSlotsShouldBe({ slots, state });
-  toStringShouldBe({ state });
-  isFinalShouldBe({ state });
+  getPlayerKeyShouldReturn({ playerKey: TestingPlayerKey.One, state });
+  getScoreShouldReturn({ players, state });
+  getSlotsShouldReturn({ slots, state });
+  toStringShouldReturn({ state });
+  isFinalShouldReturn({ state });
 
   return state;
 };

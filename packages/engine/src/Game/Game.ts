@@ -121,6 +121,8 @@ export default abstract class Game<
     return this.moves.size;
   }
 
+  public abstract play(move: M, state: S): S;
+
   protected getQuantityOfSlots(): typeof this.quantityOfSlots {
     return this.quantityOfSlots;
   }

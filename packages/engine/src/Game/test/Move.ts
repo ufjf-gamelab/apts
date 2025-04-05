@@ -2,7 +2,7 @@
 import Move, { type MoveParams } from "../Move.js";
 import type TestingGame from "./Game.js";
 import type TestingPlayer from "./Player.js";
-import TestingState, { TestingSlot } from "./State.js";
+import type TestingState from "./State.js";
 
 enum TestingMoveKey {
   NorthwestOfNorthwest = 0,
@@ -128,31 +128,6 @@ class TestingMove extends Move<
 
   public getPositionWherePlacePlayerKey(): typeof this.positionWherePlacePlayerKey {
     return this.positionWherePlacePlayerKey;
-  }
-
-  public override play(state: TestingState): TestingState {
-    const game = state.getGame();
-    const currentPlayerKey = state.getPlayerKey();
-    const nextPlayerKey = game.getNextPlayerKey(currentPlayerKey);
-
-    const updatedSlots: TestingSlot[] = state.getSlots();
-    const currentSlot = updatedSlots[this.positionWherePlacePlayerKey];
-
-    if (
-      typeof currentSlot !== "undefined" &&
-      currentSlot === TestingSlot.Empty
-    ) {
-      const slotThatRepresentsPlayerKey =
-        TestingState.getSlotThatRepresentsPlayerKey(currentPlayerKey);
-      updatedSlots[this.positionWherePlacePlayerKey] =
-        slotThatRepresentsPlayerKey;
-    }
-
-    return new TestingState({
-      game,
-      playerKey: nextPlayerKey,
-      slots: updatedSlots,
-    });
   }
 }
 

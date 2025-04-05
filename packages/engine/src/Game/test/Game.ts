@@ -60,6 +60,29 @@ class TestingGame extends Game<
         );
     }
   }
+
+  public override play(move: TestingMove, state: TestingState): TestingState {
+    const currentPlayerKey = state.getPlayerKey();
+
+    const updatedSlots: TestingSlot[] = state.getSlots();
+    const currentSlot = updatedSlots[move.getPositionWherePlacePlayerKey()];
+
+    if (
+      typeof currentSlot !== "undefined" &&
+      currentSlot === TestingSlot.Empty
+    ) {
+      const slotThatRepresentsPlayerKey =
+        TestingState.getSlotThatRepresentsPlayerKey(currentPlayerKey);
+      updatedSlots[move.getPositionWherePlacePlayerKey()] =
+        slotThatRepresentsPlayerKey;
+    }
+
+    return new TestingState({
+      game: this,
+      playerKey: this.getNextPlayerKey(state),
+      slots: updatedSlots,
+    });
+  }
 }
 
 export { TestingGame as default, type TestingGameParams };
