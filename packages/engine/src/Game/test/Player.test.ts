@@ -20,18 +20,6 @@ const createPlayers = (): TestingPlayer[] => {
     symbol: "B",
   });
 
-  testPlayer({
-    expectedName: getNameOfPlayerKey(TestingPlayerKey.Alice),
-    expectedSymbol: "A",
-    player: alice,
-  });
-
-  testPlayer({
-    expectedName: getNameOfPlayerKey(TestingPlayerKey.Bruno),
-    expectedSymbol: "B",
-    player: bruno,
-  });
-
   return [alice, bruno];
 };
 
@@ -53,13 +41,13 @@ const cloneShouldCreateANewInstance = (player: TestingPlayer): void => {
   });
 };
 
-const nameShouldBe = (player: TestingPlayer, name: string): void => {
+const getNameShouldBe = (player: TestingPlayer, name: string): void => {
   test(`name of player should be {${name}}`, () => {
     expect(player.getName()).toBe(name);
   });
 };
 
-const symbolShouldBe = (player: TestingPlayer, symbol: Char): void => {
+const getSymbolShouldBe = (player: TestingPlayer, symbol: Char): void => {
   test(`symbol of player should be {${symbol}}`, () => {
     expect(player.getSymbol()).toBe(symbol);
   });
@@ -76,8 +64,8 @@ const testPlayer = ({
 }): void => {
   shouldBeAnInstanceOfItsClass({ player });
   cloneShouldCreateANewInstance(player);
-  nameShouldBe(player, expectedName);
-  symbolShouldBe(player, expectedSymbol);
+  getNameShouldBe(player, expectedName);
+  getSymbolShouldBe(player, expectedSymbol);
 };
 
 const testPlayers = (): void => {

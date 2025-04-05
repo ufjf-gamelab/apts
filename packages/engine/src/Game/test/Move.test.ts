@@ -25,6 +25,40 @@ const formatMoveKeyName = (name: string): string => {
   return `${direction} of ${quadrant} quadrant`;
 };
 
+const createMove = ({
+  moveKey,
+}: {
+  moveKey: string;
+}): {
+  description: TestingMove["description"];
+  move: TestingMove;
+  title: TestingMove["title"];
+} => {
+  const nameOfKey = String(MoveKey[moveKey as keyof typeof MoveKey]);
+  const formattedNameOfKey = formatMoveKeyName(nameOfKey);
+
+  const description = `Control the slot on ${formattedNameOfKey}`;
+  const title = formattedNameOfKey;
+
+  const move = new TestingMove({
+    description,
+    title,
+  });
+  return { description, move, title };
+};
+
+const createMoves = (): TestingMove[] => {
+  const moves: TestingMove[] = [];
+  for (const moveKey in MoveKey) {
+    if (isNaN(Number(moveKey))) {
+      continue;
+    }
+    const { move } = createMove({ moveKey });
+    moves.push(move);
+  }
+  return moves;
+};
+
 const shouldBeAnInstanceOfItsClass = ({
   move,
 }: {
@@ -35,7 +69,7 @@ const shouldBeAnInstanceOfItsClass = ({
   });
 };
 
-const descriptionShouldBe = ({
+const getDescriptionShouldBe = ({
   description,
   move,
 }: {
@@ -47,7 +81,7 @@ const descriptionShouldBe = ({
   });
 };
 
-const titleShouldBe = ({
+const getTitleShouldBe = ({
   move,
   title,
 }: {
@@ -71,28 +105,6 @@ const cloneShouldCreateANewInstance = ({
   });
 };
 
-const createMove = ({
-  moveKey,
-}: {
-  moveKey: string;
-}): {
-  description: TestingMove["description"];
-  move: TestingMove;
-  title: TestingMove["title"];
-} => {
-  const nameOfKey = String(MoveKey[moveKey as keyof typeof MoveKey]);
-  const formattedNameOfKey = formatMoveKeyName(nameOfKey);
-
-  const description = `Control the slot on ${formattedNameOfKey}`;
-  const title = formattedNameOfKey;
-
-  const move = new TestingMove({
-    description,
-    title,
-  });
-  return { description, move, title };
-};
-
 const testMove = ({
   description,
   move,
@@ -103,21 +115,9 @@ const testMove = ({
   title: TestingMove["description"];
 }): void => {
   shouldBeAnInstanceOfItsClass({ move });
-  descriptionShouldBe({ description, move });
-  titleShouldBe({ move, title });
+  getDescriptionShouldBe({ description, move });
+  getTitleShouldBe({ move, title });
   cloneShouldCreateANewInstance({ move });
-};
-
-const createMoves = (): TestingMove[] => {
-  const moves: TestingMove[] = [];
-  for (const moveKey in MoveKey) {
-    if (isNaN(Number(moveKey))) {
-      continue;
-    }
-    const { move } = createMove({ moveKey });
-    moves.push(move);
-  }
-  return moves;
 };
 
 const testMoves = (): void => {

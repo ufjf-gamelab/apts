@@ -10,7 +10,7 @@ const createGame = ({
   players,
 }: Pick<TestingGameParams, "moves" | "players">): TestingGame => {
   const name = "Testing game";
-  const quantityOfSlots = 5;
+  const quantityOfSlots = 81;
   const game = new TestingGame({
     moves,
     name,
@@ -45,7 +45,7 @@ const cloneShouldCreateANewInstance = ({
   });
 };
 
-const nameOfGameShouldBe = ({
+const getNameShouldBe = ({
   game,
   name,
 }: {
@@ -57,57 +57,63 @@ const nameOfGameShouldBe = ({
   });
 };
 
-const playersOfGameShouldBeEqualToTheOnesPassedAsParameterWithDifferentReference =
-  (game: TestingGame, players: TestingGameParams["players"]): void => {
-    test("players of game should be equal to the one passed as parameter with different reference", () => {
-      const playersFromGame = game.getPlayers();
+const getPlayersShouldBe = (
+  game: TestingGame,
+  players: TestingGameParams["players"],
+): void => {
+  test("players of game should be equal to the one passed as parameter with different reference", () => {
+    const playersFromGame = game.getPlayers();
+    const playersFromGameAsArray = Array.from(playersFromGame.values());
 
-      expect(playersFromGame).not.toBe(players);
-      expect(playersFromGame).toStrictEqual(players);
+    expect(playersFromGameAsArray).not.toBe(players);
+    expect(playersFromGameAsArray).toStrictEqual(players);
 
-      for (
-        let currentPlayerIndex = 0;
-        currentPlayerIndex < players.length;
-        currentPlayerIndex += INCREMENT_ONE
-      ) {
-        const playerFromGame = playersFromGame[currentPlayerIndex];
-        expect(playerFromGame).toBeDefined();
+    for (
+      let currentPlayerIndex = 0;
+      currentPlayerIndex < players.length;
+      currentPlayerIndex += INCREMENT_ONE
+    ) {
+      const playerFromGame = playersFromGameAsArray[currentPlayerIndex];
+      expect(playerFromGame).toBeDefined();
 
-        const player = players[currentPlayerIndex];
-        expect(player).toBeDefined();
+      const player = players[currentPlayerIndex];
+      expect(player).toBeDefined();
 
-        expect(playerFromGame).toBeInstanceOf(TestingPlayer);
-        expect(playerFromGame).not.toBe(player);
-        expect(playerFromGame).toStrictEqual(player);
-      }
-    });
-  };
+      expect(playerFromGame).toBeInstanceOf(TestingPlayer);
+      expect(playerFromGame).not.toBe(player);
+      expect(playerFromGame).toStrictEqual(player);
+    }
+  });
+};
 
-const movesOfGameShouldBeEqualToTheOnesPassedAsParameterWithDifferentReference =
-  (game: TestingGame, moves: TestingGameParams["moves"]): void => {
-    test("move of game should be equal to the one passed as parameter with different reference", () => {
-      const movesFromGame = game.getMoves();
+const getMovesShouldBe = (
+  game: TestingGame,
+  moves: TestingGameParams["moves"],
+): void => {
+  test("move of game should be equal to the one passed as parameter with different reference", () => {
+    const movesFromGame = game.getMoves();
+    const movesFromGameAsArray = Array.from(movesFromGame.values());
 
-      expect(movesFromGame).not.toBe(moves);
-      expect(movesFromGame).toStrictEqual(moves);
+    expect(movesFromGameAsArray).not.toBe(moves);
+    expect(movesFromGameAsArray).toStrictEqual(moves);
 
-      for (
-        let currentMoveIndex = 0;
-        currentMoveIndex < moves.length;
-        currentMoveIndex += INCREMENT_ONE
-      ) {
-        const moveFromGame = movesFromGame[currentMoveIndex];
-        expect(moveFromGame).toBeDefined();
+    for (
+      let currentMoveIndex = 0;
+      currentMoveIndex < moves.length;
+      currentMoveIndex += INCREMENT_ONE
+    ) {
+      const moveFromGame = movesFromGameAsArray[currentMoveIndex];
+      expect(moveFromGame).toBeDefined();
 
-        const move = moves[currentMoveIndex];
-        expect(move).toBeDefined();
+      const move = moves[currentMoveIndex];
+      expect(move).toBeDefined();
 
-        expect(moveFromGame).toBeInstanceOf(TestingMove);
-        expect(moveFromGame).not.toBe(move);
-        expect(moveFromGame).toStrictEqual(move);
-      }
-    });
-  };
+      expect(moveFromGame).toBeInstanceOf(TestingMove);
+      expect(moveFromGame).not.toBe(move);
+      expect(moveFromGame).toStrictEqual(move);
+    }
+  });
+};
 
 const testGame = (): void => {
   const players = createPlayers();
@@ -119,15 +125,10 @@ const testGame = (): void => {
 
   shouldBeAnInstanceOfItsClass({ game });
   cloneShouldCreateANewInstance({ game });
-  nameOfGameShouldBe({ game, name: "Testing game" });
-  playersOfGameShouldBeEqualToTheOnesPassedAsParameterWithDifferentReference(
-    game,
-    players,
-  );
-  movesOfGameShouldBeEqualToTheOnesPassedAsParameterWithDifferentReference(
-    game,
-    moves,
-  );
+
+  getNameShouldBe({ game, name: "Testing game" });
+  getPlayersShouldBe(game, players);
+  getMovesShouldBe(game, moves);
 };
 
 testGame();

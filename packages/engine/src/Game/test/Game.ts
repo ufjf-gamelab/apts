@@ -19,9 +19,9 @@ class TestingGame extends Game<
 > {
   public override clone(): TestingGame {
     return new TestingGame({
-      moves: this.getMoves(),
+      moves: Array.from(this.getMoves().values()),
       name: this.getName(),
-      players: this.getPlayers(),
+      players: Array.from(this.getPlayers().values()),
       quantityOfSlots: this.getQuantityOfSlots(),
     });
   }

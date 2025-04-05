@@ -85,8 +85,13 @@ export default abstract class Game<
     return move.clone();
   }
 
-  public getMoves(): GameParams<P, M, S, G>["moves"] {
-    return Array.from(this.moves.values()).map(move => move.clone());
+  public getMoves(): typeof this.moves {
+    return new Map(
+      Array.from(this.moves.entries()).map(([key, move]) => [
+        key,
+        move.clone(),
+      ]),
+    );
   }
 
   public getName(): typeof this.name {
@@ -101,8 +106,13 @@ export default abstract class Game<
     return player.clone();
   }
 
-  public getPlayers(): GameParams<P, M, S, G>["players"] {
-    return Array.from(this.players.values()).map(player => player.clone());
+  public getPlayers(): typeof this.players {
+    return new Map(
+      Array.from(this.players.entries()).map(([key, player]) => [
+        key,
+        player.clone(),
+      ]),
+    );
   }
 
   public getQuantityOfMoves(): Integer {
