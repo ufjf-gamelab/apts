@@ -88,6 +88,22 @@ const getPlayersShouldBe = (
       expect(playerFromGame).toStrictEqual(player);
     }
   });
+
+  test("changing the players object received by the game should not change the internal attribute", () => {
+    const newPlayer = new TestingPlayer({
+      name: "Carlos",
+      symbol: "C",
+    });
+
+    const playersBeforeUpdate = game.getPlayers();
+    const updatedPlayers = game.getPlayers();
+    updatedPlayers.set(TestingPlayerKey.One, newPlayer);
+
+    expect(game.getPlayers()).not.toBe(playersBeforeUpdate);
+    expect(game.getPlayers()).toStrictEqual(playersBeforeUpdate);
+    expect(game.getPlayers()).not.toBe(updatedPlayers);
+    expect(game.getPlayers()).not.toEqual(updatedPlayers);
+  });
 };
 
 const getMovesShouldBe = (
@@ -116,6 +132,23 @@ const getMovesShouldBe = (
       expect(moveFromGame).not.toBe(move);
       expect(moveFromGame).toStrictEqual(move);
     }
+  });
+
+  test("changing the moves object received by the game should not change the internal attribute", () => {
+    const newMove = new TestingMove({
+      description: "This is a nowhere move",
+      positionWherePlacePlayerKey: 0,
+      title: "Nowhere move",
+    });
+
+    const movesBeforeUpdate = game.getMoves();
+    const updatedMoves = game.getMoves();
+    updatedMoves.set(TestingPlayerKey.One, newMove);
+
+    expect(game.getMoves()).not.toBe(movesBeforeUpdate);
+    expect(game.getMoves()).toStrictEqual(movesBeforeUpdate);
+    expect(game.getMoves()).not.toBe(updatedMoves);
+    expect(game.getMoves()).not.toEqual(updatedMoves);
   });
 };
 
@@ -158,4 +191,4 @@ const testGame = (): void => {
 
 testGame();
 
-export { createGame };
+export { createGame, QUANTITY_OF_SLOTS };

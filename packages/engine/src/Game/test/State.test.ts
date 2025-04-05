@@ -1,19 +1,23 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import { expect, test } from "vitest";
 
-import { createGame } from "./Game.test.js";
+import { createGame, QUANTITY_OF_SLOTS } from "./Game.test.js";
 import { createMoves } from "./Move.test.js";
 import { type default as TestingPlayer, TestingPlayerKey } from "./Player.js";
 import { createPlayers } from "./Player.test.js";
-import TestingState, { TestingSlot } from "./State.js";
+import TestingState, { TestingSlot, type TestingStateParams } from "./State.js";
 
-//TODO: test if changing the slots passed as argument to the constructor changes the internal state of the object
-
-const createState = ({ game }: { game: TestingState["game"] }): TestingState =>
+const createState = ({
+  game,
+  slots,
+}: {
+  game: TestingStateParams["game"];
+  slots: TestingStateParams["slots"];
+}): TestingState =>
   new TestingState({
     game,
     playerKey: TestingPlayerKey.One,
-    slots: new Array<TestingSlot>(81).fill(TestingSlot.Empty),
+    slots,
   });
 
 const shouldBeAnInstanceOfItsClass = ({
@@ -62,7 +66,7 @@ const getPlayerKeyShouldBe = ({
   playerKey,
   state,
 }: {
-  playerKey: TestingPlayerKey;
+  playerKey: TestingState["playerKey"];
   state: TestingState;
 }): void => {
   test(`playerKey of state should be {${playerKey}}`, () => {
@@ -94,22 +98,56 @@ const getScoreShouldBe = ({
     expect(state.getScore()).not.toBe(score);
     expect(state.getScore()).not.toEqual(score);
   });
+
+  test("changing the score object received by the getter should not change the internal attribute", () => {
+    const scoreBeforeUpdate = state.getScore();
+
+    const [playerOne] = scoreBeforeUpdate.keys();
+    if (typeof playerOne === "undefined") {
+      throw new Error("Player one is undefined");
+    }
+
+    const updatedScore = state.getScore();
+    updatedScore.set(playerOne, 1);
+
+    expect(state.getScore()).not.toBe(scoreBeforeUpdate);
+    expect(state.getScore()).toStrictEqual(scoreBeforeUpdate);
+    expect(state.getScore()).not.toBe(updatedScore);
+    expect(state.getScore()).not.toEqual(updatedScore);
+  });
 };
 
-const getSlotsShouldBe = ({ state }: { state: TestingState }): void => {
+const getSlotsShouldBe = ({
+  slots,
+  state,
+}: {
+  slots: TestingState["slots"];
+  state: TestingState;
+}): void => {
   test("all slots should be empty", () => {
-    const slots = new Array<TestingSlot>(81).fill(TestingSlot.Empty);
-
     expect(state.getSlots()).not.toBe(slots);
     expect(state.getSlots()).toStrictEqual(slots);
+  });
 
-    const oldSlots = [...slots];
+  test("changing the slots object passed as parameter should not change the internal attribute", () => {
+    const slotsBeforeUpdate = [...slots];
     slots[0] = TestingSlot.PlayerOne;
 
-    expect(state.getSlots()).not.toBe(oldSlots);
-    expect(state.getSlots()).toStrictEqual(oldSlots);
     expect(state.getSlots()).not.toBe(slots);
     expect(state.getSlots()).not.toEqual(slots);
+    expect(state.getSlots()).not.toBe(slotsBeforeUpdate);
+    expect(state.getSlots()).toStrictEqual(slotsBeforeUpdate);
+  });
+
+  test("changing the slots object received by the getter should not change the internal attribute", () => {
+    const slotsBeforeUpdate = state.getSlots();
+    const updatedSlots = state.getSlots();
+    updatedSlots[0] = TestingSlot.PlayerTwo;
+
+    expect(state.getSlots()).not.toBe(slotsBeforeUpdate);
+    expect(state.getSlots()).toStrictEqual(slotsBeforeUpdate);
+    expect(state.getSlots()).not.toBe(updatedSlots);
+    expect(state.getSlots()).not.toEqual(updatedSlots);
   });
 };
 
@@ -134,8 +172,13 @@ const testState = (): TestingState => {
     moves,
     players,
   });
+
+  const slots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(
+    TestingSlot.Empty,
+  );
   const state = createState({
     game,
+    slots,
   });
 
   shouldBeAnInstanceOfItsClass({ state });
@@ -147,7 +190,7 @@ const testState = (): TestingState => {
   });
   getPlayerKeyShouldBe({ playerKey: TestingPlayerKey.One, state });
   getScoreShouldBe({ players, state });
-  getSlotsShouldBe({ state });
+  getSlotsShouldBe({ slots, state });
   toStringShouldBe({ state });
   isFinalShouldBe({ state });
 

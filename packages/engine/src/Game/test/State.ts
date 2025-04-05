@@ -5,6 +5,7 @@ import type TestingGame from "./Game.js";
 import type TestingMove from "./Move.js";
 import { type default as TestingPlayer, TestingPlayerKey } from "./Player.js";
 
+// TODO: Slot should be a class, not an enum
 enum TestingSlot {
   Empty,
   PlayerOne,
@@ -118,4 +119,5 @@ class TestingState extends State<
   }
 }
 
+export type { TestingStateParams };
 export { TestingState as default, TestingSlot };
