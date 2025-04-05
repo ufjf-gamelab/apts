@@ -32,6 +32,7 @@ const createMove = ({
 }): {
   description: TestingMove["description"];
   move: TestingMove;
+  positionWherePlacePlayerKey: TestingMove["positionWherePlacePlayerKey"];
   title: TestingMove["title"];
 } => {
   const nameOfKey = String(MoveKey[moveKey as keyof typeof MoveKey]);
@@ -39,12 +40,14 @@ const createMove = ({
 
   const description = `Control the slot on ${formattedNameOfKey}`;
   const title = formattedNameOfKey;
+  const positionWherePlacePlayerKey = Number(moveKey);
 
   const move = new TestingMove({
     description,
+    positionWherePlacePlayerKey,
     title,
   });
-  return { description, move, title };
+  return { description, move, positionWherePlacePlayerKey, title };
 };
 
 const createMoves = (): TestingMove[] => {
@@ -93,6 +96,20 @@ const getTitleShouldBe = ({
   });
 };
 
+const getPositionWherePlacePlayerKeyShouldBe = ({
+  move,
+  positionWherePlacePlayerKey,
+}: {
+  move: TestingMove;
+  positionWherePlacePlayerKey: TestingMove["positionWherePlacePlayerKey"];
+}): void => {
+  test(`positionWherePlacePlayerKey of move should be {${positionWherePlacePlayerKey}}`, () => {
+    expect(move.getPositionWherePlacePlayerKey()).toBe(
+      positionWherePlacePlayerKey,
+    );
+  });
+};
+
 const cloneShouldCreateANewInstance = ({
   move,
 }: {
@@ -108,16 +125,23 @@ const cloneShouldCreateANewInstance = ({
 const testMove = ({
   description,
   move,
+  positionWherePlacePlayerKey,
   title,
 }: {
   description: TestingMove["description"];
   move: TestingMove;
+  positionWherePlacePlayerKey: TestingMove["positionWherePlacePlayerKey"];
   title: TestingMove["description"];
 }): void => {
   shouldBeAnInstanceOfItsClass({ move });
-  getDescriptionShouldBe({ description, move });
-  getTitleShouldBe({ move, title });
   cloneShouldCreateANewInstance({ move });
+
+  getDescriptionShouldBe({ description, move });
+  getPositionWherePlacePlayerKeyShouldBe({
+    move,
+    positionWherePlacePlayerKey,
+  });
+  getTitleShouldBe({ move, title });
 };
 
 const testMoves = (): void => {
@@ -125,8 +149,9 @@ const testMoves = (): void => {
     if (isNaN(Number(moveKey))) {
       continue;
     }
-    const { description, move, title } = createMove({ moveKey });
-    testMove({ description, move, title });
+    const { description, move, positionWherePlacePlayerKey, title } =
+      createMove({ moveKey });
+    testMove({ description, move, positionWherePlacePlayerKey, title });
   }
 };
 
