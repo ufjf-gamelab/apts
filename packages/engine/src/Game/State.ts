@@ -58,7 +58,11 @@ export default abstract class State<
   }
 
   public getSlot(index: SlotKey): null | Slot {
-    return this.slots[index] ?? null;
+    const slot = this.slots[index];
+    if (typeof slot === "undefined") {
+      return null;
+    }
+    return slot;
   }
 
   public getSlots(): StateParams<P, M, S, G>["slots"] {
@@ -72,6 +76,7 @@ export default abstract class State<
   protected getQuantityOfSlots(): Integer {
     return this.slots.length;
   }
+
   protected abstract initializeScore(): void;
 
   protected setScore(playerKey: PlayerKey, points: Points): void {

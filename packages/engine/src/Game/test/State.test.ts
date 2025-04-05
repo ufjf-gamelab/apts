@@ -56,7 +56,7 @@ const getGameShouldBe = ({
   game: TestingState["game"];
   state: TestingState;
 }): void => {
-  test("game of state should be equal to the one passed as parameter with different reference", () => {
+  test("game of state should be equal to the one passed as parameter, but as a different reference", () => {
     expect(state.getGame()).not.toBe(game);
     expect(state.getGame()).toEqual(game);
   });

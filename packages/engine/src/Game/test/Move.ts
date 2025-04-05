@@ -4,7 +4,7 @@ import type TestingGame from "./Game.js";
 import type TestingPlayer from "./Player.js";
 import TestingState, { TestingSlot } from "./State.js";
 
-enum MoveKey {
+enum TestingMoveKey {
   NorthwestOfNorthwest = 0,
   NorthOfNorthwest = 1,
   NortheastOfNorthwest = 2,
@@ -102,7 +102,7 @@ type TestingMoveParams = MoveParams<
   TestingState,
   TestingGame
 > & {
-  positionWherePlacePlayerKey: MoveKey;
+  positionWherePlacePlayerKey: TestingMoveKey;
 };
 
 class TestingMove extends Move<
@@ -156,4 +156,4 @@ class TestingMove extends Move<
   }
 }
 
-export { TestingMove as default, MoveKey };
+export { TestingMove as default, TestingMoveKey };

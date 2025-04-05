@@ -2,7 +2,7 @@ import { expect, test } from "vitest";
 
 import { INCREMENT_ONE } from "../../constants.js";
 import TestingGame, { type TestingGameParams } from "./Game.js";
-import TestingMove from "./Move.js";
+import { default as TestingMove, TestingMoveKey } from "./Move.js";
 import { createMoves } from "./Move.test.js";
 import TestingPlayer, { TestingPlayerKey } from "./Player.js";
 import { createPlayers } from "./Player.test.js";
@@ -61,11 +61,32 @@ const getNameShouldBe = ({
   });
 };
 
-const getPlayersShouldBe = (
-  game: TestingGame,
-  players: TestingGameParams["players"],
-): void => {
-  test("players of game should be equal to the one passed as parameter with different reference", () => {
+const getPlayerShouldBe = ({
+  game,
+  player,
+  playerKey,
+}: {
+  game: TestingGame;
+  player: TestingPlayer;
+  playerKey: TestingPlayerKey;
+}): void => {
+  test(`player of game should be equal to the one passed as parameter, but as a different reference`, () => {
+    const playerFromGame = game.getPlayer(playerKey);
+    expect(playerFromGame).toBeDefined();
+    expect(playerFromGame).toBeInstanceOf(TestingPlayer);
+    expect(playerFromGame).not.toBe(player);
+    expect(playerFromGame).toStrictEqual(player);
+  });
+};
+
+const getPlayersShouldBe = ({
+  game,
+  players,
+}: {
+  game: TestingGame;
+  players: TestingGameParams["players"];
+}): void => {
+  test("players of game should be equal to the one passed as parameter, but as a different reference", () => {
     const playersFromGame = game.getPlayers();
     const playersFromGameAsArray = Array.from(playersFromGame.values());
 
@@ -106,11 +127,32 @@ const getPlayersShouldBe = (
   });
 };
 
-const getMovesShouldBe = (
-  game: TestingGame,
-  moves: TestingGameParams["moves"],
-): void => {
-  test("move of game should be equal to the one passed as parameter with different reference", () => {
+const getMoveShouldBe = ({
+  game,
+  move,
+  moveKey,
+}: {
+  game: TestingGame;
+  move: TestingMove;
+  moveKey: TestingMoveKey;
+}): void => {
+  test(`move of game should be equal to the one passed as parameter, but as a different reference`, () => {
+    const moveFromGame = game.getMove(moveKey);
+    expect(moveFromGame).toBeDefined();
+    expect(moveFromGame).toBeInstanceOf(TestingMove);
+    expect(moveFromGame).not.toBe(move);
+    expect(moveFromGame).toStrictEqual(move);
+  });
+};
+
+const getMovesShouldBe = ({
+  game,
+  moves,
+}: {
+  game: TestingGame;
+  moves: TestingGameParams["moves"];
+}): void => {
+  test("move of game should be equal to the one passed as parameter, but as a different reference", () => {
     const movesFromGame = game.getMoves();
     const movesFromGameAsArray = Array.from(movesFromGame.values());
 
@@ -159,7 +201,7 @@ const getInitialStateShouldBe = ({
   game: TestingGame;
   state: TestingState;
 }): void => {
-  test("initial state of game should be equal to the one passed as parameter with different reference", () => {
+  test("initial state of game should be equal to the one passed as parameter, but as a different reference", () => {
     const initialStateFromGame = game.getInitialState();
     expect(initialStateFromGame).not.toBe(state);
     expect(initialStateFromGame).toStrictEqual(state);
@@ -178,8 +220,28 @@ const testGame = (): void => {
   cloneShouldCreateANewInstance({ game });
 
   getNameShouldBe({ game, name: "Testing game" });
-  getPlayersShouldBe(game, players);
-  getMovesShouldBe(game, moves);
+
+  const [playerOne] = players;
+  if (typeof playerOne === "undefined") {
+    throw new Error("Player One is undefined");
+  }
+  getPlayerShouldBe({
+    game,
+    player: playerOne,
+    playerKey: TestingPlayerKey.One,
+  });
+  getPlayersShouldBe({ game, players });
+
+  const [moveToNorthwestOfNorthwest] = moves;
+  if (typeof moveToNorthwestOfNorthwest === "undefined") {
+    throw new Error("Move to Northwest of Northwest is undefined");
+  }
+  getMoveShouldBe({
+    game,
+    move: moveToNorthwestOfNorthwest,
+    moveKey: TestingMoveKey.NorthwestOfNorthwest,
+  });
+  getMovesShouldBe({ game, moves });
 
   const initialState = new TestingState({
     game,

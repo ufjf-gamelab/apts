@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 
-import TestingMove, { MoveKey } from "./Move.js";
+import TestingMove, { TestingMoveKey } from "./Move.js";
 
 const formatMoveKeyName = (name: string): string => {
   const location = name.split("Of");
@@ -35,7 +35,9 @@ const createMove = ({
   positionWherePlacePlayerKey: TestingMove["positionWherePlacePlayerKey"];
   title: TestingMove["title"];
 } => {
-  const nameOfKey = String(MoveKey[moveKey as keyof typeof MoveKey]);
+  const nameOfKey = String(
+    TestingMoveKey[moveKey as keyof typeof TestingMoveKey],
+  );
   const formattedNameOfKey = formatMoveKeyName(nameOfKey);
 
   const description = `Control the slot on ${formattedNameOfKey}`;
@@ -52,7 +54,7 @@ const createMove = ({
 
 const createMoves = (): TestingMove[] => {
   const moves: TestingMove[] = [];
-  for (const moveKey in MoveKey) {
+  for (const moveKey in TestingMoveKey) {
     if (isNaN(Number(moveKey))) {
       continue;
     }
@@ -150,7 +152,7 @@ const testMove = ({
 };
 
 const testMoves = (): void => {
-  for (const moveKey in MoveKey) {
+  for (const moveKey in TestingMoveKey) {
     if (isNaN(Number(moveKey))) {
       continue;
     }
