@@ -21,7 +21,7 @@ class TestingGame extends Game<
     return new TestingGame({
       moves: this.getMoves(),
       name: this.getName(),
-      players: Array.from(this.getPlayers().values()),
+      players: this.getPlayers(),
       quantityOfSlots: this.getQuantityOfSlots(),
     });
   }

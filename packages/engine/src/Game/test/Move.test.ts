@@ -25,7 +25,7 @@ const formatMoveKeyName = (name: string): string => {
   return `${direction} of ${quadrant} quadrant`;
 };
 
-const moveShouldBeAnInstanceOfItsClass = ({
+const shouldBeAnInstanceOfItsClass = ({
   move,
 }: {
   move: TestingMove;
@@ -102,7 +102,7 @@ const testMove = ({
   move: TestingMove;
   title: TestingMove["description"];
 }): void => {
-  moveShouldBeAnInstanceOfItsClass({ move });
+  shouldBeAnInstanceOfItsClass({ move });
   descriptionShouldBe({ description, move });
   titleShouldBe({ move, title });
   cloneShouldCreateANewInstance({ move });

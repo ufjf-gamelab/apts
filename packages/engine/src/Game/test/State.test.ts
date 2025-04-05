@@ -2,6 +2,7 @@
 import { expect, test } from "vitest";
 
 import { createGame } from "./Game.test.js";
+import { createMoves } from "./Move.test.js";
 import {
   createPlayers,
   type TestingPlayer,
@@ -9,9 +10,24 @@ import {
 } from "./Player.test.js";
 import TestingState, { TestingSlot } from "./State.js";
 
-const stateShouldBeAnInstanceOfItsClass = (state: TestingState): void => {
+const shouldBeAnInstanceOfItsClass = (state: TestingState): void => {
   test("state should be an instance of its class", () => {
     expect(state).toBeInstanceOf(TestingState);
+  });
+};
+
+const cloneShouldCreateANewInstance = (state: TestingState): void => {
+  test("clone() should return a new instance of TestingState", () => {
+    const clone = state.clone();
+    expect(clone).toBeInstanceOf(TestingState);
+    expect(clone).not.toBe(state);
+    expect(clone.getGame()).toStrictEqual(state.getGame());
+    expect(clone.getGame()).not.toBe(state.getGame());
+    expect(clone.getPlayerKey()).toBe(state.getPlayerKey());
+    expect(clone.getScore()).toStrictEqual(state.getScore());
+    expect(clone.getScore()).not.toBe(state.getScore());
+    expect(clone.getSlots()).toStrictEqual(state.getSlots());
+    expect(clone.getSlots()).not.toBe(state.getSlots());
   });
 };
 
@@ -56,22 +72,28 @@ const getScoreShouldBe = (
 };
 
 const testState = (): TestingState => {
-  const testingPlayers = createPlayers();
+  const players = createPlayers();
+  const moves = createMoves();
+  const game = createGame({
+    moves,
+    players,
+  });
 
   const state = new TestingState({
-    game: testingGame,
+    game,
     playerKey: TestingPlayerKey.Alice,
     slots: new Array<TestingSlot>(81).fill(TestingSlot.Empty),
   });
 
-  stateShouldBeAnInstanceOfItsClass(state);
+  shouldBeAnInstanceOfItsClass(state);
+  cloneShouldCreateANewInstance(state);
   gameOfStateShouldBeEqualToTheOnePassedAsParameterWithDifferentReference(
     state,
-    testingGame,
+    game,
   );
 
   getPlayerKeyShouldBe(state, TestingPlayerKey.Alice);
-  getScoreShouldBe(state);
+  getScoreShouldBe(state, players);
 
   test("all slots should be empty", () => {
     const slots = new Array<TestingSlot>(81).fill(TestingSlot.Empty);
