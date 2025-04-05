@@ -2,20 +2,24 @@ import { expect, test } from "vitest";
 
 import { INCREMENT_ONE } from "../../constants.js";
 import TestingGame, { type TestingGameParams } from "./Game.js";
-import { createMoves, default as TestingMove } from "./Move.test.js";
-import { createPlayers, TestingPlayer } from "./Player.test.js";
+import TestingMove from "./Move.js";
+import { createMoves } from "./Move.test.js";
+import TestingPlayer, { TestingPlayerKey } from "./Player.js";
+import { createPlayers } from "./Player.test.js";
+import { TestingSlot, default as TestingState } from "./State.js";
+
+const QUANTITY_OF_SLOTS = 81;
 
 const createGame = ({
   moves,
   players,
 }: Pick<TestingGameParams, "moves" | "players">): TestingGame => {
   const name = "Testing game";
-  const quantityOfSlots = 81;
   const game = new TestingGame({
     moves,
     name,
     players,
-    quantityOfSlots,
+    quantityOfSlots: QUANTITY_OF_SLOTS,
   });
   return game;
 };
@@ -115,6 +119,20 @@ const getMovesShouldBe = (
   });
 };
 
+const getInitialStateShouldBe = ({
+  game,
+  state,
+}: {
+  game: TestingGame;
+  state: TestingState;
+}): void => {
+  test("initial state of game should be equal to the one passed as parameter with different reference", () => {
+    const initialStateFromGame = game.getInitialState();
+    expect(initialStateFromGame).not.toBe(state);
+    expect(initialStateFromGame).toStrictEqual(state);
+  });
+};
+
 const testGame = (): void => {
   const players = createPlayers();
   const moves = createMoves();
@@ -129,8 +147,15 @@ const testGame = (): void => {
   getNameShouldBe({ game, name: "Testing game" });
   getPlayersShouldBe(game, players);
   getMovesShouldBe(game, moves);
+
+  const initialState = new TestingState({
+    game,
+    playerKey: TestingPlayerKey.One,
+    slots: new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(TestingSlot.Empty),
+  });
+  getInitialStateShouldBe({ game, state: initialState });
 };
 
 testGame();
 
-export { createGame, TestingGame as default };
+export { createGame };

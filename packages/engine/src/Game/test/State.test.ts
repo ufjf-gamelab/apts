@@ -3,17 +3,16 @@ import { expect, test } from "vitest";
 
 import { createGame } from "./Game.test.js";
 import { createMoves } from "./Move.test.js";
-import {
-  createPlayers,
-  type TestingPlayer,
-  TestingPlayerKey,
-} from "./Player.test.js";
+import { type default as TestingPlayer, TestingPlayerKey } from "./Player.js";
+import { createPlayers } from "./Player.test.js";
 import TestingState, { TestingSlot } from "./State.js";
+
+//TODO: test if changing the slots passed as argument to the constructor changes the internal state of the object
 
 const createState = ({ game }: { game: TestingState["game"] }): TestingState =>
   new TestingState({
     game,
-    playerKey: TestingPlayerKey.Alice,
+    playerKey: TestingPlayerKey.One,
     slots: new Array<TestingSlot>(81).fill(TestingSlot.Empty),
   });
 
@@ -105,7 +104,7 @@ const getSlotsShouldBe = ({ state }: { state: TestingState }): void => {
     expect(state.getSlots()).toStrictEqual(slots);
 
     const oldSlots = [...slots];
-    slots[0] = TestingSlot.Alice;
+    slots[0] = TestingSlot.PlayerOne;
 
     expect(state.getSlots()).not.toBe(oldSlots);
     expect(state.getSlots()).toStrictEqual(oldSlots);
@@ -146,7 +145,7 @@ const testState = (): TestingState => {
     game,
     state,
   });
-  getPlayerKeyShouldBe({ playerKey: TestingPlayerKey.Alice, state });
+  getPlayerKeyShouldBe({ playerKey: TestingPlayerKey.One, state });
   getScoreShouldBe({ players, state });
   getSlotsShouldBe({ state });
   toStringShouldBe({ state });
@@ -157,4 +156,4 @@ const testState = (): TestingState => {
 
 testState();
 
-export { TestingState as default };
+export { createState };

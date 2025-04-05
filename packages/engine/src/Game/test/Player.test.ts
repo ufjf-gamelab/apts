@@ -11,12 +11,12 @@ const getNameOfPlayerKey = (playerKey: TestingPlayerKey): string =>
 
 const createPlayers = (): TestingPlayer[] => {
   const alice = new TestingPlayer({
-    name: getNameOfPlayerKey(TestingPlayerKey.Alice),
+    name: getNameOfPlayerKey(TestingPlayerKey.One),
     symbol: "A",
   });
 
   const bruno = new TestingPlayer({
-    name: getNameOfPlayerKey(TestingPlayerKey.Bruno),
+    name: getNameOfPlayerKey(TestingPlayerKey.Two),
     symbol: "B",
   });
 
@@ -84,13 +84,13 @@ const testPlayers = (): void => {
   }
 
   testPlayer({
-    expectedName: getNameOfPlayerKey(TestingPlayerKey.Alice),
+    expectedName: getNameOfPlayerKey(TestingPlayerKey.One),
     expectedSymbol: "A",
     player: alice,
   });
 
   testPlayer({
-    expectedName: getNameOfPlayerKey(TestingPlayerKey.Bruno),
+    expectedName: getNameOfPlayerKey(TestingPlayerKey.Two),
     expectedSymbol: "B",
     player: bruno,
   });
@@ -98,4 +98,4 @@ const testPlayers = (): void => {
 
 testPlayers();
 
-export { createPlayers, TestingPlayer, TestingPlayerKey };
+export { createPlayers };

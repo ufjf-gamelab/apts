@@ -98,6 +98,8 @@ export default abstract class Game<
     return this.name;
   }
 
+  public abstract getNextPlayerKey(playerKey: PlayerKey): PlayerKey;
+
   public getPlayer(playerKey: PlayerKey): null | P {
     const player = this.players.get(playerKey);
     if (typeof player === "undefined") {
@@ -118,8 +120,6 @@ export default abstract class Game<
   public getQuantityOfMoves(): Integer {
     return this.moves.size;
   }
-
-  protected abstract getNextPlayerKey(playerKey: PlayerKey): PlayerKey;
 
   protected getQuantityOfSlots(): typeof this.quantityOfSlots {
     return this.quantityOfSlots;

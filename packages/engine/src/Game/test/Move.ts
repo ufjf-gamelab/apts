@@ -1,7 +1,7 @@
 /* eslint-disable perfectionist/sort-enums */
 import Move, { type MoveParams } from "../Move.js";
 import type TestingGame from "./Game.js";
-import type { TestingPlayer } from "./Player.test.js";
+import type TestingPlayer from "./Player.js";
 import TestingState, { TestingSlot } from "./State.js";
 
 enum MoveKey {
@@ -131,6 +131,10 @@ class TestingMove extends Move<
   }
 
   public override play(state: TestingState): TestingState {
+    const game = state.getGame();
+    const currentPlayerKey = state.getPlayerKey();
+    const nextPlayerKey = game.getNextPlayerKey(currentPlayerKey);
+
     const updatedSlots: TestingSlot[] = state.getSlots();
     const currentSlot = updatedSlots[this.positionWherePlacePlayerKey];
 
@@ -138,12 +142,15 @@ class TestingMove extends Move<
       typeof currentSlot !== "undefined" &&
       currentSlot === TestingSlot.Empty
     ) {
-      updatedSlots[this.positionWherePlacePlayerKey] = state.getPlayerKey();
+      const slotThatRepresentsPlayerKey =
+        TestingState.getSlotThatRepresentsPlayerKey(currentPlayerKey);
+      updatedSlots[this.positionWherePlacePlayerKey] =
+        slotThatRepresentsPlayerKey;
     }
 
     return new TestingState({
-      game: state.getGame(),
-      playerKey: state.getPlayerKey(),
+      game,
+      playerKey: nextPlayerKey,
       slots: updatedSlots,
     });
   }

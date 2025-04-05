@@ -1,11 +1,11 @@
 import Player, { type PlayerParams } from "../Player.js";
 import type TestingGame from "./Game.js";
-import type TestingMove from "./Move.test.js";
+import type TestingMove from "./Move.js";
 import type TestingState from "./State.js";
 
 enum TestingPlayerKey {
-  Alice,
-  Bruno,
+  One,
+  Two,
 }
 
 type TestingPlayerParams = PlayerParams<

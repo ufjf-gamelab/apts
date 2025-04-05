@@ -1,8 +1,8 @@
 import Game, { type GameParams } from "../Game.js";
 import type { PlayerKey } from "../Player.js";
-import type TestingMove from "./Move.test.js";
-import type { TestingPlayer } from "./Player.test.js";
-import type TestingState from "./State.js";
+import type TestingMove from "./Move.js";
+import type TestingPlayer from "./Player.js";
+import TestingState, { TestingSlot } from "./State.js";
 
 type TestingGameParams = GameParams<
   TestingPlayer,
@@ -31,10 +31,23 @@ class TestingGame extends Game<
   }
 
   public override getInitialState(): TestingState {
-    throw new Error("Method not implemented.");
+    const firstPlayerKey = this.getPlayers().keys().next().value;
+    if (typeof firstPlayerKey === "undefined") {
+      throw new Error("No players found");
+    }
+
+    const emptySlots = new Array<TestingSlot>(this.getQuantityOfSlots()).fill(
+      TestingSlot.Empty,
+    );
+
+    return new TestingState({
+      game: this,
+      playerKey: firstPlayerKey,
+      slots: emptySlots,
+    });
   }
 
-  protected override getNextPlayerKey(playerKey: PlayerKey): PlayerKey {
+  public override getNextPlayerKey(playerKey: PlayerKey): PlayerKey {
     throw new Error("Method not implemented.");
   }
 }

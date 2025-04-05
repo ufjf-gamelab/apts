@@ -3,12 +3,12 @@ import { type Integer } from "../../types.js";
 import State, { type StateParams } from "../State.js";
 import type TestingGame from "./Game.js";
 import type TestingMove from "./Move.js";
-import type TestingPlayer from "./Player.js";
+import { type default as TestingPlayer, TestingPlayerKey } from "./Player.js";
 
 enum TestingSlot {
-  Alice,
-  Bruno,
   Empty,
+  PlayerOne,
+  PlayerTwo,
 }
 
 type TestingStateParams = StateParams<
@@ -31,6 +31,19 @@ class TestingState extends State<
   TestingState,
   TestingGame
 > {
+  public static getSlotThatRepresentsPlayerKey(
+    playerKey: TestingPlayerKey,
+  ): TestingSlot {
+    switch (playerKey) {
+      case TestingPlayerKey.One:
+        return TestingSlot.PlayerOne;
+      case TestingPlayerKey.Two:
+        return TestingSlot.PlayerTwo;
+      default:
+        return TestingSlot.Empty;
+    }
+  }
+
   public override changePerspective(): TestingState {
     return this.clone();
   }
@@ -85,10 +98,10 @@ class TestingState extends State<
         const slot = this.getSlots()[row * ROW_LENGTH + column];
         if (slot === TestingSlot.Empty) {
           board += "-";
-        } else if (slot === TestingSlot.Alice) {
-          board += `${TestingSlot.Alice}`;
-        } else if (slot === TestingSlot.Bruno) {
-          board += `${TestingSlot.Bruno}`;
+        } else if (slot === TestingSlot.PlayerOne) {
+          board += `${TestingSlot.PlayerOne}`;
+        } else if (slot === TestingSlot.PlayerTwo) {
+          board += `${TestingSlot.PlayerTwo}`;
         }
         board += " |";
       }

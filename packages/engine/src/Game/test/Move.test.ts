@@ -122,6 +122,11 @@ const cloneShouldCreateANewInstance = ({
   });
 };
 
+const playShouldBe = (): void => {
+  // TODO: Implement this test
+  throw new Error("Method not implemented.");
+};
+
 const testMove = ({
   description,
   move,
@@ -157,4 +162,4 @@ const testMoves = (): void => {
 
 testMoves();
 
-export { createMoves, TestingMove as default };
+export { createMoves };
