@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import { expect, test } from "vitest";
 
+import type { Score } from "../State.js";
 import { createGame, QUANTITY_OF_SLOTS } from "./Game.test.js";
 import { createMoves } from "./Move.test.js";
-import { type default as TestingPlayer, TestingPlayerKey } from "./Player.js";
+import { TestingPlayerKey } from "./Player.js";
 import { createPlayers } from "./Player.test.js";
 import TestingState, { TestingSlot, type TestingStateParams } from "./State.js";
 
@@ -75,28 +76,15 @@ const getPlayerKeyShouldReturn = ({
 };
 
 const getScoreShouldReturn = ({
-  players,
+  expectedScore,
   state,
 }: {
-  players: TestingPlayer[];
+  expectedScore: TestingState["score"];
   state: TestingState;
 }): void => {
   test("getScore should return {[[TestingPlayerKey.Alice, 0], [TestingPlayerKey.Bruno, 0]]}", () => {
-    const score = new Map([
-      [players[0], 0],
-      [players[1], 0],
-    ]);
-
-    expect(state.getScore()).not.toBe(score);
-    expect(state.getScore()).toStrictEqual(score);
-
-    const oldScore = new Map(score);
-    score.set(players[0], 1);
-
-    expect(state.getScore()).not.toBe(oldScore);
-    expect(state.getScore()).toStrictEqual(oldScore);
-    expect(state.getScore()).not.toBe(score);
-    expect(state.getScore()).not.toEqual(score);
+    expect(state.getScore()).not.toBe(expectedScore);
+    expect(state.getScore()).toStrictEqual(expectedScore);
   });
 
   test("modifying the object score received by the getter should not change the internal attribute", () => {
@@ -165,7 +153,7 @@ const isFinalShouldReturn = ({ state }: { state: TestingState }): void => {
   });
 };
 
-const testState = (): TestingState => {
+const testState = (): void => {
   const players = createPlayers();
   const moves = createMoves();
   const game = createGame({
@@ -189,14 +177,16 @@ const testState = (): TestingState => {
     state,
   });
   getPlayerKeyShouldReturn({ expectedPlayerKey: TestingPlayerKey.One, state });
-  getScoreShouldReturn({ players, state });
+
+  const expectedScore: Score = new Map([
+    [TestingPlayerKey.One, 0],
+    [TestingPlayerKey.Two, 0],
+  ]);
+  getScoreShouldReturn({ expectedScore, state });
+
   getSlotsShouldReturn({ expectedSlots: slots, state });
   toStringShouldReturn({ state });
   isFinalShouldReturn({ state });
-
-  return state;
 };
 
 testState();
-
-export { createState };

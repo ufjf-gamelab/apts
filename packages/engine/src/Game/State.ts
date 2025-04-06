@@ -30,7 +30,7 @@ export default abstract class State<
 > {
   private readonly game: StateParams<P, M, S, G>["game"];
   private readonly playerKey: StateParams<P, M, S, G>["playerKey"];
-  private readonly score: Map<P, Points>;
+  private readonly score: Score;
   private readonly slots: StateParams<P, M, S, G>["slots"];
 
   constructor({ game, playerKey, slots }: StateParams<P, M, S, G>) {
@@ -38,7 +38,7 @@ export default abstract class State<
     this.slots = [...slots];
     this.playerKey = playerKey;
     this.score = new Map();
-    this.initializeScore();
+    this.score = this.initializeScore();
   }
 
   public abstract changePerspective(playerKey: PlayerKey): S;
@@ -77,14 +77,5 @@ export default abstract class State<
     return this.slots.length;
   }
 
-  protected abstract initializeScore(): void;
-
-  protected setScore(playerKey: PlayerKey, points: Points): void {
-    const player = this.game.getPlayer(playerKey);
-    if (player === null) {
-      throw new Error(`Player with key ${playerKey} not found.`);
-    } else {
-      this.score.set(player, points);
-    }
-  }
+  protected abstract initializeScore(): Score;
 }

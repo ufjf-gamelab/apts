@@ -1,6 +1,6 @@
 import { INCREMENT_ONE } from "../../constants.js";
 import { type Integer } from "../../types.js";
-import State, { type StateParams } from "../State.js";
+import State, { type Score, type StateParams } from "../State.js";
 import type TestingGame from "./Game.js";
 import type TestingMove from "./Move.js";
 import { type default as TestingPlayer, TestingPlayerKey } from "./Player.js";
@@ -111,11 +111,12 @@ class TestingState extends State<
     return board;
   }
 
-  protected override initializeScore(): void {
-    for (const player of this.getGame().getPlayers()) {
-      const [playerKey] = player;
-      this.setScore(playerKey, INITIAL_AMOUNT_OF_POINTS);
+  protected override initializeScore(): Score {
+    const score: Score = new Map();
+    for (const [playerKey] of this.getGame().getPlayers()) {
+      score.set(playerKey, INITIAL_AMOUNT_OF_POINTS);
     }
+    return score;
   }
 }
 

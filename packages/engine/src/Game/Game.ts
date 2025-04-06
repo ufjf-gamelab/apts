@@ -3,12 +3,14 @@ import type { default as Move, MoveKey } from "./Move.js";
 import type { default as Player, PlayerKey } from "./Player.js";
 import type State from "./State.js";
 
-export enum Pixel {
+enum Pixel {
   Off = 0,
   On = 1,
 }
-export type EncodedState = Pixel[][][];
-export interface GameParams<
+type Channel = Integer;
+type EncodedState = Pixel[][][];
+
+interface GameParams<
   P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
@@ -20,17 +22,29 @@ export interface GameParams<
   readonly quantityOfSlots: Integer;
 }
 
-type Channel = Integer;
+type Moves<
+  P extends Player<P, M, S, G>,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
+> = Map<MoveKey, M>;
 
-export default abstract class Game<
+type Players<
+  P extends Player<P, M, S, G>,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
+> = Map<PlayerKey, P>;
+
+abstract class Game<
   P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
 > {
-  private readonly moves: Map<MoveKey, M>;
+  private readonly moves: Moves<P, M, S, G>;
   private readonly name: GameParams<P, M, S, G>["name"];
-  private readonly players: Map<PlayerKey, P>;
+  private readonly players: Players<P, M, S, G>;
   private readonly quantityOfSlots: GameParams<P, M, S, G>["quantityOfSlots"];
 
   constructor({
@@ -121,9 +135,14 @@ export default abstract class Game<
     return this.moves.size;
   }
 
+  public abstract getValidMoves({ state }: { state: S }): Moves<P, M, S, G>;
+
   public abstract play(move: M, state: S): S;
 
   protected getQuantityOfSlots(): typeof this.quantityOfSlots {
     return this.quantityOfSlots;
   }
 }
+
+export type { GameParams, Moves, Players };
+export { Game as default };

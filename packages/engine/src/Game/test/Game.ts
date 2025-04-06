@@ -1,10 +1,15 @@
-import Game, { type GameParams } from "../Game.js";
+import Game, { type GameParams, type Moves } from "../Game.js";
 import type { PlayerKey } from "../Player.js";
-import type TestingMove from "./Move.js";
+import { type default as TestingMove, type TestingMoveKey } from "./Move.js";
 import { type default as TestingPlayer, TestingPlayerKey } from "./Player.js";
 import TestingState, { TestingSlot } from "./State.js";
 
-type TestingGameParams = GameParams<
+type TestingGameParams = Pick<
+  GameParams<TestingPlayer, TestingMove, TestingState, TestingGame>,
+  "moves" | "name" | "players"
+>;
+
+type TestingMoves = Moves<
   TestingPlayer,
   TestingMove,
   TestingState,
@@ -17,12 +22,20 @@ class TestingGame extends Game<
   TestingState,
   TestingGame
 > {
+  public constructor({ moves, name, players }: TestingGameParams) {
+    super({
+      moves,
+      name,
+      players,
+      quantityOfSlots: 81,
+    });
+  }
+
   public override clone(): TestingGame {
     return new TestingGame({
       moves: Array.from(this.getMoves().values()),
       name: this.getName(),
       players: Array.from(this.getPlayers().values()),
-      quantityOfSlots: this.getQuantityOfSlots(),
     });
   }
 
@@ -61,6 +74,29 @@ class TestingGame extends Game<
     }
   }
 
+  public override getValidMoves({
+    state,
+  }: {
+    state: TestingState;
+  }): TestingMoves {
+    const playerKey = state.getPlayerKey();
+    const player = this.getPlayer(playerKey);
+    if (player === null) {
+      return new Map();
+    }
+
+    const slots = state.getSlots();
+    const validMoves = Array.from(this.getMoves().entries()).filter(
+      ([, move]: [TestingMoveKey, TestingMove]) => {
+        const positionWherePlacePlayerKey =
+          move.getPositionWherePlacePlayerKey();
+        const slot = slots[positionWherePlacePlayerKey];
+        return slot === TestingSlot.Empty;
+      },
+    );
+    return new Map(validMoves);
+  }
+
   public override play(move: TestingMove, state: TestingState): TestingState {
     const currentPlayerKey = state.getPlayerKey();
 
@@ -85,4 +121,5 @@ class TestingGame extends Game<
   }
 }
 
-export { TestingGame as default, type TestingGameParams };
+export type { TestingGameParams, TestingMoves };
+export { TestingGame as default };

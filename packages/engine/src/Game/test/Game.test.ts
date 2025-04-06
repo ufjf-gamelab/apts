@@ -1,7 +1,10 @@
 import { expect, test } from "vitest";
 
 import { INCREMENT_ONE } from "../../constants.js";
-import TestingGame, { type TestingGameParams } from "./Game.js";
+import TestingGame, {
+  type TestingGameParams,
+  type TestingMoves,
+} from "./Game.js";
 import { default as TestingMove, TestingMoveKey } from "./Move.js";
 import { createMoves } from "./Move.test.js";
 import TestingPlayer, { TestingPlayerKey } from "./Player.js";
@@ -9,6 +12,8 @@ import { createPlayers } from "./Player.test.js";
 import { TestingSlot, default as TestingState } from "./State.js";
 
 const QUANTITY_OF_SLOTS = 81;
+
+/* Setup */
 
 const createGame = ({
   moves,
@@ -19,10 +24,11 @@ const createGame = ({
     moves,
     name,
     players,
-    quantityOfSlots: QUANTITY_OF_SLOTS,
   });
   return game;
 };
+
+/* Expected results */
 
 const shouldBeAnInstanceOfItsClass = ({
   game,
@@ -223,6 +229,22 @@ const getNextPlayerKeyShouldReturn = ({
   });
 };
 
+const getValidMovesShouldReturn = ({
+  expectedValidMoves,
+  game,
+  state,
+}: {
+  expectedValidMoves: TestingMoves;
+  game: TestingGame;
+  state: TestingState;
+}): void => {
+  test("getValidMoves() should return an object equal to the one passed as parameter, but as a different reference", () => {
+    const validMovesFromGame = game.getValidMoves({ state });
+    expect(validMovesFromGame).not.toBe(expectedValidMoves);
+    expect(validMovesFromGame).toStrictEqual(expectedValidMoves);
+  });
+};
+
 const playShouldReturn = ({
   expectedState,
   game,
@@ -240,6 +262,46 @@ const playShouldReturn = ({
     expect(nextState).not.toBe(state);
     expect(nextState).toStrictEqual(expectedState);
   });
+};
+
+/* Tests */
+
+const testValidMoves = (): void => {
+  const playersList = createPlayers();
+  const movesList = createMoves();
+  const game = createGame({
+    moves: movesList,
+    players: playersList,
+  });
+
+  const testFromInitialState = (): void => {
+    getValidMovesShouldReturn({
+      expectedValidMoves: game.getMoves(),
+      game,
+      state: game.getInitialState(),
+    });
+  };
+  testFromInitialState();
+
+  const testAfterPlayingMoveNorthwestOfNorthwest = (): void => {
+    const [moveNorthwestOfNorthwest] = movesList;
+    if (typeof moveNorthwestOfNorthwest === "undefined") {
+      throw new Error("Move Northwest of Northwest is undefined");
+    }
+
+    let state = game.getInitialState();
+    state = game.play(moveNorthwestOfNorthwest, state);
+
+    const expectedValidMoves = game.getMoves();
+    expectedValidMoves.delete(TestingMoveKey.NorthwestOfNorthwest);
+
+    getValidMovesShouldReturn({
+      expectedValidMoves,
+      game,
+      state,
+    });
+  };
+  testAfterPlayingMoveNorthwestOfNorthwest();
 };
 
 // eslint-disable-next-line max-statements
@@ -308,6 +370,8 @@ const testGame = (): void => {
     move: moveToNorthwestOfNorthwest,
     state: initialState,
   });
+
+  testValidMoves();
 };
 
 testGame();
