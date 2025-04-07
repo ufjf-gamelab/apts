@@ -26,11 +26,11 @@ const createState = ({
   });
 
 const createInitialState = (): TestingState => {
-  const movesList = createMoves().map(({ move }) => move);
-  const playersList = createPlayers();
-  const game = createGame({
-    movesList,
-    playersList,
+  const moves = createMoves();
+  const players = createPlayers();
+  const { game } = createGame({
+    moves,
+    players,
   });
   const slots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(null);
   return new TestingState({

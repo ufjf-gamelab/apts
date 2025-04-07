@@ -24,7 +24,7 @@ const formatMoveKeyName = (name: string): string => {
 interface CreatedMoveAndRelatedData {
   description: TestingMove["description"];
   move: TestingMove;
-  nameOfMoveKey: keyof typeof TestingMoveKey;
+  nameOfMoveKey: TestingMoveKey;
   positionWherePlacePlayerKey: TestingMove["positionWherePlacePlayerKey"];
   title: TestingMove["title"];
   valueOfMoveKey: TestingMoveKey;
