@@ -1,18 +1,19 @@
 import { expect, test } from "vitest";
 
-import type { default as TestingGame, TestingMoves } from "../Game.js";
+import type { TestingMoves } from "../Game.js";
 import TestingMove from "../Move.js";
+import type { CreatedMoveAndRelatedData } from "../Move/setup.js";
 import { TestingPlayerKey } from "../Player.js";
-import { setupGame } from "./setup.js";
+import { setupGame, type TestGameParams } from "./setup.js";
 
 const getMovesShouldReturn = ({
   expectedMoves,
   game,
-}: {
+  testDescriptor,
+}: TestGameParams & {
   expectedMoves: TestingMoves;
-  game: TestingGame;
 }): void => {
-  test("getMoves() should return an object equal to the one passed as parameter, but as a different reference", () => {
+  test(`${testDescriptor}: getMoves() should return an object equal to the one passed as parameter, but as a different reference`, () => {
     const moves = game.getMoves();
 
     expect(moves).not.toBe(expectedMoves);
@@ -45,13 +46,20 @@ const getMovesShouldReturn = ({
   });
 };
 
-const testGetMoves = (): void => {
-  const { game, movesList } = setupGame();
-
+const testGetMoves = ({
+  game,
+  moves,
+  testDescriptor,
+}: TestGameParams & { moves: CreatedMoveAndRelatedData[] }): void => {
   const expectedMoves: TestingMoves = new Map(
-    movesList.map((move, index) => [index, move.clone()]),
+    moves.map(({ move }, index) => [index, move.clone()]),
   );
-  getMovesShouldReturn({ expectedMoves, game });
+  getMovesShouldReturn({ expectedMoves, game, testDescriptor });
 };
 
-testGetMoves();
+const testGetMovesForCommonGame = (): void => {
+  const { game, moves } = setupGame();
+  testGetMoves({ game, moves, testDescriptor: "common" });
+};
+
+testGetMovesForCommonGame();

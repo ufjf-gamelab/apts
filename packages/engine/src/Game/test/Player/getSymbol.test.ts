@@ -27,24 +27,13 @@ const testGetSymbol = ({
 };
 
 const testGetSymbolForEveryPlayer = (): void => {
-  const [alice, bruno] = createPlayers();
-
-  if (typeof alice === "undefined") {
-    throw new Error("Player Alice is not defined");
-  }
-  testGetSymbol({
-    expectedSymbol: "X",
-    player: alice,
-    testDescriptor: "Alice",
-  });
-
-  if (typeof bruno === "undefined") {
-    throw new Error("Player Bruno is not defined");
-  }
-  testGetSymbol({
-    expectedSymbol: "O",
-    player: bruno,
-    testDescriptor: "Bruno",
+  const players = createPlayers();
+  players.forEach(({ nameOfPlayerKey, player, symbol }) => {
+    testGetSymbol({
+      expectedSymbol: symbol,
+      player,
+      testDescriptor: nameOfPlayerKey,
+    });
   });
 };
 

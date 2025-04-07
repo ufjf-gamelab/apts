@@ -21,9 +21,8 @@ const testConstructor = ({
 
 const testConstructorForEveryPlayer = (): void => {
   const players = createPlayers();
-  players.forEach(player => {
-    const testDescriptor = player.getName();
-    testConstructor({ player, testDescriptor });
+  players.forEach(({ nameOfPlayerKey, player }) => {
+    testConstructor({ player, testDescriptor: nameOfPlayerKey });
   });
 };
 

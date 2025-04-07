@@ -20,9 +20,8 @@ const testClone = ({ player, testDescriptor }: TestPlayerParams): void => {
 
 const testCloneForEveryPlayer = (): void => {
   const players = createPlayers();
-  players.forEach(player => {
-    const testDescriptor = player.getName();
-    testClone({ player, testDescriptor });
+  players.forEach(({ nameOfPlayerKey, player }) => {
+    testClone({ player, testDescriptor: nameOfPlayerKey });
   });
 };
 

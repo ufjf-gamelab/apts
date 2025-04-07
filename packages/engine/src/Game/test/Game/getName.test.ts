@@ -1,14 +1,13 @@
 import { expect, test } from "vitest";
 
 import type TestingGame from "../Game.js";
-import { setupGame } from "./setup.js";
+import { setupGame, type TestGameParams } from "./setup.js";
 
 const getNameShouldReturn = ({
   expectedName,
   game,
-}: {
+}: TestGameParams & {
   expectedName: TestingGame["name"];
-  game: TestingGame;
 }): void => {
   test(`getName() should return {${expectedName}}`, () => {
     const name = game.getName();
@@ -16,9 +15,13 @@ const getNameShouldReturn = ({
   });
 };
 
-const testGetName = (): void => {
-  const { game } = setupGame();
-  getNameShouldReturn({ expectedName: "Testing game", game });
+const testGetName = ({ game, testDescriptor }: TestGameParams): void => {
+  getNameShouldReturn({ expectedName: "Testing game", game, testDescriptor });
 };
 
-testGetName();
+const testGetNameForCommonGame = (): void => {
+  const { game } = setupGame();
+  testGetName({ game, testDescriptor: "common" });
+};
+
+testGetNameForCommonGame();

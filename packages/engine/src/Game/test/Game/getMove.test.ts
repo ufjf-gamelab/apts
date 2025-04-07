@@ -1,19 +1,19 @@
 import { expect, test } from "vitest";
 
-import type TestingGame from "../Game.js";
-import TestingMove, { TestingMoveKey } from "../Move.js";
-import { setupGame } from "./setup.js";
+import TestingMove, { type TestingMoveKey } from "../Move.js";
+import type { CreatedMoveAndRelatedData } from "../Move/setup.js";
+import { setupGame, type TestGameParams } from "./setup.js";
 
 const getMoveShouldReturn = ({
   expectedMove,
   game,
   moveKey,
-}: {
+  testDescriptor,
+}: TestGameParams & {
   expectedMove: TestingMove;
-  game: TestingGame;
   moveKey: TestingMoveKey;
 }): void => {
-  test(`getMove(${moveKey}) should return an object equal to the one passed as parameter, but as a different reference`, () => {
+  test(`${testDescriptor}: getMove(${moveKey}) should return {${expectedMove.getTitle()}}`, () => {
     const moveFromGame = game.getMove(moveKey);
     expect(moveFromGame).toBeDefined();
     expect(moveFromGame).toBeInstanceOf(TestingMove);
@@ -22,20 +22,28 @@ const getMoveShouldReturn = ({
   });
 };
 
-const testGetMove = (): void => {
-  const { game, movesList } = setupGame();
-
-  const [moveToNorthwestOfNorthwest] = movesList;
-  if (typeof moveToNorthwestOfNorthwest === "undefined") {
-    throw new Error("Move to Northwest of Northwest is undefined");
-  }
-
-  // TODO: Loop to test every move
-  getMoveShouldReturn({
-    expectedMove: moveToNorthwestOfNorthwest,
-    game,
-    moveKey: TestingMoveKey.NorthwestOfNorthwest,
+const testGetMove = ({
+  game,
+  moves,
+  testDescriptor,
+}: TestGameParams & { moves: CreatedMoveAndRelatedData[] }): void => {
+  moves.forEach(({ move }, index) => {
+    getMoveShouldReturn({
+      expectedMove: move,
+      game,
+      moveKey: index,
+      testDescriptor,
+    });
   });
 };
 
-testGetMove();
+const testGetMoveForCommonGame = (): void => {
+  const { game, moves } = setupGame();
+  testGetMove({
+    game,
+    moves,
+    testDescriptor: "common",
+  });
+};
+
+testGetMoveForCommonGame();

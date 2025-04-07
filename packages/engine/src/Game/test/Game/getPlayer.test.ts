@@ -1,21 +1,19 @@
 import { expect, test } from "vitest";
 
-import type { default as TestingGame, TestingPlayers } from "../Game.js";
-import TestingPlayer, { TestingPlayerKey } from "../Player.js";
-import { setupGame } from "./setup.js";
+import TestingPlayer, { type TestingPlayerKey } from "../Player.js";
+import type { CreatedPlayerAndRelatedData } from "../Player/setup.js";
+import { setupGame, type TestGameParams } from "./setup.js";
 
 const getPlayerShouldReturn = ({
   expectedPlayer,
   game,
-  playerDescriptor,
   playerKey,
-}: {
+  testDescriptor,
+}: TestGameParams & {
   expectedPlayer: TestingPlayer;
-  game: TestingGame;
-  playerDescriptor: string;
   playerKey: TestingPlayerKey;
 }): void => {
-  test(`getPlayer(${playerDescriptor}) should return an object equal to the one passed as parameter, but as a different reference`, () => {
+  test(`${testDescriptor}: getPlayer(${playerKey}) should return an object equal to the one passed as parameter, but as a different reference`, () => {
     const player = game.getPlayer(playerKey);
     expect(player).toBeDefined();
     expect(player).toBeInstanceOf(TestingPlayer);
@@ -24,33 +22,23 @@ const getPlayerShouldReturn = ({
   });
 };
 
-const testGetPlayer = (): void => {
-  const { game, playersList } = setupGame();
-
-  const [playerOne] = playersList;
-  if (typeof playerOne === "undefined") {
-    throw new Error("Player One is undefined");
-  }
-  const [, playerTwo] = playersList;
-  if (typeof playerTwo === "undefined") {
-    throw new Error("Player Two is undefined");
-  }
-
-  const expectedPlayers: TestingPlayers = new Map();
-  expectedPlayers.set(TestingPlayerKey.One, playerOne);
-  expectedPlayers.set(TestingPlayerKey.Two, playerTwo);
-
-  for (const [playerKey, player] of expectedPlayers) {
-    const nameOfKey = String(
-      TestingPlayerKey[playerKey.toString() as keyof typeof TestingPlayerKey],
-    );
+const testGetPlayer = ({
+  game,
+  players,
+  testDescriptor,
+}: TestGameParams & { players: CreatedPlayerAndRelatedData[] }): void => {
+  players.forEach(({ player }, index) => {
     getPlayerShouldReturn({
       expectedPlayer: player,
       game,
-      playerDescriptor: nameOfKey,
-      playerKey,
+      playerKey: index,
+      testDescriptor,
     });
-  }
+  });
+};
+const testGetPlayerForCommonGame = (): void => {
+  const { game, players } = setupGame();
+  testGetPlayer({ game, players, testDescriptor: "common" });
 };
 
-testGetPlayer();
+testGetPlayerForCommonGame();

@@ -27,24 +27,13 @@ const testGetName = ({
 };
 
 const testGetNameForEveryPlayer = (): void => {
-  const [alice, bruno] = createPlayers();
-
-  if (typeof alice === "undefined") {
-    throw new Error("Player Alice is not defined");
-  }
-  testGetName({
-    expectedName: "Alice",
-    player: alice,
-    testDescriptor: "Alice",
-  });
-
-  if (typeof bruno === "undefined") {
-    throw new Error("Player Bruno is not defined");
-  }
-  testGetName({
-    expectedName: "Bruno",
-    player: bruno,
-    testDescriptor: "Bruno",
+  const players = createPlayers();
+  players.forEach(({ name, nameOfPlayerKey, player }) => {
+    testGetName({
+      expectedName: name,
+      player,
+      testDescriptor: nameOfPlayerKey,
+    });
   });
 };
 

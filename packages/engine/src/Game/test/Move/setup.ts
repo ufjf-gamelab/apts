@@ -11,33 +11,36 @@ const formatMoveKeyName = (name: string): string => {
   if (typeof direction !== "string" || typeof quadrant !== "string") {
     throw new Error("Invalid move key name");
   }
-  const formattedQuadrant = direction
-    .replace(/(?<quadrant>[A-Z])/gu, " $1")
-    .trim();
-  const formattedDirection = quadrant
+  const formattedDirection = direction
     .replace(/(?<direction>[A-Z])/gu, " $1")
+    .trim();
+  const formattedQuadrant = quadrant
+    .replace(/(?<quadrant>[A-Z])/gu, " $1")
     .trim();
 
   return `${formattedDirection} of ${formattedQuadrant} quadrant`;
 };
 
-const createMove = ({
-  moveKey,
-  nameOfMoveKey,
-}: {
-  moveKey: TestingMoveKey;
-  nameOfMoveKey: keyof typeof TestingMoveKey;
-}): {
+interface CreatedMoveAndRelatedData {
   description: TestingMove["description"];
   move: TestingMove;
+  nameOfMoveKey: keyof typeof TestingMoveKey;
   positionWherePlacePlayerKey: TestingMove["positionWherePlacePlayerKey"];
   title: TestingMove["title"];
-} => {
-  const formattedNameOfKey = formatMoveKeyName(nameOfMoveKey);
+  valueOfMoveKey: TestingMoveKey;
+}
 
+const createMove = ({
+  nameOfMoveKey,
+  valueOfMoveKey,
+}: {
+  nameOfMoveKey: keyof typeof TestingMoveKey;
+  valueOfMoveKey: TestingMoveKey;
+}): CreatedMoveAndRelatedData => {
+  const formattedNameOfKey = formatMoveKeyName(nameOfMoveKey);
   const description = `Control the slot on ${formattedNameOfKey}`;
   const title = formattedNameOfKey;
-  const positionWherePlacePlayerKey = moveKey;
+  const positionWherePlacePlayerKey = valueOfMoveKey;
 
   const move = new TestingMove({
     description,
@@ -45,14 +48,17 @@ const createMove = ({
     title,
   });
 
-  return { description, move, positionWherePlacePlayerKey, title };
+  return {
+    description,
+    move,
+    nameOfMoveKey,
+    positionWherePlacePlayerKey,
+    title,
+    valueOfMoveKey,
+  };
 };
 
-const createMoves = (): {
-  move: TestingMove;
-  nameOfMoveKey: keyof typeof TestingMoveKey;
-  valueOfMoveKey: TestingMoveKey;
-}[] => {
+const createMoves = (): CreatedMoveAndRelatedData[] => {
   const namesOfMoveKeys: (keyof typeof TestingMoveKey)[] = Object.keys(
     TestingMoveKey,
   ).filter(
@@ -63,17 +69,12 @@ const createMoves = (): {
 
   return namesOfMoveKeys.map(nameOfMoveKey => {
     const valueOfMoveKey: TestingMoveKey = TestingMoveKey[nameOfMoveKey];
-    const move = createMove({
-      moveKey: valueOfMoveKey,
-      nameOfMoveKey,
-    });
-    return {
-      move: move.move,
+    return createMove({
       nameOfMoveKey,
       valueOfMoveKey,
-    };
+    });
   });
 };
 
-export type { TestMoveParams };
+export type { CreatedMoveAndRelatedData, TestMoveParams };
 export { createMove, createMoves, formatMoveKeyName };

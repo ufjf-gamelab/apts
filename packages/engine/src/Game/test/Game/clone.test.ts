@@ -1,14 +1,13 @@
 import { expect, test } from "vitest";
 
 import TestingGame from "../Game.js";
-import { setupGame } from "./setup.js";
+import { setupGame, type TestGameParams } from "./setup.js";
 
 const cloneShouldCreateANewInstance = ({
   game,
-}: {
-  game: TestingGame;
-}): void => {
-  test("clone() should return a new instance of {TestingGame}", () => {
+  testDescriptor,
+}: TestGameParams): void => {
+  test(`${testDescriptor}: clone() should return a new instance of {TestingGame}`, () => {
     const clone = game.clone();
     expect(clone).toBeInstanceOf(TestingGame);
     expect(clone).not.toBe(game);
@@ -18,9 +17,13 @@ const cloneShouldCreateANewInstance = ({
   });
 };
 
-const testClone = (): void => {
-  const { game } = setupGame();
-  cloneShouldCreateANewInstance({ game });
+const testClone = ({ game, testDescriptor }: TestGameParams): void => {
+  cloneShouldCreateANewInstance({ game, testDescriptor });
 };
 
-testClone();
+const testCloneForCommonGame = (): void => {
+  const { game } = setupGame();
+  testClone({ game, testDescriptor: "common" });
+};
+
+testCloneForCommonGame();
