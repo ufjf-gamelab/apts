@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { expect, test } from "vitest";
 
 import type TestingGame from "../Game.js";
 import { type default as TestingMove, TestingMoveKey } from "../Move.js";
