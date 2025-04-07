@@ -1,16 +1,12 @@
 import { INCREMENT_ONE } from "../../constants.js";
 import { type Integer } from "../../types.js";
-import State, { type Score, type StateParams } from "../State.js";
+import State, { type Score, type Slot, type StateParams } from "../State.js";
+import TestingContent from "./Content.js";
 import type TestingGame from "./Game.js";
 import type TestingMove from "./Move.js";
 import { type default as TestingPlayer, TestingPlayerKey } from "./Player.js";
 
-// TODO: Slot should be a class, not an enum
-enum TestingSlot {
-  Empty,
-  PlayerOne,
-  PlayerTwo,
-}
+type TestingSlot = Slot<TestingPlayer, TestingMove, TestingState, TestingGame>;
 
 type TestingStateParams = StateParams<
   TestingPlayer,
@@ -37,11 +33,12 @@ class TestingState extends State<
   ): TestingSlot {
     switch (playerKey) {
       case TestingPlayerKey.One:
-        return TestingSlot.PlayerOne;
       case TestingPlayerKey.Two:
-        return TestingSlot.PlayerTwo;
+        return new TestingContent({
+          playerKey,
+        });
       default:
-        return TestingSlot.Empty;
+        return null;
     }
   }
 
@@ -66,7 +63,7 @@ class TestingState extends State<
    */
   public override isFinal(): boolean {
     const amountOfFilledSlots = this.getSlots().filter(
-      (slot: TestingSlot) => slot !== TestingSlot.Empty,
+      (slot: TestingSlot) => slot !== null,
     ).length;
     if (amountOfFilledSlots === AMOUNT_OF_SLOTS_TO_FINISH_MATCH) {
       return true;
@@ -96,13 +93,12 @@ class TestingState extends State<
         column += INCREMENT_ONE
       ) {
         board += " ";
-        const slot = this.getSlots()[row * ROW_LENGTH + column];
-        if (slot === TestingSlot.Empty) {
+        const slot = this.getSlot(row * ROW_LENGTH + column);
+        if (slot === null) {
           board += "-";
-        } else if (slot === TestingSlot.PlayerOne) {
-          board += `${TestingSlot.PlayerOne}`;
-        } else if (slot === TestingSlot.PlayerTwo) {
-          board += `${TestingSlot.PlayerTwo}`;
+        } else {
+          const content = slot.getPlayerKey();
+          board += `${content}`;
         }
         board += " |";
       }
@@ -120,5 +116,5 @@ class TestingState extends State<
   }
 }
 
-export type { TestingStateParams };
-export { TestingState as default, TestingSlot };
+export type { TestingSlot, TestingStateParams };
+export { TestingState as default };

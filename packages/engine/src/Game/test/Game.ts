@@ -1,8 +1,21 @@
-import Game, { type GameParams, type Moves, type Players } from "../Game.js";
+import Game, {
+  type Contents,
+  type GameParams,
+  type Moves,
+  type Players,
+} from "../Game.js";
 import type { PlayerKey } from "../Player.js";
+import TestingContent from "./Content.js";
 import { type default as TestingMove, type TestingMoveKey } from "./Move.js";
 import { type default as TestingPlayer, TestingPlayerKey } from "./Player.js";
-import TestingState, { TestingSlot } from "./State.js";
+import TestingState, { type TestingSlot } from "./State.js";
+
+type TestingContents = Contents<
+  TestingPlayer,
+  TestingMove,
+  TestingState,
+  TestingGame
+>;
 
 type TestingGameParams = Pick<
   GameParams<TestingPlayer, TestingMove, TestingState, TestingGame>,
@@ -30,7 +43,11 @@ class TestingGame extends Game<
   TestingGame
 > {
   public constructor({ movesList, name, playersList }: TestingGameParams) {
+    const contentsList: TestingContent[] = playersList.map(
+      (_, index): TestingContent => new TestingContent({ playerKey: index }),
+    );
     super({
+      contentsList,
       movesList,
       name,
       playersList,
@@ -57,7 +74,7 @@ class TestingGame extends Game<
     }
 
     const emptySlots = new Array<TestingSlot>(this.getQuantityOfSlots()).fill(
-      TestingSlot.Empty,
+      null,
     );
 
     return new TestingState({
@@ -98,7 +115,7 @@ class TestingGame extends Game<
         const positionWherePlacePlayerKey =
           move.getPositionWherePlacePlayerKey();
         const slot = slots[positionWherePlacePlayerKey];
-        return slot === TestingSlot.Empty;
+        return slot === null;
       },
     );
     return new Map(validMoves);
@@ -108,12 +125,9 @@ class TestingGame extends Game<
     const currentPlayerKey = state.getPlayerKey();
 
     const updatedSlots: TestingSlot[] = state.getSlots();
-    const currentSlot = updatedSlots[move.getPositionWherePlacePlayerKey()];
+    const currentSlot = state.getSlot(move.getPositionWherePlacePlayerKey());
 
-    if (
-      typeof currentSlot !== "undefined" &&
-      currentSlot === TestingSlot.Empty
-    ) {
+    if (currentSlot === null) {
       const slotThatRepresentsPlayerKey =
         TestingState.getSlotThatRepresentsPlayerKey(currentPlayerKey);
       updatedSlots[move.getPositionWherePlacePlayerKey()] =
@@ -128,5 +142,10 @@ class TestingGame extends Game<
   }
 }
 
-export type { TestingGameParams, TestingMoves, TestingPlayers };
+export type {
+  TestingContents,
+  TestingGameParams,
+  TestingMoves,
+  TestingPlayers,
+};
 export { TestingGame as default };

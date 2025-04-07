@@ -1,4 +1,5 @@
 import type { Integer } from "../types.js";
+import type { default as Content, ContentKey } from "./Content.js";
 import type { default as Move, MoveKey } from "./Move.js";
 import type { default as Player, PlayerKey } from "./Player.js";
 import type State from "./State.js";
@@ -10,6 +11,13 @@ enum Pixel {
 
 type Channel = Integer;
 
+type Contents<
+  P extends Player<P, M, S, G>,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
+> = Map<ContentKey, Content<P, M, S, G>>;
+
 type EncodedState = Pixel[][][];
 
 interface GameParams<
@@ -18,6 +26,7 @@ interface GameParams<
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
 > {
+  readonly contentsList: Content<P, M, S, G>[];
   readonly movesList: M[];
   readonly name: string;
   readonly playersList: P[];
@@ -44,12 +53,14 @@ abstract class Game<
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
 > {
+  private readonly contents: Contents<P, M, S, G>;
   private readonly moves: Moves<P, M, S, G>;
   private readonly name: GameParams<P, M, S, G>["name"];
   private readonly players: Players<P, M, S, G>;
   private readonly quantityOfSlots: GameParams<P, M, S, G>["quantityOfSlots"];
 
   constructor({
+    contentsList,
     movesList,
     name,
     playersList,
@@ -57,6 +68,9 @@ abstract class Game<
   }: GameParams<P, M, S, G>) {
     this.moves = new Map(movesList.map((move, index) => [index, move.clone()]));
     this.name = name;
+    this.contents = new Map(
+      contentsList.map((content, index) => [index, content.clone()]),
+    );
     this.players = new Map(
       playersList.map((player, index) => [index, player.clone()]),
     );
@@ -146,5 +160,5 @@ abstract class Game<
   }
 }
 
-export type { GameParams, Moves, Players };
+export type { Contents, GameParams, Moves, Players };
 export { Game as default };

@@ -9,7 +9,7 @@ import { default as TestingMove, TestingMoveKey } from "./Move.js";
 import { createMoves } from "./Move.test.js";
 import TestingPlayer, { TestingPlayerKey } from "./Player.js";
 import { createPlayers } from "./Player.test.js";
-import { TestingSlot, default as TestingState } from "./State.js";
+import TestingState, { type TestingSlot } from "./State.js";
 
 const QUANTITY_OF_SLOTS = 81;
 
@@ -245,16 +245,18 @@ const playShouldReturn = ({
   expectedState,
   game,
   move,
+  moveDescriptor,
   state,
   testDescriptor,
 }: {
   expectedState: TestingState;
   game: TestingGame;
   move: TestingMove;
+  moveDescriptor: string;
   state: TestingState;
   testDescriptor?: string;
 }): void => {
-  test(`play() ${testDescriptor ? `${testDescriptor} ` : ""}should return an object equal to the one passed as parameter, but as a different reference`, () => {
+  test(`play(${moveDescriptor}) ${testDescriptor ? `${testDescriptor} ` : ""}should return an object equal to the one passed as parameter, but as a different reference`, () => {
     const nextState = game.play(move, state);
     expect(nextState).toBeInstanceOf(TestingState);
     expect(nextState).not.toBe(state);
@@ -276,10 +278,11 @@ const testClone = (): void => {
 
 const testGetInitialState = (): void => {
   const { game } = setupGame();
+  const slots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(null);
   const expectedState = new TestingState({
     game,
     playerKey: TestingPlayerKey.One,
-    slots: new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(TestingSlot.Empty),
+    slots,
   });
   getInitialStateShouldReturn({ expectedState, game });
 };
@@ -354,9 +357,7 @@ const testPlay = (): void => {
       throw new Error("Move to Northwest of Northwest is undefined");
     }
 
-    const expectedSlots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(
-      TestingSlot.Empty,
-    );
+    const expectedSlots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(null);
     expectedSlots[moveToNorthwestOfNorthwest.getPositionWherePlacePlayerKey()] =
       TestingState.getSlotThatRepresentsPlayerKey(TestingPlayerKey.One);
 
@@ -370,6 +371,7 @@ const testPlay = (): void => {
       expectedState,
       game,
       move: moveToNorthwestOfNorthwest,
+      moveDescriptor: "Northwest of Northwest",
       state: game.getInitialState(),
       testDescriptor: "from initial state",
     });
@@ -392,9 +394,7 @@ const testPlay = (): void => {
     const expectedValidMoves = game.getMoves();
     expectedValidMoves.delete(TestingMoveKey.NorthwestOfNorthwest);
 
-    const expectedSlots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(
-      TestingSlot.Empty,
-    );
+    const expectedSlots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(null);
     expectedSlots[moveNorthwestOfNorthwest.getPositionWherePlacePlayerKey()] =
       TestingState.getSlotThatRepresentsPlayerKey(TestingPlayerKey.One);
     expectedSlots[moveNorthOfNorthwest.getPositionWherePlacePlayerKey()] =
@@ -408,7 +408,8 @@ const testPlay = (): void => {
     playShouldReturn({
       expectedState,
       game,
-      move: moveNorthwestOfNorthwest,
+      move: moveNorthOfNorthwest,
+      moveDescriptor: "North of Northwest",
       state,
       testDescriptor: "after playing move Northwest of Northwest",
     });

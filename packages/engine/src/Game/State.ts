@@ -1,4 +1,5 @@
 import type { Integer } from "../types.js";
+import type Content from "./Content.js";
 import type Game from "./Game.js";
 import type Move from "./Move.js";
 import type { default as Player, PlayerKey } from "./Player.js";
@@ -6,9 +7,14 @@ import type { default as Player, PlayerKey } from "./Player.js";
 export type Points = number;
 export type Score = Map<PlayerKey, Points>;
 
-// Content of a slot in the state.
-export type Slot = Integer;
-// Index of a slot in the state.
+export type Slot<
+  P extends Player<P, M, S, G>,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
+> = Content<P, M, S, G> | null;
+
+/// Index of a slot in the state.
 export type SlotKey = Integer;
 
 export interface StateParams<
@@ -19,7 +25,7 @@ export interface StateParams<
 > {
   readonly game: G;
   readonly playerKey: PlayerKey;
-  readonly slots: Slot[];
+  readonly slots: Slot<P, M, S, G>[];
 }
 
 export default abstract class State<
@@ -57,7 +63,7 @@ export default abstract class State<
     return new Map(this.score);
   }
 
-  public getSlot(index: SlotKey): null | Slot {
+  public getSlot(index: SlotKey): null | Slot<P, M, S, G> {
     const slot = this.slots[index];
     if (typeof slot === "undefined") {
       return null;
@@ -66,7 +72,7 @@ export default abstract class State<
   }
 
   public getSlots(): StateParams<P, M, S, G>["slots"] {
-    return [...this.slots];
+    return [...this.slots.map(slot => slot?.clone() ?? null)];
   }
 
   public abstract isFinal(): boolean;
