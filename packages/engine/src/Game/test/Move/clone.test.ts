@@ -23,12 +23,12 @@ const testClone = ({ move, testDescriptor }: TestMoveParams): void => {
 
 const testCloneForEveryMove = (): void => {
   const moves = createMoves();
-  for (const { move, nameOfMoveKey } of moves) {
+  moves.forEach(({ move, nameOfMoveKey }) => {
     testClone({
       move,
       testDescriptor: nameOfMoveKey,
     });
-  }
+  });
 };
 
 testCloneForEveryMove();

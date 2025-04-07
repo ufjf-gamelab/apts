@@ -18,12 +18,12 @@ const testConstructor = ({ move, testDescriptor }: TestMoveParams): void => {
 
 const testConstructorForEveryMove = (): void => {
   const moves = createMoves();
-  for (const { move, nameOfMoveKey } of moves) {
+  moves.forEach(({ move, nameOfMoveKey }) => {
     testConstructor({
       move,
       testDescriptor: nameOfMoveKey,
     });
-  }
+  });
 };
 
 testConstructorForEveryMove();

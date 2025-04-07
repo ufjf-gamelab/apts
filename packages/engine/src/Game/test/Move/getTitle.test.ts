@@ -33,14 +33,14 @@ const testGetTitle = ({
 
 const testGetTitleForEveryMove = (): void => {
   const moves = createMoves();
-  for (const { move, nameOfMoveKey } of moves) {
+  moves.forEach(({ move, nameOfMoveKey }) => {
     const expectedTitle = formatMoveKeyName(nameOfMoveKey);
     testGetTitle({
       expectedTitle,
       move,
       testDescriptor: nameOfMoveKey,
     });
-  }
+  });
 };
 
 testGetTitleForEveryMove();

@@ -33,13 +33,13 @@ const testGetPositionWherePlacePlayerKey = ({
 
 const testGetPositionWherePlacePlayerKeyForEveryMove = (): void => {
   const moves = createMoves();
-  for (const { move, nameOfMoveKey, valueOfMoveKey } of moves) {
+  moves.forEach(({ move, nameOfMoveKey, valueOfMoveKey }) => {
     testGetPositionWherePlacePlayerKey({
       expectedPositionWherePlacePlayerKey: valueOfMoveKey,
       move,
       testDescriptor: nameOfMoveKey,
     });
-  }
+  });
 };
 
 testGetPositionWherePlacePlayerKeyForEveryMove();

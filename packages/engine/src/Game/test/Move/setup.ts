@@ -5,11 +5,6 @@ interface TestMoveParams {
   testDescriptor: string;
 }
 
-const getNameOfMoveKey = (
-  valueOfMoveKey: TestingMoveKey,
-): keyof typeof TestingMoveKey =>
-  TestingMoveKey[valueOfMoveKey.toString() as keyof typeof TestingMoveKey];
-
 const formatMoveKeyName = (name: string): string => {
   const [direction, quadrant] = name.split("Of");
 
@@ -81,4 +76,4 @@ const createMoves = (): {
 };
 
 export type { TestMoveParams };
-export { createMove, createMoves, formatMoveKeyName, getNameOfMoveKey };
+export { createMove, createMoves, formatMoveKeyName };

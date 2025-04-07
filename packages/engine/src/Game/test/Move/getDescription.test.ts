@@ -33,14 +33,14 @@ const testGetDescription = ({
 
 const testGetDescriptionForEveryMove = (): void => {
   const moves = createMoves();
-  for (const { move, nameOfMoveKey } of moves) {
+  moves.forEach(({ move, nameOfMoveKey }) => {
     const expectedDescription = `Control the slot on ${formatMoveKeyName(nameOfMoveKey)}`;
     testGetDescription({
       expectedDescription,
       move,
       testDescriptor: nameOfMoveKey,
     });
-  }
+  });
 };
 
 testGetDescriptionForEveryMove();

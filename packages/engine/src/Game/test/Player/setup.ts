@@ -1,22 +1,23 @@
-import TestingPlayer, { TestingPlayerKey } from "../Player.js";
+import TestingPlayer from "../Player.js";
 
-const getNameOfPlayerKey = (playerKey: TestingPlayerKey): string =>
-  String(
-    TestingPlayerKey[playerKey.toString() as keyof typeof TestingPlayerKey],
-  );
+interface TestPlayerParams {
+  player: TestingPlayer;
+  testDescriptor: string;
+}
 
 const createPlayers = (): TestingPlayer[] => {
   const alice = new TestingPlayer({
-    name: getNameOfPlayerKey(TestingPlayerKey.One),
-    symbol: "A",
+    name: "Alice",
+    symbol: "X",
   });
 
   const bruno = new TestingPlayer({
-    name: getNameOfPlayerKey(TestingPlayerKey.Two),
-    symbol: "B",
+    name: "Bruno",
+    symbol: "O",
   });
 
   return [alice, bruno];
 };
 
-export { createPlayers, getNameOfPlayerKey };
+export type { TestPlayerParams };
+export { createPlayers };
