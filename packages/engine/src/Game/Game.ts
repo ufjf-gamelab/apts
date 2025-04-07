@@ -7,7 +7,9 @@ enum Pixel {
   Off = 0,
   On = 1,
 }
+
 type Channel = Integer;
+
 type EncodedState = Pixel[][][];
 
 interface GameParams<
@@ -16,9 +18,9 @@ interface GameParams<
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
 > {
-  readonly moves: M[];
+  readonly movesList: M[];
   readonly name: string;
-  readonly players: P[];
+  readonly playersList: P[];
   readonly quantityOfSlots: Integer;
 }
 
@@ -48,15 +50,15 @@ abstract class Game<
   private readonly quantityOfSlots: GameParams<P, M, S, G>["quantityOfSlots"];
 
   constructor({
-    moves,
+    movesList,
     name,
-    players,
+    playersList,
     quantityOfSlots,
   }: GameParams<P, M, S, G>) {
-    this.moves = new Map(moves.map((move, index) => [index, move.clone()]));
+    this.moves = new Map(movesList.map((move, index) => [index, move.clone()]));
     this.name = name;
     this.players = new Map(
-      players.map((player, index) => [index, player.clone()]),
+      playersList.map((player, index) => [index, player.clone()]),
     );
     this.quantityOfSlots = quantityOfSlots;
   }

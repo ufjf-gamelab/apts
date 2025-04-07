@@ -1,4 +1,4 @@
-import Game, { type GameParams, type Moves } from "../Game.js";
+import Game, { type GameParams, type Moves, type Players } from "../Game.js";
 import type { PlayerKey } from "../Player.js";
 import { type default as TestingMove, type TestingMoveKey } from "./Move.js";
 import { type default as TestingPlayer, TestingPlayerKey } from "./Player.js";
@@ -6,10 +6,17 @@ import TestingState, { TestingSlot } from "./State.js";
 
 type TestingGameParams = Pick<
   GameParams<TestingPlayer, TestingMove, TestingState, TestingGame>,
-  "moves" | "name" | "players"
+  "movesList" | "name" | "playersList"
 >;
 
 type TestingMoves = Moves<
+  TestingPlayer,
+  TestingMove,
+  TestingState,
+  TestingGame
+>;
+
+type TestingPlayers = Players<
   TestingPlayer,
   TestingMove,
   TestingState,
@@ -22,20 +29,20 @@ class TestingGame extends Game<
   TestingState,
   TestingGame
 > {
-  public constructor({ moves, name, players }: TestingGameParams) {
+  public constructor({ movesList, name, playersList }: TestingGameParams) {
     super({
-      moves,
+      movesList,
       name,
-      players,
+      playersList,
       quantityOfSlots: 81,
     });
   }
 
   public override clone(): TestingGame {
     return new TestingGame({
-      moves: Array.from(this.getMoves().values()),
+      movesList: Array.from(this.getMoves().values()),
       name: this.getName(),
-      players: Array.from(this.getPlayers().values()),
+      playersList: Array.from(this.getPlayers().values()),
     });
   }
 
@@ -121,5 +128,5 @@ class TestingGame extends Game<
   }
 }
 
-export type { TestingGameParams, TestingMoves };
+export type { TestingGameParams, TestingMoves, TestingPlayers };
 export { TestingGame as default };

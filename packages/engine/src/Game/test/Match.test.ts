@@ -14,8 +14,8 @@ const testMatch = (): void => {
   const players = createPlayers();
   const moves = createMoves();
   const game = createGame({
-    moves,
-    players,
+    movesList: moves,
+    playersList: players,
   });
   const state = game.getInitialState();
 

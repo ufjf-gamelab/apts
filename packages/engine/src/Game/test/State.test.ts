@@ -157,8 +157,8 @@ const testState = (): void => {
   const players = createPlayers();
   const moves = createMoves();
   const game = createGame({
-    moves,
-    players,
+    movesList: moves,
+    playersList: players,
   });
 
   const slots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(

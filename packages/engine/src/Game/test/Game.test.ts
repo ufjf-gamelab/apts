@@ -1,9 +1,9 @@
 import { expect, test } from "vitest";
 
-import { INCREMENT_ONE } from "../../constants.js";
 import TestingGame, {
   type TestingGameParams,
   type TestingMoves,
+  type TestingPlayers,
 } from "./Game.js";
 import { default as TestingMove, TestingMoveKey } from "./Move.js";
 import { createMoves } from "./Move.test.js";
@@ -16,16 +16,28 @@ const QUANTITY_OF_SLOTS = 81;
 /* Setup */
 
 const createGame = ({
-  moves,
-  players,
-}: Pick<TestingGameParams, "moves" | "players">): TestingGame => {
+  movesList,
+  playersList,
+}: Pick<TestingGameParams, "movesList" | "playersList">): TestingGame => {
   const name = "Testing game";
   const game = new TestingGame({
-    moves,
+    movesList,
     name,
-    players,
+    playersList,
   });
   return game;
+};
+
+const setupGame = (): Pick<TestingGameParams, "movesList" | "playersList"> & {
+  game: TestingGame;
+} => {
+  const playersList = createPlayers();
+  const movesList = createMoves();
+  const game = createGame({
+    movesList,
+    playersList,
+  });
+  return { game, movesList, playersList };
 };
 
 /* Expected results */
@@ -63,7 +75,8 @@ const getNameShouldReturn = ({
   game: TestingGame;
 }): void => {
   test(`getName() should return {${expectedName}}`, () => {
-    expect(game.getName()).toBe(expectedName);
+    const name = game.getName();
+    expect(name).toBe(expectedName);
   });
 };
 
@@ -77,11 +90,11 @@ const getPlayerShouldReturn = ({
   playerKey: TestingPlayerKey;
 }): void => {
   test(`getPlayer(${playerKey}) should return an object equal to the one passed as parameter, but as a different reference`, () => {
-    const playerFromGame = game.getPlayer(playerKey);
-    expect(playerFromGame).toBeDefined();
-    expect(playerFromGame).toBeInstanceOf(TestingPlayer);
-    expect(playerFromGame).not.toBe(expectedPlayer);
-    expect(playerFromGame).toStrictEqual(expectedPlayer);
+    const player = game.getPlayer(playerKey);
+    expect(player).toBeDefined();
+    expect(player).toBeInstanceOf(TestingPlayer);
+    expect(player).not.toBe(expectedPlayer);
+    expect(player).toStrictEqual(expectedPlayer);
   });
 };
 
@@ -89,30 +102,20 @@ const getPlayersShouldReturn = ({
   expectedPlayers,
   game,
 }: {
-  expectedPlayers: TestingPlayer[];
+  expectedPlayers: TestingPlayers;
   game: TestingGame;
 }): void => {
   test("getPlayers() should return an object equal to the one passed as parameter, but as a different reference", () => {
-    const playersFromGame = game.getPlayers();
-    const playersFromGameAsArray = Array.from(playersFromGame.values());
+    const players = game.getPlayers();
+    expect(players).not.toBe(expectedPlayers);
+    expect(players).toStrictEqual(expectedPlayers);
 
-    expect(playersFromGameAsArray).not.toBe(expectedPlayers);
-    expect(playersFromGameAsArray).toStrictEqual(expectedPlayers);
+    for (const [playerKey, player] of players) {
+      const expectedPlayer = expectedPlayers.get(playerKey);
 
-    for (
-      let currentPlayerIndex = 0;
-      currentPlayerIndex < expectedPlayers.length;
-      currentPlayerIndex += INCREMENT_ONE
-    ) {
-      const playerFromGame = playersFromGameAsArray[currentPlayerIndex];
-      expect(playerFromGame).toBeDefined();
-
-      const player = expectedPlayers[currentPlayerIndex];
-      expect(player).toBeDefined();
-
-      expect(playerFromGame).toBeInstanceOf(TestingPlayer);
-      expect(playerFromGame).not.toBe(player);
-      expect(playerFromGame).toStrictEqual(player);
+      expect(player).toBeInstanceOf(TestingPlayer);
+      expect(player).not.toBe(expectedPlayer);
+      expect(player).toStrictEqual(expectedPlayer);
     }
   });
 
@@ -155,30 +158,21 @@ const getMovesShouldReturn = ({
   expectedMoves,
   game,
 }: {
-  expectedMoves: TestingMove[];
+  expectedMoves: TestingMoves;
   game: TestingGame;
 }): void => {
   test("getMoves() should return an object equal to the one passed as parameter, but as a different reference", () => {
-    const movesFromGame = game.getMoves();
-    const movesFromGameAsArray = Array.from(movesFromGame.values());
+    const moves = game.getMoves();
 
-    expect(movesFromGameAsArray).not.toBe(expectedMoves);
-    expect(movesFromGameAsArray).toStrictEqual(expectedMoves);
+    expect(moves).not.toBe(expectedMoves);
+    expect(moves).toStrictEqual(expectedMoves);
 
-    for (
-      let currentMoveIndex = 0;
-      currentMoveIndex < expectedMoves.length;
-      currentMoveIndex += INCREMENT_ONE
-    ) {
-      const moveFromGame = movesFromGameAsArray[currentMoveIndex];
-      expect(moveFromGame).toBeDefined();
+    for (const [moveKey, move] of moves) {
+      const expectedMove = expectedMoves.get(moveKey);
 
-      const move = expectedMoves[currentMoveIndex];
-      expect(move).toBeDefined();
-
-      expect(moveFromGame).toBeInstanceOf(TestingMove);
-      expect(moveFromGame).not.toBe(move);
-      expect(moveFromGame).toStrictEqual(move);
+      expect(move).toBeInstanceOf(TestingMove);
+      expect(move).not.toBe(expectedMove);
+      expect(move).toStrictEqual(expectedMove);
     }
   });
 
@@ -233,12 +227,14 @@ const getValidMovesShouldReturn = ({
   expectedValidMoves,
   game,
   state,
+  testDescriptor,
 }: {
   expectedValidMoves: TestingMoves;
   game: TestingGame;
   state: TestingState;
+  testDescriptor?: string;
 }): void => {
-  test("getValidMoves() should return an object equal to the one passed as parameter, but as a different reference", () => {
+  test(`getValidMoves() ${testDescriptor ? `${testDescriptor} ` : ""}should return an object equal to the one passed as parameter, but as a different reference`, () => {
     const validMovesFromGame = game.getValidMoves({ state });
     expect(validMovesFromGame).not.toBe(expectedValidMoves);
     expect(validMovesFromGame).toStrictEqual(expectedValidMoves);
@@ -250,13 +246,15 @@ const playShouldReturn = ({
   game,
   move,
   state,
+  testDescriptor,
 }: {
   expectedState: TestingState;
   game: TestingGame;
   move: TestingMove;
   state: TestingState;
+  testDescriptor?: string;
 }): void => {
-  test("play() should return an object equal to the one passed as parameter, but as a different reference", () => {
+  test(`play() ${testDescriptor ? `${testDescriptor} ` : ""}should return an object equal to the one passed as parameter, but as a different reference`, () => {
     const nextState = game.play(move, state);
     expect(nextState).toBeInstanceOf(TestingState);
     expect(nextState).not.toBe(state);
@@ -266,19 +264,167 @@ const playShouldReturn = ({
 
 /* Tests */
 
-const testValidMoves = (): void => {
-  const playersList = createPlayers();
-  const movesList = createMoves();
-  const game = createGame({
-    moves: movesList,
-    players: playersList,
+const testInstance = (): void => {
+  const { game } = setupGame();
+  shouldBeAnInstanceOfItsClass({ game });
+};
+
+const testClone = (): void => {
+  const { game } = setupGame();
+  cloneShouldCreateANewInstance({ game });
+};
+
+const testGetInitialState = (): void => {
+  const { game } = setupGame();
+  const expectedState = new TestingState({
+    game,
+    playerKey: TestingPlayerKey.One,
+    slots: new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(TestingSlot.Empty),
   });
+  getInitialStateShouldReturn({ expectedState, game });
+};
+
+const testGetMoves = (): void => {
+  const { game, movesList } = setupGame();
+
+  const [moveToNorthwestOfNorthwest] = movesList;
+  if (typeof moveToNorthwestOfNorthwest === "undefined") {
+    throw new Error("Move to Northwest of Northwest is undefined");
+  }
+
+  getMoveShouldReturn({
+    expectedMove: moveToNorthwestOfNorthwest,
+    game,
+    moveKey: TestingMoveKey.NorthwestOfNorthwest,
+  });
+
+  const expectedMoves: TestingMoves = new Map(
+    movesList.map((move, index) => [index, move.clone()]),
+  );
+  getMovesShouldReturn({ expectedMoves, game });
+};
+
+const testGetName = (): void => {
+  const { game } = setupGame();
+  getNameShouldReturn({ expectedName: "Testing game", game });
+};
+
+const testGetNextPlayerKey = (): void => {
+  const { game } = setupGame();
+  getNextPlayerKeyShouldReturn({
+    expectedPlayerKey: TestingPlayerKey.Two,
+    game,
+    state: game.getInitialState(),
+  });
+};
+
+const testGetPlayers = (): void => {
+  const { game, playersList } = setupGame();
+
+  const [playerOne] = playersList;
+  if (typeof playerOne === "undefined") {
+    throw new Error("Player One is undefined");
+  }
+  getPlayerShouldReturn({
+    expectedPlayer: playerOne,
+    game,
+    playerKey: TestingPlayerKey.One,
+  });
+
+  const expectedPlayers: TestingPlayers = new Map();
+  const [, playerTwo] = playersList;
+  if (typeof playerTwo === "undefined") {
+    throw new Error("Player Two is undefined");
+  }
+  expectedPlayers.set(TestingPlayerKey.One, playerOne);
+  expectedPlayers.set(TestingPlayerKey.Two, playerTwo);
+
+  getPlayersShouldReturn({
+    expectedPlayers,
+    game,
+  });
+};
+
+const testPlay = (): void => {
+  const { game, movesList } = setupGame();
+
+  const testFromInitialState = (): void => {
+    const [moveToNorthwestOfNorthwest] = movesList;
+    if (typeof moveToNorthwestOfNorthwest === "undefined") {
+      throw new Error("Move to Northwest of Northwest is undefined");
+    }
+
+    const expectedSlots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(
+      TestingSlot.Empty,
+    );
+    expectedSlots[moveToNorthwestOfNorthwest.getPositionWherePlacePlayerKey()] =
+      TestingState.getSlotThatRepresentsPlayerKey(TestingPlayerKey.One);
+
+    const expectedState = new TestingState({
+      game,
+      playerKey: TestingPlayerKey.Two,
+      slots: expectedSlots,
+    });
+
+    playShouldReturn({
+      expectedState,
+      game,
+      move: moveToNorthwestOfNorthwest,
+      state: game.getInitialState(),
+      testDescriptor: "from initial state",
+    });
+  };
+  testFromInitialState();
+
+  const testAfterPlayingMoveNorthwestOfNorthwest = (): void => {
+    const [moveNorthwestOfNorthwest] = movesList;
+    if (typeof moveNorthwestOfNorthwest === "undefined") {
+      throw new Error("Move Northwest of Northwest is undefined");
+    }
+    const [, moveNorthOfNorthwest] = movesList;
+    if (typeof moveNorthOfNorthwest === "undefined") {
+      throw new Error("Move North of Northwest is undefined");
+    }
+
+    let state = game.getInitialState();
+    state = game.play(moveNorthwestOfNorthwest, state);
+
+    const expectedValidMoves = game.getMoves();
+    expectedValidMoves.delete(TestingMoveKey.NorthwestOfNorthwest);
+
+    const expectedSlots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(
+      TestingSlot.Empty,
+    );
+    expectedSlots[moveNorthwestOfNorthwest.getPositionWherePlacePlayerKey()] =
+      TestingState.getSlotThatRepresentsPlayerKey(TestingPlayerKey.One);
+    expectedSlots[moveNorthOfNorthwest.getPositionWherePlacePlayerKey()] =
+      TestingState.getSlotThatRepresentsPlayerKey(TestingPlayerKey.Two);
+
+    const expectedState = new TestingState({
+      game,
+      playerKey: TestingPlayerKey.One,
+      slots: expectedSlots,
+    });
+    playShouldReturn({
+      expectedState,
+      game,
+      move: moveNorthwestOfNorthwest,
+      state,
+      testDescriptor: "after playing move Northwest of Northwest",
+    });
+  };
+  testAfterPlayingMoveNorthwestOfNorthwest();
+};
+
+const testValidMoves = (): void => {
+  const { game, movesList } = setupGame();
 
   const testFromInitialState = (): void => {
     getValidMovesShouldReturn({
       expectedValidMoves: game.getMoves(),
       game,
       state: game.getInitialState(),
+      testDescriptor: "from initial state",
     });
   };
   testFromInitialState();
@@ -299,78 +445,23 @@ const testValidMoves = (): void => {
       expectedValidMoves,
       game,
       state,
+      testDescriptor: "after playing move Northwest of Northwest",
     });
   };
   testAfterPlayingMoveNorthwestOfNorthwest();
 };
 
-// eslint-disable-next-line max-statements
+/* Run tests */
+
 const testGame = (): void => {
-  const players = createPlayers();
-  const moves = createMoves();
-  const game = createGame({
-    moves,
-    players,
-  });
-
-  shouldBeAnInstanceOfItsClass({ game });
-  cloneShouldCreateANewInstance({ game });
-
-  getNameShouldReturn({ expectedName: "Testing game", game });
-
-  const [playerOne] = players;
-  if (typeof playerOne === "undefined") {
-    throw new Error("Player One is undefined");
-  }
-  getPlayerShouldReturn({
-    expectedPlayer: playerOne,
-    game,
-    playerKey: TestingPlayerKey.One,
-  });
-  getPlayersShouldReturn({ expectedPlayers: players, game });
-
-  const [moveToNorthwestOfNorthwest] = moves;
-  if (typeof moveToNorthwestOfNorthwest === "undefined") {
-    throw new Error("Move to Northwest of Northwest is undefined");
-  }
-  getMoveShouldReturn({
-    expectedMove: moveToNorthwestOfNorthwest,
-    game,
-    moveKey: TestingMoveKey.NorthwestOfNorthwest,
-  });
-  getMovesShouldReturn({ expectedMoves: moves, game });
-
-  const initialState = new TestingState({
-    game,
-    playerKey: TestingPlayerKey.One,
-    slots: new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(TestingSlot.Empty),
-  });
-  getInitialStateShouldReturn({ expectedState: initialState, game });
-
-  getNextPlayerKeyShouldReturn({
-    expectedPlayerKey: TestingPlayerKey.Two,
-    game,
-    state: initialState,
-  });
-
-  const expectedNextSlots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(
-    TestingSlot.Empty,
-  );
-  expectedNextSlots[
-    moveToNorthwestOfNorthwest.getPositionWherePlacePlayerKey()
-  ] = TestingState.getSlotThatRepresentsPlayerKey(TestingPlayerKey.One);
-  const expectedNextState = new TestingState({
-    game,
-    playerKey: TestingPlayerKey.Two,
-    slots: expectedNextSlots,
-  });
-  playShouldReturn({
-    expectedState: expectedNextState,
-    game,
-    move: moveToNorthwestOfNorthwest,
-    state: initialState,
-  });
-
+  testInstance();
+  testClone();
+  testGetInitialState();
+  testGetMoves();
+  testGetName();
+  testGetNextPlayerKey();
+  testGetPlayers();
+  testPlay();
   testValidMoves();
 };
 
