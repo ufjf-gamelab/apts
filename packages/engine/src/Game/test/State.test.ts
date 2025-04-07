@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import { expect, test } from "vitest";
+import { describe, expect, test } from "vitest";
 
 import type { Score } from "../State.js";
-import { createGame, QUANTITY_OF_SLOTS } from "./Game.test.js";
+import { createGame, QUANTITY_OF_SLOTS } from "./Game/Game.test.js";
 import { createMoves } from "./Move.test.js";
 import { TestingPlayerKey } from "./Player.js";
 import { createPlayers } from "./Player.test.js";
@@ -189,4 +189,6 @@ const testState = (): void => {
   isFinalShouldReturn({ state });
 };
 
-testState();
+describe("State", () => {
+  testState();
+});

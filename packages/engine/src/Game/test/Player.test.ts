@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import { expect, test } from "vitest";
+import { describe, expect, test } from "vitest";
 
 import type { Char } from "../../types.js";
 import TestingPlayer, { TestingPlayerKey } from "./Player.js";
@@ -112,6 +112,8 @@ const testPlayers = (): void => {
   });
 };
 
-testPlayers();
+describe("Player", () => {
+  testPlayers();
+});
 
 export { createPlayers };

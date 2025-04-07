@@ -57,5 +57,6 @@
     "pnpm-lock.yaml": true,
     "pnpm-workspace.yaml": true
   },
-  "svg.preview.mode": "img"
+  "svg.preview.mode": "img",
+  "vitest.maximumConfigs": 16
 }

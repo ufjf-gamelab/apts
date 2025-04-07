@@ -1,4 +1,4 @@
-import { expect, test } from "vitest";
+import { describe, expect, test } from "vitest";
 
 import TestingMove, { TestingMoveKey } from "./Move.js";
 
@@ -163,6 +163,8 @@ const testMoves = (): void => {
   }
 };
 
-testMoves();
+describe("Move", () => {
+  testMoves();
+});
 
 export { createMoves };
