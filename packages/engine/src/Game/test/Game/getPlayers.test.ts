@@ -64,6 +64,4 @@ const testGetPlayers = (): void => {
   });
 };
 
-describe("getPlayers", () => {
-  testGetPlayers();
-});
+testGetPlayers();

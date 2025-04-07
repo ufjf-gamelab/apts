@@ -1,27 +1,9 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import { describe, expect, test } from "vitest";
 
-import type { Char } from "../../types.js";
-import TestingPlayer, { TestingPlayerKey } from "./Player.js";
-
-const getNameOfPlayerKey = (playerKey: TestingPlayerKey): string =>
-  String(
-    TestingPlayerKey[playerKey as unknown as keyof typeof TestingPlayerKey],
-  );
-
-const createPlayers = (): TestingPlayer[] => {
-  const alice = new TestingPlayer({
-    name: getNameOfPlayerKey(TestingPlayerKey.One),
-    symbol: "A",
-  });
-
-  const bruno = new TestingPlayer({
-    name: getNameOfPlayerKey(TestingPlayerKey.Two),
-    symbol: "B",
-  });
-
-  return [alice, bruno];
-};
+import type { Char } from "../../../types.js";
+import TestingPlayer, { TestingPlayerKey } from "../Player.js";
+import { createPlayers, getNameOfPlayerKey } from "./setup.js";
 
 const shouldBeAnInstanceOfItsClass = ({
   player,
@@ -115,5 +97,3 @@ const testPlayers = (): void => {
 describe("Player", () => {
   testPlayers();
 });
-
-export { createPlayers };

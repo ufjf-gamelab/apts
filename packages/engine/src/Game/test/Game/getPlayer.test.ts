@@ -53,6 +53,4 @@ const testGetPlayer = (): void => {
   }
 };
 
-describe("getPlayer", () => {
-  testGetPlayer();
-});
+testGetPlayer();

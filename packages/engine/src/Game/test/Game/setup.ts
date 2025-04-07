@@ -1,6 +1,6 @@
 import TestingGame, { type TestingGameParams } from "../Game.js";
-import { createMoves } from "../Move.test.js";
-import { createPlayers } from "../Player.test.js";
+import { createMoves } from "../Move/setup.js";
+import { createPlayers } from "../Player/setup.js";
 
 const QUANTITY_OF_SLOTS = 81;
 
@@ -21,7 +21,7 @@ const setupGame = (): Pick<TestingGameParams, "movesList" | "playersList"> & {
   game: TestingGame;
 } => {
   const playersList = createPlayers();
-  const movesList = createMoves();
+  const movesList = createMoves().map(({ move }) => move);
   const game = createGame({
     movesList,
     playersList,

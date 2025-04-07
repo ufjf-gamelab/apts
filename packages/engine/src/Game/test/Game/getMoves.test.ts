@@ -54,6 +54,4 @@ const testGetMoves = (): void => {
   getMovesShouldReturn({ expectedMoves, game });
 };
 
-describe("getMoves", () => {
-  testGetMoves();
-});
+testGetMoves();

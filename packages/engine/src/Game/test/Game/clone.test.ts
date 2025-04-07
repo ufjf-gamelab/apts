@@ -23,6 +23,4 @@ const testClone = (): void => {
   cloneShouldCreateANewInstance({ game });
 };
 
-describe("clone", () => {
-  testClone();
-});
+testClone();

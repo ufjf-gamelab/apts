@@ -38,6 +38,4 @@ const testGetMove = (): void => {
   });
 };
 
-describe("getMove", () => {
-  testGetMove();
-});
+testGetMove();

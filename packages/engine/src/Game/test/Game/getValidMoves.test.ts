@@ -58,6 +58,4 @@ const testGetValidMoves = (): void => {
   testAfterPlayingMoveNorthwestOfNorthwest();
 };
 
-describe("getValidMoves", () => {
-  testGetValidMoves();
-});
+testGetValidMoves();

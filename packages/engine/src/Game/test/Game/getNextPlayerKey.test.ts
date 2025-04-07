@@ -29,6 +29,4 @@ const testGetNextPlayerKey = (): void => {
   });
 };
 
-describe("getNextPlayerKey", () => {
-  testGetNextPlayerKey();
-});
+testGetNextPlayerKey();

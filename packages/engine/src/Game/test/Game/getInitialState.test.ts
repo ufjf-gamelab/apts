@@ -30,8 +30,6 @@ const testGetInitialState = (): void => {
   getInitialStateShouldReturn({ expectedState, game });
 };
 
-describe("getInitialState", () => {
-  testGetInitialState();
-});
+testGetInitialState();
 
 export { QUANTITY_OF_SLOTS };

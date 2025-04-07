@@ -98,6 +98,4 @@ const testPlay = (): void => {
   testAfterPlayingMoveNorthwestOfNorthwest();
 };
 
-describe("play", () => {
-  testPlay();
-});
+testPlay();

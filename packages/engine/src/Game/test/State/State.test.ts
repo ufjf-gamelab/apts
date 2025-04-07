@@ -1,25 +1,13 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import { describe, expect, test } from "vitest";
 
-import type { Score } from "../State.js";
-import { createGame, QUANTITY_OF_SLOTS } from "./Game/Game.test.js";
-import { createMoves } from "./Move.test.js";
-import { TestingPlayerKey } from "./Player.js";
-import { createPlayers } from "./Player.test.js";
-import TestingState, { TestingSlot, type TestingStateParams } from "./State.js";
-
-const createState = ({
-  game,
-  slots,
-}: {
-  game: TestingStateParams["game"];
-  slots: TestingStateParams["slots"];
-}): TestingState =>
-  new TestingState({
-    game,
-    playerKey: TestingPlayerKey.One,
-    slots,
-  });
+import type { Score } from "../../State.js";
+import { createGame, QUANTITY_OF_SLOTS } from "../Game/setup.js";
+import { createMoves } from "../Move/setup.js";
+import { TestingPlayerKey } from "../Player.js";
+import { createPlayers } from "../Player/setup.js";
+import TestingState, { TestingSlot } from "../State.js";
+import { createState } from "./setup.js";
 
 const shouldBeAnInstanceOfItsClass = ({
   state,
@@ -161,9 +149,7 @@ const testState = (): void => {
     playersList: players,
   });
 
-  const slots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(
-    TestingSlot.Empty,
-  );
+  const slots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(null);
   const state = createState({
     game,
     slots,

@@ -18,6 +18,4 @@ const testInstance = (): void => {
   shouldBeAnInstanceOfItsClass({ game });
 };
 
-describe("Game", () => {
-  testInstance();
-});
+testInstance();

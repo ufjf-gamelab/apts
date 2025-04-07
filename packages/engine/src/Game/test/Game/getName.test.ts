@@ -21,6 +21,4 @@ const testGetName = (): void => {
   getNameShouldReturn({ expectedName: "Testing game", game });
 };
 
-describe("getName", () => {
-  testGetName();
-});
+testGetName();
