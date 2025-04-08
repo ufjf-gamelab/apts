@@ -23,6 +23,7 @@
     "Backpropagation",
     "conv",
     "crossentropy",
+    "DTO",
     "graphviz",
     "Graphviz",
     "mcts",

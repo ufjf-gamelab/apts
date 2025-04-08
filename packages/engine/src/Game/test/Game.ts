@@ -1,12 +1,8 @@
-import Game, {
-  type Contents,
-  type GameParams,
-  type Moves,
-  type Players,
-} from "../Game.js";
+import Game, { type Contents, type GameParams, type Players } from "../Game.js";
+import type { MoveKey } from "../Move.js";
 import type { PlayerKey } from "../Player.js";
 import TestingContent from "./Content.js";
-import { type default as TestingMove, type TestingMoveKey } from "./Move.js";
+import { type default as TestingMove, type TestingMoves } from "./Move.js";
 import { type default as TestingPlayer, TestingPlayerKey } from "./Player.js";
 import TestingState, { type TestingSlot } from "./State.js";
 
@@ -19,14 +15,7 @@ type TestingContents = Contents<
 
 type TestingGameParams = Pick<
   GameParams<TestingPlayer, TestingMove, TestingState, TestingGame>,
-  "movesList" | "name" | "playersList"
->;
-
-type TestingMoves = Moves<
-  TestingPlayer,
-  TestingMove,
-  TestingState,
-  TestingGame
+  "moves" | "name" | "playersList"
 >;
 
 type TestingPlayers = Players<
@@ -42,13 +31,13 @@ class TestingGame extends Game<
   TestingState,
   TestingGame
 > {
-  public constructor({ movesList, name, playersList }: TestingGameParams) {
+  public constructor({ moves, name, playersList }: TestingGameParams) {
     const contentsList: TestingContent[] = playersList.map(
       (_, index): TestingContent => new TestingContent({ playerKey: index }),
     );
     super({
       contentsList,
-      movesList,
+      moves,
       name,
       playersList,
       quantityOfSlots: 81,
@@ -57,7 +46,7 @@ class TestingGame extends Game<
 
   public override clone(): TestingGame {
     return new TestingGame({
-      movesList: Array.from(this.getMoves().values()),
+      moves: this.getMoves(),
       name: this.getName(),
       playersList: Array.from(this.getPlayers().values()),
     });
@@ -111,7 +100,7 @@ class TestingGame extends Game<
 
     const slots = state.getSlots();
     const validMoves = Array.from(this.getMoves().entries()).filter(
-      ([, move]: [TestingMoveKey, TestingMove]) => {
+      ([, move]: [MoveKey, TestingMove]) => {
         const positionWherePlacePlayerKey =
           move.getPositionWherePlacePlayerKey();
         const slot = slots[positionWherePlacePlayerKey];

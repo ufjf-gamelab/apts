@@ -1,6 +1,6 @@
 import type { Integer } from "../types.js";
 import type { default as Content, ContentKey } from "./Content.js";
-import type { default as Move, MoveKey } from "./Move.js";
+import type { default as Move, MoveKey, Moves } from "./Move.js";
 import type { default as Player, PlayerKey } from "./Player.js";
 import type State from "./State.js";
 
@@ -27,18 +27,11 @@ interface GameParams<
   G extends Game<P, M, S, G>,
 > {
   readonly contentsList: Content<P, M, S, G>[];
-  readonly movesList: M[];
+  readonly moves: Moves<P, M, S, G>;
   readonly name: string;
   readonly playersList: P[];
   readonly quantityOfSlots: Integer;
 }
-
-type Moves<
-  P extends Player<P, M, S, G>,
-  M extends Move<P, M, S, G>,
-  S extends State<P, M, S, G>,
-  G extends Game<P, M, S, G>,
-> = Map<MoveKey, M>;
 
 type Players<
   P extends Player<P, M, S, G>,
@@ -54,19 +47,19 @@ abstract class Game<
   G extends Game<P, M, S, G>,
 > {
   private readonly contents: Contents<P, M, S, G>;
-  private readonly moves: Moves<P, M, S, G>;
+  private readonly moves: GameParams<P, M, S, G>["moves"];
   private readonly name: GameParams<P, M, S, G>["name"];
   private readonly players: Players<P, M, S, G>;
   private readonly quantityOfSlots: GameParams<P, M, S, G>["quantityOfSlots"];
 
   constructor({
     contentsList,
-    movesList,
+    moves,
     name,
     playersList,
     quantityOfSlots,
   }: GameParams<P, M, S, G>) {
-    this.moves = new Map(movesList.map((move, index) => [index, move.clone()]));
+    this.moves = new Map(moves);
     this.name = name;
     this.contents = new Map(
       contentsList.map((content, index) => [index, content.clone()]),
@@ -117,8 +110,8 @@ abstract class Game<
 
   public getMoves(): typeof this.moves {
     return new Map(
-      Array.from(this.moves.entries()).map(([key, move]) => [
-        key,
+      Array.from(this.moves.entries()).map(([moveKey, move]) => [
+        moveKey,
         move.clone(),
       ]),
     );
@@ -140,8 +133,8 @@ abstract class Game<
 
   public getPlayers(): typeof this.players {
     return new Map(
-      Array.from(this.players.entries()).map(([key, player]) => [
-        key,
+      Array.from(this.players.entries()).map(([playerKey, player]) => [
+        playerKey,
         player.clone(),
       ]),
     );

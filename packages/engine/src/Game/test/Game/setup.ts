@@ -1,5 +1,5 @@
 import TestingGame from "../Game.js";
-import { type CreatedMoveAndRelatedData, createMoves } from "../Move/setup.js";
+import { type CreatedMovesAndRelatedData, createMoves } from "../Move/setup.js";
 import {
   type CreatedPlayerAndRelatedData,
   createPlayers,
@@ -12,7 +12,7 @@ const INDEX_OF_MOVE_NORTH_OF_NORTHWEST = 1;
 
 interface CreatedGameAndRelatedData {
   game: TestingGame;
-  moves: CreatedMoveAndRelatedData[];
+  moves: CreatedMovesAndRelatedData;
   players: CreatedPlayerAndRelatedData[];
 }
 
@@ -30,7 +30,9 @@ const createGame = ({
 >): CreatedGameAndRelatedData => {
   const name = "Testing game";
   const game = new TestingGame({
-    movesList: moves.map(({ move }) => move),
+    moves: new Map(
+      moves.entries().map(([keyOfMoveDTO, { move }]) => [keyOfMoveDTO, move]),
+    ),
     name,
     playersList: players.map(({ player }) => player),
   });
