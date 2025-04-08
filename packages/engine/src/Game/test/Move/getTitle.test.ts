@@ -1,11 +1,7 @@
 import { expect, test } from "vitest";
 
 import { type default as TestingMove } from "../Move.js";
-import {
-  createMoves,
-  formatMoveKeyName,
-  type TestMoveParams,
-} from "./setup.js";
+import { createMoves, type TestMoveParams } from "./setup.js";
 
 const getTitleShouldReturn = ({
   expectedTitle,
@@ -33,14 +29,15 @@ const testGetTitle = ({
 
 const testGetTitleForEveryMove = (): void => {
   const moves = createMoves();
-  moves.forEach(({ move, nameOfMoveKey }) => {
-    const expectedTitle = formatMoveKeyName(nameOfMoveKey);
-    testGetTitle({
-      expectedTitle,
-      move,
-      testDescriptor: nameOfMoveKey,
-    });
-  });
+  moves.forEach(
+    ({ dataRelatedToCreatedMove: { nameOfIndex, title }, move }) => {
+      testGetTitle({
+        expectedTitle: title,
+        move,
+        testDescriptor: nameOfIndex,
+      });
+    },
+  );
 };
 
 testGetTitleForEveryMove();

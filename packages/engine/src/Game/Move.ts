@@ -1,8 +1,9 @@
+import type { Integer } from "../types.js";
 import type Game from "./Game.js";
 import type Player from "./Player.js";
 import type State from "./State.js";
 
-type MoveKey = string;
+type IndexOfMove = Integer;
 
 interface MoveParams<
   P extends Player<P, M, S, G>,
@@ -19,7 +20,7 @@ type Moves<
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
-> = ReadonlyMap<MoveKey, M>;
+> = readonly M[];
 
 abstract class Move<
   P extends Player<P, M, S, G>,
@@ -46,5 +47,5 @@ abstract class Move<
   }
 }
 
-export type { MoveKey, MoveParams, Moves };
+export type { IndexOfMove, MoveParams, Moves };
 export { Move as default };

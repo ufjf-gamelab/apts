@@ -1,6 +1,6 @@
 import type { Integer } from "../types.js";
 import type { default as Content, ContentKey } from "./Content.js";
-import type { default as Move, MoveKey, Moves } from "./Move.js";
+import type { IndexOfMove, default as Move, Moves } from "./Move.js";
 import type { default as Player, PlayerKey } from "./Player.js";
 import type State from "./State.js";
 
@@ -59,7 +59,7 @@ abstract class Game<
     playersList,
     quantityOfSlots,
   }: GameParams<P, M, S, G>) {
-    this.moves = new Map(moves);
+    this.moves = new Array(...moves);
     this.name = name;
     this.contents = new Map(
       contentsList.map((content, index) => [index, content.clone()]),
@@ -100,8 +100,8 @@ abstract class Game<
 
   public abstract getInitialState(): S;
 
-  public getMove(moveKey: MoveKey): M | null {
-    const move = this.moves.get(moveKey);
+  public getMove(index: IndexOfMove): M | null {
+    const move = this.moves[index];
     if (typeof move === "undefined") {
       return null;
     }
@@ -109,12 +109,7 @@ abstract class Game<
   }
 
   public getMoves(): typeof this.moves {
-    return new Map(
-      Array.from(this.moves.entries()).map(([moveKey, move]) => [
-        moveKey,
-        move.clone(),
-      ]),
-    );
+    return this.moves.map(move => move.clone());
   }
 
   public getName(): typeof this.name {
@@ -141,7 +136,7 @@ abstract class Game<
   }
 
   public getQuantityOfMoves(): Integer {
-    return this.moves.size;
+    return this.moves.length;
   }
 
   public abstract getValidMoves({ state }: { state: S }): Moves<P, M, S, G>;

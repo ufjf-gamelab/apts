@@ -30,9 +30,7 @@ const createGame = ({
 >): CreatedGameAndRelatedData => {
   const name = "Testing game";
   const game = new TestingGame({
-    moves: new Map(
-      moves.entries().map(([keyOfMoveDTO, { move }]) => [keyOfMoveDTO, move]),
-    ),
+    moves: Array.from(moves.entries()).map(([, { move }]) => move),
     name,
     playersList: players.map(({ player }) => player),
   });

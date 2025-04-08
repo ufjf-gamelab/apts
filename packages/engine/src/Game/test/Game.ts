@@ -1,5 +1,4 @@
 import Game, { type Contents, type GameParams, type Players } from "../Game.js";
-import type { MoveKey } from "../Move.js";
 import type { PlayerKey } from "../Player.js";
 import TestingContent from "./Content.js";
 import { type default as TestingMove, type TestingMoves } from "./Move.js";
@@ -95,19 +94,15 @@ class TestingGame extends Game<
     const playerKey = state.getPlayerKey();
     const player = this.getPlayer(playerKey);
     if (player === null) {
-      return new Map();
+      return [];
     }
 
     const slots = state.getSlots();
-    const validMoves = Array.from(this.getMoves().entries()).filter(
-      ([, move]: [MoveKey, TestingMove]) => {
-        const positionWherePlacePlayerKey =
-          move.getPositionWherePlacePlayerKey();
-        const slot = slots[positionWherePlacePlayerKey];
-        return slot === null;
-      },
-    );
-    return new Map(validMoves);
+    return Array.from(this.getMoves()).filter((move: TestingMove) => {
+      const positionWherePlacePlayerKey = move.getPositionWherePlacePlayerKey();
+      const slot = slots[positionWherePlacePlayerKey];
+      return slot === null;
+    });
   }
 
   public override play(move: TestingMove, state: TestingState): TestingState {

@@ -1,11 +1,7 @@
 import { expect, test } from "vitest";
 
 import { type default as TestingMove } from "../Move.js";
-import {
-  createMoves,
-  formatMoveKeyName,
-  type TestMoveParams,
-} from "./setup.js";
+import { createMoves, type TestMoveParams } from "./setup.js";
 
 const getDescriptionShouldReturn = ({
   expectedDescription,
@@ -33,14 +29,15 @@ const testGetDescription = ({
 
 const testGetDescriptionForEveryMove = (): void => {
   const moves = createMoves();
-  moves.forEach(({ move, nameOfMoveKey }) => {
-    const expectedDescription = `Control the slot on ${formatMoveKeyName(nameOfMoveKey)}`;
-    testGetDescription({
-      expectedDescription,
-      move,
-      testDescriptor: nameOfMoveKey,
-    });
-  });
+  moves.forEach(
+    ({ dataRelatedToCreatedMove: { description, nameOfIndex }, move }) => {
+      testGetDescription({
+        expectedDescription: description,
+        move,
+        testDescriptor: nameOfIndex,
+      });
+    },
+  );
 };
 
 testGetDescriptionForEveryMove();

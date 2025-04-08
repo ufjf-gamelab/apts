@@ -18,10 +18,10 @@ const testConstructor = ({ move, testDescriptor }: TestMoveParams): void => {
 
 const testConstructorForEveryMove = (): void => {
   const moves = createMoves();
-  moves.forEach(({ move, nameOfMoveKey }) => {
+  moves.forEach(({ dataRelatedToCreatedMove: { nameOfIndex }, move }) => {
     testConstructor({
       move,
-      testDescriptor: nameOfMoveKey,
+      testDescriptor: nameOfIndex,
     });
   });
 };

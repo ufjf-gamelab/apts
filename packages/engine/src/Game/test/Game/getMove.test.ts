@@ -1,20 +1,23 @@
 import { expect, test } from "vitest";
 
-import TestingMove, { type TestingMoveKey } from "../Move.js";
-import type { CreatedMoveAndRelatedData } from "../Move/setup.js";
+import TestingMove from "../Move.js";
+import type {
+  CreatedMovesAndRelatedData,
+  IndexOfTestingMove,
+} from "../Move/setup.js";
 import { setupGame, type TestGameParams } from "./setup.js";
 
 const getMoveShouldReturn = ({
   expectedMove,
   game,
-  moveKey,
+  indexOfMove,
   testDescriptor,
 }: TestGameParams & {
   expectedMove: TestingMove;
-  moveKey: TestingMoveKey;
+  indexOfMove: IndexOfTestingMove;
 }): void => {
-  test(`${testDescriptor}: getMove(${moveKey}) should return {${expectedMove.getTitle()}}`, () => {
-    const moveFromGame = game.getMove(moveKey);
+  test(`${testDescriptor}: getMove(${indexOfMove}) should return {${expectedMove.getTitle()}}`, () => {
+    const moveFromGame = game.getMove(indexOfMove);
     expect(moveFromGame).toBeDefined();
     expect(moveFromGame).toBeInstanceOf(TestingMove);
     expect(moveFromGame).not.toBe(expectedMove);
@@ -26,15 +29,17 @@ const testGetMove = ({
   game,
   moves,
   testDescriptor,
-}: TestGameParams & { moves: CreatedMoveAndRelatedData[] }): void => {
-  moves.forEach(({ move }, index) => {
-    getMoveShouldReturn({
-      expectedMove: move,
-      game,
-      moveKey: index,
-      testDescriptor,
-    });
-  });
+}: TestGameParams & { moves: CreatedMovesAndRelatedData }): void => {
+  moves.forEach(
+    ({ dataRelatedToCreatedMove: { index, nameOfIndex }, move }) => {
+      getMoveShouldReturn({
+        expectedMove: move,
+        game,
+        indexOfMove: index,
+        testDescriptor: `${testDescriptor}: ${nameOfIndex}`,
+      });
+    },
+  );
 };
 
 const testGetMoveForCommonGame = (): void => {

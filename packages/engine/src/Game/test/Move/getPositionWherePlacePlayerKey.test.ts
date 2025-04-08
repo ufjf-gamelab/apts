@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 
-import type { default as TestingMove, TestingMoveKey } from "../Move.js";
+import type { default as TestingMove } from "../Move.js";
 import { createMoves, type TestMoveParams } from "./setup.js";
 
 const getPositionWherePlacePlayerKeyShouldReturn = ({
@@ -22,7 +22,7 @@ const testGetPositionWherePlacePlayerKey = ({
   move,
   testDescriptor,
 }: TestMoveParams & {
-  expectedPositionWherePlacePlayerKey: TestingMoveKey;
+  expectedPositionWherePlacePlayerKey: TestingMove["positionWherePlacePlayerKey"];
 }): void => {
   getPositionWherePlacePlayerKeyShouldReturn({
     expectedPositionWherePlacePlayerKey,
@@ -33,13 +33,18 @@ const testGetPositionWherePlacePlayerKey = ({
 
 const testGetPositionWherePlacePlayerKeyForEveryMove = (): void => {
   const moves = createMoves();
-  moves.forEach(({ move, nameOfMoveKey, valueOfMoveKey }) => {
-    testGetPositionWherePlacePlayerKey({
-      expectedPositionWherePlacePlayerKey: valueOfMoveKey,
+  moves.forEach(
+    ({
+      dataRelatedToCreatedMove: { nameOfIndex, positionWherePlacePlayerKey },
       move,
-      testDescriptor: nameOfMoveKey,
-    });
-  });
+    }) => {
+      testGetPositionWherePlacePlayerKey({
+        expectedPositionWherePlacePlayerKey: positionWherePlacePlayerKey,
+        move,
+        testDescriptor: nameOfIndex,
+      });
+    },
+  );
 };
 
 testGetPositionWherePlacePlayerKeyForEveryMove();
