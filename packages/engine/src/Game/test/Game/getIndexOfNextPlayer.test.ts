@@ -1,5 +1,6 @@
 import { expect, test } from "vitest";
 
+import type TestingGame from "../Game.js";
 import { IndexOfTestingPlayer } from "../Player/setup.js";
 import type TestingState from "../State.js";
 import { setupGame, type TestGameParams } from "./setup.js";
@@ -10,7 +11,7 @@ const getIndexOfNextPlayerShouldReturn = ({
   state,
   testDescriptor,
 }: TestGameParams & {
-  expectedIndexOfPlayer: IndexOfTestingPlayer;
+  expectedIndexOfPlayer: ReturnType<TestingGame["getIndexOfNextPlayer"]>;
   state: TestingState;
 }): void => {
   test(`${testDescriptor}: getIndexOfNextPlayer() should return {${expectedIndexOfPlayer}}`, () => {

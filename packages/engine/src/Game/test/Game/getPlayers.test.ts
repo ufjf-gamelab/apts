@@ -1,5 +1,6 @@
 import { expect, test } from "vitest";
 
+import type TestingGame from "../Game.js";
 import TestingPlayer from "../Player.js";
 import {
   type CreatedPlayersAndRelatedData,
@@ -12,7 +13,7 @@ const getPlayersShouldReturn = ({
   game,
   testDescriptor,
 }: TestGameParams & {
-  expectedPlayers: TestingPlayer[];
+  expectedPlayers: ReturnType<TestingGame["getPlayers"]>;
 }): void => {
   test(`${testDescriptor}: getPlayers() should return an object equal to the one passed as parameter, but as a different reference`, () => {
     const players = game.getPlayers();

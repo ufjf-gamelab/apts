@@ -8,7 +8,7 @@ const getTitleShouldReturn = ({
   move,
   testDescriptor,
 }: TestMoveParams & {
-  expectedTitle: TestingMove["title"];
+  expectedTitle: ReturnType<TestingMove["getTitle"]>;
 }): void => {
   test(`${testDescriptor}: getTitle() should return {${expectedTitle}}`, () => {
     expect(move.getTitle()).toBe(expectedTitle);
@@ -19,7 +19,9 @@ const testGetTitle = ({
   expectedTitle,
   move,
   testDescriptor,
-}: TestMoveParams & { expectedTitle: string }): void => {
+}: TestMoveParams & {
+  expectedTitle: ReturnType<TestingMove["getTitle"]>;
+}): void => {
   getTitleShouldReturn({
     expectedTitle,
     move,

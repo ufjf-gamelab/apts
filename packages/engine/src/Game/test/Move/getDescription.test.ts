@@ -8,7 +8,7 @@ const getDescriptionShouldReturn = ({
   move,
   testDescriptor,
 }: TestMoveParams & {
-  expectedDescription: TestingMove["description"];
+  expectedDescription: ReturnType<TestingMove["getDescription"]>;
 }): void => {
   test(`${testDescriptor}: getDescription() should return {${expectedDescription}}.`, () => {
     expect(move.getDescription()).toBe(expectedDescription);
@@ -19,7 +19,9 @@ const testGetDescription = ({
   expectedDescription,
   move,
   testDescriptor,
-}: TestMoveParams & { expectedDescription: string }): void => {
+}: TestMoveParams & {
+  expectedDescription: ReturnType<TestingMove["getDescription"]>;
+}): void => {
   getDescriptionShouldReturn({
     expectedDescription,
     move,

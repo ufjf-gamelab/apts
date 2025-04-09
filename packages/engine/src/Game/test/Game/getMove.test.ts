@@ -1,5 +1,6 @@
 import { expect, test } from "vitest";
 
+import type TestingGame from "../Game.js";
 import TestingMove from "../Move.js";
 import type {
   CreatedMovesAndRelatedData,
@@ -13,10 +14,10 @@ const getMoveShouldReturn = ({
   indexOfMove,
   testDescriptor,
 }: TestGameParams & {
-  expectedMove: TestingMove;
+  expectedMove: ReturnType<TestingGame["getMove"]>;
   indexOfMove: IndexOfTestingMove;
 }): void => {
-  test(`${testDescriptor}: getMove(${indexOfMove}) should return {${expectedMove.getTitle()}}`, () => {
+  test(`${testDescriptor}: getMove(${indexOfMove}) should return {${expectedMove?.getTitle() ?? "null"}}`, () => {
     const moveFromGame = game.getMove(indexOfMove);
     expect(moveFromGame).toBeDefined();
     expect(moveFromGame).toBeInstanceOf(TestingMove);

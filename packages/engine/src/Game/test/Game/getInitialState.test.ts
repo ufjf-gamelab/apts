@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 
-import { INITIAL_POINTS } from "../Game.js";
+import { INITIAL_POINTS, type default as TestingGame } from "../Game.js";
 import { IndexOfTestingPlayer } from "../Player/setup.js";
 import TestingSlot from "../Slot.js";
 import TestingState from "../State.js";
@@ -11,7 +11,7 @@ const getInitialStateShouldReturn = ({
   game,
   testDescriptor,
 }: TestGameParams & {
-  expectedState: TestingState;
+  expectedState: ReturnType<TestingGame["getInitialState"]>;
 }): void => {
   test(`${testDescriptor}: getInitialState() should return an object equal to the one passed as parameter, but as a different reference`, () => {
     const initialStateFromGame = game.getInitialState();

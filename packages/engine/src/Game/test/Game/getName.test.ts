@@ -7,7 +7,7 @@ const getNameShouldReturn = ({
   expectedName,
   game,
 }: TestGameParams & {
-  expectedName: TestingGame["name"];
+  expectedName: ReturnType<TestingGame["getName"]>;
 }): void => {
   test(`getName() should return {${expectedName}}`, () => {
     const name = game.getName();

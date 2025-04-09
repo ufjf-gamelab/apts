@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 
-import { INITIAL_POINTS } from "../Game.js";
+import { INITIAL_POINTS, type default as TestingGame } from "../Game.js";
 import type TestingMove from "../Move.js";
 import { IndexOfTestingMove } from "../Move/setup.js";
 import { IndexOfTestingPlayer } from "../Player/setup.js";
@@ -16,7 +16,7 @@ const playShouldReturn = ({
   state,
   testDescriptor,
 }: TestGameParams & {
-  expectedState: TestingState;
+  expectedState: ReturnType<TestingGame["play"]>;
   indexOfMove: IndexOfTestingMove;
   move: TestingMove;
   state: TestingState;

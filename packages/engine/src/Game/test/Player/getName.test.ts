@@ -1,5 +1,6 @@
 import { expect, test } from "vitest";
 
+import type TestingPlayer from "../Player.js";
 import { createPlayers, type TestPlayerParams } from "./setup.js";
 
 const getNameShouldReturn = ({
@@ -7,7 +8,7 @@ const getNameShouldReturn = ({
   player,
   testDescriptor,
 }: TestPlayerParams & {
-  expectedName: string;
+  expectedName: ReturnType<TestingPlayer["getName"]>;
 }): void => {
   test(`${testDescriptor}: getName() should return {${expectedName}}`, () => {
     expect(player.getName()).toBe(expectedName);
@@ -18,7 +19,9 @@ const testGetName = ({
   expectedName,
   player,
   testDescriptor,
-}: TestPlayerParams & { expectedName: string }): void => {
+}: TestPlayerParams & {
+  expectedName: ReturnType<TestingPlayer["getName"]>;
+}): void => {
   getNameShouldReturn({
     expectedName,
     player,

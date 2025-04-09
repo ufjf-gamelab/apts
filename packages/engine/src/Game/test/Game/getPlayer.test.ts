@@ -1,6 +1,7 @@
 import { expect, test } from "vitest";
 
 import type { IndexOfPlayer } from "../../Player.js";
+import type TestingGame from "../Game.js";
 import TestingPlayer from "../Player.js";
 import type { CreatedPlayersAndRelatedData } from "../Player/setup.js";
 import { setupGame, type TestGameParams } from "./setup.js";
@@ -11,7 +12,7 @@ const getPlayerShouldReturn = ({
   indexOfPlayer,
   testDescriptor,
 }: TestGameParams & {
-  expectedPlayer: TestingPlayer;
+  expectedPlayer: ReturnType<TestingGame["getPlayer"]>;
   indexOfPlayer: IndexOfPlayer;
 }): void => {
   test(`${testDescriptor}: getPlayer(${indexOfPlayer}) should return an object equal to the one passed as parameter, but as a different reference`, () => {

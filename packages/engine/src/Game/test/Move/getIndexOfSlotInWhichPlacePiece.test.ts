@@ -8,7 +8,9 @@ const getIndexOfSlotInWhichPlacePieceShouldReturn = ({
   move,
   testDescriptor,
 }: TestMoveParams & {
-  expectedIndexOfSlotInWhichPlacePiece: TestingMove["indexOfSlotInWhichPlacePiece"];
+  expectedIndexOfSlotInWhichPlacePiece: ReturnType<
+    TestingMove["getIndexOfSlotInWhichPlacePiece"]
+  >;
 }): void => {
   test(`${testDescriptor}: getIndexOfSlotInWhichPlacePiece() should return {${expectedIndexOfSlotInWhichPlacePiece}}`, () => {
     expect(move.getIndexOfSlotInWhichPlacePiece()).toBe(
@@ -22,7 +24,9 @@ const testGetIndexOfSlotInWhichPlacePiece = ({
   move,
   testDescriptor,
 }: TestMoveParams & {
-  expectedIndexOfSlotInWhichPlacePiece: TestingMove["indexOfSlotInWhichPlacePiece"];
+  expectedIndexOfSlotInWhichPlacePiece: ReturnType<
+    TestingMove["getIndexOfSlotInWhichPlacePiece"]
+  >;
 }): void => {
   getIndexOfSlotInWhichPlacePieceShouldReturn({
     expectedIndexOfSlotInWhichPlacePiece,
