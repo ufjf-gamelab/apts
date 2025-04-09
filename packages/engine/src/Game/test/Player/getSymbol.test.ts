@@ -28,13 +28,15 @@ const testGetSymbol = ({
 
 const testGetSymbolForEveryPlayer = (): void => {
   const players = createPlayers();
-  players.forEach(({ nameOfPlayerKey, player, symbol }) => {
-    testGetSymbol({
-      expectedSymbol: symbol,
-      player,
-      testDescriptor: nameOfPlayerKey,
-    });
-  });
+  players.forEach(
+    ({ dataRelatedToCreatedPlayer: { nameOfIndex, symbol }, player }) => {
+      testGetSymbol({
+        expectedSymbol: symbol,
+        player,
+        testDescriptor: nameOfIndex,
+      });
+    },
+  );
 };
 
 testGetSymbolForEveryPlayer();

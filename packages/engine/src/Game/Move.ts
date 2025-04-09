@@ -38,11 +38,11 @@ abstract class Move<
 
   public abstract clone(): M;
 
-  public getDescription(): MoveParams<P, M, S, G>["description"] {
+  public getDescription(): typeof this.description {
     return this.description;
   }
 
-  public getTitle(): MoveParams<P, M, S, G>["title"] {
+  public getTitle(): typeof this.title {
     return this.title;
   }
 }

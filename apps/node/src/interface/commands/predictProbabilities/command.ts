@@ -1,5 +1,6 @@
 import actions from "@repo/interface/actions/actions.js";
 import { Command, Option } from "commander";
+
 import { generateGraphvizImage } from "../../graphviz.js";
 
 const action = (): void => {

@@ -1,7 +1,8 @@
 import { InvalidArgumentError } from "commander";
-import {
+import type {
   ReadStream,
-  WriteStream,
+  WriteStream} from "fs";
+import {
   createReadStream as createReadStreamFromFs,
   existsSync as existsSyncFromFs,
   writeFileSync as writeFileSyncFromFs,
@@ -9,9 +10,9 @@ import {
 import * as path from "path";
 
 enum FileOperation {
+  Overwrite = "w+",
   Read = "r",
   Write = "wx",
-  Overwrite = "w+",
 }
 
 const createReadStream = (filePath: string): ReadStream => {

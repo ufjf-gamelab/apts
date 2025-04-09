@@ -1,12 +1,13 @@
-import { PathLike, promises as promisesFromFs } from "fs";
+import type { PathLike} from "fs";
+import { promises as promisesFromFs } from "fs";
 import { toFile } from "ts-graphviz/adapter";
 
 export const generateGraphvizImage = async ({
   directoryPath,
   graphvizDotString,
 }: {
-  graphvizDotString: string;
   directoryPath: PathLike;
+  graphvizDotString: string;
 }): Promise<void> => {
   const now = new Date().toISOString();
   const fileName = `mcts-tree-${now}`;

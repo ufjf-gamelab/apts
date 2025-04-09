@@ -1,53 +1,47 @@
 import type { Integer } from "../types.js";
-import type Content from "./Content.js";
 import type Game from "./Game.js";
 import type Move from "./Move.js";
-import type { default as Player, PlayerKey } from "./Player.js";
+import type { IndexOfPlayer, default as Player } from "./Player.js";
+import { type default as Slot, type Slots } from "./Slot.js";
 
-export type Points = number;
-export type Score = Map<PlayerKey, Points>;
+type IndexOfSlot = Integer;
 
-export type Slot<
-  P extends Player<P, M, S, G>,
-  M extends Move<P, M, S, G>,
-  S extends State<P, M, S, G>,
-  G extends Game<P, M, S, G>,
-> = Content<P, M, S, G> | null;
+type Points = number;
 
-/// Index of a slot in the state.
-export type SlotKey = Integer;
+/// The score index players the same way as the array on game
+type Score = readonly Points[];
 
-export interface StateParams<
+interface StateParams<
   P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
 > {
   readonly game: G;
-  readonly playerKey: PlayerKey;
-  readonly slots: Slot<P, M, S, G>[];
+  readonly indexOfPlayer: IndexOfPlayer;
+  readonly score: Score;
+  readonly slots: Slots<P, M, S, G>;
 }
 
-export default abstract class State<
+abstract class State<
   P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
 > {
   private readonly game: StateParams<P, M, S, G>["game"];
-  private readonly playerKey: StateParams<P, M, S, G>["playerKey"];
-  private readonly score: Score;
+  private readonly indexOfPlayer: StateParams<P, M, S, G>["indexOfPlayer"];
+  private readonly score: StateParams<P, M, S, G>["score"];
   private readonly slots: StateParams<P, M, S, G>["slots"];
 
-  constructor({ game, playerKey, slots }: StateParams<P, M, S, G>) {
+  constructor({ game, indexOfPlayer, score, slots }: StateParams<P, M, S, G>) {
     this.game = game.clone();
-    this.slots = [...slots];
-    this.playerKey = playerKey;
-    this.score = new Map();
-    this.score = this.initializeScore();
+    this.indexOfPlayer = indexOfPlayer;
+    this.score = [...score];
+    this.slots = slots.map(slot => slot.clone());
   }
 
-  public abstract changePerspective(playerKey: PlayerKey): S;
+  public abstract changePerspective(indexOfPlayer: IndexOfPlayer): S;
 
   public abstract clone(): S;
 
@@ -55,15 +49,15 @@ export default abstract class State<
     return this.game.clone();
   }
 
-  public getPlayerKey(): StateParams<P, M, S, G>["playerKey"] {
-    return this.playerKey;
+  public getIndexOfPlayer(): typeof this.indexOfPlayer {
+    return this.indexOfPlayer;
   }
 
   public getScore(): typeof this.score {
-    return new Map(this.score);
+    return [...this.score];
   }
 
-  public getSlot(index: SlotKey): null | Slot<P, M, S, G> {
+  public getSlot(index: IndexOfSlot): null | Slot<P, M, S, G> {
     const slot = this.slots[index];
     if (typeof slot === "undefined") {
       return null;
@@ -71,8 +65,8 @@ export default abstract class State<
     return slot;
   }
 
-  public getSlots(): StateParams<P, M, S, G>["slots"] {
-    return [...this.slots.map(slot => slot?.clone() ?? null)];
+  public getSlots(): typeof this.slots {
+    return this.slots.map(slot => slot.clone());
   }
 
   public abstract isFinal(): boolean;
@@ -82,6 +76,7 @@ export default abstract class State<
   protected getQuantityOfSlots(): Integer {
     return this.slots.length;
   }
-
-  protected abstract initializeScore(): Score;
 }
+
+export type { Score, StateParams };
+export { State as default };

@@ -1,21 +1,21 @@
 import TicTacToeMove from "./Move.js";
 import TicTacToePlayer from "./Player.js";
 
-export enum Slot {
-  Empty = 0,
-  X = 1,
-  O = -1,
-}
-
 export enum Channel {
-  O = 0,
   None = 1,
+  O = 0,
   X = 2,
 }
 
 export enum PlayerKey {
   X,
   O,
+}
+
+export enum Slot {
+  Empty = 0,
+  O = -1,
+  X = 1,
 }
 
 export const players: TicTacToePlayer[] = [

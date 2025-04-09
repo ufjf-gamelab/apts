@@ -1,4 +1,5 @@
-import { ReadStream, WriteStream } from "fs";
+import type { ReadStream, WriteStream } from "fs";
+
 import { FileOperation, validateFilePath } from "./file.js";
 
 export const parseJsonFile = (filePath: string): ReadStream | WriteStream => {

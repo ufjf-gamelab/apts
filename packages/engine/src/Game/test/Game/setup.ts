@@ -1,19 +1,16 @@
 import TestingGame from "../Game.js";
 import { type CreatedMovesAndRelatedData, createMoves } from "../Move/setup.js";
 import {
-  type CreatedPlayerAndRelatedData,
+  type CreatedPlayersAndRelatedData,
   createPlayers,
 } from "../Player/setup.js";
 
 const QUANTITY_OF_SLOTS = 81;
 
-const INDEX_OF_MOVE_NORTHWEST_OF_NORTHWEST = 0;
-const INDEX_OF_MOVE_NORTH_OF_NORTHWEST = 1;
-
 interface CreatedGameAndRelatedData {
   game: TestingGame;
   moves: CreatedMovesAndRelatedData;
-  players: CreatedPlayerAndRelatedData[];
+  players: CreatedPlayersAndRelatedData;
 }
 
 interface TestGameParams {
@@ -32,7 +29,7 @@ const createGame = ({
   const game = new TestingGame({
     moves: Array.from(moves.entries()).map(([, { move }]) => move),
     name,
-    playersList: players.map(({ player }) => player),
+    players: Array.from(players.entries()).map(([, { player }]) => player),
   });
   return {
     game,
@@ -51,10 +48,4 @@ const setupGame = (): CreatedGameAndRelatedData => {
 };
 
 export type { TestGameParams };
-export {
-  createGame,
-  INDEX_OF_MOVE_NORTH_OF_NORTHWEST,
-  INDEX_OF_MOVE_NORTHWEST_OF_NORTHWEST,
-  QUANTITY_OF_SLOTS,
-  setupGame,
-};
+export { createGame, QUANTITY_OF_SLOTS, setupGame };

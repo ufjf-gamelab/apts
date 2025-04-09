@@ -1,8 +1,9 @@
-import Game from "@repo/engine/Game/Game.js";
-import Move from "@repo/engine/Game/Move.js";
-import Player from "@repo/engine/Game/Player.js";
-import State from "@repo/engine/Game/State.js";
-import { ProcessGraphvizDotString } from "../actions.js";
+import type Game from "@repo/engine/Game/Game.js";
+import type Move from "@repo/engine/Game/Move.js";
+import type Player from "@repo/engine/Game/Player.js";
+import type State from "@repo/engine/Game/State.js";
+
+import type { ProcessGraphvizDotString } from "../actions.js";
 
 interface MoveOutcome<
   P extends Player<P, M, S, G>,
@@ -10,7 +11,7 @@ interface MoveOutcome<
   S extends State<P, M, S, G>,
   G extends Game<P, M, S, G>,
 > {
-  graphvizDotString: string | null;
+  graphvizDotString: null | string;
   state: S;
 }
 

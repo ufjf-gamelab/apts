@@ -1,12 +1,10 @@
 import { INCREMENT_ONE } from "../../constants.js";
 import { type Integer } from "../../types.js";
-import State, { type Score, type Slot, type StateParams } from "../State.js";
-import TestingContent from "./Content.js";
+import State, { type Score, type StateParams } from "../State.js";
 import type TestingGame from "./Game.js";
 import type TestingMove from "./Move.js";
-import { type default as TestingPlayer, TestingPlayerKey } from "./Player.js";
-
-type TestingSlot = Slot<TestingPlayer, TestingMove, TestingState, TestingGame>;
+import type TestingPlayer from "./Player.js";
+import TestingContent from "./Slot.js";
 
 type TestingStateParams = StateParams<
   TestingPlayer,
@@ -49,7 +47,8 @@ class TestingState extends State<
   public override clone(): TestingState {
     return new TestingState({
       game: this.getGame(),
-      playerKey: this.getPlayerKey(),
+      indexOfPlayer: this.getIndexOfPlayer(),
+      score: this.getScore(),
       slots: this.getSlots(),
     });
   }
@@ -69,7 +68,7 @@ class TestingState extends State<
       return true;
     }
 
-    for (const [, points] of this.getScore()) {
+    for (const points of this.getScore()) {
       if (points >= AMOUNT_OF_POINTS_TO_FINISH_MATCH) {
         return true;
       }
@@ -97,7 +96,7 @@ class TestingState extends State<
         if (slot === null) {
           board += "-";
         } else {
-          const content = slot.getPlayerKey();
+          const content = slot.getIndexOfPlayer();
           board += `${content}`;
         }
         board += " |";
@@ -106,15 +105,7 @@ class TestingState extends State<
     }
     return board;
   }
-
-  protected override initializeScore(): Score {
-    const score: Score = new Map();
-    for (const [playerKey] of this.getGame().getPlayers()) {
-      score.set(playerKey, INITIAL_AMOUNT_OF_POINTS);
-    }
-    return score;
-  }
 }
 
-export type { TestingSlot, TestingStateParams };
+export type { TestingStateParams };
 export { TestingState as default };

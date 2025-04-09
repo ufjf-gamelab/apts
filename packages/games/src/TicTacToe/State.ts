@@ -1,9 +1,13 @@
-import { PlayerKey } from "@repo/engine/Game/Player.js";
-import State, { StateParams } from "@repo/engine/Game/State.js";
-import { INCREMENT_ONE, Integer } from "@repo/engine/types";
-import TicTacToeGame from "./Game.js";
-import TicTacToeMove, { Position } from "./Move.js";
-import TicTacToePlayer from "./Player.js";
+import type { PlayerKey } from "@repo/engine/Game/Player.js";
+import type { StateParams } from "@repo/engine/Game/State.js";
+import State from "@repo/engine/Game/State.js";
+import type { Integer } from "@repo/engine/types";
+import { INCREMENT_ONE } from "@repo/engine/types";
+
+import type TicTacToeGame from "./Game.js";
+import type { Position } from "./Move.js";
+import type TicTacToeMove from "./Move.js";
+import type TicTacToePlayer from "./Player.js";
 import { Slot } from "./types.js";
 
 export const INITIAL_POINTS: Integer = 0;
@@ -15,7 +19,7 @@ interface TicTacToeStateParams
     TicTacToeState,
     TicTacToeGame
   > {
-  readonly lastAssertedPosition: Position | null;
+  readonly lastAssertedPosition: null | Position;
 }
 
 export default class TicTacToeState extends State<
@@ -28,11 +32,11 @@ export default class TicTacToeState extends State<
 
   constructor({
     game,
-    slots,
+    lastAssertedPosition,
     playerKey,
     score,
+    slots,
     validMovesKeys,
-    lastAssertedPosition,
   }: TicTacToeStateParams) {
     super({
       game,
@@ -46,12 +50,6 @@ export default class TicTacToeState extends State<
 
   /* Getters */
 
-  public getLastAssertedPosition(): Position | null {
-    return this.lastAssertedPosition;
-  }
-
-  /* Methods */
-
   public changePerspective(playerKey: PlayerKey): TicTacToeState {
     return new TicTacToeState({
       game: this.getGame(),
@@ -61,6 +59,12 @@ export default class TicTacToeState extends State<
       slots: this.getSlots(),
       validMovesKeys: this.getValidMovesKeys(),
     });
+  }
+
+  /* Methods */
+
+  public getLastAssertedPosition(): null | Position {
+    return this.lastAssertedPosition;
   }
 
   public toString(): string {

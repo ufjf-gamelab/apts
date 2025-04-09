@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 
-import TestingContent from "../Content.js";
+import TestingContent from "../Slot.js";
 import { TestingPlayerKey } from "../Player.js";
 import type TestingState from "../State.js";
 import { createInitialState, type TestStateParams } from "./setup.js";

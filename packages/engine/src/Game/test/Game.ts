@@ -1,27 +1,17 @@
-import Game, { type Contents, type GameParams, type Players } from "../Game.js";
-import type { PlayerKey } from "../Player.js";
-import TestingContent from "./Content.js";
+import Game, { type GameParams } from "../Game.js";
+import type { IndexOfPlayer } from "../Player.js";
 import { type default as TestingMove, type TestingMoves } from "./Move.js";
-import { type default as TestingPlayer, TestingPlayerKey } from "./Player.js";
-import TestingState, { type TestingSlot } from "./State.js";
+import { type default as TestingPlayer } from "./Player.js";
+import TestingSlot from "./Slot.js";
+import TestingState from "./State.js";
 
-type TestingContents = Contents<
-  TestingPlayer,
-  TestingMove,
-  TestingState,
-  TestingGame
->;
+const ADVANCE_TURN = 1;
+const INDEX_OF_INITIAL_PLAYER = 0;
+const INITIAL_POINTS = 0;
 
 type TestingGameParams = Pick<
   GameParams<TestingPlayer, TestingMove, TestingState, TestingGame>,
-  "moves" | "name" | "playersList"
->;
-
-type TestingPlayers = Players<
-  TestingPlayer,
-  TestingMove,
-  TestingState,
-  TestingGame
+  "moves" | "name" | "players"
 >;
 
 class TestingGame extends Game<
@@ -30,15 +20,11 @@ class TestingGame extends Game<
   TestingState,
   TestingGame
 > {
-  public constructor({ moves, name, playersList }: TestingGameParams) {
-    const contentsList: TestingContent[] = playersList.map(
-      (_, index): TestingContent => new TestingContent({ playerKey: index }),
-    );
+  public constructor({ moves, name, players }: TestingGameParams) {
     super({
-      contentsList,
       moves,
       name,
-      playersList,
+      players,
       quantityOfSlots: 81,
     });
   }
@@ -47,7 +33,7 @@ class TestingGame extends Game<
     return new TestingGame({
       moves: this.getMoves(),
       name: this.getName(),
-      playersList: Array.from(this.getPlayers().values()),
+      players: Array.from(this.getPlayers().values()),
     });
   }
 
@@ -55,35 +41,29 @@ class TestingGame extends Game<
     throw new Error("Method not implemented.");
   }
 
+  public override getIndexOfNextPlayer(state: TestingState): IndexOfPlayer {
+    const indexOfCurrentPlayer = state.getIndexOfPlayer();
+    return (indexOfCurrentPlayer + ADVANCE_TURN) % this.getQuantityOfPlayers();
+  }
+
   public override getInitialState(): TestingState {
-    const firstPlayerKey = this.getPlayers().keys().next().value;
-    if (typeof firstPlayerKey === "undefined") {
+    const [firstPlayer] = this.getPlayers();
+    if (typeof firstPlayer === "undefined") {
       throw new Error("No players found");
     }
 
     const emptySlots = new Array<TestingSlot>(this.getQuantityOfSlots()).fill(
-      null,
+      new TestingSlot({
+        indexOfOccupyingPlayer: null,
+      }),
     );
 
     return new TestingState({
       game: this,
-      playerKey: firstPlayerKey,
+      indexOfPlayer: INDEX_OF_INITIAL_PLAYER,
+      score: new Array(this.getQuantityOfPlayers()).fill(INITIAL_POINTS),
       slots: emptySlots,
     });
-  }
-
-  public override getNextPlayerKey(state: TestingState): PlayerKey {
-    const currentPlayerKey = state.getPlayerKey();
-    switch (currentPlayerKey as TestingPlayerKey) {
-      case TestingPlayerKey.One:
-        return TestingPlayerKey.Two;
-      case TestingPlayerKey.Two:
-        return TestingPlayerKey.One;
-      default:
-        throw new Error(
-          `Invalid player key: ${currentPlayerKey}. Expected ${TestingPlayerKey.One} or ${TestingPlayerKey.Two}`,
-        );
-    }
   }
 
   public override getValidMoves({
@@ -91,17 +71,16 @@ class TestingGame extends Game<
   }: {
     state: TestingState;
   }): TestingMoves {
-    const playerKey = state.getPlayerKey();
-    const player = this.getPlayer(playerKey);
+    const indexOfPlayer = state.getIndexOfPlayer();
+    const player = this.getPlayer(indexOfPlayer);
     if (player === null) {
       return [];
     }
 
-    const slots = state.getSlots();
     return Array.from(this.getMoves()).filter((move: TestingMove) => {
-      const positionWherePlacePlayerKey = move.getPositionWherePlacePlayerKey();
-      const slot = slots[positionWherePlacePlayerKey];
-      return slot === null;
+      const indexOfOccupyingPlayer = move.getIndexOfSlotInWhichPlacePiece();
+      const slot = state.getSlot(indexOfOccupyingPlayer);
+      return slot === null || slot.getIndexOfPlayer() === indexOfPlayer;
     });
   }
 
@@ -109,12 +88,12 @@ class TestingGame extends Game<
     const currentPlayerKey = state.getPlayerKey();
 
     const updatedSlots: TestingSlot[] = state.getSlots();
-    const currentSlot = state.getSlot(move.getPositionWherePlacePlayerKey());
+    const currentSlot = state.getSlot(move.getIndexOfSlotInWhichPlacePiece());
 
     if (currentSlot === null) {
       const slotThatRepresentsPlayerKey =
         TestingState.getSlotThatRepresentsPlayerKey(currentPlayerKey);
-      updatedSlots[move.getPositionWherePlacePlayerKey()] =
+      updatedSlots[move.getIndexOfSlotInWhichPlacePiece()] =
         slotThatRepresentsPlayerKey;
     }
 
@@ -126,10 +105,5 @@ class TestingGame extends Game<
   }
 }
 
-export type {
-  TestingContents,
-  TestingGameParams,
-  TestingMoves,
-  TestingPlayers,
-};
+export type { TestingGameParams };
 export { TestingGame as default };

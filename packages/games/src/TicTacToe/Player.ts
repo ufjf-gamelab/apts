@@ -1,7 +1,9 @@
-import Player, { PlayerPair, PlayerParams } from "@repo/engine/Game/Player.js";
-import TicTacToeGame from "./Game.js";
-import TicTacToeMove from "./Move.js";
-import TicTacToeState from "./State.js";
+import type { PlayerPair, PlayerParams } from "@repo/engine/Game/Player.js";
+import Player from "@repo/engine/Game/Player.js";
+
+import type TicTacToeGame from "./Game.js";
+import type TicTacToeMove from "./Move.js";
+import type TicTacToeState from "./State.js";
 
 export type TicTacToePlayerPair = PlayerPair<
   TicTacToePlayer,

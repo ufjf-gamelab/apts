@@ -21,8 +21,8 @@ const testConstructor = ({
 
 const testConstructorForEveryPlayer = (): void => {
   const players = createPlayers();
-  players.forEach(({ nameOfPlayerKey, player }) => {
-    testConstructor({ player, testDescriptor: nameOfPlayerKey });
+  players.forEach(({ dataRelatedToCreatedPlayer: { nameOfIndex }, player }) => {
+    testConstructor({ player, testDescriptor: nameOfIndex });
   });
 };
 

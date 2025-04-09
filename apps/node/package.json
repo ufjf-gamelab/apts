@@ -34,7 +34,7 @@
     "build": "esbuild src/index.ts --bundle --packages=external --platform=node --format=esm --outdir=dist --sourcemap",
     "dev": "tsx watch src/index.ts",
     "format": "pnpm exec prettier . -w",
-    "lint": "pnpm exec eslint ./src/** --fix",
+    "lint": "eslint .",
     "preview": "pnpm run build && node ./dist/index.js",
     "typecheck": "pnpm exec tsc"
   },

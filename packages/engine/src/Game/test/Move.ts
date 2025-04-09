@@ -10,7 +10,7 @@ type TestingMoveParams = MoveParams<
   TestingState,
   TestingGame
 > & {
-  positionWherePlacePlayerKey: Integer;
+  indexOfSlotInWhichPlacePiece: Integer;
 };
 
 type TestingMoves = Moves<
@@ -26,23 +26,23 @@ class TestingMove extends Move<
   TestingState,
   TestingGame
 > {
-  private readonly positionWherePlacePlayerKey: TestingMoveParams["positionWherePlacePlayerKey"];
+  private readonly indexOfSlotInWhichPlacePiece: TestingMoveParams["indexOfSlotInWhichPlacePiece"];
 
-  constructor({ positionWherePlacePlayerKey, ...params }: TestingMoveParams) {
+  constructor({ indexOfSlotInWhichPlacePiece, ...params }: TestingMoveParams) {
     super(params);
-    this.positionWherePlacePlayerKey = positionWherePlacePlayerKey;
+    this.indexOfSlotInWhichPlacePiece = indexOfSlotInWhichPlacePiece;
   }
 
   public override clone(): TestingMove {
     return new TestingMove({
       description: this.getDescription(),
-      positionWherePlacePlayerKey: this.positionWherePlacePlayerKey,
+      indexOfSlotInWhichPlacePiece: this.indexOfSlotInWhichPlacePiece,
       title: this.getTitle(),
     });
   }
 
-  public getPositionWherePlacePlayerKey(): typeof this.positionWherePlacePlayerKey {
-    return this.positionWherePlacePlayerKey;
+  public getIndexOfSlotInWhichPlacePiece(): typeof this.indexOfSlotInWhichPlacePiece {
+    return this.indexOfSlotInWhichPlacePiece;
   }
 }
 

@@ -1,16 +1,19 @@
-import Move, { MovePair, MoveParams } from "@repo/engine/Game/Move.js";
-import { Score } from "@repo/engine/Game/State.js";
-import { Integer } from "@repo/engine/types";
-import TicTacToeGame from "./Game.js";
-import TicTacToePlayer, { TicTacToePlayerPair } from "./Player.js";
+import type { MovePair, MoveParams } from "@repo/engine/Game/Move.js";
+import Move from "@repo/engine/Game/Move.js";
+import type { Score } from "@repo/engine/Game/State.js";
+import type { Integer } from "@repo/engine/types";
+
+import type TicTacToeGame from "./Game.js";
+import type { TicTacToePlayerPair } from "./Player.js";
+import type TicTacToePlayer from "./Player.js";
 import TicTacToeState, { INITIAL_POINTS } from "./State.js";
 import { PlayerKey, Slot } from "./types.js";
 
 const INCREMENT_ONE_POINT = 1;
 
 export interface Position {
-  readonly rowIndex: Integer;
   readonly columnIndex: Integer;
+  readonly rowIndex: Integer;
 }
 
 export type TicTacToeMovePair = MovePair<
@@ -38,12 +41,47 @@ export default class TicTacToeMove extends Move<
 > {
   readonly position: TicTacToeMoveParams["position"];
 
-  constructor({ title, description, position }: TicTacToeMoveParams) {
+  constructor({ description, position, title }: TicTacToeMoveParams) {
     super({ description, title });
     this.position = position;
   }
 
   /* Getters */
+
+  public getPosition(): Position {
+    return this.position;
+  }
+
+  public play(state: TicTacToeState): TicTacToeState {
+    const lastAssertedPosition = this.position;
+    const game = state.getGame();
+
+    const updatedSlots = this.getSlots(state);
+    const winner = game.getWinner(updatedSlots, lastAssertedPosition);
+
+    const isFinal = this.isFinal(winner !== null, updatedSlots);
+    const nextValidMovesKeys = isFinal
+      ? []
+      : this.getValidMoves(game, updatedSlots).map(({ key }) => key);
+
+    const updatedScore = this.getScore(
+      state.getScore(),
+      winner ? winner.key : null,
+    );
+
+    return new TicTacToeState({
+      game,
+      lastAssertedPosition,
+      playerKey: this.getPlayer(game, state.getPlayerKey()).key,
+      score: updatedScore,
+      slots: updatedSlots,
+      validMovesKeys: nextValidMovesKeys,
+    });
+  }
+
+  protected areThereEmptySlots(slots: Slot[]): boolean {
+    return slots.some(slot => slot === Slot.Empty);
+  }
 
   protected getPlayer(
     game: TicTacToeGame,
@@ -57,11 +95,7 @@ export default class TicTacToeMove extends Move<
     };
   }
 
-  public getPosition(): Position {
-    return this.position;
-  }
-
-  protected getScore(score: Score, winnerKey: PlayerKey | null): Score {
+  protected getScore(score: Score, winnerKey: null | PlayerKey): Score {
     if (winnerKey !== null) {
       const winnerCurrentPoints = score[winnerKey] ?? INITIAL_POINTS;
       score[winnerKey] = winnerCurrentPoints + INCREMENT_ONE_POINT;
@@ -71,7 +105,7 @@ export default class TicTacToeMove extends Move<
 
   protected getSlots(state: TicTacToeState): Slot[] {
     const slots = state.getSlots();
-    const { rowIndex, columnIndex } = this.position;
+    const { columnIndex, rowIndex } = this.position;
 
     const game = state.getGame();
     const playerKey: PlayerKey = state.getPlayerKey();
@@ -108,40 +142,9 @@ export default class TicTacToeMove extends Move<
     return validMovesPairs;
   }
 
-  protected isFinal(hasWinner: boolean, updatedSlots: Slot[]): boolean {
-    return hasWinner || !this.areThereEmptySlots(updatedSlots);
-  }
-
-  protected areThereEmptySlots(slots: Slot[]): boolean {
-    return slots.some(slot => slot === Slot.Empty);
-  }
-
   /* Methods */
 
-  public play(state: TicTacToeState): TicTacToeState {
-    const lastAssertedPosition = this.position;
-    const game = state.getGame();
-
-    const updatedSlots = this.getSlots(state);
-    const winner = game.getWinner(updatedSlots, lastAssertedPosition);
-
-    const isFinal = this.isFinal(winner !== null, updatedSlots);
-    const nextValidMovesKeys = isFinal
-      ? []
-      : this.getValidMoves(game, updatedSlots).map(({ key }) => key);
-
-    const updatedScore = this.getScore(
-      state.getScore(),
-      winner ? winner.key : null,
-    );
-
-    return new TicTacToeState({
-      game,
-      lastAssertedPosition,
-      playerKey: this.getPlayer(game, state.getPlayerKey()).key,
-      score: updatedScore,
-      slots: updatedSlots,
-      validMovesKeys: nextValidMovesKeys,
-    });
+  protected isFinal(hasWinner: boolean, updatedSlots: Slot[]): boolean {
+    return hasWinner || !this.areThereEmptySlots(updatedSlots);
   }
 }

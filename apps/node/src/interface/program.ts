@@ -1,5 +1,6 @@
 import { program } from "commander";
 import prompts from "prompts";
+
 import commandsDefinitions from "./commands/commands.js";
 
 export type GetInput = (

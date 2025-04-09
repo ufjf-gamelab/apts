@@ -3,19 +3,9 @@ import type Game from "./Game.js";
 import type Move from "./Move.js";
 import type State from "./State.js";
 
-export type PlayerKey = Integer;
+type IndexOfPlayer = Integer;
 
-export interface PlayerPair<
-  P extends Player<P, M, S, G>,
-  M extends Move<P, M, S, G>,
-  S extends State<P, M, S, G>,
-  G extends Game<P, M, S, G>,
-> {
-  key: PlayerKey;
-  player: Player<P, M, S, G>;
-}
-
-export interface PlayerParams<
+interface PlayerParams<
   P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
@@ -25,7 +15,14 @@ export interface PlayerParams<
   readonly symbol: Char;
 }
 
-export default abstract class Player<
+type Players<
+  P extends Player<P, M, S, G>,
+  M extends Move<P, M, S, G>,
+  S extends State<P, M, S, G>,
+  G extends Game<P, M, S, G>,
+> = readonly P[];
+
+abstract class Player<
   P extends Player<P, M, S, G>,
   M extends Move<P, M, S, G>,
   S extends State<P, M, S, G>,
@@ -41,11 +38,14 @@ export default abstract class Player<
 
   public abstract clone(): P;
 
-  public getName(): PlayerParams<P, M, S, G>["name"] {
+  public getName(): typeof this.name {
     return this.name;
   }
 
-  public getSymbol(): PlayerParams<P, M, S, G>["symbol"] {
+  public getSymbol(): typeof this.symbol {
     return this.symbol;
   }
 }
+
+export type { IndexOfPlayer, PlayerParams, Players };
+export { Player as default };

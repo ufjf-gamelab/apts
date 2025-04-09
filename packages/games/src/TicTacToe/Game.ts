@@ -1,16 +1,18 @@
 import Game from "@repo/engine/Game/Game.js";
-import { PlayerPair } from "@repo/engine/Game/Player.js";
-import { Integer } from "@repo/engine/types";
-import TicTacToeMove, { Position } from "./Move.js";
-import TicTacToePlayer from "./Player.js";
+import type { PlayerPair } from "@repo/engine/Game/Player.js";
+import type { Integer } from "@repo/engine/types";
+
+import type { Position } from "./Move.js";
+import type TicTacToeMove from "./Move.js";
+import type TicTacToePlayer from "./Player.js";
 import TicTacToeState, { INITIAL_POINTS } from "./State.js";
 import { moves, PlayerKey, players, Slot } from "./types.js";
 
 const ADJUST_INDEX = 1;
 
 interface TicTacToeGameParams {
-  readonly quantityOfRows: Integer;
   readonly quantityOfColumns: Integer;
+  readonly quantityOfRows: Integer;
 }
 
 export default class TicTacToeGame extends Game<
@@ -19,8 +21,8 @@ export default class TicTacToeGame extends Game<
   TicTacToeState,
   TicTacToeGame
 > {
-  private readonly quantityOfRows: TicTacToeGameParams["quantityOfRows"];
   private readonly quantityOfColumns: TicTacToeGameParams["quantityOfColumns"];
+  private readonly quantityOfRows: TicTacToeGameParams["quantityOfRows"];
 
   constructor({ quantityOfColumns, quantityOfRows }: TicTacToeGameParams) {
     super({
@@ -68,15 +70,6 @@ export default class TicTacToeGame extends Game<
     return playerKey === PlayerKey.X ? PlayerKey.O : PlayerKey.X;
   }
 
-  private getPlayerAtSlot(slot: Slot): PlayerPair | null {
-    if (slot === Slot.Empty) {
-      return null;
-    }
-    const playerKey = slot === Slot.X ? PlayerKey.X : PlayerKey.O;
-    const player = this.getPlayer(playerKey);
-    return { key: playerKey, player };
-  }
-
   public getQuantityOfColumns(): Integer {
     return this.quantityOfColumns;
   }
@@ -88,8 +81,8 @@ export default class TicTacToeGame extends Game<
   public getWinner(
     slots: Slot[],
     lastAssertedPosition: Position,
-  ): PlayerPair | null {
-    const { rowIndex, columnIndex } = lastAssertedPosition;
+  ): null | PlayerPair {
+    const { columnIndex, rowIndex } = lastAssertedPosition;
 
     const row: Slot[] = slots.slice(
       rowIndex * this.quantityOfColumns,
@@ -130,7 +123,16 @@ export default class TicTacToeGame extends Game<
     return null;
   }
 
-  private getWinnerOnSection(slots: Slot[]): PlayerPair | null {
+  private getPlayerAtSlot(slot: Slot): null | PlayerPair {
+    if (slot === Slot.Empty) {
+      return null;
+    }
+    const playerKey = slot === Slot.X ? PlayerKey.X : PlayerKey.O;
+    const player = this.getPlayer(playerKey);
+    return { key: playerKey, player };
+  }
+
+  private getWinnerOnSection(slots: Slot[]): null | PlayerPair {
     const [firstSlot] = slots;
     if (typeof firstSlot !== "undefined") {
       const allSlotsAreTheSame = slots.every(slot => slot === firstSlot);

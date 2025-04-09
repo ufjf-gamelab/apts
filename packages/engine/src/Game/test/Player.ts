@@ -1,14 +1,9 @@
-import Player, { type PlayerParams } from "../Player.js";
+import Player, { type Players } from "../Player.js";
 import type TestingGame from "./Game.js";
 import type TestingMove from "./Move.js";
 import type TestingState from "./State.js";
 
-enum TestingPlayerKey {
-  One,
-  Two,
-}
-
-type TestingPlayerParams = PlayerParams<
+type TestingPlayers = Players<
   TestingPlayer,
   TestingMove,
   TestingState,
@@ -29,4 +24,5 @@ class TestingPlayer extends Player<
   }
 }
 
-export { TestingPlayer as default, TestingPlayerKey };
+export type { TestingPlayers };
+export { TestingPlayer as default };

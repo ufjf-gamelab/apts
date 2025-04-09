@@ -541,11 +541,6 @@ interface RecordOfMoveDTO {
   index: IndexOfTestingMove;
 }
 
-interface TestMoveParams {
-  move: TestingMove;
-  testDescriptor: string;
-}
-
 const createMove = ({
   recordOfMoveDTO,
 }: {
@@ -559,7 +554,7 @@ const createMove = ({
   const description = `Control the slot on ${title}`;
   const move = new TestingMove({
     description,
-    positionWherePlacePlayerKey,
+    indexOfSlotInWhichPlacePiece: positionWherePlacePlayerKey,
     title,
   });
 
@@ -604,6 +599,11 @@ const createMoves = (): CreatedMovesAndRelatedData => {
     ),
   );
 };
+
+interface TestMoveParams {
+  move: TestingMove;
+  testDescriptor: string;
+}
 
 export type {
   CreatedMoveAndRelatedData,

@@ -28,13 +28,15 @@ const testGetName = ({
 
 const testGetNameForEveryPlayer = (): void => {
   const players = createPlayers();
-  players.forEach(({ name, nameOfPlayerKey, player }) => {
-    testGetName({
-      expectedName: name,
-      player,
-      testDescriptor: nameOfPlayerKey,
-    });
-  });
+  players.forEach(
+    ({ dataRelatedToCreatedPlayer: { name, nameOfIndex }, player }) => {
+      testGetName({
+        expectedName: name,
+        player,
+        testDescriptor: nameOfIndex,
+      });
+    },
+  );
 };
 
 testGetNameForEveryPlayer();
