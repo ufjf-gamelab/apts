@@ -13,24 +13,24 @@
 // const EMPTY_LIST = 0;
 
 // interface NodeParams<
-//   P extends Player<P, M, S, G>,
-//   M extends Move<P, M, S, G>,
-//   S extends State<P, M, S, G>,
-//   G extends Game<P, M, S, G>,
+//   P extends Player<G, S, M, Sl, P>,
+//   M extends Move<G, S, M, Sl, P>,
+//   S extends State<G, S, M, Sl, P>,
+//   G extends Game<G, S, M, Sl, P>,
 // > {
 //   state: S;
 //   keyOfTheTakenMove: MoveKey | null;
 //   explorationConstant: number;
-//   parent: Node<P, M, S, G> | null;
+//   parent: Node<G, S, M, Sl, P> | null;
 // }
 
 // export class Node<
-//   P extends Player<P, M, S, G>,
-//   M extends Move<P, M, S, G>,
-//   S extends State<P, M, S, G>,
-//   G extends Game<P, M, S, G>,
+//   P extends Player<G, S, M, Sl, P>,
+//   M extends Move<G, S, M, Sl, P>,
+//   S extends State<G, S, M, Sl, P>,
+//   G extends Game<G, S, M, Sl, P>,
 // > {
-//   private readonly state: NodeParams<P, M, S, G>["state"];
+//   private readonly state: NodeParams<G, S, M, Sl, P>["state"];
 //   private readonly keyOfTheTakenMove: NodeParams<
 //     P,
 //     M,
@@ -43,9 +43,9 @@
 //     S,
 //     G
 //   >["explorationConstant"];
-//   private readonly parent: NodeParams<P, M, S, G>["parent"];
+//   private readonly parent: NodeParams<G, S, M, Sl, P>["parent"];
 
-//   private readonly children: Map<MoveKey, Node<P, M, S, G> | null>;
+//   private readonly children: Map<MoveKey, Node<G, S, M, Sl, P> | null>;
 
 //   private quantityOfVisits: Integer = MINIMUM_QUANTITY_OF_VISITS;
 //   private victoryQuality: number = MINIMUM_VICTORY_QUALITY;
@@ -55,7 +55,7 @@
 //     keyOfTheTakenMove,
 //     explorationConstant,
 //     parent,
-//   }: NodeParams<P, M, S, G>) {
+//   }: NodeParams<G, S, M, Sl, P>) {
 //     this.state = state;
 //     this.keyOfTheTakenMove = keyOfTheTakenMove;
 //     this.explorationConstant = explorationConstant;
@@ -73,9 +73,9 @@
 //     return this.getChildren().length;
 //   }
 
-//   public getChildren(): Node<P, M, S, G>[] {
+//   public getChildren(): Node<G, S, M, Sl, P>[] {
 //     return Array.from(this.children.values()).filter(
-//       (child): child is Node<P, M, S, G> => child !== null,
+//       (child): child is Node<G, S, M, Sl, P> => child !== null,
 //     );
 //   }
 
@@ -108,7 +108,7 @@
 //   }
 
 //   /// Get the UCB value of a given child.
-//   private getChildUcb(child: Node<P, M, S, G>): number {
+//   private getChildUcb(child: Node<G, S, M, Sl, P>): number {
 //     // Privileges the child with the lowest exploitation, as it means the opponent will have the lowest chance of winning
 
 //     const exploitation =
@@ -123,16 +123,16 @@
 //   }
 
 //   /// Select the best node among children, i.e. the one with the highest UCB.
-//   public selectBestChild(): Node<P, M, S, G> | null {
+//   public selectBestChild(): Node<G, S, M, Sl, P> | null {
 //     if (this.children.size === EMPTY_LIST) {
 //       console.log("No children to select from");
 //     }
 
 //     const expandedChildren = Array.from(this.children.values()).filter(
-//       (child): child is Node<P, M, S, G> => child !== null,
+//       (child): child is Node<G, S, M, Sl, P> => child !== null,
 //     );
 
-//     let bestChild: Node<P, M, S, G> | null = null;
+//     let bestChild: Node<G, S, M, Sl, P> | null = null;
 //     let bestUcb = Number.NEGATIVE_INFINITY;
 
 //     for (const child of expandedChildren) {
@@ -147,7 +147,7 @@
 //   }
 
 //   /// Pick a random move from the list of valid moves.
-//   private pickRandomMove(): MovePair<P, M, S, G> {
+//   private pickRandomMove(): MovePair<G, S, M, Sl, P> {
 //     const indexesOfNonExpandedMoves = Array.from(
 //       this.getKeysOfNonExpandedMoves(),
 //     );
@@ -171,7 +171,7 @@
 //   }
 
 //   /// Pick a random action and perform it, returning the outcome state as a child node.
-//   public expand(): Node<P, M, S, G> {
+//   public expand(): Node<G, S, M, Sl, P> {
 //     const selectedMove = this.pickRandomMove();
 
 //     // Copy the state and play the action on the copy

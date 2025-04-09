@@ -1,8 +1,10 @@
 import { expect, test } from "vitest";
 
-import type { TestingPlayers } from "../Game.js";
-import TestingPlayer, { TestingPlayerKey } from "../Player.js";
-import type { CreatedPlayerAndRelatedData } from "../Player/setup.js";
+import TestingPlayer from "../Player.js";
+import {
+  type CreatedPlayersAndRelatedData,
+  IndexOfTestingPlayer,
+} from "../Player/setup.js";
 import { setupGame, type TestGameParams } from "./setup.js";
 
 const getPlayersShouldReturn = ({
@@ -10,20 +12,22 @@ const getPlayersShouldReturn = ({
   game,
   testDescriptor,
 }: TestGameParams & {
-  expectedPlayers: TestingPlayers;
+  expectedPlayers: TestingPlayer[];
 }): void => {
   test(`${testDescriptor}: getPlayers() should return an object equal to the one passed as parameter, but as a different reference`, () => {
     const players = game.getPlayers();
     expect(players).not.toBe(expectedPlayers);
     expect(players).toStrictEqual(expectedPlayers);
 
-    for (const [playerKey, player] of players) {
-      const expectedPlayer = expectedPlayers.get(playerKey);
+    players.forEach((player, index) => {
+      const expectedPlayer = expectedPlayers[index];
       expect(player).toBeInstanceOf(TestingPlayer);
       expect(player).not.toBe(expectedPlayer);
       expect(player).toStrictEqual(expectedPlayer);
-    }
+    });
   });
+
+  // TODO: Create test for modifying the object given to the constructor
 
   test("modifying the object players received by the getter should not change its internal attribute", () => {
     const newPlayer = new TestingPlayer({
@@ -32,8 +36,8 @@ const getPlayersShouldReturn = ({
     });
 
     const playersBeforeUpdate = game.getPlayers();
-    const updatedPlayers = game.getPlayers();
-    updatedPlayers.set(TestingPlayerKey.One, newPlayer);
+    const updatedPlayers = game.getPlayers() as TestingPlayer[];
+    updatedPlayers[IndexOfTestingPlayer.One] = newPlayer;
 
     expect(game.getPlayers()).not.toBe(playersBeforeUpdate);
     expect(game.getPlayers()).toStrictEqual(playersBeforeUpdate);
@@ -46,9 +50,9 @@ const testGetPlayers = ({
   game,
   players,
   testDescriptor,
-}: TestGameParams & { players: CreatedPlayerAndRelatedData[] }): void => {
-  const expectedPlayers: TestingPlayers = new Map(
-    players.map(({ player }, index) => [index, player.clone()]),
+}: TestGameParams & { players: CreatedPlayersAndRelatedData }): void => {
+  const expectedPlayers: TestingPlayer[] = Array.from(players.entries()).map(
+    ([, { player }]) => player,
   );
   getPlayersShouldReturn({
     expectedPlayers,
@@ -58,7 +62,10 @@ const testGetPlayers = ({
 };
 
 const testGetPlayersForCommonGame = (): void => {
-  const { game, players } = setupGame();
+  const {
+    dataRelatedToCreatedGame: { players },
+    game,
+  } = setupGame();
   testGetPlayers({ game, players, testDescriptor: "common" });
 };
 

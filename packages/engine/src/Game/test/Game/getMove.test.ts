@@ -43,7 +43,10 @@ const testGetMove = ({
 };
 
 const testGetMoveForCommonGame = (): void => {
-  const { game, moves } = setupGame();
+  const {
+    dataRelatedToCreatedGame: { moves },
+    game,
+  } = setupGame();
   testGetMove({
     game,
     moves,

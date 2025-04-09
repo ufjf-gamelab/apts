@@ -6,25 +6,26 @@ import type State from "@repo/engine/Game/State.js";
 import type { ProcessGraphvizDotString } from "../actions.js";
 
 interface MoveOutcome<
-  P extends Player<P, M, S, G>,
-  M extends Move<P, M, S, G>,
-  S extends State<P, M, S, G>,
-  G extends Game<P, M, S, G>,
+  G extends Game<G, S, M, Sl, P>,
+  S extends State<G, S, M, Sl, P>,
+  M extends Move<G, S, M, Sl, P>,
+  Sl extends Slot<G, S, M, Sl, P>,
+  P extends Player<G, S, M, Sl, P>,
 > {
   graphvizDotString: null | string;
   state: S;
 }
 
 // const playMove = <
-//   P extends Player<P, M, S, G>,
-//   M extends Move<P, M, S, G>,
-//   S extends State<P, M, S, G>,
-//   G extends Game<P, M, S, G>,
+//   P extends Player<G, S, M, Sl, P>,
+//   M extends Move<G, S, M, Sl, P>,
+//   S extends State<G, S, M, Sl, P>,
+//   G extends Game<G, S, M, Sl, P>,
 // >(
-//   mcts: Search<P, M, S, G>,
+//   mcts: Search<G, S, M, Sl, P>,
 //   state: S,
 //   move: M,
-// ): MoveOutcome<P, M, S, G> => {
+// ): MoveOutcome<G, S, M, Sl, P> => {
 //   const isFinal = state.isFinal();
 
 //   if (isFinal) {
@@ -47,15 +48,15 @@ interface MoveOutcome<
 // };
 
 // const processMove = <
-//   P extends Player<P, M, S, G>,
-//   M extends Move<P, M, S, G>,
-//   S extends State<P, M, S, G>,
-//   G extends Game<P, M, S, G>,
+//   P extends Player<G, S, M, Sl, P>,
+//   M extends Move<G, S, M, Sl, P>,
+//   S extends State<G, S, M, Sl, P>,
+//   G extends Game<G, S, M, Sl, P>,
 // >(
 //   processGraphvizDotString: ProcessGraphvizDotString,
-//   mcts: Search<P, M, S, G>,
+//   mcts: Search<G, S, M, Sl, P>,
 //   state: S,
-// ): MoveOutcome<P, M, S, G> => {
+// ): MoveOutcome<G, S, M, Sl, P> => {
 //   const validMoves = state.getValidMoves();
 //   const [validMove] = validMoves;
 //   if (typeof validMove === "undefined") {
@@ -63,7 +64,7 @@ interface MoveOutcome<
 //     return { graphvizDotString: null, state };
 //   }
 
-//   const moveOutcome = playMove<P, M, S, G>(mcts, state, validMove);
+//   const moveOutcome = playMove<G, S, M, Sl, P>(mcts, state, validMove);
 
 //   if (moveOutcome.graphvizDotString) {
 //     processGraphvizDotString(moveOutcome.graphvizDotString);
@@ -74,10 +75,11 @@ interface MoveOutcome<
 // };
 
 const main = <
-  P extends Player<P, M, S, G>,
-  M extends Move<P, M, S, G>,
-  S extends State<P, M, S, G>,
-  G extends Game<P, M, S, G>,
+  G extends Game<G, S, M, Sl, P>,
+  S extends State<G, S, M, Sl, P>,
+  M extends Move<G, S, M, Sl, P>,
+  Sl extends Slot<G, S, M, Sl, P>,
+  P extends Player<G, S, M, Sl, P>,
 >({
   processGraphvizDotString,
 }: {

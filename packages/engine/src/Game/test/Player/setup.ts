@@ -108,4 +108,4 @@ export type {
   CreatedPlayersAndRelatedData,
   TestPlayerParams,
 };
-export { createPlayers };
+export { createPlayers, IndexOfTestingPlayer };

@@ -4,30 +4,27 @@ import type Move from "./Move.js";
 import type Player from "./Player.js";
 import type State from "./State.js";
 
+// TODO: Test Slot
+
 type IndexOfSlot = Integer;
 
 type SlotParams<
-  P extends Player<P, M, S, G>,
-  M extends Move<P, M, S, G>,
-  S extends State<P, M, S, G>,
-  G extends Game<P, M, S, G>,
+  G extends Game<G, S, M, Sl, P>,
+  S extends State<G, S, M, Sl, P>,
+  M extends Move<G, S, M, Sl, P>,
+  Sl extends Slot<G, S, M, Sl, P>,
+  P extends Player<G, S, M, Sl, P>,
 > = object;
 
-type Slots<
-  P extends Player<P, M, S, G>,
-  M extends Move<P, M, S, G>,
-  S extends State<P, M, S, G>,
-  G extends Game<P, M, S, G>,
-> = readonly Slot<P, M, S, G>[];
-
 abstract class Slot<
-  P extends Player<P, M, S, G>,
-  M extends Move<P, M, S, G>,
-  S extends State<P, M, S, G>,
-  G extends Game<P, M, S, G>,
+  G extends Game<G, S, M, Sl, P>,
+  S extends State<G, S, M, Sl, P>,
+  M extends Move<G, S, M, Sl, P>,
+  Sl extends Slot<G, S, M, Sl, P>,
+  P extends Player<G, S, M, Sl, P>,
 > {
-  public abstract clone(): Slot<P, M, S, G>;
+  public abstract clone(): Sl;
 }
 
-export type { IndexOfSlot, SlotParams, Slots };
+export type { IndexOfSlot, SlotParams };
 export default Slot;

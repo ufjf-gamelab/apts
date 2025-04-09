@@ -1,7 +1,9 @@
 import { expect, test } from "vitest";
 
-import { TestingPlayerKey } from "../Player.js";
-import TestingState, { type TestingSlot } from "../State.js";
+import { INITIAL_POINTS } from "../Game.js";
+import { IndexOfTestingPlayer } from "../Player/setup.js";
+import TestingSlot from "../Slot.js";
+import TestingState from "../State.js";
 import { QUANTITY_OF_SLOTS, setupGame, type TestGameParams } from "./setup.js";
 
 const getInitialStateShouldReturn = ({
@@ -22,10 +24,15 @@ const testGetInitialState = ({
   game,
   testDescriptor,
 }: TestGameParams): void => {
-  const slots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(null);
+  const slots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(
+    new TestingSlot({
+      indexOfOccupyingPlayer: null,
+    }),
+  );
   const expectedState = new TestingState({
     game,
-    playerKey: TestingPlayerKey.One,
+    indexOfPlayer: IndexOfTestingPlayer.One,
+    score: [INITIAL_POINTS, INITIAL_POINTS],
     slots,
   });
   getInitialStateShouldReturn({ expectedState, game, testDescriptor });

@@ -1,6 +1,6 @@
 import Game, { type GameParams } from "../Game.js";
 import type { IndexOfPlayer } from "../Player.js";
-import { type default as TestingMove, type TestingMoves } from "./Move.js";
+import { type default as TestingMove } from "./Move.js";
 import { type default as TestingPlayer } from "./Player.js";
 import TestingSlot from "./Slot.js";
 import TestingState from "./State.js";
@@ -10,15 +10,22 @@ const INDEX_OF_INITIAL_PLAYER = 0;
 const INITIAL_POINTS = 0;
 
 type TestingGameParams = Pick<
-  GameParams<TestingPlayer, TestingMove, TestingState, TestingGame>,
+  GameParams<
+    TestingGame,
+    TestingState,
+    TestingMove,
+    TestingSlot,
+    TestingPlayer
+  >,
   "moves" | "name" | "players"
 >;
 
 class TestingGame extends Game<
-  TestingPlayer,
-  TestingMove,
+  TestingGame,
   TestingState,
-  TestingGame
+  TestingMove,
+  TestingSlot,
+  TestingPlayer
 > {
   public constructor({ moves, name, players }: TestingGameParams) {
     super({
@@ -70,40 +77,51 @@ class TestingGame extends Game<
     state,
   }: {
     state: TestingState;
-  }): TestingMoves {
+  }): readonly TestingMove[] {
     const indexOfPlayer = state.getIndexOfPlayer();
     const player = this.getPlayer(indexOfPlayer);
     if (player === null) {
       return [];
     }
 
+    // Return only the existing moves in which there is no player occupying the related slot
     return Array.from(this.getMoves()).filter((move: TestingMove) => {
-      const indexOfOccupyingPlayer = move.getIndexOfSlotInWhichPlacePiece();
-      const slot = state.getSlot(indexOfOccupyingPlayer);
-      return slot === null || slot.getIndexOfPlayer() === indexOfPlayer;
+      const indexOfSlotInWhichPlacePiece =
+        move.getIndexOfSlotInWhichPlacePiece();
+      const slotInWhichPlacePiece = state.getSlot(indexOfSlotInWhichPlacePiece);
+      if (slotInWhichPlacePiece === null) {
+        return false;
+      }
+      const indexOfOccupyingPlayer =
+        slotInWhichPlacePiece.getIndexOfOccupyingPlayer();
+      return indexOfOccupyingPlayer === null;
     });
   }
 
   public override play(move: TestingMove, state: TestingState): TestingState {
-    const currentPlayerKey = state.getPlayerKey();
+    const indexOfSlotInWhichPlacePiece = move.getIndexOfSlotInWhichPlacePiece();
+    const indexOfCurrentPlayer = state.getIndexOfPlayer();
 
-    const updatedSlots: TestingSlot[] = state.getSlots();
-    const currentSlot = state.getSlot(move.getIndexOfSlotInWhichPlacePiece());
-
-    if (currentSlot === null) {
-      const slotThatRepresentsPlayerKey =
-        TestingState.getSlotThatRepresentsPlayerKey(currentPlayerKey);
-      updatedSlots[move.getIndexOfSlotInWhichPlacePiece()] =
-        slotThatRepresentsPlayerKey;
+    const updatedSlots = Array.from(state.getSlots());
+    if (typeof updatedSlots[indexOfSlotInWhichPlacePiece] !== "undefined") {
+      updatedSlots[indexOfSlotInWhichPlacePiece] = new TestingSlot({
+        indexOfOccupyingPlayer: indexOfCurrentPlayer,
+      });
     }
 
+    const indexOfNextPlayer = this.getIndexOfNextPlayer(state);
+    // TODO: Calculate the score based on the game rules
+    const updatedScore = Array.from(state.getScore());
+
+    // TODO: Create tests to try to modify the slots array from exterior, to check if it is immutable
     return new TestingState({
       game: this,
-      playerKey: this.getNextPlayerKey(state),
+      indexOfPlayer: indexOfNextPlayer,
+      score: updatedScore,
       slots: updatedSlots,
     });
   }
 }
 
 export type { TestingGameParams };
-export { TestingGame as default };
+export { TestingGame as default, INITIAL_POINTS };

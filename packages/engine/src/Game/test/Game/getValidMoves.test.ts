@@ -1,12 +1,9 @@
 import { expect, test } from "vitest";
 
-import type { TestingMoves } from "../Game.js";
+import type TestingMove from "../Move.js";
+import { IndexOfTestingMove } from "../Move/setup.js";
 import type TestingState from "../State.js";
-import {
-  INDEX_OF_MOVE_NORTHWEST_OF_NORTHWEST,
-  setupGame,
-  type TestGameParams,
-} from "./setup.js";
+import { setupGame, type TestGameParams } from "./setup.js";
 
 const getValidMovesShouldReturn = ({
   expectedValidMoves,
@@ -14,7 +11,7 @@ const getValidMovesShouldReturn = ({
   state,
   testDescriptor,
 }: TestGameParams & {
-  expectedValidMoves: TestingMoves;
+  expectedValidMoves: TestingMove[];
   state: TestingState;
 }): void => {
   test(`${testDescriptor}: getValidMoves() should return an object equal to the one passed as parameter, but as a different reference`, () => {
@@ -30,7 +27,7 @@ const testGetValidMoves = ({
   state,
   testDescriptor,
 }: TestGameParams & {
-  expectedValidMoves: TestingMoves;
+  expectedValidMoves: TestingMove[];
   state: TestingState;
 }): void => {
   getValidMovesShouldReturn({
@@ -42,9 +39,12 @@ const testGetValidMoves = ({
 };
 
 const testFromInitialState = (): void => {
-  const { game } = setupGame();
+  const {
+    dataRelatedToCreatedGame: { moves },
+    game,
+  } = setupGame();
   testGetValidMoves({
-    expectedValidMoves: game.getMoves(),
+    expectedValidMoves: Array.from(moves.values().map(({ move }) => move)),
     game,
     state: game.getInitialState(),
     testDescriptor: "from initial state",
@@ -56,7 +56,7 @@ const testAfterPlayingMoveNorthwestOfNorthwest = (): void => {
   const { game } = setupGame();
 
   const moveNorthwestOfNorthwest = game.getMove(
-    INDEX_OF_MOVE_NORTHWEST_OF_NORTHWEST,
+    IndexOfTestingMove.NorthwestOfNorthwest,
   );
   if (moveNorthwestOfNorthwest === null) {
     throw new Error("Move Northwest of Northwest is null");
@@ -65,8 +65,8 @@ const testAfterPlayingMoveNorthwestOfNorthwest = (): void => {
   let state = game.getInitialState();
   state = game.play(moveNorthwestOfNorthwest, state);
 
-  const expectedValidMoves = game.getMoves();
-  expectedValidMoves.delete(INDEX_OF_MOVE_NORTHWEST_OF_NORTHWEST);
+  const expectedValidMoves = Array.from(game.getMoves());
+  expectedValidMoves.shift();
 
   getValidMovesShouldReturn({
     expectedValidMoves,

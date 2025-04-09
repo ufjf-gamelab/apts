@@ -6,15 +6,22 @@ import type TestingPlayer from "./Player.js";
 import type TestingState from "./State.js";
 
 interface TestingSlotParams
-  extends SlotParams<TestingPlayer, TestingMove, TestingState, TestingGame> {
+  extends SlotParams<
+    TestingGame,
+    TestingState,
+    TestingMove,
+    TestingSlot,
+    TestingPlayer
+  > {
   indexOfOccupyingPlayer: IndexOfPlayer | null;
 }
 
 class TestingSlot extends Slot<
-  TestingPlayer,
-  TestingMove,
+  TestingGame,
   TestingState,
-  TestingGame
+  TestingMove,
+  TestingSlot,
+  TestingPlayer
 > {
   private readonly indexOfOccupyingPlayer: TestingSlotParams["indexOfOccupyingPlayer"];
 
@@ -23,18 +30,13 @@ class TestingSlot extends Slot<
     this.indexOfOccupyingPlayer = indexOfOccupyingPlayer;
   }
 
-  public override clone(): Slot<
-    TestingPlayer,
-    TestingMove,
-    TestingState,
-    TestingGame
-  > {
+  public override clone(): TestingSlot {
     return new TestingSlot({
       indexOfOccupyingPlayer: this.indexOfOccupyingPlayer,
     });
   }
 
-  public getIndexOfPlayer(): typeof this.indexOfOccupyingPlayer {
+  public getIndexOfOccupyingPlayer(): typeof this.indexOfOccupyingPlayer {
     return this.indexOfOccupyingPlayer;
   }
 }

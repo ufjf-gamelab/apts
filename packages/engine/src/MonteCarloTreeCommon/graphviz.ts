@@ -27,20 +27,20 @@
 // };
 
 // interface NodeTuple<
-//   P extends Player<P, M, S, G>,
-//   M extends Move<P, M, S, G>,
-//   S extends State<P, M, S, G>,
-//   G extends Game<P, M, S, G>,
+//   P extends Player<G, S, M, Sl, P>,
+//   M extends Move<G, S, M, Sl, P>,
+//   S extends State<G, S, M, Sl, P>,
+//   G extends Game<G, S, M, Sl, P>,
 // > {
-//   node: Node<P, M, S, G>;
+//   node: Node<G, S, M, Sl, P>;
 //   parentNodeFromGraphviz: NodeFromGraphviz;
 // }
 
 // const insertGraphvizNodeIntoGraph = <
-//   P extends Player<P, M, S, G>,
-//   M extends Move<P, M, S, G>,
-//   S extends State<P, M, S, G>,
-//   G extends Game<P, M, S, G>,
+//   P extends Player<G, S, M, Sl, P>,
+//   M extends Move<G, S, M, Sl, P>,
+//   S extends State<G, S, M, Sl, P>,
+//   G extends Game<G, S, M, Sl, P>,
 // >({
 //   graphFromGraphviz,
 //   currentNode,
@@ -48,9 +48,9 @@
 //   currentNodeId,
 // }: {
 //   graphFromGraphviz: DigraphFromGraphviz;
-//   nodeTuples: NodeTuple<P, M, S, G>[];
+//   nodeTuples: NodeTuple<G, S, M, Sl, P>[];
 //   currentNodeId: Integer;
-//   currentNode: Node<P, M, S, G>;
+//   currentNode: Node<G, S, M, Sl, P>;
 // }): NodeFromGraphviz => {
 //   const currentNodeFromGraphviz = currentNode.toGraphvizNode(currentNodeId);
 //   graphFromGraphviz.addNode(currentNodeFromGraphviz);
@@ -66,10 +66,10 @@
 // };
 
 // const insertedgeIntoGraph = <
-//   P extends Player<P, M, S, G>,
-//   M extends Move<P, M, S, G>,
-//   S extends State<P, M, S, G>,
-//   G extends Game<P, M, S, G>,
+//   P extends Player<G, S, M, Sl, P>,
+//   M extends Move<G, S, M, Sl, P>,
+//   S extends State<G, S, M, Sl, P>,
+//   G extends Game<G, S, M, Sl, P>,
 // >({
 //   game,
 //   graphFromGraphviz,
@@ -94,16 +94,16 @@
 // };
 
 // export const generateGraphvizDotStringFromTree = <
-//   P extends Player<P, M, S, G>,
-//   M extends Move<P, M, S, G>,
-//   S extends State<P, M, S, G>,
-//   G extends Game<P, M, S, G>,
+//   P extends Player<G, S, M, Sl, P>,
+//   M extends Move<G, S, M, Sl, P>,
+//   S extends State<G, S, M, Sl, P>,
+//   G extends Game<G, S, M, Sl, P>,
 // >(
 //   game: G,
-//   root: Node<P, M, S, G>,
+//   root: Node<G, S, M, Sl, P>,
 // ): string => {
 //   const graphFromGraphviz = new DigraphFromGraphviz("G", GRAPH_ATTRIBUTES);
-//   const nodeTuples: NodeTuple<P, M, S, G>[] = [];
+//   const nodeTuples: NodeTuple<G, S, M, Sl, P>[] = [];
 
 //   const rootNodeFromGraphviz = root.toGraphvizNode(ROOT_ID);
 //   graphFromGraphviz.addNode(rootNodeFromGraphviz);

@@ -2,7 +2,7 @@ import type { Integer } from "../types.js";
 import type Game from "./Game.js";
 import type Move from "./Move.js";
 import type { IndexOfPlayer, default as Player } from "./Player.js";
-import { type default as Slot, type Slots } from "./Slot.js";
+import type { default as Slot } from "./Slot.js";
 
 type IndexOfSlot = Integer;
 
@@ -12,29 +12,36 @@ type Points = number;
 type Score = readonly Points[];
 
 interface StateParams<
-  P extends Player<P, M, S, G>,
-  M extends Move<P, M, S, G>,
-  S extends State<P, M, S, G>,
-  G extends Game<P, M, S, G>,
+  G extends Game<G, S, M, Sl, P>,
+  S extends State<G, S, M, Sl, P>,
+  M extends Move<G, S, M, Sl, P>,
+  Sl extends Slot<G, S, M, Sl, P>,
+  P extends Player<G, S, M, Sl, P>,
 > {
   readonly game: G;
   readonly indexOfPlayer: IndexOfPlayer;
   readonly score: Score;
-  readonly slots: Slots<P, M, S, G>;
+  readonly slots: readonly Sl[];
 }
 
 abstract class State<
-  P extends Player<P, M, S, G>,
-  M extends Move<P, M, S, G>,
-  S extends State<P, M, S, G>,
-  G extends Game<P, M, S, G>,
+  G extends Game<G, S, M, Sl, P>,
+  S extends State<G, S, M, Sl, P>,
+  M extends Move<G, S, M, Sl, P>,
+  Sl extends Slot<G, S, M, Sl, P>,
+  P extends Player<G, S, M, Sl, P>,
 > {
-  private readonly game: StateParams<P, M, S, G>["game"];
-  private readonly indexOfPlayer: StateParams<P, M, S, G>["indexOfPlayer"];
-  private readonly score: StateParams<P, M, S, G>["score"];
-  private readonly slots: StateParams<P, M, S, G>["slots"];
+  private readonly game: StateParams<G, S, M, Sl, P>["game"];
+  private readonly indexOfPlayer: StateParams<G, S, M, Sl, P>["indexOfPlayer"];
+  private readonly score: StateParams<G, S, M, Sl, P>["score"];
+  private readonly slots: StateParams<G, S, M, Sl, P>["slots"];
 
-  constructor({ game, indexOfPlayer, score, slots }: StateParams<P, M, S, G>) {
+  constructor({
+    game,
+    indexOfPlayer,
+    score,
+    slots,
+  }: StateParams<G, S, M, Sl, P>) {
     this.game = game.clone();
     this.indexOfPlayer = indexOfPlayer;
     this.score = [...score];
@@ -57,7 +64,7 @@ abstract class State<
     return [...this.score];
   }
 
-  public getSlot(index: IndexOfSlot): null | Slot<P, M, S, G> {
+  public getSlot(index: IndexOfSlot): null | Sl {
     const slot = this.slots[index];
     if (typeof slot === "undefined") {
       return null;

@@ -1,6 +1,6 @@
 import type { Integer } from "../types.js";
-import type { IndexOfMove, default as Move, Moves } from "./Move.js";
-import type { IndexOfPlayer, default as Player, Players } from "./Player.js";
+import type { IndexOfMove, default as Move } from "./Move.js";
+import type { IndexOfPlayer, default as Player } from "./Player.js";
 import type Slot from "./Slot.js";
 import type State from "./State.js";
 
@@ -14,35 +14,42 @@ type Channel = Integer;
 type EncodedState = Pixel[][][];
 
 interface GameParams<
-  G extends Game<P, M, S, G>,
-  S extends State<P, M, S, G>,
-  M extends Move<P, M, S, G>,
-  Sl extends Slot<P, M, S, G>,
-  P extends Player<P, M, S, G>,
+  G extends Game<G, S, M, Sl, P>,
+  S extends State<G, S, M, Sl, P>,
+  M extends Move<G, S, M, Sl, P>,
+  Sl extends Slot<G, S, M, Sl, P>,
+  P extends Player<G, S, M, Sl, P>,
 > {
-  readonly moves: Moves<P, M, S, G>;
+  readonly moves: readonly M[];
   readonly name: string;
-  readonly players: Players<P, M, S, G>;
+  readonly players: readonly P[];
   readonly quantityOfSlots: Integer;
 }
 
 abstract class Game<
-  P extends Player<P, M, S, G>,
-  M extends Move<P, M, S, G>,
-  S extends State<P, M, S, G>,
-  G extends Game<P, M, S, G>,
+  G extends Game<G, S, M, Sl, P>,
+  S extends State<G, S, M, Sl, P>,
+  M extends Move<G, S, M, Sl, P>,
+  Sl extends Slot<G, S, M, Sl, P>,
+  P extends Player<G, S, M, Sl, P>,
 > {
-  private readonly moves: GameParams<P, M, S, G>["moves"];
-  private readonly name: GameParams<P, M, S, G>["name"];
-  private readonly players: GameParams<P, M, S, G>["players"];
-  private readonly quantityOfSlots: GameParams<P, M, S, G>["quantityOfSlots"];
+  private readonly moves: GameParams<G, S, M, Sl, P>["moves"];
+  private readonly name: GameParams<G, S, M, Sl, P>["name"];
+  private readonly players: GameParams<G, S, M, Sl, P>["players"];
+  private readonly quantityOfSlots: GameParams<
+    G,
+    S,
+    M,
+    Sl,
+    P
+  >["quantityOfSlots"];
 
   constructor({
     moves,
     name,
     players,
     quantityOfSlots,
-  }: GameParams<P, M, S, G>) {
+  }: GameParams<G, S, M, Sl, P>) {
     this.moves = moves.map(move => move.clone());
     this.name = name;
     this.players = players.map(player => player.clone());
@@ -113,7 +120,7 @@ abstract class Game<
     return this.moves.length;
   }
 
-  public abstract getValidMoves({ state }: { state: S }): Moves<P, M, S, G>;
+  public abstract getValidMoves({ state }: { state: S }): readonly M[];
 
   public abstract play(move: M, state: S): S;
 

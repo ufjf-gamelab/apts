@@ -1,30 +1,27 @@
 import { expect, test } from "vitest";
 
-import { type default as TestingMove, TestingMoveKey } from "../Move.js";
-import { TestingPlayerKey } from "../Player.js";
-import TestingState, { type TestingSlot } from "../State.js";
-import {
-  INDEX_OF_MOVE_NORTH_OF_NORTHWEST,
-  INDEX_OF_MOVE_NORTHWEST_OF_NORTHWEST,
-  QUANTITY_OF_SLOTS,
-  setupGame,
-  type TestGameParams,
-} from "./setup.js";
+import { INITIAL_POINTS } from "../Game.js";
+import type TestingMove from "../Move.js";
+import { IndexOfTestingMove } from "../Move/setup.js";
+import { IndexOfTestingPlayer } from "../Player/setup.js";
+import TestingSlot from "../Slot.js";
+import TestingState from "../State.js";
+import { QUANTITY_OF_SLOTS, setupGame, type TestGameParams } from "./setup.js";
 
 const playShouldReturn = ({
   expectedState,
   game,
+  indexOfMove,
   move,
-  moveKey,
   state,
   testDescriptor,
 }: TestGameParams & {
   expectedState: TestingState;
+  indexOfMove: IndexOfTestingMove;
   move: TestingMove;
-  moveKey: TestingMoveKey;
   state: TestingState;
 }): void => {
-  test(`${testDescriptor}: play(${moveKey}) should return an object equal to the one passed as parameter, but as a different reference`, () => {
+  test(`${testDescriptor}: play(${indexOfMove}) should return an object equal to the one passed as parameter, but as a different reference`, () => {
     const nextState = game.play(move, state);
     expect(nextState).toBeInstanceOf(TestingState);
     expect(nextState).not.toBe(state);
@@ -35,21 +32,21 @@ const playShouldReturn = ({
 const testPlay = ({
   expectedState,
   game,
+  indexOfMove,
   move,
-  moveKey,
   state,
   testDescriptor,
 }: TestGameParams & {
   expectedState: TestingState;
+  indexOfMove: IndexOfTestingMove;
   move: TestingMove;
-  moveKey: TestingMoveKey;
   state: TestingState;
 }): void => {
   playShouldReturn({
     expectedState,
     game,
+    indexOfMove,
     move,
-    moveKey,
     state,
     testDescriptor,
   });
@@ -59,27 +56,37 @@ const testFromInitialState = (): void => {
   const { game } = setupGame();
 
   const moveNorthwestOfNorthwest = game.getMove(
-    INDEX_OF_MOVE_NORTHWEST_OF_NORTHWEST,
+    IndexOfTestingMove.NorthwestOfNorthwest,
   );
   if (moveNorthwestOfNorthwest === null) {
     throw new Error("Move to Northwest of Northwest is null");
   }
 
-  const expectedSlots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(null);
-  expectedSlots[moveNorthwestOfNorthwest.getPositionWherePlacePlayerKey()] =
-    TestingState.getSlotThatRepresentsPlayerKey(TestingPlayerKey.One);
+  const expectedSlots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(
+    new TestingSlot({
+      indexOfOccupyingPlayer: null,
+    }),
+  );
+
+  const indexOfSlotInWhichPlacePiece =
+    moveNorthwestOfNorthwest.getIndexOfSlotInWhichPlacePiece();
+  expectedSlots[indexOfSlotInWhichPlacePiece] = new TestingSlot({
+    indexOfOccupyingPlayer: IndexOfTestingPlayer.One,
+  });
 
   const expectedState = new TestingState({
     game,
-    playerKey: TestingPlayerKey.Two,
+    indexOfPlayer: IndexOfTestingPlayer.Two,
+    // TODO: Update this to use the correct score
+    score: [INITIAL_POINTS, INITIAL_POINTS],
     slots: expectedSlots,
   });
 
   testPlay({
     expectedState,
     game,
+    indexOfMove: IndexOfTestingMove.NorthwestOfNorthwest,
     move: moveNorthwestOfNorthwest,
-    moveKey: INDEX_OF_MOVE_NORTHWEST_OF_NORTHWEST,
     state: game.getInitialState(),
     testDescriptor: "from initial state",
   });
@@ -90,13 +97,15 @@ const testAfterPlayingMoveNorthwestOfNorthwest = (): void => {
   const { game } = setupGame();
 
   const moveNorthwestOfNorthwest = game.getMove(
-    INDEX_OF_MOVE_NORTHWEST_OF_NORTHWEST,
+    IndexOfTestingMove.NorthwestOfNorthwest,
   );
   if (moveNorthwestOfNorthwest === null) {
     throw new Error("Move to Northwest of Northwest is null");
   }
 
-  const moveNorthOfNorthwest = game.getMove(INDEX_OF_MOVE_NORTH_OF_NORTHWEST);
+  const moveNorthOfNorthwest = game.getMove(
+    IndexOfTestingMove.NorthOfNorthwest,
+  );
   if (moveNorthOfNorthwest === null) {
     throw new Error("Move to North of Northwest is null");
   }
@@ -104,25 +113,38 @@ const testAfterPlayingMoveNorthwestOfNorthwest = (): void => {
   let state = game.getInitialState();
   state = game.play(moveNorthwestOfNorthwest, state);
 
-  const expectedValidMoves = game.getMoves();
-  expectedValidMoves.delete(TestingMoveKey.NorthwestOfNorthwest);
+  const expectedValidMoves = Array.from(game.getMoves());
+  expectedValidMoves.shift();
+  expectedValidMoves.shift();
 
-  const expectedSlots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(null);
-  expectedSlots[moveNorthwestOfNorthwest.getPositionWherePlacePlayerKey()] =
-    TestingState.getSlotThatRepresentsPlayerKey(TestingPlayerKey.One);
-  expectedSlots[moveNorthOfNorthwest.getPositionWherePlacePlayerKey()] =
-    TestingState.getSlotThatRepresentsPlayerKey(TestingPlayerKey.Two);
+  const expectedSlots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(
+    new TestingSlot({
+      indexOfOccupyingPlayer: null,
+    }),
+  );
+
+  moveNorthwestOfNorthwest.getIndexOfSlotInWhichPlacePiece();
+  expectedSlots[moveNorthwestOfNorthwest.getIndexOfSlotInWhichPlacePiece()] =
+    new TestingSlot({
+      indexOfOccupyingPlayer: IndexOfTestingPlayer.One,
+    });
+  expectedSlots[moveNorthOfNorthwest.getIndexOfSlotInWhichPlacePiece()] =
+    new TestingSlot({
+      indexOfOccupyingPlayer: IndexOfTestingPlayer.Two,
+    });
 
   const expectedState = new TestingState({
     game,
-    playerKey: TestingPlayerKey.One,
+    indexOfPlayer: IndexOfTestingPlayer.One,
+    // TODO: Update this to use the correct score
+    score: [INITIAL_POINTS, INITIAL_POINTS],
     slots: expectedSlots,
   });
   testPlay({
     expectedState,
     game,
+    indexOfMove: IndexOfTestingMove.NorthOfNorthwest,
     move: moveNorthOfNorthwest,
-    moveKey: INDEX_OF_MOVE_NORTH_OF_NORTHWEST,
     state,
     testDescriptor: "after playing move Northwest of Northwest",
   });

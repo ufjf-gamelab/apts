@@ -1,37 +1,33 @@
 import type { Integer } from "../types.js";
 import type Game from "./Game.js";
 import type Player from "./Player.js";
+import type Slot from "./Slot.js";
 import type State from "./State.js";
 
 type IndexOfMove = Integer;
 
 interface MoveParams<
-  P extends Player<P, M, S, G>,
-  M extends Move<P, M, S, G>,
-  S extends State<P, M, S, G>,
-  G extends Game<P, M, S, G>,
+  G extends Game<G, S, M, Sl, P>,
+  S extends State<G, S, M, Sl, P>,
+  M extends Move<G, S, M, Sl, P>,
+  Sl extends Slot<G, S, M, Sl, P>,
+  P extends Player<G, S, M, Sl, P>,
 > {
   readonly description: string;
   readonly title: string;
 }
 
-type Moves<
-  P extends Player<P, M, S, G>,
-  M extends Move<P, M, S, G>,
-  S extends State<P, M, S, G>,
-  G extends Game<P, M, S, G>,
-> = readonly M[];
-
 abstract class Move<
-  P extends Player<P, M, S, G>,
-  M extends Move<P, M, S, G>,
-  S extends State<P, M, S, G>,
-  G extends Game<P, M, S, G>,
+  G extends Game<G, S, M, Sl, P>,
+  S extends State<G, S, M, Sl, P>,
+  M extends Move<G, S, M, Sl, P>,
+  Sl extends Slot<G, S, M, Sl, P>,
+  P extends Player<G, S, M, Sl, P>,
 > {
-  private readonly description: MoveParams<P, M, S, G>["description"];
-  private readonly title: MoveParams<P, M, S, G>["title"];
+  private readonly description: MoveParams<G, S, M, Sl, P>["description"];
+  private readonly title: MoveParams<G, S, M, Sl, P>["title"];
 
-  constructor({ description, title }: MoveParams<P, M, S, G>) {
+  constructor({ description, title }: MoveParams<G, S, M, Sl, P>) {
     this.title = title;
     this.description = description;
   }
@@ -47,5 +43,5 @@ abstract class Move<
   }
 }
 
-export type { IndexOfMove, MoveParams, Moves };
+export type { IndexOfMove, MoveParams };
 export { Move as default };

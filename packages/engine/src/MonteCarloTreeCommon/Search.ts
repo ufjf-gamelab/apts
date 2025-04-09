@@ -14,10 +14,10 @@
 // }
 
 // interface SearchParams<
-//   P extends Player<P, M, S, G>,
-//   M extends Move<P, M, S, G>,
-//   S extends State<P, M, S, G>,
-//   G extends Game<P, M, S, G>,
+//   P extends Player<G, S, M, Sl, P>,
+//   M extends Move<G, S, M, Sl, P>,
+//   S extends State<G, S, M, Sl, P>,
+//   G extends Game<G, S, M, Sl, P>,
 // > {
 //   game: G;
 //   explorationConstant: number;
@@ -25,20 +25,20 @@
 // }
 
 // export default class Search<
-//   P extends Player<P, M, S, G>,
-//   M extends Move<P, M, S, G>,
-//   S extends State<P, M, S, G>,
-//   G extends Game<P, M, S, G>,
+//   P extends Player<G, S, M, Sl, P>,
+//   M extends Move<G, S, M, Sl, P>,
+//   S extends State<G, S, M, Sl, P>,
+//   G extends Game<G, S, M, Sl, P>,
 // > {
-//   private game: SearchParams<P, M, S, G>["game"];
-//   private explorationConstant: SearchParams<P, M, S, G>["explorationConstant"];
-//   private quantityOfSearches: SearchParams<P, M, S, G>["quantityOfSearches"];
+//   private game: SearchParams<G, S, M, Sl, P>["game"];
+//   private explorationConstant: SearchParams<G, S, M, Sl, P>["explorationConstant"];
+//   private quantityOfSearches: SearchParams<G, S, M, Sl, P>["quantityOfSearches"];
 
 //   constructor({
 //     game,
 //     explorationConstant,
 //     quantityOfSearches,
-//   }: SearchParams<P, M, S, G>) {
+//   }: SearchParams<G, S, M, Sl, P>) {
 //     this.game = game;
 //     this.explorationConstant = explorationConstant;
 //     this.quantityOfSearches = quantityOfSearches;
@@ -55,7 +55,7 @@
 //       probabilities: [],
 //     };
 
-//     const root = new Node<P, M, S, G>({
+//     const root = new Node<G, S, M, Sl, P>({
 //       explorationConstant: this.explorationConstant,
 //       keyOfTheTakenMove: null,
 //       parent: null,
@@ -97,7 +97,7 @@
 //     return returnObject;
 //   }
 
-//   private buildTree(root: Node<P, M, S, G>): void {
+//   private buildTree(root: Node<G, S, M, Sl, P>): void {
 //     for (
 //       let currentSearchIndex = 0;
 //       currentSearchIndex < this.quantityOfSearches;

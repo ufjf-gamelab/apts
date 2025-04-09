@@ -8,7 +8,11 @@ import {
 const QUANTITY_OF_SLOTS = 81;
 
 interface CreatedGameAndRelatedData {
+  dataRelatedToCreatedGame: DataRelatedToCreatedGame;
   game: TestingGame;
+}
+
+interface DataRelatedToCreatedGame {
   moves: CreatedMovesAndRelatedData;
   players: CreatedPlayersAndRelatedData;
 }
@@ -22,19 +26,20 @@ const createGame = ({
   moves,
   players,
 }: Pick<
-  CreatedGameAndRelatedData,
+  DataRelatedToCreatedGame,
   "moves" | "players"
 >): CreatedGameAndRelatedData => {
-  const name = "Testing game";
   const game = new TestingGame({
-    moves: Array.from(moves.entries()).map(([, { move }]) => move),
-    name,
-    players: Array.from(players.entries()).map(([, { player }]) => player),
+    moves: Array.from(moves.values().map(({ move }) => move)),
+    name: "Testing Game",
+    players: Array.from(players.values().map(({ player }) => player)),
   });
   return {
+    dataRelatedToCreatedGame: {
+      moves,
+      players,
+    },
     game,
-    moves,
-    players,
   };
 };
 

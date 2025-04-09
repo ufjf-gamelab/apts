@@ -96,335 +96,335 @@ type NameOfIndexOfTestingMove = keyof typeof IndexOfTestingMove;
 
 const movesDTOs = {
   [IndexOfTestingMove.CenterOfCenter]: {
-    positionWherePlacePlayerKey: 40,
+    indexOfSlotInWhichPlacePiece: 40,
     title: "Center of Center",
   },
   [IndexOfTestingMove.CenterOfEast]: {
-    positionWherePlacePlayerKey: 43,
+    indexOfSlotInWhichPlacePiece: 43,
     title: "Center of East",
   },
   [IndexOfTestingMove.CenterOfNorth]: {
-    positionWherePlacePlayerKey: 13,
+    indexOfSlotInWhichPlacePiece: 13,
     title: "Center of North",
   },
   [IndexOfTestingMove.CenterOfNortheast]: {
-    positionWherePlacePlayerKey: 16,
+    indexOfSlotInWhichPlacePiece: 16,
     title: "Center of Northeast",
   },
   [IndexOfTestingMove.CenterOfNorthwest]: {
-    positionWherePlacePlayerKey: 10,
+    indexOfSlotInWhichPlacePiece: 10,
     title: "Center of Northwest",
   },
   [IndexOfTestingMove.CenterOfSouth]: {
-    positionWherePlacePlayerKey: 67,
+    indexOfSlotInWhichPlacePiece: 67,
     title: "Center of South",
   },
   [IndexOfTestingMove.CenterOfSoutheast]: {
-    positionWherePlacePlayerKey: 70,
+    indexOfSlotInWhichPlacePiece: 70,
     title: "Center of Southeast",
   },
   [IndexOfTestingMove.CenterOfSouthwest]: {
-    positionWherePlacePlayerKey: 64,
+    indexOfSlotInWhichPlacePiece: 64,
     title: "Center of Southwest",
   },
   [IndexOfTestingMove.CenterOfWest]: {
-    positionWherePlacePlayerKey: 37,
+    indexOfSlotInWhichPlacePiece: 37,
     title: "Center of West",
   },
 
   [IndexOfTestingMove.EastOfCenter]: {
-    positionWherePlacePlayerKey: 41,
+    indexOfSlotInWhichPlacePiece: 41,
     title: "East of Center",
   },
   [IndexOfTestingMove.EastOfEast]: {
-    positionWherePlacePlayerKey: 44,
+    indexOfSlotInWhichPlacePiece: 44,
     title: "East of East",
   },
   [IndexOfTestingMove.EastOfNorth]: {
-    positionWherePlacePlayerKey: 14,
+    indexOfSlotInWhichPlacePiece: 14,
     title: "East of North",
   },
   [IndexOfTestingMove.EastOfNortheast]: {
-    positionWherePlacePlayerKey: 17,
+    indexOfSlotInWhichPlacePiece: 17,
     title: "East of Northeast",
   },
   [IndexOfTestingMove.EastOfNorthwest]: {
-    positionWherePlacePlayerKey: 11,
+    indexOfSlotInWhichPlacePiece: 11,
     title: "East of Northwest",
   },
   [IndexOfTestingMove.EastOfSouth]: {
-    positionWherePlacePlayerKey: 68,
+    indexOfSlotInWhichPlacePiece: 68,
     title: "East of South",
   },
   [IndexOfTestingMove.EastOfSoutheast]: {
-    positionWherePlacePlayerKey: 71,
+    indexOfSlotInWhichPlacePiece: 71,
     title: "East of Southeast",
   },
   [IndexOfTestingMove.EastOfSouthwest]: {
-    positionWherePlacePlayerKey: 65,
+    indexOfSlotInWhichPlacePiece: 65,
     title: "East of Southwest",
   },
   [IndexOfTestingMove.EastOfWest]: {
-    positionWherePlacePlayerKey: 38,
+    indexOfSlotInWhichPlacePiece: 38,
     title: "East of West",
   },
 
   [IndexOfTestingMove.NortheastOfCenter]: {
-    positionWherePlacePlayerKey: 32,
+    indexOfSlotInWhichPlacePiece: 32,
     title: "Northeast of Center",
   },
   [IndexOfTestingMove.NortheastOfEast]: {
-    positionWherePlacePlayerKey: 35,
+    indexOfSlotInWhichPlacePiece: 35,
     title: "Northeast of East",
   },
   [IndexOfTestingMove.NortheastOfNorth]: {
-    positionWherePlacePlayerKey: 5,
+    indexOfSlotInWhichPlacePiece: 5,
     title: "Northeast of North",
   },
   [IndexOfTestingMove.NortheastOfNortheast]: {
-    positionWherePlacePlayerKey: 8,
+    indexOfSlotInWhichPlacePiece: 8,
     title: "Northeast of Northeast",
   },
   [IndexOfTestingMove.NortheastOfNorthwest]: {
-    positionWherePlacePlayerKey: 2,
+    indexOfSlotInWhichPlacePiece: 2,
     title: "Northeast of Northwest",
   },
   [IndexOfTestingMove.NortheastOfSouth]: {
-    positionWherePlacePlayerKey: 59,
+    indexOfSlotInWhichPlacePiece: 59,
     title: "Northeast of South",
   },
   [IndexOfTestingMove.NortheastOfSoutheast]: {
-    positionWherePlacePlayerKey: 62,
+    indexOfSlotInWhichPlacePiece: 62,
     title: "Northeast of Southeast",
   },
   [IndexOfTestingMove.NortheastOfSouthwest]: {
-    positionWherePlacePlayerKey: 56,
+    indexOfSlotInWhichPlacePiece: 56,
     title: "Northeast of Southwest",
   },
   [IndexOfTestingMove.NortheastOfWest]: {
-    positionWherePlacePlayerKey: 29,
+    indexOfSlotInWhichPlacePiece: 29,
     title: "Northeast of West",
   },
 
   [IndexOfTestingMove.NorthOfCenter]: {
-    positionWherePlacePlayerKey: 31,
+    indexOfSlotInWhichPlacePiece: 31,
     title: "North of Center",
   },
   [IndexOfTestingMove.NorthOfEast]: {
-    positionWherePlacePlayerKey: 34,
+    indexOfSlotInWhichPlacePiece: 34,
     title: "North of East",
   },
   [IndexOfTestingMove.NorthOfNorth]: {
-    positionWherePlacePlayerKey: 4,
+    indexOfSlotInWhichPlacePiece: 4,
     title: "North of North",
   },
   [IndexOfTestingMove.NorthOfNortheast]: {
-    positionWherePlacePlayerKey: 7,
+    indexOfSlotInWhichPlacePiece: 7,
     title: "North of Northeast",
   },
   [IndexOfTestingMove.NorthOfNorthwest]: {
-    positionWherePlacePlayerKey: 1,
+    indexOfSlotInWhichPlacePiece: 1,
     title: "North of Northwest",
   },
   [IndexOfTestingMove.NorthOfSouth]: {
-    positionWherePlacePlayerKey: 58,
+    indexOfSlotInWhichPlacePiece: 58,
     title: "North of South",
   },
   [IndexOfTestingMove.NorthOfSoutheast]: {
-    positionWherePlacePlayerKey: 61,
+    indexOfSlotInWhichPlacePiece: 61,
     title: "North of Southeast",
   },
   [IndexOfTestingMove.NorthOfSouthwest]: {
-    positionWherePlacePlayerKey: 55,
+    indexOfSlotInWhichPlacePiece: 55,
     title: "North of Southwest",
   },
   [IndexOfTestingMove.NorthOfWest]: {
-    positionWherePlacePlayerKey: 28,
+    indexOfSlotInWhichPlacePiece: 28,
     title: "North of West",
   },
 
   [IndexOfTestingMove.NorthwestOfCenter]: {
-    positionWherePlacePlayerKey: 30,
+    indexOfSlotInWhichPlacePiece: 30,
     title: "Northwest of Center",
   },
   [IndexOfTestingMove.NorthwestOfEast]: {
-    positionWherePlacePlayerKey: 33,
+    indexOfSlotInWhichPlacePiece: 33,
     title: "Northwest of East",
   },
   [IndexOfTestingMove.NorthwestOfNorth]: {
-    positionWherePlacePlayerKey: 3,
+    indexOfSlotInWhichPlacePiece: 3,
     title: "Northwest of North",
   },
   [IndexOfTestingMove.NorthwestOfNortheast]: {
-    positionWherePlacePlayerKey: 6,
+    indexOfSlotInWhichPlacePiece: 6,
     title: "Northwest of Northeast",
   },
   [IndexOfTestingMove.NorthwestOfNorthwest]: {
-    positionWherePlacePlayerKey: 0,
+    indexOfSlotInWhichPlacePiece: 0,
     title: "Northwest of Northwest",
   },
   [IndexOfTestingMove.NorthwestOfSouth]: {
-    positionWherePlacePlayerKey: 57,
+    indexOfSlotInWhichPlacePiece: 57,
     title: "Northwest of South",
   },
   [IndexOfTestingMove.NorthwestOfSoutheast]: {
-    positionWherePlacePlayerKey: 60,
+    indexOfSlotInWhichPlacePiece: 60,
     title: "Northwest of Southeast",
   },
   [IndexOfTestingMove.NorthwestOfSouthwest]: {
-    positionWherePlacePlayerKey: 54,
+    indexOfSlotInWhichPlacePiece: 54,
     title: "Northwest of Southwest",
   },
   [IndexOfTestingMove.NorthwestOfWest]: {
-    positionWherePlacePlayerKey: 27,
+    indexOfSlotInWhichPlacePiece: 27,
     title: "Northwest of West",
   },
 
   [IndexOfTestingMove.SoutheastOfCenter]: {
-    positionWherePlacePlayerKey: 50,
+    indexOfSlotInWhichPlacePiece: 50,
     title: "Southeast of Center",
   },
   [IndexOfTestingMove.SoutheastOfEast]: {
-    positionWherePlacePlayerKey: 53,
+    indexOfSlotInWhichPlacePiece: 53,
     title: "Southeast of East",
   },
   [IndexOfTestingMove.SoutheastOfNorth]: {
-    positionWherePlacePlayerKey: 23,
+    indexOfSlotInWhichPlacePiece: 23,
     title: "Southeast of North",
   },
   [IndexOfTestingMove.SoutheastOfNortheast]: {
-    positionWherePlacePlayerKey: 26,
+    indexOfSlotInWhichPlacePiece: 26,
     title: "Southeast of Northeast",
   },
   [IndexOfTestingMove.SoutheastOfNorthwest]: {
-    positionWherePlacePlayerKey: 20,
+    indexOfSlotInWhichPlacePiece: 20,
     title: "Southeast of Northwest",
   },
   [IndexOfTestingMove.SoutheastOfSouth]: {
-    positionWherePlacePlayerKey: 77,
+    indexOfSlotInWhichPlacePiece: 77,
     title: "Southeast of South",
   },
   [IndexOfTestingMove.SoutheastOfSoutheast]: {
-    positionWherePlacePlayerKey: 80,
+    indexOfSlotInWhichPlacePiece: 80,
     title: "Southeast of Southeast",
   },
   [IndexOfTestingMove.SoutheastOfSouthwest]: {
-    positionWherePlacePlayerKey: 74,
+    indexOfSlotInWhichPlacePiece: 74,
     title: "Southeast of Southwest",
   },
   [IndexOfTestingMove.SoutheastOfWest]: {
-    positionWherePlacePlayerKey: 47,
+    indexOfSlotInWhichPlacePiece: 47,
     title: "Southeast of West",
   },
 
   [IndexOfTestingMove.SouthOfCenter]: {
-    positionWherePlacePlayerKey: 49,
+    indexOfSlotInWhichPlacePiece: 49,
     title: "South of Center",
   },
   [IndexOfTestingMove.SouthOfEast]: {
-    positionWherePlacePlayerKey: 52,
+    indexOfSlotInWhichPlacePiece: 52,
     title: "South of East",
   },
   [IndexOfTestingMove.SouthOfNorth]: {
-    positionWherePlacePlayerKey: 22,
+    indexOfSlotInWhichPlacePiece: 22,
     title: "South of North",
   },
   [IndexOfTestingMove.SouthOfNortheast]: {
-    positionWherePlacePlayerKey: 25,
+    indexOfSlotInWhichPlacePiece: 25,
     title: "South of Northeast",
   },
   [IndexOfTestingMove.SouthOfNorthwest]: {
-    positionWherePlacePlayerKey: 19,
+    indexOfSlotInWhichPlacePiece: 19,
     title: "South of Northwest",
   },
   [IndexOfTestingMove.SouthOfSouth]: {
-    positionWherePlacePlayerKey: 76,
+    indexOfSlotInWhichPlacePiece: 76,
     title: "South of South",
   },
   [IndexOfTestingMove.SouthOfSoutheast]: {
-    positionWherePlacePlayerKey: 79,
+    indexOfSlotInWhichPlacePiece: 79,
     title: "South of Southeast",
   },
   [IndexOfTestingMove.SouthOfSouthwest]: {
-    positionWherePlacePlayerKey: 73,
+    indexOfSlotInWhichPlacePiece: 73,
     title: "South of Southwest",
   },
   [IndexOfTestingMove.SouthOfWest]: {
-    positionWherePlacePlayerKey: 46,
+    indexOfSlotInWhichPlacePiece: 46,
     title: "South of West",
   },
 
   [IndexOfTestingMove.SouthwestOfCenter]: {
-    positionWherePlacePlayerKey: 48,
+    indexOfSlotInWhichPlacePiece: 48,
     title: "Southwest of Center",
   },
   [IndexOfTestingMove.SouthwestOfEast]: {
-    positionWherePlacePlayerKey: 51,
+    indexOfSlotInWhichPlacePiece: 51,
     title: "Southwest of East",
   },
   [IndexOfTestingMove.SouthwestOfNorth]: {
-    positionWherePlacePlayerKey: 21,
+    indexOfSlotInWhichPlacePiece: 21,
     title: "Southwest of North",
   },
   [IndexOfTestingMove.SouthwestOfNortheast]: {
-    positionWherePlacePlayerKey: 24,
+    indexOfSlotInWhichPlacePiece: 24,
     title: "Southwest of Northeast",
   },
   [IndexOfTestingMove.SouthwestOfNorthwest]: {
-    positionWherePlacePlayerKey: 18,
+    indexOfSlotInWhichPlacePiece: 18,
     title: "Southwest of Northwest",
   },
   [IndexOfTestingMove.SouthwestOfSouth]: {
-    positionWherePlacePlayerKey: 75,
+    indexOfSlotInWhichPlacePiece: 75,
     title: "Southwest of South",
   },
   [IndexOfTestingMove.SouthwestOfSoutheast]: {
-    positionWherePlacePlayerKey: 78,
+    indexOfSlotInWhichPlacePiece: 78,
     title: "Southwest of Southeast",
   },
   [IndexOfTestingMove.SouthwestOfSouthwest]: {
-    positionWherePlacePlayerKey: 72,
+    indexOfSlotInWhichPlacePiece: 72,
     title: "Southwest of Southwest",
   },
   [IndexOfTestingMove.SouthwestOfWest]: {
-    positionWherePlacePlayerKey: 45,
+    indexOfSlotInWhichPlacePiece: 45,
     title: "Southwest of West",
   },
 
   [IndexOfTestingMove.WestOfCenter]: {
-    positionWherePlacePlayerKey: 39,
+    indexOfSlotInWhichPlacePiece: 39,
     title: "West of Center",
   },
   [IndexOfTestingMove.WestOfEast]: {
-    positionWherePlacePlayerKey: 42,
+    indexOfSlotInWhichPlacePiece: 42,
     title: "West of East",
   },
   [IndexOfTestingMove.WestOfNorth]: {
-    positionWherePlacePlayerKey: 12,
+    indexOfSlotInWhichPlacePiece: 12,
     title: "West of North",
   },
   [IndexOfTestingMove.WestOfNortheast]: {
-    positionWherePlacePlayerKey: 15,
+    indexOfSlotInWhichPlacePiece: 15,
     title: "West of Northeast",
   },
   [IndexOfTestingMove.WestOfNorthwest]: {
-    positionWherePlacePlayerKey: 9,
+    indexOfSlotInWhichPlacePiece: 9,
     title: "West of Northwest",
   },
   [IndexOfTestingMove.WestOfSouth]: {
-    positionWherePlacePlayerKey: 66,
+    indexOfSlotInWhichPlacePiece: 66,
     title: "West of South",
   },
   [IndexOfTestingMove.WestOfSoutheast]: {
-    positionWherePlacePlayerKey: 69,
+    indexOfSlotInWhichPlacePiece: 69,
     title: "West of Southeast",
   },
   [IndexOfTestingMove.WestOfSouthwest]: {
-    positionWherePlacePlayerKey: 63,
+    indexOfSlotInWhichPlacePiece: 63,
     title: "West of Southwest",
   },
   [IndexOfTestingMove.WestOfWest]: {
-    positionWherePlacePlayerKey: 36,
+    indexOfSlotInWhichPlacePiece: 36,
     title: "West of West",
   },
 } as const;
@@ -529,8 +529,8 @@ interface CreatedMoveAndRelatedData {
 interface DataRelatedToCreatedMove {
   description: TestingMove["description"];
   index: IndexOfTestingMove;
+  indexOfSlotInWhichPlacePiece: TestingMove["indexOfSlotInWhichPlacePiece"];
   nameOfIndex: NameOfIndexOfTestingMove;
-  positionWherePlacePlayerKey: TestingMove["positionWherePlacePlayerKey"];
   title: TestingMove["title"];
 }
 
@@ -547,14 +547,14 @@ const createMove = ({
   recordOfMoveDTO: RecordOfMoveDTO;
 }): CreatedMoveAndRelatedData => {
   const {
-    data: { positionWherePlacePlayerKey, title },
+    data: { indexOfSlotInWhichPlacePiece, title },
     index: indexOfMoveDTO,
   } = recordOfMoveDTO;
 
   const description = `Control the slot on ${title}`;
   const move = new TestingMove({
     description,
-    indexOfSlotInWhichPlacePiece: positionWherePlacePlayerKey,
+    indexOfSlotInWhichPlacePiece,
     title,
   });
 
@@ -562,10 +562,10 @@ const createMove = ({
     dataRelatedToCreatedMove: {
       description,
       index: indexOfMoveDTO,
+      indexOfSlotInWhichPlacePiece,
       nameOfIndex: IndexOfTestingMove[
         indexOfMoveDTO
       ] as NameOfIndexOfTestingMove,
-      positionWherePlacePlayerKey,
       title,
     },
     move,

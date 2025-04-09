@@ -16,7 +16,7 @@ const getNameShouldReturn = ({
 };
 
 const testGetName = ({ game, testDescriptor }: TestGameParams): void => {
-  getNameShouldReturn({ expectedName: "Testing game", game, testDescriptor });
+  getNameShouldReturn({ expectedName: "Testing Game", game, testDescriptor });
 };
 
 const testGetNameForCommonGame = (): void => {

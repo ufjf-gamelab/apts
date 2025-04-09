@@ -1,30 +1,26 @@
 import type { Integer } from "../../types.js";
-import Move, { type MoveParams, type Moves } from "../Move.js";
+import Move, { type MoveParams } from "../Move.js";
 import type TestingGame from "./Game.js";
 import type TestingPlayer from "./Player.js";
+import type TestingSlot from "./Slot.js";
 import type TestingState from "./State.js";
 
 type TestingMoveParams = MoveParams<
-  TestingPlayer,
-  TestingMove,
+  TestingGame,
   TestingState,
-  TestingGame
+  TestingMove,
+  TestingSlot,
+  TestingPlayer
 > & {
   indexOfSlotInWhichPlacePiece: Integer;
 };
 
-type TestingMoves = Moves<
-  TestingPlayer,
-  TestingMove,
-  TestingState,
-  TestingGame
->;
-
 class TestingMove extends Move<
-  TestingPlayer,
-  TestingMove,
+  TestingGame,
   TestingState,
-  TestingGame
+  TestingMove,
+  TestingSlot,
+  TestingPlayer
 > {
   private readonly indexOfSlotInWhichPlacePiece: TestingMoveParams["indexOfSlotInWhichPlacePiece"];
 
@@ -46,5 +42,4 @@ class TestingMove extends Move<
   }
 }
 
-export type { TestingMoves };
 export { TestingMove as default };

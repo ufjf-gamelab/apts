@@ -1,20 +1,15 @@
-import Player, { type Players } from "../Player.js";
+import Player from "../Player.js";
 import type TestingGame from "./Game.js";
 import type TestingMove from "./Move.js";
+import type TestingSlot from "./Slot.js";
 import type TestingState from "./State.js";
 
-type TestingPlayers = Players<
-  TestingPlayer,
-  TestingMove,
-  TestingState,
-  TestingGame
->;
-
 class TestingPlayer extends Player<
-  TestingPlayer,
-  TestingMove,
+  TestingGame,
   TestingState,
-  TestingGame
+  TestingMove,
+  TestingSlot,
+  TestingPlayer
 > {
   public override clone(): TestingPlayer {
     return new TestingPlayer({
@@ -24,5 +19,4 @@ class TestingPlayer extends Player<
   }
 }
 
-export type { TestingPlayers };
 export { TestingPlayer as default };

@@ -8,9 +8,9 @@
 
 // const printContext = <
 //   P extends Player,
-//   M extends Move<P, M, S, G>,
-//   S extends State<P, M, S, G>,
-//   G extends Game<P, M, S, G>,
+//   M extends Move<G, S, M, Sl, P>,
+//   S extends State<G, S, M, Sl, P>,
+//   G extends Game<G, S, M, Sl, P>,
 // >(
 //   player: P,
 // ): void => {
@@ -19,9 +19,9 @@
 
 // const getContext = <
 //   P extends Player,
-//   M extends Move<P, M, S, G>,
-//   S extends State<P, M, S, G>,
-//   G extends Game<P, M, S, G>,
+//   M extends Move<G, S, M, Sl, P>,
+//   S extends State<G, S, M, Sl, P>,
+//   G extends Game<G, S, M, Sl, P>,
 // >(
 //   state: S,
 //   player: P,
@@ -32,9 +32,9 @@
 
 // const playMove = <
 //   P extends Player,
-//   M extends Move<P, M, S, G>,
-//   S extends State<P, M, S, G>,
-//   G extends Game<P, M, S, G>,
+//   M extends Move<G, S, M, Sl, P>,
+//   S extends State<G, S, M, Sl, P>,
+//   G extends Game<G, S, M, Sl, P>,
 // >(
 //   state: S,
 //   move: M,
@@ -46,9 +46,9 @@
 
 // const hasGameEnded = <
 //   P extends Player,
-//   M extends Move<P, M, S, G>,
-//   S extends State<P, M, S, G>,
-//   G extends Game<P, M, S, G>,
+//   M extends Move<G, S, M, Sl, P>,
+//   S extends State<G, S, M, Sl, P>,
+//   G extends Game<G, S, M, Sl, P>,
 // >(
 //   state: S,
 // ): boolean => {
@@ -62,9 +62,9 @@
 
 // interface PlayParams<
 //   P extends Player,
-//   M extends Move<P, M, S, G>,
-//   S extends State<P, M, S, G>,
-//   G extends Game<P, M, S, G>,
+//   M extends Move<G, S, M, Sl, P>,
+//   S extends State<G, S, M, Sl, P>,
+//   G extends Game<G, S, M, Sl, P>,
 // > {
 //   getInput: GetInput;
 //   game: G;
@@ -73,14 +73,14 @@
 
 // const main = async <
 //   P extends Player,
-//   M extends Move<P, M, S, G>,
-//   S extends State<P, M, S, G>,
-//   G extends Game<P, M, S, G>,
+//   M extends Move<G, S, M, Sl, P>,
+//   S extends State<G, S, M, Sl, P>,
+//   G extends Game<G, S, M, Sl, P>,
 // >({
 //   getInput,
 //   game,
 //   gameMode,
-// }: PlayParams<P, M, S, G>): Promise<void> => {
+// }: PlayParams<G, S, M, Sl, P>): Promise<void> => {
 //   console.log(`Game: ${game.getName()}`);
 //   console.log(`Mode: ${gameMode}\n`);
 
@@ -91,7 +91,7 @@
 //   console.log(state.toString());
 
 //   while (!gameHasEnded) {
-//     const validMoves = getContext<P, M, S, G>(state, player);
+//     const validMoves = getContext<G, S, M, Sl, P>(state, player);
 
 //     // eslint-disable-next-line no-await-in-loop
 //     const input = await getInput({

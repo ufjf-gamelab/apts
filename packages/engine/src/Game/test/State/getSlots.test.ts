@@ -1,7 +1,8 @@
 import { expect, test } from "vitest";
 
-import TestingContent from "../Slot.js";
 import { TestingPlayerKey } from "../Player.js";
+import TestingContent from "../Slot.js";
+import type TestingSlot from "../Slot.js";
 import type TestingState from "../State.js";
 import { createInitialState, type TestStateParams } from "./setup.js";
 
@@ -50,7 +51,7 @@ const testGetSlots = ({
   state,
   testDescriptor,
 }: TestStateParams & {
-  expectedSlots: TestingState["slots"];
+  expectedSlots: TestingSlot[];
 }): void => {
   getSlotsShouldReturn({ expectedSlots, state, testDescriptor });
 };
