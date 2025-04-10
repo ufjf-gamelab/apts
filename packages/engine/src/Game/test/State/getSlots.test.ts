@@ -17,7 +17,7 @@ const getSlotsShouldReturn = ({
     expect(state.getSlots()).toStrictEqual(expectedSlots);
   });
 
-  test("modifying the object slots passed via constructor should not change the internal attribute", () => {
+  test(`${testDescriptor}: modifying the object slots passed via constructor should not change the internal attribute`, () => {
     const slotsBeforeUpdate = [...expectedSlots];
     expectedSlots[IndexOfTestingSlot.NorthwestOfNorthwest] = new TestingSlot({
       indexOfOccupyingPlayer: IndexOfTestingPlayer.One,
@@ -29,7 +29,7 @@ const getSlotsShouldReturn = ({
     expect(state.getSlots()).toStrictEqual(slotsBeforeUpdate);
   });
 
-  test("modifying the object slots received by the getter should not change the internal attribute", () => {
+  test(`${testDescriptor}: modifying the object slots received by the getter should not change the internal attribute`, () => {
     const slotsBeforeUpdate = [...state.getSlots()];
     const updatedSlots = state.getSlots() as TestingSlot[];
     updatedSlots[IndexOfTestingSlot.NorthwestOfNorthwest] = new TestingSlot({

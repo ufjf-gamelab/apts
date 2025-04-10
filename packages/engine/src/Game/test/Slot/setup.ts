@@ -1,4 +1,4 @@
-import { QUANTITY_OF_SLOTS } from "../Game/setup.js";
+import { QUANTITY_OF_SLOTS } from "../Game.js";
 import { IndexOfTestingPlayer } from "../Player/setup.js";
 import TestingSlot from "../Slot.js";
 

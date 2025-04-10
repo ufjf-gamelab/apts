@@ -1,13 +1,20 @@
+import type { Integer } from "../../types.js";
 import Game, { type GameParams } from "../Game.js";
 import type { IndexOfPlayer } from "../Player.js";
+import type { Score } from "../State.js";
 import { type default as TestingMove } from "./Move.js";
 import { type default as TestingPlayer } from "./Player.js";
+import type { IndexOfTestingPlayer } from "./Player/setup.js";
 import TestingSlot from "./Slot.js";
 import TestingState from "./State.js";
 
-const ADVANCE_TURN = 1;
-const INDEX_OF_INITIAL_PLAYER = 0;
-const INITIAL_POINTS = 0;
+const COLUMN_LENGTH: Integer = 9;
+const ROW_LENGTH: Integer = 9;
+const QUANTITY_OF_SLOTS: Integer = COLUMN_LENGTH * ROW_LENGTH;
+
+const INDEX_OF_INITIAL_PLAYER: IndexOfTestingPlayer = 0;
+
+const ADVANCE_TURN: Integer = 1;
 
 type TestingGameParams = Pick<
   GameParams<
@@ -32,7 +39,7 @@ class TestingGame extends Game<
       moves,
       name,
       players,
-      quantityOfSlots: 81,
+      quantityOfSlots: QUANTITY_OF_SLOTS,
     });
   }
 
@@ -40,7 +47,7 @@ class TestingGame extends Game<
     return new TestingGame({
       moves: this.getMoves(),
       name: this.getName(),
-      players: Array.from(this.getPlayers().values()),
+      players: this.getPlayers(),
     });
   }
 
@@ -68,7 +75,7 @@ class TestingGame extends Game<
     return new TestingState({
       game: this,
       indexOfPlayer: INDEX_OF_INITIAL_PLAYER,
-      score: new Array(this.getQuantityOfPlayers()).fill(INITIAL_POINTS),
+      score: TestingState.initializeScore(this.getQuantityOfPlayers()),
       slots: emptySlots,
     });
   }
@@ -121,7 +128,13 @@ class TestingGame extends Game<
       slots: updatedSlots,
     });
   }
+
+  private calculateScore(state: TestingState): Score {
+    const score = TestingState.initializeScore(this.getQuantityOfPlayers());
+
+    return score;
+  }
 }
 
 export type { TestingGameParams };
-export { TestingGame as default, INITIAL_POINTS };
+export { COLUMN_LENGTH, TestingGame as default, QUANTITY_OF_SLOTS, ROW_LENGTH };

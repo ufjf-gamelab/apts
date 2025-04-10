@@ -4,8 +4,6 @@ import type Move from "./Move.js";
 import type Player from "./Player.js";
 import type State from "./State.js";
 
-// TODO: Test Slot
-
 type IndexOfSlot = Integer;
 
 type SlotParams<

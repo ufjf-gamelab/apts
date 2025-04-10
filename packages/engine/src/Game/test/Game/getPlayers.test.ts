@@ -27,7 +27,7 @@ const getPlayersShouldReturn = ({
 
   // TODO: Create test for modifying the object given to the constructor
 
-  test("modifying the object players received by the getter should not change its internal attribute", () => {
+  test(`${testDescriptor}: modifying the object players received by the getter should not change its internal attribute`, () => {
     const newPlayer = new TestingPlayer({
       name: "Carlos",
       symbol: "C",

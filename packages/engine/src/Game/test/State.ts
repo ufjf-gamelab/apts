@@ -1,10 +1,20 @@
 import { INCREMENT_ONE } from "../../constants.js";
 import { type Integer } from "../../types.js";
-import State, { type StateParams } from "../State.js";
-import type TestingGame from "./Game.js";
+import State, { type Points, type StateParams } from "../State.js";
+import {
+  COLUMN_LENGTH,
+  ROW_LENGTH,
+  type default as TestingGame,
+} from "./Game.js";
 import type TestingMove from "./Move.js";
 import type TestingPlayer from "./Player.js";
 import type TestingSlot from "./Slot.js";
+
+const INITIAL_POINTS: Points = 0;
+const AMOUNT_OF_POINTS_TO_FINISH_MATCH: Points = 15;
+const AMOUNT_OF_SLOTS_TO_FINISH_MATCH: Points = 49;
+
+const INDEX_OF_FIRST_SLOT: Integer = 0;
 
 type TestingStateParams = StateParams<
   TestingGame,
@@ -14,14 +24,6 @@ type TestingStateParams = StateParams<
   TestingPlayer
 >;
 
-const AMOUNT_OF_POINTS_TO_FINISH_MATCH: Integer = 15;
-const AMOUNT_OF_SLOTS_TO_FINISH_MATCH: Integer = 49;
-
-const COLUMN_LENGTH: Integer = 9;
-const ROW_LENGTH: Integer = 9;
-
-const INDEX_OF_INITIAL_SLOT: Integer = 0;
-
 class TestingState extends State<
   TestingGame,
   TestingState,
@@ -29,6 +31,10 @@ class TestingState extends State<
   TestingSlot,
   TestingPlayer
 > {
+  public static initializeScore(quantityOfPlayers: Integer): Points[] {
+    return Array<Points>(quantityOfPlayers).fill(INITIAL_POINTS);
+  }
+
   public override changePerspective(): TestingState {
     return this.clone();
   }
@@ -74,13 +80,13 @@ class TestingState extends State<
   public override toString(): string {
     let board = "";
     for (
-      let row = INDEX_OF_INITIAL_SLOT;
+      let row = INDEX_OF_FIRST_SLOT;
       row < ROW_LENGTH;
       row += INCREMENT_ONE
     ) {
       board += "|";
       for (
-        let column = INDEX_OF_INITIAL_SLOT;
+        let column = INDEX_OF_FIRST_SLOT;
         column < COLUMN_LENGTH;
         column += INCREMENT_ONE
       ) {

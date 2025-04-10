@@ -19,7 +19,7 @@ const getScoreShouldReturn = ({
     expect(state.getScore()).toStrictEqual(expectedScore);
   });
 
-  test("modifying the object score received by the getter should not change the internal attribute", () => {
+  test(`${testDescriptor}: modifying the object score received by the getter should not change the internal attribute`, () => {
     const scoreBeforeUpdate = state.getScore();
 
     const updatedScore = state.getScore() as Integer[];

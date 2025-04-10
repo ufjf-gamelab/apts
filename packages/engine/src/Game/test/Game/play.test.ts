@@ -5,8 +5,9 @@ import type TestingMove from "../Move.js";
 import { IndexOfTestingMove } from "../Move/setup.js";
 import { IndexOfTestingPlayer } from "../Player/setup.js";
 import TestingSlot from "../Slot.js";
+import { createSlotsForInitialState } from "../Slot/setup.js";
 import TestingState from "../State.js";
-import { QUANTITY_OF_SLOTS, setupGame, type TestGameParams } from "./setup.js";
+import { setupGame, type TestGameParams } from "./setup.js";
 
 const playShouldReturn = ({
   expectedState,
@@ -31,6 +32,8 @@ const playShouldReturn = ({
 
 const testFromInitialState = (): void => {
   const { game } = setupGame();
+  const slots = createSlotsForInitialState();
+  const expectedSlots = Array.from(slots.values().map(({ slot }) => slot));
 
   const moveNorthwestOfNorthwest = game.getMove(
     IndexOfTestingMove.NorthwestOfNorthwest,
@@ -38,12 +41,6 @@ const testFromInitialState = (): void => {
   if (moveNorthwestOfNorthwest === null) {
     throw new Error("Move to Northwest of Northwest is null");
   }
-
-  const expectedSlots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(
-    new TestingSlot({
-      indexOfOccupyingPlayer: null,
-    }),
-  );
 
   const indexOfSlotInWhichPlacePiece =
     moveNorthwestOfNorthwest.getIndexOfSlotInWhichPlacePiece();
@@ -65,13 +62,15 @@ const testFromInitialState = (): void => {
     indexOfMove: IndexOfTestingMove.NorthwestOfNorthwest,
     move: moveNorthwestOfNorthwest,
     state: game.getInitialState(),
-    testDescriptor: "from initial state",
+    testDescriptor: "common: from initial state",
   });
 };
 testFromInitialState();
 
 const testAfterPlayingMoveNorthwestOfNorthwest = (): void => {
   const { game } = setupGame();
+  const slots = createSlotsForInitialState();
+  const expectedSlots = Array.from(slots.values().map(({ slot }) => slot));
 
   const moveNorthwestOfNorthwest = game.getMove(
     IndexOfTestingMove.NorthwestOfNorthwest,
@@ -93,12 +92,6 @@ const testAfterPlayingMoveNorthwestOfNorthwest = (): void => {
   const expectedValidMoves = Array.from(game.getMoves());
   expectedValidMoves.shift();
   expectedValidMoves.shift();
-
-  const expectedSlots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(
-    new TestingSlot({
-      indexOfOccupyingPlayer: null,
-    }),
-  );
 
   moveNorthwestOfNorthwest.getIndexOfSlotInWhichPlacePiece();
   expectedSlots[moveNorthwestOfNorthwest.getIndexOfSlotInWhichPlacePiece()] =
@@ -123,7 +116,7 @@ const testAfterPlayingMoveNorthwestOfNorthwest = (): void => {
     indexOfMove: IndexOfTestingMove.NorthOfNorthwest,
     move: moveNorthOfNorthwest,
     state,
-    testDescriptor: "after playing move Northwest of Northwest",
+    testDescriptor: "common: after playing move Northwest of Northwest",
   });
 };
 testAfterPlayingMoveNorthwestOfNorthwest();

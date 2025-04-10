@@ -85,5 +85,5 @@ abstract class State<
   }
 }
 
-export type { Score, StateParams };
+export type { Points, Score, StateParams };
 export { State as default };

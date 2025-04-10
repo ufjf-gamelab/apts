@@ -5,8 +5,6 @@ import {
   createPlayers,
 } from "../Player/setup.js";
 
-const QUANTITY_OF_SLOTS = 81;
-
 interface CreatedGameAndRelatedData {
   dataRelatedToCreatedGame: DataRelatedToCreatedGame;
   game: TestingGame;
@@ -50,4 +48,4 @@ const setupGame = (): CreatedGameAndRelatedData => {
 };
 
 export type { TestGameParams };
-export { createGame, QUANTITY_OF_SLOTS, setupGame };
+export { createGame, setupGame };
