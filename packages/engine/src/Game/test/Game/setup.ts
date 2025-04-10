@@ -25,10 +25,7 @@ interface TestGameParams {
 const createGame = ({
   moves,
   players,
-}: Pick<
-  DataRelatedToCreatedGame,
-  "moves" | "players"
->): CreatedGameAndRelatedData => {
+}: DataRelatedToCreatedGame): CreatedGameAndRelatedData => {
   const game = new TestingGame({
     moves: Array.from(moves.values().map(({ move }) => move)),
     name: "Testing Game",

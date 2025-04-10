@@ -30,23 +30,15 @@ const getMovesShouldReturn = ({
   // TODO: Create test for modifying the object received by the getter
 };
 
-const testGetMoves = ({
-  game,
-  moves,
-  testDescriptor,
-}: TestGameParams & { moves: CreatedMovesAndRelatedData }): void => {
-  const expectedMoves: TestingMove[] = Array.from(moves.entries()).map(
-    ([, { move }]) => move,
-  );
-  getMovesShouldReturn({ expectedMoves, game, testDescriptor });
-};
-
 const testGetMovesForCommonGame = (): void => {
   const {
     dataRelatedToCreatedGame: { moves },
     game,
   } = setupGame();
-  testGetMoves({ game, moves, testDescriptor: "common" });
+  const expectedMoves: TestingMove[] = Array.from(moves.entries()).map(
+    ([, { move }]) => move,
+  );
+  getMovesShouldReturn({ expectedMoves, game, testDescriptor: "common" });
 };
 
 testGetMovesForCommonGame();

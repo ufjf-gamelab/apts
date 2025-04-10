@@ -15,13 +15,13 @@ const getNameShouldReturn = ({
   });
 };
 
-const testGetName = ({ game, testDescriptor }: TestGameParams): void => {
-  getNameShouldReturn({ expectedName: "Testing Game", game, testDescriptor });
-};
-
 const testGetNameForCommonGame = (): void => {
   const { game } = setupGame();
-  testGetName({ game, testDescriptor: "common" });
+  getNameShouldReturn({
+    expectedName: "Testing Game",
+    game,
+    testDescriptor: "common",
+  });
 };
 
 testGetNameForCommonGame();

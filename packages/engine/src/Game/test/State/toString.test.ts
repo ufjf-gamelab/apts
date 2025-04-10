@@ -1,25 +1,28 @@
 import { expect, test } from "vitest";
 
+import type TestingState from "../State.js";
 import { createInitialState, type TestStateParams } from "./setup.js";
 
 const toStringShouldReturn = ({
+  expectedToString,
   state,
   testDescriptor,
-}: TestStateParams): void => {
-  test(`${testDescriptor}: toString() should return a matrix of 9x9 in which each slot is surrounded by "|" and its value is shown as "-"`, () => {
-    expect(state.toString()).toBe(
-      "| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n",
-    );
+}: TestStateParams & {
+  expectedToString: ReturnType<TestingState["toString"]>;
+}): void => {
+  test(`${testDescriptor}: toString() should return a string equal to the one passed as parameter`, () => {
+    expect(state.toString()).toBe(expectedToString);
   });
 };
 
-const testToString = ({ state, testDescriptor }: TestStateParams): void => {
-  toStringShouldReturn({ state, testDescriptor });
-};
-
 const testToStringForInitialState = (): void => {
-  const state = createInitialState();
-  testToString({ state, testDescriptor: "initial state" });
+  const { state } = createInitialState();
+  toStringShouldReturn({
+    expectedToString:
+      "| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n| - | - | - | - | - | - | - | - | - |\n",
+    state,
+    testDescriptor: "initial",
+  });
 };
 
 testToStringForInitialState();

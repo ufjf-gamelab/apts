@@ -15,25 +15,11 @@ const getSymbolShouldReturn = ({
   });
 };
 
-const testGetSymbol = ({
-  expectedSymbol,
-  player,
-  testDescriptor,
-}: TestPlayerParams & {
-  expectedSymbol: ReturnType<TestingPlayer["getSymbol"]>;
-}): void => {
-  getSymbolShouldReturn({
-    expectedSymbol,
-    player,
-    testDescriptor,
-  });
-};
-
 const testGetSymbolForEveryPlayer = (): void => {
   const players = createPlayers();
   players.forEach(
     ({ dataRelatedToCreatedPlayer: { nameOfIndex, symbol }, player }) => {
-      testGetSymbol({
+      getSymbolShouldReturn({
         expectedSymbol: symbol,
         player,
         testDescriptor: nameOfIndex,

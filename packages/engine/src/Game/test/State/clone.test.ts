@@ -11,23 +11,13 @@ const cloneShouldCreateANewInstance = ({
     const clone = state.clone();
     expect(clone).toBeInstanceOf(TestingState);
     expect(clone).not.toBe(state);
-    expect(clone.getGame()).not.toBe(state.getGame());
-    expect(clone.getGame()).toStrictEqual(state.getGame());
-    expect(clone.getPlayerKey()).toBe(state.getPlayerKey());
-    expect(clone.getScore()).not.toBe(state.getScore());
-    expect(clone.getScore()).toStrictEqual(state.getScore());
-    expect(clone.getSlots()).not.toBe(state.getSlots());
-    expect(clone.getSlots()).toStrictEqual(state.getSlots());
+    expect(clone).toStrictEqual(state);
   });
 };
 
-const testClone = ({ state, testDescriptor }: TestStateParams): void => {
-  cloneShouldCreateANewInstance({ state, testDescriptor });
-};
-
 const testCloneForInitialState = (): void => {
-  const state = createInitialState();
-  testClone({ state, testDescriptor: "initial state" });
+  const { state } = createInitialState();
+  cloneShouldCreateANewInstance({ state, testDescriptor: "initial" });
 };
 
 testCloneForInitialState();

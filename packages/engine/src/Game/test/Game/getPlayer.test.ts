@@ -3,7 +3,6 @@ import { expect, test } from "vitest";
 import type { IndexOfPlayer } from "../../Player.js";
 import type TestingGame from "../Game.js";
 import TestingPlayer from "../Player.js";
-import type { CreatedPlayersAndRelatedData } from "../Player/setup.js";
 import { setupGame, type TestGameParams } from "./setup.js";
 
 const getPlayerShouldReturn = ({
@@ -24,26 +23,19 @@ const getPlayerShouldReturn = ({
   });
 };
 
-const testGetPlayer = ({
-  game,
-  players,
-  testDescriptor,
-}: TestGameParams & { players: CreatedPlayersAndRelatedData }): void => {
-  players.forEach(({ player }, index) => {
-    getPlayerShouldReturn({
-      expectedPlayer: player,
-      game,
-      indexOfPlayer: index,
-      testDescriptor,
-    });
-  });
-};
 const testGetPlayerForCommonGame = (): void => {
   const {
     dataRelatedToCreatedGame: { players },
     game,
   } = setupGame();
-  testGetPlayer({ game, players, testDescriptor: "common" });
+  players.forEach(({ player }, index) => {
+    getPlayerShouldReturn({
+      expectedPlayer: player,
+      game,
+      indexOfPlayer: index,
+      testDescriptor: "common",
+    });
+  });
 };
 
 testGetPlayerForCommonGame();

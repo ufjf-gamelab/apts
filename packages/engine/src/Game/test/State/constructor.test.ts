@@ -12,13 +12,9 @@ const shouldBeAnInstanceOfItsClass = ({
   });
 };
 
-const testConstructor = ({ state, testDescriptor }: TestStateParams): void => {
-  shouldBeAnInstanceOfItsClass({ state, testDescriptor });
-};
-
 const testConstructorForInitialState = (): void => {
-  const state = createInitialState();
-  testConstructor({ state, testDescriptor: "initial state" });
+  const { state } = createInitialState();
+  shouldBeAnInstanceOfItsClass({ state, testDescriptor: "initial" });
 };
 
 testConstructorForInitialState();

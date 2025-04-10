@@ -1,7 +1,10 @@
 import { expect, test } from "vitest";
 
 import TestingSlot from "../Slot.js";
-import { createSlots, type TestSlotParams } from "./setup.js";
+import {
+  createOneSlotForEachOccupyingPlayer,
+  type TestSlotParams,
+} from "./setup.js";
 
 const shouldBeAnInstanceOfItsClass = ({
   slot,
@@ -12,14 +15,10 @@ const shouldBeAnInstanceOfItsClass = ({
   });
 };
 
-const testConstructor = ({ slot, testDescriptor }: TestSlotParams): void => {
-  shouldBeAnInstanceOfItsClass({ slot, testDescriptor });
-};
-
 const testConstructorForEverySlot = (): void => {
-  const slots = createSlots();
+  const slots = createOneSlotForEachOccupyingPlayer();
   slots.forEach(({ dataRelatedToCreatedSlot: { nameOfIndex }, slot }) => {
-    testConstructor({
+    shouldBeAnInstanceOfItsClass({
       slot,
       testDescriptor: nameOfIndex,
     });

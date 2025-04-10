@@ -19,22 +19,6 @@ const getIndexOfSlotInWhichPlacePieceShouldReturn = ({
   });
 };
 
-const testGetIndexOfSlotInWhichPlacePiece = ({
-  expectedIndexOfSlotInWhichPlacePiece,
-  move,
-  testDescriptor,
-}: TestMoveParams & {
-  expectedIndexOfSlotInWhichPlacePiece: ReturnType<
-    TestingMove["getIndexOfSlotInWhichPlacePiece"]
-  >;
-}): void => {
-  getIndexOfSlotInWhichPlacePieceShouldReturn({
-    expectedIndexOfSlotInWhichPlacePiece,
-    move,
-    testDescriptor,
-  });
-};
-
 const testGetIndexOfSlotInWhichPlacePieceForEveryMove = (): void => {
   const moves = createMoves();
   moves.forEach(
@@ -42,7 +26,7 @@ const testGetIndexOfSlotInWhichPlacePieceForEveryMove = (): void => {
       dataRelatedToCreatedMove: { indexOfSlotInWhichPlacePiece, nameOfIndex },
       move,
     }) => {
-      testGetIndexOfSlotInWhichPlacePiece({
+      getIndexOfSlotInWhichPlacePieceShouldReturn({
         expectedIndexOfSlotInWhichPlacePiece: indexOfSlotInWhichPlacePiece,
         move,
         testDescriptor: nameOfIndex,

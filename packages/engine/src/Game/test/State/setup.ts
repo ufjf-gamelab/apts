@@ -1,11 +1,24 @@
-import { createGame, QUANTITY_OF_SLOTS } from "../Game/setup.js";
+import { INITIAL_POINTS } from "../Game.js";
+import { createGame } from "../Game/setup.js";
 import { createMoves } from "../Move/setup.js";
-import { TestingPlayerKey } from "../Player.js";
-import { createPlayers } from "../Player/setup.js";
-import TestingState, {
-  type TestingSlot,
-  type TestingStateParams,
-} from "../State.js";
+import { createPlayers, IndexOfTestingPlayer } from "../Player/setup.js";
+import {
+  type CreatedSlotsAndRelatedData,
+  createSlotsForInitialState,
+} from "../Slot/setup.js";
+import TestingState, { type TestingStateParams } from "../State.js";
+
+interface CreatedStateAndRelatedData {
+  dataRelatedToCreatedState: DataRelatedToCreatedState;
+  state: TestingState;
+}
+
+interface DataRelatedToCreatedState {
+  game: TestingStateParams["game"];
+  indexOfPlayer: TestingStateParams["indexOfPlayer"];
+  score: TestingStateParams["score"];
+  slots: CreatedSlotsAndRelatedData;
+}
 
 interface TestStateParams {
   state: TestingState;
@@ -14,31 +27,44 @@ interface TestStateParams {
 
 const createState = ({
   game,
+  indexOfPlayer,
+  score,
   slots,
-}: {
-  game: TestingStateParams["game"];
-  slots: TestingStateParams["slots"];
-}): TestingState =>
-  new TestingState({
+}: DataRelatedToCreatedState): CreatedStateAndRelatedData => {
+  const state = new TestingState({
     game,
-    playerKey: TestingPlayerKey.One,
-    slots,
+    indexOfPlayer,
+    score,
+    slots: Array.from(slots.values().map(({ slot }) => slot)),
   });
 
-const createInitialState = (): TestingState => {
+  return {
+    dataRelatedToCreatedState: {
+      game,
+      indexOfPlayer,
+      score,
+      slots,
+    },
+    state,
+  };
+};
+
+const createInitialState = (): CreatedStateAndRelatedData => {
   const moves = createMoves();
   const players = createPlayers();
+  const slots = createSlotsForInitialState();
   const { game } = createGame({
     moves,
     players,
   });
-  const slots = new Array<TestingSlot>(QUANTITY_OF_SLOTS).fill(null);
-  return new TestingState({
+
+  return createState({
     game,
-    playerKey: TestingPlayerKey.One,
+    indexOfPlayer: IndexOfTestingPlayer.One,
+    score: [INITIAL_POINTS, INITIAL_POINTS],
     slots,
   });
 };
 
 export { createInitialState, createState };
-export type { TestStateParams };
+export type { CreatedStateAndRelatedData, TestStateParams };

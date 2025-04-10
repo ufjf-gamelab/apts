@@ -9,32 +9,28 @@ const getIndexOfNextPlayerShouldReturn = ({
   expectedIndexOfPlayer,
   game,
   state,
+  stateDescriptor,
   testDescriptor,
 }: TestGameParams & {
   expectedIndexOfPlayer: ReturnType<TestingGame["getIndexOfNextPlayer"]>;
   state: TestingState;
+  stateDescriptor: string;
 }): void => {
-  test(`${testDescriptor}: getIndexOfNextPlayer() should return {${expectedIndexOfPlayer}}`, () => {
+  test(`${testDescriptor}: getIndexOfNextPlayer(${stateDescriptor}) should return {${expectedIndexOfPlayer}}`, () => {
     const nextIndexOfPlayer = game.getIndexOfNextPlayer(state);
     expect(nextIndexOfPlayer).toBe(expectedIndexOfPlayer);
   });
 };
 
-const testGetNextIndexOfPlayer = ({
-  game,
-  testDescriptor,
-}: TestGameParams): void => {
+const testGetNextIndexOfPlayerForCommonGameAndInitialState = (): void => {
+  const { game } = setupGame();
   getIndexOfNextPlayerShouldReturn({
     expectedIndexOfPlayer: IndexOfTestingPlayer.Two,
     game,
     state: game.getInitialState(),
-    testDescriptor,
+    stateDescriptor: "initial state",
+    testDescriptor: "common",
   });
 };
 
-const testGetNextIndexOfPlayerForCommonGame = (): void => {
-  const { game } = setupGame();
-  testGetNextIndexOfPlayer({ game, testDescriptor: "common" });
-};
-
-testGetNextIndexOfPlayerForCommonGame();
+testGetNextIndexOfPlayerForCommonGameAndInitialState();

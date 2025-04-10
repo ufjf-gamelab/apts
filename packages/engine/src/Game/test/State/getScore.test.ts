@@ -1,5 +1,7 @@
 import { expect, test } from "vitest";
 
+import type { Integer } from "../../../types.js";
+import { IndexOfTestingPlayer } from "../Player/setup.js";
 import type TestingState from "../State.js";
 import { createInitialState, type TestStateParams } from "./setup.js";
 
@@ -10,9 +12,9 @@ const getScoreShouldReturn = ({
   state,
   testDescriptor,
 }: TestStateParams & {
-  expectedScore: TestingState["score"];
+  expectedScore: ReturnType<TestingState["getScore"]>;
 }): void => {
-  test(`${testDescriptor}: getScore should return {[[TestingPlayerKey.Alice, 0], [TestingPlayerKey.Bruno, 0]]}`, () => {
+  test(`${testDescriptor}: getScore should return {${expectedScore.toString()}}`, () => {
     expect(state.getScore()).not.toBe(expectedScore);
     expect(state.getScore()).toStrictEqual(expectedScore);
   });
@@ -20,13 +22,8 @@ const getScoreShouldReturn = ({
   test("modifying the object score received by the getter should not change the internal attribute", () => {
     const scoreBeforeUpdate = state.getScore();
 
-    const [playerOne] = scoreBeforeUpdate.keys();
-    if (typeof playerOne === "undefined") {
-      throw new Error("Player one is undefined");
-    }
-
-    const updatedScore = state.getScore();
-    updatedScore.set(playerOne, ONE_POINT);
+    const updatedScore = state.getScore() as Integer[];
+    updatedScore[IndexOfTestingPlayer.One] = ONE_POINT;
 
     expect(state.getScore()).not.toBe(scoreBeforeUpdate);
     expect(state.getScore()).toStrictEqual(scoreBeforeUpdate);
@@ -35,22 +32,14 @@ const getScoreShouldReturn = ({
   });
 };
 
-const testGetScore = ({
-  expectedScore,
-  state,
-  testDescriptor,
-}: {
-  expectedScore: TestingState["score"];
-  state: TestingState;
-  testDescriptor: string;
-}): void => {
-  getScoreShouldReturn({ expectedScore, state, testDescriptor });
-};
-
 const testGetScoreForInitialState = (): void => {
-  const state = createInitialState();
+  const { state } = createInitialState();
   const expectedScore = state.getScore();
-  testGetScore({ expectedScore, state, testDescriptor: "initial state" });
+  getScoreShouldReturn({
+    expectedScore,
+    state,
+    testDescriptor: "initial",
+  });
 };
 
 testGetScoreForInitialState();

@@ -29,29 +29,6 @@ const playShouldReturn = ({
   });
 };
 
-const testPlay = ({
-  expectedState,
-  game,
-  indexOfMove,
-  move,
-  state,
-  testDescriptor,
-}: TestGameParams & {
-  expectedState: TestingState;
-  indexOfMove: IndexOfTestingMove;
-  move: TestingMove;
-  state: TestingState;
-}): void => {
-  playShouldReturn({
-    expectedState,
-    game,
-    indexOfMove,
-    move,
-    state,
-    testDescriptor,
-  });
-};
-
 const testFromInitialState = (): void => {
   const { game } = setupGame();
 
@@ -82,7 +59,7 @@ const testFromInitialState = (): void => {
     slots: expectedSlots,
   });
 
-  testPlay({
+  playShouldReturn({
     expectedState,
     game,
     indexOfMove: IndexOfTestingMove.NorthwestOfNorthwest,
@@ -140,7 +117,7 @@ const testAfterPlayingMoveNorthwestOfNorthwest = (): void => {
     score: [INITIAL_POINTS, INITIAL_POINTS],
     slots: expectedSlots,
   });
-  testPlay({
+  playShouldReturn({
     expectedState,
     game,
     indexOfMove: IndexOfTestingMove.NorthOfNorthwest,

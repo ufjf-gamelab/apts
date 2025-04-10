@@ -1,23 +1,27 @@
 import { expect, test } from "vitest";
 
+import type TestingState from "../State.js";
 import { createInitialState, type TestStateParams } from "./setup.js";
 
 const isFinalShouldReturn = ({
+  expectedIsFinal,
   state,
   testDescriptor,
-}: TestStateParams): void => {
-  test(`${testDescriptor}: isFinal() should return {false}`, () => {
-    expect(state.isFinal()).toBe(false);
+}: TestStateParams & {
+  expectedIsFinal: ReturnType<TestingState["isFinal"]>;
+}): void => {
+  test(`${testDescriptor}: isFinal() should return {${expectedIsFinal}}`, () => {
+    expect(state.isFinal()).toBe(expectedIsFinal);
   });
 };
 
-const testIsFinal = ({ state, testDescriptor }: TestStateParams): void => {
-  isFinalShouldReturn({ state, testDescriptor });
-};
-
 const testIsFinalForInitialState = (): void => {
-  const state = createInitialState();
-  testIsFinal({ state, testDescriptor: "initial state" });
+  const { state } = createInitialState();
+  isFinalShouldReturn({
+    expectedIsFinal: false,
+    state,
+    testDescriptor: "initial",
+  });
 };
 
 testIsFinalForInitialState();

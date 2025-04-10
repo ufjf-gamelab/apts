@@ -11,19 +11,13 @@ const cloneShouldCreateANewInstance = ({
     const clone = game.clone();
     expect(clone).toBeInstanceOf(TestingGame);
     expect(clone).not.toBe(game);
-    expect(clone.getMoves()).toStrictEqual(game.getMoves());
-    expect(clone.getName()).toBe(game.getName());
-    expect(clone.getPlayers()).toStrictEqual(game.getPlayers());
+    expect(clone).toStrictEqual(game);
   });
-};
-
-const testClone = ({ game, testDescriptor }: TestGameParams): void => {
-  cloneShouldCreateANewInstance({ game, testDescriptor });
 };
 
 const testCloneForCommonGame = (): void => {
   const { game } = setupGame();
-  testClone({ game, testDescriptor: "common" });
+  cloneShouldCreateANewInstance({ game, testDescriptor: "common" });
 };
 
 testCloneForCommonGame();

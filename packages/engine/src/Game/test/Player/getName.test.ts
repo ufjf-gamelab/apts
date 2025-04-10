@@ -15,25 +15,11 @@ const getNameShouldReturn = ({
   });
 };
 
-const testGetName = ({
-  expectedName,
-  player,
-  testDescriptor,
-}: TestPlayerParams & {
-  expectedName: ReturnType<TestingPlayer["getName"]>;
-}): void => {
-  getNameShouldReturn({
-    expectedName,
-    player,
-    testDescriptor,
-  });
-};
-
 const testGetNameForEveryPlayer = (): void => {
   const players = createPlayers();
   players.forEach(
     ({ dataRelatedToCreatedPlayer: { name, nameOfIndex }, player }) => {
-      testGetName({
+      getNameShouldReturn({
         expectedName: name,
         player,
         testDescriptor: nameOfIndex,

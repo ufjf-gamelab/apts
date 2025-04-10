@@ -8,7 +8,7 @@ const getGameShouldReturn = ({
   state,
   testDescriptor,
 }: TestStateParams & {
-  expectedGame: TestingState["game"];
+  expectedGame: ReturnType<TestingState["getGame"]>;
 }): void => {
   test(`${testDescriptor}: getGame() should return an object equal to the one passed as parameter, but as a different reference`, () => {
     expect(state.getGame()).not.toBe(expectedGame);
@@ -16,20 +16,10 @@ const getGameShouldReturn = ({
   });
 };
 
-const testGetGame = ({
-  expectedGame,
-  state,
-  testDescriptor,
-}: TestStateParams & {
-  expectedGame: TestingState["game"];
-}): void => {
-  getGameShouldReturn({ expectedGame, state, testDescriptor });
-};
-
 const testGetGameForInitialState = (): void => {
-  const state = createInitialState();
+  const { state } = createInitialState();
   const expectedGame = state.getGame();
-  testGetGame({ expectedGame, state, testDescriptor: "initial state" });
+  getGameShouldReturn({ expectedGame, state, testDescriptor: "initial" });
 };
 
 testGetGameForInitialState();

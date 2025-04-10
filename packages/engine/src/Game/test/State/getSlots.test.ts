@@ -1,29 +1,26 @@
 import { expect, test } from "vitest";
 
-import { TestingPlayerKey } from "../Player.js";
-import TestingContent from "../Slot.js";
-import type TestingSlot from "../Slot.js";
-import type TestingState from "../State.js";
+import { IndexOfTestingPlayer } from "../Player/setup.js";
+import TestingSlot from "../Slot.js";
+import { IndexOfTestingSlot } from "../Slot/setup.js";
 import { createInitialState, type TestStateParams } from "./setup.js";
-
-const SLOT_ON_NORTHWEST_OF_NORTHWEST = 0;
 
 const getSlotsShouldReturn = ({
   expectedSlots,
   state,
   testDescriptor,
 }: TestStateParams & {
-  expectedSlots: TestingState["slots"];
+  expectedSlots: TestingSlot[];
 }): void => {
-  test(`${testDescriptor}: getSlots() should return should return an object equal to the one passed as parameter, but as a different reference`, () => {
+  test(`${testDescriptor}: getSlots() should return an object equal to the one passed as parameter, but as a different reference`, () => {
     expect(state.getSlots()).not.toBe(expectedSlots);
     expect(state.getSlots()).toStrictEqual(expectedSlots);
   });
 
   test("modifying the object slots passed via constructor should not change the internal attribute", () => {
     const slotsBeforeUpdate = [...expectedSlots];
-    expectedSlots[SLOT_ON_NORTHWEST_OF_NORTHWEST] = new TestingContent({
-      playerKey: TestingPlayerKey.One,
+    expectedSlots[IndexOfTestingSlot.NorthwestOfNorthwest] = new TestingSlot({
+      indexOfOccupyingPlayer: IndexOfTestingPlayer.One,
     });
 
     expect(state.getSlots()).not.toBe(expectedSlots);
@@ -33,10 +30,10 @@ const getSlotsShouldReturn = ({
   });
 
   test("modifying the object slots received by the getter should not change the internal attribute", () => {
-    const slotsBeforeUpdate = state.getSlots();
-    const updatedSlots = state.getSlots();
-    updatedSlots[SLOT_ON_NORTHWEST_OF_NORTHWEST] = new TestingContent({
-      playerKey: TestingPlayerKey.Two,
+    const slotsBeforeUpdate = [...state.getSlots()];
+    const updatedSlots = state.getSlots() as TestingSlot[];
+    updatedSlots[IndexOfTestingSlot.NorthwestOfNorthwest] = new TestingSlot({
+      indexOfOccupyingPlayer: IndexOfTestingPlayer.Two,
     });
 
     expect(state.getSlots()).not.toBe(slotsBeforeUpdate);
@@ -46,20 +43,16 @@ const getSlotsShouldReturn = ({
   });
 };
 
-const testGetSlots = ({
-  expectedSlots,
-  state,
-  testDescriptor,
-}: TestStateParams & {
-  expectedSlots: TestingSlot[];
-}): void => {
-  getSlotsShouldReturn({ expectedSlots, state, testDescriptor });
-};
-
 const testGetSlotsForInitialState = (): void => {
-  const state = createInitialState();
-  const expectedSlots = state.getSlots();
-  testGetSlots({ expectedSlots, state, testDescriptor: "initial state" });
+  const {
+    dataRelatedToCreatedState: { slots },
+    state,
+  } = createInitialState();
+  getSlotsShouldReturn({
+    expectedSlots: Array.from(slots.entries()).map(([, { slot }]) => slot),
+    state,
+    testDescriptor: "initial",
+  });
 };
 
 testGetSlotsForInitialState();

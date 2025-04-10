@@ -1,7 +1,10 @@
 import { expect, test } from "vitest";
 
 import TestingSlot from "../Slot.js";
-import { createSlots, type TestSlotParams } from "./setup.js";
+import {
+  createOneSlotForEachOccupyingPlayer,
+  type TestSlotParams,
+} from "./setup.js";
 
 const cloneShouldCreateANewInstance = ({
   slot,
@@ -11,17 +14,14 @@ const cloneShouldCreateANewInstance = ({
     const clone = slot.clone();
     expect(clone).toBeInstanceOf(TestingSlot);
     expect(clone).not.toBe(slot);
+    expect(clone).toStrictEqual(slot);
   });
 };
 
-const testClone = ({ slot, testDescriptor }: TestSlotParams): void => {
-  cloneShouldCreateANewInstance({ slot, testDescriptor });
-};
-
 const testCloneForEverySlot = (): void => {
-  const slots = createSlots();
+  const slots = createOneSlotForEachOccupyingPlayer();
   slots.forEach(({ dataRelatedToCreatedSlot: { nameOfIndex }, slot }) => {
-    testClone({ slot, testDescriptor: nameOfIndex });
+    cloneShouldCreateANewInstance({ slot, testDescriptor: nameOfIndex });
   });
 };
 

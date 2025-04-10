@@ -11,17 +11,14 @@ const cloneShouldCreateANewInstance = ({
     const clone = player.clone();
     expect(clone).toBeInstanceOf(TestingPlayer);
     expect(clone).not.toBe(player);
+    expect(clone).toStrictEqual(player);
   });
-};
-
-const testClone = ({ player, testDescriptor }: TestPlayerParams): void => {
-  cloneShouldCreateANewInstance({ player, testDescriptor });
 };
 
 const testCloneForEveryPlayer = (): void => {
   const players = createPlayers();
   players.forEach(({ dataRelatedToCreatedPlayer: { nameOfIndex }, player }) => {
-    testClone({ player, testDescriptor: nameOfIndex });
+    cloneShouldCreateANewInstance({ player, testDescriptor: nameOfIndex });
   });
 };
 

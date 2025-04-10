@@ -15,25 +15,11 @@ const getDescriptionShouldReturn = ({
   });
 };
 
-const testGetDescription = ({
-  expectedDescription,
-  move,
-  testDescriptor,
-}: TestMoveParams & {
-  expectedDescription: ReturnType<TestingMove["getDescription"]>;
-}): void => {
-  getDescriptionShouldReturn({
-    expectedDescription,
-    move,
-    testDescriptor,
-  });
-};
-
 const testGetDescriptionForEveryMove = (): void => {
   const moves = createMoves();
   moves.forEach(
     ({ dataRelatedToCreatedMove: { description, nameOfIndex }, move }) => {
-      testGetDescription({
+      getDescriptionShouldReturn({
         expectedDescription: description,
         move,
         testDescriptor: nameOfIndex,

@@ -12,14 +12,10 @@ const shouldBeAnInstanceOfItsClass = ({
   });
 };
 
-const testConstructor = ({ move, testDescriptor }: TestMoveParams): void => {
-  shouldBeAnInstanceOfItsClass({ move, testDescriptor });
-};
-
 const testConstructorForEveryMove = (): void => {
   const moves = createMoves();
   moves.forEach(({ dataRelatedToCreatedMove: { nameOfIndex }, move }) => {
-    testConstructor({
+    shouldBeAnInstanceOfItsClass({
       move,
       testDescriptor: nameOfIndex,
     });

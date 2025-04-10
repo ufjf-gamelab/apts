@@ -1,7 +1,10 @@
 import { expect, test } from "vitest";
 
 import type TestingSlot from "../Slot.js";
-import { createSlots, type TestSlotParams } from "./setup.js";
+import {
+  createOneSlotForEachOccupyingPlayer,
+  type TestSlotParams,
+} from "./setup.js";
 
 const getIndexOfOccupyingPlayerShouldReturn = ({
   expectedIndexOfOccupyingPlayerShouldReturn,
@@ -19,30 +22,14 @@ const getIndexOfOccupyingPlayerShouldReturn = ({
   });
 };
 
-const testGetName = ({
-  expectedIndexOfOccupyingPlayerShouldReturn,
-  slot,
-  testDescriptor,
-}: TestSlotParams & {
-  expectedIndexOfOccupyingPlayerShouldReturn: ReturnType<
-    TestingSlot["getIndexOfOccupyingPlayer"]
-  >;
-}): void => {
-  getIndexOfOccupyingPlayerShouldReturn({
-    expectedIndexOfOccupyingPlayerShouldReturn,
-    slot,
-    testDescriptor,
-  });
-};
-
 const testGetNameForEverySlot = (): void => {
-  const slots = createSlots();
+  const slots = createOneSlotForEachOccupyingPlayer();
   slots.forEach(
     ({
       dataRelatedToCreatedSlot: { indexOfOccupyingPlayer, nameOfIndex },
       slot,
     }) => {
-      testGetName({
+      getIndexOfOccupyingPlayerShouldReturn({
         expectedIndexOfOccupyingPlayerShouldReturn: indexOfOccupyingPlayer,
         slot,
         testDescriptor: nameOfIndex,

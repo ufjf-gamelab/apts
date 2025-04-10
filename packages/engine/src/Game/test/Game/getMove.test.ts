@@ -2,10 +2,7 @@ import { expect, test } from "vitest";
 
 import type TestingGame from "../Game.js";
 import TestingMove from "../Move.js";
-import type {
-  CreatedMovesAndRelatedData,
-  IndexOfTestingMove,
-} from "../Move/setup.js";
+import type { IndexOfTestingMove } from "../Move/setup.js";
 import { setupGame, type TestGameParams } from "./setup.js";
 
 const getMoveShouldReturn = ({
@@ -26,33 +23,21 @@ const getMoveShouldReturn = ({
   });
 };
 
-const testGetMove = ({
-  game,
-  moves,
-  testDescriptor,
-}: TestGameParams & { moves: CreatedMovesAndRelatedData }): void => {
+const testGetMoveForCommonGame = (): void => {
+  const {
+    dataRelatedToCreatedGame: { moves },
+    game,
+  } = setupGame();
   moves.forEach(
     ({ dataRelatedToCreatedMove: { index, nameOfIndex }, move }) => {
       getMoveShouldReturn({
         expectedMove: move,
         game,
         indexOfMove: index,
-        testDescriptor: `${testDescriptor}: ${nameOfIndex}`,
+        testDescriptor: `common: ${nameOfIndex}`,
       });
     },
   );
-};
-
-const testGetMoveForCommonGame = (): void => {
-  const {
-    dataRelatedToCreatedGame: { moves },
-    game,
-  } = setupGame();
-  testGetMove({
-    game,
-    moves,
-    testDescriptor: "common",
-  });
 };
 
 testGetMoveForCommonGame();

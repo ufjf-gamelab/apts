@@ -12,17 +12,10 @@ const shouldBeAnInstanceOfItsClass = ({
   });
 };
 
-const testConstructor = ({
-  player,
-  testDescriptor,
-}: TestPlayerParams): void => {
-  shouldBeAnInstanceOfItsClass({ player, testDescriptor });
-};
-
 const testConstructorForEveryPlayer = (): void => {
   const players = createPlayers();
   players.forEach(({ dataRelatedToCreatedPlayer: { nameOfIndex }, player }) => {
-    testConstructor({ player, testDescriptor: nameOfIndex });
+    shouldBeAnInstanceOfItsClass({ player, testDescriptor: nameOfIndex });
   });
 };
 

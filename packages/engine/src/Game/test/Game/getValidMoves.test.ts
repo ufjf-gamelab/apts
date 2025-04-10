@@ -1,7 +1,6 @@
 import { expect, test } from "vitest";
 
 import type TestingGame from "../Game.js";
-import type TestingMove from "../Move.js";
 import { IndexOfTestingMove } from "../Move/setup.js";
 import type TestingState from "../State.js";
 import { setupGame, type TestGameParams } from "./setup.js";
@@ -22,29 +21,12 @@ const getValidMovesShouldReturn = ({
   });
 };
 
-const testGetValidMoves = ({
-  expectedValidMoves,
-  game,
-  state,
-  testDescriptor,
-}: TestGameParams & {
-  expectedValidMoves: TestingMove[];
-  state: TestingState;
-}): void => {
-  getValidMovesShouldReturn({
-    expectedValidMoves,
-    game,
-    state,
-    testDescriptor,
-  });
-};
-
 const testFromInitialState = (): void => {
   const {
     dataRelatedToCreatedGame: { moves },
     game,
   } = setupGame();
-  testGetValidMoves({
+  getValidMovesShouldReturn({
     expectedValidMoves: Array.from(moves.values().map(({ move }) => move)),
     game,
     state: game.getInitialState(),

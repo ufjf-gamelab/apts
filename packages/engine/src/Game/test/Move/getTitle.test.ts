@@ -15,25 +15,11 @@ const getTitleShouldReturn = ({
   });
 };
 
-const testGetTitle = ({
-  expectedTitle,
-  move,
-  testDescriptor,
-}: TestMoveParams & {
-  expectedTitle: ReturnType<TestingMove["getTitle"]>;
-}): void => {
-  getTitleShouldReturn({
-    expectedTitle,
-    move,
-    testDescriptor,
-  });
-};
-
 const testGetTitleForEveryMove = (): void => {
   const moves = createMoves();
   moves.forEach(
     ({ dataRelatedToCreatedMove: { nameOfIndex, title }, move }) => {
-      testGetTitle({
+      getTitleShouldReturn({
         expectedTitle: title,
         move,
         testDescriptor: nameOfIndex,

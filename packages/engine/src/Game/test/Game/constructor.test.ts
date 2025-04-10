@@ -12,13 +12,9 @@ const shouldBeAnInstanceOfItsClass = ({
   });
 };
 
-const testInstance = ({ game, testDescriptor }: TestGameParams): void => {
-  shouldBeAnInstanceOfItsClass({ game, testDescriptor });
-};
-
 const testInstanceForCommonGame = (): void => {
   const { game } = setupGame();
-  testInstance({ game, testDescriptor: "common" });
+  shouldBeAnInstanceOfItsClass({ game, testDescriptor: "common" });
 };
 
 testInstanceForCommonGame();

@@ -1,38 +1,104 @@
+import { QUANTITY_OF_SLOTS } from "../Game/setup.js";
 import { IndexOfTestingPlayer } from "../Player/setup.js";
 import TestingSlot from "../Slot.js";
 
-enum IndexOfTestingSlot {
+enum CategoryOfTestingOccupyingPlayer {
   Null,
-  PlayerOne,
-  PlayerTwo,
+  One,
+  Two,
 }
 
-type NameOfIndexOfTestingSlot = keyof typeof IndexOfTestingSlot;
+enum IndexOfTestingSlot {
+  NorthwestOfNorthwest,
+  NorthOfNorthwest,
+  NortheastOfNorthwest,
+  WestOfNorthwest,
+  CenterOfNorthwest,
+  EastOfNorthwest,
+  SouthwestOfNorthwest,
+  SouthOfNorthwest,
+  SoutheastOfNorthwest,
 
-const slotsDTOs = {
-  [IndexOfTestingSlot.Null]: {
-    indexOfOccupyingPlayer: null,
-  },
-  [IndexOfTestingSlot.PlayerOne]: {
-    indexOfOccupyingPlayer: IndexOfTestingPlayer.One,
-  },
-  [IndexOfTestingSlot.PlayerTwo]: {
-    indexOfOccupyingPlayer: IndexOfTestingPlayer.Two,
-  },
-} as const;
+  NorthwestOfNorth,
+  NorthOfNorth,
+  NortheastOfNorth,
+  WestOfNorth,
+  CenterOfNorth,
+  EastOfNorth,
+  SouthwestOfNorth,
+  SouthOfNorth,
+  SoutheastOfNorth,
 
-interface RecordOfSlotDTO {
-  data: SlotDTO;
-  index: IndexOfTestingSlot;
+  NorthwestOfNortheast,
+  NorthOfNortheast,
+  NortheastOfNortheast,
+  WestOfNortheast,
+  CenterOfNortheast,
+  EastOfNortheast,
+  SouthwestOfNortheast,
+  SouthOfNortheast,
+  SoutheastOfNortheast,
+
+  NorthwestOfWest,
+  NorthOfWest,
+  NortheastOfWest,
+  WestOfWest,
+  CenterOfWest,
+  EastOfWest,
+  SouthwestOfWest,
+  SouthOfWest,
+  SoutheastOfWest,
+
+  NorthwestOfCenter,
+  NorthOfCenter,
+  NortheastOfCenter,
+  WestOfCenter,
+  CenterOfCenter,
+  EastOfCenter,
+  SouthwestOfCenter,
+  SouthOfCenter,
+  SoutheastOfCenter,
+
+  NorthwestOfEast,
+  NorthOfEast,
+  NortheastOfEast,
+  WestOfEast,
+  CenterOfEast,
+  EastOfEast,
+  SouthwestOfEast,
+  SouthOfEast,
+  SoutheastOfEast,
+
+  NorthwestOfSouthwest,
+  NorthOfSouthwest,
+  NortheastOfSouthwest,
+  WestOfSouthwest,
+  CenterOfSouthwest,
+  EastOfSouthwest,
+  SouthwestOfSouthwest,
+  SouthOfSouthwest,
+  SoutheastOfSouthwest,
+
+  NorthwestOfSouth,
+  NorthOfSouth,
+  NortheastOfSouth,
+  WestOfSouth,
+  CenterOfSouth,
+  EastOfSouth,
+  SouthwestOfSouth,
+  SouthOfSouth,
+  SoutheastOfSouth,
+
+  NorthwestOfSoutheast,
+  NorthOfSoutheast,
+  NortheastOfSoutheast,
+  WestOfSoutheast,
+  CenterOfSoutheast,
+  EastOfSoutheast,
+  SouthwestOfSoutheast,
+  SouthOfSoutheast,
+  SoutheastOfSoutheast,
 }
-
-type SlotDTO = (typeof slotsDTOs)[IndexOfTestingSlot];
-
-const listOfSlotsDTOs = [
-  slotsDTOs[IndexOfTestingSlot.Null],
-  slotsDTOs[IndexOfTestingSlot.PlayerOne],
-  slotsDTOs[IndexOfTestingSlot.PlayerTwo],
-] as const;
 
 interface CreatedSlotAndRelatedData {
   dataRelatedToCreatedSlot: DataRelatedToCreatedSlot;
@@ -45,6 +111,17 @@ interface DataRelatedToCreatedSlot {
   nameOfIndex: NameOfIndexOfTestingSlot;
 }
 
+type NameOfIndexOfTestingSlot = keyof typeof IndexOfTestingSlot;
+
+interface RecordOfSlotDTO {
+  data: SlotDTO;
+  index: IndexOfTestingSlot;
+}
+
+interface SlotDTO {
+  indexOfOccupyingPlayer: IndexOfTestingPlayer | null;
+}
+
 const createSlot = ({
   recordOfSlotDTO,
 }: {
@@ -52,7 +129,7 @@ const createSlot = ({
 }): CreatedSlotAndRelatedData => {
   const {
     data: { indexOfOccupyingPlayer },
-    index: indexOfSlotDTO,
+    index: indexOfTestingSlot,
   } = recordOfSlotDTO;
 
   const slot = new TestingSlot({
@@ -61,10 +138,10 @@ const createSlot = ({
 
   return {
     dataRelatedToCreatedSlot: {
-      index: indexOfSlotDTO,
+      index: indexOfTestingSlot,
       indexOfOccupyingPlayer,
       nameOfIndex: IndexOfTestingSlot[
-        indexOfSlotDTO
+        indexOfTestingSlot
       ] as NameOfIndexOfTestingSlot,
     },
     slot,
@@ -76,27 +153,55 @@ type CreatedSlotsAndRelatedData = ReadonlyMap<
   CreatedSlotAndRelatedData
 >;
 
-const createSlots = (): CreatedSlotsAndRelatedData => {
-  const slots = listOfSlotsDTOs.map((slotDTO, index) =>
-    createSlot({
-      recordOfSlotDTO: {
-        data: slotDTO,
-        index,
-      },
-    }),
-  );
+const createSlots = ({
+  listOfSlotsDTOs,
+}: {
+  listOfSlotsDTOs: readonly SlotDTO[];
+}): CreatedSlotsAndRelatedData => {
+  const slots = listOfSlotsDTOs.map((slotDTO, index) => ({
+    data: slotDTO,
+    index,
+  }));
 
   return new Map(
-    slots.map(
-      ({ dataRelatedToCreatedSlot, slot }: CreatedSlotAndRelatedData) => [
-        dataRelatedToCreatedSlot.index,
-        {
-          dataRelatedToCreatedSlot,
-          slot,
-        },
-      ],
-    ),
+    slots.map(({ data, index }) => [
+      index,
+      createSlot({ recordOfSlotDTO: { data, index } }),
+    ]),
   );
+};
+
+const createOneSlotForEachOccupyingPlayer = (): CreatedSlotsAndRelatedData => {
+  const slotsDTOs = {
+    [CategoryOfTestingOccupyingPlayer.Null]: {
+      indexOfOccupyingPlayer: null,
+    },
+    [CategoryOfTestingOccupyingPlayer.One]: {
+      indexOfOccupyingPlayer: IndexOfTestingPlayer.One,
+    },
+    [CategoryOfTestingOccupyingPlayer.Two]: {
+      indexOfOccupyingPlayer: IndexOfTestingPlayer.Two,
+    },
+  } as const;
+
+  const listOfSlotsDTOs = [
+    slotsDTOs[CategoryOfTestingOccupyingPlayer.Null],
+    slotsDTOs[CategoryOfTestingOccupyingPlayer.One],
+    slotsDTOs[CategoryOfTestingOccupyingPlayer.Two],
+  ] as const;
+
+  return createSlots({
+    listOfSlotsDTOs,
+  });
+};
+
+const createSlotsForInitialState = (): CreatedSlotsAndRelatedData => {
+  const listOfSlotsDTOs = new Array<SlotDTO>(QUANTITY_OF_SLOTS).fill({
+    indexOfOccupyingPlayer: null,
+  });
+  return createSlots({
+    listOfSlotsDTOs,
+  });
 };
 
 interface TestSlotParams {
@@ -109,4 +214,9 @@ export type {
   CreatedSlotsAndRelatedData,
   TestSlotParams,
 };
-export { createSlots, IndexOfTestingSlot };
+export {
+  createOneSlotForEachOccupyingPlayer,
+  createSlots,
+  createSlotsForInitialState,
+  IndexOfTestingSlot,
+};

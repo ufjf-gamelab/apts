@@ -11,20 +11,14 @@ const cloneShouldCreateANewInstance = ({
     const clone = move.clone();
     expect(clone).toBeInstanceOf(TestingMove);
     expect(clone).not.toBe(move);
-  });
-};
-
-const testClone = ({ move, testDescriptor }: TestMoveParams): void => {
-  cloneShouldCreateANewInstance({
-    move,
-    testDescriptor,
+    expect(clone).toStrictEqual(move);
   });
 };
 
 const testCloneForEveryMove = (): void => {
   const moves = createMoves();
   moves.forEach(({ dataRelatedToCreatedMove: { nameOfIndex }, move }) => {
-    testClone({
+    cloneShouldCreateANewInstance({
       move,
       testDescriptor: nameOfIndex,
     });
