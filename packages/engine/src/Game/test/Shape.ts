@@ -5,8 +5,6 @@ import { COLUMN_LENGTH } from "./Game.js";
 import type { IndexOfTestingPlayer } from "./Player/setup.js";
 import TestingSlot from "./Slot.js";
 
-const ADJUST_FINAL_INDEX: Integer = 1;
-
 interface Line {
   direction:
     | "horizontal"
@@ -63,10 +61,8 @@ const getIndexesOfShape = ({
             { length: size },
             (_, index) =>
               (initialRowIndex + index) * columnLength +
-              initialColumnIndex +
-              size -
-              index -
-              ADJUST_FINAL_INDEX,
+              initialColumnIndex -
+              index,
           );
         }
         case "vertical": {
@@ -85,25 +81,18 @@ const getIndexesOfShape = ({
     }
     case "rectangle": {
       const { horizontalSize, verticalSize } = shape;
-      const indexes: Integer[] = [];
-      for (
-        let columnIndex = 0;
-        columnIndex < horizontalSize;
-        columnIndex += INCREMENT_ONE
-      ) {
-        for (
-          let rowIndex = 0;
-          rowIndex < verticalSize;
-          rowIndex += INCREMENT_ONE
-        ) {
-          indexes.push(
-            (initialRowIndex + rowIndex) * columnLength +
-              initialColumnIndex +
-              columnIndex,
+      return Array.from(
+        { length: horizontalSize * verticalSize },
+        (_, index) => {
+          const rowOffset = Math.floor(index / horizontalSize);
+          const columnOffset = index % horizontalSize;
+          return (
+            (initialRowIndex + rowOffset) * columnLength +
+            initialColumnIndex +
+            columnOffset
           );
-        }
-      }
-      return indexes;
+        },
+      );
     }
     default: {
       throw new Error(`Invalid type "${type as string}" for shape`);
@@ -325,8 +314,10 @@ const adjustScore = ({
   }
 };
 
+export type { Shape };
 export {
   adjustScore,
+  getIndexesOfShape,
   getIndexOfPlayerWhoIsOccupyingHorizontalLine,
   getIndexOfPlayerWhoIsOccupyingPrincipalDiagonal,
   getIndexOfPlayerWhoIsOccupyingSecondaryDiagonal,

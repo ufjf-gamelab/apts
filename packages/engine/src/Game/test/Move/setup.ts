@@ -1,4 +1,5 @@
 import TestingMove from "../Move.js";
+import { IndexOfTestingSlot } from "../Slot/setup.js";
 
 enum IndexOfTestingMove {
   NorthwestOfNorthwest,
@@ -96,335 +97,335 @@ type TitleOfIndexOfTestingMove = keyof typeof IndexOfTestingMove;
 
 const movesDTOs = {
   [IndexOfTestingMove.CenterOfCenter]: {
-    indexOfSlotInWhichPlacePiece: 40,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.CenterOfCenter,
     title: "Center of Center",
   },
   [IndexOfTestingMove.CenterOfEast]: {
-    indexOfSlotInWhichPlacePiece: 43,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.CenterOfEast,
     title: "Center of East",
   },
   [IndexOfTestingMove.CenterOfNorth]: {
-    indexOfSlotInWhichPlacePiece: 13,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.CenterOfNorth,
     title: "Center of North",
   },
   [IndexOfTestingMove.CenterOfNortheast]: {
-    indexOfSlotInWhichPlacePiece: 16,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.CenterOfNortheast,
     title: "Center of Northeast",
   },
   [IndexOfTestingMove.CenterOfNorthwest]: {
-    indexOfSlotInWhichPlacePiece: 10,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.CenterOfNorthwest,
     title: "Center of Northwest",
   },
   [IndexOfTestingMove.CenterOfSouth]: {
-    indexOfSlotInWhichPlacePiece: 67,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.CenterOfSouth,
     title: "Center of South",
   },
   [IndexOfTestingMove.CenterOfSoutheast]: {
-    indexOfSlotInWhichPlacePiece: 70,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.CenterOfSoutheast,
     title: "Center of Southeast",
   },
   [IndexOfTestingMove.CenterOfSouthwest]: {
-    indexOfSlotInWhichPlacePiece: 64,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.CenterOfSouthwest,
     title: "Center of Southwest",
   },
   [IndexOfTestingMove.CenterOfWest]: {
-    indexOfSlotInWhichPlacePiece: 37,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.CenterOfWest,
     title: "Center of West",
   },
 
   [IndexOfTestingMove.EastOfCenter]: {
-    indexOfSlotInWhichPlacePiece: 41,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.EastOfCenter,
     title: "East of Center",
   },
   [IndexOfTestingMove.EastOfEast]: {
-    indexOfSlotInWhichPlacePiece: 44,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.EastOfEast,
     title: "East of East",
   },
   [IndexOfTestingMove.EastOfNorth]: {
-    indexOfSlotInWhichPlacePiece: 14,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.EastOfNorth,
     title: "East of North",
   },
   [IndexOfTestingMove.EastOfNortheast]: {
-    indexOfSlotInWhichPlacePiece: 17,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.EastOfNortheast,
     title: "East of Northeast",
   },
   [IndexOfTestingMove.EastOfNorthwest]: {
-    indexOfSlotInWhichPlacePiece: 11,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.EastOfNorthwest,
     title: "East of Northwest",
   },
   [IndexOfTestingMove.EastOfSouth]: {
-    indexOfSlotInWhichPlacePiece: 68,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.EastOfSouth,
     title: "East of South",
   },
   [IndexOfTestingMove.EastOfSoutheast]: {
-    indexOfSlotInWhichPlacePiece: 71,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.EastOfSoutheast,
     title: "East of Southeast",
   },
   [IndexOfTestingMove.EastOfSouthwest]: {
-    indexOfSlotInWhichPlacePiece: 65,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.EastOfSouthwest,
     title: "East of Southwest",
   },
   [IndexOfTestingMove.EastOfWest]: {
-    indexOfSlotInWhichPlacePiece: 38,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.EastOfWest,
     title: "East of West",
   },
 
   [IndexOfTestingMove.NortheastOfCenter]: {
-    indexOfSlotInWhichPlacePiece: 32,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NortheastOfCenter,
     title: "Northeast of Center",
   },
   [IndexOfTestingMove.NortheastOfEast]: {
-    indexOfSlotInWhichPlacePiece: 35,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NortheastOfEast,
     title: "Northeast of East",
   },
   [IndexOfTestingMove.NortheastOfNorth]: {
-    indexOfSlotInWhichPlacePiece: 5,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NortheastOfNorth,
     title: "Northeast of North",
   },
   [IndexOfTestingMove.NortheastOfNortheast]: {
-    indexOfSlotInWhichPlacePiece: 8,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NortheastOfNortheast,
     title: "Northeast of Northeast",
   },
   [IndexOfTestingMove.NortheastOfNorthwest]: {
-    indexOfSlotInWhichPlacePiece: 2,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NortheastOfNorthwest,
     title: "Northeast of Northwest",
   },
   [IndexOfTestingMove.NortheastOfSouth]: {
-    indexOfSlotInWhichPlacePiece: 59,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NortheastOfSouth,
     title: "Northeast of South",
   },
   [IndexOfTestingMove.NortheastOfSoutheast]: {
-    indexOfSlotInWhichPlacePiece: 62,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NortheastOfSoutheast,
     title: "Northeast of Southeast",
   },
   [IndexOfTestingMove.NortheastOfSouthwest]: {
-    indexOfSlotInWhichPlacePiece: 56,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NortheastOfSouthwest,
     title: "Northeast of Southwest",
   },
   [IndexOfTestingMove.NortheastOfWest]: {
-    indexOfSlotInWhichPlacePiece: 29,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NortheastOfWest,
     title: "Northeast of West",
   },
 
   [IndexOfTestingMove.NorthOfCenter]: {
-    indexOfSlotInWhichPlacePiece: 31,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NorthOfCenter,
     title: "North of Center",
   },
   [IndexOfTestingMove.NorthOfEast]: {
-    indexOfSlotInWhichPlacePiece: 34,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NorthOfEast,
     title: "North of East",
   },
   [IndexOfTestingMove.NorthOfNorth]: {
-    indexOfSlotInWhichPlacePiece: 4,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NorthOfNorth,
     title: "North of North",
   },
   [IndexOfTestingMove.NorthOfNortheast]: {
-    indexOfSlotInWhichPlacePiece: 7,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NorthOfNortheast,
     title: "North of Northeast",
   },
   [IndexOfTestingMove.NorthOfNorthwest]: {
-    indexOfSlotInWhichPlacePiece: 1,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NorthOfNorthwest,
     title: "North of Northwest",
   },
   [IndexOfTestingMove.NorthOfSouth]: {
-    indexOfSlotInWhichPlacePiece: 58,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NorthOfSouth,
     title: "North of South",
   },
   [IndexOfTestingMove.NorthOfSoutheast]: {
-    indexOfSlotInWhichPlacePiece: 61,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NorthOfSoutheast,
     title: "North of Southeast",
   },
   [IndexOfTestingMove.NorthOfSouthwest]: {
-    indexOfSlotInWhichPlacePiece: 55,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NorthOfSouthwest,
     title: "North of Southwest",
   },
   [IndexOfTestingMove.NorthOfWest]: {
-    indexOfSlotInWhichPlacePiece: 28,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NorthOfWest,
     title: "North of West",
   },
 
   [IndexOfTestingMove.NorthwestOfCenter]: {
-    indexOfSlotInWhichPlacePiece: 30,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NorthwestOfCenter,
     title: "Northwest of Center",
   },
   [IndexOfTestingMove.NorthwestOfEast]: {
-    indexOfSlotInWhichPlacePiece: 33,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NorthwestOfEast,
     title: "Northwest of East",
   },
   [IndexOfTestingMove.NorthwestOfNorth]: {
-    indexOfSlotInWhichPlacePiece: 3,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NorthwestOfNorth,
     title: "Northwest of North",
   },
   [IndexOfTestingMove.NorthwestOfNortheast]: {
-    indexOfSlotInWhichPlacePiece: 6,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NorthwestOfNortheast,
     title: "Northwest of Northeast",
   },
   [IndexOfTestingMove.NorthwestOfNorthwest]: {
-    indexOfSlotInWhichPlacePiece: 0,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NorthwestOfNorthwest,
     title: "Northwest of Northwest",
   },
   [IndexOfTestingMove.NorthwestOfSouth]: {
-    indexOfSlotInWhichPlacePiece: 57,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NorthwestOfSouth,
     title: "Northwest of South",
   },
   [IndexOfTestingMove.NorthwestOfSoutheast]: {
-    indexOfSlotInWhichPlacePiece: 60,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NorthwestOfSoutheast,
     title: "Northwest of Southeast",
   },
   [IndexOfTestingMove.NorthwestOfSouthwest]: {
-    indexOfSlotInWhichPlacePiece: 54,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NorthwestOfSouthwest,
     title: "Northwest of Southwest",
   },
   [IndexOfTestingMove.NorthwestOfWest]: {
-    indexOfSlotInWhichPlacePiece: 27,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.NorthwestOfWest,
     title: "Northwest of West",
   },
 
   [IndexOfTestingMove.SoutheastOfCenter]: {
-    indexOfSlotInWhichPlacePiece: 50,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SoutheastOfCenter,
     title: "Southeast of Center",
   },
   [IndexOfTestingMove.SoutheastOfEast]: {
-    indexOfSlotInWhichPlacePiece: 53,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SoutheastOfEast,
     title: "Southeast of East",
   },
   [IndexOfTestingMove.SoutheastOfNorth]: {
-    indexOfSlotInWhichPlacePiece: 23,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SoutheastOfNorth,
     title: "Southeast of North",
   },
   [IndexOfTestingMove.SoutheastOfNortheast]: {
-    indexOfSlotInWhichPlacePiece: 26,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SoutheastOfNortheast,
     title: "Southeast of Northeast",
   },
   [IndexOfTestingMove.SoutheastOfNorthwest]: {
-    indexOfSlotInWhichPlacePiece: 20,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SoutheastOfNorthwest,
     title: "Southeast of Northwest",
   },
   [IndexOfTestingMove.SoutheastOfSouth]: {
-    indexOfSlotInWhichPlacePiece: 77,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SoutheastOfSouth,
     title: "Southeast of South",
   },
   [IndexOfTestingMove.SoutheastOfSoutheast]: {
-    indexOfSlotInWhichPlacePiece: 80,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SoutheastOfSoutheast,
     title: "Southeast of Southeast",
   },
   [IndexOfTestingMove.SoutheastOfSouthwest]: {
-    indexOfSlotInWhichPlacePiece: 74,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SoutheastOfSouthwest,
     title: "Southeast of Southwest",
   },
   [IndexOfTestingMove.SoutheastOfWest]: {
-    indexOfSlotInWhichPlacePiece: 47,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SoutheastOfWest,
     title: "Southeast of West",
   },
 
   [IndexOfTestingMove.SouthOfCenter]: {
-    indexOfSlotInWhichPlacePiece: 49,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SouthOfCenter,
     title: "South of Center",
   },
   [IndexOfTestingMove.SouthOfEast]: {
-    indexOfSlotInWhichPlacePiece: 52,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SouthOfEast,
     title: "South of East",
   },
   [IndexOfTestingMove.SouthOfNorth]: {
-    indexOfSlotInWhichPlacePiece: 22,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SouthOfNorth,
     title: "South of North",
   },
   [IndexOfTestingMove.SouthOfNortheast]: {
-    indexOfSlotInWhichPlacePiece: 25,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SouthOfNortheast,
     title: "South of Northeast",
   },
   [IndexOfTestingMove.SouthOfNorthwest]: {
-    indexOfSlotInWhichPlacePiece: 19,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SouthOfNorthwest,
     title: "South of Northwest",
   },
   [IndexOfTestingMove.SouthOfSouth]: {
-    indexOfSlotInWhichPlacePiece: 76,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SouthOfSouth,
     title: "South of South",
   },
   [IndexOfTestingMove.SouthOfSoutheast]: {
-    indexOfSlotInWhichPlacePiece: 79,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SouthOfSoutheast,
     title: "South of Southeast",
   },
   [IndexOfTestingMove.SouthOfSouthwest]: {
-    indexOfSlotInWhichPlacePiece: 73,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SouthOfSouthwest,
     title: "South of Southwest",
   },
   [IndexOfTestingMove.SouthOfWest]: {
-    indexOfSlotInWhichPlacePiece: 46,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SouthOfWest,
     title: "South of West",
   },
 
   [IndexOfTestingMove.SouthwestOfCenter]: {
-    indexOfSlotInWhichPlacePiece: 48,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SouthwestOfCenter,
     title: "Southwest of Center",
   },
   [IndexOfTestingMove.SouthwestOfEast]: {
-    indexOfSlotInWhichPlacePiece: 51,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SouthwestOfEast,
     title: "Southwest of East",
   },
   [IndexOfTestingMove.SouthwestOfNorth]: {
-    indexOfSlotInWhichPlacePiece: 21,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SouthwestOfNorth,
     title: "Southwest of North",
   },
   [IndexOfTestingMove.SouthwestOfNortheast]: {
-    indexOfSlotInWhichPlacePiece: 24,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SouthwestOfNortheast,
     title: "Southwest of Northeast",
   },
   [IndexOfTestingMove.SouthwestOfNorthwest]: {
-    indexOfSlotInWhichPlacePiece: 18,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SouthwestOfNorthwest,
     title: "Southwest of Northwest",
   },
   [IndexOfTestingMove.SouthwestOfSouth]: {
-    indexOfSlotInWhichPlacePiece: 75,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SouthwestOfSouth,
     title: "Southwest of South",
   },
   [IndexOfTestingMove.SouthwestOfSoutheast]: {
-    indexOfSlotInWhichPlacePiece: 78,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SouthwestOfSoutheast,
     title: "Southwest of Southeast",
   },
   [IndexOfTestingMove.SouthwestOfSouthwest]: {
-    indexOfSlotInWhichPlacePiece: 72,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SouthwestOfSouthwest,
     title: "Southwest of Southwest",
   },
   [IndexOfTestingMove.SouthwestOfWest]: {
-    indexOfSlotInWhichPlacePiece: 45,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.SouthwestOfWest,
     title: "Southwest of West",
   },
 
   [IndexOfTestingMove.WestOfCenter]: {
-    indexOfSlotInWhichPlacePiece: 39,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.WestOfCenter,
     title: "West of Center",
   },
   [IndexOfTestingMove.WestOfEast]: {
-    indexOfSlotInWhichPlacePiece: 42,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.WestOfEast,
     title: "West of East",
   },
   [IndexOfTestingMove.WestOfNorth]: {
-    indexOfSlotInWhichPlacePiece: 12,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.WestOfNorth,
     title: "West of North",
   },
   [IndexOfTestingMove.WestOfNortheast]: {
-    indexOfSlotInWhichPlacePiece: 15,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.WestOfNortheast,
     title: "West of Northeast",
   },
   [IndexOfTestingMove.WestOfNorthwest]: {
-    indexOfSlotInWhichPlacePiece: 9,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.WestOfNorthwest,
     title: "West of Northwest",
   },
   [IndexOfTestingMove.WestOfSouth]: {
-    indexOfSlotInWhichPlacePiece: 66,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.WestOfSouth,
     title: "West of South",
   },
   [IndexOfTestingMove.WestOfSoutheast]: {
-    indexOfSlotInWhichPlacePiece: 69,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.WestOfSoutheast,
     title: "West of Southeast",
   },
   [IndexOfTestingMove.WestOfSouthwest]: {
-    indexOfSlotInWhichPlacePiece: 63,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.WestOfSouthwest,
     title: "West of Southwest",
   },
   [IndexOfTestingMove.WestOfWest]: {
-    indexOfSlotInWhichPlacePiece: 36,
+    indexOfSlotInWhichPlacePiece: IndexOfTestingSlot.WestOfWest,
     title: "West of West",
   },
 } as const;

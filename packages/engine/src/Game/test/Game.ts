@@ -70,8 +70,8 @@ class TestingGame extends Game<
       adjustScore({
         indexOfPlayerWhoIsOccupyingShape:
           getIndexOfPlayerWhoIsOccupyingVerticalLine({
-            initialColumnIndex: indexOfRow,
-            initialRowIndex: indexOfColumn,
+            initialColumnIndex: indexOfColumn,
+            initialRowIndex: indexOfRow,
             slots,
           }),
         score,
@@ -79,8 +79,8 @@ class TestingGame extends Game<
       adjustScore({
         indexOfPlayerWhoIsOccupyingShape:
           getIndexOfPlayerWhoIsOccupyingPrincipalDiagonal({
-            initialColumnIndex: indexOfRow,
-            initialRowIndex: indexOfColumn,
+            initialColumnIndex: indexOfColumn,
+            initialRowIndex: indexOfRow,
             slots,
           }),
         score,
@@ -88,8 +88,8 @@ class TestingGame extends Game<
       adjustScore({
         indexOfPlayerWhoIsOccupyingShape:
           getIndexOfPlayerWhoIsOccupyingSecondaryDiagonal({
-            initialColumnIndex: indexOfRow,
-            initialRowIndex: indexOfColumn,
+            initialColumnIndex: indexOfColumn,
+            initialRowIndex: indexOfRow,
             slots,
           }),
         score,
@@ -97,8 +97,8 @@ class TestingGame extends Game<
       adjustScore({
         indexOfPlayerWhoIsOccupyingShape:
           getIndexOfPlayerWhoIsOccupyingSquareOfOrderTwo({
-            initialColumnIndex: indexOfRow,
-            initialRowIndex: indexOfColumn,
+            initialColumnIndex: indexOfColumn,
+            initialRowIndex: indexOfRow,
             slots,
           }),
         score,
@@ -106,8 +106,8 @@ class TestingGame extends Game<
       adjustScore({
         indexOfPlayerWhoIsOccupyingShape:
           getIndexOfPlayerWhoIsOccupyingSquareOfOrderThree({
-            initialColumnIndex: indexOfRow,
-            initialRowIndex: indexOfColumn,
+            initialColumnIndex: indexOfColumn,
+            initialRowIndex: indexOfRow,
             slots,
           }),
         score,
