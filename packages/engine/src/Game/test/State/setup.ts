@@ -1,4 +1,3 @@
-import { INITIAL_POINTS } from "../Game.js";
 import { createGame } from "../Game/setup.js";
 import { createMoves } from "../Move/setup.js";
 import { createPlayers, IndexOfTestingPlayer } from "../Player/setup.js";
@@ -61,7 +60,7 @@ const createInitialState = (): CreatedStateAndRelatedData => {
   return createState({
     game,
     indexOfPlayer: IndexOfTestingPlayer.One,
-    score: [INITIAL_POINTS, INITIAL_POINTS],
+    score: TestingState.initializeScore(game.getQuantityOfPlayers()),
     slots,
   });
 };

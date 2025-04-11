@@ -5,6 +5,15 @@ import type { Score } from "../State.js";
 import { type default as TestingMove } from "./Move.js";
 import { type default as TestingPlayer } from "./Player.js";
 import type { IndexOfTestingPlayer } from "./Player/setup.js";
+import {
+  adjustScore,
+  getIndexOfPlayerWhoIsOccupyingHorizontalLine,
+  getIndexOfPlayerWhoIsOccupyingPrincipalDiagonal,
+  getIndexOfPlayerWhoIsOccupyingSecondaryDiagonal,
+  getIndexOfPlayerWhoIsOccupyingSquareOfOrderThree,
+  getIndexOfPlayerWhoIsOccupyingSquareOfOrderTwo,
+  getIndexOfPlayerWhoIsOccupyingVerticalLine,
+} from "./Shape.js";
 import TestingSlot from "./Slot.js";
 import TestingState from "./State.js";
 
@@ -13,7 +22,6 @@ const ROW_LENGTH: Integer = 9;
 const QUANTITY_OF_SLOTS: Integer = COLUMN_LENGTH * ROW_LENGTH;
 
 const INDEX_OF_INITIAL_PLAYER: IndexOfTestingPlayer = 0;
-
 const ADVANCE_TURN: Integer = 1;
 
 type TestingGameParams = Pick<
@@ -41,6 +49,72 @@ class TestingGame extends Game<
       players,
       quantityOfSlots: QUANTITY_OF_SLOTS,
     });
+  }
+
+  public calculateScore(slots: TestingSlot[]): Score {
+    const score = TestingState.initializeScore(this.getQuantityOfPlayers());
+
+    slots.forEach((_, indexOfSlot) => {
+      const indexOfRow = Math.floor(indexOfSlot / COLUMN_LENGTH);
+      const indexOfColumn = indexOfSlot % COLUMN_LENGTH;
+
+      adjustScore({
+        indexOfPlayerWhoIsOccupyingShape:
+          getIndexOfPlayerWhoIsOccupyingHorizontalLine({
+            initialColumnIndex: indexOfColumn,
+            initialRowIndex: indexOfRow,
+            slots,
+          }),
+        score,
+      });
+      adjustScore({
+        indexOfPlayerWhoIsOccupyingShape:
+          getIndexOfPlayerWhoIsOccupyingVerticalLine({
+            initialColumnIndex: indexOfRow,
+            initialRowIndex: indexOfColumn,
+            slots,
+          }),
+        score,
+      });
+      adjustScore({
+        indexOfPlayerWhoIsOccupyingShape:
+          getIndexOfPlayerWhoIsOccupyingPrincipalDiagonal({
+            initialColumnIndex: indexOfRow,
+            initialRowIndex: indexOfColumn,
+            slots,
+          }),
+        score,
+      });
+      adjustScore({
+        indexOfPlayerWhoIsOccupyingShape:
+          getIndexOfPlayerWhoIsOccupyingSecondaryDiagonal({
+            initialColumnIndex: indexOfRow,
+            initialRowIndex: indexOfColumn,
+            slots,
+          }),
+        score,
+      });
+      adjustScore({
+        indexOfPlayerWhoIsOccupyingShape:
+          getIndexOfPlayerWhoIsOccupyingSquareOfOrderTwo({
+            initialColumnIndex: indexOfRow,
+            initialRowIndex: indexOfColumn,
+            slots,
+          }),
+        score,
+      });
+      adjustScore({
+        indexOfPlayerWhoIsOccupyingShape:
+          getIndexOfPlayerWhoIsOccupyingSquareOfOrderThree({
+            initialColumnIndex: indexOfRow,
+            initialRowIndex: indexOfColumn,
+            slots,
+          }),
+        score,
+      });
+    });
+
+    return score;
   }
 
   public override clone(): TestingGame {
@@ -117,8 +191,7 @@ class TestingGame extends Game<
     }
 
     const indexOfNextPlayer = this.getIndexOfNextPlayer(state);
-    // TODO: Calculate the score based on the game rules
-    const updatedScore = Array.from(state.getScore());
+    const updatedScore = this.calculateScore(updatedSlots);
 
     // TODO: Create tests to try to modify the slots array from exterior, to check if it is immutable
     return new TestingState({
@@ -127,12 +200,6 @@ class TestingGame extends Game<
       score: updatedScore,
       slots: updatedSlots,
     });
-  }
-
-  private calculateScore(state: TestingState): Score {
-    const score = TestingState.initializeScore(this.getQuantityOfPlayers());
-
-    return score;
   }
 }
 

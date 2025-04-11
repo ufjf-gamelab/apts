@@ -112,4 +112,4 @@ class TestingState extends State<
 }
 
 export type { TestingStateParams };
-export { TestingState as default };
+export { TestingState as default, INITIAL_POINTS };

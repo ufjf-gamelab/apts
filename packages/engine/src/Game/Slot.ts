@@ -21,6 +21,26 @@ abstract class Slot<
   Sl extends Slot<G, S, M, Sl, P>,
   P extends Player<G, S, M, Sl, P>,
 > {
+  public static getSlot<
+    G extends Game<G, S, M, Sl, P>,
+    S extends State<G, S, M, Sl, P>,
+    M extends Move<G, S, M, Sl, P>,
+    Sl extends Slot<G, S, M, Sl, P>,
+    P extends Player<G, S, M, Sl, P>,
+  >({
+    indexOfSlot,
+    slots,
+  }: {
+    indexOfSlot: IndexOfSlot;
+    slots: readonly Sl[];
+  }): null | Sl {
+    const slot = slots[indexOfSlot];
+    if (typeof slot === "undefined") {
+      return null;
+    }
+    return slot;
+  }
+
   public abstract clone(): Sl;
 }
 

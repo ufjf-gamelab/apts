@@ -120,17 +120,17 @@ abstract class Game<
     return this.moves.length;
   }
 
-  public abstract getValidMoves({ state }: { state: S }): readonly M[];
-
-  public abstract play(move: M, state: S): S;
-
-  protected getQuantityOfPlayers(): Integer {
+  public getQuantityOfPlayers(): Integer {
     return this.players.length;
   }
 
-  protected getQuantityOfSlots(): typeof this.quantityOfSlots {
+  public getQuantityOfSlots(): typeof this.quantityOfSlots {
     return this.quantityOfSlots;
   }
+
+  public abstract getValidMoves({ state }: { state: S }): readonly M[];
+
+  public abstract play(move: M, state: S): S;
 }
 
 export type { GameParams };

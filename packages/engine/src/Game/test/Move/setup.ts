@@ -92,7 +92,7 @@ enum IndexOfTestingMove {
   SoutheastOfSoutheast,
 }
 
-type NameOfIndexOfTestingMove = keyof typeof IndexOfTestingMove;
+type TitleOfIndexOfTestingMove = keyof typeof IndexOfTestingMove;
 
 const movesDTOs = {
   [IndexOfTestingMove.CenterOfCenter]: {
@@ -429,6 +429,13 @@ const movesDTOs = {
   },
 } as const;
 
+const getTitleOfTestingMove = (
+  indexOfTestingMove: IndexOfTestingMove,
+): MoveDTO["title"] => {
+  const moveDTO = movesDTOs[indexOfTestingMove];
+  return moveDTO.title;
+};
+
 const listOfMovesDTOs = [
   movesDTOs[IndexOfTestingMove.NorthwestOfNorthwest],
   movesDTOs[IndexOfTestingMove.NorthOfNorthwest],
@@ -530,7 +537,7 @@ interface DataRelatedToCreatedMove {
   description: TestingMove["description"];
   index: IndexOfTestingMove;
   indexOfSlotInWhichPlacePiece: TestingMove["indexOfSlotInWhichPlacePiece"];
-  nameOfIndex: NameOfIndexOfTestingMove;
+  nameOfIndex: TitleOfIndexOfTestingMove;
   title: TestingMove["title"];
 }
 
@@ -565,7 +572,7 @@ const createMove = ({
       indexOfSlotInWhichPlacePiece,
       nameOfIndex: IndexOfTestingMove[
         indexOfMoveDTO
-      ] as NameOfIndexOfTestingMove,
+      ] as TitleOfIndexOfTestingMove,
       title,
     },
     move,
@@ -609,5 +616,6 @@ export type {
   CreatedMoveAndRelatedData,
   CreatedMovesAndRelatedData,
   TestMoveParams,
+  TitleOfIndexOfTestingMove,
 };
-export { createMove, createMoves, IndexOfTestingMove };
+export { createMove, createMoves, getTitleOfTestingMove, IndexOfTestingMove };

@@ -2,7 +2,7 @@ import type { Integer } from "../types.js";
 import type Game from "./Game.js";
 import type Move from "./Move.js";
 import type { IndexOfPlayer, default as Player } from "./Player.js";
-import type { default as Slot } from "./Slot.js";
+import Slot from "./Slot.js";
 
 type IndexOfSlot = Integer;
 
@@ -42,6 +42,12 @@ abstract class State<
     score,
     slots,
   }: StateParams<G, S, M, Sl, P>) {
+    if (slots.length !== game.getQuantityOfSlots()) {
+      throw new Error(
+        `The number of slots (${slots.length}) does not match the game quantity of slots (${game.getQuantityOfSlots()}).`,
+      );
+    }
+
     this.game = game.clone();
     this.indexOfPlayer = indexOfPlayer;
     this.score = [...score];
@@ -60,16 +66,19 @@ abstract class State<
     return this.indexOfPlayer;
   }
 
+  public getQuantityOfSlots(): Integer {
+    return this.slots.length;
+  }
+
   public getScore(): typeof this.score {
     return [...this.score];
   }
 
   public getSlot(index: IndexOfSlot): null | Sl {
-    const slot = this.slots[index];
-    if (typeof slot === "undefined") {
-      return null;
-    }
-    return slot;
+    return Slot.getSlot({
+      indexOfSlot: index,
+      slots: this.slots,
+    });
   }
 
   public getSlots(): typeof this.slots {
@@ -79,10 +88,6 @@ abstract class State<
   public abstract isFinal(): boolean;
 
   public abstract toString(): string;
-
-  protected getQuantityOfSlots(): Integer {
-    return this.slots.length;
-  }
 }
 
 export type { Points, Score, StateParams };
