@@ -1,9 +1,12 @@
 import { INCREMENT_ONE } from "../../constants.js";
 import type { Integer } from "../../types.js";
 import type { Points } from "../State.js";
-import { COLUMN_LENGTH } from "./Game.js";
+import { COLUMN_LENGTH, ROW_LENGTH } from "./Game.js";
 import type { IndexOfTestingPlayer } from "./Player/setup.js";
 import TestingSlot from "./Slot.js";
+
+const ADJUST_INDEX = 1;
+const INITIAL_INDEX = 0;
 
 interface Line {
   direction:
@@ -23,54 +26,62 @@ interface Rectangle {
 
 type Shape = Line | Rectangle;
 
-// eslint-disable-next-line max-lines-per-function
+// eslint-disable-next-line max-lines-per-function, max-statements
 const getIndexesOfShape = ({
   columnLength,
   initialColumnIndex,
   initialRowIndex,
+  rowLength,
   shape,
 }: {
   columnLength: Integer;
   initialColumnIndex: Integer;
   initialRowIndex: Integer;
+  rowLength: Integer;
   shape: Shape;
 }): Integer[] => {
   const { type } = shape;
+  // eslint-disable-next-line init-declarations
+  let indexesOfShape: Integer[];
   switch (type) {
     case "line": {
       const { direction, size } = shape;
       switch (direction) {
         case "horizontal": {
-          return Array.from(
+          indexesOfShape = Array.from(
             { length: size },
             (_, index) =>
               initialRowIndex * columnLength + initialColumnIndex + index,
           );
+          break;
         }
         case "principalDiagonal": {
-          return Array.from(
+          indexesOfShape = Array.from(
             { length: size },
             (_, index) =>
               (initialRowIndex + index) * columnLength +
               initialColumnIndex +
               index,
           );
+          break;
         }
         case "secondaryDiagonal": {
-          return Array.from(
+          indexesOfShape = Array.from(
             { length: size },
             (_, index) =>
               (initialRowIndex + index) * columnLength +
               initialColumnIndex -
               index,
           );
+          break;
         }
         case "vertical": {
-          return Array.from(
+          indexesOfShape = Array.from(
             { length: size },
             (_, index) =>
               (initialRowIndex + index) * columnLength + initialColumnIndex,
           );
+          break;
         }
         default: {
           throw new Error(
@@ -78,10 +89,11 @@ const getIndexesOfShape = ({
           );
         }
       }
+      break;
     }
     case "rectangle": {
       const { horizontalSize, verticalSize } = shape;
-      return Array.from(
+      indexesOfShape = Array.from(
         { length: horizontalSize * verticalSize },
         (_, index) => {
           const rowOffset = Math.floor(index / horizontalSize);
@@ -93,23 +105,36 @@ const getIndexesOfShape = ({
           );
         },
       );
+      break;
     }
     default: {
       throw new Error(`Invalid type "${type as string}" for shape`);
     }
   }
+  const limitOfIndexOfShape = rowLength * columnLength - ADJUST_INDEX;
+  if (
+    indexesOfShape.find(
+      indexOfShape =>
+        indexOfShape < INITIAL_INDEX || indexOfShape > limitOfIndexOfShape,
+    )
+  ) {
+    return [];
+  }
+  return indexesOfShape;
 };
 
 const getIndexOfPlayerWhoIsOccupyingShape = ({
   columnLength,
   initialColumnIndex,
   initialRowIndex,
+  rowLength,
   shape,
   slots,
 }: {
   columnLength: Integer;
   initialColumnIndex: Integer;
   initialRowIndex: Integer;
+  rowLength: Integer;
   shape: Shape;
   slots: TestingSlot[];
 }): IndexOfTestingPlayer | null => {
@@ -117,6 +142,7 @@ const getIndexOfPlayerWhoIsOccupyingShape = ({
     columnLength,
     initialColumnIndex,
     initialRowIndex,
+    rowLength,
     shape,
   });
 
@@ -147,18 +173,21 @@ const getIndexOfPlayerWhoIsOccupyingLine = ({
   direction,
   initialColumnIndex,
   initialRowIndex,
+  rowLength,
   slots,
 }: {
   columnLength: Integer;
   direction: Line["direction"];
   initialColumnIndex: Integer;
   initialRowIndex: Integer;
+  rowLength: Integer;
   slots: TestingSlot[];
 }): ReturnType<typeof getIndexOfPlayerWhoIsOccupyingShape> =>
   getIndexOfPlayerWhoIsOccupyingShape({
     columnLength,
     initialColumnIndex,
     initialRowIndex,
+    rowLength,
     shape: {
       direction,
       size: 5,
@@ -172,6 +201,7 @@ const getIndexOfPlayerWhoIsOccupyingRectangle = ({
   horizontalSize,
   initialColumnIndex,
   initialRowIndex,
+  rowLength,
   slots,
   verticalSize,
 }: {
@@ -179,6 +209,7 @@ const getIndexOfPlayerWhoIsOccupyingRectangle = ({
   horizontalSize: Rectangle["horizontalSize"];
   initialColumnIndex: Integer;
   initialRowIndex: Integer;
+  rowLength: Integer;
   slots: TestingSlot[];
   verticalSize: Rectangle["verticalSize"];
 }): ReturnType<typeof getIndexOfPlayerWhoIsOccupyingShape> =>
@@ -186,6 +217,7 @@ const getIndexOfPlayerWhoIsOccupyingRectangle = ({
     columnLength,
     initialColumnIndex,
     initialRowIndex,
+    rowLength,
     shape: {
       horizontalSize,
       type: "rectangle",
@@ -208,6 +240,7 @@ const getIndexOfPlayerWhoIsOccupyingHorizontalLine = ({
     direction: "horizontal",
     initialColumnIndex,
     initialRowIndex,
+    rowLength: ROW_LENGTH,
     slots,
   });
 
@@ -225,6 +258,7 @@ const getIndexOfPlayerWhoIsOccupyingVerticalLine = ({
     direction: "vertical",
     initialColumnIndex,
     initialRowIndex,
+    rowLength: ROW_LENGTH,
     slots,
   });
 
@@ -242,6 +276,7 @@ const getIndexOfPlayerWhoIsOccupyingPrincipalDiagonal = ({
     direction: "principalDiagonal",
     initialColumnIndex,
     initialRowIndex,
+    rowLength: ROW_LENGTH,
     slots,
   });
 
@@ -259,6 +294,7 @@ const getIndexOfPlayerWhoIsOccupyingSecondaryDiagonal = ({
     direction: "secondaryDiagonal",
     initialColumnIndex,
     initialRowIndex,
+    rowLength: ROW_LENGTH,
     slots,
   });
 
@@ -276,6 +312,7 @@ const getIndexOfPlayerWhoIsOccupyingSquareOfOrderTwo = ({
     horizontalSize: 2,
     initialColumnIndex,
     initialRowIndex,
+    rowLength: ROW_LENGTH,
     slots,
     verticalSize: 2,
   });
@@ -294,6 +331,7 @@ const getIndexOfPlayerWhoIsOccupyingSquareOfOrderThree = ({
     horizontalSize: 3,
     initialColumnIndex,
     initialRowIndex,
+    rowLength: ROW_LENGTH,
     slots,
     verticalSize: 3,
   });

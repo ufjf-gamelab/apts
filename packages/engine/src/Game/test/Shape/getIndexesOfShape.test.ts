@@ -1,6 +1,7 @@
 import { expect, test } from "vitest";
 
-import { COLUMN_LENGTH } from "../Game.js";
+import type { Integer } from "../../../types.js";
+import { COLUMN_LENGTH, ROW_LENGTH } from "../Game.js";
 import { getIndexesOfShape, type Shape } from "../Shape.js";
 import { IndexOfTestingSlot } from "../Slot/setup.js";
 import type { TestShapeParams } from "./setup.js";
@@ -20,6 +21,7 @@ const getIndexesOfShapeShouldReturn = ({
       columnLength: COLUMN_LENGTH,
       initialColumnIndex,
       initialRowIndex,
+      rowLength: ROW_LENGTH,
       shape,
     });
 
@@ -28,9 +30,131 @@ const getIndexesOfShapeShouldReturn = ({
   });
 };
 
+const testGetIndexesOfShapeForHorizontalLine = ({
+  expectedIndexesOfShape,
+  initialColumnIndex,
+  initialRowIndex,
+  size,
+}: {
+  expectedIndexesOfShape: ReturnType<typeof getIndexesOfShape>;
+  initialColumnIndex: Integer;
+  initialRowIndex: Integer;
+  size: Integer;
+}): void => {
+  getIndexesOfShapeShouldReturn({
+    expectedIndexesOfShape,
+    initialColumnIndex,
+    initialRowIndex,
+    shape: {
+      direction: "horizontal",
+      size,
+      type: "line",
+    },
+    testDescriptor: `horizontal line of size ${size} beginning on row ${initialRowIndex} and column ${initialColumnIndex}`,
+  });
+};
+
+const testGetIndexesOfShapeForVerticalLine = ({
+  expectedIndexesOfShape,
+  initialColumnIndex,
+  initialRowIndex,
+  size,
+}: {
+  expectedIndexesOfShape: ReturnType<typeof getIndexesOfShape>;
+  initialColumnIndex: Integer;
+  initialRowIndex: Integer;
+  size: Integer;
+}): void => {
+  getIndexesOfShapeShouldReturn({
+    expectedIndexesOfShape,
+    initialColumnIndex,
+    initialRowIndex,
+    shape: {
+      direction: "vertical",
+      size,
+      type: "line",
+    },
+    testDescriptor: `vertical line of size ${size} beginning on row ${initialRowIndex} and column ${initialColumnIndex}`,
+  });
+};
+
+const testGetIndexesOfShapeForPrincipalDiagonal = ({
+  expectedIndexesOfShape,
+  initialColumnIndex,
+  initialRowIndex,
+  size,
+}: {
+  expectedIndexesOfShape: ReturnType<typeof getIndexesOfShape>;
+  initialColumnIndex: Integer;
+  initialRowIndex: Integer;
+  size: Integer;
+}): void => {
+  getIndexesOfShapeShouldReturn({
+    expectedIndexesOfShape,
+    initialColumnIndex,
+    initialRowIndex,
+    shape: {
+      direction: "principalDiagonal",
+      size,
+      type: "line",
+    },
+    testDescriptor: `principal diagonal of size ${size} beginning on row ${initialRowIndex} and column ${initialColumnIndex}`,
+  });
+};
+
+const testGetIndexesOfShapeForSecondaryDiagonal = ({
+  expectedIndexesOfShape,
+  initialColumnIndex,
+  initialRowIndex,
+  size,
+}: {
+  expectedIndexesOfShape: ReturnType<typeof getIndexesOfShape>;
+  initialColumnIndex: Integer;
+  initialRowIndex: Integer;
+  size: Integer;
+}): void => {
+  getIndexesOfShapeShouldReturn({
+    expectedIndexesOfShape,
+    initialColumnIndex,
+    initialRowIndex,
+    shape: {
+      direction: "secondaryDiagonal",
+      size,
+      type: "line",
+    },
+    testDescriptor: `secondary diagonal of size ${size} beginning on row ${initialRowIndex} and column ${initialColumnIndex}`,
+  });
+};
+
+const testGetIndexesOfShapeForRectangle = ({
+  expectedIndexesOfShape,
+  horizontalSize,
+  initialColumnIndex,
+  initialRowIndex,
+  verticalSize,
+}: {
+  expectedIndexesOfShape: ReturnType<typeof getIndexesOfShape>;
+  horizontalSize: Integer;
+  initialColumnIndex: Integer;
+  initialRowIndex: Integer;
+  verticalSize: Integer;
+}): void => {
+  getIndexesOfShapeShouldReturn({
+    expectedIndexesOfShape,
+    initialColumnIndex,
+    initialRowIndex,
+    shape: {
+      horizontalSize,
+      type: "rectangle",
+      verticalSize,
+    },
+    testDescriptor: `rectangle of size ${horizontalSize}x${verticalSize} beginning on row ${initialRowIndex} and column ${initialColumnIndex}`,
+  });
+};
+
 const testGetIndexesOfShapeForHorizontalLineOfSizeFiveBeginningOnRowZeroAndColumnZero =
   (): void => {
-    getIndexesOfShapeShouldReturn({
+    testGetIndexesOfShapeForHorizontalLine({
       expectedIndexesOfShape: [
         IndexOfTestingSlot.NorthwestOfNorthwest,
         IndexOfTestingSlot.NorthOfNorthwest,
@@ -40,20 +164,53 @@ const testGetIndexesOfShapeForHorizontalLineOfSizeFiveBeginningOnRowZeroAndColum
       ],
       initialColumnIndex: 0,
       initialRowIndex: 0,
-      shape: {
-        direction: "horizontal",
-        size: 5,
-        type: "line",
-      },
-      testDescriptor:
-        "horizontal line of size 5 beginning on row 0 and column 0",
+      size: 5,
     });
   };
 testGetIndexesOfShapeForHorizontalLineOfSizeFiveBeginningOnRowZeroAndColumnZero();
 
+const testGetIndexesOfShapeForHorizontalLineOfSizeFiveBeginningOnRowFourAndColumnFour =
+  (): void => {
+    testGetIndexesOfShapeForHorizontalLine({
+      expectedIndexesOfShape: [
+        IndexOfTestingSlot.CenterOfCenter,
+        IndexOfTestingSlot.EastOfCenter,
+        IndexOfTestingSlot.WestOfEast,
+        IndexOfTestingSlot.CenterOfEast,
+        IndexOfTestingSlot.EastOfEast,
+      ],
+      initialColumnIndex: 4,
+      initialRowIndex: 4,
+      size: 5,
+    });
+  };
+testGetIndexesOfShapeForHorizontalLineOfSizeFiveBeginningOnRowFourAndColumnFour();
+
+const testGetIndexesOfShapeForHorizontalLineOfSizeFiveBeginningOnRowNegativeFiveAndColumnNegativeFive =
+  (): void => {
+    testGetIndexesOfShapeForHorizontalLine({
+      expectedIndexesOfShape: [],
+      initialColumnIndex: -5,
+      initialRowIndex: -5,
+      size: 5,
+    });
+  };
+testGetIndexesOfShapeForHorizontalLineOfSizeFiveBeginningOnRowNegativeFiveAndColumnNegativeFive();
+
+const testGetIndexesOfShapeForHorizontalLineOfSizeFiveBeginningOnRowEightAndColumnEight =
+  (): void => {
+    testGetIndexesOfShapeForHorizontalLine({
+      expectedIndexesOfShape: [],
+      initialColumnIndex: 8,
+      initialRowIndex: 8,
+      size: 5,
+    });
+  };
+testGetIndexesOfShapeForHorizontalLineOfSizeFiveBeginningOnRowEightAndColumnEight();
+
 const testGetIndexesOfShapeForVerticalLineOfSizeFiveBeginningOnRowZeroAndColumnZero =
   (): void => {
-    getIndexesOfShapeShouldReturn({
+    testGetIndexesOfShapeForVerticalLine({
       expectedIndexesOfShape: [
         IndexOfTestingSlot.NorthwestOfNorthwest,
         IndexOfTestingSlot.WestOfNorthwest,
@@ -63,19 +220,31 @@ const testGetIndexesOfShapeForVerticalLineOfSizeFiveBeginningOnRowZeroAndColumnZ
       ],
       initialColumnIndex: 0,
       initialRowIndex: 0,
-      shape: {
-        direction: "vertical",
-        size: 5,
-        type: "line",
-      },
-      testDescriptor: "vertical line of size 5 beginning on row 0 and column 0",
+      size: 5,
     });
   };
 testGetIndexesOfShapeForVerticalLineOfSizeFiveBeginningOnRowZeroAndColumnZero();
 
+const testGetIndexesOfShapeForVerticalLineOfSizeFiveBeginningOnRowFourAndColumnFour =
+  (): void => {
+    testGetIndexesOfShapeForVerticalLine({
+      expectedIndexesOfShape: [
+        IndexOfTestingSlot.CenterOfCenter,
+        IndexOfTestingSlot.SouthOfCenter,
+        IndexOfTestingSlot.NorthOfSouth,
+        IndexOfTestingSlot.CenterOfSouth,
+        IndexOfTestingSlot.SouthOfSouth,
+      ],
+      initialColumnIndex: 4,
+      initialRowIndex: 4,
+      size: 5,
+    });
+  };
+testGetIndexesOfShapeForVerticalLineOfSizeFiveBeginningOnRowFourAndColumnFour();
+
 const testGetIndexesOfShapeForPrincipalDiagonalOfSizeFiveBeginningOnRowZeroAndColumnZero =
   (): void => {
-    getIndexesOfShapeShouldReturn({
+    testGetIndexesOfShapeForPrincipalDiagonal({
       expectedIndexesOfShape: [
         IndexOfTestingSlot.NorthwestOfNorthwest,
         IndexOfTestingSlot.CenterOfNorthwest,
@@ -85,20 +254,31 @@ const testGetIndexesOfShapeForPrincipalDiagonalOfSizeFiveBeginningOnRowZeroAndCo
       ],
       initialColumnIndex: 0,
       initialRowIndex: 0,
-      shape: {
-        direction: "principalDiagonal",
-        size: 5,
-        type: "line",
-      },
-      testDescriptor:
-        "principal diagonal of size 5 beginning on row 0 and column 0",
+      size: 5,
     });
   };
 testGetIndexesOfShapeForPrincipalDiagonalOfSizeFiveBeginningOnRowZeroAndColumnZero();
 
+const testGetIndexesOfShapeForPrincipalDiagonalOfSizeFiveBeginningOnRowFourAndColumnFour =
+  (): void => {
+    testGetIndexesOfShapeForPrincipalDiagonal({
+      expectedIndexesOfShape: [
+        IndexOfTestingSlot.CenterOfCenter,
+        IndexOfTestingSlot.SoutheastOfCenter,
+        IndexOfTestingSlot.NorthwestOfSoutheast,
+        IndexOfTestingSlot.CenterOfSoutheast,
+        IndexOfTestingSlot.SoutheastOfSoutheast,
+      ],
+      initialColumnIndex: 4,
+      initialRowIndex: 4,
+      size: 5,
+    });
+  };
+testGetIndexesOfShapeForPrincipalDiagonalOfSizeFiveBeginningOnRowFourAndColumnFour();
+
 const testGetIndexesOfShapeForSecondaryDiagonalOfSizeFiveBeginningOnRowZeroAndColumnFour =
   (): void => {
-    getIndexesOfShapeShouldReturn({
+    testGetIndexesOfShapeForSecondaryDiagonal({
       expectedIndexesOfShape: [
         IndexOfTestingSlot.NorthOfNorth,
         IndexOfTestingSlot.WestOfNorth,
@@ -108,42 +288,84 @@ const testGetIndexesOfShapeForSecondaryDiagonalOfSizeFiveBeginningOnRowZeroAndCo
       ],
       initialColumnIndex: 4,
       initialRowIndex: 0,
-      shape: {
-        direction: "secondaryDiagonal",
-        size: 5,
-        type: "line",
-      },
-      testDescriptor:
-        "principal diagonal of size 5 beginning on row 0 and column 0",
+      size: 5,
     });
   };
 testGetIndexesOfShapeForSecondaryDiagonalOfSizeFiveBeginningOnRowZeroAndColumnFour();
 
+const testGetIndexesOfShapeForSecondaryDiagonalOfSizeFiveBeginningOnRowFourAndColumnFour =
+  (): void => {
+    testGetIndexesOfShapeForSecondaryDiagonal({
+      expectedIndexesOfShape: [
+        IndexOfTestingSlot.CenterOfCenter,
+        IndexOfTestingSlot.SouthwestOfCenter,
+        IndexOfTestingSlot.NortheastOfSouthwest,
+        IndexOfTestingSlot.CenterOfSouthwest,
+        IndexOfTestingSlot.SouthwestOfSouthwest,
+      ],
+      initialColumnIndex: 4,
+      initialRowIndex: 4,
+      size: 5,
+    });
+  };
+testGetIndexesOfShapeForSecondaryDiagonalOfSizeFiveBeginningOnRowFourAndColumnFour();
+
 const testGetIndexesOfShapeForRectangleOfSizeTwoByTwoBeginningOnRowZeroAndColumnZero =
   (): void => {
-    getIndexesOfShapeShouldReturn({
+    testGetIndexesOfShapeForRectangle({
       expectedIndexesOfShape: [
         IndexOfTestingSlot.NorthwestOfNorthwest,
         IndexOfTestingSlot.NorthOfNorthwest,
         IndexOfTestingSlot.WestOfNorthwest,
         IndexOfTestingSlot.CenterOfNorthwest,
       ],
+      horizontalSize: 2,
       initialColumnIndex: 0,
       initialRowIndex: 0,
-      shape: {
-        horizontalSize: 2,
-        type: "rectangle",
-        verticalSize: 2,
-      },
-      testDescriptor:
-        "rectangle of size 2 by 2 beginning on row 0 and column 0",
+      verticalSize: 2,
     });
   };
 testGetIndexesOfShapeForRectangleOfSizeTwoByTwoBeginningOnRowZeroAndColumnZero();
 
+const testGetIndexesOfShapeForRectangleOfSizeTwoByTwoBeginningOnRowFourAndColumnFour =
+  (): void => {
+    testGetIndexesOfShapeForRectangle({
+      expectedIndexesOfShape: [
+        IndexOfTestingSlot.CenterOfCenter,
+        IndexOfTestingSlot.EastOfCenter,
+        IndexOfTestingSlot.SouthOfCenter,
+        IndexOfTestingSlot.SoutheastOfCenter,
+      ],
+      horizontalSize: 2,
+      initialColumnIndex: 4,
+      initialRowIndex: 4,
+      verticalSize: 2,
+    });
+  };
+testGetIndexesOfShapeForRectangleOfSizeTwoByTwoBeginningOnRowFourAndColumnFour();
+
+const testGetIndexesOfShapeForRectangleOfSizeThreeByTwoBeginningOnRowZeroAndColumnZero =
+  (): void => {
+    testGetIndexesOfShapeForRectangle({
+      expectedIndexesOfShape: [
+        IndexOfTestingSlot.NorthwestOfNorthwest,
+        IndexOfTestingSlot.NorthOfNorthwest,
+        IndexOfTestingSlot.NortheastOfNorthwest,
+        IndexOfTestingSlot.WestOfNorthwest,
+        IndexOfTestingSlot.CenterOfNorthwest,
+        IndexOfTestingSlot.EastOfNorthwest,
+      ],
+      horizontalSize: 3,
+      initialColumnIndex: 0,
+      initialRowIndex: 0,
+      verticalSize: 2,
+    });
+  };
+testGetIndexesOfShapeForRectangleOfSizeThreeByTwoBeginningOnRowZeroAndColumnZero();
+
 const testGetIndexesOfShapeForRectangleOfSizeThreeByThreeBeginningOnRowZeroAndColumnZero =
   (): void => {
-    getIndexesOfShapeShouldReturn({
+    testGetIndexesOfShapeForRectangle({
       expectedIndexesOfShape: [
         IndexOfTestingSlot.NorthwestOfNorthwest,
         IndexOfTestingSlot.NorthOfNorthwest,
@@ -155,15 +377,32 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThreeBeginningOnRowZeroAndCo
         IndexOfTestingSlot.SouthOfNorthwest,
         IndexOfTestingSlot.SoutheastOfNorthwest,
       ],
+      horizontalSize: 3,
       initialColumnIndex: 0,
       initialRowIndex: 0,
-      shape: {
-        horizontalSize: 3,
-        type: "rectangle",
-        verticalSize: 3,
-      },
-      testDescriptor:
-        "rectangle of size 3 by 3 beginning on row 0 and column 0",
+      verticalSize: 3,
     });
   };
 testGetIndexesOfShapeForRectangleOfSizeThreeByThreeBeginningOnRowZeroAndColumnZero();
+
+const testGetIndexesOfShapeForRectangleOfSizeThreeByThreeBeginningOnRowFourAndColumnFour =
+  (): void => {
+    testGetIndexesOfShapeForRectangle({
+      expectedIndexesOfShape: [
+        IndexOfTestingSlot.CenterOfCenter,
+        IndexOfTestingSlot.EastOfCenter,
+        IndexOfTestingSlot.WestOfEast,
+        IndexOfTestingSlot.SouthOfCenter,
+        IndexOfTestingSlot.SoutheastOfCenter,
+        IndexOfTestingSlot.SouthwestOfEast,
+        IndexOfTestingSlot.NorthOfSouth,
+        IndexOfTestingSlot.NortheastOfSouth,
+        IndexOfTestingSlot.NorthwestOfSoutheast,
+      ],
+      horizontalSize: 3,
+      initialColumnIndex: 4,
+      initialRowIndex: 4,
+      verticalSize: 3,
+    });
+  };
+testGetIndexesOfShapeForRectangleOfSizeThreeByThreeBeginningOnRowFourAndColumnFour();
