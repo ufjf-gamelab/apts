@@ -58,11 +58,15 @@ const calculateIndexesOfShapeForHorizontalLine = ({
     (_, columnIndex) => columnIndex + initialRowIndex * columnLength,
   );
 
-  return Array.from(
-    { length: Math.min(quantityOfValidIndexes, size) },
-    (_, columnIndex) =>
-      columnIndex + initialRowIndex * columnLength + initialColumnIndex,
-  ).filter(index => validIndexes.includes(index));
+  return validIndexes.filter(index => {
+    const indexOfRow = Math.floor(index / columnLength);
+    const indexOfColumn = index % columnLength;
+    return (
+      indexOfRow === initialRowIndex &&
+      indexOfColumn >= initialColumnIndex &&
+      indexOfColumn < initialColumnIndex + size
+    );
+  });
 };
 
 const calculateIndexesOfShapeForPrincipalDiagonal = ({
@@ -78,21 +82,31 @@ const calculateIndexesOfShapeForPrincipalDiagonal = ({
   rowLength: Integer;
   size: Line["size"];
 }): Integer[] => {
-  const quantityOfValidIndexes = Math.min(
-    rowLength - initialRowIndex,
-    columnLength - initialColumnIndex,
+  const quantityOfIndexesBelowLimit = Math.max(
+    -Math.min(initialRowIndex, initialColumnIndex),
+    INITIAL_INDEX,
   );
+  const quantityOfValidIndexes =
+    Math.min(rowLength - initialRowIndex, columnLength - initialColumnIndex) -
+    quantityOfIndexesBelowLimit;
+
   const validIndexes = Array.from(
     { length: quantityOfValidIndexes },
     (_, index) =>
-      (initialRowIndex + index) * columnLength + (initialColumnIndex + index),
+      (initialRowIndex + index + quantityOfIndexesBelowLimit) * columnLength +
+      (initialColumnIndex + index + quantityOfIndexesBelowLimit),
   );
 
-  return Array.from(
-    { length: Math.min(quantityOfValidIndexes, size) },
-    (_, index) =>
-      (initialRowIndex + index) * columnLength + (initialColumnIndex + index),
-  ).filter(index => validIndexes.includes(index));
+  return validIndexes.filter(index => {
+    const indexOfRow = Math.floor(index / columnLength);
+    const indexOfColumn = index % columnLength;
+    return (
+      indexOfRow >= initialRowIndex &&
+      indexOfRow < initialRowIndex + size &&
+      indexOfColumn >= initialColumnIndex &&
+      indexOfColumn < initialColumnIndex + size
+    );
+  });
 };
 
 const calculateIndexesOfShapeForSecondaryDiagonal = ({
@@ -108,10 +122,14 @@ const calculateIndexesOfShapeForSecondaryDiagonal = ({
   rowLength: Integer;
   size: Line["size"];
 }): Integer[] => {
-  const quantityOfValidIndexes = Math.min(
-    rowLength - initialRowIndex,
-    columnLength - initialColumnIndex,
+  const quantityOfIndexesBelowLimit = Math.max(
+    -Math.min(initialRowIndex, initialColumnIndex),
+    INITIAL_INDEX,
   );
+  const quantityOfValidIndexes =
+    Math.min(rowLength - initialRowIndex, columnLength - initialColumnIndex) -
+    quantityOfIndexesBelowLimit;
+
   const validIndexes = Array.from(
     {
       length: quantityOfValidIndexes,
@@ -121,12 +139,16 @@ const calculateIndexesOfShapeForSecondaryDiagonal = ({
       (initialColumnIndex - rowIndex),
   );
 
-  return Array.from(
-    { length: Math.min(quantityOfValidIndexes, size) },
-    (_, rowIndex) =>
-      (initialRowIndex + rowIndex) * columnLength +
-      (initialColumnIndex - rowIndex),
-  ).filter(index => validIndexes.includes(index));
+  return validIndexes.filter(index => {
+    const indexOfRow = Math.floor(index / columnLength);
+    const indexOfColumn = index % columnLength;
+    return (
+      indexOfRow >= initialRowIndex &&
+      indexOfRow < initialRowIndex + size &&
+      indexOfColumn <= initialColumnIndex &&
+      indexOfColumn > initialColumnIndex - size
+    );
+  });
 };
 
 const calculateIndexesOfShapeForVerticalLine = ({
@@ -148,11 +170,15 @@ const calculateIndexesOfShapeForVerticalLine = ({
     (_, rowIndex) => rowIndex * rowLength + initialColumnIndex,
   );
 
-  return Array.from(
-    { length: Math.min(quantityOfValidIndexes, size) },
-    (_, rowIndex) =>
-      (initialRowIndex + rowIndex) * columnLength + initialColumnIndex,
-  ).filter(index => validIndexes.includes(index));
+  return validIndexes.filter(index => {
+    const indexOfRow = Math.floor(index / columnLength);
+    const indexOfColumn = index % columnLength;
+    return (
+      indexOfRow >= initialRowIndex &&
+      indexOfRow < initialRowIndex + size &&
+      indexOfColumn === initialColumnIndex
+    );
+  });
 };
 
 const getIndexesOfLine = ({
