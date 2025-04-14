@@ -5,7 +5,6 @@ import { COLUMN_LENGTH, ROW_LENGTH } from "./Game.js";
 import type { IndexOfTestingPlayer } from "./Player/setup.js";
 import TestingSlot from "./Slot.js";
 
-const ADJUST_INDEX = 1;
 const INITIAL_INDEX = 0;
 
 interface Line {
@@ -26,7 +25,235 @@ interface Rectangle {
 
 type Shape = Line | Rectangle;
 
-// eslint-disable-next-line max-lines-per-function, max-statements
+const formatDirection = (direction: Line["direction"]): string => {
+  switch (direction) {
+    case "horizontal":
+    case "vertical":
+      return `${direction} line`;
+    case "principalDiagonal":
+      return "principal diagonal";
+    case "secondaryDiagonal":
+      return "secondary diagonal";
+    default:
+      return "unknown direction";
+  }
+};
+
+const calculateIndexesOfShapeForHorizontalLine = ({
+  columnLength,
+  initialColumnIndex,
+  initialRowIndex,
+  rowLength,
+  size,
+}: {
+  columnLength: Integer;
+  initialColumnIndex: Integer;
+  initialRowIndex: Integer;
+  rowLength: Integer;
+  size: Line["size"];
+}): Integer[] => {
+  const quantityOfValidIndexes = rowLength;
+  const validIndexes = Array.from(
+    { length: quantityOfValidIndexes },
+    (_, columnIndex) => columnIndex + initialRowIndex * columnLength,
+  );
+
+  return Array.from(
+    { length: Math.min(quantityOfValidIndexes, size) },
+    (_, columnIndex) =>
+      columnIndex + initialRowIndex * columnLength + initialColumnIndex,
+  ).filter(index => validIndexes.includes(index));
+};
+
+const calculateIndexesOfShapeForPrincipalDiagonal = ({
+  columnLength,
+  initialColumnIndex,
+  initialRowIndex,
+  rowLength,
+  size,
+}: {
+  columnLength: Integer;
+  initialColumnIndex: Integer;
+  initialRowIndex: Integer;
+  rowLength: Integer;
+  size: Line["size"];
+}): Integer[] => {
+  const quantityOfValidIndexes = Math.min(
+    rowLength - initialRowIndex,
+    columnLength - initialColumnIndex,
+  );
+  const validIndexes = Array.from(
+    { length: quantityOfValidIndexes },
+    (_, index) =>
+      (initialRowIndex + index) * columnLength + (initialColumnIndex + index),
+  );
+
+  return Array.from(
+    { length: Math.min(quantityOfValidIndexes, size) },
+    (_, index) =>
+      (initialRowIndex + index) * columnLength + (initialColumnIndex + index),
+  ).filter(index => validIndexes.includes(index));
+};
+
+const calculateIndexesOfShapeForSecondaryDiagonal = ({
+  columnLength,
+  initialColumnIndex,
+  initialRowIndex,
+  rowLength,
+  size,
+}: {
+  columnLength: Integer;
+  initialColumnIndex: Integer;
+  initialRowIndex: Integer;
+  rowLength: Integer;
+  size: Line["size"];
+}): Integer[] => {
+  const quantityOfValidIndexes = Math.min(
+    rowLength - initialRowIndex,
+    columnLength - initialColumnIndex,
+  );
+  const validIndexes = Array.from(
+    {
+      length: quantityOfValidIndexes,
+    },
+    (_, rowIndex) =>
+      (initialRowIndex + rowIndex) * columnLength +
+      (initialColumnIndex - rowIndex),
+  );
+
+  return Array.from(
+    { length: Math.min(quantityOfValidIndexes, size) },
+    (_, rowIndex) =>
+      (initialRowIndex + rowIndex) * columnLength +
+      (initialColumnIndex - rowIndex),
+  ).filter(index => validIndexes.includes(index));
+};
+
+const calculateIndexesOfShapeForVerticalLine = ({
+  columnLength,
+  initialColumnIndex,
+  initialRowIndex,
+  rowLength,
+  size,
+}: {
+  columnLength: Integer;
+  initialColumnIndex: Integer;
+  initialRowIndex: Integer;
+  rowLength: Integer;
+  size: Line["size"];
+}): Integer[] => {
+  const quantityOfValidIndexes = columnLength;
+  const validIndexes = Array.from(
+    { length: quantityOfValidIndexes },
+    (_, rowIndex) => rowIndex * rowLength + initialColumnIndex,
+  );
+
+  return Array.from(
+    { length: Math.min(quantityOfValidIndexes, size) },
+    (_, rowIndex) =>
+      (initialRowIndex + rowIndex) * columnLength + initialColumnIndex,
+  ).filter(index => validIndexes.includes(index));
+};
+
+const getIndexesOfLine = ({
+  columnLength,
+  direction,
+  initialColumnIndex,
+  initialRowIndex,
+  rowLength,
+  size,
+}: {
+  columnLength: Integer;
+  direction: Line["direction"];
+  initialColumnIndex: Integer;
+  initialRowIndex: Integer;
+  rowLength: Integer;
+  size: Line["size"];
+}): Integer[] => {
+  switch (direction) {
+    case "horizontal": {
+      return calculateIndexesOfShapeForHorizontalLine({
+        columnLength,
+        initialColumnIndex,
+        initialRowIndex,
+        rowLength,
+        size,
+      });
+    }
+    case "principalDiagonal": {
+      return calculateIndexesOfShapeForPrincipalDiagonal({
+        columnLength,
+        initialColumnIndex,
+        initialRowIndex,
+        rowLength,
+        size,
+      });
+    }
+    case "secondaryDiagonal": {
+      return calculateIndexesOfShapeForSecondaryDiagonal({
+        columnLength,
+        initialColumnIndex,
+        initialRowIndex,
+        rowLength,
+        size,
+      });
+    }
+    case "vertical": {
+      return calculateIndexesOfShapeForVerticalLine({
+        columnLength,
+        initialColumnIndex,
+        initialRowIndex,
+        rowLength,
+        size,
+      });
+    }
+    default: {
+      throw new Error(
+        `Invalid direction "${direction as string}" for line shape`,
+      );
+    }
+  }
+};
+
+const getIndexesOfRectangle = ({
+  columnLength,
+  horizontalSize,
+  initialColumnIndex,
+  initialRowIndex,
+  lowerLimitOfIndexOfShape,
+  rowLength,
+  upperLimitOfIndexOfShape,
+  verticalSize,
+}: {
+  columnLength: Integer;
+  horizontalSize: Rectangle["horizontalSize"];
+  initialColumnIndex: Integer;
+  initialRowIndex: Integer;
+  lowerLimitOfIndexOfShape: Integer;
+  rowLength: Integer;
+  upperLimitOfIndexOfShape: Integer;
+  verticalSize: Rectangle["verticalSize"];
+}): Integer[] => {
+  const quantityOfValidIndexes = columnLength * rowLength;
+  const validIndexes = Array.from(
+    { length: quantityOfValidIndexes },
+    (_, index) => index,
+  );
+
+  return validIndexes.filter(index => {
+    const rowOffset = Math.floor(index / columnLength);
+    const columnOffset = index % columnLength;
+    return (
+      index >= lowerLimitOfIndexOfShape &&
+      index < upperLimitOfIndexOfShape &&
+      rowOffset >= initialRowIndex &&
+      rowOffset < initialRowIndex + verticalSize &&
+      columnOffset >= initialColumnIndex &&
+      columnOffset < initialColumnIndex + horizontalSize
+    );
+  });
+};
+
 const getIndexesOfShape = ({
   columnLength,
   initialColumnIndex,
@@ -41,86 +268,37 @@ const getIndexesOfShape = ({
   shape: Shape;
 }): Integer[] => {
   const { type } = shape;
-  // eslint-disable-next-line init-declarations
-  let indexesOfShape: Integer[];
+  const lowerLimitOfIndexOfShape = INITIAL_INDEX;
+  const upperLimitOfIndexOfShape = rowLength * columnLength;
   switch (type) {
     case "line": {
       const { direction, size } = shape;
-      switch (direction) {
-        case "horizontal": {
-          indexesOfShape = Array.from(
-            { length: size },
-            (_, index) =>
-              initialRowIndex * columnLength + initialColumnIndex + index,
-          );
-          break;
-        }
-        case "principalDiagonal": {
-          indexesOfShape = Array.from(
-            { length: size },
-            (_, index) =>
-              (initialRowIndex + index) * columnLength +
-              initialColumnIndex +
-              index,
-          );
-          break;
-        }
-        case "secondaryDiagonal": {
-          indexesOfShape = Array.from(
-            { length: size },
-            (_, index) =>
-              (initialRowIndex + index) * columnLength +
-              initialColumnIndex -
-              index,
-          );
-          break;
-        }
-        case "vertical": {
-          indexesOfShape = Array.from(
-            { length: size },
-            (_, index) =>
-              (initialRowIndex + index) * columnLength + initialColumnIndex,
-          );
-          break;
-        }
-        default: {
-          throw new Error(
-            `Invalid direction "${direction as string}" for line shape`,
-          );
-        }
-      }
-      break;
+      return getIndexesOfLine({
+        columnLength,
+        direction,
+        initialColumnIndex,
+        initialRowIndex,
+        rowLength,
+        size,
+      });
     }
     case "rectangle": {
       const { horizontalSize, verticalSize } = shape;
-      indexesOfShape = Array.from(
-        { length: horizontalSize * verticalSize },
-        (_, index) => {
-          const rowOffset = Math.floor(index / horizontalSize);
-          const columnOffset = index % horizontalSize;
-          return (
-            (initialRowIndex + rowOffset) * columnLength +
-            initialColumnIndex +
-            columnOffset
-          );
-        },
-      );
-      break;
+      return getIndexesOfRectangle({
+        columnLength,
+        horizontalSize,
+        initialColumnIndex,
+        initialRowIndex,
+        lowerLimitOfIndexOfShape,
+        rowLength,
+        upperLimitOfIndexOfShape,
+        verticalSize,
+      });
     }
     default: {
       throw new Error(`Invalid type "${type as string}" for shape`);
     }
   }
-  const limitOfIndexOfShape = rowLength * columnLength - ADJUST_INDEX;
-  if (
-    indexesOfShape.find(
-      indexOfShape =>
-        indexOfShape < INITIAL_INDEX || indexOfShape > limitOfIndexOfShape,
-    )
-  ) {
-    return [];
-  }
-  return indexesOfShape;
 };
 
 const getIndexOfPlayerWhoIsOccupyingShape = ({
@@ -352,9 +530,10 @@ const adjustScore = ({
   }
 };
 
-export type { Shape };
+export type { Line, Rectangle, Shape };
 export {
   adjustScore,
+  formatDirection,
   getIndexesOfShape,
   getIndexOfPlayerWhoIsOccupyingHorizontalLine,
   getIndexOfPlayerWhoIsOccupyingPrincipalDiagonal,

@@ -137,7 +137,7 @@ class TestingGame extends Game<
   public override getInitialState(): TestingState {
     const [firstPlayer] = this.getPlayers();
     if (typeof firstPlayer === "undefined") {
-      throw new Error("No players found");
+      throw new Error("There are no players registered for this game");
     }
 
     const emptySlots = new Array<TestingSlot>(this.getQuantityOfSlots()).fill(
