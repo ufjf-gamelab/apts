@@ -21,32 +21,133 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
   });
 };
 
-const testGetIndexesOfShapeForRectangleOfSizeTwoByTwoBeginningOnRowZeroAndColumnZero =
-  (): void => {
-    testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
-      expectedIndexesOfShape: [
-        IndexOfTestingSlot.NorthwestOfNorthwest,
-        IndexOfTestingSlot.NorthOfNorthwest,
-        IndexOfTestingSlot.WestOfNorthwest,
-        IndexOfTestingSlot.CenterOfNorthwest,
-      ],
-      initialColumnIndex: 0,
-      initialRowIndex: 0,
-    });
-  };
-testGetIndexesOfShapeForRectangleOfSizeTwoByTwoBeginningOnRowZeroAndColumnZero();
+((): void => {
+  testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
+    expectedIndexesOfShape: [],
+    initialColumnIndex: -1,
+    initialRowIndex: -2,
+  });
+})();
 
-const testGetIndexesOfShapeForRectangleOfSizeTwoByTwoBeginningOnRowFourAndColumnFour =
-  (): void => {
-    testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
-      expectedIndexesOfShape: [
-        IndexOfTestingSlot.CenterOfCenter,
-        IndexOfTestingSlot.EastOfCenter,
-        IndexOfTestingSlot.SouthOfCenter,
-        IndexOfTestingSlot.SoutheastOfCenter,
-      ],
-      initialColumnIndex: 4,
-      initialRowIndex: 4,
-    });
-  };
-testGetIndexesOfShapeForRectangleOfSizeTwoByTwoBeginningOnRowFourAndColumnFour();
+((): void => {
+  testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
+    expectedIndexesOfShape: [],
+    initialColumnIndex: -2,
+    initialRowIndex: -1,
+  });
+})();
+
+((): void => {
+  testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
+    expectedIndexesOfShape: [IndexOfTestingSlot.NorthwestOfNorthwest],
+    initialColumnIndex: -1,
+    initialRowIndex: -1,
+  });
+})();
+
+((): void => {
+  testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
+    expectedIndexesOfShape: [
+      IndexOfTestingSlot.NorthwestOfNorthwest,
+      IndexOfTestingSlot.NorthOfNorthwest,
+    ],
+    initialColumnIndex: 0,
+    initialRowIndex: -1,
+  });
+})();
+
+((): void => {
+  testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
+    expectedIndexesOfShape: [
+      IndexOfTestingSlot.NorthwestOfNorthwest,
+      IndexOfTestingSlot.WestOfNorthwest,
+    ],
+    initialColumnIndex: -1,
+    initialRowIndex: 0,
+  });
+})();
+
+((): void => {
+  testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
+    expectedIndexesOfShape: [
+      IndexOfTestingSlot.NorthwestOfNorthwest,
+      IndexOfTestingSlot.NorthOfNorthwest,
+      IndexOfTestingSlot.WestOfNorthwest,
+      IndexOfTestingSlot.CenterOfNorthwest,
+    ],
+    initialColumnIndex: 0,
+    initialRowIndex: 0,
+  });
+})();
+
+((): void => {
+  testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
+    expectedIndexesOfShape: [
+      IndexOfTestingSlot.CenterOfCenter,
+      IndexOfTestingSlot.EastOfCenter,
+      IndexOfTestingSlot.SouthOfCenter,
+      IndexOfTestingSlot.SoutheastOfCenter,
+    ],
+    initialColumnIndex: 4,
+    initialRowIndex: 4,
+  });
+})();
+
+((): void => {
+  testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
+    expectedIndexesOfShape: [
+      IndexOfTestingSlot.CenterOfSoutheast,
+      IndexOfTestingSlot.EastOfSoutheast,
+      IndexOfTestingSlot.SouthOfSoutheast,
+      IndexOfTestingSlot.SoutheastOfSoutheast,
+    ],
+    initialColumnIndex: 7,
+    initialRowIndex: 7,
+  });
+})();
+
+((): void => {
+  testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
+    expectedIndexesOfShape: [
+      IndexOfTestingSlot.EastOfSoutheast,
+      IndexOfTestingSlot.SoutheastOfSoutheast,
+    ],
+    initialColumnIndex: 8,
+    initialRowIndex: 7,
+  });
+})();
+
+((): void => {
+  testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
+    expectedIndexesOfShape: [
+      IndexOfTestingSlot.SouthOfSoutheast,
+      IndexOfTestingSlot.SoutheastOfSoutheast,
+    ],
+    initialColumnIndex: 7,
+    initialRowIndex: 8,
+  });
+})();
+
+((): void => {
+  testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
+    expectedIndexesOfShape: [IndexOfTestingSlot.SoutheastOfSoutheast],
+    initialColumnIndex: 8,
+    initialRowIndex: 8,
+  });
+})();
+
+((): void => {
+  testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
+    expectedIndexesOfShape: [],
+    initialColumnIndex: 9,
+    initialRowIndex: 8,
+  });
+})();
+
+((): void => {
+  testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
+    expectedIndexesOfShape: [],
+    initialColumnIndex: 8,
+    initialRowIndex: 9,
+  });
+})();

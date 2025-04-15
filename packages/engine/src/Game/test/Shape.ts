@@ -143,14 +143,14 @@ const calculateIndexesOfShapeForVerticalLine = ({
   const validIndexes = [];
   for (let index = 0; index < size; index += ADJUST_INDEX) {
     const rowIndex = initialRowIndex + index;
-    const colIndex = initialColumnIndex;
+    const columnIndex = initialColumnIndex;
     if (
       rowIndex >= INITIAL_INDEX &&
       rowIndex < rowLength &&
-      colIndex >= INITIAL_INDEX &&
-      colIndex < columnLength
+      columnIndex >= INITIAL_INDEX &&
+      columnIndex < columnLength
     ) {
-      validIndexes.push(rowIndex * columnLength + colIndex);
+      validIndexes.push(rowIndex * columnLength + columnIndex);
     }
   }
   return validIndexes;
@@ -221,38 +221,39 @@ const getIndexesOfRectangle = ({
   horizontalSize,
   initialColumnIndex,
   initialRowIndex,
-  lowerLimitOfIndexOfShape,
   rowLength,
-  upperLimitOfIndexOfShape,
   verticalSize,
 }: {
   columnLength: Integer;
   horizontalSize: Rectangle["horizontalSize"];
   initialColumnIndex: Integer;
   initialRowIndex: Integer;
-  lowerLimitOfIndexOfShape: Integer;
   rowLength: Integer;
-  upperLimitOfIndexOfShape: Integer;
   verticalSize: Rectangle["verticalSize"];
 }): Integer[] => {
-  const quantityOfValidIndexes = columnLength * rowLength;
-  const validIndexes = Array.from(
-    { length: quantityOfValidIndexes },
-    (_, index) => index,
-  );
-
-  return validIndexes.filter(index => {
-    const rowOffset = Math.floor(index / columnLength);
-    const columnOffset = index % columnLength;
-    return (
-      index >= lowerLimitOfIndexOfShape &&
-      index < upperLimitOfIndexOfShape &&
-      rowOffset >= initialRowIndex &&
-      rowOffset < initialRowIndex + verticalSize &&
-      columnOffset >= initialColumnIndex &&
-      columnOffset < initialColumnIndex + horizontalSize
-    );
-  });
+  const validIndexes = [];
+  for (
+    let iterationOnRow = 0;
+    iterationOnRow < verticalSize;
+    iterationOnRow += INCREMENT_ONE
+  ) {
+    const rowIndex = initialRowIndex + iterationOnRow;
+    if (rowIndex < INITIAL_INDEX || rowIndex >= rowLength) {
+      continue;
+    }
+    for (
+      let iterationOnColumn = 0;
+      iterationOnColumn < horizontalSize;
+      iterationOnColumn += INCREMENT_ONE
+    ) {
+      const columnIndex = initialColumnIndex + iterationOnColumn;
+      if (columnIndex < INITIAL_INDEX || columnIndex >= columnLength) {
+        continue;
+      }
+      validIndexes.push(rowIndex * columnLength + columnIndex);
+    }
+  }
+  return validIndexes;
 };
 
 const getIndexesOfShape = ({
@@ -269,8 +270,6 @@ const getIndexesOfShape = ({
   shape: Shape;
 }): Integer[] => {
   const { type } = shape;
-  const lowerLimitOfIndexOfShape = INITIAL_INDEX;
-  const upperLimitOfIndexOfShape = rowLength * columnLength;
   switch (type) {
     case "line": {
       const { direction, size } = shape;
@@ -290,9 +289,7 @@ const getIndexesOfShape = ({
         horizontalSize,
         initialColumnIndex,
         initialRowIndex,
-        lowerLimitOfIndexOfShape,
         rowLength,
-        upperLimitOfIndexOfShape,
         verticalSize,
       });
     }
