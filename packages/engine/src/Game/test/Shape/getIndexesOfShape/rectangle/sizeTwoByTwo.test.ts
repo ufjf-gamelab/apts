@@ -21,6 +21,8 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
   });
 };
 
+/* Row -2 */
+
 ((): void => {
   testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
     expectedIndexesOfShape: [],
@@ -28,6 +30,8 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
     initialIndexOfRow: -2,
   });
 })();
+
+/* Row -1 */
 
 ((): void => {
   testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
@@ -55,6 +59,8 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
     initialIndexOfRow: -1,
   });
 })();
+
+/* Row 0 */
 
 ((): void => {
   testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
@@ -106,6 +112,8 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
   });
 })();
 
+/* Row 4 */
+
 ((): void => {
   testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
     expectedIndexesOfShape: [
@@ -144,6 +152,8 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
     initialIndexOfRow: 4,
   });
 })();
+
+/* Row 7 */
 
 ((): void => {
   testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
@@ -195,6 +205,8 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
   });
 })();
 
+/* Row 8 */
+
 ((): void => {
   testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
     expectedIndexesOfShape: [
@@ -221,6 +233,8 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
     initialIndexOfRow: 8,
   });
 })();
+
+/* Row 9 */
 
 ((): void => {
   testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
