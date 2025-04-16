@@ -85,7 +85,7 @@ const getIndexOfPlayerWhoIsOccupyingShapeShouldReturn = ({
     .toString();
 
   test(`${testDescriptor}: getIndexOfPlayerWhoIsOccupyingShape({slots: [${slotsAsString}]}) should return {${expectedIndexOfPlayer}}`, () => {
-    const indexesOfShape = getIndexOfPlayerWhoIsOccupyingShape({
+    const indexOfShape = getIndexOfPlayerWhoIsOccupyingShape({
       columnLength: COLUMN_LENGTH,
       initialColumnIndex,
       initialRowIndex,
@@ -94,7 +94,7 @@ const getIndexOfPlayerWhoIsOccupyingShapeShouldReturn = ({
       slots,
     });
 
-    expect(indexesOfShape).toBe(expectedIndexOfPlayer);
+    expect(indexOfShape).toBe(expectedIndexOfPlayer);
   });
 };
 
