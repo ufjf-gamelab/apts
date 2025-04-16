@@ -23,6 +23,8 @@ const testGetIndexesOfShapeForSecondaryDiagonal = ({
   });
 };
 
+/* Row -5 */
+
 ((): void => {
   testGetIndexesOfShapeForSecondaryDiagonal({
     expectedIndexesOfShape: [],
@@ -40,6 +42,8 @@ const testGetIndexesOfShapeForSecondaryDiagonal = ({
     size: 5,
   });
 })();
+
+/* Row -4 */
 
 ((): void => {
   testGetIndexesOfShapeForSecondaryDiagonal({
@@ -58,6 +62,8 @@ const testGetIndexesOfShapeForSecondaryDiagonal = ({
     size: 5,
   });
 })();
+
+/* Row -3 */
 
 ((): void => {
   testGetIndexesOfShapeForSecondaryDiagonal({
@@ -91,6 +97,8 @@ const testGetIndexesOfShapeForSecondaryDiagonal = ({
     size: 5,
   });
 })();
+
+/* Row -2 */
 
 ((): void => {
   testGetIndexesOfShapeForSecondaryDiagonal({
@@ -126,6 +134,8 @@ const testGetIndexesOfShapeForSecondaryDiagonal = ({
     size: 5,
   });
 })();
+
+/* Row -1 */
 
 ((): void => {
   testGetIndexesOfShapeForSecondaryDiagonal({
@@ -191,6 +201,8 @@ const testGetIndexesOfShapeForSecondaryDiagonal = ({
     size: 5,
   });
 })();
+
+/* Row 0 */
 
 ((): void => {
   testGetIndexesOfShapeForSecondaryDiagonal({
@@ -381,6 +393,8 @@ const testGetIndexesOfShapeForSecondaryDiagonal = ({
   });
 })();
 
+/* Row 1 */
+
 ((): void => {
   testGetIndexesOfShapeForSecondaryDiagonal({
     expectedIndexesOfShape: [IndexOfTestingSlot.WestOfNorthwest],
@@ -440,6 +454,8 @@ const testGetIndexesOfShapeForSecondaryDiagonal = ({
     size: 5,
   });
 })();
+
+/* Row 2 */
 
 ((): void => {
   testGetIndexesOfShapeForSecondaryDiagonal({
@@ -501,6 +517,8 @@ const testGetIndexesOfShapeForSecondaryDiagonal = ({
     size: 5,
   });
 })();
+
+/* Row 3 */
 
 ((): void => {
   testGetIndexesOfShapeForSecondaryDiagonal({
@@ -564,6 +582,8 @@ const testGetIndexesOfShapeForSecondaryDiagonal = ({
   });
 })();
 
+/* Row 4 */
+
 ((): void => {
   testGetIndexesOfShapeForSecondaryDiagonal({
     expectedIndexesOfShape: [IndexOfTestingSlot.WestOfWest],
@@ -611,6 +631,8 @@ const testGetIndexesOfShapeForSecondaryDiagonal = ({
     size: 5,
   });
 })();
+
+/* Row 5 */
 
 ((): void => {
   testGetIndexesOfShapeForSecondaryDiagonal({
@@ -672,6 +694,8 @@ const testGetIndexesOfShapeForSecondaryDiagonal = ({
   });
 })();
 
+/* Row 6 */
+
 ((): void => {
   testGetIndexesOfShapeForSecondaryDiagonal({
     expectedIndexesOfShape: [IndexOfTestingSlot.NorthwestOfSouthwest],
@@ -720,6 +744,8 @@ const testGetIndexesOfShapeForSecondaryDiagonal = ({
   });
 })();
 
+/* Row 7 */
+
 ((): void => {
   testGetIndexesOfShapeForSecondaryDiagonal({
     expectedIndexesOfShape: [IndexOfTestingSlot.WestOfSouthwest],
@@ -765,6 +791,8 @@ const testGetIndexesOfShapeForSecondaryDiagonal = ({
   });
 })();
 
+/* Row 8 */
+
 ((): void => {
   testGetIndexesOfShapeForSecondaryDiagonal({
     expectedIndexesOfShape: [IndexOfTestingSlot.SouthwestOfSouthwest],
@@ -791,6 +819,8 @@ const testGetIndexesOfShapeForSecondaryDiagonal = ({
     size: 5,
   });
 })();
+
+/* Row 9 */
 
 ((): void => {
   testGetIndexesOfShapeForSecondaryDiagonal({
