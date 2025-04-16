@@ -2,10 +2,9 @@ import { expect, test } from "vitest";
 
 import type { Integer } from "../../../types.js";
 import { IndexOfTestingPlayer } from "../Player/setup.js";
+import { ONE_POINT } from "../Shape/incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots/incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots.js";
 import type TestingState from "../State.js";
 import { createInitialState, type TestStateParams } from "./setup.js";
-
-const ONE_POINT = 1;
 
 const getScoreShouldReturn = ({
   expectedScore,

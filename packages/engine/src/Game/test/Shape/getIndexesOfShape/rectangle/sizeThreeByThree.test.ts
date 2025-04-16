@@ -5,18 +5,18 @@ import { testGetIndexesOfShapeForRectangle } from "./getIndexesOfShapeForRectang
 
 const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
   expectedIndexesOfShape,
-  initialColumnIndex,
-  initialRowIndex,
+  initialIndexOfColumn,
+  initialIndexOfRow,
 }: {
   expectedIndexesOfShape: ReturnType<typeof getIndexesOfShape>;
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
+  initialIndexOfColumn: Integer;
+  initialIndexOfRow: Integer;
 }): void => {
   testGetIndexesOfShapeForRectangle({
     expectedIndexesOfShape,
     horizontalSize: 3,
-    initialColumnIndex,
-    initialRowIndex,
+    initialIndexOfColumn,
+    initialIndexOfRow,
     verticalSize: 3,
   });
 };
@@ -26,8 +26,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
 ((): void => {
   testGetIndexesOfShapeForRectangleOfSizeThreeByThree({
     expectedIndexesOfShape: [],
-    initialColumnIndex: -2,
-    initialRowIndex: -3,
+    initialIndexOfColumn: -2,
+    initialIndexOfRow: -3,
   });
 })();
 
@@ -36,16 +36,16 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
 ((): void => {
   testGetIndexesOfShapeForRectangleOfSizeThreeByThree({
     expectedIndexesOfShape: [],
-    initialColumnIndex: -3,
-    initialRowIndex: -2,
+    initialIndexOfColumn: -3,
+    initialIndexOfRow: -2,
   });
 })();
 
 ((): void => {
   testGetIndexesOfShapeForRectangleOfSizeThreeByThree({
     expectedIndexesOfShape: [IndexOfTestingSlot.NorthwestOfNorthwest],
-    initialColumnIndex: -2,
-    initialRowIndex: -2,
+    initialIndexOfColumn: -2,
+    initialIndexOfRow: -2,
   });
 })();
 
@@ -55,8 +55,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.NorthwestOfNorthwest,
       IndexOfTestingSlot.NorthOfNorthwest,
     ],
-    initialColumnIndex: -1,
-    initialRowIndex: -2,
+    initialIndexOfColumn: -1,
+    initialIndexOfRow: -2,
   });
 })();
 
@@ -68,8 +68,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.NorthwestOfNorthwest,
       IndexOfTestingSlot.WestOfNorthwest,
     ],
-    initialColumnIndex: -2,
-    initialRowIndex: -1,
+    initialIndexOfColumn: -2,
+    initialIndexOfRow: -1,
   });
 })();
 
@@ -81,8 +81,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.WestOfNorthwest,
       IndexOfTestingSlot.CenterOfNorthwest,
     ],
-    initialColumnIndex: -1,
-    initialRowIndex: -1,
+    initialIndexOfColumn: -1,
+    initialIndexOfRow: -1,
   });
 })();
 
@@ -96,8 +96,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.CenterOfNorthwest,
       IndexOfTestingSlot.EastOfNorthwest,
     ],
-    initialColumnIndex: 0,
-    initialRowIndex: -1,
+    initialIndexOfColumn: 0,
+    initialIndexOfRow: -1,
   });
 })();
 
@@ -110,8 +110,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.WestOfNorthwest,
       IndexOfTestingSlot.SouthwestOfNorthwest,
     ],
-    initialColumnIndex: -2,
-    initialRowIndex: 0,
+    initialIndexOfColumn: -2,
+    initialIndexOfRow: 0,
   });
 })();
 
@@ -125,8 +125,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.SouthwestOfNorthwest,
       IndexOfTestingSlot.SouthOfNorthwest,
     ],
-    initialColumnIndex: -1,
-    initialRowIndex: 0,
+    initialIndexOfColumn: -1,
+    initialIndexOfRow: 0,
   });
 })();
 
@@ -143,8 +143,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.SouthOfNorthwest,
       IndexOfTestingSlot.SoutheastOfNorthwest,
     ],
-    initialColumnIndex: 0,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 0,
+    initialIndexOfRow: 0,
   });
 })();
 
@@ -161,8 +161,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.SoutheastOfNorth,
       IndexOfTestingSlot.SouthwestOfNortheast,
     ],
-    initialColumnIndex: 4,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 4,
+    initialIndexOfRow: 0,
   });
 })();
 
@@ -179,8 +179,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.SouthOfNortheast,
       IndexOfTestingSlot.SoutheastOfNortheast,
     ],
-    initialColumnIndex: 6,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 6,
+    initialIndexOfRow: 0,
   });
 })();
 
@@ -193,8 +193,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.SouthwestOfWest,
       IndexOfTestingSlot.NorthwestOfSouthwest,
     ],
-    initialColumnIndex: -2,
-    initialRowIndex: 4,
+    initialIndexOfColumn: -2,
+    initialIndexOfRow: 4,
   });
 })();
 
@@ -208,8 +208,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.NorthwestOfSouthwest,
       IndexOfTestingSlot.NorthOfSouthwest,
     ],
-    initialColumnIndex: -1,
-    initialRowIndex: 4,
+    initialIndexOfColumn: -1,
+    initialIndexOfRow: 4,
   });
 })();
 
@@ -226,8 +226,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.NorthOfSouthwest,
       IndexOfTestingSlot.NortheastOfSouthwest,
     ],
-    initialColumnIndex: 0,
-    initialRowIndex: 4,
+    initialIndexOfColumn: 0,
+    initialIndexOfRow: 4,
   });
 })();
 
@@ -244,8 +244,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.NortheastOfSouth,
       IndexOfTestingSlot.NorthwestOfSoutheast,
     ],
-    initialColumnIndex: 4,
-    initialRowIndex: 4,
+    initialIndexOfColumn: 4,
+    initialIndexOfRow: 4,
   });
 })();
 
@@ -262,8 +262,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.NorthOfSoutheast,
       IndexOfTestingSlot.NortheastOfSoutheast,
     ],
-    initialColumnIndex: 6,
-    initialRowIndex: 4,
+    initialIndexOfColumn: 6,
+    initialIndexOfRow: 4,
   });
 })();
 
@@ -277,8 +277,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.NorthOfSoutheast,
       IndexOfTestingSlot.NortheastOfSoutheast,
     ],
-    initialColumnIndex: 7,
-    initialRowIndex: 4,
+    initialIndexOfColumn: 7,
+    initialIndexOfRow: 4,
   });
 })();
 
@@ -289,8 +289,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.SoutheastOfEast,
       IndexOfTestingSlot.NortheastOfSoutheast,
     ],
-    initialColumnIndex: 8,
-    initialRowIndex: 4,
+    initialIndexOfColumn: 8,
+    initialIndexOfRow: 4,
   });
 })();
 
@@ -303,8 +303,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.WestOfSouthwest,
       IndexOfTestingSlot.SouthwestOfSouthwest,
     ],
-    initialColumnIndex: -2,
-    initialRowIndex: 6,
+    initialIndexOfColumn: -2,
+    initialIndexOfRow: 6,
   });
 })();
 
@@ -318,8 +318,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.SouthwestOfSouthwest,
       IndexOfTestingSlot.SouthOfSouthwest,
     ],
-    initialColumnIndex: -1,
-    initialRowIndex: 6,
+    initialIndexOfColumn: -1,
+    initialIndexOfRow: 6,
   });
 })();
 
@@ -336,8 +336,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.SouthOfSouthwest,
       IndexOfTestingSlot.SoutheastOfSouthwest,
     ],
-    initialColumnIndex: 0,
-    initialRowIndex: 6,
+    initialIndexOfColumn: 0,
+    initialIndexOfRow: 6,
   });
 })();
 
@@ -354,8 +354,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.SoutheastOfSouth,
       IndexOfTestingSlot.SouthwestOfSoutheast,
     ],
-    initialColumnIndex: 4,
-    initialRowIndex: 6,
+    initialIndexOfColumn: 4,
+    initialIndexOfRow: 6,
   });
 })();
 
@@ -372,8 +372,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.SouthOfSoutheast,
       IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
-    initialColumnIndex: 6,
-    initialRowIndex: 6,
+    initialIndexOfColumn: 6,
+    initialIndexOfRow: 6,
   });
 })();
 
@@ -387,8 +387,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.SouthOfSoutheast,
       IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
-    initialColumnIndex: 7,
-    initialRowIndex: 6,
+    initialIndexOfColumn: 7,
+    initialIndexOfRow: 6,
   });
 })();
 
@@ -399,8 +399,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.EastOfSoutheast,
       IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
-    initialColumnIndex: 8,
-    initialRowIndex: 6,
+    initialIndexOfColumn: 8,
+    initialIndexOfRow: 6,
   });
 })();
 
@@ -416,8 +416,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.SouthOfSoutheast,
       IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
-    initialColumnIndex: 6,
-    initialRowIndex: 7,
+    initialIndexOfColumn: 6,
+    initialIndexOfRow: 7,
   });
 })();
 
@@ -429,8 +429,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.SouthOfSoutheast,
       IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
-    initialColumnIndex: 7,
-    initialRowIndex: 7,
+    initialIndexOfColumn: 7,
+    initialIndexOfRow: 7,
   });
 })();
 
@@ -440,8 +440,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.EastOfSoutheast,
       IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
-    initialColumnIndex: 8,
-    initialRowIndex: 7,
+    initialIndexOfColumn: 8,
+    initialIndexOfRow: 7,
   });
 })();
 
@@ -454,8 +454,8 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.SouthOfSoutheast,
       IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
-    initialColumnIndex: 6,
-    initialRowIndex: 8,
+    initialIndexOfColumn: 6,
+    initialIndexOfRow: 8,
   });
 })();
 
@@ -465,24 +465,24 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
       IndexOfTestingSlot.SouthOfSoutheast,
       IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
-    initialColumnIndex: 7,
-    initialRowIndex: 8,
+    initialIndexOfColumn: 7,
+    initialIndexOfRow: 8,
   });
 })();
 
 ((): void => {
   testGetIndexesOfShapeForRectangleOfSizeThreeByThree({
     expectedIndexesOfShape: [IndexOfTestingSlot.SoutheastOfSoutheast],
-    initialColumnIndex: 8,
-    initialRowIndex: 8,
+    initialIndexOfColumn: 8,
+    initialIndexOfRow: 8,
   });
 })();
 
 ((): void => {
   testGetIndexesOfShapeForRectangleOfSizeThreeByThree({
     expectedIndexesOfShape: [],
-    initialColumnIndex: 9,
-    initialRowIndex: 8,
+    initialIndexOfColumn: 9,
+    initialIndexOfRow: 8,
   });
 })();
 
@@ -491,7 +491,7 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
 ((): void => {
   testGetIndexesOfShapeForRectangleOfSizeThreeByThree({
     expectedIndexesOfShape: [],
-    initialColumnIndex: 8,
-    initialRowIndex: 9,
+    initialIndexOfColumn: 8,
+    initialIndexOfRow: 9,
   });
 })();

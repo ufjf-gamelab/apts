@@ -38,47 +38,47 @@ export enum MoveKey {
 export const moves: TicTacToeMove[] = [
   new TicTacToeMove({
     description: "Northwest",
-    position: { columnIndex: 0, rowIndex: 0 },
+    position: { indexOfColumn: 0, indexOfRow: 0 },
     title: "NW",
   }),
   new TicTacToeMove({
     description: "North",
-    position: { columnIndex: 1, rowIndex: 0 },
+    position: { indexOfColumn: 1, indexOfRow: 0 },
     title: "N",
   }),
   new TicTacToeMove({
     description: "Northeast",
-    position: { columnIndex: 2, rowIndex: 0 },
+    position: { indexOfColumn: 2, indexOfRow: 0 },
     title: "NE",
   }),
   new TicTacToeMove({
     description: "West",
-    position: { columnIndex: 0, rowIndex: 1 },
+    position: { indexOfColumn: 0, indexOfRow: 1 },
     title: "W",
   }),
   new TicTacToeMove({
     description: "Center",
-    position: { columnIndex: 1, rowIndex: 1 },
+    position: { indexOfColumn: 1, indexOfRow: 1 },
     title: "C",
   }),
   new TicTacToeMove({
     description: "East",
-    position: { columnIndex: 2, rowIndex: 1 },
+    position: { indexOfColumn: 2, indexOfRow: 1 },
     title: "E",
   }),
   new TicTacToeMove({
     description: "Southwest",
-    position: { columnIndex: 0, rowIndex: 2 },
+    position: { indexOfColumn: 0, indexOfRow: 2 },
     title: "SW",
   }),
   new TicTacToeMove({
     description: "South",
-    position: { columnIndex: 1, rowIndex: 2 },
+    position: { indexOfColumn: 1, indexOfRow: 2 },
     title: "S",
   }),
   new TicTacToeMove({
     description: "Southeast",
-    position: { columnIndex: 2, rowIndex: 2 },
+    position: { indexOfColumn: 2, indexOfRow: 2 },
     title: "SE",
   }),
 ];

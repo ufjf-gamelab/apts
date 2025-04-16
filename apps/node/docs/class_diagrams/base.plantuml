@@ -194,7 +194,7 @@ package state_package as "State" {
     + {abstract} playMove(move: M): State<G>
     + {abstract} toString(): string
     .. static ..
-    + {static} setSlotInEncodedState(rowIndex: Integer, columnIndex: Integer, channel: Channel, encodedState: EncodedState): void
+    + {static} setSlotInEncodedState(indexOfRow: Integer, indexOfColumn: Integer, channel: Channel, encodedState: EncodedState): void
   }
   State::game --> StateParams::game
   State::slots --> StateParams::slots

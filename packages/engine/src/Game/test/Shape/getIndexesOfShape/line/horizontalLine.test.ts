@@ -5,20 +5,20 @@ import { testGetIndexesOfShapeForLine } from "./getIndexesOfShapeForLine.js";
 
 const testGetIndexesOfShapeForHorizontalLine = ({
   expectedIndexesOfShape,
-  initialColumnIndex,
-  initialRowIndex,
+  initialIndexOfColumn,
+  initialIndexOfRow,
   size,
 }: {
   expectedIndexesOfShape: ReturnType<typeof getIndexesOfShape>;
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
+  initialIndexOfColumn: Integer;
+  initialIndexOfRow: Integer;
   size: Integer;
 }): void => {
   testGetIndexesOfShapeForLine({
     direction: "horizontal",
     expectedIndexesOfShape,
-    initialColumnIndex,
-    initialRowIndex,
+    initialIndexOfColumn,
+    initialIndexOfRow,
     size,
   });
 };
@@ -26,8 +26,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
 ((): void => {
   testGetIndexesOfShapeForHorizontalLine({
     expectedIndexesOfShape: [],
-    initialColumnIndex: -5,
-    initialRowIndex: 0,
+    initialIndexOfColumn: -5,
+    initialIndexOfRow: 0,
     size: 5,
   });
 })();
@@ -35,8 +35,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
 ((): void => {
   testGetIndexesOfShapeForHorizontalLine({
     expectedIndexesOfShape: [IndexOfTestingSlot.NorthwestOfNorthwest],
-    initialColumnIndex: -4,
-    initialRowIndex: 0,
+    initialIndexOfColumn: -4,
+    initialIndexOfRow: 0,
     size: 5,
   });
 })();
@@ -47,8 +47,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
       IndexOfTestingSlot.NorthwestOfNorthwest,
       IndexOfTestingSlot.NorthOfNorthwest,
     ],
-    initialColumnIndex: -3,
-    initialRowIndex: 0,
+    initialIndexOfColumn: -3,
+    initialIndexOfRow: 0,
     size: 5,
   });
 })();
@@ -60,8 +60,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
       IndexOfTestingSlot.NorthOfNorthwest,
       IndexOfTestingSlot.NortheastOfNorthwest,
     ],
-    initialColumnIndex: -2,
-    initialRowIndex: 0,
+    initialIndexOfColumn: -2,
+    initialIndexOfRow: 0,
     size: 5,
   });
 })();
@@ -74,8 +74,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
       IndexOfTestingSlot.NortheastOfNorthwest,
       IndexOfTestingSlot.NorthwestOfNorth,
     ],
-    initialColumnIndex: -1,
-    initialRowIndex: 0,
+    initialIndexOfColumn: -1,
+    initialIndexOfRow: 0,
     size: 5,
   });
 })();
@@ -89,8 +89,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
       IndexOfTestingSlot.NorthwestOfNorth,
       IndexOfTestingSlot.NorthOfNorth,
     ],
-    initialColumnIndex: 0,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 0,
+    initialIndexOfRow: 0,
     size: 5,
   });
 })();
@@ -104,8 +104,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
       IndexOfTestingSlot.NorthOfNortheast,
       IndexOfTestingSlot.NortheastOfNortheast,
     ],
-    initialColumnIndex: 4,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 4,
+    initialIndexOfRow: 0,
     size: 5,
   });
 })();
@@ -118,8 +118,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
       IndexOfTestingSlot.NorthOfNortheast,
       IndexOfTestingSlot.NortheastOfNortheast,
     ],
-    initialColumnIndex: 5,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 5,
+    initialIndexOfRow: 0,
     size: 5,
   });
 })();
@@ -131,8 +131,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
       IndexOfTestingSlot.NorthOfNortheast,
       IndexOfTestingSlot.NortheastOfNortheast,
     ],
-    initialColumnIndex: 6,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 6,
+    initialIndexOfRow: 0,
     size: 5,
   });
 })();
@@ -143,8 +143,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
       IndexOfTestingSlot.NorthOfNortheast,
       IndexOfTestingSlot.NortheastOfNortheast,
     ],
-    initialColumnIndex: 7,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 7,
+    initialIndexOfRow: 0,
     size: 5,
   });
 })();
@@ -152,8 +152,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
 ((): void => {
   testGetIndexesOfShapeForHorizontalLine({
     expectedIndexesOfShape: [IndexOfTestingSlot.NortheastOfNortheast],
-    initialColumnIndex: 8,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 8,
+    initialIndexOfRow: 0,
     size: 5,
   });
 })();
@@ -161,8 +161,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
 ((): void => {
   testGetIndexesOfShapeForHorizontalLine({
     expectedIndexesOfShape: [],
-    initialColumnIndex: 9,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 9,
+    initialIndexOfRow: 0,
     size: 5,
   });
 })();
@@ -170,8 +170,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
 ((): void => {
   testGetIndexesOfShapeForHorizontalLine({
     expectedIndexesOfShape: [],
-    initialColumnIndex: -5,
-    initialRowIndex: 4,
+    initialIndexOfColumn: -5,
+    initialIndexOfRow: 4,
     size: 5,
   });
 })();
@@ -179,8 +179,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
 ((): void => {
   testGetIndexesOfShapeForHorizontalLine({
     expectedIndexesOfShape: [IndexOfTestingSlot.WestOfWest],
-    initialColumnIndex: -4,
-    initialRowIndex: 4,
+    initialIndexOfColumn: -4,
+    initialIndexOfRow: 4,
     size: 5,
   });
 })();
@@ -191,8 +191,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
       IndexOfTestingSlot.WestOfWest,
       IndexOfTestingSlot.CenterOfWest,
     ],
-    initialColumnIndex: -3,
-    initialRowIndex: 4,
+    initialIndexOfColumn: -3,
+    initialIndexOfRow: 4,
     size: 5,
   });
 })();
@@ -204,8 +204,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
       IndexOfTestingSlot.CenterOfWest,
       IndexOfTestingSlot.EastOfWest,
     ],
-    initialColumnIndex: -2,
-    initialRowIndex: 4,
+    initialIndexOfColumn: -2,
+    initialIndexOfRow: 4,
     size: 5,
   });
 })();
@@ -218,8 +218,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
       IndexOfTestingSlot.EastOfWest,
       IndexOfTestingSlot.WestOfCenter,
     ],
-    initialColumnIndex: -1,
-    initialRowIndex: 4,
+    initialIndexOfColumn: -1,
+    initialIndexOfRow: 4,
     size: 5,
   });
 })();
@@ -233,8 +233,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
       IndexOfTestingSlot.WestOfCenter,
       IndexOfTestingSlot.CenterOfCenter,
     ],
-    initialColumnIndex: 0,
-    initialRowIndex: 4,
+    initialIndexOfColumn: 0,
+    initialIndexOfRow: 4,
     size: 5,
   });
 })();
@@ -248,8 +248,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
       IndexOfTestingSlot.CenterOfEast,
       IndexOfTestingSlot.EastOfEast,
     ],
-    initialColumnIndex: 4,
-    initialRowIndex: 4,
+    initialIndexOfColumn: 4,
+    initialIndexOfRow: 4,
     size: 5,
   });
 })();
@@ -257,8 +257,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
 ((): void => {
   testGetIndexesOfShapeForHorizontalLine({
     expectedIndexesOfShape: [IndexOfTestingSlot.EastOfEast],
-    initialColumnIndex: 8,
-    initialRowIndex: 4,
+    initialIndexOfColumn: 8,
+    initialIndexOfRow: 4,
     size: 5,
   });
 })();
@@ -266,8 +266,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
 ((): void => {
   testGetIndexesOfShapeForHorizontalLine({
     expectedIndexesOfShape: [],
-    initialColumnIndex: 9,
-    initialRowIndex: 4,
+    initialIndexOfColumn: 9,
+    initialIndexOfRow: 4,
     size: 5,
   });
 })();
@@ -275,8 +275,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
 ((): void => {
   testGetIndexesOfShapeForHorizontalLine({
     expectedIndexesOfShape: [],
-    initialColumnIndex: -5,
-    initialRowIndex: 8,
+    initialIndexOfColumn: -5,
+    initialIndexOfRow: 8,
     size: 5,
   });
 })();
@@ -284,8 +284,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
 ((): void => {
   testGetIndexesOfShapeForHorizontalLine({
     expectedIndexesOfShape: [IndexOfTestingSlot.SouthwestOfSouthwest],
-    initialColumnIndex: -4,
-    initialRowIndex: 8,
+    initialIndexOfColumn: -4,
+    initialIndexOfRow: 8,
     size: 5,
   });
 })();
@@ -296,8 +296,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
       IndexOfTestingSlot.SouthwestOfSouthwest,
       IndexOfTestingSlot.SouthOfSouthwest,
     ],
-    initialColumnIndex: -3,
-    initialRowIndex: 8,
+    initialIndexOfColumn: -3,
+    initialIndexOfRow: 8,
     size: 5,
   });
 })();
@@ -309,8 +309,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
       IndexOfTestingSlot.SouthOfSouthwest,
       IndexOfTestingSlot.SoutheastOfSouthwest,
     ],
-    initialColumnIndex: -2,
-    initialRowIndex: 8,
+    initialIndexOfColumn: -2,
+    initialIndexOfRow: 8,
     size: 5,
   });
 })();
@@ -323,8 +323,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
       IndexOfTestingSlot.SoutheastOfSouthwest,
       IndexOfTestingSlot.SouthwestOfSouth,
     ],
-    initialColumnIndex: -1,
-    initialRowIndex: 8,
+    initialIndexOfColumn: -1,
+    initialIndexOfRow: 8,
     size: 5,
   });
 })();
@@ -338,8 +338,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
       IndexOfTestingSlot.SouthwestOfSouth,
       IndexOfTestingSlot.SouthOfSouth,
     ],
-    initialColumnIndex: 0,
-    initialRowIndex: 8,
+    initialIndexOfColumn: 0,
+    initialIndexOfRow: 8,
     size: 5,
   });
 })();
@@ -353,8 +353,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
       IndexOfTestingSlot.SouthOfSoutheast,
       IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
-    initialColumnIndex: 4,
-    initialRowIndex: 8,
+    initialIndexOfColumn: 4,
+    initialIndexOfRow: 8,
     size: 5,
   });
 })();
@@ -362,8 +362,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
 ((): void => {
   testGetIndexesOfShapeForHorizontalLine({
     expectedIndexesOfShape: [IndexOfTestingSlot.SoutheastOfSoutheast],
-    initialColumnIndex: 8,
-    initialRowIndex: 8,
+    initialIndexOfColumn: 8,
+    initialIndexOfRow: 8,
     size: 5,
   });
 })();
@@ -371,8 +371,8 @@ const testGetIndexesOfShapeForHorizontalLine = ({
 ((): void => {
   testGetIndexesOfShapeForHorizontalLine({
     expectedIndexesOfShape: [],
-    initialColumnIndex: 9,
-    initialRowIndex: 8,
+    initialIndexOfColumn: 9,
+    initialIndexOfRow: 8,
     size: 5,
   });
 })();

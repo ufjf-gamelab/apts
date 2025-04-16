@@ -1,6 +1,7 @@
 import { INCREMENT_ONE } from "../../constants.js";
 import type { Integer } from "../../types.js";
 import type { Points } from "../State.js";
+import { COLUMN_LENGTH, ROW_LENGTH } from "./Game.js";
 import type { IndexOfTestingPlayer } from "./Player/setup.js";
 import TestingSlot from "./Slot.js";
 
@@ -59,28 +60,28 @@ const getNameAndFormattedSizeOfShape = (
 
 const calculateIndexesOfShapeForHorizontalLine = ({
   columnLength,
-  initialColumnIndex,
-  initialRowIndex,
+  initialIndexOfColumn,
+  initialIndexOfRow,
   rowLength,
   size,
 }: {
   columnLength: Integer;
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
+  initialIndexOfColumn: Integer;
+  initialIndexOfRow: Integer;
   rowLength: Integer;
   size: Line["size"];
 }): Integer[] => {
   const validIndexes = [];
   for (let index = 0; index < size; index += ADJUST_INDEX) {
-    const rowIndex = initialRowIndex;
-    const columnIndex = initialColumnIndex + index;
+    const indexOfRow = initialIndexOfRow;
+    const indexOfColumn = initialIndexOfColumn + index;
     if (
-      rowIndex >= INITIAL_INDEX &&
-      rowIndex < rowLength &&
-      columnIndex >= INITIAL_INDEX &&
-      columnIndex < columnLength
+      indexOfRow >= INITIAL_INDEX &&
+      indexOfRow < rowLength &&
+      indexOfColumn >= INITIAL_INDEX &&
+      indexOfColumn < columnLength
     ) {
-      validIndexes.push(rowIndex * columnLength + columnIndex);
+      validIndexes.push(indexOfRow * columnLength + indexOfColumn);
     }
   }
   return validIndexes;
@@ -88,28 +89,28 @@ const calculateIndexesOfShapeForHorizontalLine = ({
 
 const calculateIndexesOfShapeForPrincipalDiagonal = ({
   columnLength,
-  initialColumnIndex,
-  initialRowIndex,
+  initialIndexOfColumn,
+  initialIndexOfRow,
   rowLength,
   size,
 }: {
   columnLength: Integer;
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
+  initialIndexOfColumn: Integer;
+  initialIndexOfRow: Integer;
   rowLength: Integer;
   size: Line["size"];
 }): Integer[] => {
   const validIndexes = [];
   for (let index = 0; index < size; index += ADJUST_INDEX) {
-    const rowIndex = initialRowIndex + index;
-    const columnIndex = initialColumnIndex + index;
+    const indexOfRow = initialIndexOfRow + index;
+    const indexOfColumn = initialIndexOfColumn + index;
     if (
-      rowIndex >= INITIAL_INDEX &&
-      rowIndex < rowLength &&
-      columnIndex >= INITIAL_INDEX &&
-      columnIndex < columnLength
+      indexOfRow >= INITIAL_INDEX &&
+      indexOfRow < rowLength &&
+      indexOfColumn >= INITIAL_INDEX &&
+      indexOfColumn < columnLength
     ) {
-      validIndexes.push(rowIndex * columnLength + columnIndex);
+      validIndexes.push(indexOfRow * columnLength + indexOfColumn);
     }
   }
   return validIndexes;
@@ -117,28 +118,28 @@ const calculateIndexesOfShapeForPrincipalDiagonal = ({
 
 const calculateIndexesOfShapeForSecondaryDiagonal = ({
   columnLength,
-  initialColumnIndex,
-  initialRowIndex,
+  initialIndexOfColumn,
+  initialIndexOfRow,
   rowLength,
   size,
 }: {
   columnLength: Integer;
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
+  initialIndexOfColumn: Integer;
+  initialIndexOfRow: Integer;
   rowLength: Integer;
   size: Line["size"];
 }): Integer[] => {
   const validIndexes = [];
   for (let index = 0; index < size; index += ADJUST_INDEX) {
-    const rowIndex = initialRowIndex + index;
-    const columnIndex = initialColumnIndex - index;
+    const indexOfRow = initialIndexOfRow + index;
+    const indexOfColumn = initialIndexOfColumn - index;
     if (
-      rowIndex >= INITIAL_INDEX &&
-      rowIndex < rowLength &&
-      columnIndex >= INITIAL_INDEX &&
-      columnIndex < columnLength
+      indexOfRow >= INITIAL_INDEX &&
+      indexOfRow < rowLength &&
+      indexOfColumn >= INITIAL_INDEX &&
+      indexOfColumn < columnLength
     ) {
-      validIndexes.push(rowIndex * columnLength + columnIndex);
+      validIndexes.push(indexOfRow * columnLength + indexOfColumn);
     }
   }
   return validIndexes;
@@ -146,28 +147,28 @@ const calculateIndexesOfShapeForSecondaryDiagonal = ({
 
 const calculateIndexesOfShapeForVerticalLine = ({
   columnLength,
-  initialColumnIndex,
-  initialRowIndex,
+  initialIndexOfColumn,
+  initialIndexOfRow,
   rowLength,
   size,
 }: {
   columnLength: Integer;
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
+  initialIndexOfColumn: Integer;
+  initialIndexOfRow: Integer;
   rowLength: Integer;
   size: Integer;
 }): Integer[] => {
   const validIndexes = [];
   for (let index = 0; index < size; index += ADJUST_INDEX) {
-    const rowIndex = initialRowIndex + index;
-    const columnIndex = initialColumnIndex;
+    const indexOfRow = initialIndexOfRow + index;
+    const indexOfColumn = initialIndexOfColumn;
     if (
-      rowIndex >= INITIAL_INDEX &&
-      rowIndex < rowLength &&
-      columnIndex >= INITIAL_INDEX &&
-      columnIndex < columnLength
+      indexOfRow >= INITIAL_INDEX &&
+      indexOfRow < rowLength &&
+      indexOfColumn >= INITIAL_INDEX &&
+      indexOfColumn < columnLength
     ) {
-      validIndexes.push(rowIndex * columnLength + columnIndex);
+      validIndexes.push(indexOfRow * columnLength + indexOfColumn);
     }
   }
   return validIndexes;
@@ -176,15 +177,15 @@ const calculateIndexesOfShapeForVerticalLine = ({
 const getIndexesOfLine = ({
   columnLength,
   direction,
-  initialColumnIndex,
-  initialRowIndex,
+  initialIndexOfColumn,
+  initialIndexOfRow,
   rowLength,
   size,
 }: {
   columnLength: Integer;
   direction: Line["direction"];
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
+  initialIndexOfColumn: Integer;
+  initialIndexOfRow: Integer;
   rowLength: Integer;
   size: Line["size"];
 }): Integer[] => {
@@ -192,8 +193,8 @@ const getIndexesOfLine = ({
     case "horizontal": {
       return calculateIndexesOfShapeForHorizontalLine({
         columnLength,
-        initialColumnIndex,
-        initialRowIndex,
+        initialIndexOfColumn,
+        initialIndexOfRow,
         rowLength,
         size,
       });
@@ -201,8 +202,8 @@ const getIndexesOfLine = ({
     case "principalDiagonal": {
       return calculateIndexesOfShapeForPrincipalDiagonal({
         columnLength,
-        initialColumnIndex,
-        initialRowIndex,
+        initialIndexOfColumn,
+        initialIndexOfRow,
         rowLength,
         size,
       });
@@ -210,8 +211,8 @@ const getIndexesOfLine = ({
     case "secondaryDiagonal": {
       return calculateIndexesOfShapeForSecondaryDiagonal({
         columnLength,
-        initialColumnIndex,
-        initialRowIndex,
+        initialIndexOfColumn,
+        initialIndexOfRow,
         rowLength,
         size,
       });
@@ -219,8 +220,8 @@ const getIndexesOfLine = ({
     case "vertical": {
       return calculateIndexesOfShapeForVerticalLine({
         columnLength,
-        initialColumnIndex,
-        initialRowIndex,
+        initialIndexOfColumn,
+        initialIndexOfRow,
         rowLength,
         size,
       });
@@ -236,15 +237,15 @@ const getIndexesOfLine = ({
 const getIndexesOfRectangle = ({
   columnLength,
   horizontalSize,
-  initialColumnIndex,
-  initialRowIndex,
+  initialIndexOfColumn,
+  initialIndexOfRow,
   rowLength,
   verticalSize,
 }: {
   columnLength: Integer;
   horizontalSize: Rectangle["horizontalSize"];
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
+  initialIndexOfColumn: Integer;
+  initialIndexOfRow: Integer;
   rowLength: Integer;
   verticalSize: Rectangle["verticalSize"];
 }): Integer[] => {
@@ -254,8 +255,8 @@ const getIndexesOfRectangle = ({
     iterationOnRow < verticalSize;
     iterationOnRow += INCREMENT_ONE
   ) {
-    const rowIndex = initialRowIndex + iterationOnRow;
-    if (rowIndex < INITIAL_INDEX || rowIndex >= rowLength) {
+    const indexOfRow = initialIndexOfRow + iterationOnRow;
+    if (indexOfRow < INITIAL_INDEX || indexOfRow >= rowLength) {
       continue;
     }
     for (
@@ -263,11 +264,11 @@ const getIndexesOfRectangle = ({
       iterationOnColumn < horizontalSize;
       iterationOnColumn += INCREMENT_ONE
     ) {
-      const columnIndex = initialColumnIndex + iterationOnColumn;
-      if (columnIndex < INITIAL_INDEX || columnIndex >= columnLength) {
+      const indexOfColumn = initialIndexOfColumn + iterationOnColumn;
+      if (indexOfColumn < INITIAL_INDEX || indexOfColumn >= columnLength) {
         continue;
       }
-      validIndexes.push(rowIndex * columnLength + columnIndex);
+      validIndexes.push(indexOfRow * columnLength + indexOfColumn);
     }
   }
   return validIndexes;
@@ -275,14 +276,14 @@ const getIndexesOfRectangle = ({
 
 const getIndexesOfShape = ({
   columnLength,
-  initialColumnIndex,
-  initialRowIndex,
+  initialIndexOfColumn,
+  initialIndexOfRow,
   rowLength,
   shape,
 }: {
   columnLength: Integer;
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
+  initialIndexOfColumn: Integer;
+  initialIndexOfRow: Integer;
   rowLength: Integer;
   shape: Shape;
 }): Integer[] => {
@@ -293,8 +294,8 @@ const getIndexesOfShape = ({
       return getIndexesOfLine({
         columnLength,
         direction,
-        initialColumnIndex,
-        initialRowIndex,
+        initialIndexOfColumn,
+        initialIndexOfRow,
         rowLength,
         size,
       });
@@ -304,8 +305,8 @@ const getIndexesOfShape = ({
       return getIndexesOfRectangle({
         columnLength,
         horizontalSize,
-        initialColumnIndex,
-        initialRowIndex,
+        initialIndexOfColumn,
+        initialIndexOfRow,
         rowLength,
         verticalSize,
       });
@@ -318,23 +319,23 @@ const getIndexesOfShape = ({
 
 const getIndexOfPlayerWhoIsOccupyingShape = ({
   columnLength,
-  initialColumnIndex,
-  initialRowIndex,
+  initialIndexOfColumn,
+  initialIndexOfRow,
   rowLength,
   shape,
   slots,
 }: {
   columnLength: Integer;
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
+  initialIndexOfColumn: Integer;
+  initialIndexOfRow: Integer;
   rowLength: Integer;
   shape: Shape;
   slots: TestingSlot[];
 }): IndexOfTestingPlayer | null => {
   const indexesOfSlots = getIndexesOfShape({
     columnLength,
-    initialColumnIndex,
-    initialRowIndex,
+    initialIndexOfColumn,
+    initialIndexOfRow,
     rowLength,
     shape,
   });
@@ -369,7 +370,7 @@ const getIndexOfPlayerWhoIsOccupyingShape = ({
   return indexOfLastOccupyingPlayer;
 };
 
-const adjustScore = ({
+const incrementScoreForPlayer = ({
   indexOfPlayerWhoIsOccupyingShape,
   score,
 }: {
@@ -385,11 +386,38 @@ const adjustScore = ({
   }
 };
 
+const incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots = ({
+  initialIndexOfColumn,
+  initialIndexOfRow,
+  score,
+  shape,
+  slots,
+}: {
+  initialIndexOfColumn: Integer;
+  initialIndexOfRow: Integer;
+  score: Points[];
+  shape: Shape;
+  slots: TestingSlot[];
+}): void => {
+  const indexOfPlayerWhoIsOccupyingShape = getIndexOfPlayerWhoIsOccupyingShape({
+    columnLength: COLUMN_LENGTH,
+    initialIndexOfColumn,
+    initialIndexOfRow,
+    rowLength: ROW_LENGTH,
+    shape,
+    slots,
+  });
+  incrementScoreForPlayer({
+    indexOfPlayerWhoIsOccupyingShape,
+    score,
+  });
+};
+
 export type { Line, Rectangle, Shape };
 export {
-  adjustScore,
   formatDirection,
   getIndexesOfShape,
   getIndexOfPlayerWhoIsOccupyingShape,
   getNameAndFormattedSizeOfShape,
+  incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots,
 };

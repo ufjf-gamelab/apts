@@ -9,26 +9,26 @@ import { getIndexesOfShapeShouldReturn } from "../getIndexesOfShape.js";
 const testGetIndexesOfShapeForLine = ({
   direction,
   expectedIndexesOfShape,
-  initialColumnIndex,
-  initialRowIndex,
+  initialIndexOfColumn,
+  initialIndexOfRow,
   size,
 }: {
   direction: Line["direction"];
   expectedIndexesOfShape: ReturnType<typeof getIndexesOfShape>;
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
+  initialIndexOfColumn: Integer;
+  initialIndexOfRow: Integer;
   size: Line["size"];
 }): void => {
   getIndexesOfShapeShouldReturn({
     expectedIndexesOfShape,
-    initialColumnIndex,
-    initialRowIndex,
+    initialIndexOfColumn,
+    initialIndexOfRow,
     shape: {
       direction,
       size,
       type: "line",
     },
-    testDescriptor: `${formatDirection(direction)} of size ${size} beginning on row ${initialRowIndex} and column ${initialColumnIndex}`,
+    testDescriptor: `${formatDirection(direction)} of size ${size} beginning on row ${initialIndexOfRow} and column ${initialIndexOfColumn}`,
   });
 };
 

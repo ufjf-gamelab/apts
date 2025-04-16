@@ -71,20 +71,21 @@ export default class TicTacToeState extends State<
     const game = this.getGame();
     let boardString = "";
     for (
-      let currentRowIndex = 0;
-      currentRowIndex < game.getQuantityOfRows();
-      currentRowIndex += INCREMENT_ONE
+      let currentindexOfRow = 0;
+      currentindexOfRow < game.getQuantityOfRows();
+      currentindexOfRow += INCREMENT_ONE
     ) {
       boardString += "|";
       for (
-        let currentColumnIndex = 0;
-        currentColumnIndex < game.getQuantityOfColumns();
-        currentColumnIndex += INCREMENT_ONE
+        let currentindexOfColumn = 0;
+        currentindexOfColumn < game.getQuantityOfColumns();
+        currentindexOfColumn += INCREMENT_ONE
       ) {
         boardString += " ";
 
         const position =
-          currentRowIndex * game.getQuantityOfColumns() + currentColumnIndex;
+          currentindexOfRow * game.getQuantityOfColumns() +
+          currentindexOfColumn;
         const slot: Slot = this.getSlot(position);
 
         if (slot === Slot.Empty) {

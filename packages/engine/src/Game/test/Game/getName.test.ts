@@ -6,10 +6,11 @@ import { setupGame, type TestGameParams } from "./setup.js";
 const getNameShouldReturn = ({
   expectedName,
   game,
+  testDescriptor,
 }: TestGameParams & {
   expectedName: ReturnType<TestingGame["getName"]>;
 }): void => {
-  test(`getName() should return {${expectedName}}`, () => {
+  test(`${testDescriptor}: getName() should return {${expectedName}}`, () => {
     const name = game.getName();
     expect(name).toBe(expectedName);
   });

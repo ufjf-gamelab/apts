@@ -12,8 +12,8 @@ import { PlayerKey, Slot } from "./types.js";
 const INCREMENT_ONE_POINT = 1;
 
 export interface Position {
-  readonly columnIndex: Integer;
-  readonly rowIndex: Integer;
+  readonly indexOfColumn: Integer;
+  readonly indexOfRow: Integer;
 }
 
 export type TicTacToeMovePair = MovePair<
@@ -105,13 +105,13 @@ export default class TicTacToeMove extends Move<
 
   protected getSlots(state: TicTacToeState): Slot[] {
     const slots = state.getSlots();
-    const { columnIndex, rowIndex } = this.position;
+    const { indexOfColumn, indexOfRow } = this.position;
 
     const game = state.getGame();
     const playerKey: PlayerKey = state.getPlayerKey();
     const slotFilledByPlayer = playerKey === PlayerKey.X ? Slot.X : Slot.O;
 
-    const slotKey = rowIndex * game.getQuantityOfColumns() + columnIndex;
+    const slotKey = indexOfRow * game.getQuantityOfColumns() + indexOfColumn;
     const updatedSlots = [...slots];
     updatedSlots[slotKey] = slotFilledByPlayer;
     return updatedSlots;
@@ -126,9 +126,9 @@ export default class TicTacToeMove extends Move<
 
     slots.forEach((slot: Slot, index: Integer) => {
       if (slot === Slot.Empty) {
-        const rowIndex = Math.floor(index / quantityOfColumns);
-        const columnIndex = index % quantityOfColumns;
-        const moveKey = rowIndex * quantityOfColumns + columnIndex;
+        const indexOfRow = Math.floor(index / quantityOfColumns);
+        const indexOfColumn = index % quantityOfColumns;
+        const moveKey = indexOfRow * quantityOfColumns + indexOfColumn;
 
         const move = game.getMove(moveKey);
         if (move !== this) {

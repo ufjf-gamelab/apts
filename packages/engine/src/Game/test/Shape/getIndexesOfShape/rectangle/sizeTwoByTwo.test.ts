@@ -5,18 +5,18 @@ import { testGetIndexesOfShapeForRectangle } from "./getIndexesOfShapeForRectang
 
 const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
   expectedIndexesOfShape,
-  initialColumnIndex,
-  initialRowIndex,
+  initialIndexOfColumn,
+  initialIndexOfRow,
 }: {
   expectedIndexesOfShape: ReturnType<typeof getIndexesOfShape>;
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
+  initialIndexOfColumn: Integer;
+  initialIndexOfRow: Integer;
 }): void => {
   testGetIndexesOfShapeForRectangle({
     expectedIndexesOfShape,
     horizontalSize: 2,
-    initialColumnIndex,
-    initialRowIndex,
+    initialIndexOfColumn,
+    initialIndexOfRow,
     verticalSize: 2,
   });
 };
@@ -24,24 +24,24 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
 ((): void => {
   testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
     expectedIndexesOfShape: [],
-    initialColumnIndex: -1,
-    initialRowIndex: -2,
+    initialIndexOfColumn: -1,
+    initialIndexOfRow: -2,
   });
 })();
 
 ((): void => {
   testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
     expectedIndexesOfShape: [],
-    initialColumnIndex: -2,
-    initialRowIndex: -1,
+    initialIndexOfColumn: -2,
+    initialIndexOfRow: -1,
   });
 })();
 
 ((): void => {
   testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
     expectedIndexesOfShape: [IndexOfTestingSlot.NorthwestOfNorthwest],
-    initialColumnIndex: -1,
-    initialRowIndex: -1,
+    initialIndexOfColumn: -1,
+    initialIndexOfRow: -1,
   });
 })();
 
@@ -51,8 +51,8 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
       IndexOfTestingSlot.NorthwestOfNorthwest,
       IndexOfTestingSlot.NorthOfNorthwest,
     ],
-    initialColumnIndex: 0,
-    initialRowIndex: -1,
+    initialIndexOfColumn: 0,
+    initialIndexOfRow: -1,
   });
 })();
 
@@ -62,8 +62,8 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
       IndexOfTestingSlot.NorthwestOfNorthwest,
       IndexOfTestingSlot.WestOfNorthwest,
     ],
-    initialColumnIndex: -1,
-    initialRowIndex: 0,
+    initialIndexOfColumn: -1,
+    initialIndexOfRow: 0,
   });
 })();
 
@@ -75,8 +75,8 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
       IndexOfTestingSlot.WestOfNorthwest,
       IndexOfTestingSlot.CenterOfNorthwest,
     ],
-    initialColumnIndex: 0,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 0,
+    initialIndexOfRow: 0,
   });
 })();
 
@@ -88,8 +88,8 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
       IndexOfTestingSlot.CenterOfNorth,
       IndexOfTestingSlot.EastOfNorth,
     ],
-    initialColumnIndex: 4,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 4,
+    initialIndexOfRow: 0,
   });
 })();
 
@@ -101,8 +101,8 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
       IndexOfTestingSlot.CenterOfNortheast,
       IndexOfTestingSlot.EastOfNortheast,
     ],
-    initialColumnIndex: 7,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 7,
+    initialIndexOfRow: 0,
   });
 })();
 
@@ -114,8 +114,8 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
       IndexOfTestingSlot.SouthwestOfWest,
       IndexOfTestingSlot.SouthOfWest,
     ],
-    initialColumnIndex: 0,
-    initialRowIndex: 4,
+    initialIndexOfColumn: 0,
+    initialIndexOfRow: 4,
   });
 })();
 
@@ -127,8 +127,8 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
       IndexOfTestingSlot.SouthOfCenter,
       IndexOfTestingSlot.SoutheastOfCenter,
     ],
-    initialColumnIndex: 4,
-    initialRowIndex: 4,
+    initialIndexOfColumn: 4,
+    initialIndexOfRow: 4,
   });
 })();
 
@@ -140,8 +140,8 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
       IndexOfTestingSlot.SouthOfEast,
       IndexOfTestingSlot.SoutheastOfEast,
     ],
-    initialColumnIndex: 7,
-    initialRowIndex: 4,
+    initialIndexOfColumn: 7,
+    initialIndexOfRow: 4,
   });
 })();
 
@@ -153,8 +153,8 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
       IndexOfTestingSlot.SouthwestOfSouthwest,
       IndexOfTestingSlot.SouthOfSouthwest,
     ],
-    initialColumnIndex: 0,
-    initialRowIndex: 7,
+    initialIndexOfColumn: 0,
+    initialIndexOfRow: 7,
   });
 })();
 
@@ -166,8 +166,8 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
       IndexOfTestingSlot.SouthOfSouth,
       IndexOfTestingSlot.SoutheastOfSouth,
     ],
-    initialColumnIndex: 4,
-    initialRowIndex: 7,
+    initialIndexOfColumn: 4,
+    initialIndexOfRow: 7,
   });
 })();
 
@@ -179,8 +179,8 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
       IndexOfTestingSlot.SouthOfSoutheast,
       IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
-    initialColumnIndex: 7,
-    initialRowIndex: 7,
+    initialIndexOfColumn: 7,
+    initialIndexOfRow: 7,
   });
 })();
 
@@ -190,8 +190,8 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
       IndexOfTestingSlot.EastOfSoutheast,
       IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
-    initialColumnIndex: 8,
-    initialRowIndex: 7,
+    initialIndexOfColumn: 8,
+    initialIndexOfRow: 7,
   });
 })();
 
@@ -201,31 +201,31 @@ const testGetIndexesOfShapeForRectangleOfSizeTwoByTwo = ({
       IndexOfTestingSlot.SouthOfSoutheast,
       IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
-    initialColumnIndex: 7,
-    initialRowIndex: 8,
+    initialIndexOfColumn: 7,
+    initialIndexOfRow: 8,
   });
 })();
 
 ((): void => {
   testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
     expectedIndexesOfShape: [IndexOfTestingSlot.SoutheastOfSoutheast],
-    initialColumnIndex: 8,
-    initialRowIndex: 8,
+    initialIndexOfColumn: 8,
+    initialIndexOfRow: 8,
   });
 })();
 
 ((): void => {
   testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
     expectedIndexesOfShape: [],
-    initialColumnIndex: 9,
-    initialRowIndex: 8,
+    initialIndexOfColumn: 9,
+    initialIndexOfRow: 8,
   });
 })();
 
 ((): void => {
   testGetIndexesOfShapeForRectangleOfSizeTwoByTwo({
     expectedIndexesOfShape: [],
-    initialColumnIndex: 8,
-    initialRowIndex: 9,
+    initialIndexOfColumn: 8,
+    initialIndexOfRow: 9,
   });
 })();

@@ -172,6 +172,11 @@ const createSlots = ({
   );
 };
 
+const convertCreatedSlotsAndRelatedDataToSlots = (
+  createdSlotsAndRelatedData: CreatedSlotsAndRelatedData,
+): TestingSlot[] =>
+  Array.from(createdSlotsAndRelatedData.values()).map(({ slot }) => slot);
+
 const createOneSlotForEachOccupyingPlayer = (): CreatedSlotsAndRelatedData => {
   const slotsDTOs = {
     [CategoryOfTestingOccupyingPlayer.Null]: {
@@ -216,6 +221,7 @@ export type {
   TestSlotParams,
 };
 export {
+  convertCreatedSlotsAndRelatedDataToSlots,
   createOneSlotForEachOccupyingPlayer,
   createSlots,
   createSlotsForInitialState,

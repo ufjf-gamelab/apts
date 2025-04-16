@@ -9,21 +9,21 @@ import {
 
 const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
   indexesOfSlots,
-  initialColumnIndex,
-  initialRowIndex,
+  initialIndexOfColumn,
+  initialIndexOfRow,
   playersShouldBeOccupyingShapes,
   size,
 }: {
   indexesOfSlots: IndexOfTestingSlot[];
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
+  initialIndexOfColumn: Integer;
+  initialIndexOfRow: Integer;
   playersShouldBeOccupyingShapes: PlayerShouldBeOccupyingShape[];
   size: Line["size"];
 }): void => {
   testGetIndexOfPlayerWhoIsOccupyingShapeForEveryPlayer({
     indexesOfSlots,
-    initialColumnIndex,
-    initialRowIndex,
+    initialIndexOfColumn,
+    initialIndexOfRow,
     playersShouldBeOccupyingShapes,
     shape: {
       direction: "vertical",
@@ -44,8 +44,8 @@ const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
       IndexOfTestingSlot.NorthwestOfWest,
       IndexOfTestingSlot.WestOfWest,
     ],
-    initialColumnIndex: -1,
-    initialRowIndex: -1,
+    initialIndexOfColumn: -1,
+    initialIndexOfRow: -1,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -73,8 +73,8 @@ const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
       IndexOfTestingSlot.NorthwestOfWest,
       IndexOfTestingSlot.WestOfWest,
     ],
-    initialColumnIndex: 0,
-    initialRowIndex: -1,
+    initialIndexOfColumn: 0,
+    initialIndexOfRow: -1,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -102,8 +102,8 @@ const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
       IndexOfTestingSlot.NorthOfCenter,
       IndexOfTestingSlot.CenterOfCenter,
     ],
-    initialColumnIndex: 4,
-    initialRowIndex: -1,
+    initialIndexOfColumn: 4,
+    initialIndexOfRow: -1,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -131,8 +131,8 @@ const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
       IndexOfTestingSlot.NortheastOfEast,
       IndexOfTestingSlot.EastOfEast,
     ],
-    initialColumnIndex: 8,
-    initialRowIndex: -1,
+    initialIndexOfColumn: 8,
+    initialIndexOfRow: -1,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -160,8 +160,8 @@ const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
       IndexOfTestingSlot.NortheastOfEast,
       IndexOfTestingSlot.EastOfEast,
     ],
-    initialColumnIndex: 9,
-    initialRowIndex: -1,
+    initialIndexOfColumn: 9,
+    initialIndexOfRow: -1,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -191,8 +191,8 @@ const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
       IndexOfTestingSlot.NorthwestOfWest,
       IndexOfTestingSlot.WestOfWest,
     ],
-    initialColumnIndex: -1,
-    initialRowIndex: 0,
+    initialIndexOfColumn: -1,
+    initialIndexOfRow: 0,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -220,8 +220,8 @@ const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
       IndexOfTestingSlot.NorthwestOfWest,
       IndexOfTestingSlot.WestOfWest,
     ],
-    initialColumnIndex: 0,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 0,
+    initialIndexOfRow: 0,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -249,8 +249,8 @@ const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
       IndexOfTestingSlot.NorthOfCenter,
       IndexOfTestingSlot.CenterOfCenter,
     ],
-    initialColumnIndex: 4,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 4,
+    initialIndexOfRow: 0,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -278,8 +278,8 @@ const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
       IndexOfTestingSlot.NortheastOfEast,
       IndexOfTestingSlot.EastOfEast,
     ],
-    initialColumnIndex: 8,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 8,
+    initialIndexOfRow: 0,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -307,8 +307,8 @@ const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
       IndexOfTestingSlot.NortheastOfEast,
       IndexOfTestingSlot.EastOfEast,
     ],
-    initialColumnIndex: 9,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 9,
+    initialIndexOfRow: 0,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -338,8 +338,8 @@ const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
       IndexOfTestingSlot.NorthwestOfWest,
       IndexOfTestingSlot.WestOfWest,
     ],
-    initialColumnIndex: -1,
-    initialRowIndex: 4,
+    initialIndexOfColumn: -1,
+    initialIndexOfRow: 4,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -367,8 +367,8 @@ const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
       IndexOfTestingSlot.WestOfSouthwest,
       IndexOfTestingSlot.SouthwestOfSouthwest,
     ],
-    initialColumnIndex: 0,
-    initialRowIndex: 4,
+    initialIndexOfColumn: 0,
+    initialIndexOfRow: 4,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -396,8 +396,8 @@ const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
       IndexOfTestingSlot.CenterOfSouth,
       IndexOfTestingSlot.SouthOfSouth,
     ],
-    initialColumnIndex: 4,
-    initialRowIndex: 4,
+    initialIndexOfColumn: 4,
+    initialIndexOfRow: 4,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -425,8 +425,8 @@ const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
       IndexOfTestingSlot.EastOfSoutheast,
       IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
-    initialColumnIndex: 8,
-    initialRowIndex: 4,
+    initialIndexOfColumn: 8,
+    initialIndexOfRow: 4,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -454,8 +454,8 @@ const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
       IndexOfTestingSlot.EastOfSoutheast,
       IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
-    initialColumnIndex: 9,
-    initialRowIndex: 4,
+    initialIndexOfColumn: 9,
+    initialIndexOfRow: 4,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -485,8 +485,8 @@ const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
       IndexOfTestingSlot.NorthwestOfWest,
       IndexOfTestingSlot.WestOfWest,
     ],
-    initialColumnIndex: -1,
-    initialRowIndex: 5,
+    initialIndexOfColumn: -1,
+    initialIndexOfRow: 5,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -514,8 +514,8 @@ const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
       IndexOfTestingSlot.WestOfSouthwest,
       IndexOfTestingSlot.SouthwestOfSouthwest,
     ],
-    initialColumnIndex: 0,
-    initialRowIndex: 5,
+    initialIndexOfColumn: 0,
+    initialIndexOfRow: 5,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -543,8 +543,8 @@ const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
       IndexOfTestingSlot.CenterOfSouth,
       IndexOfTestingSlot.SouthOfSouth,
     ],
-    initialColumnIndex: 4,
-    initialRowIndex: 5,
+    initialIndexOfColumn: 4,
+    initialIndexOfRow: 5,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -572,8 +572,8 @@ const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
       IndexOfTestingSlot.EastOfSoutheast,
       IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
-    initialColumnIndex: 8,
-    initialRowIndex: 5,
+    initialIndexOfColumn: 8,
+    initialIndexOfRow: 5,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -601,8 +601,8 @@ const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
       IndexOfTestingSlot.EastOfSoutheast,
       IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
-    initialColumnIndex: 9,
-    initialRowIndex: 5,
+    initialIndexOfColumn: 9,
+    initialIndexOfRow: 5,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,

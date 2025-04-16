@@ -7,71 +7,18 @@ import {
   getNameAndFormattedSizeOfShape,
   type Shape,
 } from "../../Shape.js";
-import TestingSlot from "../../Slot.js";
+import type TestingSlot from "../../Slot.js";
+import { type IndexOfTestingSlot } from "../../Slot/setup.js";
 import {
-  createSlotsForInitialState,
-  type IndexOfTestingSlot,
-} from "../../Slot/setup.js";
-import type { TestShapeParams } from "../setup.js";
-
-const fillSlot = ({
-  indexOfPlayer,
-  indexOfSlot,
-  slots,
-}: {
-  indexOfPlayer: ReturnType<typeof getIndexOfPlayerWhoIsOccupyingShape>;
-  indexOfSlot: IndexOfTestingSlot;
-  slots: TestingSlot[];
-}): void => {
-  slots[indexOfSlot] = new TestingSlot({
-    indexOfOccupyingPlayer: indexOfPlayer,
-  });
-};
-
-const fillSlots = ({
-  indexesOfSlots,
-  indexOfPlayer,
-  slots,
-}: {
-  indexesOfSlots: IndexOfTestingSlot[];
-  indexOfPlayer: ReturnType<typeof getIndexOfPlayerWhoIsOccupyingShape>;
-  slots: TestingSlot[];
-}): void => {
-  indexesOfSlots.forEach(indexOfSlot => {
-    fillSlot({
-      indexOfPlayer,
-      indexOfSlot,
-      slots,
-    });
-  });
-};
-
-const getSlotsFilledByPlayer = ({
-  indexesOfSlots,
-  indexOfPlayer,
-}: {
-  indexesOfSlots: IndexOfTestingSlot[];
-  indexOfPlayer: ReturnType<typeof getIndexOfPlayerWhoIsOccupyingShape>;
-}): TestingSlot[] => {
-  const slots = Array.from(
-    createSlotsForInitialState()
-      .values()
-      .map(({ slot }) => slot),
-  );
-
-  fillSlots({
-    indexesOfSlots,
-    indexOfPlayer,
-    slots,
-  });
-
-  return slots;
-};
+  fillSlots,
+  getSlotsFilledByPlayer,
+  type TestShapeParams,
+} from "../setup.js";
 
 const getIndexOfPlayerWhoIsOccupyingShapeShouldReturn = ({
   expectedIndexOfPlayer,
-  initialColumnIndex,
-  initialRowIndex,
+  initialIndexOfColumn,
+  initialIndexOfRow,
   shape,
   slots,
   testDescriptor,
@@ -87,8 +34,8 @@ const getIndexOfPlayerWhoIsOccupyingShapeShouldReturn = ({
   test(`${testDescriptor}: getIndexOfPlayerWhoIsOccupyingShape({slots: [${slotsAsString}]}) should return {${expectedIndexOfPlayer}}`, () => {
     const indexOfShape = getIndexOfPlayerWhoIsOccupyingShape({
       columnLength: COLUMN_LENGTH,
-      initialColumnIndex,
-      initialRowIndex,
+      initialIndexOfColumn,
+      initialIndexOfRow,
       rowLength: ROW_LENGTH,
       shape,
       slots,
@@ -105,14 +52,14 @@ interface PlayerShouldBeOccupyingShape {
 
 const testGetIndexOfPlayerWhoIsOccupyingShapeForEveryPlayer = ({
   indexesOfSlots,
-  initialColumnIndex,
-  initialRowIndex,
+  initialIndexOfColumn,
+  initialIndexOfRow,
   playersShouldBeOccupyingShapes,
   shape,
 }: {
   indexesOfSlots: IndexOfTestingSlot[];
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
+  initialIndexOfColumn: Integer;
+  initialIndexOfRow: Integer;
   playersShouldBeOccupyingShapes: PlayerShouldBeOccupyingShape[];
   shape: Shape;
 }): void => {
@@ -134,11 +81,11 @@ const testGetIndexOfPlayerWhoIsOccupyingShapeForEveryPlayer = ({
     const { nameOfShape, sizeOfShape } = getNameAndFormattedSizeOfShape(shape);
     getIndexOfPlayerWhoIsOccupyingShapeShouldReturn({
       expectedIndexOfPlayer: shouldBeOccupyingShape ? indexOfPlayer : null,
-      initialColumnIndex,
-      initialRowIndex,
+      initialIndexOfColumn,
+      initialIndexOfRow,
       shape,
       slots,
-      testDescriptor: `${nameOfShape} of size ${sizeOfShape} beginning on row ${initialRowIndex} and column ${initialColumnIndex}`,
+      testDescriptor: `${nameOfShape} of size ${sizeOfShape} beginning on row ${initialIndexOfRow} and column ${initialIndexOfColumn}`,
     });
   };
 

@@ -82,11 +82,11 @@ export default class TicTacToeGame extends Game<
     slots: Slot[],
     lastAssertedPosition: Position,
   ): null | PlayerPair {
-    const { columnIndex, rowIndex } = lastAssertedPosition;
+    const { indexOfColumn, indexOfRow } = lastAssertedPosition;
 
     const row: Slot[] = slots.slice(
-      rowIndex * this.quantityOfColumns,
-      rowIndex * this.quantityOfColumns + this.quantityOfColumns,
+      indexOfRow * this.quantityOfColumns,
+      indexOfRow * this.quantityOfColumns + this.quantityOfColumns,
     );
     let winner = this.getWinnerOnSection(row);
     if (winner !== null) {
@@ -94,7 +94,7 @@ export default class TicTacToeGame extends Game<
     }
 
     const column = slots.filter(
-      (_, index) => index % this.quantityOfColumns === columnIndex,
+      (_, index) => index % this.quantityOfColumns === indexOfColumn,
     );
     winner = this.getWinnerOnSection(column);
     if (winner !== null) {

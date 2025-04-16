@@ -6,8 +6,8 @@ import type { TestShapeParams } from "../setup.js";
 
 const getIndexesOfShapeShouldReturn = ({
   expectedIndexesOfShape,
-  initialColumnIndex,
-  initialRowIndex,
+  initialIndexOfColumn,
+  initialIndexOfRow,
   shape,
   testDescriptor,
 }: TestShapeParams & {
@@ -17,8 +17,8 @@ const getIndexesOfShapeShouldReturn = ({
   test(`${testDescriptor}: getIndexesOfShape() should return {${expectedIndexesOfShape.toString()}}`, () => {
     const indexesOfShape = getIndexesOfShape({
       columnLength: COLUMN_LENGTH,
-      initialColumnIndex,
-      initialRowIndex,
+      initialIndexOfColumn,
+      initialIndexOfRow,
       rowLength: ROW_LENGTH,
       shape,
     });

@@ -1,17 +1,15 @@
 /* eslint-disable max-statements */
 import { expect, test } from "vitest";
 
-import type { Integer } from "../../../types.js";
 import type TestingGame from "../Game.js";
 import type TestingMove from "../Move.js";
 import { getTitleOfTestingMove, IndexOfTestingMove } from "../Move/setup.js";
 import { IndexOfTestingPlayer } from "../Player/setup.js";
+import { ONE_POINT } from "../Shape/incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots/incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots.js";
 import TestingSlot from "../Slot.js";
 import { createSlotsForInitialState } from "../Slot/setup.js";
 import TestingState, { INITIAL_POINTS } from "../State.js";
 import { setupGame, type TestGameParams } from "./setup.js";
-
-const ONE_POINT: Integer = 1;
 
 const getMove = ({
   game,
@@ -49,7 +47,7 @@ const playShouldReturn = ({
   });
 };
 
-const testFromInitialState = (): void => {
+((): void => {
   const { game } = setupGame();
   const slots = createSlotsForInitialState();
   const expectedSlots = Array.from(slots.values().map(({ slot }) => slot));
@@ -81,10 +79,9 @@ const testFromInitialState = (): void => {
     state: game.getInitialState(),
     testDescriptor: "common: from initial state",
   });
-};
-testFromInitialState();
+})();
 
-const testAfterPlayingMoveNorthwestOfNorthwest = (): void => {
+((): void => {
   const { game } = setupGame();
   const slots = createSlotsForInitialState();
   const expectedSlots = Array.from(slots.values().map(({ slot }) => slot));
@@ -133,128 +130,124 @@ const testAfterPlayingMoveNorthwestOfNorthwest = (): void => {
     state,
     testDescriptor: "common: after playing move Northwest of Northwest",
   });
-};
-testAfterPlayingMoveNorthwestOfNorthwest();
+})();
 
-const testAfterPlayerTwoEarnsOnePointAndBeforePlayerOneEarnsOnePoint =
-  // eslint-disable-next-line max-lines-per-function
-  (): void => {
-    const { game } = setupGame();
-    const slots = createSlotsForInitialState();
-    const expectedSlots = Array.from(slots.values().map(({ slot }) => slot));
+((): void => {
+  const { game } = setupGame();
+  const slots = createSlotsForInitialState();
+  const expectedSlots = Array.from(slots.values().map(({ slot }) => slot));
 
-    const moveNorthOfNorth = getMove({
-      game,
-      indexOfTestingMove: IndexOfTestingMove.NorthOfNorth,
+  const moveNorthOfNorth = getMove({
+    game,
+    indexOfTestingMove: IndexOfTestingMove.NorthOfNorth,
+  });
+  const moveCenterOfNorth = getMove({
+    game,
+    indexOfTestingMove: IndexOfTestingMove.CenterOfNorth,
+  });
+  const moveSouthOfNorth = getMove({
+    game,
+    indexOfTestingMove: IndexOfTestingMove.SouthOfNorth,
+  });
+  const moveNorthOfCenter = getMove({
+    game,
+    indexOfTestingMove: IndexOfTestingMove.NorthOfCenter,
+  });
+  const moveCenterOfCenter = getMove({
+    game,
+    indexOfTestingMove: IndexOfTestingMove.CenterOfCenter,
+  });
+
+  const moveNorthwestOfNorthwest = getMove({
+    game,
+    indexOfTestingMove: IndexOfTestingMove.NorthwestOfNorthwest,
+  });
+  const moveNorthOfNorthwest = getMove({
+    game,
+    indexOfTestingMove: IndexOfTestingMove.NorthOfNorthwest,
+  });
+  const moveWestOfNorthwest = getMove({
+    game,
+    indexOfTestingMove: IndexOfTestingMove.WestOfNorthwest,
+  });
+  const moveCenterOfNorthwest = getMove({
+    game,
+    indexOfTestingMove: IndexOfTestingMove.CenterOfNorthwest,
+  });
+
+  let state = game.getInitialState();
+  state = game.play(moveNorthOfNorth, state);
+  state = game.play(moveNorthwestOfNorthwest, state);
+  state = game.play(moveCenterOfNorth, state);
+  state = game.play(moveWestOfNorthwest, state);
+  state = game.play(moveSouthOfNorth, state);
+  state = game.play(moveNorthOfNorthwest, state);
+  state = game.play(moveNorthOfCenter, state);
+  state = game.play(moveCenterOfNorthwest, state);
+  state = game.play(moveCenterOfCenter, state);
+
+  const expectedValidMoves = Array.from(game.getMoves());
+  expectedValidMoves.splice(IndexOfTestingMove.NorthOfNorth);
+  expectedValidMoves.splice(IndexOfTestingMove.CenterOfNorth);
+  expectedValidMoves.splice(IndexOfTestingMove.SouthOfNorth);
+  expectedValidMoves.splice(IndexOfTestingMove.NorthOfCenter);
+  expectedValidMoves.splice(IndexOfTestingMove.CenterOfCenter);
+  expectedValidMoves.splice(IndexOfTestingMove.NorthwestOfNorthwest);
+  expectedValidMoves.splice(IndexOfTestingMove.NorthOfNorthwest);
+  expectedValidMoves.splice(IndexOfTestingMove.WestOfNorthwest);
+  expectedValidMoves.splice(IndexOfTestingMove.CenterOfNorthwest);
+
+  expectedSlots[moveNorthwestOfNorthwest.getIndexOfSlotInWhichPlacePiece()] =
+    new TestingSlot({
+      indexOfOccupyingPlayer: IndexOfTestingPlayer.Two,
     });
-    const moveCenterOfNorth = getMove({
-      game,
-      indexOfTestingMove: IndexOfTestingMove.CenterOfNorth,
+  expectedSlots[moveNorthOfNorthwest.getIndexOfSlotInWhichPlacePiece()] =
+    new TestingSlot({
+      indexOfOccupyingPlayer: IndexOfTestingPlayer.Two,
     });
-    const moveSouthOfNorth = getMove({
-      game,
-      indexOfTestingMove: IndexOfTestingMove.SouthOfNorth,
+  expectedSlots[moveWestOfNorthwest.getIndexOfSlotInWhichPlacePiece()] =
+    new TestingSlot({
+      indexOfOccupyingPlayer: IndexOfTestingPlayer.Two,
     });
-    const moveNorthOfCenter = getMove({
-      game,
-      indexOfTestingMove: IndexOfTestingMove.NorthOfCenter,
-    });
-    const moveCenterOfCenter = getMove({
-      game,
-      indexOfTestingMove: IndexOfTestingMove.CenterOfCenter,
+  expectedSlots[moveCenterOfNorthwest.getIndexOfSlotInWhichPlacePiece()] =
+    new TestingSlot({
+      indexOfOccupyingPlayer: IndexOfTestingPlayer.Two,
     });
 
-    const moveNorthwestOfNorthwest = getMove({
-      game,
-      indexOfTestingMove: IndexOfTestingMove.NorthwestOfNorthwest,
+  expectedSlots[moveNorthOfNorth.getIndexOfSlotInWhichPlacePiece()] =
+    new TestingSlot({
+      indexOfOccupyingPlayer: IndexOfTestingPlayer.One,
     });
-    const moveNorthOfNorthwest = getMove({
-      game,
-      indexOfTestingMove: IndexOfTestingMove.NorthOfNorthwest,
+  expectedSlots[moveCenterOfNorth.getIndexOfSlotInWhichPlacePiece()] =
+    new TestingSlot({
+      indexOfOccupyingPlayer: IndexOfTestingPlayer.One,
     });
-    const moveWestOfNorthwest = getMove({
-      game,
-      indexOfTestingMove: IndexOfTestingMove.WestOfNorthwest,
+  expectedSlots[moveSouthOfNorth.getIndexOfSlotInWhichPlacePiece()] =
+    new TestingSlot({
+      indexOfOccupyingPlayer: IndexOfTestingPlayer.One,
     });
-    const moveCenterOfNorthwest = getMove({
-      game,
-      indexOfTestingMove: IndexOfTestingMove.CenterOfNorthwest,
+  expectedSlots[moveNorthOfCenter.getIndexOfSlotInWhichPlacePiece()] =
+    new TestingSlot({
+      indexOfOccupyingPlayer: IndexOfTestingPlayer.One,
+    });
+  expectedSlots[moveCenterOfCenter.getIndexOfSlotInWhichPlacePiece()] =
+    new TestingSlot({
+      indexOfOccupyingPlayer: IndexOfTestingPlayer.One,
     });
 
-    let state = game.getInitialState();
-    state = game.play(moveNorthOfNorth, state);
-    state = game.play(moveNorthwestOfNorthwest, state);
-    state = game.play(moveCenterOfNorth, state);
-    state = game.play(moveWestOfNorthwest, state);
-    state = game.play(moveSouthOfNorth, state);
-    state = game.play(moveNorthOfNorthwest, state);
-    state = game.play(moveNorthOfCenter, state);
-    state = game.play(moveCenterOfNorthwest, state);
-    state = game.play(moveCenterOfCenter, state);
-
-    const expectedValidMoves = Array.from(game.getMoves());
-    expectedValidMoves.splice(IndexOfTestingMove.NorthOfNorth);
-    expectedValidMoves.splice(IndexOfTestingMove.CenterOfNorth);
-    expectedValidMoves.splice(IndexOfTestingMove.SouthOfNorth);
-    expectedValidMoves.splice(IndexOfTestingMove.NorthOfCenter);
-    expectedValidMoves.splice(IndexOfTestingMove.CenterOfCenter);
-    expectedValidMoves.splice(IndexOfTestingMove.NorthwestOfNorthwest);
-    expectedValidMoves.splice(IndexOfTestingMove.NorthOfNorthwest);
-    expectedValidMoves.splice(IndexOfTestingMove.WestOfNorthwest);
-    expectedValidMoves.splice(IndexOfTestingMove.CenterOfNorthwest);
-
-    expectedSlots[moveNorthwestOfNorthwest.getIndexOfSlotInWhichPlacePiece()] =
-      new TestingSlot({
-        indexOfOccupyingPlayer: IndexOfTestingPlayer.Two,
-      });
-    expectedSlots[moveNorthOfNorthwest.getIndexOfSlotInWhichPlacePiece()] =
-      new TestingSlot({
-        indexOfOccupyingPlayer: IndexOfTestingPlayer.Two,
-      });
-    expectedSlots[moveWestOfNorthwest.getIndexOfSlotInWhichPlacePiece()] =
-      new TestingSlot({
-        indexOfOccupyingPlayer: IndexOfTestingPlayer.Two,
-      });
-    expectedSlots[moveCenterOfNorthwest.getIndexOfSlotInWhichPlacePiece()] =
-      new TestingSlot({
-        indexOfOccupyingPlayer: IndexOfTestingPlayer.Two,
-      });
-
-    expectedSlots[moveNorthOfNorth.getIndexOfSlotInWhichPlacePiece()] =
-      new TestingSlot({
-        indexOfOccupyingPlayer: IndexOfTestingPlayer.One,
-      });
-    expectedSlots[moveCenterOfNorth.getIndexOfSlotInWhichPlacePiece()] =
-      new TestingSlot({
-        indexOfOccupyingPlayer: IndexOfTestingPlayer.One,
-      });
-    expectedSlots[moveSouthOfNorth.getIndexOfSlotInWhichPlacePiece()] =
-      new TestingSlot({
-        indexOfOccupyingPlayer: IndexOfTestingPlayer.One,
-      });
-    expectedSlots[moveNorthOfCenter.getIndexOfSlotInWhichPlacePiece()] =
-      new TestingSlot({
-        indexOfOccupyingPlayer: IndexOfTestingPlayer.One,
-      });
-    expectedSlots[moveCenterOfCenter.getIndexOfSlotInWhichPlacePiece()] =
-      new TestingSlot({
-        indexOfOccupyingPlayer: IndexOfTestingPlayer.One,
-      });
-
-    const expectedState = new TestingState({
-      game,
-      indexOfPlayer: IndexOfTestingPlayer.One,
-      score: [INITIAL_POINTS, ONE_POINT],
-      slots: expectedSlots,
-    });
-    playShouldReturn({
-      expectedState,
-      game,
-      indexOfMove: IndexOfTestingMove.NorthOfNorthwest,
-      move: moveNorthOfNorthwest,
-      state,
-      testDescriptor:
-        "common: after player two earns one point and before player one earns one point",
-    });
-  };
-testAfterPlayerTwoEarnsOnePointAndBeforePlayerOneEarnsOnePoint();
+  const expectedState = new TestingState({
+    game,
+    indexOfPlayer: IndexOfTestingPlayer.One,
+    score: [INITIAL_POINTS, ONE_POINT],
+    slots: expectedSlots,
+  });
+  playShouldReturn({
+    expectedState,
+    game,
+    indexOfMove: IndexOfTestingMove.NorthOfNorthwest,
+    move: moveNorthOfNorthwest,
+    state,
+    testDescriptor:
+      "common: after player two earns one point and before player one earns one point",
+  });
+})();

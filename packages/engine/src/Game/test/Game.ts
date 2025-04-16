@@ -6,13 +6,8 @@ import { type default as TestingMove } from "./Move.js";
 import { type default as TestingPlayer } from "./Player.js";
 import type { IndexOfTestingPlayer } from "./Player/setup.js";
 import {
-  adjustScore,
-  getIndexOfPlayerWhoIsOccupyingHorizontalLine,
-  getIndexOfPlayerWhoIsOccupyingPrincipalDiagonal,
-  getIndexOfPlayerWhoIsOccupyingSecondaryDiagonal,
-  getIndexOfPlayerWhoIsOccupyingSquareOfOrderThree,
-  getIndexOfPlayerWhoIsOccupyingSquareOfOrderTwo,
-  getIndexOfPlayerWhoIsOccupyingVerticalLine,
+  incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots,
+  type Shape,
 } from "./Shape.js";
 import TestingSlot from "./Slot.js";
 import TestingState from "./State.js";
@@ -23,6 +18,12 @@ const QUANTITY_OF_SLOTS: Integer = COLUMN_LENGTH * ROW_LENGTH;
 
 const INDEX_OF_INITIAL_PLAYER: IndexOfTestingPlayer = 0;
 const ADVANCE_TURN: Integer = 1;
+
+enum SizeOfPatternsUsedForCalculatingPoints {
+  LargeSquare = 3,
+  Line = 5,
+  SmallSquare = 2,
+}
 
 type TestingGameParams = Pick<
   GameParams<
@@ -58,59 +59,45 @@ class TestingGame extends Game<
       const indexOfRow = Math.floor(indexOfSlot / COLUMN_LENGTH);
       const indexOfColumn = indexOfSlot % COLUMN_LENGTH;
 
-      adjustScore({
-        indexOfPlayerWhoIsOccupyingShape:
-          getIndexOfPlayerWhoIsOccupyingHorizontalLine({
-            initialColumnIndex: indexOfColumn,
-            initialRowIndex: indexOfRow,
-            slots,
-          }),
-        score,
+      const updateScoreConsideringShape = (shape: Shape): void => {
+        incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots({
+          indexOfColumn,
+          indexOfRow,
+          score,
+          shape,
+          slots,
+        });
+      };
+
+      updateScoreConsideringShape({
+        direction: "horizontal",
+        size: SizeOfPatternsUsedForCalculatingPoints.Line,
+        type: "line",
       });
-      adjustScore({
-        indexOfPlayerWhoIsOccupyingShape:
-          getIndexOfPlayerWhoIsOccupyingVerticalLine({
-            initialColumnIndex: indexOfColumn,
-            initialRowIndex: indexOfRow,
-            slots,
-          }),
-        score,
+      updateScoreConsideringShape({
+        direction: "vertical",
+        size: SizeOfPatternsUsedForCalculatingPoints.Line,
+        type: "line",
       });
-      adjustScore({
-        indexOfPlayerWhoIsOccupyingShape:
-          getIndexOfPlayerWhoIsOccupyingPrincipalDiagonal({
-            initialColumnIndex: indexOfColumn,
-            initialRowIndex: indexOfRow,
-            slots,
-          }),
-        score,
+      updateScoreConsideringShape({
+        direction: "principalDiagonal",
+        size: SizeOfPatternsUsedForCalculatingPoints.Line,
+        type: "line",
       });
-      adjustScore({
-        indexOfPlayerWhoIsOccupyingShape:
-          getIndexOfPlayerWhoIsOccupyingSecondaryDiagonal({
-            initialColumnIndex: indexOfColumn,
-            initialRowIndex: indexOfRow,
-            slots,
-          }),
-        score,
+      updateScoreConsideringShape({
+        direction: "secondaryDiagonal",
+        size: SizeOfPatternsUsedForCalculatingPoints.Line,
+        type: "line",
       });
-      adjustScore({
-        indexOfPlayerWhoIsOccupyingShape:
-          getIndexOfPlayerWhoIsOccupyingSquareOfOrderTwo({
-            initialColumnIndex: indexOfColumn,
-            initialRowIndex: indexOfRow,
-            slots,
-          }),
-        score,
+      updateScoreConsideringShape({
+        horizontalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
+        type: "rectangle",
+        verticalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
       });
-      adjustScore({
-        indexOfPlayerWhoIsOccupyingShape:
-          getIndexOfPlayerWhoIsOccupyingSquareOfOrderThree({
-            initialColumnIndex: indexOfColumn,
-            initialRowIndex: indexOfRow,
-            slots,
-          }),
-        score,
+      updateScoreConsideringShape({
+        horizontalSize: SizeOfPatternsUsedForCalculatingPoints.LargeSquare,
+        type: "rectangle",
+        verticalSize: SizeOfPatternsUsedForCalculatingPoints.LargeSquare,
       });
     });
 
@@ -204,4 +191,11 @@ class TestingGame extends Game<
 }
 
 export type { TestingGameParams };
-export { COLUMN_LENGTH, TestingGame as default, QUANTITY_OF_SLOTS, ROW_LENGTH };
+export {
+  COLUMN_LENGTH,
+  TestingGame as default,
+  incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots,
+  QUANTITY_OF_SLOTS,
+  ROW_LENGTH,
+  SizeOfPatternsUsedForCalculatingPoints,
+};

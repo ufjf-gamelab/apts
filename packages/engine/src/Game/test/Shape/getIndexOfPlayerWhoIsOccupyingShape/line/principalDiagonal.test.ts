@@ -9,21 +9,21 @@ import {
 
 const testGetIndexOfPlayerWhoIsOccupyingPrincipalDiagonalForEveryPlayer = ({
   indexesOfSlots,
-  initialColumnIndex,
-  initialRowIndex,
+  initialIndexOfColumn,
+  initialIndexOfRow,
   playersShouldBeOccupyingShapes,
   size,
 }: {
   indexesOfSlots: IndexOfTestingSlot[];
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
+  initialIndexOfColumn: Integer;
+  initialIndexOfRow: Integer;
   playersShouldBeOccupyingShapes: PlayerShouldBeOccupyingShape[];
   size: Line["size"];
 }): void => {
   testGetIndexOfPlayerWhoIsOccupyingShapeForEveryPlayer({
     indexesOfSlots,
-    initialColumnIndex,
-    initialRowIndex,
+    initialIndexOfColumn,
+    initialIndexOfRow,
     playersShouldBeOccupyingShapes,
     shape: {
       direction: "principalDiagonal",
@@ -44,8 +44,8 @@ const testGetIndexOfPlayerWhoIsOccupyingPrincipalDiagonalForEveryPlayer = ({
       IndexOfTestingSlot.NorthwestOfCenter,
       IndexOfTestingSlot.CenterOfCenter,
     ],
-    initialColumnIndex: -1,
-    initialRowIndex: -1,
+    initialIndexOfColumn: -1,
+    initialIndexOfRow: -1,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -73,8 +73,8 @@ const testGetIndexOfPlayerWhoIsOccupyingPrincipalDiagonalForEveryPlayer = ({
       IndexOfTestingSlot.NorthOfCenter,
       IndexOfTestingSlot.EastOfCenter,
     ],
-    initialColumnIndex: 0,
-    initialRowIndex: -1,
+    initialIndexOfColumn: 0,
+    initialIndexOfRow: -1,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -102,8 +102,8 @@ const testGetIndexOfPlayerWhoIsOccupyingPrincipalDiagonalForEveryPlayer = ({
       IndexOfTestingSlot.NorthOfEast,
       IndexOfTestingSlot.EastOfEast,
     ],
-    initialColumnIndex: 3,
-    initialRowIndex: -1,
+    initialIndexOfColumn: 3,
+    initialIndexOfRow: -1,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -133,8 +133,8 @@ const testGetIndexOfPlayerWhoIsOccupyingPrincipalDiagonalForEveryPlayer = ({
       IndexOfTestingSlot.WestOfCenter,
       IndexOfTestingSlot.SouthOfCenter,
     ],
-    initialColumnIndex: -1,
-    initialRowIndex: 0,
+    initialIndexOfColumn: -1,
+    initialIndexOfRow: 0,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -162,8 +162,8 @@ const testGetIndexOfPlayerWhoIsOccupyingPrincipalDiagonalForEveryPlayer = ({
       IndexOfTestingSlot.NorthwestOfCenter,
       IndexOfTestingSlot.CenterOfCenter,
     ],
-    initialColumnIndex: 0,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 0,
+    initialIndexOfRow: 0,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -191,8 +191,8 @@ const testGetIndexOfPlayerWhoIsOccupyingPrincipalDiagonalForEveryPlayer = ({
       IndexOfTestingSlot.NorthOfEast,
       IndexOfTestingSlot.EastOfEast,
     ],
-    initialColumnIndex: 4,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 4,
+    initialIndexOfRow: 0,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -222,8 +222,8 @@ const testGetIndexOfPlayerWhoIsOccupyingPrincipalDiagonalForEveryPlayer = ({
       IndexOfTestingSlot.WestOfSouth,
       IndexOfTestingSlot.SouthOfSouth,
     ],
-    initialColumnIndex: 0,
-    initialRowIndex: 4,
+    initialIndexOfColumn: 0,
+    initialIndexOfRow: 4,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -251,8 +251,8 @@ const testGetIndexOfPlayerWhoIsOccupyingPrincipalDiagonalForEveryPlayer = ({
       IndexOfTestingSlot.CenterOfSoutheast,
       IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
-    initialColumnIndex: 4,
-    initialRowIndex: 4,
+    initialIndexOfColumn: 4,
+    initialIndexOfRow: 4,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,

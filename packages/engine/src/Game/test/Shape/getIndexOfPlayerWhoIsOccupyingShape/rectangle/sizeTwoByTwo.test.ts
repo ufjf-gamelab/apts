@@ -11,22 +11,22 @@ const testGetIndexOfPlayerWhoIsOccupyingRectangleOfSizeTwoByTwoForEveryPlayer =
   ({
     horizontalSize,
     indexesOfSlots,
-    initialColumnIndex,
-    initialRowIndex,
+    initialIndexOfColumn,
+    initialIndexOfRow,
     playersShouldBeOccupyingShapes,
     verticalSize,
   }: {
     horizontalSize: Rectangle["horizontalSize"];
     indexesOfSlots: IndexOfTestingSlot[];
-    initialColumnIndex: Integer;
-    initialRowIndex: Integer;
+    initialIndexOfColumn: Integer;
+    initialIndexOfRow: Integer;
     playersShouldBeOccupyingShapes: PlayerShouldBeOccupyingShape[];
     verticalSize: Rectangle["verticalSize"];
   }): void => {
     testGetIndexOfPlayerWhoIsOccupyingShapeForEveryPlayer({
       indexesOfSlots,
-      initialColumnIndex,
-      initialRowIndex,
+      initialIndexOfColumn,
+      initialIndexOfRow,
       playersShouldBeOccupyingShapes,
       shape: {
         horizontalSize,
@@ -47,8 +47,8 @@ const testGetIndexOfPlayerWhoIsOccupyingRectangleOfSizeTwoByTwoForEveryPlayer =
       IndexOfTestingSlot.WestOfNorthwest,
       IndexOfTestingSlot.CenterOfNorthwest,
     ],
-    initialColumnIndex: 0,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 0,
+    initialIndexOfRow: 0,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -76,8 +76,8 @@ const testGetIndexOfPlayerWhoIsOccupyingRectangleOfSizeTwoByTwoForEveryPlayer =
       IndexOfTestingSlot.CenterOfNorth,
       IndexOfTestingSlot.EastOfNorth,
     ],
-    initialColumnIndex: 4,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 4,
+    initialIndexOfRow: 0,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -105,8 +105,8 @@ const testGetIndexOfPlayerWhoIsOccupyingRectangleOfSizeTwoByTwoForEveryPlayer =
       IndexOfTestingSlot.CenterOfNortheast,
       IndexOfTestingSlot.EastOfNortheast,
     ],
-    initialColumnIndex: 7,
-    initialRowIndex: 0,
+    initialIndexOfColumn: 7,
+    initialIndexOfRow: 0,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -136,8 +136,8 @@ const testGetIndexOfPlayerWhoIsOccupyingRectangleOfSizeTwoByTwoForEveryPlayer =
       IndexOfTestingSlot.SouthwestOfWest,
       IndexOfTestingSlot.SouthOfWest,
     ],
-    initialColumnIndex: 0,
-    initialRowIndex: 4,
+    initialIndexOfColumn: 0,
+    initialIndexOfRow: 4,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -165,8 +165,8 @@ const testGetIndexOfPlayerWhoIsOccupyingRectangleOfSizeTwoByTwoForEveryPlayer =
       IndexOfTestingSlot.SouthOfCenter,
       IndexOfTestingSlot.SoutheastOfCenter,
     ],
-    initialColumnIndex: 4,
-    initialRowIndex: 4,
+    initialIndexOfColumn: 4,
+    initialIndexOfRow: 4,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -194,8 +194,8 @@ const testGetIndexOfPlayerWhoIsOccupyingRectangleOfSizeTwoByTwoForEveryPlayer =
       IndexOfTestingSlot.SouthOfEast,
       IndexOfTestingSlot.SoutheastOfEast,
     ],
-    initialColumnIndex: 7,
-    initialRowIndex: 4,
+    initialIndexOfColumn: 7,
+    initialIndexOfRow: 4,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -225,8 +225,8 @@ const testGetIndexOfPlayerWhoIsOccupyingRectangleOfSizeTwoByTwoForEveryPlayer =
       IndexOfTestingSlot.SouthwestOfSouthwest,
       IndexOfTestingSlot.SouthOfSouthwest,
     ],
-    initialColumnIndex: 0,
-    initialRowIndex: 7,
+    initialIndexOfColumn: 0,
+    initialIndexOfRow: 7,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -254,8 +254,8 @@ const testGetIndexOfPlayerWhoIsOccupyingRectangleOfSizeTwoByTwoForEveryPlayer =
       IndexOfTestingSlot.SouthOfSouth,
       IndexOfTestingSlot.SoutheastOfSouth,
     ],
-    initialColumnIndex: 4,
-    initialRowIndex: 7,
+    initialIndexOfColumn: 4,
+    initialIndexOfRow: 7,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
@@ -283,8 +283,8 @@ const testGetIndexOfPlayerWhoIsOccupyingRectangleOfSizeTwoByTwoForEveryPlayer =
       IndexOfTestingSlot.SouthOfSoutheast,
       IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
-    initialColumnIndex: 7,
-    initialRowIndex: 7,
+    initialIndexOfColumn: 7,
+    initialIndexOfRow: 7,
     playersShouldBeOccupyingShapes: [
       {
         indexOfPlayer: null,
