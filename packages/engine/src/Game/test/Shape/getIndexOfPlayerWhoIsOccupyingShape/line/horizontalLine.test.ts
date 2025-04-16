@@ -1,5 +1,6 @@
 import type { Integer } from "../../../../../types.js";
 import { IndexOfTestingPlayer } from "../../../Player/setup.js";
+import type { Line } from "../../../Shape.js";
 import { IndexOfTestingSlot } from "../../../Slot/setup.js";
 import {
   type PlayerShouldBeOccupyingShape,
@@ -17,7 +18,7 @@ const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
   initialColumnIndex: Integer;
   initialRowIndex: Integer;
   playersShouldBeOccupyingShapes: PlayerShouldBeOccupyingShape[];
-  size: Integer;
+  size: Line["size"];
 }): void => {
   testGetIndexOfPlayerWhoIsOccupyingShapeForEveryPlayer({
     indexesOfSlots,

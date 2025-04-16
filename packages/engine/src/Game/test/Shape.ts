@@ -1,7 +1,6 @@
 import { INCREMENT_ONE } from "../../constants.js";
 import type { Integer } from "../../types.js";
 import type { Points } from "../State.js";
-import { COLUMN_LENGTH, ROW_LENGTH } from "./Game.js";
 import type { IndexOfTestingPlayer } from "./Player/setup.js";
 import TestingSlot from "./Slot.js";
 
