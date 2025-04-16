@@ -40,6 +40,24 @@ const formatDirection = (direction: Line["direction"]): string => {
   }
 };
 
+const getNameAndFormattedSizeOfShape = (
+  shape: Shape,
+): {
+  nameOfShape: string;
+  sizeOfShape: string;
+} => {
+  if (shape.type === "line") {
+    return {
+      nameOfShape: formatDirection(shape.direction),
+      sizeOfShape: shape.size.toString(),
+    };
+  }
+  return {
+    nameOfShape: "rectangle",
+    sizeOfShape: `${shape.horizontalSize}x${shape.verticalSize}`,
+  };
+};
+
 const calculateIndexesOfShapeForHorizontalLine = ({
   columnLength,
   initialColumnIndex,
@@ -322,6 +340,14 @@ const getIndexOfPlayerWhoIsOccupyingShape = ({
     shape,
   });
 
+  if (
+    (shape.type === "line" && shape.size !== indexesOfSlots.length) ||
+    (shape.type === "rectangle" &&
+      shape.horizontalSize * shape.verticalSize !== indexesOfSlots.length)
+  ) {
+    return null;
+  }
+
   let indexOfLastOccupyingPlayer: IndexOfTestingPlayer | null = null;
   for (const indexOfSlot of indexesOfSlots) {
     const slot = TestingSlot.getSlot({ indexOfSlot, slots });
@@ -344,174 +370,6 @@ const getIndexOfPlayerWhoIsOccupyingShape = ({
   return indexOfLastOccupyingPlayer;
 };
 
-const getIndexOfPlayerWhoIsOccupyingLine = ({
-  columnLength,
-  direction,
-  initialColumnIndex,
-  initialRowIndex,
-  rowLength,
-  slots,
-}: {
-  columnLength: Integer;
-  direction: Line["direction"];
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
-  rowLength: Integer;
-  slots: TestingSlot[];
-}): ReturnType<typeof getIndexOfPlayerWhoIsOccupyingShape> =>
-  getIndexOfPlayerWhoIsOccupyingShape({
-    columnLength,
-    initialColumnIndex,
-    initialRowIndex,
-    rowLength,
-    shape: {
-      direction,
-      size: 5,
-      type: "line",
-    },
-    slots,
-  });
-
-const getIndexOfPlayerWhoIsOccupyingRectangle = ({
-  columnLength,
-  horizontalSize,
-  initialColumnIndex,
-  initialRowIndex,
-  rowLength,
-  slots,
-  verticalSize,
-}: {
-  columnLength: Integer;
-  horizontalSize: Rectangle["horizontalSize"];
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
-  rowLength: Integer;
-  slots: TestingSlot[];
-  verticalSize: Rectangle["verticalSize"];
-}): ReturnType<typeof getIndexOfPlayerWhoIsOccupyingShape> =>
-  getIndexOfPlayerWhoIsOccupyingShape({
-    columnLength,
-    initialColumnIndex,
-    initialRowIndex,
-    rowLength,
-    shape: {
-      horizontalSize,
-      type: "rectangle",
-      verticalSize,
-    },
-    slots,
-  });
-
-const getIndexOfPlayerWhoIsOccupyingHorizontalLine = ({
-  initialColumnIndex,
-  initialRowIndex,
-  slots,
-}: {
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
-  slots: TestingSlot[];
-}): ReturnType<typeof getIndexOfPlayerWhoIsOccupyingShape> =>
-  getIndexOfPlayerWhoIsOccupyingLine({
-    columnLength: COLUMN_LENGTH,
-    direction: "horizontal",
-    initialColumnIndex,
-    initialRowIndex,
-    rowLength: ROW_LENGTH,
-    slots,
-  });
-
-const getIndexOfPlayerWhoIsOccupyingVerticalLine = ({
-  initialColumnIndex,
-  initialRowIndex,
-  slots,
-}: {
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
-  slots: TestingSlot[];
-}): ReturnType<typeof getIndexOfPlayerWhoIsOccupyingShape> =>
-  getIndexOfPlayerWhoIsOccupyingLine({
-    columnLength: COLUMN_LENGTH,
-    direction: "vertical",
-    initialColumnIndex,
-    initialRowIndex,
-    rowLength: ROW_LENGTH,
-    slots,
-  });
-
-const getIndexOfPlayerWhoIsOccupyingPrincipalDiagonal = ({
-  initialColumnIndex,
-  initialRowIndex,
-  slots,
-}: {
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
-  slots: TestingSlot[];
-}): ReturnType<typeof getIndexOfPlayerWhoIsOccupyingShape> =>
-  getIndexOfPlayerWhoIsOccupyingLine({
-    columnLength: COLUMN_LENGTH,
-    direction: "principalDiagonal",
-    initialColumnIndex,
-    initialRowIndex,
-    rowLength: ROW_LENGTH,
-    slots,
-  });
-
-const getIndexOfPlayerWhoIsOccupyingSecondaryDiagonal = ({
-  initialColumnIndex,
-  initialRowIndex,
-  slots,
-}: {
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
-  slots: TestingSlot[];
-}): ReturnType<typeof getIndexOfPlayerWhoIsOccupyingShape> =>
-  getIndexOfPlayerWhoIsOccupyingLine({
-    columnLength: COLUMN_LENGTH,
-    direction: "secondaryDiagonal",
-    initialColumnIndex,
-    initialRowIndex,
-    rowLength: ROW_LENGTH,
-    slots,
-  });
-
-const getIndexOfPlayerWhoIsOccupyingSquareOfOrderTwo = ({
-  initialColumnIndex,
-  initialRowIndex,
-  slots,
-}: {
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
-  slots: TestingSlot[];
-}): ReturnType<typeof getIndexOfPlayerWhoIsOccupyingShape> =>
-  getIndexOfPlayerWhoIsOccupyingRectangle({
-    columnLength: COLUMN_LENGTH,
-    horizontalSize: 2,
-    initialColumnIndex,
-    initialRowIndex,
-    rowLength: ROW_LENGTH,
-    slots,
-    verticalSize: 2,
-  });
-
-const getIndexOfPlayerWhoIsOccupyingSquareOfOrderThree = ({
-  initialColumnIndex,
-  initialRowIndex,
-  slots,
-}: {
-  initialColumnIndex: Integer;
-  initialRowIndex: Integer;
-  slots: TestingSlot[];
-}): ReturnType<typeof getIndexOfPlayerWhoIsOccupyingShape> =>
-  getIndexOfPlayerWhoIsOccupyingRectangle({
-    columnLength: COLUMN_LENGTH,
-    horizontalSize: 3,
-    initialColumnIndex,
-    initialRowIndex,
-    rowLength: ROW_LENGTH,
-    slots,
-    verticalSize: 3,
-  });
-
 const adjustScore = ({
   indexOfPlayerWhoIsOccupyingShape,
   score,
@@ -533,10 +391,6 @@ export {
   adjustScore,
   formatDirection,
   getIndexesOfShape,
-  getIndexOfPlayerWhoIsOccupyingHorizontalLine,
-  getIndexOfPlayerWhoIsOccupyingPrincipalDiagonal,
-  getIndexOfPlayerWhoIsOccupyingSecondaryDiagonal,
-  getIndexOfPlayerWhoIsOccupyingSquareOfOrderThree,
-  getIndexOfPlayerWhoIsOccupyingSquareOfOrderTwo,
-  getIndexOfPlayerWhoIsOccupyingVerticalLine,
+  getIndexOfPlayerWhoIsOccupyingShape,
+  getNameAndFormattedSizeOfShape,
 };
