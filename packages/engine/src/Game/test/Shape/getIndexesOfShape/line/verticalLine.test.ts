@@ -23,6 +23,8 @@ const testGetIndexesOfShapeForVerticalLine = ({
   });
 };
 
+/* Row -5 */
+
 ((): void => {
   testGetIndexesOfShapeForVerticalLine({
     expectedIndexesOfShape: [],
@@ -49,6 +51,8 @@ const testGetIndexesOfShapeForVerticalLine = ({
     size: 5,
   });
 })();
+
+/* Row -4 */
 
 ((): void => {
   testGetIndexesOfShapeForVerticalLine({
@@ -76,6 +80,8 @@ const testGetIndexesOfShapeForVerticalLine = ({
     size: 5,
   });
 })();
+
+/* Row -3 */
 
 ((): void => {
   testGetIndexesOfShapeForVerticalLine({
@@ -112,6 +118,8 @@ const testGetIndexesOfShapeForVerticalLine = ({
     size: 5,
   });
 })();
+
+/* Row -2 */
 
 ((): void => {
   testGetIndexesOfShapeForVerticalLine({
@@ -151,6 +159,8 @@ const testGetIndexesOfShapeForVerticalLine = ({
     size: 5,
   });
 })();
+
+/* Row -1 */
 
 ((): void => {
   testGetIndexesOfShapeForVerticalLine({
@@ -193,6 +203,8 @@ const testGetIndexesOfShapeForVerticalLine = ({
     size: 5,
   });
 })();
+
+/* Row 0 */
 
 ((): void => {
   testGetIndexesOfShapeForVerticalLine({
@@ -248,6 +260,8 @@ const testGetIndexesOfShapeForVerticalLine = ({
   });
 })();
 
+/* Row 4 */
+
 ((): void => {
   testGetIndexesOfShapeForVerticalLine({
     expectedIndexesOfShape: [
@@ -293,6 +307,8 @@ const testGetIndexesOfShapeForVerticalLine = ({
   });
 })();
 
+/* Row 5 */
+
 ((): void => {
   testGetIndexesOfShapeForVerticalLine({
     expectedIndexesOfShape: [
@@ -335,6 +351,8 @@ const testGetIndexesOfShapeForVerticalLine = ({
   });
 })();
 
+/* Row 6 */
+
 ((): void => {
   testGetIndexesOfShapeForVerticalLine({
     expectedIndexesOfShape: [
@@ -374,6 +392,8 @@ const testGetIndexesOfShapeForVerticalLine = ({
   });
 })();
 
+/* Row 7 */
+
 ((): void => {
   testGetIndexesOfShapeForVerticalLine({
     expectedIndexesOfShape: [
@@ -410,6 +430,8 @@ const testGetIndexesOfShapeForVerticalLine = ({
   });
 })();
 
+/* Row 8 */
+
 ((): void => {
   testGetIndexesOfShapeForVerticalLine({
     expectedIndexesOfShape: [IndexOfTestingSlot.SouthwestOfSouthwest],
@@ -436,6 +458,8 @@ const testGetIndexesOfShapeForVerticalLine = ({
     size: 5,
   });
 })();
+
+/* Row 9 */
 
 ((): void => {
   testGetIndexesOfShapeForVerticalLine({
