@@ -6,7 +6,7 @@ import {
   testGetIndexOfPlayerWhoIsOccupyingShapeForEveryPlayer,
 } from "../getIndexOfPlayerWhoIsOccupyingShape.js";
 
-const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
+const testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer = ({
   indexesOfSlots,
   initialColumnIndex,
   initialRowIndex,
@@ -35,7 +35,7 @@ const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
 /* Row -1 */
 
 ((): void => {
-  testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer({
+  testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.NorthwestOfNorthwest,
       IndexOfTestingSlot.WestOfNorthwest,
@@ -64,7 +64,7 @@ const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
 })();
 
 ((): void => {
-  testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer({
+  testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.NorthwestOfNorthwest,
       IndexOfTestingSlot.WestOfNorthwest,
@@ -93,7 +93,7 @@ const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
 })();
 
 ((): void => {
-  testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer({
+  testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.NorthOfNorth,
       IndexOfTestingSlot.CenterOfNorth,
@@ -122,7 +122,7 @@ const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
 })();
 
 ((): void => {
-  testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer({
+  testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.NortheastOfNortheast,
       IndexOfTestingSlot.EastOfNortheast,
@@ -151,7 +151,7 @@ const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
 })();
 
 ((): void => {
-  testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer({
+  testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.NortheastOfNortheast,
       IndexOfTestingSlot.EastOfNortheast,
@@ -182,7 +182,7 @@ const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
 /* Row 0 */
 
 ((): void => {
-  testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer({
+  testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.NorthwestOfNorthwest,
       IndexOfTestingSlot.WestOfNorthwest,
@@ -211,7 +211,7 @@ const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
 })();
 
 ((): void => {
-  testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer({
+  testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.NorthwestOfNorthwest,
       IndexOfTestingSlot.WestOfNorthwest,
@@ -240,7 +240,7 @@ const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
 })();
 
 ((): void => {
-  testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer({
+  testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.NorthOfNorth,
       IndexOfTestingSlot.CenterOfNorth,
@@ -269,7 +269,7 @@ const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
 })();
 
 ((): void => {
-  testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer({
+  testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.NortheastOfNortheast,
       IndexOfTestingSlot.EastOfNortheast,
@@ -298,7 +298,7 @@ const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
 })();
 
 ((): void => {
-  testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer({
+  testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.NortheastOfNortheast,
       IndexOfTestingSlot.EastOfNortheast,
@@ -329,7 +329,7 @@ const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
 /* Row 4 */
 
 ((): void => {
-  testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer({
+  testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.NorthwestOfNorthwest,
       IndexOfTestingSlot.WestOfNorthwest,
@@ -358,7 +358,7 @@ const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
 })();
 
 ((): void => {
-  testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer({
+  testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.WestOfWest,
       IndexOfTestingSlot.SouthwestOfWest,
@@ -387,7 +387,7 @@ const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
 })();
 
 ((): void => {
-  testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer({
+  testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.CenterOfCenter,
       IndexOfTestingSlot.SouthOfCenter,
@@ -416,7 +416,7 @@ const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
 })();
 
 ((): void => {
-  testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer({
+  testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.EastOfEast,
       IndexOfTestingSlot.SoutheastOfEast,
@@ -445,7 +445,7 @@ const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
 })();
 
 ((): void => {
-  testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer({
+  testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.EastOfEast,
       IndexOfTestingSlot.SoutheastOfEast,
@@ -476,7 +476,7 @@ const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
 /* Row 5 */
 
 ((): void => {
-  testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer({
+  testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.NorthwestOfNorthwest,
       IndexOfTestingSlot.WestOfNorthwest,
@@ -505,7 +505,7 @@ const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
 })();
 
 ((): void => {
-  testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer({
+  testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.WestOfWest,
       IndexOfTestingSlot.SouthwestOfWest,
@@ -534,7 +534,7 @@ const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
 })();
 
 ((): void => {
-  testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer({
+  testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.CenterOfCenter,
       IndexOfTestingSlot.SouthOfCenter,
@@ -563,7 +563,7 @@ const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
 })();
 
 ((): void => {
-  testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer({
+  testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.EastOfEast,
       IndexOfTestingSlot.SoutheastOfEast,
@@ -592,7 +592,7 @@ const testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer = ({
 })();
 
 ((): void => {
-  testGetIndexOfPlayerWhoIsOccupyingHorizontalLineForEveryPlayer({
+  testGetIndexOfPlayerWhoIsOccupyingVerticalLineForEveryPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.EastOfEast,
       IndexOfTestingSlot.SoutheastOfEast,

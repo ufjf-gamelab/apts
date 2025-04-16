@@ -710,6 +710,21 @@ const testGetIndexesOfShapeForPrincipalDiagonal = ({
 ((): void => {
   testGetIndexesOfShapeForPrincipalDiagonal({
     expectedIndexesOfShape: [
+      IndexOfTestingSlot.WestOfWest,
+      IndexOfTestingSlot.SouthOfWest,
+      IndexOfTestingSlot.NortheastOfSouthwest,
+      IndexOfTestingSlot.WestOfSouth,
+      IndexOfTestingSlot.SouthOfSouth,
+    ],
+    initialColumnIndex: 0,
+    initialRowIndex: 4,
+    size: 5,
+  });
+})();
+
+((): void => {
+  testGetIndexesOfShapeForPrincipalDiagonal({
+    expectedIndexesOfShape: [
       IndexOfTestingSlot.CenterOfCenter,
       IndexOfTestingSlot.SoutheastOfCenter,
       IndexOfTestingSlot.NorthwestOfSoutheast,
