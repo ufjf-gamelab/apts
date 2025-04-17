@@ -61,8 +61,8 @@ class TestingGame extends Game<
 
       const updateScoreConsideringShape = (shape: Shape): void => {
         incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots({
-          indexOfColumn,
-          indexOfRow,
+          initialIndexOfColumn: indexOfColumn,
+          initialIndexOfRow: indexOfRow,
           score,
           shape,
           slots,

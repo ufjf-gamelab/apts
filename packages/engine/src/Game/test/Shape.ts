@@ -43,19 +43,32 @@ const formatDirection = (direction: Line["direction"]): string => {
 const getNameAndFormattedSizeOfShape = (
   shape: Shape,
 ): {
-  nameOfShape: string;
-  sizeOfShape: string;
+  name: string;
+  size: string;
 } => {
   if (shape.type === "line") {
     return {
-      nameOfShape: formatDirection(shape.direction),
-      sizeOfShape: shape.size.toString(),
+      name: formatDirection(shape.direction),
+      size: shape.size.toString(),
     };
   }
   return {
-    nameOfShape: "rectangle",
-    sizeOfShape: `${shape.horizontalSize}x${shape.verticalSize}`,
+    name: "rectangle",
+    size: `${shape.horizontalSize}x${shape.verticalSize}`,
   };
+};
+
+const getFormattedDescriptorOfShape = ({
+  initialIndexOfColumn,
+  initialIndexOfRow,
+  shape,
+}: {
+  initialIndexOfColumn: Integer;
+  initialIndexOfRow: Integer;
+  shape: Shape;
+}): string => {
+  const { name, size } = getNameAndFormattedSizeOfShape(shape);
+  return `${name} of size ${size} beginning on row ${initialIndexOfRow} and column ${initialIndexOfColumn}`;
 };
 
 const calculateIndexesOfShapeForHorizontalLine = ({
@@ -416,8 +429,8 @@ const incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots = ({
 export type { Line, Rectangle, Shape };
 export {
   formatDirection,
+  getFormattedDescriptorOfShape,
   getIndexesOfShape,
   getIndexOfPlayerWhoIsOccupyingShape,
-  getNameAndFormattedSizeOfShape,
   incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots,
 };

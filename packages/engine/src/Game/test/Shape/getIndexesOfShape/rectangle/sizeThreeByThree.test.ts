@@ -184,6 +184,26 @@ const testGetIndexesOfShapeForRectangleOfSizeThreeByThree = ({
   });
 })();
 
+/* Row 3 */
+
+((): void => {
+  testGetIndexesOfShapeForRectangleOfSizeThreeByThree({
+    expectedIndexesOfShape: [
+      IndexOfTestingSlot.NorthwestOfCenter,
+      IndexOfTestingSlot.NorthOfCenter,
+      IndexOfTestingSlot.NortheastOfCenter,
+      IndexOfTestingSlot.WestOfCenter,
+      IndexOfTestingSlot.CenterOfCenter,
+      IndexOfTestingSlot.EastOfCenter,
+      IndexOfTestingSlot.SouthwestOfCenter,
+      IndexOfTestingSlot.SouthOfCenter,
+      IndexOfTestingSlot.SoutheastOfCenter,
+    ],
+    initialIndexOfColumn: 3,
+    initialIndexOfRow: 3,
+  });
+})();
+
 /* Row 4 */
 
 ((): void => {

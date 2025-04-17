@@ -1,8 +1,9 @@
 import type { Integer } from "../../../../../types.js";
 import {
-  formatDirection,
+  getFormattedDescriptorOfShape,
   type getIndexesOfShape,
   type Line,
+  type Shape,
 } from "../../../Shape.js";
 import { getIndexesOfShapeShouldReturn } from "../getIndexesOfShape.js";
 
@@ -19,16 +20,21 @@ const testGetIndexesOfShapeForLine = ({
   initialIndexOfRow: Integer;
   size: Line["size"];
 }): void => {
+  const shape: Shape = {
+    direction,
+    size,
+    type: "line",
+  };
   getIndexesOfShapeShouldReturn({
     expectedIndexesOfShape,
     initialIndexOfColumn,
     initialIndexOfRow,
-    shape: {
-      direction,
-      size,
-      type: "line",
-    },
-    testDescriptor: `${formatDirection(direction)} of size ${size} beginning on row ${initialIndexOfRow} and column ${initialIndexOfColumn}`,
+    shape,
+    testDescriptor: getFormattedDescriptorOfShape({
+      initialIndexOfColumn,
+      initialIndexOfRow,
+      shape,
+    }),
   });
 };
 

@@ -58,13 +58,13 @@ abstract class Game<
 
   protected static setSlotInEncodedState({
     channel,
-    indexOfColumn,
     encodedState,
+    indexOfColumn,
     indexOfRow,
   }: {
     channel: Channel;
-    indexOfColumn: Integer;
     encodedState: EncodedState;
+    indexOfColumn: Integer;
     indexOfRow: Integer;
   }): void {
     const row = encodedState[indexOfRow];

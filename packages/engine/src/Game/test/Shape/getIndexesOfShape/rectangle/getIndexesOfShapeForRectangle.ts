@@ -1,5 +1,10 @@
 import type { Integer } from "../../../../../types.js";
-import type { getIndexesOfShape, Rectangle } from "../../../Shape.js";
+import {
+  getFormattedDescriptorOfShape,
+  type getIndexesOfShape,
+  type Rectangle,
+  type Shape,
+} from "../../../Shape.js";
 import { getIndexesOfShapeShouldReturn } from "../getIndexesOfShape.js";
 
 const testGetIndexesOfShapeForRectangle = ({
@@ -15,16 +20,21 @@ const testGetIndexesOfShapeForRectangle = ({
   initialIndexOfRow: Integer;
   verticalSize: Rectangle["verticalSize"];
 }): void => {
+  const shape: Shape = {
+    horizontalSize,
+    type: "rectangle",
+    verticalSize,
+  };
   getIndexesOfShapeShouldReturn({
     expectedIndexesOfShape,
     initialIndexOfColumn,
     initialIndexOfRow,
-    shape: {
-      horizontalSize,
-      type: "rectangle",
-      verticalSize,
-    },
-    testDescriptor: `rectangle of size ${horizontalSize}x${verticalSize} beginning on row ${initialIndexOfRow} and column ${initialIndexOfColumn}`,
+    shape,
+    testDescriptor: getFormattedDescriptorOfShape({
+      initialIndexOfColumn,
+      initialIndexOfRow,
+      shape,
+    }),
   });
 };
 

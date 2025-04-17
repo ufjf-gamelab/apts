@@ -3,11 +3,11 @@ import { expect, test } from "vitest";
 import type { Integer } from "../../../../types.js";
 import { COLUMN_LENGTH, ROW_LENGTH } from "../../Game.js";
 import {
+  getFormattedDescriptorOfShape,
   getIndexOfPlayerWhoIsOccupyingShape,
-  getNameAndFormattedSizeOfShape,
   type Shape,
 } from "../../Shape.js";
-import type TestingSlot from "../../Slot.js";
+import { slotsAsString, type default as TestingSlot } from "../../Slot.js";
 import { type IndexOfTestingSlot } from "../../Slot/setup.js";
 import {
   fillSlots,
@@ -27,11 +27,7 @@ const getIndexOfPlayerWhoIsOccupyingShapeShouldReturn = ({
   shape: Shape;
   slots: TestingSlot[];
 }): void => {
-  const slotsAsString = slots
-    .map(slot => slot.getIndexOfOccupyingPlayer())
-    .toString();
-
-  test(`${testDescriptor}: getIndexOfPlayerWhoIsOccupyingShape({slots: [${slotsAsString}]}) should return {${expectedIndexOfPlayer}}`, () => {
+  test(`${testDescriptor}: getIndexOfPlayerWhoIsOccupyingShape({slots: [${slotsAsString(slots)}]}) should return {${expectedIndexOfPlayer}}`, () => {
     const indexOfShape = getIndexOfPlayerWhoIsOccupyingShape({
       columnLength: COLUMN_LENGTH,
       initialIndexOfColumn,
@@ -78,14 +74,17 @@ const testGetIndexOfPlayerWhoIsOccupyingShapeForEveryPlayer = ({
       slots,
     });
 
-    const { nameOfShape, sizeOfShape } = getNameAndFormattedSizeOfShape(shape);
     getIndexOfPlayerWhoIsOccupyingShapeShouldReturn({
       expectedIndexOfPlayer: shouldBeOccupyingShape ? indexOfPlayer : null,
       initialIndexOfColumn,
       initialIndexOfRow,
       shape,
       slots,
-      testDescriptor: `${nameOfShape} of size ${sizeOfShape} beginning on row ${initialIndexOfRow} and column ${initialIndexOfColumn}`,
+      testDescriptor: getFormattedDescriptorOfShape({
+        initialIndexOfColumn,
+        initialIndexOfRow,
+        shape,
+      }),
     });
   };
 

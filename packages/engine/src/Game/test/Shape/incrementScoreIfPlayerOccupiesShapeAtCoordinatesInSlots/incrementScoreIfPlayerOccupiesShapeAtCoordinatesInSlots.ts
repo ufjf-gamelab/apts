@@ -3,8 +3,8 @@ import { expect, test } from "vitest";
 import type { Integer } from "../../../../types.js";
 import type { Points } from "../../../State.js";
 import { incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots } from "../../Game.js";
-import { getNameAndFormattedSizeOfShape, type Shape } from "../../Shape.js";
-import type TestingSlot from "../../Slot.js";
+import { getFormattedDescriptorOfShape, type Shape } from "../../Shape.js";
+import { slotsAsString, type default as TestingSlot } from "../../Slot.js";
 import { type TestShapeParams } from "../setup.js";
 
 const ONE_POINT: Integer = 1;
@@ -25,10 +25,7 @@ const incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlotsShouldModify = ({
   shape: Shape;
   slots: TestingSlot[];
 }): void => {
-  const slotsAsString = slots
-    .map(slot => slot.getIndexOfOccupyingPlayer())
-    .toString();
-  test(`${testDescriptor}: incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots({slots: [${slotsAsString}]}) should modify score to {${expectedScore.toString()}}`, () => {
+  test(`${testDescriptor}: incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots({slots: [${slotsAsString(slots)}]}) should modify score to {${expectedScore.toString()}}`, () => {
     incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots({
       initialIndexOfColumn,
       initialIndexOfRow,
@@ -56,7 +53,6 @@ const testIncrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots = ({
   shape: Shape;
   slots: TestingSlot[];
 }): void => {
-  const { nameOfShape, sizeOfShape } = getNameAndFormattedSizeOfShape(shape);
   incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlotsShouldModify({
     expectedScore,
     initialIndexOfColumn,
@@ -64,7 +60,11 @@ const testIncrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots = ({
     score,
     shape,
     slots,
-    testDescriptor: `${nameOfShape} of size ${sizeOfShape} beginning on row ${initialIndexOfRow} and column ${initialIndexOfColumn}`,
+    testDescriptor: getFormattedDescriptorOfShape({
+      initialIndexOfColumn,
+      initialIndexOfRow,
+      shape,
+    }),
   });
 };
 
