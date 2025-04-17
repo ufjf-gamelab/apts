@@ -3,7 +3,7 @@ import { expect, test } from "vitest";
 import type TestingGame from "../Game.js";
 import { IndexOfTestingPlayer } from "../Player/setup.js";
 import type TestingState from "../State.js";
-import { setupGame, type TestGameParams } from "./setup.js";
+import { createCommonGame, type TestGameParams } from "./setup.js";
 
 const getIndexOfNextPlayerShouldReturn = ({
   expectedIndexOfPlayer,
@@ -23,7 +23,7 @@ const getIndexOfNextPlayerShouldReturn = ({
 };
 
 const testGetNextIndexOfPlayerForCommonGameAndInitialState = (): void => {
-  const { game } = setupGame();
+  const { game } = createCommonGame();
   getIndexOfNextPlayerShouldReturn({
     expectedIndexOfPlayer: IndexOfTestingPlayer.Two,
     game,

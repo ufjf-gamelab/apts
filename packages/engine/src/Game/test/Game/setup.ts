@@ -38,7 +38,7 @@ const createGame = ({
   };
 };
 
-const setupGame = (): CreatedGameAndRelatedData => {
+const createCommonGame = (): CreatedGameAndRelatedData => {
   const players = createPlayers();
   const moves = createMoves();
   return createGame({
@@ -48,4 +48,4 @@ const setupGame = (): CreatedGameAndRelatedData => {
 };
 
 export type { TestGameParams };
-export { createGame, setupGame };
+export { createCommonGame, createGame };

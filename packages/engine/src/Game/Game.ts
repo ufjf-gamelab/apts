@@ -88,8 +88,8 @@ abstract class Game<
 
   public abstract getInitialState(): S;
 
-  public getMove(index: IndexOfMove): M | null {
-    const move = this.moves[index];
+  public getMove(indexOfMove: IndexOfMove): M | null {
+    const move = this.moves[indexOfMove];
     if (typeof move === "undefined") {
       return null;
     }
@@ -104,8 +104,8 @@ abstract class Game<
     return this.name;
   }
 
-  public getPlayer(playerIndex: IndexOfPlayer): null | P {
-    const player = this.players[playerIndex];
+  public getPlayer(indexOfPlayer: IndexOfPlayer): null | P {
+    const player = this.players[indexOfPlayer];
     if (typeof player === "undefined") {
       return null;
     }
@@ -130,7 +130,7 @@ abstract class Game<
 
   public abstract getValidMoves({ state }: { state: S }): readonly M[];
 
-  public abstract play(move: M, state: S): S;
+  public abstract play(indexOfMove: IndexOfMove, state: S): S;
 }
 
 export type { GameParams };

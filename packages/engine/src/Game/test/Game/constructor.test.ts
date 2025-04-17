@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
 
 import TestingGame from "../Game.js";
-import { setupGame, type TestGameParams } from "./setup.js";
+import { createCommonGame, type TestGameParams } from "./setup.js";
 
 const shouldBeAnInstanceOfItsClass = ({
   game,
@@ -13,7 +13,7 @@ const shouldBeAnInstanceOfItsClass = ({
 };
 
 const testInstanceForCommonGame = (): void => {
-  const { game } = setupGame();
+  const { game } = createCommonGame();
   shouldBeAnInstanceOfItsClass({ game, testDescriptor: "common" });
 };
 

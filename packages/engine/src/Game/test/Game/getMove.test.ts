@@ -3,7 +3,7 @@ import { expect, test } from "vitest";
 import type TestingGame from "../Game.js";
 import TestingMove from "../Move.js";
 import type { IndexOfTestingMove } from "../Move/setup.js";
-import { setupGame, type TestGameParams } from "./setup.js";
+import { createCommonGame, type TestGameParams } from "./setup.js";
 
 const getMoveShouldReturn = ({
   expectedMove,
@@ -27,7 +27,7 @@ const testGetMoveForCommonGame = (): void => {
   const {
     dataRelatedToCreatedGame: { moves },
     game,
-  } = setupGame();
+  } = createCommonGame();
   moves.forEach(
     ({ dataRelatedToCreatedMove: { index, nameOfIndex }, move }) => {
       getMoveShouldReturn({

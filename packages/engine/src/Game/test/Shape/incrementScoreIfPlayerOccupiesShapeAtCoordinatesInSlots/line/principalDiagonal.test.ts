@@ -9,12 +9,8 @@ import {
   createSlotsForInitialState,
   IndexOfTestingSlot,
 } from "../../../Slot/setup.js";
-import { INITIAL_POINTS } from "../../../State.js";
-import { getSlotsFilledByPlayer } from "../../setup.js";
-import {
-  ONE_POINT,
-  testIncrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots,
-} from "../incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots.js";
+import { AmountOfPoints, getSlotsFilledByPlayer } from "../../setup.js";
+import { testIncrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots } from "../incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots.js";
 
 const testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots =
   ({
@@ -53,10 +49,10 @@ const testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots =
     createSlotsForInitialState(),
   );
   testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
-    expectedScore: [INITIAL_POINTS, INITIAL_POINTS],
+    expectedScore: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     initialIndexOfColumn: 0,
     initialIndexOfRow: 0,
-    score: [INITIAL_POINTS, INITIAL_POINTS],
+    score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     size: SizeOfPatternsUsedForCalculatingPoints.Line,
     slots,
   });
@@ -73,10 +69,10 @@ const testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots =
     indexOfPlayer: IndexOfTestingPlayer.One,
   });
   testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
-    expectedScore: [INITIAL_POINTS, INITIAL_POINTS],
+    expectedScore: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     initialIndexOfColumn: 0,
     initialIndexOfRow: 0,
-    score: [INITIAL_POINTS, INITIAL_POINTS],
+    score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     size: SizeOfPatternsUsedForCalculatingPoints.Line,
     slots,
   });
@@ -94,10 +90,10 @@ const testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots =
     indexOfPlayer: IndexOfTestingPlayer.One,
   });
   testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
-    expectedScore: [ONE_POINT, INITIAL_POINTS],
+    expectedScore: [AmountOfPoints.One, AmountOfPoints.Zero],
     initialIndexOfColumn: 0,
     initialIndexOfRow: 0,
-    score: [INITIAL_POINTS, INITIAL_POINTS],
+    score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     size: SizeOfPatternsUsedForCalculatingPoints.Line,
     slots,
   });
@@ -115,10 +111,10 @@ const testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots =
     indexOfPlayer: IndexOfTestingPlayer.Two,
   });
   testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
-    expectedScore: [INITIAL_POINTS, ONE_POINT],
+    expectedScore: [AmountOfPoints.Zero, AmountOfPoints.One],
     initialIndexOfColumn: 0,
     initialIndexOfRow: 0,
-    score: [INITIAL_POINTS, INITIAL_POINTS],
+    score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     size: SizeOfPatternsUsedForCalculatingPoints.Line,
     slots,
   });
@@ -138,10 +134,10 @@ const testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots =
     indexOfPlayer: IndexOfTestingPlayer.One,
   });
   testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
-    expectedScore: [INITIAL_POINTS, INITIAL_POINTS],
+    expectedScore: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     initialIndexOfColumn: 1,
     initialIndexOfRow: 1,
-    score: [INITIAL_POINTS, INITIAL_POINTS],
+    score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     size: SizeOfPatternsUsedForCalculatingPoints.Line,
     slots,
   });
@@ -160,10 +156,10 @@ const testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots =
     indexOfPlayer: IndexOfTestingPlayer.One,
   });
   testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
-    expectedScore: [ONE_POINT, INITIAL_POINTS],
+    expectedScore: [AmountOfPoints.One, AmountOfPoints.Zero],
     initialIndexOfColumn: 1,
     initialIndexOfRow: 1,
-    score: [INITIAL_POINTS, INITIAL_POINTS],
+    score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     size: SizeOfPatternsUsedForCalculatingPoints.Line,
     slots,
   });
@@ -183,10 +179,10 @@ const testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots =
     indexOfPlayer: IndexOfTestingPlayer.One,
   });
   testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
-    expectedScore: [INITIAL_POINTS, INITIAL_POINTS],
+    expectedScore: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     initialIndexOfColumn: 3,
     initialIndexOfRow: 3,
-    score: [INITIAL_POINTS, INITIAL_POINTS],
+    score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     size: SizeOfPatternsUsedForCalculatingPoints.Line,
     slots,
   });
@@ -205,10 +201,10 @@ const testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots =
     indexOfPlayer: IndexOfTestingPlayer.One,
   });
   testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
-    expectedScore: [ONE_POINT, INITIAL_POINTS],
+    expectedScore: [AmountOfPoints.One, AmountOfPoints.Zero],
     initialIndexOfColumn: 3,
     initialIndexOfRow: 3,
-    score: [INITIAL_POINTS, INITIAL_POINTS],
+    score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     size: SizeOfPatternsUsedForCalculatingPoints.Line,
     slots,
   });
@@ -221,10 +217,10 @@ const testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots =
     createSlotsForInitialState(),
   );
   testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
-    expectedScore: [INITIAL_POINTS, INITIAL_POINTS],
+    expectedScore: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     initialIndexOfColumn: 4,
     initialIndexOfRow: 4,
-    score: [INITIAL_POINTS, INITIAL_POINTS],
+    score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     size: SizeOfPatternsUsedForCalculatingPoints.Line,
     slots,
   });
@@ -241,10 +237,10 @@ const testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots =
     indexOfPlayer: IndexOfTestingPlayer.One,
   });
   testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
-    expectedScore: [INITIAL_POINTS, INITIAL_POINTS],
+    expectedScore: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     initialIndexOfColumn: 4,
     initialIndexOfRow: 4,
-    score: [INITIAL_POINTS, INITIAL_POINTS],
+    score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     size: SizeOfPatternsUsedForCalculatingPoints.Line,
     slots,
   });
@@ -262,10 +258,10 @@ const testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots =
     indexOfPlayer: IndexOfTestingPlayer.One,
   });
   testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
-    expectedScore: [ONE_POINT, INITIAL_POINTS],
+    expectedScore: [AmountOfPoints.One, AmountOfPoints.Zero],
     initialIndexOfColumn: 4,
     initialIndexOfRow: 4,
-    score: [INITIAL_POINTS, INITIAL_POINTS],
+    score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     size: SizeOfPatternsUsedForCalculatingPoints.Line,
     slots,
   });
@@ -283,10 +279,10 @@ const testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots =
     indexOfPlayer: IndexOfTestingPlayer.Two,
   });
   testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
-    expectedScore: [INITIAL_POINTS, ONE_POINT],
+    expectedScore: [AmountOfPoints.Zero, AmountOfPoints.One],
     initialIndexOfColumn: 4,
     initialIndexOfRow: 4,
-    score: [INITIAL_POINTS, INITIAL_POINTS],
+    score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     size: SizeOfPatternsUsedForCalculatingPoints.Line,
     slots,
   });

@@ -41,7 +41,7 @@ class TestingSlot extends Slot<
   }
 }
 
-const slotsAsString = (slots: TestingSlot[]): string =>
+const slotsAsString = (slots: readonly TestingSlot[]): string =>
   slots.map(slot => slot.getIndexOfOccupyingPlayer()).toString();
 
 export { TestingSlot as default, slotsAsString };

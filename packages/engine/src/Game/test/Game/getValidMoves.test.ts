@@ -3,7 +3,7 @@ import { expect, test } from "vitest";
 import type TestingGame from "../Game.js";
 import { IndexOfTestingMove } from "../Move/setup.js";
 import type TestingState from "../State.js";
-import { setupGame, type TestGameParams } from "./setup.js";
+import { createCommonGame, type TestGameParams } from "./setup.js";
 
 const getValidMovesShouldReturn = ({
   expectedValidMoves,
@@ -25,7 +25,7 @@ const testFromInitialState = (): void => {
   const {
     dataRelatedToCreatedGame: { moves },
     game,
-  } = setupGame();
+  } = createCommonGame();
   getValidMovesShouldReturn({
     expectedValidMoves: Array.from(moves.values().map(({ move }) => move)),
     game,
@@ -36,7 +36,7 @@ const testFromInitialState = (): void => {
 testFromInitialState();
 
 const testAfterPlayingMoveNorthwestOfNorthwest = (): void => {
-  const { game } = setupGame();
+  const { game } = createCommonGame();
 
   const moveNorthwestOfNorthwest = game.getMove(
     IndexOfTestingMove.NorthwestOfNorthwest,

@@ -2,25 +2,18 @@ import { expect, test } from "vitest";
 
 import { type default as TestingGame } from "../Game.js";
 import { IndexOfTestingPlayer } from "../Player/setup.js";
-import { ONE_POINT } from "../Shape/incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots/incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots.js";
-import { fillSlots, getSlotsFilledByPlayer } from "../Shape/setup.js";
+import {
+  AmountOfPoints,
+  fillSlots,
+  getSlotsFilledByPlayer,
+} from "../Shape/setup.js";
 import { slotsAsString, type default as TestingSlot } from "../Slot.js";
 import {
   convertCreatedSlotsAndRelatedDataToSlots,
   createSlotsForInitialState,
   IndexOfTestingSlot,
 } from "../Slot/setup.js";
-import { INITIAL_POINTS } from "../State.js";
-import { setupGame, type TestGameParams } from "./setup.js";
-
-enum AmountOfPoints {
-  Five = 5,
-  Nine = 9,
-  One = ONE_POINT,
-  Seven = 7,
-  Two = 2,
-  Zero = INITIAL_POINTS,
-}
+import { createCommonGame, type TestGameParams } from "./setup.js";
 
 const calculateScoreShouldReturn = ({
   expectedScore,
@@ -47,7 +40,7 @@ const testCalculateScoreForCommonGame = ({
   slots: TestingSlot[];
   testDescriptor?: string;
 }): void => {
-  const { game } = setupGame();
+  const { game } = createCommonGame();
   calculateScoreShouldReturn({
     expectedScore,
     game,

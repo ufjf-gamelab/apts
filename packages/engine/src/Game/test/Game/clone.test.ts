@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
 
 import TestingGame from "../Game.js";
-import { setupGame, type TestGameParams } from "./setup.js";
+import { createCommonGame, type TestGameParams } from "./setup.js";
 
 const cloneShouldCreateANewInstance = ({
   game,
@@ -16,7 +16,7 @@ const cloneShouldCreateANewInstance = ({
 };
 
 const testCloneForCommonGame = (): void => {
-  const { game } = setupGame();
+  const { game } = createCommonGame();
   cloneShouldCreateANewInstance({ game, testDescriptor: "common" });
 };
 

@@ -7,8 +7,6 @@ import { getFormattedDescriptorOfShape, type Shape } from "../../Shape.js";
 import { slotsAsString, type default as TestingSlot } from "../../Slot.js";
 import { type TestShapeParams } from "../setup.js";
 
-const ONE_POINT: Integer = 1;
-
 const incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlotsShouldModify = ({
   expectedScore,
   initialIndexOfColumn,
@@ -68,7 +66,4 @@ const testIncrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots = ({
   });
 };
 
-export {
-  ONE_POINT,
-  testIncrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots,
-};
+export { testIncrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots };

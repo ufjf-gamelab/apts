@@ -3,6 +3,7 @@ import Game, { type GameParams } from "../Game.js";
 import type { IndexOfPlayer } from "../Player.js";
 import type { Score } from "../State.js";
 import { type default as TestingMove } from "./Move.js";
+import type { IndexOfTestingMove } from "./Move/setup.js";
 import { type default as TestingPlayer } from "./Player.js";
 import type { IndexOfTestingPlayer } from "./Player/setup.js";
 import {
@@ -166,7 +167,15 @@ class TestingGame extends Game<
     });
   }
 
-  public override play(move: TestingMove, state: TestingState): TestingState {
+  public override play(
+    indexOfMove: IndexOfTestingMove,
+    state: TestingState,
+  ): TestingState {
+    const move = this.getMove(indexOfMove);
+    if (move === null) {
+      return state.clone();
+    }
+
     const indexOfSlotInWhichPlacePiece = move.getIndexOfSlotInWhichPlacePiece();
     const indexOfCurrentPlayer = state.getIndexOfPlayer();
 

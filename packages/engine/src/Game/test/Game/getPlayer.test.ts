@@ -3,7 +3,7 @@ import { expect, test } from "vitest";
 import type { IndexOfPlayer } from "../../Player.js";
 import type TestingGame from "../Game.js";
 import TestingPlayer from "../Player.js";
-import { setupGame, type TestGameParams } from "./setup.js";
+import { createCommonGame, type TestGameParams } from "./setup.js";
 
 const getPlayerShouldReturn = ({
   expectedPlayer,
@@ -27,7 +27,7 @@ const testGetPlayerForCommonGame = (): void => {
   const {
     dataRelatedToCreatedGame: { players },
     game,
-  } = setupGame();
+  } = createCommonGame();
   players.forEach(({ player }, index) => {
     getPlayerShouldReturn({
       expectedPlayer: player,

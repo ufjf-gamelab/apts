@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
 
 import type TestingGame from "../Game.js";
-import { setupGame, type TestGameParams } from "./setup.js";
+import { createCommonGame, type TestGameParams } from "./setup.js";
 
 const getNameShouldReturn = ({
   expectedName,
@@ -17,7 +17,7 @@ const getNameShouldReturn = ({
 };
 
 const testGetNameForCommonGame = (): void => {
-  const { game } = setupGame();
+  const { game } = createCommonGame();
   getNameShouldReturn({
     expectedName: "Testing Game",
     game,

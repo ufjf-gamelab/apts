@@ -6,6 +6,18 @@ import {
   createSlotsForInitialState,
   type IndexOfTestingSlot,
 } from "../Slot/setup.js";
+import { INITIAL_POINTS } from "../State.js";
+
+const ONE_POINT: Integer = 1;
+
+enum AmountOfPoints {
+  Five = 5,
+  Nine = 9,
+  One = ONE_POINT,
+  Seven = 7,
+  Two = 2,
+  Zero = INITIAL_POINTS,
+}
 
 interface TestShapeParams {
   initialIndexOfColumn: Integer;
@@ -32,7 +44,7 @@ const fillSlots = ({
   indexOfPlayer,
   slots,
 }: {
-  indexesOfSlots: IndexOfTestingSlot[];
+  indexesOfSlots: readonly IndexOfTestingSlot[];
   indexOfPlayer: ReturnType<typeof getIndexOfPlayerWhoIsOccupyingShape>;
   slots: TestingSlot[];
 }): void => {
@@ -66,4 +78,4 @@ const getSlotsFilledByPlayer = ({
 };
 
 export type { TestShapeParams };
-export { fillSlots, getSlotsFilledByPlayer };
+export { AmountOfPoints, fillSlots, getSlotsFilledByPlayer, ONE_POINT };

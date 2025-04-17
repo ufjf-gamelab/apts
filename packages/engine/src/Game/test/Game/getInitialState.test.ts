@@ -2,7 +2,7 @@ import { expect, test } from "vitest";
 
 import type TestingGame from "../Game.js";
 import { createInitialState } from "../State/setup.js";
-import { setupGame, type TestGameParams } from "./setup.js";
+import { createCommonGame, type TestGameParams } from "./setup.js";
 
 const getInitialStateShouldReturn = ({
   expectedState,
@@ -19,7 +19,7 @@ const getInitialStateShouldReturn = ({
 };
 
 const testGetInitialStateForCommonGame = (): void => {
-  const { game } = setupGame();
+  const { game } = createCommonGame();
   const { state } = createInitialState();
   getInitialStateShouldReturn({
     expectedState: state,

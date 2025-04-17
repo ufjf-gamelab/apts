@@ -9,12 +9,8 @@ import {
   createSlotsForInitialState,
   IndexOfTestingSlot,
 } from "../../../Slot/setup.js";
-import { INITIAL_POINTS } from "../../../State.js";
-import { getSlotsFilledByPlayer } from "../../setup.js";
-import {
-  ONE_POINT,
-  testIncrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots,
-} from "../incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots.js";
+import { AmountOfPoints, getSlotsFilledByPlayer } from "../../setup.js";
+import { testIncrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots } from "../incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots.js";
 
 const testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSlots =
   ({
@@ -56,11 +52,11 @@ const testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSl
   );
   testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSlots(
     {
-      expectedScore: [INITIAL_POINTS, INITIAL_POINTS],
+      expectedScore: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       horizontalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
       initialIndexOfColumn: 0,
       initialIndexOfRow: 0,
-      score: [INITIAL_POINTS, INITIAL_POINTS],
+      score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       slots,
       verticalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
     },
@@ -78,11 +74,11 @@ const testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSl
   });
   testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSlots(
     {
-      expectedScore: [INITIAL_POINTS, INITIAL_POINTS],
+      expectedScore: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       horizontalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
       initialIndexOfColumn: 0,
       initialIndexOfRow: 0,
-      score: [INITIAL_POINTS, INITIAL_POINTS],
+      score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       slots,
       verticalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
     },
@@ -101,11 +97,11 @@ const testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSl
   });
   testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSlots(
     {
-      expectedScore: [ONE_POINT, INITIAL_POINTS],
+      expectedScore: [AmountOfPoints.One, AmountOfPoints.Zero],
       horizontalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
       initialIndexOfColumn: 0,
       initialIndexOfRow: 0,
-      score: [INITIAL_POINTS, INITIAL_POINTS],
+      score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       slots,
       verticalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
     },
@@ -124,11 +120,11 @@ const testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSl
   });
   testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSlots(
     {
-      expectedScore: [INITIAL_POINTS, ONE_POINT],
+      expectedScore: [AmountOfPoints.Zero, AmountOfPoints.One],
       horizontalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
       initialIndexOfColumn: 0,
       initialIndexOfRow: 0,
-      score: [INITIAL_POINTS, INITIAL_POINTS],
+      score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       slots,
       verticalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
     },
@@ -147,11 +143,11 @@ const testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSl
   });
   testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSlots(
     {
-      expectedScore: [INITIAL_POINTS, INITIAL_POINTS],
+      expectedScore: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       horizontalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
       initialIndexOfColumn: 1,
       initialIndexOfRow: 0,
-      score: [INITIAL_POINTS, INITIAL_POINTS],
+      score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       slots,
       verticalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
     },
@@ -172,11 +168,11 @@ const testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSl
   });
   testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSlots(
     {
-      expectedScore: [ONE_POINT, INITIAL_POINTS],
+      expectedScore: [AmountOfPoints.One, AmountOfPoints.Zero],
       horizontalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
       initialIndexOfColumn: 1,
       initialIndexOfRow: 0,
-      score: [INITIAL_POINTS, INITIAL_POINTS],
+      score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       slots,
       verticalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
     },
@@ -197,11 +193,11 @@ const testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSl
   });
   testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSlots(
     {
-      expectedScore: [INITIAL_POINTS, INITIAL_POINTS],
+      expectedScore: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       horizontalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
       initialIndexOfColumn: 0,
       initialIndexOfRow: 1,
-      score: [INITIAL_POINTS, INITIAL_POINTS],
+      score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       slots,
       verticalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
     },
@@ -222,11 +218,11 @@ const testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSl
   });
   testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSlots(
     {
-      expectedScore: [ONE_POINT, INITIAL_POINTS],
+      expectedScore: [AmountOfPoints.One, AmountOfPoints.Zero],
       horizontalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
       initialIndexOfColumn: 0,
       initialIndexOfRow: 1,
-      score: [INITIAL_POINTS, INITIAL_POINTS],
+      score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       slots,
       verticalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
     },
@@ -241,11 +237,11 @@ const testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSl
   );
   testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSlots(
     {
-      expectedScore: [INITIAL_POINTS, INITIAL_POINTS],
+      expectedScore: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       horizontalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
       initialIndexOfColumn: 4,
       initialIndexOfRow: 4,
-      score: [INITIAL_POINTS, INITIAL_POINTS],
+      score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       slots,
       verticalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
     },
@@ -263,11 +259,11 @@ const testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSl
   });
   testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSlots(
     {
-      expectedScore: [INITIAL_POINTS, INITIAL_POINTS],
+      expectedScore: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       horizontalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
       initialIndexOfColumn: 4,
       initialIndexOfRow: 4,
-      score: [INITIAL_POINTS, INITIAL_POINTS],
+      score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       slots,
       verticalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
     },
@@ -286,11 +282,11 @@ const testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSl
   });
   testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSlots(
     {
-      expectedScore: [ONE_POINT, INITIAL_POINTS],
+      expectedScore: [AmountOfPoints.One, AmountOfPoints.Zero],
       horizontalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
       initialIndexOfColumn: 4,
       initialIndexOfRow: 4,
-      score: [INITIAL_POINTS, INITIAL_POINTS],
+      score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       slots,
       verticalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
     },
@@ -309,11 +305,11 @@ const testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSl
   });
   testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSlots(
     {
-      expectedScore: [INITIAL_POINTS, ONE_POINT],
+      expectedScore: [AmountOfPoints.Zero, AmountOfPoints.One],
       horizontalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
       initialIndexOfColumn: 4,
       initialIndexOfRow: 4,
-      score: [INITIAL_POINTS, INITIAL_POINTS],
+      score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       slots,
       verticalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
     },
@@ -332,11 +328,11 @@ const testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSl
   });
   testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSlots(
     {
-      expectedScore: [INITIAL_POINTS, INITIAL_POINTS],
+      expectedScore: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       horizontalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
       initialIndexOfColumn: 5,
       initialIndexOfRow: 4,
-      score: [INITIAL_POINTS, INITIAL_POINTS],
+      score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       slots,
       verticalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
     },
@@ -357,11 +353,11 @@ const testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSl
   });
   testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSlots(
     {
-      expectedScore: [ONE_POINT, INITIAL_POINTS],
+      expectedScore: [AmountOfPoints.One, AmountOfPoints.Zero],
       horizontalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
       initialIndexOfColumn: 5,
       initialIndexOfRow: 4,
-      score: [INITIAL_POINTS, INITIAL_POINTS],
+      score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       slots,
       verticalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
     },
@@ -382,11 +378,11 @@ const testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSl
   });
   testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSlots(
     {
-      expectedScore: [INITIAL_POINTS, INITIAL_POINTS],
+      expectedScore: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       horizontalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
       initialIndexOfColumn: 4,
       initialIndexOfRow: 5,
-      score: [INITIAL_POINTS, INITIAL_POINTS],
+      score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       slots,
       verticalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
     },
@@ -407,11 +403,11 @@ const testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSl
   });
   testIncrementScoreIfPlayerOccupiesRectangleOfSizeTwoByTwoAtCoordinatesInSlots(
     {
-      expectedScore: [ONE_POINT, INITIAL_POINTS],
+      expectedScore: [AmountOfPoints.One, AmountOfPoints.Zero],
       horizontalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
       initialIndexOfColumn: 4,
       initialIndexOfRow: 5,
-      score: [INITIAL_POINTS, INITIAL_POINTS],
+      score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
       slots,
       verticalSize: SizeOfPatternsUsedForCalculatingPoints.SmallSquare,
     },
