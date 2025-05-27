@@ -128,7 +128,9 @@ abstract class Game<
     return this.quantityOfSlots;
   }
 
-  public abstract getValidMoves({ state }: { state: S }): readonly M[];
+  public abstract getValidMoves(state: S): readonly M[];
+
+  public abstract isFinal(state: S): boolean;
 
   public abstract play(indexOfMove: IndexOfMove, state: S): S;
 }

@@ -1,7 +1,7 @@
 import type { Integer } from "../../types.js";
 import Game, { type GameParams } from "../Game.js";
 import type { IndexOfPlayer } from "../Player.js";
-import type { Score } from "../State.js";
+import type { Points, Score } from "../State.js";
 import { type default as TestingMove } from "./Move.js";
 import type { IndexOfTestingMove } from "./Move/setup.js";
 import { type default as TestingPlayer } from "./Player.js";
@@ -19,6 +19,9 @@ const QUANTITY_OF_SLOTS: Integer = COLUMN_LENGTH * ROW_LENGTH;
 
 const INDEX_OF_INITIAL_PLAYER: IndexOfTestingPlayer = 0;
 const ADVANCE_TURN: Integer = 1;
+
+const AMOUNT_OF_POINTS_TO_FINISH_MATCH: Points = 15;
+const AMOUNT_OF_SLOTS_TO_FINISH_MATCH: Points = 49;
 
 enum SizeOfPatternsUsedForCalculatingPoints {
   LargeSquare = 3,
@@ -52,7 +55,6 @@ class TestingGame extends Game<
       quantityOfSlots: QUANTITY_OF_SLOTS,
     });
   }
-
   public calculateScore(slots: TestingSlot[]): Score {
     const score = TestingState.initializeScore(this.getQuantityOfPlayers());
 
@@ -142,11 +144,7 @@ class TestingGame extends Game<
     });
   }
 
-  public override getValidMoves({
-    state,
-  }: {
-    state: TestingState;
-  }): readonly TestingMove[] {
+  public override getValidMoves(state: TestingState): readonly TestingMove[] {
     const indexOfPlayer = state.getIndexOfPlayer();
     const player = this.getPlayer(indexOfPlayer);
     if (player === null) {
@@ -157,14 +155,35 @@ class TestingGame extends Game<
     return Array.from(this.getMoves()).filter((move: TestingMove) => {
       const indexOfSlotInWhichPlacePiece =
         move.getIndexOfSlotInWhichPlacePiece();
+
       const slotInWhichPlacePiece = state.getSlot(indexOfSlotInWhichPlacePiece);
       if (slotInWhichPlacePiece === null) {
         return false;
       }
+
       const indexOfOccupyingPlayer =
         slotInWhichPlacePiece.getIndexOfOccupyingPlayer();
       return indexOfOccupyingPlayer === null;
     });
+  }
+
+  public override isFinal(state: TestingState): boolean {
+    const amountOfFilledSlots = state
+      .getSlots()
+      .filter(
+        (slot: TestingSlot) => slot.getIndexOfOccupyingPlayer() !== null,
+      ).length;
+    if (amountOfFilledSlots === AMOUNT_OF_SLOTS_TO_FINISH_MATCH) {
+      return true;
+    }
+
+    for (const points of state.getScore()) {
+      if (points >= AMOUNT_OF_POINTS_TO_FINISH_MATCH) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public override play(

@@ -1,5 +1,8 @@
 import type { Integer } from "../../../types.js";
-import type { getIndexOfPlayerWhoIsOccupyingShape } from "../Shape.js";
+import type {
+  getIndexesOfShape,
+  getIndexOfPlayerWhoIsOccupyingShape,
+} from "../Shape.js";
 import TestingSlot from "../Slot.js";
 import {
   convertCreatedSlotsAndRelatedDataToSlots,
@@ -77,5 +80,15 @@ const getSlotsFilledByPlayer = ({
   return slots;
 };
 
+const indexesOfShapeAsString = (
+  indexesOfShape: ReturnType<typeof getIndexesOfShape>,
+): string => indexesOfShape.join(", ");
+
 export type { TestShapeParams };
-export { AmountOfPoints, fillSlots, getSlotsFilledByPlayer, ONE_POINT };
+export {
+  AmountOfPoints,
+  fillSlots,
+  getSlotsFilledByPlayer,
+  indexesOfShapeAsString,
+  ONE_POINT,
+};

@@ -2,9 +2,7 @@ import type { Integer } from "../types.js";
 import type Game from "./Game.js";
 import type Move from "./Move.js";
 import type { IndexOfPlayer, default as Player } from "./Player.js";
-import Slot from "./Slot.js";
-
-type IndexOfSlot = Integer;
+import { type IndexOfSlot, default as Slot } from "./Slot.js";
 
 type Points = number;
 
@@ -84,8 +82,6 @@ abstract class State<
   public getSlots(): typeof this.slots {
     return this.slots.map(slot => slot.clone());
   }
-
-  public abstract isFinal(): boolean;
 
   public abstract toString(): string;
 }

@@ -1,9 +1,66 @@
 import { expect, test } from "vitest";
 
 import type TestingGame from "../Game.js";
+import { type default as TestingMove } from "../Move.js";
+import { getMoveAsString, getMovesAsString } from "../Move/asString.js";
 import { IndexOfTestingMove } from "../Move/setup.js";
+import { getSlotsAsString } from "../Slot/asString.js";
 import type TestingState from "../State.js";
-import { createCommonGame, type TestGameParams } from "./setup.js";
+import { createInitialState } from "../State/setup.js";
+import { type TestGameParams } from "./setup.js";
+
+const playMoves = ({
+  game,
+  indexesOfMoves,
+  state,
+}: {
+  game: TestingGame;
+  indexesOfMoves: readonly IndexOfTestingMove[];
+  state: TestingState;
+}): { state: TestingState; validMoves: TestingMove[] } => {
+  let currentState = state;
+  const playedMoves: IndexOfTestingMove[] = [];
+
+  for (const indexOfMove of indexesOfMoves) {
+    currentState = game.play(indexOfMove, currentState);
+    playedMoves.push(indexOfMove);
+
+    if (game.isFinal(currentState)) {
+      const move = game.getMove(indexOfMove);
+
+      if (move === null) {
+        throw new Error(
+          `Move on index ${indexOfMove} is null, but match is finished`,
+        );
+      }
+
+      throw new Error(
+        `Match finished after playing move {${getMoveAsString(move)}}. Cannot play more moves.`,
+      );
+    }
+  }
+
+  const indexesOfAllMoves = game
+    .getMoves()
+    .map((_, index) => index as IndexOfTestingMove);
+
+  const indexesOfNotPlayedMoves = indexesOfAllMoves.filter(
+    index => !playedMoves.includes(index),
+  );
+
+  const validMoves = indexesOfNotPlayedMoves.reduce<TestingMove[]>(
+    (moves, index) => {
+      const move = game.getMove(index);
+      if (move !== null) {
+        moves.push(move);
+      }
+      return moves;
+    },
+    [],
+  );
+
+  return { state: currentState, validMoves };
+};
 
 const getValidMovesShouldReturn = ({
   expectedValidMoves,
@@ -14,48 +71,138 @@ const getValidMovesShouldReturn = ({
   expectedValidMoves: ReturnType<TestingGame["getValidMoves"]>;
   state: TestingState;
 }): void => {
-  test(`${testDescriptor}: getValidMoves() should return an object equal to the one passed as parameter, but as a different reference`, () => {
-    const validMovesFromGame = game.getValidMoves({ state });
+  test(`${testDescriptor}: getValidMoves({{indexOfPlayer: ${state.getIndexOfPlayer()}; score: [${state.getScore().toString()}]; slots: [${getSlotsAsString(state.getSlots())}]}}}) should return {[${getMovesAsString(expectedValidMoves)}]}`, () => {
+    const validMovesFromGame = game.getValidMoves(state);
     expect(validMovesFromGame).not.toBe(expectedValidMoves);
     expect(validMovesFromGame).toStrictEqual(expectedValidMoves);
   });
 };
 
-const testFromInitialState = (): void => {
-  const {
-    dataRelatedToCreatedGame: { moves },
-    game,
-  } = createCommonGame();
-  getValidMovesShouldReturn({
-    expectedValidMoves: Array.from(moves.values().map(({ move }) => move)),
-    game,
-    state: game.getInitialState(),
-    testDescriptor: "from initial state",
-  });
-};
-testFromInitialState();
-
-const testAfterPlayingMoveNorthwestOfNorthwest = (): void => {
-  const { game } = createCommonGame();
-
-  const moveNorthwestOfNorthwest = game.getMove(
-    IndexOfTestingMove.NorthwestOfNorthwest,
-  );
-  if (moveNorthwestOfNorthwest === null) {
-    throw new Error("Move Northwest of Northwest is null");
-  }
-
-  let state = game.getInitialState();
-  state = game.play(moveNorthwestOfNorthwest, state);
-
-  const expectedValidMoves = Array.from(game.getMoves());
-  expectedValidMoves.shift();
-
+const testGetValidMoves = ({
+  expectedValidMoves,
+  state,
+  testDescriptor,
+}: {
+  expectedValidMoves: ReturnType<TestingGame["getValidMoves"]>;
+  state: TestingState;
+  testDescriptor?: string;
+}): void => {
   getValidMovesShouldReturn({
     expectedValidMoves,
-    game,
+    game: state.getGame(),
     state,
-    testDescriptor: "after playing move Northwest of Northwest",
+    testDescriptor: `common${testDescriptor ? `: ${testDescriptor}` : ""}`,
   });
 };
-testAfterPlayingMoveNorthwestOfNorthwest();
+
+/* Initial State */
+
+((): void => {
+  const {
+    dataRelatedToCreatedState: { game },
+    state: initialState,
+  } = createInitialState();
+  const expectedValidMoves = game.getMoves();
+
+  testGetValidMoves({
+    expectedValidMoves,
+    state: initialState,
+  });
+})();
+
+/* Row 0 */
+
+((): void => {
+  const {
+    dataRelatedToCreatedState: { game },
+    state: initialState,
+  } = createInitialState();
+
+  const { state, validMoves: expectedValidMoves } = playMoves({
+    game,
+    indexesOfMoves: [IndexOfTestingMove.NorthwestOfNorthwest],
+    state: initialState,
+  });
+
+  testGetValidMoves({
+    expectedValidMoves,
+    state,
+  });
+})();
+
+((): void => {
+  const {
+    dataRelatedToCreatedState: { game },
+    state: initialState,
+  } = createInitialState();
+
+  const { state, validMoves: expectedValidMoves } = playMoves({
+    game,
+    indexesOfMoves: [
+      IndexOfTestingMove.NorthwestOfNorthwest,
+      IndexOfTestingMove.NorthOfNorthwest,
+    ],
+    state: initialState,
+  });
+
+  testGetValidMoves({
+    expectedValidMoves,
+    state,
+  });
+})();
+
+((): void => {
+  const {
+    dataRelatedToCreatedState: { game },
+    state: initialState,
+  } = createInitialState();
+
+  const { state, validMoves: expectedValidMoves } = playMoves({
+    game,
+    indexesOfMoves: [
+      IndexOfTestingMove.NorthwestOfNorthwest,
+      IndexOfTestingMove.NorthOfNorthwest,
+      IndexOfTestingMove.NortheastOfNorthwest,
+      IndexOfTestingMove.NorthwestOfNorth,
+      IndexOfTestingMove.NorthOfNorth,
+      IndexOfTestingMove.NortheastOfNorth,
+      IndexOfTestingMove.NorthwestOfNortheast,
+      IndexOfTestingMove.NorthOfNortheast,
+      IndexOfTestingMove.NortheastOfNortheast,
+    ],
+    state: initialState,
+  });
+
+  testGetValidMoves({
+    expectedValidMoves,
+    state,
+  });
+})();
+
+((): void => {
+  const {
+    dataRelatedToCreatedState: { game },
+    state: initialState,
+  } = createInitialState();
+
+  const { state, validMoves: expectedValidMoves } = playMoves({
+    game,
+    indexesOfMoves: [
+      IndexOfTestingMove.NorthwestOfNorthwest,
+      IndexOfTestingMove.WestOfNorthwest,
+      IndexOfTestingMove.SouthwestOfNorthwest,
+      IndexOfTestingMove.NorthwestOfWest,
+      IndexOfTestingMove.WestOfWest,
+      IndexOfTestingMove.SouthwestOfWest,
+      IndexOfTestingMove.NorthwestOfSouthwest,
+      IndexOfTestingMove.WestOfSouthwest,
+      IndexOfTestingMove.SouthwestOfSouthwest,
+    ],
+    state: initialState,
+  });
+
+  testGetValidMoves({
+    expectedValidMoves,
+    state,
+  });
+})();

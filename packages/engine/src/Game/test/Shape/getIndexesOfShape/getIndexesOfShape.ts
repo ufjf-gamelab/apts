@@ -2,7 +2,7 @@ import { expect, test } from "vitest";
 
 import { COLUMN_LENGTH, ROW_LENGTH } from "../../Game.js";
 import { getIndexesOfShape, type Shape } from "../../Shape.js";
-import type { TestShapeParams } from "../setup.js";
+import { indexesOfShapeAsString, type TestShapeParams } from "../setup.js";
 
 const getIndexesOfShapeShouldReturn = ({
   expectedIndexesOfShape,
@@ -14,7 +14,7 @@ const getIndexesOfShapeShouldReturn = ({
   expectedIndexesOfShape: ReturnType<typeof getIndexesOfShape>;
   shape: Shape;
 }): void => {
-  test(`${testDescriptor}: getIndexesOfShape() should return {${expectedIndexesOfShape.toString()}}`, () => {
+  test(`${testDescriptor}: getIndexesOfShape() should return {[${indexesOfShapeAsString(expectedIndexesOfShape)}]}`, () => {
     const indexesOfShape = getIndexesOfShape({
       columnLength: COLUMN_LENGTH,
       initialIndexOfColumn,

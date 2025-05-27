@@ -5,7 +5,7 @@ import type TestingMove from "../Move.js";
 import { getTitleOfTestingMove, IndexOfTestingMove } from "../Move/setup.js";
 import { IndexOfTestingPlayer } from "../Player/setup.js";
 import { AmountOfPoints, fillSlots } from "../Shape/setup.js";
-import { slotsAsString } from "../Slot.js";
+import { getSlotsAsString } from "../Slot/asString.js";
 import {
   convertCreatedSlotsAndRelatedDataToSlots,
   createSlotsForInitialState,
@@ -62,7 +62,7 @@ const playShouldReturn = ({
   indexOfMove: IndexOfTestingMove;
   state: TestingState;
 }): void => {
-  test(`${testDescriptor}: play({move: ${indexOfMove}; state: {indexOfPlayer: ${state.getIndexOfPlayer()}; score: [${state.getScore().toString()}]; slots: [${slotsAsString(state.getSlots())}]}}) should return {{indexOfPlayer: ${expectedState.getIndexOfPlayer()}; score: [${expectedState.getScore().toString()}]; slots: [${slotsAsString(expectedState.getSlots())}]}}`, () => {
+  test(`${testDescriptor}: play({indexOfMove: ${indexOfMove}; state: {indexOfPlayer: ${state.getIndexOfPlayer()}; score: [${state.getScore().toString()}]; slots: [${getSlotsAsString(state.getSlots())}]}}) should return {{indexOfPlayer: ${expectedState.getIndexOfPlayer()}; score: [${expectedState.getScore().toString()}]; slots: [${getSlotsAsString(expectedState.getSlots())}]}}`, () => {
     const nextState = game.play(indexOfMove, state);
     expect(nextState).toBeInstanceOf(TestingState);
     expect(nextState).not.toBe(state);

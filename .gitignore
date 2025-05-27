@@ -10,10 +10,7 @@ dist-ssr
 server/dist
 public/dist
 
-## Direnv
-.envrc
+## Development environment
 .direnv/
 
 .images/
-## Development environment
-.direnv/

@@ -11,8 +11,6 @@ import type TestingPlayer from "./Player.js";
 import type TestingSlot from "./Slot.js";
 
 const INITIAL_POINTS: Points = 0;
-const AMOUNT_OF_POINTS_TO_FINISH_MATCH: Points = 15;
-const AMOUNT_OF_SLOTS_TO_FINISH_MATCH: Points = 49;
 
 const INDEX_OF_FIRST_SLOT: Integer = 0;
 
@@ -46,30 +44,6 @@ class TestingState extends State<
       score: this.getScore(),
       slots: this.getSlots(),
     });
-  }
-
-  /**
-   * Determines if the current state is final.
-   *
-   * This method checks if all slots are empty (i.e., equal to 0).
-   *
-   * @returns {boolean} `true` if all slots are empty, indicating the final state; otherwise, `false`.
-   */
-  public override isFinal(): boolean {
-    const amountOfFilledSlots = this.getSlots().filter(
-      (slot: TestingSlot) => slot.getIndexOfOccupyingPlayer() !== null,
-    ).length;
-    if (amountOfFilledSlots === AMOUNT_OF_SLOTS_TO_FINISH_MATCH) {
-      return true;
-    }
-
-    for (const points of this.getScore()) {
-      if (points >= AMOUNT_OF_POINTS_TO_FINISH_MATCH) {
-        return true;
-      }
-    }
-
-    return false;
   }
 
   /**

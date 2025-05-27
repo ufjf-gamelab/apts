@@ -1,0 +1,66 @@
+@startuml class_diagram_base
+' title Class diagram: Game, State, Move, Slot and Player
+
+left to right direction
+
+hide empty members
+
+abstract class Player {
+  - name: string
+  - symbol: Char
+  ' + getName(): this::name
+  ' + getSymbol(): this::symbol
+}
+
+abstract class Slot {
+  + {static} getSlot(indexOfSlot: Integer, slots: Slot[]): null | Slot
+}
+
+abstract class Move {
+  - title: string
+  - description: string
+  ' + getTitle(): this::title
+  ' + getDescription(): this::description
+}
+
+abstract class Game {
+  - moves: Move[]
+  - name: string
+  - players: Player[]
+  - maximumQuantityOfSlots: Integer
+  + getMove(indexOfMove: Integer): null | Move
+  ' + getMoves(): this::moves
+  ' + getName(): this::name
+  + getPlayer(indexOfPlayer: Integer): null | Player
+  ' + getPlayers(): this::players
+  + getQuantityOfMoves(): Integer
+  + getQuantityOfPlayers(): Integer
+  ' + getMaximumQuantityOfSlots(): this::maximumQuantityOfSlots
+  .. abstract ..
+  + {abstract} getEndOfGameMessage(state: State): string
+  + {abstract} getIndexOfNextPlayer(state: State): Integer
+  + {abstract} getInitialState(): State
+  + {abstract} getValidMoves(state: State): Move[]
+  + {abstract} isFinal(state: State): boolean
+  + {abstract} play(indexOfMove: Integer, state: State): State
+}
+Game::moves *-u- "1..*" Move
+Game::players *-u- "1..*" Player
+
+abstract class State {
+  - game: Game
+  - indexOfPlayer: Integer
+  - score: Integer[]
+  - slots: Slot[]
+  ' + getGame(): this::game
+  ' + getIndexOfPlayer(): this::indexOfPlayer
+  + getQuantityOfSlots(): Integer
+  ' + getScore(): this::score
+  + getSlot(indexOfSlot: Integer): null | Slot
+  ' + getSlots(): this::slots
+}
+State::game "0..*" -- "1" Game
+State::slots *-- "1..*" Slot
+
+
+@enduml

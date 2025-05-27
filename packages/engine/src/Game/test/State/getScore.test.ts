@@ -2,7 +2,7 @@ import { expect, test } from "vitest";
 
 import type { Integer } from "../../../types.js";
 import { IndexOfTestingPlayer } from "../Player/setup.js";
-import { ONE_POINT } from "../Shape/incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots/incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots.js";
+import { ONE_POINT } from "../Shape/setup.js";
 import type TestingState from "../State.js";
 import { createInitialState, type TestStateParams } from "./setup.js";
 

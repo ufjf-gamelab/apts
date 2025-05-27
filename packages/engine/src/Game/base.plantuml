@@ -1,0 +1,189 @@
+@startuml class_diagram_base
+title Class diagram: Game, State and Move
+
+hide empty members
+
+!function $type($name)
+!return "struct " + $name + " << (T,lavender) >>"
+!endfunction
+
+!function $type($name, $generics)
+!return "struct " + $name + $generics + " << (T,lavender) >>"
+!endfunction
+
+package Types << rectangle >> {
+
+  package Standard << rectangle >>{
+    $type(number)
+    $type(string)
+    $type(boolean)
+  }
+
+  package Aliases << rectangle >> {
+
+    $type(Integer)
+    Integer [alias] ..> number
+
+    $type(Char)
+    Char [alias] ..> string
+
+  }
+
+}
+
+package player_package as "Player" {
+
+    package Aliases << rectangle >> {
+
+    $type(IndexOfPlayer)
+    IndexOfPlayer [alias] ..> Integer
+
+  }
+
+  interface PlayerParams {
+    name: string
+    symbol: Char
+  }
+
+  abstract class Player {
+    - name: PlayerParams::name
+    - symbol: PlayerParams::symbol
+    --
+    + getName(): this::name
+    + getSymbol(): this::symbol
+  }
+  Player::name -> PlayerParams::name
+  Player::symbol -> PlayerParams::symbol
+
+}
+
+package slot_package as "Slot" {
+
+    package Aliases << rectangle >> {
+
+    $type(IndexOfSlot)
+    IndexOfSlot [alias] ..> Integer
+
+  }
+
+  interface SlotParams {}
+
+  abstract class Slot {
+    + {static} getSlot({indexOfSlot: IndexOfSlot; slots: Slot[];}): null | Slot
+  }
+
+}
+
+package move_package as "Move" {
+
+    package Aliases << rectangle >> {
+
+    $type(IndexOfMove)
+    IndexOfMove [alias] ..> Integer
+
+  }
+
+  interface MoveParams {
+    title: string
+    description: string
+  }
+
+  abstract class Move {
+    - title: MoveParams::title
+    - description: MoveParams::description
+    --
+    + getTitle(): this::title
+    + getDescription(): this::description
+  }
+  Move::title -> MoveParams::title
+  Move::description -> MoveParams::description
+
+}
+
+package game_package as "Game" {
+
+  interface GameParams {
+    moves: Move[]
+    name: string
+    players: Player[]
+    quantityOfSlots: Integer
+  }
+  GameParams::players --> Player
+  GameParams::moves --> Move
+
+  abstract class Game {
+    - moves: GameParams::moves
+    - name: GameParams::name
+    - players: GameParams::players
+    - quantityOfSlots: GameParams::quantityOfSlots
+    --
+    + getMove(indexOfMove: IndexOfMove): null | Move
+    + getMoves(): this::moves
+    + getName(): this::name
+    + getPlayer(indexOfPlayer: IndexOfPlayer): null | Player
+    + getPlayers(): this::players
+    + getQuantityOfMoves(): Integer
+    + getQuantityOfPlayers(): Integer
+    + getQuantityOfSlots(): this::quantityOfSlots
+    .. abstract ..
+    + {abstract} getEndOfGameMessage(state: State): string
+    + {abstract} getIndexOfNextPlayer(state: State): IndexOfPlayer
+    + {abstract} getInitialState(): State
+    + {abstract} getValidMoves(state: State): Move[]
+    + {abstract} isFinal(state: State): boolean
+    + {abstract} play(indexOfMove: IndexOfMove, state: State): State
+  }
+  Game::moves -> GameParams::moves
+  Game::name -> GameParams::name
+  Game::players -> GameParams::players
+  Game::quantityOfSlots -> GameParams::quantityOfSlots
+  
+}
+
+package state_package as "State" {
+
+  package Aliases << rectangle >> {
+
+    $type(Points)
+    Points [alias] ..> Integer
+
+  }
+
+  $type(Score) {
+    Array<Points>
+  }
+  Score::0 --> Points
+
+  interface StateParams {
+    game: Game
+    indexOfPlayer: IndexOfPlayer
+    score: Score
+    slots: Slot[]
+  }
+  StateParams::game --> Game
+  StateParams::indexOfPlayer --> IndexOfPlayer
+  StateParams::score --> Score
+  StateParams::slots --> Slot
+
+  abstract class State {
+    # game: StateParams::game
+    # indexOfPlayer: StateParams::indexOfPlayer
+    # score: StateParams::score
+    # slots: StateParams::slots
+    --
+    + getGame(): this::game
+    + getIndexOfPlayer(): this::indexOfPlayer
+    + getQuantityOfSlots(): Integer
+    + getScore(): this::score
+    + getSlot(indexOfSlot: IndexOfSlot): null | Slot
+    + getSlots(): this::slots
+  }
+  State::game -> StateParams::game
+  State::indexOfPlayer -> StateParams::indexOfPlayer
+  State::score -> StateParams::score
+  State::slots -> StateParams::slots
+
+}
+
+
+@enduml

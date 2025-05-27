@@ -7,7 +7,8 @@ import {
   fillSlots,
   getSlotsFilledByPlayer,
 } from "../Shape/setup.js";
-import { slotsAsString, type default as TestingSlot } from "../Slot.js";
+import { type default as TestingSlot } from "../Slot.js";
+import { getSlotsAsString } from "../Slot/asString.js";
 import {
   convertCreatedSlotsAndRelatedDataToSlots,
   createSlotsForInitialState,
@@ -24,7 +25,7 @@ const calculateScoreShouldReturn = ({
   expectedScore: ReturnType<TestingGame["calculateScore"]>;
   slots: TestingSlot[];
 }): void => {
-  test(`${testDescriptor}: calculateScore(${slotsAsString(slots)}) should return {${expectedScore.toString()}}`, () => {
+  test(`${testDescriptor}: calculateScore([${getSlotsAsString(slots)}]) should return {${expectedScore.toString()}}`, () => {
     const score = game.calculateScore(slots);
     expect(score).not.toBe(expectedScore);
     expect(score).toStrictEqual(expectedScore);

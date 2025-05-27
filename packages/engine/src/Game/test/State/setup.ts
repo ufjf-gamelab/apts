@@ -1,6 +1,7 @@
 import { createGame } from "../Game/setup.js";
 import { createMoves } from "../Move/setup.js";
 import { createPlayers, IndexOfTestingPlayer } from "../Player/setup.js";
+import type TestingSlot from "../Slot.js";
 import {
   type CreatedSlotsAndRelatedData,
   createSlotsForInitialState,
@@ -65,5 +66,5 @@ const createInitialState = (): CreatedStateAndRelatedData => {
   });
 };
 
-export { createInitialState, createState };
 export type { CreatedStateAndRelatedData, TestStateParams };
+export { createInitialState, createState };

@@ -65,6 +65,7 @@ export const config = [
           ignoreEnums: true,
           ignoreNumericLiteralTypes: true,
           ignoreReadonlyClassProperties: true,
+          ignoreTypeIndexes: true,
         },
       ],
       "@typescript-eslint/no-shadow": [
