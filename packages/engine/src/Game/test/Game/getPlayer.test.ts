@@ -1,9 +1,20 @@
 import { expect, test } from "vitest";
 
-import type { IndexOfPlayer } from "../../Player.js";
 import type TestingGame from "../Game.js";
 import TestingPlayer from "../Player.js";
+import { encodePlayer } from "../Player/encode.js";
+import { IndexOfTestingPlayer } from "../Player/setup.js";
 import { createCommonGame, type TestGameParams } from "./setup.js";
+
+const INDEX_BEFORE_FIRST_PLAYER = 1;
+
+const getDescriptorOfTestedMethod = ({
+  indexOfPlayer,
+  testDescriptor,
+}: {
+  indexOfPlayer: IndexOfTestingPlayer;
+  testDescriptor: string;
+}): string => `${testDescriptor}: getPlayer(${indexOfPlayer})`;
 
 const getPlayerShouldReturn = ({
   expectedPlayer,
@@ -11,10 +22,10 @@ const getPlayerShouldReturn = ({
   indexOfPlayer,
   testDescriptor,
 }: TestGameParams & {
-  expectedPlayer: ReturnType<TestingGame["getPlayer"]>;
-  indexOfPlayer: IndexOfPlayer;
+  expectedPlayer: NonNullable<ReturnType<TestingGame["getPlayer"]>>;
+  indexOfPlayer: IndexOfTestingPlayer;
 }): void => {
-  test(`${testDescriptor}: getPlayer(${indexOfPlayer}) should return an object equal to the one passed as parameter, but as a different reference`, () => {
+  test(`${getDescriptorOfTestedMethod({ indexOfPlayer, testDescriptor })} should return {${encodePlayer({ player: expectedPlayer })}}`, () => {
     const player = game.getPlayer(indexOfPlayer);
     expect(player).toBeDefined();
     expect(player).toBeInstanceOf(TestingPlayer);
@@ -23,11 +34,30 @@ const getPlayerShouldReturn = ({
   });
 };
 
+const getPlayerShouldReturnNull = ({
+  game,
+  indexOfPlayer,
+  testDescriptor,
+}: TestGameParams & {
+  indexOfPlayer: IndexOfTestingPlayer;
+}): void => {
+  test(`${getDescriptorOfTestedMethod({
+    indexOfPlayer,
+    testDescriptor,
+  })} should return {null}`, () => {
+    const moveFromGame = game.getPlayer(indexOfPlayer);
+    expect(moveFromGame).not.toBeInstanceOf(TestingPlayer);
+    expect(moveFromGame).toBeNull();
+  });
+};
+
 const testGetPlayerForCommonGame = (): void => {
   const {
     dataRelatedToCreatedGame: { players },
     game,
   } = createCommonGame();
+
+  // Test every player that was created in the common game
   players.forEach(({ player }, index) => {
     getPlayerShouldReturn({
       expectedPlayer: player,
@@ -35,6 +65,12 @@ const testGetPlayerForCommonGame = (): void => {
       indexOfPlayer: index,
       testDescriptor: "common",
     });
+  });
+
+  getPlayerShouldReturnNull({
+    game,
+    indexOfPlayer: IndexOfTestingPlayer.One - INDEX_BEFORE_FIRST_PLAYER,
+    testDescriptor: "common: invalid index",
   });
 };
 

@@ -5,6 +5,7 @@ import type { Points, Score } from "../State.js";
 import { type default as TestingMove } from "./Move.js";
 import type { IndexOfTestingMove } from "./Move/setup.js";
 import { type default as TestingPlayer } from "./Player.js";
+import { encodePlayer } from "./Player/encode.js";
 import type { IndexOfTestingPlayer } from "./Player/setup.js";
 import {
   incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots,
@@ -196,10 +197,21 @@ class TestingGame extends Game<
     }
 
     const indexOfSlotInWhichPlacePiece = move.getIndexOfSlotInWhichPlacePiece();
-    const indexOfCurrentPlayer = state.getIndexOfPlayer();
-
     const updatedSlots = Array.from(state.getSlots());
+
     if (typeof updatedSlots[indexOfSlotInWhichPlacePiece] !== "undefined") {
+      const slotInWhichPlacePiece = updatedSlots[indexOfSlotInWhichPlacePiece];
+      const indexOfOccupyingPlayer =
+        slotInWhichPlacePiece.getIndexOfOccupyingPlayer();
+
+      if (indexOfOccupyingPlayer !== null) {
+        const player = this.getPlayer(indexOfOccupyingPlayer);
+        throw new Error(
+          `Cannot place piece in slot ${indexOfSlotInWhichPlacePiece} because it is already occupied by player ${player ? encodePlayer({ player }) : "unknown"}`,
+        );
+      }
+
+      const indexOfCurrentPlayer = state.getIndexOfPlayer();
       updatedSlots[indexOfSlotInWhichPlacePiece] = new TestingSlot({
         indexOfOccupyingPlayer: indexOfCurrentPlayer,
       });

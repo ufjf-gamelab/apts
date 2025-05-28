@@ -4,6 +4,7 @@ import type { Integer } from "../../../types.js";
 import { IndexOfTestingPlayer } from "../Player/setup.js";
 import { ONE_POINT } from "../Shape/setup.js";
 import type TestingState from "../State.js";
+import { encodeScore } from "./encode.js";
 import { createInitialState, type TestStateParams } from "./setup.js";
 
 const getScoreShouldReturn = ({
@@ -13,7 +14,7 @@ const getScoreShouldReturn = ({
 }: TestStateParams & {
   expectedScore: ReturnType<TestingState["getScore"]>;
 }): void => {
-  test(`${testDescriptor}: getScore should return {${expectedScore.toString()}}`, () => {
+  test(`${testDescriptor}: getScore should return {${encodeScore({ score: expectedScore, surround: true })}}`, () => {
     expect(state.getScore()).not.toBe(expectedScore);
     expect(state.getScore()).toStrictEqual(expectedScore);
   });

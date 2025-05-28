@@ -5,13 +5,14 @@ import type TestingMove from "../Move.js";
 import { getTitleOfTestingMove, IndexOfTestingMove } from "../Move/setup.js";
 import { IndexOfTestingPlayer } from "../Player/setup.js";
 import { AmountOfPoints, fillSlots } from "../Shape/setup.js";
-import { getSlotsAsString } from "../Slot/asString.js";
+import { encodeSlots } from "../Slot/encode.js";
 import {
   convertCreatedSlotsAndRelatedDataToSlots,
   createSlotsForInitialState,
   type IndexOfTestingSlot,
 } from "../Slot/setup.js";
 import TestingState from "../State.js";
+import { encodeScore, encodeState } from "../State/encode.js";
 import { createCommonGame, type TestGameParams } from "./setup.js";
 
 const getMove = ({
@@ -51,6 +52,21 @@ const getIndexesOfSlotsFilledByMoves = ({
     return indexOfSlotInWhichPlacePiece;
   });
 
+const getDescriptorOfTestedMethod = ({
+  state,
+  testDescriptor,
+}: {
+  state: TestingState;
+  testDescriptor: string;
+}): string => `${testDescriptor}: play({${encodeState({ state })}})`;
+
+const getDescriptorOfExpectedResult = ({
+  expectedState,
+}: {
+  expectedState: ReturnType<TestingGame["play"]>;
+}): string =>
+  `{{indexOfPlayer: ${expectedState.getIndexOfPlayer()}; score: ${encodeScore({ score: expectedState.getScore() })}; slots: ${encodeSlots({ slots: expectedState.getSlots() })}}}`;
+
 const playShouldReturn = ({
   expectedState,
   game,
@@ -62,7 +78,10 @@ const playShouldReturn = ({
   indexOfMove: IndexOfTestingMove;
   state: TestingState;
 }): void => {
-  test(`${testDescriptor}: play({indexOfMove: ${indexOfMove}; state: {indexOfPlayer: ${state.getIndexOfPlayer()}; score: [${state.getScore().toString()}]; slots: [${getSlotsAsString(state.getSlots())}]}}) should return {{indexOfPlayer: ${expectedState.getIndexOfPlayer()}; score: [${expectedState.getScore().toString()}]; slots: [${getSlotsAsString(expectedState.getSlots())}]}}`, () => {
+  test(`${getDescriptorOfTestedMethod({
+    state,
+    testDescriptor,
+  })} should return ${getDescriptorOfExpectedResult({ expectedState })}`, () => {
     const nextState = game.play(indexOfMove, state);
     expect(nextState).toBeInstanceOf(TestingState);
     expect(nextState).not.toBe(state);
@@ -75,18 +94,20 @@ const testPlayForCommonGame = ({
   game,
   indexOfMove,
   state,
+  testDescriptor,
 }: {
   expectedState: ReturnType<TestingGame["play"]>;
   game: TestingGame;
   indexOfMove: IndexOfTestingMove;
   state: TestingState;
+  testDescriptor?: string;
 }): void => {
   playShouldReturn({
     expectedState,
     game,
     indexOfMove,
     state,
-    testDescriptor: "common",
+    testDescriptor: testDescriptor ? `: ${testDescriptor}` : "",
   });
 };
 
@@ -120,6 +141,8 @@ const testPlayForCommonGame = ({
     state: game.getInitialState(),
   });
 })();
+
+/* Initial State */
 
 ((): void => {
   const { game } = createCommonGame();
@@ -166,6 +189,28 @@ const testPlayForCommonGame = ({
     state,
   });
 })();
+
+((): void => {
+  const { game } = createCommonGame();
+
+  let state = game.getInitialState();
+  state = game.play(IndexOfTestingMove.NorthwestOfNorthwest, state);
+
+  test(`${getDescriptorOfTestedMethod({
+    state,
+    testDescriptor: "play NorthwestOfNorthwest twice",
+  })} should return {}`, () => {
+    expect(() =>
+      game.play(IndexOfTestingMove.NorthwestOfNorthwest, state),
+    ).toThrowError(
+      new Error(
+        "Cannot place piece in slot 0 because it is already occupied by player 0",
+      ),
+    );
+  });
+})();
+
+/* Row 0 */
 
 ((): void => {
   const { game } = createCommonGame();

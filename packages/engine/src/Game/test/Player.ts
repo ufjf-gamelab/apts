@@ -4,6 +4,11 @@ import type TestingMove from "./Move.js";
 import type TestingSlot from "./Slot.js";
 import type TestingState from "./State.js";
 
+interface EncodedTestingPlayer {
+  name: string;
+  symbol: string;
+}
+
 class TestingPlayer extends Player<
   TestingGame,
   TestingState,
@@ -19,4 +24,5 @@ class TestingPlayer extends Player<
   }
 }
 
+export type { EncodedTestingPlayer };
 export { TestingPlayer as default };

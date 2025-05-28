@@ -2,6 +2,7 @@ import { expect, test } from "vitest";
 
 import type TestingGame from "../Game.js";
 import TestingPlayer from "../Player.js";
+import { encodePlayers } from "../Player/encode.js";
 import { IndexOfTestingPlayer } from "../Player/setup.js";
 import { createCommonGame, type TestGameParams } from "./setup.js";
 
@@ -12,7 +13,9 @@ const getPlayersShouldReturn = ({
 }: TestGameParams & {
   expectedPlayers: ReturnType<TestingGame["getPlayers"]>;
 }): void => {
-  test(`${testDescriptor}: getPlayers() should return an object equal to the one passed as parameter, but as a different reference`, () => {
+  test(`${testDescriptor}: getPlayers() should return {${encodePlayers({
+    players: expectedPlayers,
+  })}}`, () => {
     const players = game.getPlayers();
     expect(players).not.toBe(expectedPlayers);
     expect(players).toStrictEqual(expectedPlayers);

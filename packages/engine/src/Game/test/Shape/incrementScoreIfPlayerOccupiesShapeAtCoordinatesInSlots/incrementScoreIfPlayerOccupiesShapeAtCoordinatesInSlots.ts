@@ -5,7 +5,7 @@ import type { Points } from "../../../State.js";
 import { incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots } from "../../Game.js";
 import { getFormattedDescriptorOfShape, type Shape } from "../../Shape.js";
 import { type default as TestingSlot } from "../../Slot.js";
-import { getSlotsAsString } from "../../Slot/asString.js";
+import { encodeSlots } from "../../Slot/encode.js";
 import { type TestShapeParams } from "../setup.js";
 
 const incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlotsShouldModify = ({
@@ -24,7 +24,7 @@ const incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlotsShouldModify = ({
   shape: Shape;
   slots: TestingSlot[];
 }): void => {
-  test(`${testDescriptor}: incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots({slots: [${getSlotsAsString(slots)}]}) should modify score to {${expectedScore.toString()}}`, () => {
+  test(`${testDescriptor}: incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots({slots: [${encodeSlots({ slots })}]}) should modify score to {${expectedScore.toString()}}`, () => {
     incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots({
       initialIndexOfColumn,
       initialIndexOfRow,

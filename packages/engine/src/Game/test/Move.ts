@@ -5,6 +5,8 @@ import type TestingPlayer from "./Player.js";
 import type TestingSlot from "./Slot.js";
 import type TestingState from "./State.js";
 
+type EncodedTestingMove = TestingMoveParams;
+
 type TestingMoveParams = MoveParams<
   TestingGame,
   TestingState,
@@ -42,4 +44,5 @@ class TestingMove extends Move<
   }
 }
 
+export type { EncodedTestingMove };
 export { TestingMove as default };

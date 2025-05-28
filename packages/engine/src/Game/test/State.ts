@@ -14,6 +14,8 @@ const INITIAL_POINTS: Points = 0;
 
 const INDEX_OF_FIRST_SLOT: Integer = 0;
 
+type EncodedTestingState = TestingStateParams;
+
 type TestingStateParams = StateParams<
   TestingGame,
   TestingState,
@@ -85,5 +87,5 @@ class TestingState extends State<
   }
 }
 
-export type { TestingStateParams };
+export type { EncodedTestingState, TestingStateParams };
 export { TestingState as default, INITIAL_POINTS };

@@ -8,7 +8,7 @@ import {
   type Shape,
 } from "../../Shape.js";
 import { type default as TestingSlot } from "../../Slot.js";
-import { getSlotsAsString } from "../../Slot/asString.js";
+import { encodeSlots } from "../../Slot/encode.js";
 import { type IndexOfTestingSlot } from "../../Slot/setup.js";
 import {
   fillSlots,
@@ -28,7 +28,7 @@ const getIndexOfPlayerWhoIsOccupyingShapeShouldReturn = ({
   shape: Shape;
   slots: TestingSlot[];
 }): void => {
-  test(`${testDescriptor}: getIndexOfPlayerWhoIsOccupyingShape({slots: [${getSlotsAsString(slots)}]}) should return {${expectedIndexOfPlayer}}`, () => {
+  test(`${testDescriptor}: getIndexOfPlayerWhoIsOccupyingShape({slots: [${encodeSlots({ slots })}]}) should return {${expectedIndexOfPlayer}}`, () => {
     const indexOfShape = getIndexOfPlayerWhoIsOccupyingShape({
       columnLength: COLUMN_LENGTH,
       initialIndexOfColumn,
