@@ -126,7 +126,6 @@ package game_package as "Game" {
     + getQuantityOfPlayers(): Integer
     + getQuantityOfSlots(): this::quantityOfSlots
     .. abstract ..
-    + {abstract} getEndOfGameMessage(state: State): string
     + {abstract} getIndexOfNextPlayer(state: State): IndexOfPlayer
     + {abstract} getInitialState(): State
     + {abstract} getValidMoves(state: State): Move[]

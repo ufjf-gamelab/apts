@@ -67,22 +67,15 @@ const playMoves = ({
   const playedMoves: IndexOfTestingMove[] = [];
 
   for (const indexOfMove of indexesOfMoves) {
-    currentState = game.play(indexOfMove, currentState);
-    playedMoves.push(indexOfMove);
-
     if (game.isFinal(currentState)) {
       const move = game.getMove(indexOfMove);
-
-      if (move === null) {
-        throw new Error(
-          `Move on index ${indexOfMove} is null, but match is finished`,
-        );
-      }
-
       throw new Error(
-        `Match finished after playing move {${encodeMove({ move })}}. Cannot play more moves.`,
+        `Match was already finished when tried to play move {${move === null ? "null" : encodeMove({ move })}}. Cannot play more moves.`,
       );
     }
+
+    currentState = game.play(indexOfMove, currentState);
+    playedMoves.push(indexOfMove);
   }
 
   const indexesOfAllMoves = game

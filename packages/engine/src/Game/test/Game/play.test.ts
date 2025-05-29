@@ -202,11 +202,7 @@ const testPlayForCommonGame = ({
   })} should return {}`, () => {
     expect(() =>
       game.play(IndexOfTestingMove.NorthwestOfNorthwest, state),
-    ).toThrowError(
-      new Error(
-        "Cannot place piece in slot 0 because it is already occupied by player 0",
-      ),
-    );
+    ).toThrowError(new Error("Cannot play move 0 because it is not valid."));
   });
 })();
 

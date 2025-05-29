@@ -71,11 +71,11 @@ const encodeObject = ({
     }
   }
 
-  const objectAsString = encodedFields.join("; ");
+  const encodedObject = encodedFields.join("; ");
   if (surround) {
-    return `{${objectAsString}}`;
+    return `{${encodedObject}}`;
   }
-  return objectAsString;
+  return encodedObject;
 };
 
 const encodeObjects = ({
@@ -87,10 +87,10 @@ const encodeObjects = ({
   objects: readonly Record<string, unknown>[];
   surround?: boolean;
 }): string => {
-  const objectsAsString = objects
+  const encodedObjects = objects
     .map(object => encodeObject({ definitionsForEncodingObject, object }))
     .join(", ");
-  return surround ? `[${objectsAsString}]` : objectsAsString;
+  return surround ? `[${encodedObjects}]` : encodedObjects;
 };
 
 type GetObjectAsRecord<T> = (object: T) => Record<string, unknown>;

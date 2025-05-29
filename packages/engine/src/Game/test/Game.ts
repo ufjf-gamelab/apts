@@ -5,7 +5,6 @@ import type { Points, Score } from "../State.js";
 import { type default as TestingMove } from "./Move.js";
 import type { IndexOfTestingMove } from "./Move/setup.js";
 import { type default as TestingPlayer } from "./Player.js";
-import { encodePlayer } from "./Player/encode.js";
 import type { IndexOfTestingPlayer } from "./Player/setup.js";
 import {
   incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots,
@@ -116,10 +115,6 @@ class TestingGame extends Game<
     });
   }
 
-  public override getEndOfGameMessage(state: TestingState): string {
-    throw new Error("Method not implemented.");
-  }
-
   public override getIndexOfNextPlayer(state: TestingState): IndexOfPlayer {
     const indexOfCurrentPlayer = state.getIndexOfPlayer();
     return (indexOfCurrentPlayer + ADVANCE_TURN) % this.getQuantityOfPlayers();
@@ -146,26 +141,9 @@ class TestingGame extends Game<
   }
 
   public override getValidMoves(state: TestingState): readonly TestingMove[] {
-    const indexOfPlayer = state.getIndexOfPlayer();
-    const player = this.getPlayer(indexOfPlayer);
-    if (player === null) {
-      return [];
-    }
-
-    // Return only the existing moves in which there is no player occupying the related slot
-    return Array.from(this.getMoves()).filter((move: TestingMove) => {
-      const indexOfSlotInWhichPlacePiece =
-        move.getIndexOfSlotInWhichPlacePiece();
-
-      const slotInWhichPlacePiece = state.getSlot(indexOfSlotInWhichPlacePiece);
-      if (slotInWhichPlacePiece === null) {
-        return false;
-      }
-
-      const indexOfOccupyingPlayer =
-        slotInWhichPlacePiece.getIndexOfOccupyingPlayer();
-      return indexOfOccupyingPlayer === null;
-    });
+    return Array.from(this.getMoves()).filter((move: TestingMove) =>
+      this.isMoveValid(move, state),
+    );
   }
 
   public override isFinal(state: TestingState): boolean {
@@ -196,37 +174,46 @@ class TestingGame extends Game<
       return state.clone();
     }
 
+    const moveIsValid = this.isMoveValid(move, state);
+    if (!moveIsValid) {
+      throw new Error(
+        `Cannot play move ${indexOfMove} because it is not valid.`,
+      );
+    }
+
     const indexOfSlotInWhichPlacePiece = move.getIndexOfSlotInWhichPlacePiece();
     const updatedSlots = Array.from(state.getSlots());
 
-    if (typeof updatedSlots[indexOfSlotInWhichPlacePiece] !== "undefined") {
-      const slotInWhichPlacePiece = updatedSlots[indexOfSlotInWhichPlacePiece];
-      const indexOfOccupyingPlayer =
-        slotInWhichPlacePiece.getIndexOfOccupyingPlayer();
-
-      if (indexOfOccupyingPlayer !== null) {
-        const player = this.getPlayer(indexOfOccupyingPlayer);
-        throw new Error(
-          `Cannot place piece in slot ${indexOfSlotInWhichPlacePiece} because it is already occupied by player ${player ? encodePlayer({ player }) : "unknown"}`,
-        );
-      }
-
-      const indexOfCurrentPlayer = state.getIndexOfPlayer();
-      updatedSlots[indexOfSlotInWhichPlacePiece] = new TestingSlot({
-        indexOfOccupyingPlayer: indexOfCurrentPlayer,
+    const slotInWhichPlacePiece = updatedSlots[indexOfSlotInWhichPlacePiece];
+    if (typeof slotInWhichPlacePiece !== "undefined") {
+      const updatedSlot = new TestingSlot({
+        indexOfOccupyingPlayer: state.getIndexOfPlayer(),
       });
+      updatedSlots[indexOfSlotInWhichPlacePiece] = updatedSlot;
     }
 
     const indexOfNextPlayer = this.getIndexOfNextPlayer(state);
     const updatedScore = this.calculateScore(updatedSlots);
 
-    // TODO: Create tests to try to modify the slots array from exterior, to check if it is immutable
     return new TestingState({
       game: this,
       indexOfPlayer: indexOfNextPlayer,
       score: updatedScore,
       slots: updatedSlots,
     });
+  }
+
+  private isMoveValid(move: TestingMove, state: TestingState): boolean {
+    const indexOfSlotInWhichPlacePiece = move.getIndexOfSlotInWhichPlacePiece();
+
+    const slotInWhichPlacePiece = state.getSlot(indexOfSlotInWhichPlacePiece);
+    if (slotInWhichPlacePiece === null) {
+      return false;
+    }
+
+    const indexOfOccupyingPlayer =
+      slotInWhichPlacePiece.getIndexOfOccupyingPlayer();
+    return indexOfOccupyingPlayer === null;
   }
 }
 

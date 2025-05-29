@@ -91,8 +91,8 @@ const encodeScore = ({
   score: readonly number[];
   surround?: boolean;
 }): string => {
-  const scoreAsString = score.join(", ");
-  return surround ? `[${scoreAsString}]` : scoreAsString;
+  const encodedScore = score.join(", ");
+  return surround ? `[${encodedScore}]` : encodedScore;
 };
 
 export { encodeScore, encodeState, encodeStates };

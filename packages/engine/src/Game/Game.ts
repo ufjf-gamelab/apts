@@ -82,8 +82,6 @@ abstract class Game<
 
   public abstract clone(): G;
 
-  public abstract getEndOfGameMessage(state: S): string;
-
   public abstract getIndexOfNextPlayer(state: S): IndexOfPlayer;
 
   public abstract getInitialState(): S;

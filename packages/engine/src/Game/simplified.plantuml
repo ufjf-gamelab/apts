@@ -37,7 +37,6 @@ abstract class Game {
   + getQuantityOfPlayers(): Integer
   ' + getMaximumQuantityOfSlots(): this::maximumQuantityOfSlots
   .. abstract ..
-  + {abstract} getEndOfGameMessage(state: State): string
   + {abstract} getIndexOfNextPlayer(state: State): Integer
   + {abstract} getInitialState(): State
   + {abstract} getValidMoves(state: State): Move[]
