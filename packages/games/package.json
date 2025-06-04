@@ -1,9 +1,7 @@
 {
   "author": "Gabriel Malosto",
   "dependencies": {
-    "@repo/engine": "workspace:*",
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*"
+    "@repo/engine": "workspace:*"
   },
   "description": "Collection of tabletop games to be used with the engine.",
   "devDependencies": {
@@ -14,12 +12,10 @@
   },
   "exports": {
     "./Snowball/*": {
-      "default": "./dist/Snowball/*",
-      "types": "./src/Snowball/*"
+      "import": "./src/Snowball/*"
     },
     "./TicTacToe/*": {
-      "default": "./dist/TicTacToe/*",
-      "types": "./src/TicTacToe/*"
+      "import": "./src/TicTacToe/*"
     }
   },
   "license": "AGPL-3.0-only",

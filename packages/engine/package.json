@@ -8,17 +8,17 @@
     "vitest": "^3.2.1"
   },
   "exports": {
+    "./constants.js": {
+      "import": "./src/constants.ts"
+    },
     "./Game/*": {
-      "default": "./dist/Game/*",
-      "types": "./src/Game/*"
+      "import": "./src/Game/*"
     },
     "./MonteCarloTreeCommon/*": {
-      "default": "./dist/MonteCarloTreeCommon/*",
-      "types": "./src/MonteCarloTreeCommon/*"
+      "import": "./src/MonteCarloTreeCommon/*"
     },
-    "./types": {
-      "default": "./dist/types.js",
-      "types": "./src/types.ts"
+    "./types.js": {
+      "import": "./src/types.ts"
     }
   },
   "license": "AGPL-3.0-only",
