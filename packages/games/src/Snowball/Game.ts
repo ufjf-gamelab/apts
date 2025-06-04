@@ -141,10 +141,16 @@ class TestingGame extends Game<
     });
   }
 
-  public override getValidMoves(state: TestingState): readonly TestingMove[] {
-    return Array.from(this.getMoves()).filter((move: TestingMove) =>
-      this.isMoveValid(move, state),
-    );
+  public override getValidMoves(
+    state: TestingState,
+  ): readonly [IndexOfTestingMove, TestingMove][] {
+    const validMoves: [IndexOfTestingMove, TestingMove][] = [];
+    this.getMoves().forEach((move, indexOfMove) => {
+      if (this.isMoveValid(move, state)) {
+        validMoves.push([indexOfMove, move]);
+      }
+    });
+    return validMoves;
   }
 
   public override isFinal(state: TestingState): boolean {

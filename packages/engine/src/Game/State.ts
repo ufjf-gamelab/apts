@@ -9,6 +9,20 @@ type Points = number;
 /// The score index players the same way as the array on game
 type Score = readonly Points[];
 
+/**
+ * Parameters for constructing a {@link State}.
+ *
+ * @typeParam G - The game type, extending {@link Game}.
+ * @typeParam S - The state type, extending {@link State}.
+ * @typeParam M - The move type, extending {@link Move}.
+ * @typeParam Sl - The slot type, extending {@link Slot}.
+ * @typeParam P - The player type, extending {@link Player}.
+ *
+ * @property game - The game ({@link G}) instance associated with this state.
+ * @property indexOfPlayer - The index ({@link IndexOfPlayer}) of the player ({@link P}) who is about to make a move.
+ * @property score - The {@link Score} array, indexed by the index of a player ({@link IndexOfPlayer}), representing the current scores of all players.
+ * @property slots - An array of slots ({@link Slot}) representing the current state of the game.
+ */
 interface StateParams<
   G extends Game<G, S, M, Sl, P>,
   S extends State<G, S, M, Sl, P>,
@@ -42,7 +56,9 @@ abstract class State<
   }: StateParams<G, S, M, Sl, P>) {
     if (slots.length !== game.getQuantityOfSlots()) {
       throw new Error(
-        `The number of slots (${slots.length}) does not match the game quantity of slots (${game.getQuantityOfSlots()}).`,
+        `The number of slots (${
+          slots.length
+        }) does not match the quantity of slots determined by the game (${game.getQuantityOfSlots()}).`,
       );
     }
 
@@ -50,6 +66,21 @@ abstract class State<
     this.indexOfPlayer = indexOfPlayer;
     this.score = [...score];
     this.slots = slots.map(slot => slot.clone());
+  }
+
+  public static getScoreOfPlayer(
+    indexOfPlayer: IndexOfPlayer,
+    score: Score,
+  ): Points {
+    const scoreOfPlayer = score[indexOfPlayer];
+    if (typeof scoreOfPlayer === "undefined") {
+      throw new Error(`Invalid player index: ${indexOfPlayer}.`, {
+        cause: new RangeError(
+          `Index of player ${indexOfPlayer} is out of bounds for score array.`,
+        ),
+      });
+    }
+    return scoreOfPlayer;
   }
 
   public abstract changePerspective(indexOfPlayer: IndexOfPlayer): S;

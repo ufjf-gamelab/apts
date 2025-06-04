@@ -225,7 +225,7 @@ package monte_carlo_tree_common_package as "Monte Carlo Tree Common" {
     - quantityOfVisits: Integer
     - victoryQuality: number
     + getChildren(): Node<G, M>[]
-    + getKeysOfNonExpandedMoves(): Set<MoveKey>
+    + getKeysOfNotExpandedMoves(): Set<MoveKey>
     + getKeyOfTheTakenMove(): MoveKey | null
     + getQuantityOfVisits(): Integer
     + getState(): State<G, M>

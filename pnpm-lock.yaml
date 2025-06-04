@@ -105,6 +105,10 @@ importers:
         version: 6.3.5(@types/node@22.15.29)(tsx@4.19.4)
 
   packages/engine:
+    dependencies:
+      ts-graphviz:
+        specifier: ^2.1.6
+        version: 2.1.6
     devDependencies:
       '@repo/eslint-config':
         specifier: workspace:*

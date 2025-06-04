@@ -1,3 +1,6 @@
+const EMPTY_LIST = 0;
+
+const NOT_INCREMENT = 0;
 const INCREMENT_ONE = 1;
 
-export { INCREMENT_ONE };
+export { EMPTY_LIST, INCREMENT_ONE, NOT_INCREMENT };

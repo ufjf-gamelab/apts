@@ -62,7 +62,10 @@ const playMoves = ({
   game: TestingGame;
   indexesOfMoves: readonly IndexOfTestingMove[];
   state: TestingState;
-}): { state: TestingState; validMoves: TestingMove[] } => {
+}): {
+  state: TestingState;
+  validMoves: [IndexOfTestingMove, TestingMove][];
+} => {
   let currentState = state;
   const playedMoves: IndexOfTestingMove[] = [];
 
@@ -88,16 +91,15 @@ const playMoves = ({
     index => !playedMoves.includes(index),
   );
 
-  const validMoves = indexesOfNotPlayedMoves.reduce<TestingMove[]>(
-    (moves, index) => {
-      const move = game.getMove(index);
-      if (move !== null) {
-        moves.push(move);
-      }
-      return moves;
-    },
-    [],
-  );
+  const validMoves = indexesOfNotPlayedMoves.reduce<
+    [IndexOfTestingMove, TestingMove][]
+  >((moves, indexOfCurrentMove) => {
+    const move = game.getMove(indexOfCurrentMove);
+    if (move !== null) {
+      moves.push([indexOfCurrentMove, move]);
+    }
+    return moves;
+  }, []);
 
   return { state: currentState, validMoves };
 };

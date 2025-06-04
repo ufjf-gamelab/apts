@@ -1,8 +1,9 @@
 import { expect, test } from "vitest";
 
 import type TestingGame from "../../Game.js";
+import type TestingMove from "../../Move.js";
 import type TestingState from "../../State.js";
-import { encodeMoves } from "../Move/encode.js";
+import { encodeIndexedMoves } from "../Move/encode.js";
 import { IndexOfTestingMove } from "../Move/setup.js";
 import { encodeState } from "../State/encode.js";
 import { createInitialState } from "../State/setup.js";
@@ -19,7 +20,9 @@ const getValidMovesShouldReturn = ({
 }): void => {
   test(`${testDescriptor}: getValidMoves(${encodeState({
     state,
-  })}) should return {${encodeMoves({ moves: expectedValidMoves })}}`, () => {
+  })}) should return {${encodeIndexedMoves({
+    indexedMoves: expectedValidMoves,
+  })}}`, () => {
     const validMovesFromGame = game.getValidMoves(state);
     expect(validMovesFromGame).not.toBe(expectedValidMoves);
     expect(validMovesFromGame).toStrictEqual(expectedValidMoves);
@@ -50,7 +53,9 @@ const testGetValidMoves = ({
     dataRelatedToCreatedState: { game },
     state: initialState,
   } = createInitialState();
-  const expectedValidMoves = game.getMoves();
+  const expectedValidMoves: [IndexOfTestingMove, TestingMove][] = game
+    .getMoves()
+    .map((move, index) => [index, move]);
 
   testGetValidMoves({
     expectedValidMoves,
