@@ -4,10 +4,8 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "prettier": "^3.5.3",
-    "ts-graphviz": "^2.1.6",
     "typescript": "^5.8.3",
-    "vitest": "^3.1.4"
+    "vitest": "^3.2.1"
   },
   "exports": {
     "./Game/*": {

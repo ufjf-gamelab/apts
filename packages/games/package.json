@@ -1,15 +1,22 @@
 {
   "author": "Gabriel Malosto",
-  "description": "Collection of tabletop games to be used with the engine.",
   "dependencies": {
-    "@repo/engine": "workspace:*"
+    "@repo/engine": "workspace:*",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*"
   },
+  "description": "Collection of tabletop games to be used with the engine.",
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.1"
   },
   "exports": {
+    "./Snowball/*": {
+      "default": "./dist/Snowball/*",
+      "types": "./src/Snowball/*"
+    },
     "./TicTacToe/*": {
       "default": "./dist/TicTacToe/*",
       "types": "./src/TicTacToe/*"
@@ -23,6 +30,8 @@
     "dev": "tsc --watch",
     "format": "pnpm exec prettier . -w",
     "lint": "pnpm exec eslint ./src/** --fix",
+    "test": "vitest run",
+    "test:watch": "vitest --watch",
     "typecheck": "pnpm exec tsc"
   },
   "type": "module",
