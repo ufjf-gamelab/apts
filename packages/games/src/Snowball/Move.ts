@@ -1,5 +1,5 @@
-import Move, { type MoveParams } from "@repo/engine/Game/Move.js";
-import type { Integer } from "@repo/engine/types.js";
+import type { Integer } from "@repo/engine_core/types.js";
+import Move, { type MoveParams } from "@repo/engine_game/Move.js";
 
 import type TestingGame from "./Game.js";
 import type TestingPlayer from "./Player.js";

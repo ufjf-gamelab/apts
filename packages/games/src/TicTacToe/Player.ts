@@ -1,5 +1,5 @@
-import type { PlayerPair, PlayerParams } from "@repo/engine/Game/Player.js";
-import Player from "@repo/engine/Game/Player.js";
+import type { PlayerPair, PlayerParams } from "@repo/engine_game/Player.js";
+import Player from "@repo/engine_game/Player.js";
 
 import type TicTacToeGame from "./Game.js";
 import type TicTacToeMove from "./Move.js";

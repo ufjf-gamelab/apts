@@ -1,5 +1,8 @@
 {
   "author": "Gabriel Malosto",
+  "dependencies": {
+    "ts-graphviz": "^2.1.6"
+  },
   "description": "Engine to simulate and create AI models for tabletop games, inspired by the AlphaZero algorithm.",
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
@@ -11,9 +14,6 @@
     "./constants.js": {
       "import": "./src/constants.ts"
     },
-    "./Game/*": {
-      "import": "./src/Game/*"
-    },
     "./MonteCarloTreeCommon/*": {
       "import": "./src/MonteCarloTreeCommon/*"
     },
@@ -22,7 +22,7 @@
     }
   },
   "license": "AGPL-3.0-only",
-  "name": "@repo/engine",
+  "name": "@repo/engine_core",
   "private": true,
   "scripts": {
     "build": "tsc",
@@ -34,8 +34,5 @@
     "typecheck": "pnpm exec tsc"
   },
   "type": "module",
-  "version": "4.3.0",
-  "dependencies": {
-    "ts-graphviz": "^2.1.6"
-  }
+  "version": "4.3.0"
 }

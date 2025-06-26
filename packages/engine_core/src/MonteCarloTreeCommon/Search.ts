@@ -1,16 +1,14 @@
-// import Game from "../Game/Game.js";
-// import Move from "../Game/Move.js";
-// import Player from "../Game/Player.js";
-// import State from "../Game/State.js";
-// import { INCREMENT_ONE, Integer } from "../types.js";
-// import { Node } from "./Node.js";
-// import { generateGraphvizDotStringFromTree } from "./graphviz.js";
+// import type Game from "../Game/Game.js";
+// import type Move from "../Game/Move.js";
+// import type Player from "../Game/Player.js";
+// import type State from "../Game/State.js";
+// import type { Integer } from "../types.js";
 
 // const MINIMUM_PROBABILITY = 0;
 
 // interface GetProbabilitiesReturn {
+//   graphvizDotString: null | string;
 //   probabilities: number[];
-//   graphvizDotString: string | null;
 // }
 
 // interface SearchParams<
@@ -19,8 +17,8 @@
 //   S extends State<G, S, M, Sl, P>,
 //   G extends Game<G, S, M, Sl, P>,
 // > {
-//   game: G;
 //   explorationConstant: number;
+//   game: G;
 //   quantityOfSearches: Integer;
 // }
 
@@ -30,13 +28,25 @@
 //   S extends State<G, S, M, Sl, P>,
 //   G extends Game<G, S, M, Sl, P>,
 // > {
+//   private explorationConstant: SearchParams<
+//     G,
+//     S,
+//     M,
+//     Sl,
+//     P
+//   >["explorationConstant"];
 //   private game: SearchParams<G, S, M, Sl, P>["game"];
-//   private explorationConstant: SearchParams<G, S, M, Sl, P>["explorationConstant"];
-//   private quantityOfSearches: SearchParams<G, S, M, Sl, P>["quantityOfSearches"];
+//   private quantityOfSearches: SearchParams<
+//     G,
+//     S,
+//     M,
+//     Sl,
+//     P
+//   >["quantityOfSearches"];
 
 //   constructor({
-//     game,
 //     explorationConstant,
+//     game,
 //     quantityOfSearches,
 //   }: SearchParams<G, S, M, Sl, P>) {
 //     this.game = game;

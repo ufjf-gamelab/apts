@@ -1,8 +1,8 @@
-import type { PlayerKey } from "@repo/engine/Game/Player.js";
-import type { StateParams } from "@repo/engine/Game/State.js";
-import State from "@repo/engine/Game/State.js";
-import type { Integer } from "@repo/engine/types";
-import { INCREMENT_ONE } from "@repo/engine/types";
+import type { PlayerKey } from "@repo/engine_game/Player.js";
+import type { StateParams } from "@repo/engine_game/State.js";
+import State from "@repo/engine_game/State.js";
+import type { Integer } from "@repo/engine_game/types";
+import { INCREMENT_ONE } from "@repo/engine_game/types";
 
 import type TicTacToeGame from "./Game.js";
 import type { Position } from "./Move.js";

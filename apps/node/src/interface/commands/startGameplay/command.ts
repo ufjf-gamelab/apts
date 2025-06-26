@@ -1,4 +1,4 @@
-// import { GameMode, GameName } from "@repo/engine/interface/types.js";
+// import { GameMode, GameName } from "@repo/engine_game/interface/types.js";
 // import { Argument, Command } from "commander";
 // import actions from "../../../../actions/actions.js";
 // import { parseGameMode } from "../../../../parsing.js";

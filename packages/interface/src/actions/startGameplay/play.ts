@@ -1,8 +1,8 @@
-// import Game from "@repo/engine/engine/Game/Game.js";
-// import Move from "@repo/engine/engine/Game/Move.js";
-// import Player from "@repo/engine/engine/Game/Player.js";
-// import State from "@repo/engine/engine/Game/State.js";
-// import { GameMode } from "@repo/engine/interface/types.js";
+// import Game from "@repo/engine_game/engine/Game/Game.js";
+// import Move from "@repo/engine_game/engine/Game/Move.js";
+// import Player from "@repo/engine_game/engine/Game/Player.js";
+// import State from "@repo/engine_game/engine/Game/State.js";
+// import { GameMode } from "@repo/engine_game/interface/types.js";
 // import { Choice } from "prompts";
 // import { GetInput } from "../../environments/fileSystem/program.js";
 

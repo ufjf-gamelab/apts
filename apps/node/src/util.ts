@@ -1,4 +1,4 @@
-import type { Integer } from "@repo/engine/types";
+import type { Integer } from "@repo/engine_game/types";
 
 export const getMaskFromArray = (
   dataLength: Integer,

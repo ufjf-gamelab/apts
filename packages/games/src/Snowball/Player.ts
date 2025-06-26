@@ -1,4 +1,4 @@
-import Player from "@repo/engine/Game/Player.js";
+import Player from "@repo/engine_game/Player.js";
 
 import type TestingGame from "./Game.js";
 import type TestingMove from "./Move.js";

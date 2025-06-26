@@ -23,9 +23,9 @@ importers:
       '@paralleldrive/cuid2':
         specifier: ^2.2.2
         version: 2.2.2
-      '@repo/engine':
+      '@repo/engine_game':
         specifier: workspace:*
-        version: link:../../packages/engine
+        version: link:../../packages/engine_game
       '@repo/interface':
         specifier: workspace:*
         version: link:../../packages/interface
@@ -104,11 +104,30 @@ importers:
         specifier: ^6.3.5
         version: 6.3.5(@types/node@22.15.29)(tsx@4.19.4)
 
-  packages/engine:
+  packages/engine_core:
     dependencies:
       ts-graphviz:
         specifier: ^2.1.6
         version: 2.1.6
+    devDependencies:
+      '@repo/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
+      vitest:
+        specifier: ^3.2.1
+        version: 3.2.1(@types/node@22.15.29)(tsx@4.19.4)
+
+  packages/engine_game:
+    dependencies:
+      '@repo/engine_core':
+        specifier: workspace:*
+        version: link:../engine_core
     devDependencies:
       '@repo/eslint-config':
         specifier: workspace:*
@@ -158,9 +177,12 @@ importers:
 
   packages/games:
     dependencies:
-      '@repo/engine':
+      '@repo/engine_core':
         specifier: workspace:*
-        version: link:../engine
+        version: link:../engine_core
+      '@repo/engine_game':
+        specifier: workspace:*
+        version: link:../engine_game
     devDependencies:
       '@repo/eslint-config':
         specifier: workspace:*
@@ -177,9 +199,9 @@ importers:
 
   packages/interface:
     dependencies:
-      '@repo/engine':
+      '@repo/engine_game':
         specifier: workspace:*
-        version: link:../engine
+        version: link:../engine_game
       '@repo/games':
         specifier: workspace:*
         version: link:../games

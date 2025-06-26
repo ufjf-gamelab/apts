@@ -1,4 +1,5 @@
-import type { Char, Integer } from "../types.js";
+import type { Char, Integer } from "@repo/engine_core/types.js";
+
 import type Game from "./Game.js";
 import type Move from "./Move.js";
 import type Slot from "./Slot.js";

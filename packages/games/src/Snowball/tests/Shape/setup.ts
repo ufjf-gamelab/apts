@@ -1,9 +1,6 @@
-import type { Integer } from "@repo/engine/types.js";
+import type { Integer } from "@repo/engine_core/types.js";
 
-import type {
-  getIndexesOfShape,
-  getIndexOfPlayerWhoIsOccupyingShape,
-} from "../../Shape.js";
+import type { getIndexOfPlayerWhoIsOccupyingShape } from "../../Shape.js";
 import TestingSlot from "../../Slot.js";
 import { INITIAL_POINTS } from "../../State.js";
 import {

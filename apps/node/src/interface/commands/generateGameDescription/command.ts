@@ -1,4 +1,4 @@
-// import { GameName } from "@repo/engine/interface/types.js";
+// import { GameName } from "@repo/engine_game/interface/types.js";
 // import actions from "@repo/interface/actions/actions.js";
 // import { Argument, Command } from "commander";
 // import { parseJsonFile } from "../../parsing.js";

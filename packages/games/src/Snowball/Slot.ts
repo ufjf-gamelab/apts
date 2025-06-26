@@ -1,5 +1,5 @@
-import type { IndexOfPlayer } from "@repo/engine/Game/Player.js";
-import Slot, { type SlotParams } from "@repo/engine/Game/Slot.js";
+import type { IndexOfPlayer } from "@repo/engine_game/Player.js";
+import Slot, { type SlotParams } from "@repo/engine_game/Slot.js";
 
 import { type default as TestingGame } from "./Game.js";
 import type TestingMove from "./Move.js";

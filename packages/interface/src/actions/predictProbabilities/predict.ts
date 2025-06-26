@@ -1,7 +1,7 @@
-import type Game from "@repo/engine/Game/Game.js";
-import type Move from "@repo/engine/Game/Move.js";
-import type Player from "@repo/engine/Game/Player.js";
-import type State from "@repo/engine/Game/State.js";
+import type Game from "@repo/engine_game/Game.js";
+import type Move from "@repo/engine_game/Move.js";
+import type Player from "@repo/engine_game/Player.js";
+import type State from "@repo/engine_game/State.js";
 
 import type { ProcessGraphvizDotString } from "../actions.js";
 

@@ -1,4 +1,4 @@
-import type { Integer } from "@repo/engine/types.js";
+import type { Integer } from "@repo/engine_core/types.js";
 
 import {
   getFormattedDescriptorOfShape,

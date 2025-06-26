@@ -1,4 +1,5 @@
-import type { Integer } from "../types.js";
+import type { Integer } from "@repo/engine_core/types.js";
+
 import type { IndexOfMove, default as Move } from "./Move.js";
 import type { IndexOfPlayer, default as Player } from "./Player.js";
 import type Slot from "./Slot.js";

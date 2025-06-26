@@ -1,8 +1,8 @@
 // import { createId } from "@paralleldrive/cuid2";
-// import { EncodedState } from "@repo/engine/engine/Game/Game";
-// import Player from "@repo/engine/engine/Game/Player";
-// import State from "@repo/engine/engine/Game/State";
-// import { INCREMENT_ONE } from "@repo/engine/types";
+// import { EncodedState } from "@repo/engine_game/engine/Game/Game";
+// import Player from "@repo/engine_game/engine/Game/Player";
+// import State from "@repo/engine_game/engine/Game/State";
+// import { INCREMENT_ONE } from "@repo/engine_game/types";
 // import * as tf from "@tensorflow/tfjs";
 // import Game from "../games/TicTacToe/Game";
 // import MonteCarloTreeSearch from "./MonteCarloTree/Search";

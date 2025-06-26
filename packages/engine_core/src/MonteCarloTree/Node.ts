@@ -1,7 +1,7 @@
-// import Game from "@repo/engine/engine/Game/Game";
-// import Move from "@repo/engine/engine/Game/Move";
-// import State from "@repo/engine/engine/Game/State";
-// import { INCREMENT_ONE, Integer } from "@repo/engine/types";
+// import Game from "@repo/engine_game/engine/Game/Game";
+// import Move from "@repo/engine_game/engine/Game/Move";
+// import State from "@repo/engine_game/engine/Game/State";
+// import { INCREMENT_ONE, Integer } from "@repo/engine_game/types";
 
 // const EMPTY_CHILDREN_LIST = 0;
 // const MINIMUM_VALUE_SUM = 0;

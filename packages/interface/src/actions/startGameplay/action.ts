@@ -1,4 +1,4 @@
-// import { GameMode, GameName } from "@repo/engine/interface/types.js";
+// import { GameMode, GameName } from "@repo/engine_game/interface/types.js";
 // import TicTacToeGame from "../../../games/TicTacToe/Game.js";
 // import play from "./play.js";
 

@@ -1,4 +1,4 @@
-// import { GameName } from "@repo/engine/interface/types.js";
+// import { GameName } from "@repo/engine_game/interface/types.js";
 
 // interface GameDescription {
 //   $schema?: string;

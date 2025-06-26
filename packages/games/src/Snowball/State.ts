@@ -1,9 +1,9 @@
-import { INCREMENT_ONE } from "@repo/engine/constants.js";
+import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
+import { type Integer } from "@repo/engine_core/types.js";
 import State, {
   type Points,
   type StateParams,
-} from "@repo/engine/Game/State.js";
-import { type Integer } from "@repo/engine/types.js";
+} from "@repo/engine_game/State.js";
 
 import {
   COLUMN_LENGTH,

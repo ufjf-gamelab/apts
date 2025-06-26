@@ -1,8 +1,3 @@
-import {
-  attribute as attributeFromGraphviz,
-  Node as NodeFromGraphviz,
-} from "ts-graphviz";
-
 import { EMPTY_LIST, INCREMENT_ONE, NOT_INCREMENT } from "../constants.js";
 import type Game from "../Game/Game.js";
 import { type IndexOfMove, type default as Move } from "../Game/Move.js";
@@ -67,7 +62,7 @@ interface TreeNodeParams<
  *   and backpropagation (updating statistics up the tree).
  * - UCB (Upper Confidence Bound) is used for child selection during tree traversal.
  */
-export class TreeNode<
+class TreeNode<
   G extends Game<G, S, M, Sl, P>,
   S extends State<G, S, M, Sl, P>,
   M extends Move<G, S, M, Sl, P>,
@@ -169,11 +164,11 @@ export class TreeNode<
   /// Select the best node among children, i.e. the one with the highest UCB.
   public selectBestChild(): null | TreeNode<G, S, M, Sl, P> {
     if (this.children.size === EMPTY_LIST) {
-      console.log("No children to select from");
+      throw new Error("No children to select from");
     }
 
     const expandedChildren = Array.from(this.children.values()).filter(
-      (child): child is TreeNode<G, S, M, Sl, P> => child !== null,
+      child => child !== null,
     );
 
     let bestChild: null | TreeNode<G, S, M, Sl, P> = null;
@@ -274,3 +269,6 @@ export class TreeNode<
     return indexOfMove;
   }
 }
+
+export type { TreeNodeParams };
+export { TreeNode as default };

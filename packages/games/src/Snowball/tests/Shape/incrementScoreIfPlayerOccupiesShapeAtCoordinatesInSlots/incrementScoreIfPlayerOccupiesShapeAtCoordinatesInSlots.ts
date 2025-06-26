@@ -1,5 +1,5 @@
-import type { Points } from "@repo/engine/Game/State.js";
-import type { Integer } from "@repo/engine/types.js";
+import type { Points } from "@repo/engine_game/State.js";
+import type { Integer } from "@repo/engine_core/types.js";
 import { expect, test } from "vitest";
 
 import { incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots } from "../../../Game.js";

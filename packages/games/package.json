@@ -1,7 +1,8 @@
 {
   "author": "Gabriel Malosto",
   "dependencies": {
-    "@repo/engine": "workspace:*"
+    "@repo/engine_core": "workspace:*",
+    "@repo/engine_game": "workspace:*"
   },
   "description": "Collection of tabletop games to be used with the engine.",
   "devDependencies": {

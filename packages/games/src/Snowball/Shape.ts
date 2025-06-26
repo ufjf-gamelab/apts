@@ -1,6 +1,6 @@
-import { INCREMENT_ONE } from "@repo/engine/constants.js";
-import type { Points } from "@repo/engine/Game/State.js";
-import type { Integer } from "@repo/engine/types.js";
+import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
+import type { Integer } from "@repo/engine_core/types.js";
+import type { Points } from "@repo/engine_game/State.js";
 
 import { COLUMN_LENGTH, ROW_LENGTH } from "./Game.js";
 import TestingSlot from "./Slot.js";
