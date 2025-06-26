@@ -1,7 +1,7 @@
 {
   "devDependencies": {
     "@eslint/js": "^9.28.0",
-    "@repo/typescript-config": "workspace:*",
+    "@repo/typescript_config": "workspace:*",
     "eslint": "^9.28.0",
     "eslint-plugin-perfectionist": "^4.14.0",
     "eslint-plugin-react": "^7.37.5",
@@ -16,7 +16,7 @@
     "./node": "./node.js",
     "./vite": "./vite.js"
   },
-  "name": "@repo/eslint-config",
+  "name": "@repo/eslint_config",
   "private": true,
   "scripts": {
     "format": "pnpm exec prettier . -w",

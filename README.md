@@ -46,8 +46,8 @@ This monorepo includes the following packages and apps:
 - `node`: an environment for running the automatic play-testing system using [Node.js](https://nodejs.org)
 - `web`: a [React](https://reactjs.org) with [vite](https://vitejs.dev) TypesCript app
 - `@repo/focinho`: a functionality library shared by both `node` and `web` applications
-- `@repo/eslint-config`: shared `eslint` configurations
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- `@repo/eslint_config`: shared `eslint` configurations
+- `@repo/typescript_config`: `tsconfig.json`s used throughout the monorepo
 
 Each package and app is 100% [TypeScript](https://www.typescriptlang.org/).
 

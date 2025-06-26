@@ -6,18 +6,16 @@
   },
   "description": "Definition of actions for the engine.",
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
+    "@repo/eslint_config": "workspace:*",
+    "@repo/typescript_config": "workspace:*",
     "typescript": "^5.8.3"
   },
   "exports": {
     "./actions/*": {
-      "default": "./dist/actions/*",
-      "types": "./src/actions/*"
+      "import": "./src/actions/*"
     },
     "./types": {
-      "default": "./dist/types.js",
-      "types": "./src/types.ts"
+      "import": "./src/types.ts"
     }
   },
   "license": "AGPL-3.0-only",

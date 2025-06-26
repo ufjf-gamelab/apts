@@ -12,8 +12,8 @@
   },
   "description": "Engine to simulate and create AI models for tabletop games, inspired by the AlphaZero algorithm.",
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
+    "@repo/eslint_config": "workspace:*",
+    "@repo/typescript_config": "workspace:*",
     "@types/node": "^22.15.29",
     "@types/prompts": "^2.4.9",
     "esbuild": "^0.25.5",

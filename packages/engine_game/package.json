@@ -4,10 +4,9 @@
     "@repo/engine_core": "workspace:*"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "typescript": "^5.8.3",
-    "vitest": "^3.2.1"
+    "@repo/eslint_config": "workspace:*",
+    "@repo/typescript_config": "workspace:*",
+    "typescript": "^5.8.3"
   },
   "exports": {
     "./*": {

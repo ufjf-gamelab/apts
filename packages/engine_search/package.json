@@ -1,26 +1,20 @@
 {
   "author": "Gabriel Malosto",
-  "dependencies": {
-    "@repo/engine_core": "workspace:*",
-    "@repo/engine_game": "workspace:*"
-  },
-  "description": "Collection of tabletop games to be used with the engine.",
   "devDependencies": {
+    "@repo/engine_core": "workspace:*",
+    "@repo/engine_game": "workspace:*",
     "@repo/eslint_config": "workspace:*",
     "@repo/typescript_config": "workspace:*",
     "typescript": "^5.8.3",
     "vitest": "^3.2.1"
   },
   "exports": {
-    "./Snowball/*": {
-      "import": "./src/Snowball/*"
-    },
-    "./TicTacToe/*": {
-      "import": "./src/TicTacToe/*"
+    "./MonteCarloTreeCommon/*": {
+      "import": "./src/MonteCarloTreeCommon/*"
     }
   },
   "license": "AGPL-3.0-only",
-  "name": "@repo/games",
+  "name": "@repo/engine_search",
   "private": true,
   "scripts": {
     "build": "tsc",
@@ -32,5 +26,5 @@
     "typecheck": "pnpm exec tsc"
   },
   "type": "module",
-  "version": "0.0.1"
+  "version": "4.3.0"
 }

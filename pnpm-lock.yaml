@@ -45,12 +45,12 @@ importers:
         specifier: ^2.1.6
         version: 2.1.6
     devDependencies:
-      '@repo/eslint-config':
+      '@repo/eslint_config':
         specifier: workspace:*
-        version: link:../../packages/eslint-config
-      '@repo/typescript-config':
+        version: link:../../packages/eslint_config
+      '@repo/typescript_config':
         specifier: workspace:*
-        version: link:../../packages/typescript-config
+        version: link:../../packages/typescript_config
       '@types/node':
         specifier: ^22.15.29
         version: 22.15.29
@@ -76,12 +76,12 @@ importers:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
     devDependencies:
-      '@repo/eslint-config':
+      '@repo/eslint_config':
         specifier: workspace:*
-        version: link:../../packages/eslint-config
-      '@repo/typescript-config':
+        version: link:../../packages/eslint_config
+      '@repo/typescript_config':
         specifier: workspace:*
-        version: link:../../packages/typescript-config
+        version: link:../../packages/typescript_config
       '@types/react':
         specifier: ^19.1.6
         version: 19.1.6
@@ -105,23 +105,16 @@ importers:
         version: 6.3.5(@types/node@22.15.29)(tsx@4.19.4)
 
   packages/engine_core:
-    dependencies:
-      ts-graphviz:
-        specifier: ^2.1.6
-        version: 2.1.6
     devDependencies:
-      '@repo/eslint-config':
+      '@repo/eslint_config':
         specifier: workspace:*
-        version: link:../eslint-config
-      '@repo/typescript-config':
+        version: link:../eslint_config
+      '@repo/typescript_config':
         specifier: workspace:*
-        version: link:../typescript-config
+        version: link:../typescript_config
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
-      vitest:
-        specifier: ^3.2.1
-        version: 3.2.1(@types/node@22.15.29)(tsx@4.19.4)
 
   packages/engine_game:
     dependencies:
@@ -129,12 +122,30 @@ importers:
         specifier: workspace:*
         version: link:../engine_core
     devDependencies:
-      '@repo/eslint-config':
+      '@repo/eslint_config':
         specifier: workspace:*
-        version: link:../eslint-config
-      '@repo/typescript-config':
+        version: link:../eslint_config
+      '@repo/typescript_config':
         specifier: workspace:*
-        version: link:../typescript-config
+        version: link:../typescript_config
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
+
+  packages/engine_search:
+    devDependencies:
+      '@repo/engine_core':
+        specifier: workspace:*
+        version: link:../engine_core
+      '@repo/engine_game':
+        specifier: workspace:*
+        version: link:../engine_game
+      '@repo/eslint_config':
+        specifier: workspace:*
+        version: link:../eslint_config
+      '@repo/typescript_config':
+        specifier: workspace:*
+        version: link:../typescript_config
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -142,14 +153,14 @@ importers:
         specifier: ^3.2.1
         version: 3.2.1(@types/node@22.15.29)(tsx@4.19.4)
 
-  packages/eslint-config:
+  packages/eslint_config:
     devDependencies:
       '@eslint/js':
         specifier: ^9.28.0
         version: 9.28.0
-      '@repo/typescript-config':
+      '@repo/typescript_config':
         specifier: workspace:*
-        version: link:../typescript-config
+        version: link:../typescript_config
       eslint:
         specifier: ^9.28.0
         version: 9.28.0
@@ -184,12 +195,12 @@ importers:
         specifier: workspace:*
         version: link:../engine_game
     devDependencies:
-      '@repo/eslint-config':
+      '@repo/eslint_config':
         specifier: workspace:*
-        version: link:../eslint-config
-      '@repo/typescript-config':
+        version: link:../eslint_config
+      '@repo/typescript_config':
         specifier: workspace:*
-        version: link:../typescript-config
+        version: link:../typescript_config
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -206,17 +217,17 @@ importers:
         specifier: workspace:*
         version: link:../games
     devDependencies:
-      '@repo/eslint-config':
+      '@repo/eslint_config':
         specifier: workspace:*
-        version: link:../eslint-config
-      '@repo/typescript-config':
+        version: link:../eslint_config
+      '@repo/typescript_config':
         specifier: workspace:*
-        version: link:../typescript-config
+        version: link:../typescript_config
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
 
-  packages/typescript-config: {}
+  packages/typescript_config: {}
 
 packages:
 
