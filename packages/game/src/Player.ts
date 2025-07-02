@@ -13,4 +13,22 @@ interface PlayerParams {
   readonly symbol: Char;
 }
 
+const createPlayer = ({
+  name,
+  symbol,
+}: {
+  name: Player["name"];
+  symbol: Player["symbol"];
+}): Player => ({
+  clone(): Player {
+    return createPlayer({
+      name,
+      symbol,
+    });
+  },
+  name,
+  symbol,
+});
+
 export type { Player as default, IndexOfPlayer, PlayerParams };
+export { createPlayer };

@@ -21,12 +21,11 @@ const createMove = ({
   });
   return {
     ...baseMove,
-    clone(): typeof this {
-      return createMove({
-        indexOfSlotInWhichPlacePiece: this.indexOfSlotInWhichPlacePiece,
-        title: this.title,
-      });
-    },
+    clone: () =>
+      createMove({
+        indexOfSlotInWhichPlacePiece,
+        title,
+      }),
     indexOfSlotInWhichPlacePiece,
   };
 };
@@ -42,4 +41,5 @@ const moves: Record<string, Move> = {
   }),
 } as const;
 
+export type { Move as default };
 export { moves };

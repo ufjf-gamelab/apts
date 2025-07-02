@@ -1,5 +1,5 @@
 interface Move {
-  clone(): this;
+  clone: () => this;
   readonly description: MoveParams["description"];
   readonly title: MoveParams["title"];
 }
