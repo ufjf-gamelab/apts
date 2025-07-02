@@ -5,5 +5,6 @@ export default defineWorkspace([
   "./apps/node/vitest.config.ts",
   "./packages/engine_search/vitest.config.ts",
   "./packages/games/vitest.config.ts",
+  "./packages/games_i/vitest.config.ts",
   "./packages/interface/vitest.config.ts",
 ]);

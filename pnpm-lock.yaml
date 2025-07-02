@@ -186,6 +186,22 @@ importers:
         specifier: ^8.33.1
         version: 8.33.1(eslint@9.28.0)(typescript@5.8.3)
 
+  packages/game:
+    dependencies:
+      '@repo/engine_core':
+        specifier: workspace:*
+        version: link:../engine_core
+    devDependencies:
+      '@repo/eslint_config':
+        specifier: workspace:*
+        version: link:../eslint_config
+      '@repo/typescript_config':
+        specifier: workspace:*
+        version: link:../typescript_config
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
+
   packages/games:
     dependencies:
       '@repo/engine_core':
@@ -194,6 +210,28 @@ importers:
       '@repo/engine_game':
         specifier: workspace:*
         version: link:../engine_game
+    devDependencies:
+      '@repo/eslint_config':
+        specifier: workspace:*
+        version: link:../eslint_config
+      '@repo/typescript_config':
+        specifier: workspace:*
+        version: link:../typescript_config
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
+      vitest:
+        specifier: ^3.2.1
+        version: 3.2.1(@types/node@22.15.29)(tsx@4.19.4)
+
+  packages/games_i:
+    dependencies:
+      '@repo/engine_core':
+        specifier: workspace:*
+        version: link:../engine_core
+      '@repo/game':
+        specifier: workspace:*
+        version: link:../game
     devDependencies:
       '@repo/eslint_config':
         specifier: workspace:*
