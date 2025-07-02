@@ -1,8 +1,8 @@
 {
   "author": "Gabriel Malosto",
   "dependencies": {
-    "@repo/engine_game": "workspace:*",
-    "@repo/games": "workspace:*"
+    "@repo/game.old": "workspace:*",
+    "@repo/games.old": "workspace:*"
   },
   "description": "Definition of actions for the engine.",
   "devDependencies": {

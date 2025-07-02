@@ -3,7 +3,7 @@ import { type Integer } from "@repo/engine_core/types.js";
 import State, {
   type Points,
   type StateParams,
-} from "@repo/engine_game/State.js";
+} from "../../../game.old/src/State.js";
 
 import {
   COLUMN_LENGTH,

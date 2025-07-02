@@ -1,7 +1,7 @@
 import type { Integer } from "@repo/engine_core/types.js";
-import Game, { type GameParams } from "@repo/engine_game/Game.js";
-import type { IndexOfPlayer } from "@repo/engine_game/Player.js";
-import type { Points, Score } from "@repo/engine_game/State.js";
+import Game, { type GameParams } from "../../../game.old/src/Game.js";
+import type { IndexOfPlayer } from "../../../game.old/src/Player.js";
+import type { Points, Score } from "../../../game.old/src/State.js";
 
 import { type default as TestingMove } from "./Move.js";
 import { type default as TestingPlayer } from "./Player.js";

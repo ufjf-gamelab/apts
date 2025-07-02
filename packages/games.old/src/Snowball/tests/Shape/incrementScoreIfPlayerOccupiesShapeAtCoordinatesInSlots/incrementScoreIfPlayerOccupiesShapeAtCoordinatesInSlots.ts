@@ -1,4 +1,4 @@
-import type { Points } from "@repo/engine_game/State.js";
+import type { Points } from "../../../../../../game.old/src/State.js";
 import type { Integer } from "@repo/engine_core/types.js";
 import { expect, test } from "vitest";
 

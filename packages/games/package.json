@@ -2,7 +2,7 @@
   "author": "Gabriel Malosto",
   "dependencies": {
     "@repo/engine_core": "workspace:*",
-    "@repo/engine_game": "workspace:*"
+    "@repo/game": "workspace:*"
   },
   "description": "Collection of tabletop games to be used with the engine.",
   "devDependencies": {
@@ -14,9 +14,6 @@
   "exports": {
     "./Snowball/*": {
       "import": "./src/Snowball/*"
-    },
-    "./TicTacToe/*": {
-      "import": "./src/TicTacToe/*"
     }
   },
   "license": "AGPL-3.0-only",

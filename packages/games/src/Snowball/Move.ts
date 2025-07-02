@@ -1,49 +1,45 @@
 import type { Integer } from "@repo/engine_core/types.js";
-import Move, { type MoveParams } from "@repo/engine_game/Move.js";
+import {
+  type default as BaseMove,
+  createMove as createBaseMove,
+} from "@repo/game/Move.js";
 
-import type TestingGame from "./Game.js";
-import type TestingPlayer from "./Player.js";
-import type TestingSlot from "./Slot.js";
-import type TestingState from "./State.js";
-
-type EncodedTestingMove = TestingMoveParams;
-
-type TestingMoveParams = MoveParams<
-  TestingGame,
-  TestingState,
-  TestingMove,
-  TestingSlot,
-  TestingPlayer
-> & {
-  indexOfSlotInWhichPlacePiece: Integer;
-};
-
-class TestingMove extends Move<
-  TestingGame,
-  TestingState,
-  TestingMove,
-  TestingSlot,
-  TestingPlayer
-> {
-  private readonly indexOfSlotInWhichPlacePiece: TestingMoveParams["indexOfSlotInWhichPlacePiece"];
-
-  constructor({ indexOfSlotInWhichPlacePiece, ...params }: TestingMoveParams) {
-    super(params);
-    this.indexOfSlotInWhichPlacePiece = indexOfSlotInWhichPlacePiece;
-  }
-
-  public override clone(): TestingMove {
-    return new TestingMove({
-      description: this.getDescription(),
-      indexOfSlotInWhichPlacePiece: this.indexOfSlotInWhichPlacePiece,
-      title: this.getTitle(),
-    });
-  }
-
-  public getIndexOfSlotInWhichPlacePiece(): typeof this.indexOfSlotInWhichPlacePiece {
-    return this.indexOfSlotInWhichPlacePiece;
-  }
+interface Move extends BaseMove {
+  readonly indexOfSlotInWhichPlacePiece: Integer;
 }
 
-export type { EncodedTestingMove };
-export { TestingMove as default };
+const createMove = ({
+  indexOfSlotInWhichPlacePiece,
+  title,
+}: {
+  indexOfSlotInWhichPlacePiece: Move["indexOfSlotInWhichPlacePiece"];
+  title: Move["title"];
+}): Move => {
+  const baseMove = createBaseMove({
+    description: `Control the slot on ${title}`,
+    title,
+  });
+  return {
+    ...baseMove,
+    clone(): typeof this {
+      return createMove({
+        indexOfSlotInWhichPlacePiece: this.indexOfSlotInWhichPlacePiece,
+        title: this.title,
+      });
+    },
+    indexOfSlotInWhichPlacePiece,
+  };
+};
+
+const moves: Record<string, Move> = {
+  northOfNorthwest: createMove({
+    indexOfSlotInWhichPlacePiece: 1,
+    title: "North of Northwest",
+  }),
+  northwestOfNorthwest: createMove({
+    indexOfSlotInWhichPlacePiece: 0,
+    title: "Northwest of Northwest",
+  }),
+} as const;
+
+export { moves };

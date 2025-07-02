@@ -1,6 +1,6 @@
-import type { MovePair, MoveParams } from "@repo/engine_game/Move.js";
-import Move from "@repo/engine_game/Move.js";
-import type { Score } from "@repo/engine_game/State.js";
+import type { MovePair, MoveParams } from "../../../game.old/src/Move.js";
+import Move from "../../../game.old/src/Move.js";
+import type { Score } from "../../../game.old/src/State.js";
 import type { Integer } from "@repo/engine_game/types";
 
 import type TicTacToeGame from "./Game.js";

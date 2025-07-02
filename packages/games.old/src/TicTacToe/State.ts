@@ -1,6 +1,6 @@
-import type { PlayerKey } from "@repo/engine_game/Player.js";
-import type { StateParams } from "@repo/engine_game/State.js";
-import State from "@repo/engine_game/State.js";
+import type { PlayerKey } from "../../../game.old/src/Player.js";
+import type { StateParams } from "../../../game.old/src/State.js";
+import State from "../../../game.old/src/State.js";
 import type { Integer } from "@repo/engine_game/types";
 import { INCREMENT_ONE } from "@repo/engine_game/types";
 

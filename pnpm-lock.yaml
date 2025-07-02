@@ -23,9 +23,9 @@ importers:
       '@paralleldrive/cuid2':
         specifier: ^2.2.2
         version: 2.2.2
-      '@repo/engine_game':
+      '@repo/game.old':
         specifier: workspace:*
-        version: link:../../packages/engine_game
+        version: link:../../packages/game.old
       '@repo/interface':
         specifier: workspace:*
         version: link:../../packages/interface
@@ -116,43 +116,6 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
 
-  packages/engine_game:
-    dependencies:
-      '@repo/engine_core':
-        specifier: workspace:*
-        version: link:../engine_core
-    devDependencies:
-      '@repo/eslint_config':
-        specifier: workspace:*
-        version: link:../eslint_config
-      '@repo/typescript_config':
-        specifier: workspace:*
-        version: link:../typescript_config
-      typescript:
-        specifier: ^5.8.3
-        version: 5.8.3
-
-  packages/engine_search:
-    devDependencies:
-      '@repo/engine_core':
-        specifier: workspace:*
-        version: link:../engine_core
-      '@repo/engine_game':
-        specifier: workspace:*
-        version: link:../engine_game
-      '@repo/eslint_config':
-        specifier: workspace:*
-        version: link:../eslint_config
-      '@repo/typescript_config':
-        specifier: workspace:*
-        version: link:../typescript_config
-      typescript:
-        specifier: ^5.8.3
-        version: 5.8.3
-      vitest:
-        specifier: ^3.2.1
-        version: 3.2.1(@types/node@22.15.29)(tsx@4.19.4)
-
   packages/eslint_config:
     devDependencies:
       '@eslint/js':
@@ -202,14 +165,11 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
 
-  packages/games:
+  packages/game.old:
     dependencies:
       '@repo/engine_core':
         specifier: workspace:*
         version: link:../engine_core
-      '@repo/engine_game':
-        specifier: workspace:*
-        version: link:../engine_game
     devDependencies:
       '@repo/eslint_config':
         specifier: workspace:*
@@ -220,11 +180,8 @@ importers:
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
-      vitest:
-        specifier: ^3.2.1
-        version: 3.2.1(@types/node@22.15.29)(tsx@4.19.4)
 
-  packages/games_i:
+  packages/games:
     dependencies:
       '@repo/engine_core':
         specifier: workspace:*
@@ -246,14 +203,14 @@ importers:
         specifier: ^3.2.1
         version: 3.2.1(@types/node@22.15.29)(tsx@4.19.4)
 
-  packages/interface:
+  packages/games.old:
     dependencies:
-      '@repo/engine_game':
+      '@repo/engine_core':
         specifier: workspace:*
-        version: link:../engine_game
-      '@repo/games':
+        version: link:../engine_core
+      '@repo/game.old':
         specifier: workspace:*
-        version: link:../games
+        version: link:../game.old
     devDependencies:
       '@repo/eslint_config':
         specifier: workspace:*
@@ -264,6 +221,49 @@ importers:
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
+      vitest:
+        specifier: ^3.2.1
+        version: 3.2.1(@types/node@22.15.29)(tsx@4.19.4)
+
+  packages/interface:
+    dependencies:
+      '@repo/game.old':
+        specifier: workspace:*
+        version: link:../game.old
+      '@repo/games.old':
+        specifier: workspace:*
+        version: link:../games.old
+    devDependencies:
+      '@repo/eslint_config':
+        specifier: workspace:*
+        version: link:../eslint_config
+      '@repo/typescript_config':
+        specifier: workspace:*
+        version: link:../typescript_config
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
+
+  packages/search:
+    devDependencies:
+      '@repo/engine_core':
+        specifier: workspace:*
+        version: link:../engine_core
+      '@repo/eslint_config':
+        specifier: workspace:*
+        version: link:../eslint_config
+      '@repo/game.old':
+        specifier: workspace:*
+        version: link:../game.old
+      '@repo/typescript_config':
+        specifier: workspace:*
+        version: link:../typescript_config
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
+      vitest:
+        specifier: ^3.2.1
+        version: 3.2.1(@types/node@22.15.29)(tsx@4.19.4)
 
   packages/typescript_config: {}
 

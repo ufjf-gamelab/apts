@@ -1,4 +1,4 @@
-import type { Points } from "@repo/engine_game/State.js";
+import type { Points } from "../../../../../../../game.old/src/State.js";
 import type { Integer } from "@repo/engine_core/types.js";
 
 import { SizeOfPatternsUsedForCalculatingPoints } from "../../../../Game.js";
@@ -13,7 +13,7 @@ import {
 import { AmountOfPoints, getSlotsFilledByPlayer } from "../../setup.js";
 import { testIncrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots } from "../incrementScoreIfPlayerOccupiesShapeAtCoordinatesInSlots.js";
 
-const testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots =
+const testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots =
   ({
     expectedScore,
     initialIndexOfColumn,
@@ -35,7 +35,7 @@ const testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots =
       initialIndexOfRow,
       score,
       shape: {
-        direction: "secondaryDiagonal",
+        direction: "principalDiagonal",
         size,
         type: "line",
       },
@@ -49,9 +49,9 @@ const testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots =
   const slots = convertCreatedSlotsAndRelatedDataToSlots(
     createSlotsForInitialState(),
   );
-  testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots({
+  testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
     expectedScore: [AmountOfPoints.Zero, AmountOfPoints.Zero],
-    initialIndexOfColumn: 8,
+    initialIndexOfColumn: 0,
     initialIndexOfRow: 0,
     score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     size: SizeOfPatternsUsedForCalculatingPoints.Line,
@@ -62,16 +62,16 @@ const testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots =
 ((): void => {
   const slots = getSlotsFilledByPlayer({
     indexesOfSlots: [
-      IndexOfTestingSlot.NortheastOfNortheast,
-      IndexOfTestingSlot.CenterOfNortheast,
-      IndexOfTestingSlot.SouthwestOfNortheast,
-      IndexOfTestingSlot.NortheastOfCenter,
+      IndexOfTestingSlot.NorthwestOfNorthwest,
+      IndexOfTestingSlot.CenterOfNorthwest,
+      IndexOfTestingSlot.SoutheastOfNorthwest,
+      IndexOfTestingSlot.NorthwestOfCenter,
     ],
     indexOfPlayer: IndexOfTestingPlayer.One,
   });
-  testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots({
+  testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
     expectedScore: [AmountOfPoints.Zero, AmountOfPoints.Zero],
-    initialIndexOfColumn: 8,
+    initialIndexOfColumn: 0,
     initialIndexOfRow: 0,
     score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     size: SizeOfPatternsUsedForCalculatingPoints.Line,
@@ -82,17 +82,17 @@ const testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots =
 ((): void => {
   const slots = getSlotsFilledByPlayer({
     indexesOfSlots: [
-      IndexOfTestingSlot.NortheastOfNortheast,
-      IndexOfTestingSlot.CenterOfNortheast,
-      IndexOfTestingSlot.SouthwestOfNortheast,
-      IndexOfTestingSlot.NortheastOfCenter,
+      IndexOfTestingSlot.NorthwestOfNorthwest,
+      IndexOfTestingSlot.CenterOfNorthwest,
+      IndexOfTestingSlot.SoutheastOfNorthwest,
+      IndexOfTestingSlot.NorthwestOfCenter,
       IndexOfTestingSlot.CenterOfCenter,
     ],
     indexOfPlayer: IndexOfTestingPlayer.One,
   });
-  testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots({
+  testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
     expectedScore: [AmountOfPoints.One, AmountOfPoints.Zero],
-    initialIndexOfColumn: 8,
+    initialIndexOfColumn: 0,
     initialIndexOfRow: 0,
     score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     size: SizeOfPatternsUsedForCalculatingPoints.Line,
@@ -103,17 +103,17 @@ const testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots =
 ((): void => {
   const slots = getSlotsFilledByPlayer({
     indexesOfSlots: [
-      IndexOfTestingSlot.NortheastOfNortheast,
-      IndexOfTestingSlot.CenterOfNortheast,
-      IndexOfTestingSlot.SouthwestOfNortheast,
-      IndexOfTestingSlot.NortheastOfCenter,
+      IndexOfTestingSlot.NorthwestOfNorthwest,
+      IndexOfTestingSlot.CenterOfNorthwest,
+      IndexOfTestingSlot.SoutheastOfNorthwest,
+      IndexOfTestingSlot.NorthwestOfCenter,
       IndexOfTestingSlot.CenterOfCenter,
     ],
     indexOfPlayer: IndexOfTestingPlayer.Two,
   });
-  testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots({
+  testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
     expectedScore: [AmountOfPoints.Zero, AmountOfPoints.One],
-    initialIndexOfColumn: 8,
+    initialIndexOfColumn: 0,
     initialIndexOfRow: 0,
     score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     size: SizeOfPatternsUsedForCalculatingPoints.Line,
@@ -126,17 +126,17 @@ const testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots =
 ((): void => {
   const slots = getSlotsFilledByPlayer({
     indexesOfSlots: [
-      IndexOfTestingSlot.NortheastOfNortheast,
-      IndexOfTestingSlot.CenterOfNortheast,
-      IndexOfTestingSlot.SouthwestOfNortheast,
-      IndexOfTestingSlot.NortheastOfCenter,
+      IndexOfTestingSlot.NorthwestOfNorthwest,
+      IndexOfTestingSlot.CenterOfNorthwest,
+      IndexOfTestingSlot.SoutheastOfNorthwest,
+      IndexOfTestingSlot.NorthwestOfCenter,
       IndexOfTestingSlot.CenterOfCenter,
     ],
     indexOfPlayer: IndexOfTestingPlayer.One,
   });
-  testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots({
+  testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
     expectedScore: [AmountOfPoints.Zero, AmountOfPoints.Zero],
-    initialIndexOfColumn: 7,
+    initialIndexOfColumn: 1,
     initialIndexOfRow: 1,
     score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     size: SizeOfPatternsUsedForCalculatingPoints.Line,
@@ -147,18 +147,18 @@ const testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots =
 ((): void => {
   const slots = getSlotsFilledByPlayer({
     indexesOfSlots: [
-      IndexOfTestingSlot.NortheastOfNortheast,
-      IndexOfTestingSlot.CenterOfNortheast,
-      IndexOfTestingSlot.SouthwestOfNortheast,
-      IndexOfTestingSlot.NortheastOfCenter,
+      IndexOfTestingSlot.NorthwestOfNorthwest,
+      IndexOfTestingSlot.CenterOfNorthwest,
+      IndexOfTestingSlot.SoutheastOfNorthwest,
+      IndexOfTestingSlot.NorthwestOfCenter,
       IndexOfTestingSlot.CenterOfCenter,
-      IndexOfTestingSlot.SouthwestOfCenter,
+      IndexOfTestingSlot.SoutheastOfCenter,
     ],
     indexOfPlayer: IndexOfTestingPlayer.One,
   });
-  testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots({
+  testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
     expectedScore: [AmountOfPoints.One, AmountOfPoints.Zero],
-    initialIndexOfColumn: 7,
+    initialIndexOfColumn: 1,
     initialIndexOfRow: 1,
     score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     size: SizeOfPatternsUsedForCalculatingPoints.Line,
@@ -172,16 +172,16 @@ const testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots =
   const slots = getSlotsFilledByPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.CenterOfCenter,
-      IndexOfTestingSlot.SouthwestOfCenter,
-      IndexOfTestingSlot.NortheastOfSouthwest,
-      IndexOfTestingSlot.CenterOfSouthwest,
-      IndexOfTestingSlot.SouthwestOfSouthwest,
+      IndexOfTestingSlot.SoutheastOfCenter,
+      IndexOfTestingSlot.NorthwestOfSoutheast,
+      IndexOfTestingSlot.CenterOfSoutheast,
+      IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
     indexOfPlayer: IndexOfTestingPlayer.One,
   });
-  testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots({
+  testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
     expectedScore: [AmountOfPoints.Zero, AmountOfPoints.Zero],
-    initialIndexOfColumn: 5,
+    initialIndexOfColumn: 3,
     initialIndexOfRow: 3,
     score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     size: SizeOfPatternsUsedForCalculatingPoints.Line,
@@ -192,18 +192,18 @@ const testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots =
 ((): void => {
   const slots = getSlotsFilledByPlayer({
     indexesOfSlots: [
-      IndexOfTestingSlot.NortheastOfCenter,
+      IndexOfTestingSlot.NorthwestOfCenter,
       IndexOfTestingSlot.CenterOfCenter,
-      IndexOfTestingSlot.SouthwestOfCenter,
-      IndexOfTestingSlot.NortheastOfSouthwest,
-      IndexOfTestingSlot.CenterOfSouthwest,
-      IndexOfTestingSlot.SouthwestOfSouthwest,
+      IndexOfTestingSlot.SoutheastOfCenter,
+      IndexOfTestingSlot.NorthwestOfSoutheast,
+      IndexOfTestingSlot.CenterOfSoutheast,
+      IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
     indexOfPlayer: IndexOfTestingPlayer.One,
   });
-  testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots({
+  testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
     expectedScore: [AmountOfPoints.One, AmountOfPoints.Zero],
-    initialIndexOfColumn: 5,
+    initialIndexOfColumn: 3,
     initialIndexOfRow: 3,
     score: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     size: SizeOfPatternsUsedForCalculatingPoints.Line,
@@ -217,7 +217,7 @@ const testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots =
   const slots = convertCreatedSlotsAndRelatedDataToSlots(
     createSlotsForInitialState(),
   );
-  testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots({
+  testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
     expectedScore: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     initialIndexOfColumn: 4,
     initialIndexOfRow: 4,
@@ -231,13 +231,13 @@ const testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots =
   const slots = getSlotsFilledByPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.CenterOfCenter,
-      IndexOfTestingSlot.SouthwestOfCenter,
-      IndexOfTestingSlot.NortheastOfSouthwest,
-      IndexOfTestingSlot.CenterOfSouthwest,
+      IndexOfTestingSlot.SoutheastOfCenter,
+      IndexOfTestingSlot.NorthwestOfSoutheast,
+      IndexOfTestingSlot.CenterOfSoutheast,
     ],
     indexOfPlayer: IndexOfTestingPlayer.One,
   });
-  testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots({
+  testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
     expectedScore: [AmountOfPoints.Zero, AmountOfPoints.Zero],
     initialIndexOfColumn: 4,
     initialIndexOfRow: 4,
@@ -251,14 +251,14 @@ const testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots =
   const slots = getSlotsFilledByPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.CenterOfCenter,
-      IndexOfTestingSlot.SouthwestOfCenter,
-      IndexOfTestingSlot.NortheastOfSouthwest,
-      IndexOfTestingSlot.CenterOfSouthwest,
-      IndexOfTestingSlot.SouthwestOfSouthwest,
+      IndexOfTestingSlot.SoutheastOfCenter,
+      IndexOfTestingSlot.NorthwestOfSoutheast,
+      IndexOfTestingSlot.CenterOfSoutheast,
+      IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
     indexOfPlayer: IndexOfTestingPlayer.One,
   });
-  testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots({
+  testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
     expectedScore: [AmountOfPoints.One, AmountOfPoints.Zero],
     initialIndexOfColumn: 4,
     initialIndexOfRow: 4,
@@ -272,14 +272,14 @@ const testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots =
   const slots = getSlotsFilledByPlayer({
     indexesOfSlots: [
       IndexOfTestingSlot.CenterOfCenter,
-      IndexOfTestingSlot.SouthwestOfCenter,
-      IndexOfTestingSlot.NortheastOfSouthwest,
-      IndexOfTestingSlot.CenterOfSouthwest,
-      IndexOfTestingSlot.SouthwestOfSouthwest,
+      IndexOfTestingSlot.SoutheastOfCenter,
+      IndexOfTestingSlot.NorthwestOfSoutheast,
+      IndexOfTestingSlot.CenterOfSoutheast,
+      IndexOfTestingSlot.SoutheastOfSoutheast,
     ],
     indexOfPlayer: IndexOfTestingPlayer.Two,
   });
-  testIncrementScoreIfPlayerOccupiesSecondaryDiagonalAtCoordinatesInSlots({
+  testIncrementScoreIfPlayerOccupiesPrincipalDiagonalAtCoordinatesInSlots({
     expectedScore: [AmountOfPoints.Zero, AmountOfPoints.One],
     initialIndexOfColumn: 4,
     initialIndexOfRow: 4,

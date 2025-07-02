@@ -1,29 +1,9 @@
-import Player from "@repo/engine_game/Player.js";
+import type { default as Player } from "@repo/game/Player.js";
+import { createPlayer } from "@repo/game/tests/Player/setup.js";
 
-import type TestingGame from "./Game.js";
-import type TestingMove from "./Move.js";
-import type TestingSlot from "./Slot.js";
-import type TestingState from "./State.js";
+const players: Record<string, Player> = {
+  alice: createPlayer({ name: "Alice", symbol: "X" }),
+  bruno: createPlayer({ name: "Bruno", symbol: "O" }),
+} as const;
 
-interface EncodedTestingPlayer {
-  name: string;
-  symbol: string;
-}
-
-class TestingPlayer extends Player<
-  TestingGame,
-  TestingState,
-  TestingMove,
-  TestingSlot,
-  TestingPlayer
-> {
-  public override clone(): TestingPlayer {
-    return new TestingPlayer({
-      name: this.getName(),
-      symbol: this.getSymbol(),
-    });
-  }
-}
-
-export type { EncodedTestingPlayer };
-export { TestingPlayer as default };
+export { players };

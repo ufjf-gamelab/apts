@@ -2,7 +2,7 @@
   "author": "Gabriel Malosto",
   "devDependencies": {
     "@repo/engine_core": "workspace:*",
-    "@repo/engine_game": "workspace:*",
+    "@repo/game.old": "workspace:*",
     "@repo/eslint_config": "workspace:*",
     "@repo/typescript_config": "workspace:*",
     "typescript": "^5.8.3",
@@ -14,7 +14,7 @@
     }
   },
   "license": "AGPL-3.0-only",
-  "name": "@repo/engine_search",
+  "name": "@repo/search",
   "private": true,
   "scripts": {
     "build": "tsc",
