@@ -1,15 +1,15 @@
 import { descriptionOfTestsOfCloneMethod } from "@repo/engine_core/constants.js";
 import { expect, test } from "vitest";
 
-import { type default as Player, players } from "../Player.js";
+import { default as Player } from "../Player.js";
+import { players } from "./setup.js";
 
 const testPlayer = (player: Player): void => {
   test(descriptionOfTestsOfCloneMethod, () => {
-    const clone = player.clone();
-    expect(clone).not.toBe(player);
-    expect(clone.name).toStrictEqual(player.name);
-    expect(clone.symbol).toStrictEqual(player.symbol);
-    expect(clone.clone).toBeInstanceOf(Function);
+    const clonedPlayer = player.clone();
+    expect(clonedPlayer).not.toBe(player);
+    expect(clonedPlayer).toBeInstanceOf(Player);
+    expect(clonedPlayer).toStrictEqual(player);
   });
 };
 
