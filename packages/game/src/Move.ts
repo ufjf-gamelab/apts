@@ -1,30 +1,31 @@
-interface Move {
-  clone: () => this;
-  readonly description: MoveParams["description"];
-  readonly title: MoveParams["title"];
-}
+import type { Integer } from "@repo/engine_core/types.js";
+
+type IndexOfMove = Integer;
 
 interface MoveParams {
   readonly description: string;
   readonly title: string;
 }
 
-const createMove = ({
-  description,
-  title,
-}: {
-  description: Move["description"];
-  title: Move["title"];
-}): Move => ({
-  clone(): typeof this {
-    return createMove({
-      description: this.description,
-      title: this.title,
-    });
-  },
-  description,
-  title,
-});
+abstract class Move {
+  private readonly description: MoveParams["description"];
+  private readonly title: MoveParams["title"];
 
-export type { Move as default, MoveParams };
-export { createMove };
+  constructor({ description, title }: MoveParams) {
+    this.title = title;
+    this.description = description;
+  }
+
+  public abstract clone(): this;
+
+  public getDescription(): typeof this.description {
+    return this.description;
+  }
+
+  public getTitle(): typeof this.title {
+    return this.title;
+  }
+}
+
+export type { IndexOfMove, MoveParams };
+export { Move as default };

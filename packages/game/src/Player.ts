@@ -2,33 +2,30 @@ import type { Char, Integer } from "@repo/engine_core/types.js";
 
 type IndexOfPlayer = Integer;
 
-interface Player {
-  clone: () => this;
-  readonly name: PlayerParams["name"];
-  readonly symbol: PlayerParams["symbol"];
-}
-
 interface PlayerParams {
   readonly name: string;
   readonly symbol: Char;
 }
 
-const createPlayer = ({
-  name,
-  symbol,
-}: {
-  name: Player["name"];
-  symbol: Player["symbol"];
-}): Player => ({
-  clone(): Player {
-    return createPlayer({
-      name,
-      symbol,
-    });
-  },
-  name,
-  symbol,
-});
+abstract class Player {
+  private readonly name: PlayerParams["name"];
+  private readonly symbol: PlayerParams["symbol"];
 
-export type { Player as default, IndexOfPlayer, PlayerParams };
-export { createPlayer };
+  constructor({ name, symbol }: PlayerParams) {
+    this.symbol = symbol;
+    this.name = name;
+  }
+
+  public abstract clone(): this;
+
+  public getName(): typeof this.name {
+    return this.name;
+  }
+
+  public getSymbol(): typeof this.symbol {
+    return this.symbol;
+  }
+}
+
+export type { IndexOfPlayer, PlayerParams };
+export { Player as default };
