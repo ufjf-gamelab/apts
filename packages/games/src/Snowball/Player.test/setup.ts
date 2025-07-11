@@ -1,18 +1,34 @@
-import { createPlayerParams } from "@repo/game/Player.test/setup.js";
+import {
+  createPlayerParams,
+  createPlayersWithParams,
+} from "@repo/game/Player.test/setup.js";
 
-import Player from "../Player.js";
+import { SnowballPlayer } from "../Player.js";
 
-type PlayerParams = ConstructorParameters<typeof Player>[number];
+type SnowballPlayerParams = ConstructorParameters<
+  typeof SnowballPlayer
+>[number];
 
 const createPlayer = ({
   name,
   symbol,
-}: Pick<PlayerParams, "name" | "symbol">): Player =>
-  new Player(createPlayerParams({ name, symbol }));
+}: Pick<SnowballPlayerParams, "name" | "symbol">): SnowballPlayer =>
+  new SnowballPlayer(createPlayerParams({ name, symbol }));
 
-const players: Record<string, Player> = {
-  alice: createPlayer({ name: "Alice", symbol: "X" }),
-  bruno: createPlayer({ name: "Bruno", symbol: "O" }),
+const playerParams = {
+  alice: { name: "Alice", symbol: "X" },
+  bruno: { name: "Bruno", symbol: "O" },
 } as const;
 
-export { players };
+const mutablePlayerParams = { ...playerParams };
+const playersWithParams = createPlayersWithParams({
+  createPlayer,
+  playerParams: mutablePlayerParams,
+}) as {
+  [K in keyof typeof mutablePlayerParams]: {
+    params: SnowballPlayerParams;
+    player: SnowballPlayer;
+  };
+};
+
+export { playersWithParams };

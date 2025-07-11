@@ -1,22 +1,22 @@
 import { createMoveParams } from "@repo/game/Move.test/setup.js";
 
-import Move from "../Move.js";
+import { SnowballMove } from "../Move.js";
 
 const createMove = ({
   indexOfSlotInWhichPlacePiece,
   title,
 }: Pick<
-  ConstructorParameters<typeof Move>[number],
+  ConstructorParameters<typeof SnowballMove>[number],
   "indexOfSlotInWhichPlacePiece" | "title"
->): Move => {
-  const baseMoveParams = createMoveParams({ title });
-  return new Move({
-    ...baseMoveParams,
+>): SnowballMove => {
+  const moveParams = createMoveParams({ title });
+  return new SnowballMove({
+    ...moveParams,
     indexOfSlotInWhichPlacePiece,
   });
 };
 
-const moves: Record<string, Move> = {
+const moves: Record<string, SnowballMove> = {
   northOfNorthwest: createMove({
     indexOfSlotInWhichPlacePiece: 1,
     title: "North of Northwest",

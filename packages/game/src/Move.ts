@@ -28,4 +28,4 @@ abstract class Move {
 }
 
 export type { IndexOfMove, MoveParams };
-export { Move as default };
+export { Move };

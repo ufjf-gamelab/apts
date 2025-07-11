@@ -1,9 +1,7 @@
 import type { Integer } from "@repo/engine_core/types.js";
 
-import type { IndexOfMove, default as Move } from "./Move.js";
-import type { IndexOfPlayer, default as Player } from "./Player.js";
-import { type Points, default as Score } from "./Score.js";
-import type { IndexOfSlot, default as Slot } from "./Slot.js";
+import type { IndexOfMove, Move } from "./Move.js";
+import type { IndexOfPlayer, Player } from "./Player.js";
 import type { State } from "./State.js";
 
 interface GameParams {
@@ -77,4 +75,4 @@ abstract class Game {
 }
 
 export type { GameParams };
-export { Game as default };
+export { Game };

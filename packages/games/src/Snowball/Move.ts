@@ -1,23 +1,20 @@
 import type { Integer } from "@repo/engine_core/types.js";
-import {
-  default as BaseMove,
-  type MoveParams as BaseMoveParams,
-} from "@repo/game/Move.js";
+import { type MoveParams as BaseMoveParams, Move } from "@repo/game/Move.js";
 
-type MoveParams = BaseMoveParams & {
+type SnowballMoveParams = BaseMoveParams & {
   indexOfSlotInWhichPlacePiece: Integer;
 };
 
-class Move extends BaseMove {
-  private readonly indexOfSlotInWhichPlacePiece: MoveParams["indexOfSlotInWhichPlacePiece"];
+class SnowballMove extends Move {
+  private readonly indexOfSlotInWhichPlacePiece: SnowballMoveParams["indexOfSlotInWhichPlacePiece"];
 
-  constructor({ indexOfSlotInWhichPlacePiece, ...params }: MoveParams) {
+  constructor({ indexOfSlotInWhichPlacePiece, ...params }: SnowballMoveParams) {
     super(params);
     this.indexOfSlotInWhichPlacePiece = indexOfSlotInWhichPlacePiece;
   }
 
-  public override clone(): Move {
-    return new Move({
+  public override clone(): SnowballMove {
+    return new SnowballMove({
       description: this.getDescription(),
       indexOfSlotInWhichPlacePiece: this.indexOfSlotInWhichPlacePiece,
       title: this.getTitle(),
@@ -29,4 +26,4 @@ class Move extends BaseMove {
   }
 }
 
-export { Move as default };
+export { SnowballMove };

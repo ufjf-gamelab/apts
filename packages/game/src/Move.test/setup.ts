@@ -1,4 +1,4 @@
-import type Move from "../Move.js";
+import { type Move } from "../Move.js";
 
 type MoveParams = ConstructorParameters<typeof Move>[number];
 

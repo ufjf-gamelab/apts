@@ -24,4 +24,4 @@ class Score extends Map<IndexOfPlayer, Points> {
 }
 
 export type { Points };
-export { Score as default };
+export { Score };

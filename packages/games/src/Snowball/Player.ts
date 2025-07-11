@@ -1,12 +1,12 @@
-import { default as BasePlayer } from "@repo/game/Player.js";
+import { Player } from "@repo/game/Player.js";
 
-class Player extends BasePlayer {
-  public override clone(): Player {
-    return new Player({
+class SnowballPlayer extends Player {
+  public override clone(): SnowballPlayer {
+    return new SnowballPlayer({
       name: this.getName(),
       symbol: this.getSymbol(),
     });
   }
 }
 
-export { Player as default };
+export { SnowballPlayer };

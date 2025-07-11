@@ -28,4 +28,4 @@ abstract class Player {
 }
 
 export type { IndexOfPlayer, PlayerParams };
-export { Player as default };
+export { Player };

@@ -1,9 +1,9 @@
 import type { Integer } from "@repo/engine_core/types.js";
 
-import type Game from "./Game.js";
+import { type Game } from "./Game.js";
 import type { IndexOfPlayer } from "./Player.js";
-import { type Points, default as Score } from "./Score.js";
-import { type IndexOfSlot, default as Slot } from "./Slot.js";
+import { type Points, Score } from "./Score.js";
+import { type IndexOfSlot, Slot } from "./Slot.js";
 
 interface StateParams {
   readonly game: Game;
@@ -64,4 +64,5 @@ abstract class State {
   }
 }
 
-export type { State, StateParams };
+export type { StateParams };
+export { State };

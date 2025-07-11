@@ -18,4 +18,4 @@ abstract class Slot {
 }
 
 export type { IndexOfSlot };
-export default Slot;
+export { Slot };

@@ -1,4 +1,4 @@
-import type Player from "../Player.js";
+import { type Player } from "../Player.js";
 
 type PlayerParams = ConstructorParameters<typeof Player>[number];
 
@@ -10,4 +10,24 @@ const createPlayerParams = ({
   symbol,
 });
 
-export { createPlayerParams };
+const createPlayersWithParams = ({
+  createPlayer,
+  playerParams,
+}: {
+  createPlayer: (params: PlayerParams) => Player;
+  playerParams: Record<string, PlayerParams>;
+}) =>
+  Object.entries(playerParams).reduce<{
+    [K in keyof typeof playerParams]: {
+      params: PlayerParams;
+      player: Player;
+    };
+  }>((acc, [key, params]) => {
+    acc[key] = {
+      params,
+      player: createPlayer(params),
+    };
+    return acc;
+  }, {});
+
+export { createPlayerParams, createPlayersWithParams };

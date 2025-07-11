@@ -1,15 +1,17 @@
-import { descriptionOfTestsOfCloneMethod } from "@repo/engine_core/constants.js";
-import { expect, test } from "vitest";
+import { expect } from "vitest";
 
-import { default as Move } from "../Move.js";
+import { Move } from "../Move.js";
 
-const shouldCloneMove = (move: Move): void => {
-  test(descriptionOfTestsOfCloneMethod({ className: "Move" }), () => {
-    const clonedMove = move.clone();
-    expect(clonedMove).not.toBe(move);
-    expect(clonedMove).toBeInstanceOf(Move);
-    expect(clonedMove).toStrictEqual(move);
-  });
+const validateClonedMove = ({
+  clonedMove,
+  move,
+}: {
+  clonedMove: unknown;
+  move: Move;
+}) => {
+  expect(clonedMove).toBeInstanceOf(Move);
+  expect(clonedMove).not.toBe(move);
+  expect(clonedMove).toStrictEqual(move);
 };
 
-export { shouldCloneMove };
+export { validateClonedMove };
