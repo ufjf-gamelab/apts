@@ -16,7 +16,7 @@ abstract class Move {
     this.description = description;
   }
 
-  public abstract clone(): this;
+  public abstract clone(): Move;
 
   public getDescription(): typeof this.description {
     return this.description;

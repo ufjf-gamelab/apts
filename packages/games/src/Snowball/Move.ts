@@ -1,45 +1,32 @@
 import type { Integer } from "@repo/engine_core/types.js";
 import {
-  type default as BaseMove,
-  createMove as createBaseMove,
+  default as BaseMove,
+  type MoveParams as BaseMoveParams,
 } from "@repo/game/Move.js";
 
-interface Move extends BaseMove {
-  readonly indexOfSlotInWhichPlacePiece: Integer;
-}
-
-const createMove = ({
-  indexOfSlotInWhichPlacePiece,
-  title,
-}: {
-  indexOfSlotInWhichPlacePiece: Move["indexOfSlotInWhichPlacePiece"];
-  title: Move["title"];
-}): Move => {
-  const baseMove = createBaseMove({
-    description: `Control the slot on ${title}`,
-    title,
-  });
-  return {
-    ...baseMove,
-    clone: () =>
-      createMove({
-        indexOfSlotInWhichPlacePiece,
-        title,
-      }),
-    indexOfSlotInWhichPlacePiece,
-  };
+type MoveParams = BaseMoveParams & {
+  indexOfSlotInWhichPlacePiece: Integer;
 };
 
-const moves: Record<string, Move> = {
-  northOfNorthwest: createMove({
-    indexOfSlotInWhichPlacePiece: 1,
-    title: "North of Northwest",
-  }),
-  northwestOfNorthwest: createMove({
-    indexOfSlotInWhichPlacePiece: 0,
-    title: "Northwest of Northwest",
-  }),
-} as const;
+class Move extends BaseMove {
+  private readonly indexOfSlotInWhichPlacePiece: MoveParams["indexOfSlotInWhichPlacePiece"];
 
-export type { Move as default };
-export { moves };
+  constructor({ indexOfSlotInWhichPlacePiece, ...params }: MoveParams) {
+    super(params);
+    this.indexOfSlotInWhichPlacePiece = indexOfSlotInWhichPlacePiece;
+  }
+
+  public override clone(): Move {
+    return new Move({
+      description: this.getDescription(),
+      indexOfSlotInWhichPlacePiece: this.indexOfSlotInWhichPlacePiece,
+      title: this.getTitle(),
+    });
+  }
+
+  public getIndexOfSlotInWhichPlacePiece(): typeof this.indexOfSlotInWhichPlacePiece {
+    return this.indexOfSlotInWhichPlacePiece;
+  }
+}
+
+export { Move as default };

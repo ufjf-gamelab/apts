@@ -1,12 +1,14 @@
+import { createPlayerParams } from "@repo/game/Player.test/setup.js";
+
 import Player from "../Player.js";
+
+type PlayerParams = ConstructorParameters<typeof Player>[number];
 
 const createPlayer = ({
   name,
   symbol,
-}: Pick<
-  ConstructorParameters<typeof Player>[number],
-  "name" | "symbol"
->): Player => new Player({ name, symbol });
+}: Pick<PlayerParams, "name" | "symbol">): Player =>
+  new Player(createPlayerParams({ name, symbol }));
 
 const players: Record<string, Player> = {
   alice: createPlayer({ name: "Alice", symbol: "X" }),
