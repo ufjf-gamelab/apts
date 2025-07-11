@@ -2,7 +2,7 @@ import { expect } from "vitest";
 
 import { Player, type PlayerParams } from "../Player.js";
 
-const validateConstructedPlayer = ({
+const validateConstructor = ({
   params,
   player,
 }: {
@@ -14,4 +14,4 @@ const validateConstructedPlayer = ({
   expect(player.getSymbol()).toBe(params.symbol);
 };
 
-export { validateConstructedPlayer };
+export { validateConstructor };

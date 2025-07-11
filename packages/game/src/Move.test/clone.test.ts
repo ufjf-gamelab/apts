@@ -2,7 +2,7 @@ import { expect } from "vitest";
 
 import { Move } from "../Move.js";
 
-const validateClonedMove = ({
+const validateClone = ({
   clonedMove,
   move,
 }: {
@@ -14,4 +14,4 @@ const validateClonedMove = ({
   expect(clonedMove).toStrictEqual(move);
 };
 
-export { validateClonedMove };
+export { validateClone };

@@ -2,23 +2,31 @@ interface ParamsForTesting {
   affix?: string | undefined;
 }
 
-const createTestDescription = ({
+const createDescriptionForTest = ({
   affix,
   description,
 }: ParamsForTesting & {
   description: string;
 }): string => `${affix ? `${affix} — ` : ""}${description}`;
 
-const descriptionOfTestsOfConstructor = ({
+const createDescriptionForTestsOfGetter = ({
+  methodName,
+  returnedValue,
+}: {
+  methodName: string;
+  returnedValue: boolean | number | string;
+}): string => `${methodName} should return {${returnedValue}}`;
+
+const createDescriptionForTestsOfConstructor = ({
   className,
 }: {
   className?: string;
 }) =>
   `The constructor should return a new object instance ${
-    className ? `of class ${className}` : ""
+    className ? `of class \`${className}\`` : ""
   }.`;
 
-const descriptionOfTestsOfCloneMethod = ({
+const createDescriptionForTestsOfCloneMethod = ({
   className,
 }: {
   className?: string;
@@ -29,7 +37,8 @@ const descriptionOfTestsOfCloneMethod = ({
 
 export type { ParamsForTesting };
 export {
-  createTestDescription,
-  descriptionOfTestsOfCloneMethod,
-  descriptionOfTestsOfConstructor,
+  createDescriptionForTest,
+  createDescriptionForTestsOfCloneMethod,
+  createDescriptionForTestsOfConstructor,
+  createDescriptionForTestsOfGetter,
 };

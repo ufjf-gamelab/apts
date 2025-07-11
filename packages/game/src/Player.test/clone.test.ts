@@ -2,7 +2,7 @@ import { expect } from "vitest";
 
 import { Player } from "../Player.js";
 
-const validateClonedPlayer = ({
+const validateClone = ({
   clonedPlayer,
   player,
 }: {
@@ -14,4 +14,4 @@ const validateClonedPlayer = ({
   expect(clonedPlayer).toStrictEqual(player);
 };
 
-export { validateClonedPlayer };
+export { validateClone };
