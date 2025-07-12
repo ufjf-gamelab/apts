@@ -12,17 +12,19 @@ const createSlotsWithData = <PartialParams, DerivedSlotParams>({
   Object.entries(partialParamsOfSlots).reduce<{
     [K in keyof typeof partialParamsOfSlots]: {
       indexOfSlot: IndexOfSlot;
+      keyOfSlot: string;
       params: DerivedSlotParams;
       slot: Slot;
     };
-  }>((slotsWithParams, [key, partialParams], index) => {
+  }>((slotsWithData, [key, partialParams], index) => {
     const params = createParams(partialParams);
-    slotsWithParams[key] = {
+    slotsWithData[key] = {
       indexOfSlot: index,
+      keyOfSlot: key,
       params,
       slot: create(params),
     };
-    return slotsWithParams;
+    return slotsWithData;
   }, {});
 
 export { createSlotsWithData };

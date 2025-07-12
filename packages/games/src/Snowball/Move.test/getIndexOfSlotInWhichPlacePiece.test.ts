@@ -6,7 +6,7 @@ import {
 import { expect, test } from "vitest";
 
 import type { SnowballMove } from "../Move.js";
-import { movesWithParams } from "./setup.js";
+import { movesWithData } from "./setup.js";
 
 const validateGetTitle = ({
   expectedIndexOfSlotInWhichPlacePiece,
@@ -60,15 +60,18 @@ const createDescription = ({
     }),
   });
 
-Object.values(movesWithParams).forEach(({ move, params }) => {
-  const description = createDescription({
-    affix: params.title,
-    expectedIndexOfSlotInWhichPlacePiece: params.indexOfSlotInWhichPlacePiece,
-  });
-  test(description, () => {
-    validateGetTitle({
+Object.values(movesWithData).forEach(({ keyOfMove, move, params }) => {
+  test(
+    createDescription({
+      affix: keyOfMove,
       expectedIndexOfSlotInWhichPlacePiece: params.indexOfSlotInWhichPlacePiece,
-      move,
-    });
-  });
+    }),
+    () => {
+      validateGetTitle({
+        expectedIndexOfSlotInWhichPlacePiece:
+          params.indexOfSlotInWhichPlacePiece,
+        move,
+      });
+    },
+  );
 });

@@ -6,7 +6,7 @@ import { validateClone } from "@repo/game/Slot.test/clone.test.js";
 import { expect, test } from "vitest";
 
 import { SnowballSlot } from "../Slot.js";
-import { slotsWithParams } from "./setup.js";
+import { slotsWithDataForUnitTest } from "./setup.js";
 
 const createDescription = ({ affix }: { affix: string }) =>
   createDescriptionForTest({
@@ -16,13 +16,15 @@ const createDescription = ({ affix }: { affix: string }) =>
     }),
   });
 
-Object.values(slotsWithParams).forEach(({ indexOfSlot, slot }) => {
-  const description = createDescription({
-    affix: indexOfSlot.toString(),
-  });
-  test(description, () => {
-    const clonedSlot = slot.clone();
-    validateClone({ clonedSlot, slot });
-    expect(clonedSlot).toBeInstanceOf(SnowballSlot);
-  });
+Object.values(slotsWithDataForUnitTest).forEach(({ keyOfSlot, slot }) => {
+  test(
+    createDescription({
+      affix: keyOfSlot,
+    }),
+    () => {
+      const clonedSlot = slot.clone();
+      validateClone({ clonedSlot, slot });
+      expect(clonedSlot).toBeInstanceOf(SnowballSlot);
+    },
+  );
 });

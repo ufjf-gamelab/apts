@@ -1,5 +1,7 @@
+import type { IndexOfSlot } from "@repo/game/Slot.js";
 import { createSlotsWithData } from "@repo/game/Slot.test/setup.js";
 
+import { playersWithData } from "../Player.test/setup.js";
 import { SnowballSlot } from "../Slot.js";
 
 type SnowballSlotParams = ConstructorParameters<typeof SnowballSlot>[number];
@@ -16,107 +18,6 @@ const createSlot = ({
   new SnowballSlot({
     indexOfOccupyingPlayer,
   });
-
-enum IndexesOfSlots {
-  // Row 0
-  NorthwestOfNorthwest,
-  NorthOfNorthwest,
-  NortheastOfNorthwest,
-  NorthwestOfNorth,
-  NorthOfNorth,
-  NortheastOfNorth,
-  NorthwestOfNortheast,
-  NorthOfNortheast,
-  NortheastOfNortheast,
-
-  // Row 1
-  WestOfNorthwest,
-  CenterOfNorthwest,
-  EastOfNorthwest,
-  WestOfNorth,
-  CenterOfNorth,
-  EastOfNorth,
-  WestOfNortheast,
-  CenterOfNortheast,
-  EastOfNortheast,
-
-  // Row 2
-  SouthwestOfNorthwest,
-  SouthOfNorthwest,
-  SoutheastOfNorthwest,
-  SouthwestOfNorth,
-  SouthOfNorth,
-  SoutheastOfNorth,
-  SouthwestOfNortheast,
-  SouthOfNortheast,
-  SoutheastOfNortheast,
-
-  // Row 3
-  NorthwestOfWest,
-  NorthOfWest,
-  NortheastOfWest,
-  NorthwestOfCenter,
-  NorthOfCenter,
-  NortheastOfCenter,
-  NorthwestOfEast,
-  NorthOfEast,
-  NortheastOfEast,
-
-  // Row 4
-  WestOfWest,
-  CenterOfWest,
-  EastOfWest,
-  WestOfCenter,
-  CenterOfCenter,
-  EastOfCenter,
-  WestOfEast,
-  CenterOfEast,
-  EastOfEast,
-
-  // Row 5
-  SouthwestOfWest,
-  SouthOfWest,
-  SoutheastOfWest,
-  SouthwestOfCenter,
-  SouthOfCenter,
-  SoutheastOfCenter,
-  SouthwestOfEast,
-  SouthOfEast,
-  SoutheastOfEast,
-
-  // Row 6
-  NorthwestOfSouthwest,
-  NorthOfSouthwest,
-  NortheastOfSouthwest,
-  NorthwestOfSouth,
-  NorthOfSouth,
-  NortheastOfSouth,
-  NorthwestOfSoutheast,
-  NorthOfSoutheast,
-  NortheastOfSoutheast,
-
-  // Row 7
-  WestOfSouthwest,
-  CenterOfSouthwest,
-  EastOfSouthwest,
-  WestOfSouth,
-  CenterOfSouth,
-  EastOfSouth,
-  WestOfSoutheast,
-  CenterOfSoutheast,
-  EastOfSoutheast,
-
-  // Row 8
-  SouthwestOfSouthwest,
-  SouthOfSouthwest,
-  SoutheastOfSouthwest,
-  SouthwestOfSouth,
-  SouthOfSouth,
-  SoutheastOfSouth,
-  SouthwestOfSoutheast,
-  SouthOfSoutheast,
-  SoutheastOfSoutheast,
-}
 
 const paramsOfSlots = {
   // Center
@@ -381,16 +282,35 @@ const paramsOfSlots = {
   },
 } as const satisfies Record<string, SnowballSlotParams>;
 
-const slotsWithParams = createSlotsWithData({
-  createSlot,
-  createSlotParams: createSnowballSlotParams,
-  partialParamsOfSlots: paramsOfSlots,
-}) as {
+type RecordOfSlotsWithData = {
   [K in keyof typeof paramsOfSlots]: {
-    indexOfSlot: IndexesOfSlots;
+    indexOfSlot: IndexOfSlot;
+    keyOfSlot: keyof typeof paramsOfSlots;
     params: SnowballSlotParams;
     slot: SnowballSlot;
   };
 };
 
-export { IndexesOfSlots, slotsWithParams };
+const slotsWithData = createSlotsWithData({
+  createSlot,
+  createSlotParams: createSnowballSlotParams,
+  partialParamsOfSlots: paramsOfSlots,
+}) as RecordOfSlotsWithData;
+
+const slotsWithDataForUnitTest = createSlotsWithData({
+  createSlot,
+  createSlotParams: createSnowballSlotParams,
+  partialParamsOfSlots: {
+    northeastOfNorthwest: {
+      indexOfOccupyingPlayer: null,
+    },
+    northOfNorthwest: {
+      indexOfOccupyingPlayer: playersWithData.alice.indexOfPlayer,
+    },
+    northwestOfNorthwest: {
+      indexOfOccupyingPlayer: playersWithData.bruno.indexOfPlayer,
+    },
+  },
+}) as RecordOfSlotsWithData;
+
+export { slotsWithData, slotsWithDataForUnitTest };

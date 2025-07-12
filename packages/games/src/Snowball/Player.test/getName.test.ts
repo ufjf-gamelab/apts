@@ -6,7 +6,7 @@ import {
 import { test } from "vitest";
 
 import type { SnowballPlayer } from "../Player.js";
-import { playersWithParams } from "./setup.js";
+import { playersWithData } from "./setup.js";
 
 const createDescription = ({
   affix,
@@ -22,15 +22,17 @@ const createDescription = ({
     }),
   });
 
-Object.values(playersWithParams).forEach(({ params, player }) => {
-  const description = createDescription({
-    affix: params.name,
-    expectedName: params.name,
-  });
-  test(description, () => {
-    validateGetName({
+Object.values(playersWithData).forEach(({ keyOfPlayer, params, player }) => {
+  test(
+    createDescription({
+      affix: keyOfPlayer,
       expectedName: params.name,
-      player,
-    });
-  });
+    }),
+    () => {
+      validateGetName({
+        expectedName: params.name,
+        player,
+      });
+    },
+  );
 });

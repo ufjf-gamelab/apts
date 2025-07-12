@@ -1,4 +1,4 @@
-import { type Move } from "../Move.js";
+import { type IndexOfMove, type Move } from "../Move.js";
 
 type MoveParams = ConstructorParameters<typeof Move>[number];
 
@@ -9,7 +9,7 @@ const createMoveParams = ({
   title,
 });
 
-const createMovesWithParams = <PartialParams, DerivedMoveParams>({
+const createMovesWithData = <PartialParams, DerivedMoveParams>({
   createMove: create,
   createMoveParams: createParams,
   partialParamsOfMoves,
@@ -20,16 +20,20 @@ const createMovesWithParams = <PartialParams, DerivedMoveParams>({
 }) =>
   Object.entries(partialParamsOfMoves).reduce<{
     [K in keyof typeof partialParamsOfMoves]: {
+      indexOfMove: IndexOfMove;
+      keyOfMove: string;
       move: Move;
       params: DerivedMoveParams;
     };
-  }>((movesWithParams, [key, partialParams]) => {
+  }>((movesWithData, [key, partialParams], index) => {
     const params = createParams(partialParams);
-    movesWithParams[key] = {
+    movesWithData[key] = {
+      indexOfMove: index,
+      keyOfMove: key,
       move: create(params),
       params,
     };
-    return movesWithParams;
+    return movesWithData;
   }, {});
 
-export { createMoveParams, createMovesWithParams };
+export { createMoveParams, createMovesWithData };

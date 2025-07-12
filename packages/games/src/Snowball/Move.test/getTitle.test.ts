@@ -6,7 +6,7 @@ import {
 import { test } from "vitest";
 
 import type { SnowballMove } from "../Move.js";
-import { movesWithParams } from "./setup.js";
+import { movesWithData } from "./setup.js";
 
 const createDescription = ({
   affix,
@@ -22,15 +22,17 @@ const createDescription = ({
     }),
   });
 
-Object.values(movesWithParams).forEach(({ move, params }) => {
-  const description = createDescription({
-    affix: params.title,
-    expectedTitle: params.title,
-  });
-  test(description, () => {
-    validateGetTitle({
+Object.values(movesWithData).forEach(({ keyOfMove, move, params }) => {
+  test(
+    createDescription({
+      affix: keyOfMove,
       expectedTitle: params.title,
-      move,
-    });
-  });
+    }),
+    () => {
+      validateGetTitle({
+        expectedTitle: params.title,
+        move,
+      });
+    },
+  );
 });

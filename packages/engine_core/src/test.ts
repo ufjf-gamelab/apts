@@ -14,8 +14,8 @@ const createDescriptionForTestsOfGetter = ({
   returnedValue,
 }: {
   methodDescription: string;
-  returnedValue: boolean | number | string;
-}): string => `${methodDescription} should return {${returnedValue}}`;
+  returnedValue: boolean | null | number | string;
+}): string => `${methodDescription} => {${returnedValue}}`;
 
 const createDescriptionForTestsOfConstructor = ({
   className,

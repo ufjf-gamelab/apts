@@ -1,4 +1,4 @@
-import { type Player } from "../Player.js";
+import { type IndexOfPlayer, type Player } from "../Player.js";
 
 type PlayerParams = ConstructorParameters<typeof Player>[number];
 
@@ -10,7 +10,7 @@ const createPlayerParams = ({
   symbol,
 });
 
-const createPlayersWithParams = <PartialParams, DerivedPlayerParams>({
+const createPlayersWithData = <PartialParams, DerivedPlayerParams>({
   createPlayer: create,
   createPlayerParams: createParams,
   partialParamsOfPlayers,
@@ -21,16 +21,20 @@ const createPlayersWithParams = <PartialParams, DerivedPlayerParams>({
 }) =>
   Object.entries(partialParamsOfPlayers).reduce<{
     [K in keyof typeof partialParamsOfPlayers]: {
+      indexOfPlayer: IndexOfPlayer;
+      keyOfPlayer: string;
       params: DerivedPlayerParams;
       player: Player;
     };
-  }>((playersWithParams, [key, partialParams]) => {
+  }>((playersWithData, [key, partialParams], index) => {
     const params = createParams(partialParams);
-    playersWithParams[key] = {
+    playersWithData[key] = {
+      indexOfPlayer: index,
+      keyOfPlayer: key,
       params,
       player: create(params),
     };
-    return playersWithParams;
+    return playersWithData;
   }, {});
 
-export { createPlayerParams, createPlayersWithParams };
+export { createPlayerParams, createPlayersWithData };

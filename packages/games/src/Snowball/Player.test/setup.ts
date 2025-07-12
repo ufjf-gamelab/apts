@@ -1,6 +1,7 @@
+import type { IndexOfPlayer } from "@repo/game/Player.js";
 import {
   createPlayerParams,
-  createPlayersWithParams,
+  createPlayersWithData,
 } from "@repo/game/Player.test/setup.js";
 
 import { SnowballPlayer } from "../Player.js";
@@ -29,15 +30,17 @@ const paramsOfPlayers = {
   bruno: { name: "Bruno", symbol: "O" },
 } as const satisfies Record<string, SnowballPlayerParams>;
 
-const playersWithParams = createPlayersWithParams({
+const playersWithData = createPlayersWithData({
   createPlayer,
   createPlayerParams: createSnowballPlayerParams,
   partialParamsOfPlayers: paramsOfPlayers,
 }) as {
   [K in keyof typeof paramsOfPlayers]: {
+    indexOfPlayer: IndexOfPlayer;
+    keyOfPlayer: keyof typeof paramsOfPlayers;
     params: SnowballPlayerParams;
     player: SnowballPlayer;
   };
 };
 
-export { playersWithParams };
+export { playersWithData };
