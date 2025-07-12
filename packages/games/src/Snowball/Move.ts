@@ -1,7 +1,7 @@
 import type { Integer } from "@repo/engine_core/types.js";
-import { type MoveParams as BaseMoveParams, Move } from "@repo/game/Move.js";
+import { Move, type MoveParams } from "@repo/game/Move.js";
 
-type SnowballMoveParams = BaseMoveParams & {
+type SnowballMoveParams = MoveParams & {
   indexOfSlotInWhichPlacePiece: Integer;
 };
 

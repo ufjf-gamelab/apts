@@ -2,6 +2,8 @@ import type { Integer } from "@repo/engine_core/types.js";
 
 type IndexOfSlot = Integer;
 
+type SlotParams = object;
+
 abstract class Slot {
   public static getSlot(
     indexOfSlot: IndexOfSlot,
@@ -14,8 +16,8 @@ abstract class Slot {
     return slot;
   }
 
-  public abstract clone(): this;
+  public abstract clone(): Slot;
 }
 
-export type { IndexOfSlot };
+export type { IndexOfSlot, SlotParams };
 export { Slot };
