@@ -6,7 +6,7 @@ import { validateClone } from "@repo/game/Move.test/clone.test.js";
 import { expect, test } from "vitest";
 
 import { SnowballMove } from "../Move.js";
-import { moves } from "./setup.js";
+import { movesWithParams } from "./setup.js";
 
 const createDescription = ({ affix }: { affix: string }) =>
   createDescriptionForTest({
@@ -16,9 +16,9 @@ const createDescription = ({ affix }: { affix: string }) =>
     }),
   });
 
-Object.values(moves).forEach(move => {
+Object.values(movesWithParams).forEach(({ move, params }) => {
   const description = createDescription({
-    affix: move.getTitle(),
+    affix: params.title,
   });
   test(description, () => {
     const clonedMove = move.clone();

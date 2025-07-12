@@ -26,7 +26,7 @@ const createDescriptionForTestOfGetName = ({
   expectedName: ReturnType<Player["getName"]>;
 }): string =>
   createDescriptionForTestsOfGetter({
-    methodName: "getName()",
+    methodDescription: "getName()",
     returnedValue: expectedName,
   });
 

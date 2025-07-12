@@ -10,24 +10,27 @@ const createPlayerParams = ({
   symbol,
 });
 
-const createPlayersWithParams = ({
-  createPlayer,
-  playerParams,
+const createPlayersWithParams = <PartialParams, DerivedPlayerParams>({
+  createPlayer: create,
+  createPlayerParams: createParams,
+  partialParamsOfPlayers,
 }: {
-  createPlayer: (params: PlayerParams) => Player;
-  playerParams: Record<string, PlayerParams>;
+  createPlayer: (params: DerivedPlayerParams) => Player;
+  createPlayerParams: (partialParams: PartialParams) => DerivedPlayerParams;
+  partialParamsOfPlayers: Record<string, PartialParams>;
 }) =>
-  Object.entries(playerParams).reduce<{
-    [K in keyof typeof playerParams]: {
-      params: PlayerParams;
+  Object.entries(partialParamsOfPlayers).reduce<{
+    [K in keyof typeof partialParamsOfPlayers]: {
+      params: DerivedPlayerParams;
       player: Player;
     };
-  }>((acc, [key, params]) => {
-    acc[key] = {
+  }>((playersWithParams, [key, partialParams]) => {
+    const params = createParams(partialParams);
+    playersWithParams[key] = {
       params,
-      player: createPlayer(params),
+      player: create(params),
     };
-    return acc;
+    return playersWithParams;
   }, {});
 
 export { createPlayerParams, createPlayersWithParams };

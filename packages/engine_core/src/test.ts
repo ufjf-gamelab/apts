@@ -10,12 +10,12 @@ const createDescriptionForTest = ({
 }): string => `${affix ? `${affix} — ` : ""}${description}`;
 
 const createDescriptionForTestsOfGetter = ({
-  methodName,
+  methodDescription,
   returnedValue,
 }: {
-  methodName: string;
+  methodDescription: string;
   returnedValue: boolean | number | string;
-}): string => `${methodName} should return {${returnedValue}}`;
+}): string => `${methodDescription} should return {${returnedValue}}`;
 
 const createDescriptionForTestsOfConstructor = ({
   className,

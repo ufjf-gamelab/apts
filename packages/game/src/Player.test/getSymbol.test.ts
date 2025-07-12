@@ -26,7 +26,7 @@ const createDescriptionForTestOfGetSymbol = ({
   expectedSymbol: ReturnType<Player["getSymbol"]>;
 }): string =>
   createDescriptionForTestsOfGetter({
-    methodName: "getSymbol()",
+    methodDescription: "getSymbol()",
     returnedValue: expectedSymbol,
   });
 
