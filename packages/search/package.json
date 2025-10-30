@@ -2,11 +2,11 @@
   "author": "Gabriel Malosto",
   "devDependencies": {
     "@repo/engine_core": "workspace:*",
-    "@repo/game.old": "workspace:*",
     "@repo/eslint_config": "workspace:*",
+    "@repo/game.old": "workspace:*",
     "@repo/typescript_config": "workspace:*",
-    "typescript": "^5.8.3",
-    "vitest": "^3.2.1"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.5"
   },
   "exports": {
     "./MonteCarloTreeCommon/*": {

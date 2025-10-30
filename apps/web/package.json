@@ -1,18 +1,18 @@
 {
   "dependencies": {
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@repo/eslint_config": "workspace:*",
     "@repo/typescript_config": "workspace:*",
-    "@types/react": "^19.1.6",
-    "@types/react-dom": "^19.1.6",
-    "@vitejs/plugin-react": "^4.5.1",
-    "eslint-plugin-react-refresh": "^0.4.20",
-    "typescript": "~5.8.3",
-    "typescript-eslint": "^8.33.1",
-    "vite": "^6.3.5"
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-react": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.46.2",
+    "vite": "^7.1.12"
   },
   "name": "web",
   "private": true,

@@ -1,15 +1,15 @@
 {
   "devDependencies": {
-    "@eslint/js": "^9.28.0",
+    "@eslint/js": "^9.38.0",
     "@repo/typescript_config": "workspace:*",
-    "eslint": "^9.28.0",
-    "eslint-plugin-perfectionist": "^4.14.0",
+    "eslint": "^9.38.0",
+    "eslint-plugin-perfectionist": "^4.15.1",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-turbo": "^2.5.4",
-    "globals": "^16.2.0",
-    "typescript": "^5.8.3",
-    "typescript-eslint": "^8.33.1"
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-turbo": "^2.5.8",
+    "globals": "^16.4.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.2"
   },
   "exports": {
     "./base": "./base.js",
