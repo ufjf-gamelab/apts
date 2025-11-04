@@ -1,6 +1,5 @@
 import type { IndexOfPlayer } from "../../../game.old/src/Player.js";
 import Slot, { type SlotParams } from "../../../game.old/src/Slot.js";
-
 import { type default as TestingGame } from "./Game.js";
 import type TestingMove from "./Move.js";
 import type TestingPlayer from "./Player.js";

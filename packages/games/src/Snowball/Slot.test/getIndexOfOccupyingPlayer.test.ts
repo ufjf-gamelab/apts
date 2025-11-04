@@ -10,7 +10,7 @@ import { slotsWithData, slotsWithDataForUnitTest } from "./setup.js";
 
 const INDEX_OF_FIRST_PLAYER = 0;
 
-const validateGetTitle = ({
+const validateGetIndexOfOccupyingPlayer = ({
   expectedIndexOfOccupyingPlayer,
   slot,
 }: {
@@ -70,7 +70,7 @@ const testGetIndexOfOccupyingPlayer = (
         expectedIndexOfOccupyingPlayer: params.indexOfOccupyingPlayer,
       }),
       () => {
-        validateGetTitle({
+        validateGetIndexOfOccupyingPlayer({
           expectedIndexOfOccupyingPlayer: params.indexOfOccupyingPlayer,
           slot,
         });

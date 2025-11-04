@@ -1,10 +1,10 @@
 import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import { type Integer } from "@repo/engine_core/types.js";
+
 import State, {
   type Points,
   type StateParams,
 } from "../../../game.old/src/State.js";
-
 import {
   COLUMN_LENGTH,
   ROW_LENGTH,

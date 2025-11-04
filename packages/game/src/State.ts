@@ -5,6 +5,8 @@ import type { IndexOfPlayer } from "./Player.js";
 import { type Points, Score } from "./Score.js";
 import { type IndexOfSlot, Slot } from "./Slot.js";
 
+type IndexOfState = Integer;
+
 interface StateParams {
   readonly game: Game;
   readonly indexOfPlayer: IndexOfPlayer;
@@ -33,7 +35,7 @@ abstract class State {
     this.slots = slots.map(slot => slot.clone());
   }
 
-  public abstract clone(): this;
+  public abstract clone(): State;
 
   public getGame(): typeof this.game {
     return this.game.clone();
@@ -64,5 +66,5 @@ abstract class State {
   }
 }
 
-export type { StateParams };
+export type { IndexOfState, StateParams };
 export { State };

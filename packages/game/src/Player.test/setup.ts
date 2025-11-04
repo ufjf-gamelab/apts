@@ -37,4 +37,12 @@ const createPlayersWithData = <PartialParams, DerivedPlayerParams>({
     return playersWithData;
   }, {});
 
-export { createPlayerParams, createPlayersWithData };
+const getKeyOfPlayer = ({
+  indexOfPlayer,
+  players,
+}: {
+  indexOfPlayer: IndexOfPlayer;
+  players: ReturnType<typeof createPlayersWithData>;
+}) => Object.values(players).at(indexOfPlayer)?.keyOfPlayer;
+
+export { createPlayerParams, createPlayersWithData, getKeyOfPlayer };

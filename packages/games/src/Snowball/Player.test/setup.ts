@@ -19,7 +19,10 @@ const createSnowballPlayerParams = ({
     symbol,
   });
 
-const createPlayer = ({ name, symbol }: SnowballPlayerParams): SnowballPlayer =>
+const createSnowballPlayer = ({
+  name,
+  symbol,
+}: SnowballPlayerParams): SnowballPlayer =>
   new SnowballPlayer({
     name,
     symbol,
@@ -31,7 +34,7 @@ const paramsOfPlayers = {
 } as const satisfies Record<string, SnowballPlayerParams>;
 
 const playersWithData = createPlayersWithData({
-  createPlayer,
+  createPlayer: createSnowballPlayer,
   createPlayerParams: createSnowballPlayerParams,
   partialParamsOfPlayers: paramsOfPlayers,
 }) as {

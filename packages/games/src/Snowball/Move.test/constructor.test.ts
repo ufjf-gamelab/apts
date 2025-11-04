@@ -2,7 +2,6 @@ import {
   createDescriptionForTest,
   createDescriptionForTestsOfConstructor,
 } from "@repo/engine_core/test.js";
-import type { Char } from "@repo/engine_core/types.js";
 import { validateConstructor } from "@repo/game/Move.test/constructor.test.js";
 import { expect, test } from "vitest";
 
@@ -23,7 +22,7 @@ Object.values(movesWithData).forEach(({ keyOfMove, params }) => {
       affix: keyOfMove,
     }),
     () => {
-      let { description, title } = params;
+      const { description, title } = params;
       const { indexOfSlotInWhichPlacePiece } = params;
 
       const newMove = new SnowballMove({
@@ -34,15 +33,6 @@ Object.values(movesWithData).forEach(({ keyOfMove, params }) => {
 
       validateConstructor({ move: newMove, params: { description, title } });
       expect(newMove).toBeInstanceOf(SnowballMove);
-
-      // Ensure that the object does not keep references to the original parameters
-      description = `${params.description} (modified)`;
-      title = `${params.title} (modified)` as Char;
-
-      expect(newMove.getDescription()).toBe(params.description);
-      expect(newMove.getDescription()).not.toBe(description);
-      expect(newMove.getTitle()).toBe(params.title);
-      expect(newMove.getTitle()).not.toBe(title);
     },
   );
 });

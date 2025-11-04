@@ -25,7 +25,7 @@ const createSnowballMoveParams = ({
   };
 };
 
-const createMove = ({
+const createSnowballMove = ({
   description,
   indexOfSlotInWhichPlacePiece,
   title,
@@ -398,7 +398,7 @@ const paramsOfMoves = {
 } as const satisfies Record<string, RequiredSnowballMoveParams>;
 
 const movesWithData = createMovesWithData({
-  createMove,
+  createMove: createSnowballMove,
   createMoveParams: createSnowballMoveParams,
   partialParamsOfMoves: paramsOfMoves,
 }) as {
