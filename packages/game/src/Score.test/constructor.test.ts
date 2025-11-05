@@ -14,7 +14,7 @@ const validateConstructor = ({
     params.pointsOfEachPlayer,
   );
   params.pointsOfEachPlayer.forEach((points, indexOfPlayer) => {
-    expect(score.getPointsOfPlayer(indexOfPlayer)).toBe(points);
+    expect(score.getPointsOfPlayer({ indexOfPlayer })).toBe(points);
   });
 };
 

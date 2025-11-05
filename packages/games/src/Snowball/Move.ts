@@ -13,12 +13,12 @@ class SnowballMove extends Move {
     this.indexOfSlotInWhichPlacePiece = indexOfSlotInWhichPlacePiece;
   }
 
-  public override clone(): SnowballMove {
+  public override clone(): this {
     return new SnowballMove({
       description: this.getDescription(),
       indexOfSlotInWhichPlacePiece: this.indexOfSlotInWhichPlacePiece,
       title: this.getTitle(),
-    });
+    }) as this;
   }
 
   public getIndexOfSlotInWhichPlacePiece(): typeof this.indexOfSlotInWhichPlacePiece {

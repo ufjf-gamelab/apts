@@ -5,10 +5,13 @@ type IndexOfSlot = Integer;
 type SlotParams = object;
 
 abstract class Slot {
-  public static getSlot(
-    indexOfSlot: IndexOfSlot,
-    slots: readonly Slot[],
-  ): null | Slot {
+  public static getSlot<Sl extends Slot>({
+    indexOfSlot,
+    slots,
+  }: {
+    indexOfSlot: IndexOfSlot;
+    slots: readonly Sl[];
+  }): null | Sl {
     const slot = slots[indexOfSlot];
     if (typeof slot === "undefined") {
       return null;
@@ -16,7 +19,7 @@ abstract class Slot {
     return slot;
   }
 
-  public abstract clone(): Slot;
+  public abstract clone(): this;
 }
 
 export type { IndexOfSlot, SlotParams };

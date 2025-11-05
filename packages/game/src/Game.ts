@@ -2,22 +2,25 @@ import type { Integer } from "@repo/engine_core/types.js";
 
 import type { IndexOfMove, Move } from "./Move.js";
 import type { IndexOfPlayer, Player } from "./Player.js";
+import type { Slot } from "./Slot.js";
 import type { State } from "./State.js";
 
-interface GameParams {
-  readonly moves: readonly Move[];
+interface GameParams<M extends Move> {
+  readonly moves: readonly M[];
   readonly name: string;
   readonly players: readonly Player[];
   readonly quantityOfSlots: Integer;
 }
 
-abstract class Game {
-  private readonly moves: GameParams["moves"];
-  private readonly name: GameParams["name"];
-  private readonly players: GameParams["players"];
-  private readonly quantityOfSlots: GameParams["quantityOfSlots"];
+type IndexOfGame = Integer;
 
-  constructor({ moves, name, players, quantityOfSlots }: GameParams) {
+abstract class Game<M extends Move, S extends State<M, Sl>, Sl extends Slot> {
+  private readonly moves: GameParams<M>["moves"];
+  private readonly name: GameParams<M>["name"];
+  private readonly players: GameParams<M>["players"];
+  private readonly quantityOfSlots: GameParams<M>["quantityOfSlots"];
+
+  constructor({ moves, name, players, quantityOfSlots }: GameParams<M>) {
     this.moves = moves.map(move => move.clone());
     this.name = name;
     this.players = players.map(player => player.clone());
@@ -26,10 +29,15 @@ abstract class Game {
 
   public abstract clone(): this;
 
-  public abstract getIndexOfNextPlayer(state: State): IndexOfPlayer;
-  public abstract getInitialState(): State;
+  public abstract constructInitialState(): S;
 
-  public getMove(indexOfMove: IndexOfMove): (typeof this.moves)[number] | null {
+  public abstract getIndexOfNextPlayer({ state }: { state: S }): IndexOfPlayer;
+
+  public getMove({
+    indexOfMove,
+  }: {
+    indexOfMove: IndexOfMove;
+  }): (typeof this.moves)[number] | null {
     const move = this.moves[indexOfMove];
     if (typeof move === "undefined") {
       return null;
@@ -45,9 +53,11 @@ abstract class Game {
     return this.name;
   }
 
-  public getPlayer(
-    indexOfPlayer: IndexOfPlayer,
-  ): (typeof this.players)[number] | null {
+  public getPlayer({
+    indexOfPlayer,
+  }: {
+    indexOfPlayer: IndexOfPlayer;
+  }): (typeof this.players)[number] | null {
     const player = this.players[indexOfPlayer];
     if (typeof player === "undefined") {
       return null;
@@ -67,12 +77,22 @@ abstract class Game {
     return this.quantityOfSlots;
   }
 
-  public abstract getValidMoves(state: State): readonly [IndexOfMove, Move][];
+  public abstract getValidMoves({
+    state,
+  }: {
+    state: S;
+  }): ReadonlyMap<IndexOfMove, M>;
 
-  public abstract isFinal(state: State): boolean;
+  public abstract isFinal({ state }: { state: S }): boolean;
 
-  public abstract play(indexOfMove: IndexOfMove, state: State): State;
+  public abstract play({
+    indexOfMove,
+    state,
+  }: {
+    indexOfMove: IndexOfMove;
+    state: S;
+  }): S;
 }
 
-export type { GameParams };
+export type { GameParams, IndexOfGame };
 export { Game };

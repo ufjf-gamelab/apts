@@ -16,7 +16,7 @@ abstract class Player {
     this.name = name;
   }
 
-  public abstract clone(): Player;
+  public abstract clone(): this;
 
   public getName(): typeof this.name {
     return this.name;

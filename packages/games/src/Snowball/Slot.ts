@@ -13,10 +13,10 @@ class SnowballSlot extends Slot {
     this.indexOfOccupyingPlayer = indexOfOccupyingPlayer;
   }
 
-  public override clone(): SnowballSlot {
+  public override clone(): this {
     return new SnowballSlot({
       indexOfOccupyingPlayer: this.indexOfOccupyingPlayer,
-    });
+    }) as this;
   }
 
   public getIndexOfOccupyingPlayer(): typeof this.indexOfOccupyingPlayer {

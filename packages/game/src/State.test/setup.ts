@@ -1,26 +1,38 @@
+import type { Move } from "../Move.js";
+import type { Slot } from "../Slot.js";
 import { type IndexOfState, type State, type StateParams } from "../State.js";
 
-const createStateParams = ({
+const createStateParams = <
+  M extends Move,
+  S extends State<M, Sl>,
+  Sl extends Slot,
+>({
   game,
   indexOfPlayer,
   score,
   slots,
 }: Pick<
-  StateParams,
+  StateParams<M, S, Sl>,
   "game" | "indexOfPlayer" | "score" | "slots"
->): StateParams => ({
+>): StateParams<M, S, Sl> => ({
   game,
   indexOfPlayer,
   score,
   slots,
 });
 
-const createStatesWithData = <PartialParams, DerivedStateParams>({
+const createStatesWithData = <
+  PartialParams,
+  DerivedStateParams,
+  M extends Move,
+  S extends State<M, Sl>,
+  Sl extends Slot,
+>({
   createState: create,
   createStateParams: createParams,
   partialParamsOfStates,
 }: {
-  createState: (params: DerivedStateParams) => State;
+  createState: (params: DerivedStateParams) => S;
   createStateParams: (partialParams: PartialParams) => DerivedStateParams;
   partialParamsOfStates: Record<string, PartialParams>;
 }) =>
@@ -29,7 +41,7 @@ const createStatesWithData = <PartialParams, DerivedStateParams>({
       indexOfState: IndexOfState;
       keyOfState: string;
       params: DerivedStateParams;
-      state: State;
+      state: S;
     };
   }>((statesWithData, [key, partialParams], index) => {
     const params = createParams(partialParams);

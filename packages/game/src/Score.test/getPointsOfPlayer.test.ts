@@ -14,13 +14,17 @@ const validateGetPointsOfPlayer = ({
   indexOfPlayer: IndexOfPlayer;
   score: Score;
 }) => {
-  let pointsOfPlayer = score.getPointsOfPlayer(indexOfPlayer);
+  let pointsOfPlayer = score.getPointsOfPlayer({ indexOfPlayer });
   expect(pointsOfPlayer).toBe(expectedPointsOfPlayer);
 
   // Ensure that the returned object does not keep reference to the internal property
   pointsOfPlayer += INCREMENT_ONE;
-  expect(score.getPointsOfPlayer(indexOfPlayer)).toBe(expectedPointsOfPlayer);
-  expect(score.getPointsOfPlayer(indexOfPlayer)).not.toEqual(pointsOfPlayer);
+  expect(score.getPointsOfPlayer({ indexOfPlayer })).toBe(
+    expectedPointsOfPlayer,
+  );
+  expect(score.getPointsOfPlayer({ indexOfPlayer })).not.toEqual(
+    pointsOfPlayer,
+  );
 };
 
 const createDescriptionForTestOfGetPointsOfPlayer = ({

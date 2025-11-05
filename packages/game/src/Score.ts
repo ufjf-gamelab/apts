@@ -16,13 +16,17 @@ abstract class Score {
     this.pointsOfEachPlayer = pointsOfEachPlayer;
   }
 
-  public abstract clone(): Score;
+  public abstract clone(): this;
 
   public getPointsOfEachPlayer(): typeof this.pointsOfEachPlayer {
     return new Map(this.pointsOfEachPlayer);
   }
 
-  public getPointsOfPlayer(indexOfPlayer: IndexOfPlayer): Points {
+  public getPointsOfPlayer({
+    indexOfPlayer,
+  }: {
+    indexOfPlayer: IndexOfPlayer;
+  }): Points {
     const scoreOfPlayer = this.pointsOfEachPlayer.get(indexOfPlayer);
     if (typeof scoreOfPlayer === "undefined") {
       throw new Error(`Invalid player index: ${indexOfPlayer}.`, {
