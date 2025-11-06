@@ -5,6 +5,7 @@ import type Move from "../../../Game/Move.js";
 import type Player from "../../../Game/Player.js";
 import type Slot from "../../../Game/Slot.js";
 import type State from "../../../Game/State.js";
+
 import { default as TreeNode } from "../../TreeNode.js";
 import { createTreeNode, type TestMonteCarloTreeNodeParams } from "./setup.js";
 

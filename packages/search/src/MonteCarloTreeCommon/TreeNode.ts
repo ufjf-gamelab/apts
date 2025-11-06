@@ -1,16 +1,17 @@
+import type { Integer } from "@repo/engine_core/types.js";
+import type Game from "@repo/engine_game/Game.js";
+import type Player from "@repo/engine_game/Player.js";
+import type Slot from "@repo/engine_game/Slot.js";
+
 import {
   EMPTY_LIST,
   INCREMENT_ONE,
   NOT_INCREMENT,
 } from "@repo/engine_core/constants.js";
-import type { Integer } from "@repo/engine_core/types.js";
-import type Game from "@repo/engine_game/Game.js";
 import {
   type IndexOfMove,
   type default as Move,
 } from "@repo/engine_game/Move.js";
-import type Player from "@repo/engine_game/Player.js";
-import type Slot from "@repo/engine_game/Slot.js";
 import { type Score, default as State } from "@repo/engine_game/State.js";
 
 const MINIMUM_VICTORY_QUALITY = 0;

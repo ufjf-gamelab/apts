@@ -5,10 +5,8 @@ import tseslint from "typescript-eslint";
 
 /**
  * A shared ESLint configuration for the repository.
- *
- * @type {import("eslint").Linter.Config[]}
  * */
-export const config = [
+export const config: import("eslint").Linter.Config[] = [
   {
     languageOptions: {
       parserOptions: {
@@ -321,6 +319,6 @@ export const config = [
 
   /* Ignore files */
   {
-    ignores: ["dist/**"],
+    ignores: ["dist", "node_modules"],
   },
 ];

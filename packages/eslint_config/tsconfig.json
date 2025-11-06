@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "checkJs": false,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "outDir": "dist",
-    "strict": true
-  }
+    "checkJs": true,
+    "rootDir": "."
+  },
+  "include": ["src"],
+  "extends": "@repo/typescript_config/library.json",
+  "files": ["eslint.config.ts"]
 }

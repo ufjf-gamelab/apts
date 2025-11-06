@@ -6,5 +6,6 @@
   },
   "exclude": ["node_modules", "dist"],
   "extends": "@repo/typescript_config/library.json",
-  "include": ["src"]
+  "include": ["src"],
+  "files": ["eslint.config.ts", "vitest.config.ts"]
 }

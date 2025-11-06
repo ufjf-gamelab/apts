@@ -7,18 +7,7 @@
     "typescript": "^5.9.3"
   },
   "exports": {
-    "./constants.js": {
-      "import": "./src/constants.ts"
-    },
-    "./format.js": {
-      "import": "./src/format.ts"
-    },
-    "./test.js": {
-      "import": "./src/test.ts"
-    },
-    "./types.js": {
-      "import": "./src/types.ts"
-    }
+    "./*": "./src/*"
   },
   "license": "AGPL-3.0-only",
   "name": "@repo/engine_core",
@@ -26,11 +15,12 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "format": "pnpm exec prettier . -w",
-    "lint": "pnpm exec eslint ./src/** --fix",
+    "format": "prettier . -w",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "test": "vitest run",
     "test:watch": "vitest --watch",
-    "typecheck": "pnpm exec tsc"
+    "check-types": "tsc"
   },
   "type": "module",
   "version": "4.3.0"

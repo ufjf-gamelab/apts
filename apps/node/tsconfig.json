@@ -2,5 +2,6 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "exclude": ["dist", "node_modules"],
   "extends": "@repo/typescript_config/node.json",
+  "files": ["eslint.config.ts", "vitest.config.ts"],
   "include": ["src"]
 }

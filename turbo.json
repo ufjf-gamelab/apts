@@ -6,11 +6,19 @@
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**"]
     },
+    "check-types": {
+      "dependsOn": ["^check-types"]
+    },
     "dev": {
       "cache": false,
       "persistent": true
     },
-    "lint": {},
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "lint:fix": {
+      "dependsOn": ["^lint:fix"]
+    },
     "test": {
       "dependsOn": ["^test"]
     },

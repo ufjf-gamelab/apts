@@ -1,8 +1,8 @@
 {
   "author": "Gabriel Malosto",
   "dependencies": {
-    "@repo/game.old": "workspace:*",
-    "@repo/games.old": "workspace:*"
+    "@repo/game": "workspace:*",
+    "@repo/games": "workspace:*"
   },
   "description": "Definition of actions for the engine.",
   "devDependencies": {
@@ -11,12 +11,7 @@
     "typescript": "^5.9.3"
   },
   "exports": {
-    "./actions/*": {
-      "import": "./src/actions/*"
-    },
-    "./types": {
-      "import": "./src/types.ts"
-    }
+    "./*": "./src/*"
   },
   "license": "AGPL-3.0-only",
   "name": "@repo/interface",
@@ -24,9 +19,12 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "format": "pnpm exec prettier . -w",
-    "lint": "pnpm exec eslint ./src/** --fix",
-    "typecheck": "pnpm exec tsc"
+    "format": "prettier . -w",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "test": "vitest run",
+    "test:watch": "vitest --watch",
+    "check-types": "tsc"
   },
   "type": "module",
   "version": "0.0.1"

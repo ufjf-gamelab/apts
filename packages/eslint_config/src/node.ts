@@ -4,10 +4,8 @@ import { config as baseConfig } from "./base.js";
 
 /**
  * A shared ESLint configuration for Node projects in the repository.
- *
- * @type {import("eslint").Linter.Config}
  * */
-export const nodeConfig = [
+export const nodeConfig: import("eslint").Linter.Config[] = [
   ...baseConfig,
 
   {
@@ -17,10 +15,13 @@ export const nodeConfig = [
       },
       parserOptions: {
         ecmaVersion: "latest",
-        projectService: true,
         sourceType: "module",
-        tsconfigRootDir: import.meta.dirname,
       },
     },
+  },
+
+  /* Ignore files */
+  {
+    ignores: ["dist", "node_modules"],
   },
 ];

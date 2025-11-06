@@ -2,7 +2,7 @@
   "author": "Gabriel Malosto",
   "dependencies": {
     "@paralleldrive/cuid2": "^3.0.4",
-    "@repo/game.old": "workspace:*",
+    "@repo/game": "workspace:*",
     "@repo/interface": "workspace:*",
     "@tensorflow/tfjs": "^4.22.0",
     "commander": "^14.0.2",

@@ -9,12 +9,10 @@
     "@repo/eslint_config": "workspace:*",
     "@repo/typescript_config": "workspace:*",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.6"
+    "vitest": "^4.0.7"
   },
   "exports": {
-    "./Snowball/*": {
-      "import": "./src/Snowball/*"
-    }
+    "./Snowball/*": "./src/Snowball/*"
   },
   "license": "AGPL-3.0-only",
   "name": "@repo/games",
@@ -22,11 +20,12 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "format": "pnpm exec prettier . -w",
-    "lint": "pnpm exec eslint ./src/** --fix",
+    "format": "prettier . -w",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "test": "vitest run",
     "test:watch": "vitest --watch",
-    "typecheck": "pnpm exec tsc"
+    "check-types": "tsc"
   },
   "type": "module",
   "version": "0.0.1"

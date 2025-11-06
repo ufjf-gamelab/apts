@@ -2,7 +2,6 @@ import type Game from "../../../../game.old/src/Game.js";
 import type Move from "../../../../game.old/src/Move.js";
 import type Player from "../../../../game.old/src/Player.js";
 import type State from "../../../../game.old/src/State.js";
-
 import type { ProcessGraphvizDotString } from "../actions.js";
 
 interface MoveOutcome<

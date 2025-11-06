@@ -4,10 +4,6 @@
     "allowArbitraryExtensions": false,
     "allowJs": false,
     "allowSyntheticDefaultImports": false,
-    "module": "NodeNext",
-    "moduleDetection": "auto",
-    "moduleResolution": "nodenext",
-    "resolveJsonModule": true,
     "resolvePackageJsonExports": false,
     "resolvePackageJsonImports": false
   },
