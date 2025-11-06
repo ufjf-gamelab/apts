@@ -25,4 +25,5 @@ class SnowballSlot extends Slot<SnowballSlot> {
   }
 }
 
+export type { SnowballSlotParams };
 export { SnowballSlot };

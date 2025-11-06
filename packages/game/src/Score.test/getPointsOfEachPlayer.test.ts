@@ -10,16 +10,13 @@ import { getKeyOfPlayer, type PlayerWithData } from "../Player.test/setup.js";
 const INDEX_OF_FIRST_PLAYER = 0;
 const ZERO_POINTS = 0;
 
-const createDescriptionForPlayerAndItsPoints = <
-  P extends Player<P>,
-  ParamsRecord extends Record<string, unknown>,
->({
+const createDescriptionForPlayerAndItsPoints = <P extends Player<P>>({
   indexOfPlayer,
   players,
   points,
 }: {
   indexOfPlayer: IndexOfPlayer;
-  players: Record<string, PlayerWithData<P, unknown, unknown, ParamsRecord>>;
+  players: Record<string, PlayerWithData<P>>;
   points: Points;
 }): string =>
   `{${String(getKeyOfPlayer({ indexOfPlayer, players }))}}: ${points}}`;
@@ -54,13 +51,12 @@ const validateGetPointsOfEachPlayer = <Sc extends Score<Sc>>({
 const createDescriptionForTestOfGetPointsOfEachPlayer = <
   Sc extends Score<Sc>,
   P extends Player<P>,
-  ParamsRecord extends Record<string, unknown>,
 >({
   expectedPointsOfEachPlayer,
   players,
 }: {
   expectedPointsOfEachPlayer: ReturnType<Sc["getPointsOfEachPlayer"]>;
-  players: Record<string, PlayerWithData<P, unknown, unknown, ParamsRecord>>;
+  players: Record<string, PlayerWithData<P>>;
 }): string => {
   const returnedValueOfEachPlayer = expectedPointsOfEachPlayer
     .entries()

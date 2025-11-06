@@ -1,67 +1,71 @@
 import { type IndexOfSlot, type Slot } from "../Slot.js";
 
+type DerivedSlotParams = RequiredSlotParams;
+
+type RequiredSlotParams = object;
+
 interface SlotWithData<
   Sl extends Slot<Sl>,
-  PartialParams,
-  DerivedSlotParams,
-  ParamsRecord extends Record<string, PartialParams>,
+  Params extends DerivedSlotParams = DerivedSlotParams,
 > {
   indexOfSlot: IndexOfSlot;
-  keyOfSlot: keyof ParamsRecord;
-  params: DerivedSlotParams;
+  keyOfSlot: string;
+  params: Params;
   slot: Sl;
 }
 
+const deriveSlotParams = (_: RequiredSlotParams): DerivedSlotParams => _;
+
 const createSlotsWithData = <
   Sl extends Slot<Sl>,
-  PartialParams,
-  DerivedSlotParams,
-  ParamsRecord extends Record<string, PartialParams>,
+  RequiredParams extends RequiredSlotParams,
+  DerivedParams extends DerivedSlotParams,
+  RecordOfRequiredParams extends Record<string, RequiredParams>,
 >({
-  createSlot: create,
-  createSlotParams: createParams,
-  partialParamsOfSlots,
+  create,
+  deriveParams,
+  recordOfRequiredParams,
 }: {
-  createSlot: (params: DerivedSlotParams) => Sl;
-  createSlotParams: (partialParams: PartialParams) => DerivedSlotParams;
-  partialParamsOfSlots: ParamsRecord;
+  create: (params: DerivedParams) => Sl;
+  deriveParams: (requiredParams: RequiredParams) => DerivedParams;
+  recordOfRequiredParams: RecordOfRequiredParams;
 }): {
-  [K in keyof ParamsRecord]: SlotWithData<
-    Sl,
-    PartialParams,
-    DerivedSlotParams,
-    ParamsRecord
-  >;
+  [K in keyof RecordOfRequiredParams]: {
+    indexOfSlot: IndexOfSlot;
+    keyOfSlot: keyof RecordOfRequiredParams;
+    params: RequiredParams;
+    slot: Sl;
+  };
 } => {
   type ResultType = {
-    [K in keyof ParamsRecord]: SlotWithData<
-      Sl,
-      PartialParams,
-      DerivedSlotParams,
-      ParamsRecord
-    >;
+    [K in keyof RecordOfRequiredParams]: {
+      indexOfSlot: IndexOfSlot;
+      keyOfSlot: keyof RecordOfRequiredParams;
+      params: RequiredParams;
+      slot: Sl;
+    };
   };
 
   /**
    * TypeScript cannot statically verify that Object.fromEntries produces all required keys since the operation happens at runtime.
-   * This assertion is safe because we're iterating over all entries from partialParamsOfSlots, which ParamsRecord is derived from.
+   * This assertion is safe because we're iterating over all entries from recordOfRequiredParams, which RecordOfRequiredParams is derived from.
    */
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Object.fromEntries cannot preserve mapped type keys
   return Object.fromEntries(
-    Object.entries(partialParamsOfSlots).map(([key, partialParams], index) => {
-      const params = createParams(partialParams);
-      return [
-        key,
-        {
-          indexOfSlot: index,
-          keyOfSlot: key,
-          params,
-          slot: create(params),
-        },
-      ] as const;
-    }),
+    Object.entries(recordOfRequiredParams).map(
+      ([key, requiredParams], index) =>
+        [
+          key,
+          {
+            indexOfSlot: index,
+            keyOfSlot: key,
+            params: requiredParams,
+            slot: create(deriveParams(requiredParams)),
+          } satisfies SlotWithData<Sl, RequiredParams>,
+        ] as const,
+    ),
   ) as ResultType;
 };
 
-export type { SlotWithData };
-export { createSlotsWithData };
+export type { DerivedSlotParams, RequiredSlotParams, SlotWithData };
+export { createSlotsWithData, deriveSlotParams };

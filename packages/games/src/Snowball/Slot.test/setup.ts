@@ -1,24 +1,29 @@
 import { createSlotsWithData } from "@repo/game/Slot.test/setup.js";
 
 import { playersWithData } from "../Player.test/setup.js";
-import { SnowballSlot } from "../Slot.js";
+import { SnowballSlot, type SnowballSlotParams } from "../Slot.js";
 
-type SnowballSlotParams = ConstructorParameters<typeof SnowballSlot>[number];
+type DerivedSnowballSlotParams = RequiredSnowballSlotParams;
 
-const createSnowballSlotParams = ({
+type RequiredSnowballSlotParams = Pick<
+  SnowballSlotParams,
+  "indexOfOccupyingPlayer"
+>;
+
+const deriveSnowballSlotParams = ({
   indexOfOccupyingPlayer,
-}: Pick<SnowballSlotParams, "indexOfOccupyingPlayer">): SnowballSlotParams => ({
+}: RequiredSnowballSlotParams): DerivedSnowballSlotParams => ({
   indexOfOccupyingPlayer,
 });
 
-const createSlot = ({
+const createSnowballSlot = ({
   indexOfOccupyingPlayer,
-}: SnowballSlotParams): SnowballSlot =>
+}: DerivedSnowballSlotParams): SnowballSlot =>
   new SnowballSlot({
     indexOfOccupyingPlayer,
   });
 
-const paramsOfSlots = {
+const recordOfRequiredParamsOfSlots = {
   // Center
   centerOfCenter: {
     indexOfOccupyingPlayer: null,
@@ -279,18 +284,18 @@ const paramsOfSlots = {
   westOfWest: {
     indexOfOccupyingPlayer: null,
   },
-} as const satisfies Record<string, SnowballSlotParams>;
+} as const satisfies Record<string, RequiredSnowballSlotParams>;
 
 const slotsWithData = createSlotsWithData({
-  createSlot,
-  createSlotParams: createSnowballSlotParams,
-  partialParamsOfSlots: paramsOfSlots,
+  create: createSnowballSlot,
+  deriveParams: deriveSnowballSlotParams,
+  recordOfRequiredParams: recordOfRequiredParamsOfSlots,
 });
 
 const slotsWithDataForUnitTest = createSlotsWithData({
-  createSlot,
-  createSlotParams: createSnowballSlotParams,
-  partialParamsOfSlots: {
+  create: createSnowballSlot,
+  deriveParams: deriveSnowballSlotParams,
+  recordOfRequiredParams: {
     northeastOfNorthwest: {
       indexOfOccupyingPlayer: null,
     },

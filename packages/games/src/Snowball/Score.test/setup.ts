@@ -1,6 +1,9 @@
+import type { IndexOfScore } from "@repo/game/Score.js";
+
 import {
-  createScoreParams,
   createScoresWithData,
+  deriveScoreParams,
+  type RequiredScoreParams,
 } from "@repo/game/Score.test/setup.js";
 
 import { playersWithData } from "../Player.test/setup.js";
@@ -10,26 +13,37 @@ const ZERO_POINTS = 0;
 const FIVE_POINTS = 5;
 const TEN_POINTS = 10;
 
+type DerivedSnowballScoreParams = RequiredSnowballScoreParams;
+
 type RequiredSnowballScoreParams = Pick<
-  SnowballScoreParams,
+  RequiredScoreParams,
   "pointsOfEachPlayer"
 >;
 
-type SnowballScoreParams = ConstructorParameters<typeof SnowballScore>[number];
+interface SnowballScoreWithData<
+  Params extends RequiredSnowballScoreParams = RequiredSnowballScoreParams,
+> {
+  indexOfScore: IndexOfScore;
+  keyOfScore: string;
+  params: Params;
+  player: SnowballScore;
+}
 
-const createSnowballScoreParams = ({
+const deriveSnowballScoreParams = ({
   pointsOfEachPlayer,
-}: RequiredSnowballScoreParams): SnowballScoreParams =>
-  createScoreParams({ pointsOfEachPlayer });
+}: RequiredSnowballScoreParams): DerivedSnowballScoreParams =>
+  deriveScoreParams({
+    pointsOfEachPlayer,
+  });
 
 const createSnowballScore = ({
   pointsOfEachPlayer,
-}: SnowballScoreParams): SnowballScore =>
+}: DerivedSnowballScoreParams): SnowballScore =>
   new SnowballScore({
     pointsOfEachPlayer,
   });
 
-const paramsOfScores = {
+const recordOfRequiredParamsOfScores = {
   aliceWith0PointsAndBrunoWith0Points: {
     pointsOfEachPlayer: new Map(
       Object.values(playersWithData).map(({ indexOfPlayer }) => [
@@ -44,12 +58,21 @@ const paramsOfScores = {
       [playersWithData.bruno.indexOfPlayer, TEN_POINTS],
     ]),
   },
-} as const satisfies Record<string, SnowballScoreParams>;
+} as const satisfies Record<string, RequiredSnowballScoreParams>;
 
 const scoresWithDataForUnitTest = createScoresWithData({
-  createScore: createSnowballScore,
-  createScoreParams: createSnowballScoreParams,
-  partialParamsOfScores: paramsOfScores,
+  create: createSnowballScore,
+  deriveParams: deriveSnowballScoreParams,
+  recordOfRequiredParams: recordOfRequiredParamsOfScores,
 });
 
-export { scoresWithDataForUnitTest };
+export type {
+  DerivedSnowballScoreParams,
+  RequiredSnowballScoreParams,
+  SnowballScoreWithData,
+};
+export {
+  createSnowballScore,
+  deriveSnowballScoreParams,
+  scoresWithDataForUnitTest,
+};
