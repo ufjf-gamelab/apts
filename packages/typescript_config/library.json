@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "allowArbitraryExtensions": false,
+    "allowJs": false,
+    "allowSyntheticDefaultImports": false,
+    "module": "NodeNext",
+    "moduleDetection": "auto",
+    "moduleResolution": "nodenext",
+    "resolveJsonModule": true,
+    "resolvePackageJsonExports": false,
+    "resolvePackageJsonImports": false
+  },
+  "exclude": ["dist", "node_modules"],
+  "extends": "./base.json"
+}

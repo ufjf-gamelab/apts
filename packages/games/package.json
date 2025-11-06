@@ -1,0 +1,33 @@
+{
+  "author": "Gabriel Malosto",
+  "dependencies": {
+    "@repo/engine_core": "workspace:*",
+    "@repo/game": "workspace:*"
+  },
+  "description": "Collection of tabletop games to be used with the engine.",
+  "devDependencies": {
+    "@repo/eslint_config": "workspace:*",
+    "@repo/typescript_config": "workspace:*",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.6"
+  },
+  "exports": {
+    "./Snowball/*": {
+      "import": "./src/Snowball/*"
+    }
+  },
+  "license": "AGPL-3.0-only",
+  "name": "@repo/games",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "format": "pnpm exec prettier . -w",
+    "lint": "pnpm exec eslint ./src/** --fix",
+    "test": "vitest run",
+    "test:watch": "vitest --watch",
+    "typecheck": "pnpm exec tsc"
+  },
+  "type": "module",
+  "version": "0.0.1"
+}

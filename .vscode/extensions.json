@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "davidanson.vscode-markdownlint",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "gruntfuggly.todo-tree",
+    "jebbs.plantuml",
+    "mhutchie.git-graph",
+    "streetsidesoftware.code-spell-checker-portuguese-brazilian",
+    "streetsidesoftware.code-spell-checker",
+    "usernamehw.errorlens",
+    "vitest.explorer",
+    "yoavbls.pretty-ts-errors"
+  ]
+}

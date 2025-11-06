@@ -1,0 +1,32 @@
+import { createDescriptionForTestsOfGetter } from "@repo/engine_core/test.js";
+import { expect } from "vitest";
+
+import type { Player } from "../Player.js";
+
+const validateGetName = <P extends Player<P>>({
+  expectedName,
+  player,
+}: {
+  expectedName: ReturnType<P["getName"]>;
+  player: P;
+}) => {
+  let name = player.getName();
+  expect(name).toBe(expectedName);
+
+  // Ensure that the returned object does not keep reference to the internal property
+  name = `${name} (modified)`;
+  expect(player.getName()).toBe(expectedName);
+  expect(player.getName()).not.toEqual(name);
+};
+
+const createDescriptionForTestOfGetName = <P extends Player<P>>({
+  expectedName,
+}: {
+  expectedName: ReturnType<P["getName"]>;
+}): string =>
+  createDescriptionForTestsOfGetter({
+    methodDescription: "getName()",
+    returnedValue: expectedName,
+  });
+
+export { createDescriptionForTestOfGetName, validateGetName };

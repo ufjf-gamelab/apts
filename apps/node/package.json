@@ -1,0 +1,43 @@
+{
+  "author": "Gabriel Malosto",
+  "dependencies": {
+    "@paralleldrive/cuid2": "^3.0.4",
+    "@repo/game.old": "workspace:*",
+    "@repo/interface": "workspace:*",
+    "@tensorflow/tfjs": "^4.22.0",
+    "commander": "^14.0.2",
+    "dotenv": "^17.2.3",
+    "prompts": "^2.4.2",
+    "ts-graphviz": "^3.0.5"
+  },
+  "description": "Engine to simulate and create AI models for tabletop games, inspired by the AlphaZero algorithm.",
+  "devDependencies": {
+    "@repo/eslint_config": "workspace:*",
+    "@repo/typescript_config": "workspace:*",
+    "@types/node": "^24.10.0",
+    "@types/prompts": "^2.4.9",
+    "esbuild": "^0.25.12",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "include": [
+    "src"
+  ],
+  "license": "AGPL-3.0-only",
+  "main": "src/index.ts",
+  "name": "node",
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --packages=external --platform=node --format=esm --outdir=dist --sourcemap",
+    "dev": "tsx watch src/index.ts",
+    "format": "pnpm exec prettier . -w",
+    "lint": "eslint .",
+    "preview": "pnpm run build && node ./dist/index.js",
+    "typecheck": "pnpm exec tsc"
+  },
+  "type": "module",
+  "version": "4.2.0"
+}

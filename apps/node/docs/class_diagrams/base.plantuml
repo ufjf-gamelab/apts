@@ -1,0 +1,269 @@
+@startuml class_diagram_base
+title Class diagram: Game, State and Move
+
+hide empty members
+
+!function $type($name)
+!return "struct " + $name + " << (T,lavender) >>"
+!endfunction
+
+!function $type($name, $generics)
+!return "struct " + $name + $generics + " << (T,lavender) >>"
+!endfunction
+
+!$M = "<M extends Move>"
+!$G = "<G extends Game<M>, M extends Move>"
+
+package Types << rectangle >> {
+
+  package Standard << rectangle >>{
+    $type(number)
+    $type(string)
+    $type(boolean)
+  }
+
+  package Aliases << rectangle >> {
+
+    $type(Integer)
+    Integer [alias] ..> number
+
+    $type(Char)
+    Char [alias] ..> string
+
+  }
+
+}
+
+package move_package as "Move" {
+
+    package Aliases << rectangle >> {
+
+    $type(MoveKey)
+    MoveKey [alias] ..> Integer
+
+  }
+
+  interface MoveParams {
+    title: string
+    description: string
+  }
+
+  abstract class Move {
+    - title: MoveParams::title
+    - description: MoveParams::description
+    --
+    + getTitle(): MoveParams::title
+    + getDescription(): MoveParams::description
+  }
+  Move::title --> MoveParams::title
+  Move::description --> MoveParams::description
+
+  interface KeyedMove<M extends Move>  {
+    move: M
+    index: MoveKey
+  }
+  KeyedMove::move --> Move
+  KeyedMove::index --> MoveKey
+
+}
+
+package game_package as "Game" {
+
+  package Aliases << rectangle >> {
+
+    $type(Player)
+    Player [alias] ..> Integer
+
+  }
+
+  interface PlayerData {
+    symbol: Char
+    name: string
+  }
+
+  interface GameParams $M {
+    name: string
+    players: Map<Player, PlayerData>
+    quantityOfSlots: Integer
+    moves: M[]
+  }
+  GameParams::players --> Player
+  GameParams::players --> PlayerData
+  GameParams::moves --> Move
+
+  abstract class Game $M {
+    - name: GameParams::name
+    - players: GameParams::players
+    # quantityOfSlots: GameParams::quantityOfSlots
+    # moves: Map<MoveKey, M>
+    --
+    + getMove(key: MoveKey): M
+    + getMoves(): Map<MoveKey, M>
+    + getName(): GameParams::name
+    + getPlayerData(player: Player): PlayerData
+    + getPlayers(): GameParams::players
+    + getQuantityOfSlots(): GameParams::quantityOfSlots
+    .. abstract ..
+    + {abstract} getInitialState(): State<this>
+  }
+  Game::name --> GameParams::name
+  Game::players --> GameParams::players
+  Game::quantityOfSlots --> GameParams::quantityOfSlots
+  Game::moves --> MoveKey
+  Game::moves --> Move
+  
+}
+
+package state_package as "State" {
+
+  package Enums << rectangle >> {
+    
+    enum Pixel {
+      Off = 0
+      On = 1
+    }
+
+  }
+
+  package Aliases << rectangle >> {
+
+    $type(Channel)
+    Channel [alias] ..> Integer
+
+    $type(EncodedState) {
+      Pixel[][][]
+    }
+    EncodedState::0 [alias] ..> Pixel
+
+    $type(Points)
+    Points [alias] ..> number
+
+    $type(Position)
+    Position [alias] ..> Integer
+
+    $type(Slot)
+    Slot [alias] ..> Integer
+
+  }
+
+  $type(Score) {
+    Map<Player, Points>
+  }
+  Score::0 --> Player
+  Score::0 --> Points
+
+  interface TurnOutcome {
+    gameHasEnded: boolean
+    score: Score
+    winner: Player | null
+  }
+  TurnOutcome::winner --> Player
+  TurnOutcome::score --> Score
+
+  interface StateParams $G {
+    game: G
+    player: Player
+    score: Score
+    slots: Slot[]
+    keysOfTheValidMoves: Set<MoveKey>
+  }
+  StateParams::game --> Game
+  StateParams::player --> Player
+  StateParams::score --> Score
+  StateParams::slots --> Slot
+  StateParams::keysOfTheValidMoves --> MoveKey
+
+  abstract class State $G {
+    # game: StateParams::game
+    # slots: StateParams::slots
+    ..
+    # player: StateParams::player
+    # score: StateParams::score
+    # keysOfTheValidMoves: StateParams::keysOfTheValidMoves
+    --
+    + getGame(): StateParams::game
+    + getKeysOfTheValidMoves(): Set<MoveKey>
+    + getMaskFromValidMoves(): boolean[]
+    + getPlayer(): StateParams::lastPlayer
+    + getSlotAt(position: Position): Slot
+    .. abstract ..
+    + {abstract} getEncodedState(): EncodedState
+    + {abstract} getTurnOutcome(): TurnOutcome
+    + {abstract} changePerspective(player: Player): State<G>
+    + {abstract} clone(): State<G>
+    + {abstract} playMove(move: M): State<G>
+    + {abstract} toString(): string
+    .. static ..
+    + {static} setSlotInEncodedState(indexOfRow: Integer, indexOfColumn: Integer, channel: Channel, encodedState: EncodedState): void
+  }
+  State::game --> StateParams::game
+  State::slots --> StateParams::slots
+  State::player --> StateParams::player
+  State::score --> StateParams::score
+
+}
+
+package monte_carlo_tree_common_package as "Monte Carlo Tree Common" {
+
+  interface NodeParams $G {
+    state: State<G, M>
+    keyOfTheTakenMove: MoveKey | null
+    explorationConstant: number
+    parent: Node<G, M> | null
+  }
+  NodeParams::state --> State
+  NodeParams::keyOfTheTakenMove --> MoveKey
+  NodeParams::parent --> Node
+
+  class Node $G {
+    - state: NodeParams::state
+    - keyOfTheTakenMove: NodeParams::keyOfTheTakenMove
+    - explorationConstant: NodeParams::explorationConstant
+    - parent: NodeParams::parent
+    - children: Node<G, M>[]
+    - moveIsExpandable: Map<MoveKey, boolean>
+    - quantityOfVisits: Integer
+    - victoryQuality: number
+    + getChildren(): Node<G, M>[]
+    + getKeysOfNotExpandedMoves(): Set<MoveKey>
+    + getKeyOfTheTakenMove(): MoveKey | null
+    + getQuantityOfVisits(): Integer
+    + getState(): State<G, M>
+    + setMoveAsExpanded(index: Integer): void
+    + isFullyExpanded(): boolean
+    + getChildUcb(child: Node<G, M>): number
+    + selectBestChild(): Node<G, M>
+    + pickRandomMove(): KeyedMove<M>
+    + expand(): Node<G, M>
+    + simulate(): TurnOutcome["score"]
+    + backpropagate(score: TurnOutcome["score"]): void
+  }
+  Node::state --> NodeParams::state
+  Node::keyOfTheTakenMove --> NodeParams::keyOfTheTakenMove
+  Node::explorationConstant --> NodeParams::explorationConstant
+  Node::parent --> NodeParams::parent
+  Node::children --> Node
+  Node::moveIsExpandable --> MoveKey
+
+  interface SearchParams $G {
+    game: G
+    explorationConstant: number
+    quantityOfSearches: Integer
+  }
+  SearchParams::game --> Game
+
+  class Search $G {
+    - game: SearchParams::game
+    - explorationConstant: SearchParams::explorationConstant
+    - quantityOfSearches: SearchParams::quantityOfSearches
+    --
+    - buildTree(root: Node<G, M>): void
+    - getProbabilities(state: State<G, M>): number[]
+  }
+  Search::game --> SearchParams::game
+  Search::explorationConstant --> SearchParams::explorationConstant
+  Search::quantityOfSearches --> SearchParams::quantityOfSearches
+
+}
+
+@enduml

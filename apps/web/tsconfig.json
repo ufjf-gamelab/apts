@@ -1,0 +1,12 @@
+{
+  "extends": "@repo/typescript_config/vite/vite.json",
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+}
