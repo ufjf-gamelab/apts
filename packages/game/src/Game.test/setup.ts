@@ -8,11 +8,16 @@ import type { State } from "../State.js";
 
 import { type Game, type GameParams, type IndexOfGame } from "../Game.js";
 
-type DerivedGameParams<M extends Move<M>, P extends Player<P>> = Pick<
-  GameParams<M, P>,
-  "moves" | "players"
-> &
-  Pick<RequiredGameParams<M, P>, "name" | "quantityOfSlots">;
+type DerivedGameParams<
+  M extends Move<M>,
+  P extends Player<P>,
+  ExtendedMoveWithData extends MoveWithData<M>,
+  ExtendedPlayerWithData extends PlayerWithData<P>,
+> = Pick<GameParams<M, P>, "moves" | "players"> &
+  Pick<
+    RequiredGameParams<M, P, ExtendedMoveWithData, ExtendedPlayerWithData>,
+    "name" | "quantityOfSlots"
+  >;
 
 interface GameWithData<
   G extends Game<G, M, P, S, Sc, Sl>,
@@ -21,7 +26,14 @@ interface GameWithData<
   S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
-  Params extends RequiredGameParams<M, P> = RequiredGameParams<M, P>,
+  ExtendedMoveWithData extends MoveWithData<M>,
+  ExtendedPlayerWithData extends PlayerWithData<P>,
+  Params extends RequiredGameParams<
+    M,
+    P,
+    ExtendedMoveWithData,
+    ExtendedPlayerWithData
+  > = RequiredGameParams<M, P, ExtendedMoveWithData, ExtendedPlayerWithData>,
 > {
   game: G;
   indexOfGame: IndexOfGame;
@@ -29,12 +41,14 @@ interface GameWithData<
   params: Params;
 }
 
-type RequiredGameParams<M extends Move<M>, P extends Player<P>> = Pick<
-  GameParams<M, P>,
-  "name" | "quantityOfSlots"
-> & {
-  moves: Record<string, MoveWithData<M>>;
-  players: Record<string, PlayerWithData<P>>;
+type RequiredGameParams<
+  M extends Move<M>,
+  P extends Player<P>,
+  ExtendedMoveWithData extends MoveWithData<M>,
+  ExtendedPlayerWithData extends PlayerWithData<P>,
+> = Pick<GameParams<M, P>, "name" | "quantityOfSlots"> & {
+  moves: Record<string, ExtendedMoveWithData>;
+  players: Record<string, ExtendedPlayerWithData>;
 };
 
 const deriveGameParams = <
@@ -44,18 +58,26 @@ const deriveGameParams = <
   S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
+  ExtendedMoveWithData extends MoveWithData<M>,
+  ExtendedPlayerWithData extends PlayerWithData<P>,
 >({
   moves,
   name,
   players,
   quantityOfSlots,
-}: RequiredGameParams<M, P>): DerivedGameParams<M, P> => ({
+}: RequiredGameParams<
+  M,
+  P,
+  ExtendedMoveWithData,
+  ExtendedPlayerWithData
+>): DerivedGameParams<M, P, ExtendedMoveWithData, ExtendedPlayerWithData> => ({
   moves: Object.values(moves).map(({ move }) => move),
   name,
   players: Object.values(players).map(({ player }) => player),
   quantityOfSlots,
 });
 
+// eslint-disable-next-line max-lines-per-function
 const createGamesWithData = <
   G extends Game<G, M, P, S, Sc, Sl>,
   M extends Move<M>,
@@ -63,8 +85,20 @@ const createGamesWithData = <
   S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
-  RequiredParams extends RequiredGameParams<M, P>,
-  DerivedParams extends DerivedGameParams<M, P>,
+  ExtendedMoveWithData extends MoveWithData<M>,
+  ExtendedPlayerWithData extends PlayerWithData<P>,
+  RequiredParams extends RequiredGameParams<
+    M,
+    P,
+    ExtendedMoveWithData,
+    ExtendedPlayerWithData
+  >,
+  DerivedParams extends DerivedGameParams<
+    M,
+    P,
+    ExtendedMoveWithData,
+    ExtendedPlayerWithData
+  >,
   RecordOfRequiredParams extends Record<string, RequiredParams>,
 >({
   create,
@@ -106,7 +140,17 @@ const createGamesWithData = <
             indexOfGame: index,
             keyOfGame: key,
             params: requiredParams,
-          } satisfies GameWithData<G, M, P, S, Sc, Sl, RequiredParams>,
+          } satisfies GameWithData<
+            G,
+            M,
+            P,
+            S,
+            Sc,
+            Sl,
+            ExtendedMoveWithData,
+            ExtendedPlayerWithData,
+            RequiredParams
+          >,
         ] as const,
     ),
   ) as ResultType;

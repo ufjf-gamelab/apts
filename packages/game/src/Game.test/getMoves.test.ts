@@ -1,12 +1,14 @@
+import { formatArray } from "@repo/engine_core/format.js";
 import { createDescriptionForTestsOfGetter } from "@repo/engine_core/test.js";
 import { assert, expect } from "vitest";
 
 import type { Game } from "../Game.js";
-import type { Move } from "../Move.js";
 import type { Player } from "../Player.js";
 import type { Score } from "../Score.js";
 import type { Slot } from "../Slot.js";
 import type { State } from "../State.js";
+
+import { Move } from "../Move.js";
 
 const validateGetMoves = <
   G extends Game<G, M, P, S, Sc, Sl>,
@@ -24,6 +26,7 @@ const validateGetMoves = <
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
   const moves = game.getMoves() as M[];
+  expect(moves).toBeInstanceOf(Array<M>);
   expect(moves).not.toBe(expectedMoves);
   expect(moves).toStrictEqual(expectedMoves);
 
@@ -32,9 +35,10 @@ const validateGetMoves = <
   if (typeof firstMove === "undefined") {
     assert.fail("There should be at least one move to perform this test.");
   }
+  expect(firstMove).toBeInstanceOf(Move);
   moves.push(firstMove);
 
-  expect(game.getMoves()).toBe(expectedMoves);
+  expect(game.getMoves()).toStrictEqual(expectedMoves);
   expect(game.getMoves()).not.toEqual(moves);
 };
 
@@ -52,7 +56,7 @@ const createDescriptionForTestOfGetMoves = <
 }): string =>
   createDescriptionForTestsOfGetter({
     methodDescription: "getMoves()",
-    returnedValue: `[${keysOfExpectedMoves.join(", ")}]`,
+    returnedValue: formatArray({ array: keysOfExpectedMoves }),
   });
 
 export { createDescriptionForTestOfGetMoves, validateGetMoves };

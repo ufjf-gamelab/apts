@@ -12,8 +12,14 @@ import type { SnowballMove } from "../Move.js";
 import type { SnowballPlayer } from "../Player.js";
 
 import { SnowballGame } from "../Game.js";
-import { movesWithData } from "../Move.test/setup.js";
-import { playersWithData } from "../Player.test/setup.js";
+import {
+  movesWithData,
+  type SnowballMoveWithData,
+} from "../Move.test/setup.js";
+import {
+  playersWithData,
+  type SnowballPlayerWithData,
+} from "../Player.test/setup.js";
 
 const COLUMN_LENGTH: Integer = 9;
 const ROW_LENGTH: Integer = 9;
@@ -21,12 +27,16 @@ const QUANTITY_OF_SLOTS: Integer = COLUMN_LENGTH * ROW_LENGTH;
 
 type DerivedSnowballGameParams = DerivedGameParams<
   SnowballMove,
-  SnowballPlayer
+  SnowballPlayer,
+  SnowballMoveWithData,
+  SnowballPlayerWithData
 >;
 
 type RequiredSnowballGameParams = RequiredGameParams<
   SnowballMove,
-  SnowballPlayer
+  SnowballPlayer,
+  SnowballMoveWithData,
+  SnowballPlayerWithData
 >;
 
 interface SnowballGameWithData<

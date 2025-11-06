@@ -20,6 +20,7 @@ const validateGetSlot = <Sl extends Slot<Sl>>({
   slots: PropsOfGetSlot<Sl>["slots"];
 }) => {
   const slot = Slot.getSlot({ indexOfSlot, slots });
+  expect(slot).toBeInstanceOf(Slot);
   expect(slot).toBe(expectedSlot);
 };
 

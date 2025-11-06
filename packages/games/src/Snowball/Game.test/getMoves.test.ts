@@ -3,18 +3,19 @@ import {
   createDescriptionForTestOfGetMoves,
   validateGetMoves,
 } from "@repo/game/Game.test/getMoves.test.js";
-import { test } from "vitest";
+import { expect, test } from "vitest";
 
+import { SnowballMove } from "../Move.js";
 import { gamesWithDataForUnitTest } from "./setup.js";
 
 const createDescription = ({
   affix,
   keysOfExpectedMoves,
-}: {
+}: Pick<
+  Parameters<typeof createDescriptionForTestOfGetMoves>[0],
+  "keysOfExpectedMoves"
+> & {
   affix: string;
-  keysOfExpectedMoves: Parameters<
-    typeof createDescriptionForTestOfGetMoves
-  >[0]["keysOfExpectedMoves"];
 }) =>
   createDescriptionForTest({
     affix,
@@ -25,18 +26,21 @@ const createDescription = ({
 
 Object.values(gamesWithDataForUnitTest).forEach(
   ({ game, keyOfGame, params }) => {
-    const moves = Object.values(params.moves);
+    const movesWithData = Object.values(params.moves);
 
     test(
       createDescription({
         affix: keyOfGame,
-        keysOfExpectedMoves: moves.map(({ keyOfMove }) => keyOfMove),
+        keysOfExpectedMoves: movesWithData.map(({ keyOfMove }) => keyOfMove),
       }),
       () => {
         validateGetMoves({
-          expectedMoves: moves.map(({ move }) => move),
+          expectedMoves: movesWithData.map(({ move }) => move),
           game,
         });
+        expect(movesWithData).toBeInstanceOf(Array<SnowballMove>);
+        const [firstMoveWithData] = movesWithData;
+        expect(firstMoveWithData?.move).toBeInstanceOf(SnowballMove);
       },
     );
   },

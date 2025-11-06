@@ -1,4 +1,5 @@
 import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
+import { formatArray } from "@repo/engine_core/format.js";
 import { createDescriptionForTestsOfGetter } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
@@ -71,7 +72,7 @@ const createDescriptionForTestOfGetPointsOfEachPlayer = <
 
   return createDescriptionForTestsOfGetter({
     methodDescription: "getPointsOfEachPlayer()",
-    returnedValue: `[${returnedValueOfEachPlayer.join(", ")}]`,
+    returnedValue: formatArray({ array: returnedValueOfEachPlayer }),
   });
 };
 

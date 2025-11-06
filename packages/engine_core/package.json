@@ -10,6 +10,9 @@
     "./constants.js": {
       "import": "./src/constants.ts"
     },
+    "./format.js": {
+      "import": "./src/format.ts"
+    },
     "./test.js": {
       "import": "./src/test.ts"
     },

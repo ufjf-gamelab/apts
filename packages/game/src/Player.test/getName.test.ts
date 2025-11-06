@@ -26,7 +26,7 @@ const createDescriptionForTestOfGetName = <P extends Player<P>>({
 }): string =>
   createDescriptionForTestsOfGetter({
     methodDescription: "getName()",
-    returnedValue: expectedName,
+    returnedValue: `"${expectedName}"`,
   });
 
 export { createDescriptionForTestOfGetName, validateGetName };

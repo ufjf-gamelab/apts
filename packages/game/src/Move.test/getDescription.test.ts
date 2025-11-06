@@ -26,7 +26,7 @@ const createDescriptionForTestOfGetDescription = <M extends Move<M>>({
 }): string =>
   createDescriptionForTestsOfGetter({
     methodDescription: "getDescription()",
-    returnedValue: expectedDescription,
+    returnedValue: `"${expectedDescription}"`,
   });
 
 export { createDescriptionForTestOfGetDescription, validateGetDescription };

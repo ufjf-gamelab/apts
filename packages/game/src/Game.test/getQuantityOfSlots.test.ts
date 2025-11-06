@@ -1,3 +1,4 @@
+import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import { createDescriptionForTestsOfGetter } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
@@ -8,7 +9,7 @@ import type { Score } from "../Score.js";
 import type { Slot } from "../Slot.js";
 import type { State } from "../State.js";
 
-const validateGetName = <
+const validateGetQuantityOfSlots = <
   G extends Game<G, M, P, S, Sc, Sl>,
   M extends Move<M>,
   P extends Player<P>,
@@ -16,22 +17,22 @@ const validateGetName = <
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
 >({
-  expectedName,
+  expectedQuantityOfSlots,
   game,
 }: {
-  expectedName: ReturnType<G["getName"]>;
+  expectedQuantityOfSlots: ReturnType<G["getQuantityOfSlots"]>;
   game: G;
 }) => {
-  let name = game.getName();
-  expect(name).toBe(expectedName);
+  let quantityOfSlots = game.getQuantityOfSlots();
+  expect(quantityOfSlots).toBe(expectedQuantityOfSlots);
 
   // Ensure that the returned object does not keep reference to the internal property
-  name = `${name} (modified)`;
-  expect(game.getName()).toBe(expectedName);
-  expect(game.getName()).not.toEqual(name);
+  quantityOfSlots += INCREMENT_ONE;
+  expect(game.getQuantityOfSlots()).toBe(expectedQuantityOfSlots);
+  expect(game.getQuantityOfSlots()).not.toEqual(quantityOfSlots);
 };
 
-const createDescriptionForTestOfGetName = <
+const createDescriptionForTestOfGetQuantityOfSlots = <
   G extends Game<G, M, P, S, Sc, Sl>,
   M extends Move<M>,
   P extends Player<P>,
@@ -39,13 +40,16 @@ const createDescriptionForTestOfGetName = <
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
 >({
-  expectedName,
+  expectedQuantityOfSlots,
 }: {
-  expectedName: ReturnType<G["getName"]>;
+  expectedQuantityOfSlots: ReturnType<G["getQuantityOfSlots"]>;
 }): string =>
   createDescriptionForTestsOfGetter({
-    methodDescription: "getName()",
-    returnedValue: `"${expectedName}"`,
+    methodDescription: "getQuantityOfSlots()",
+    returnedValue: expectedQuantityOfSlots,
   });
 
-export { createDescriptionForTestOfGetName, validateGetName };
+export {
+  createDescriptionForTestOfGetQuantityOfSlots,
+  validateGetQuantityOfSlots,
+};

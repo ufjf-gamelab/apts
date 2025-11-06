@@ -29,7 +29,7 @@ const createDescriptionForTestOfGetSymbol = <P extends Player<P>>({
 }): string =>
   createDescriptionForTestsOfGetter({
     methodDescription: "getSymbol()",
-    returnedValue: expectedSymbol,
+    returnedValue: `'${expectedSymbol}'`,
   });
 
 export { createDescriptionForTestOfGetSymbol, validateGetSymbol };
