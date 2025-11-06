@@ -35,7 +35,7 @@ const createDescriptionForTestOfGetPointsOfPlayer = ({
   keyOfPlayer: string;
 }): string =>
   createDescriptionForTestsOfGetter({
-    methodDescription: `getPointsOfPlayer(${keyOfPlayer})`,
+    methodDescription: `getPointsOfPlayer({ indexOfPlayer: ${keyOfPlayer} })`,
     returnedValue: expectedPointsOfPlayer,
   });
 

@@ -1,4 +1,5 @@
 import type { IndexOfSlot } from "@repo/game/Slot.js";
+
 import { createSlotsWithData } from "@repo/game/Slot.test/setup.js";
 
 import { playersWithData } from "../Player.test/setup.js";

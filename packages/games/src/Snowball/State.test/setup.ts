@@ -4,7 +4,7 @@ import {
   createStatesWithData,
 } from "@repo/game/State.test/setup.js";
 
-import { SnowballGame } from "../Game.js";
+import { gamesWithDataForUnitTest } from "../Game.test/setup.js";
 import { playersWithData } from "../Player.test/setup.js";
 import { scoresWithDataForUnitTest } from "../Score.test/setup.js";
 import { slotsWithData } from "../Slot.test/setup.js";
@@ -40,7 +40,7 @@ const createSnowballState = ({
 
 const paramsOfStates = {
   player0WithNoScoreAndAllSlotsEmpty: {
-    game: new SnowballGame({}),
+    game: gamesWithDataForUnitTest.snowballWith9RowsAnd9Columns.game,
     indexOfPlayer: playersWithData.alice.indexOfPlayer,
     score: scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     slots: [slotsWithData.centerOfCenter.slot],

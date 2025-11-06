@@ -7,7 +7,8 @@ const createDescriptionForTest = ({
   description,
 }: ParamsForTesting & {
   description: string;
-}): string => `${affix ? `${affix} — ` : ""}${description}`;
+}): string =>
+  `${typeof affix === "undefined" ? "" : `${affix} — `}${description}`;
 
 const createDescriptionForTestsOfGetter = ({
   methodDescription,
@@ -15,7 +16,7 @@ const createDescriptionForTestsOfGetter = ({
 }: {
   methodDescription: string;
   returnedValue: boolean | null | number | string;
-}): string => `${methodDescription} => {${returnedValue}}`;
+}): string => `${methodDescription} => { ${returnedValue} }`;
 
 const createDescriptionForTestsOfConstructor = ({
   className,
@@ -23,7 +24,7 @@ const createDescriptionForTestsOfConstructor = ({
   className?: string;
 }) =>
   `The constructor should return a new object instance ${
-    className ? `of class \`${className}\`` : ""
+    typeof className === "undefined" ? "" : `of class \`${className}\``
   }.`;
 
 const createDescriptionForTestsOfCloneMethod = ({
@@ -32,7 +33,7 @@ const createDescriptionForTestsOfCloneMethod = ({
   className?: string;
 }) =>
   `The \`clone()\` method should return a new object instance ${
-    className ? `of class \`${className}\` ` : ""
+    typeof className === "undefined" ? "" : `of class \`${className}\` `
   }with attributes that are strictly equal to the original object's attributes. The cloned object must be a distinct instance from the original.`;
 
 export type { ParamsForTesting };

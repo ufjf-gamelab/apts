@@ -1,5 +1,4 @@
 import { createDescriptionForTestsOfGetter } from "@repo/engine_core/test.js";
-import type { Char } from "@repo/engine_core/types.js";
 import { expect } from "vitest";
 
 import type { Player } from "../Player.js";
@@ -15,7 +14,7 @@ const validateGetName = ({
   expect(name).toBe(expectedName);
 
   // Ensure that the returned object does not keep reference to the internal property
-  name = `${name} (modified)` as Char;
+  name = `${name} (modified)`;
   expect(player.getName()).toBe(expectedName);
   expect(player.getName()).not.toEqual(name);
 };
