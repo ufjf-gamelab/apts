@@ -2,32 +2,45 @@ import type { Integer } from "@repo/engine_core/types.js";
 
 import type { IndexOfMove, Move } from "./Move.js";
 import type { IndexOfPlayer, Player } from "./Player.js";
+import type { Score } from "./Score.js";
 import type { Slot } from "./Slot.js";
 import type { State } from "./State.js";
 
-interface GameParams<M extends Move> {
+interface GameParams<M extends Move<M>, P extends Player<P>> {
   readonly moves: readonly M[];
   readonly name: string;
-  readonly players: readonly Player[];
+  readonly players: readonly P[];
   readonly quantityOfSlots: Integer;
 }
 
 type IndexOfGame = Integer;
 
-abstract class Game<M extends Move, S extends State<M, Sl>, Sl extends Slot> {
-  private readonly moves: GameParams<M>["moves"];
-  private readonly name: GameParams<M>["name"];
-  private readonly players: GameParams<M>["players"];
-  private readonly quantityOfSlots: GameParams<M>["quantityOfSlots"];
+abstract class Game<
+  G extends Game<G, M, P, S, Sc, Sl>,
+  M extends Move<M>,
+  P extends Player<P>,
+  S extends State<G, M, P, S, Sc, Sl>,
+  Sc extends Score<Sc>,
+  Sl extends Slot<Sl>,
+> {
+  private readonly moves: GameParams<M, P>["moves"];
+  private readonly name: GameParams<M, P>["name"];
+  private readonly players: GameParams<M, P>["players"];
+  private readonly quantityOfSlots: GameParams<M, P>["quantityOfSlots"];
 
-  constructor({ moves, name, players, quantityOfSlots }: GameParams<M>) {
+  public constructor({
+    moves,
+    name,
+    players,
+    quantityOfSlots,
+  }: GameParams<M, P>) {
     this.moves = moves.map(move => move.clone());
     this.name = name;
     this.players = players.map(player => player.clone());
     this.quantityOfSlots = quantityOfSlots;
   }
 
-  public abstract clone(): this;
+  public abstract clone(): G;
 
   public abstract constructInitialState(): S;
 

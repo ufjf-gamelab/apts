@@ -2,30 +2,36 @@ import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import { createDescriptionForTestsOfGetter } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
-import type { IndexOfPlayer } from "../Player.js";
-import { getKeyOfPlayer } from "../Player.test/setup.js";
+import type { IndexOfPlayer, Player } from "../Player.js";
 import type { Points, Score } from "../Score.js";
+
+import { getKeyOfPlayer, type PlayerWithData } from "../Player.test/setup.js";
 
 const INDEX_OF_FIRST_PLAYER = 0;
 const ZERO_POINTS = 0;
 
-const createDescriptionForPlayerAndItsPoints = ({
+const createDescriptionForPlayerAndItsPoints = <
+  P extends Player<P>,
+  ParamsRecord extends Record<string, unknown>,
+>({
   indexOfPlayer,
   players,
   points,
 }: {
-  indexOfPlayer: Parameters<typeof getKeyOfPlayer>[0]["indexOfPlayer"];
-  players: Parameters<typeof getKeyOfPlayer>[0]["players"];
+  indexOfPlayer: IndexOfPlayer;
+  players: Record<string, PlayerWithData<P, unknown, unknown, ParamsRecord>>;
   points: Points;
-}) => `{${getKeyOfPlayer({ indexOfPlayer, players })}}: ${points}}`;
+}): string =>
+  `{${String(getKeyOfPlayer({ indexOfPlayer, players }))}}: ${points}}`;
 
-const validateGetPointsOfEachPlayer = ({
+const validateGetPointsOfEachPlayer = <Sc extends Score<Sc>>({
   expectedPointsOfEachPlayer,
   score,
 }: {
-  expectedPointsOfEachPlayer: ReturnType<Score["getPointsOfEachPlayer"]>;
-  score: Score;
+  expectedPointsOfEachPlayer: ReturnType<Sc["getPointsOfEachPlayer"]>;
+  score: Sc;
 }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
   const pointsOfEachPlayer = score.getPointsOfEachPlayer() as Map<
     IndexOfPlayer,
     Points
@@ -45,14 +51,16 @@ const validateGetPointsOfEachPlayer = ({
   expect(score.getPointsOfEachPlayer()).not.toEqual(pointsOfEachPlayer);
 };
 
-const createDescriptionForTestOfGetPointsOfEachPlayer = ({
+const createDescriptionForTestOfGetPointsOfEachPlayer = <
+  Sc extends Score<Sc>,
+  P extends Player<P>,
+  ParamsRecord extends Record<string, unknown>,
+>({
   expectedPointsOfEachPlayer,
   players,
 }: {
-  expectedPointsOfEachPlayer: ReturnType<Score["getPointsOfEachPlayer"]>;
-  players: Parameters<
-    typeof createDescriptionForPlayerAndItsPoints
-  >[0]["players"];
+  expectedPointsOfEachPlayer: ReturnType<Sc["getPointsOfEachPlayer"]>;
+  players: Record<string, PlayerWithData<P, unknown, unknown, ParamsRecord>>;
 }): string => {
   const returnedValueOfEachPlayer = expectedPointsOfEachPlayer
     .entries()

@@ -5,8 +5,9 @@ import {
 } from "@repo/game/Score.test/getPointsOfPlayer.test.js";
 import { test } from "vitest";
 
-import { playersWithData } from "../Player.test/setup.js";
 import type { SnowballScore } from "../Score.js";
+
+import { playersWithData } from "../Player.test/setup.js";
 import { scoresWithDataForUnitTest } from "./setup.js";
 
 const ZERO_POINTS = 0;

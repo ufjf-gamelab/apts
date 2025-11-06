@@ -2,12 +2,12 @@ import { expect } from "vitest";
 
 import { Player } from "../Player.js";
 
-const validateClone = ({
+const validateClone = <P extends Player<P>>({
   clonedPlayer,
   player,
 }: {
   clonedPlayer: unknown;
-  player: Player;
+  player: P;
 }) => {
   expect(clonedPlayer).toBeInstanceOf(Player);
   expect(clonedPlayer).not.toBe(player);

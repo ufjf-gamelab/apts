@@ -1,11 +1,14 @@
-import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import type { Integer } from "@repo/engine_core/types.js";
-import { Game } from "@repo/game/Game.js";
 import type { IndexOfMove } from "@repo/game/Move.js";
 import type { IndexOfPlayer } from "@repo/game/Player.js";
 import type { Points } from "@repo/game/Score.js";
 
+import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
+import { Game } from "@repo/game/Game.js";
+
 import type { SnowballMove } from "./Move.js";
+import type { SnowballPlayer } from "./Player.js";
+
 import { SnowballScore } from "./Score.js";
 import { SnowballSlot } from "./Slot.js";
 import { SnowballState } from "./State.js";
@@ -17,14 +20,21 @@ const ZERO_POINTS: Points = 0;
 const AMOUNT_OF_POINTS_TO_FINISH_MATCH: Points = 15;
 const AMOUNT_OF_SLOTS_TO_FINISH_MATCH: Integer = 49;
 
-class SnowballGame extends Game<SnowballMove, SnowballState, SnowballSlot> {
-  public override clone(): this {
+class SnowballGame extends Game<
+  SnowballGame,
+  SnowballMove,
+  SnowballPlayer,
+  SnowballState,
+  SnowballScore,
+  SnowballSlot
+> {
+  public override clone() {
     return new SnowballGame({
       moves: this.getMoves(),
       name: this.getName(),
       players: this.getPlayers(),
       quantityOfSlots: this.getQuantityOfSlots(),
-    }) as this;
+    });
   }
 
   public override constructInitialState(): SnowballState {
@@ -60,7 +70,8 @@ class SnowballGame extends Game<SnowballMove, SnowballState, SnowballSlot> {
     return validMoves;
   }
 
-  public override isFinal({ state }: { state: SnowballState }): boolean {
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  public override isFinal({ state }: { state: SnowballState }) {
     const amountOfFilledSlots = state
       .getSlots()
       .filter(slot => slot.getIndexOfOccupyingPlayer() !== null).length;
@@ -139,6 +150,7 @@ class SnowballGame extends Game<SnowballMove, SnowballState, SnowballSlot> {
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
   private isMoveValid({
     move,
     state,

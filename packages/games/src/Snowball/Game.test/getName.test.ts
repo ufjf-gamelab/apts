@@ -6,6 +6,7 @@ import {
 import { test } from "vitest";
 
 import type { SnowballGame } from "../Game.js";
+
 import { gamesWithDataForUnitTest } from "./setup.js";
 
 const createDescription = ({

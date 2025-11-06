@@ -7,16 +7,16 @@ interface MoveParams {
   readonly title: string;
 }
 
-abstract class Move {
+abstract class Move<M extends Move<M>> {
   private readonly description: MoveParams["description"];
   private readonly title: MoveParams["title"];
 
-  constructor({ description, title }: MoveParams) {
+  public constructor({ description, title }: MoveParams) {
     this.title = title;
     this.description = description;
   }
 
-  public abstract clone(): this;
+  public abstract clone(): M;
 
   public getDescription(): typeof this.description {
     return this.description;

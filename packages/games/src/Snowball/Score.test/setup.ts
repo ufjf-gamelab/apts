@@ -1,4 +1,3 @@
-import type { IndexOfScore } from "@repo/game/Score.js";
 import {
   createScoreParams,
   createScoresWithData,
@@ -47,19 +46,10 @@ const paramsOfScores = {
   },
 } as const satisfies Record<string, SnowballScoreParams>;
 
-type RecordOfScoresWithData = {
-  [K in keyof typeof paramsOfScores]: {
-    indexOfScore: IndexOfScore;
-    keyOfScore: keyof typeof paramsOfScores;
-    params: SnowballScoreParams;
-    score: SnowballScore;
-  };
-};
-
 const scoresWithDataForUnitTest = createScoresWithData({
   createScore: createSnowballScore,
   createScoreParams: createSnowballScoreParams,
   partialParamsOfScores: paramsOfScores,
-}) as RecordOfScoresWithData;
+});
 
 export { scoresWithDataForUnitTest };

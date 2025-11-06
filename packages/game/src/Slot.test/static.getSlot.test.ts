@@ -3,10 +3,14 @@ import { expect } from "vitest";
 
 import { Slot } from "../Slot.js";
 
-type PropsOfGetSlot<Sl extends Slot> = Parameters<typeof Slot.getSlot<Sl>>[0];
-type ReturnTypeOfGetSlot<Sl extends Slot> = ReturnType<typeof Slot.getSlot<Sl>>;
+type PropsOfGetSlot<Sl extends Slot<Sl>> = Parameters<
+  typeof Slot.getSlot<Sl>
+>[0];
+type ReturnTypeOfGetSlot<Sl extends Slot<Sl>> = ReturnType<
+  typeof Slot.getSlot<Sl>
+>;
 
-const validateGetSlot = <Sl extends Slot>({
+const validateGetSlot = <Sl extends Slot<Sl>>({
   expectedSlot,
   indexOfSlot,
   slots,
@@ -19,7 +23,7 @@ const validateGetSlot = <Sl extends Slot>({
   expect(slot).toBe(expectedSlot);
 };
 
-const createDescriptionForTestOfGetSlot = <Sl extends Slot>({
+const createDescriptionForTestOfGetSlot = <Sl extends Slot<Sl>>({
   expectedKeyOfSlot,
   indexOfSlot,
   slots,

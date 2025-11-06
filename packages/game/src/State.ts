@@ -1,36 +1,54 @@
 import type { Integer } from "@repo/engine_core/types.js";
 
-import { type Game } from "./Game.js";
+import type { Game } from "./Game.js";
 import type { Move } from "./Move.js";
-import type { IndexOfPlayer } from "./Player.js";
+import type { IndexOfPlayer, Player } from "./Player.js";
 import type { Score } from "./Score.js";
+
 import { type IndexOfSlot, Slot } from "./Slot.js";
 
 type IndexOfState = Integer;
 
-interface StateParams<M extends Move, S extends State<M, Sl>, Sl extends Slot> {
-  readonly game: Game<M, S, Sl>;
+interface StateParams<
+  G extends Game<G, M, P, S, Sc, Sl>,
+  M extends Move<M>,
+  P extends Player<P>,
+  S extends State<G, M, P, S, Sc, Sl>,
+  Sc extends Score<Sc>,
+  Sl extends Slot<Sl>,
+> {
+  readonly game: G;
   readonly indexOfPlayer: IndexOfPlayer;
-  readonly score: Score;
+  readonly score: Sc;
   readonly slots: readonly Sl[];
 }
 
-abstract class State<M extends Move, Sl extends Slot> {
-  private readonly game: StateParams<M, State<M, Sl>, Sl>["game"];
+abstract class State<
+  G extends Game<G, M, P, S, Sc, Sl>,
+  M extends Move<M>,
+  P extends Player<P>,
+  S extends State<G, M, P, S, Sc, Sl>,
+  Sc extends Score<Sc>,
+  Sl extends Slot<Sl>,
+> {
+  private readonly game: StateParams<G, M, P, S, Sc, Sl>["game"];
   private readonly indexOfPlayer: StateParams<
+    G,
     M,
-    State<M, Sl>,
+    P,
+    S,
+    Sc,
     Sl
   >["indexOfPlayer"];
-  private readonly score: StateParams<M, State<M, Sl>, Sl>["score"];
-  private readonly slots: StateParams<M, State<M, Sl>, Sl>["slots"];
+  private readonly score: StateParams<G, M, P, S, Sc, Sl>["score"];
+  private readonly slots: StateParams<G, M, P, S, Sc, Sl>["slots"];
 
-  constructor({
+  public constructor({
     game,
     indexOfPlayer,
     score,
     slots,
-  }: StateParams<M, State<M, Sl>, Sl>) {
+  }: StateParams<G, M, P, S, Sc, Sl>) {
     if (slots.length !== game.getQuantityOfSlots()) {
       throw new Error(
         `The number of slots (${
@@ -45,13 +63,13 @@ abstract class State<M extends Move, Sl extends Slot> {
     this.slots = slots.map(slot => slot.clone());
   }
 
-  public abstract clone(): this;
+  public abstract clone(): S;
 
-  public getGame(): typeof this.game {
+  public getGame() {
     return this.game.clone();
   }
 
-  public getIndexOfPlayer(): typeof this.indexOfPlayer {
+  public getIndexOfPlayer() {
     return this.indexOfPlayer;
   }
 
@@ -59,23 +77,19 @@ abstract class State<M extends Move, Sl extends Slot> {
     indexOfPlayer,
   }: {
     indexOfPlayer: IndexOfPlayer;
-  }): ReturnType<Score["getPointsOfPlayer"]> {
+  }) {
     return this.score.getPointsOfPlayer({ indexOfPlayer });
   }
 
-  public getQuantityOfSlots(): Integer {
+  public getQuantityOfSlots() {
     return this.game.getQuantityOfSlots();
   }
 
-  public getScore(): typeof this.score {
+  public getScore() {
     return this.score.clone();
   }
 
-  public getSlot({
-    indexOfSlot,
-  }: {
-    indexOfSlot: IndexOfSlot;
-  }): ReturnType<typeof Slot.getSlot<Sl>> {
+  public getSlot({ indexOfSlot }: { indexOfSlot: IndexOfSlot }) {
     return (
       Slot.getSlot({
         indexOfSlot,
@@ -84,7 +98,7 @@ abstract class State<M extends Move, Sl extends Slot> {
     );
   }
 
-  public getSlots(): typeof this.slots {
+  public getSlots() {
     return this.slots.map(slot => slot.clone());
   }
 }

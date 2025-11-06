@@ -6,6 +6,7 @@ import {
 import { test } from "vitest";
 
 import type { SnowballMove } from "../Move.js";
+
 import { movesWithData } from "./setup.js";
 
 const createDescription = ({

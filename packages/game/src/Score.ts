@@ -9,14 +9,14 @@ interface ScoreParams {
   readonly pointsOfEachPlayer: ReadonlyMap<IndexOfPlayer, Points>;
 }
 
-abstract class Score {
+abstract class Score<Sc extends Score<Sc>> {
   private readonly pointsOfEachPlayer: ScoreParams["pointsOfEachPlayer"];
 
   public constructor({ pointsOfEachPlayer }: ScoreParams) {
     this.pointsOfEachPlayer = pointsOfEachPlayer;
   }
 
-  public abstract clone(): this;
+  public abstract clone(): Sc;
 
   public getPointsOfEachPlayer(): typeof this.pointsOfEachPlayer {
     return new Map(this.pointsOfEachPlayer);

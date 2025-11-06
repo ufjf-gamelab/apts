@@ -7,16 +7,16 @@ interface PlayerParams {
   readonly symbol: Char;
 }
 
-abstract class Player {
+abstract class Player<P extends Player<P>> {
   private readonly name: PlayerParams["name"];
   private readonly symbol: PlayerParams["symbol"];
 
-  constructor({ name, symbol }: PlayerParams) {
+  public constructor({ name, symbol }: PlayerParams) {
     this.symbol = symbol;
     this.name = name;
   }
 
-  public abstract clone(): this;
+  public abstract clone(): P;
 
   public getName(): typeof this.name {
     return this.name;

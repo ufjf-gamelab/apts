@@ -3,19 +3,24 @@ import { expect } from "vitest";
 
 import type { Game } from "../Game.js";
 import type { Move } from "../Move.js";
+import type { Player } from "../Player.js";
+import type { Score } from "../Score.js";
 import type { Slot } from "../Slot.js";
 import type { State } from "../State.js";
 
 const validateGetName = <
-  M extends Move,
-  S extends State<M, Sl>,
-  Sl extends Slot,
+  G extends Game<G, M, P, S, Sc, Sl>,
+  M extends Move<M>,
+  P extends Player<P>,
+  S extends State<G, M, P, S, Sc, Sl>,
+  Sc extends Score<Sc>,
+  Sl extends Slot<Sl>,
 >({
   expectedName,
   game,
 }: {
-  expectedName: ReturnType<Game<M, S, Sl>["getName"]>;
-  game: Game<M, S, Sl>;
+  expectedName: ReturnType<G["getName"]>;
+  game: G;
 }) => {
   let name = game.getName();
   expect(name).toBe(expectedName);
@@ -27,13 +32,16 @@ const validateGetName = <
 };
 
 const createDescriptionForTestOfGetName = <
-  M extends Move,
-  S extends State<M, Sl>,
-  Sl extends Slot,
+  G extends Game<G, M, P, S, Sc, Sl>,
+  M extends Move<M>,
+  P extends Player<P>,
+  S extends State<G, M, P, S, Sc, Sl>,
+  Sc extends Score<Sc>,
+  Sl extends Slot<Sl>,
 >({
   expectedName,
 }: {
-  expectedName: ReturnType<Game<M, S, Sl>["getName"]>;
+  expectedName: ReturnType<G["getName"]>;
 }): string =>
   createDescriptionForTestsOfGetter({
     methodDescription: "getName()",

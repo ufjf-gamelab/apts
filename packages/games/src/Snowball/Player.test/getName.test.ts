@@ -6,6 +6,7 @@ import {
 import { test } from "vitest";
 
 import type { SnowballPlayer } from "../Player.js";
+
 import { playersWithData } from "./setup.js";
 
 const createDescription = ({

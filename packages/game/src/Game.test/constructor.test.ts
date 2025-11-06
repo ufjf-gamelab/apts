@@ -1,20 +1,26 @@
 import { expect } from "vitest";
 
-import { Game, type GameParams } from "../Game.js";
 import type { Move } from "../Move.js";
+import type { Player } from "../Player.js";
+import type { Score } from "../Score.js";
 import type { Slot } from "../Slot.js";
 import type { State } from "../State.js";
 
+import { Game, type GameParams } from "../Game.js";
+
 const validateConstructor = <
-  M extends Move,
-  S extends State<M, Sl>,
-  Sl extends Slot,
+  G extends Game<G, M, P, S, Sc, Sl>,
+  M extends Move<M>,
+  P extends Player<P>,
+  S extends State<G, M, P, S, Sc, Sl>,
+  Sc extends Score<Sc>,
+  Sl extends Slot<Sl>,
 >({
   game,
   params,
 }: {
-  game: Game<M, S, Sl>;
-  params: GameParams<M>;
+  game: G;
+  params: GameParams<M, P>;
 }) => {
   expect(game).toBeInstanceOf(Game);
   expect(game.getMoves()).toStrictEqual(params.moves);

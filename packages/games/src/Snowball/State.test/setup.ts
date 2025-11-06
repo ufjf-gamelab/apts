@@ -1,4 +1,3 @@
-import type { IndexOfState } from "@repo/game/State.js";
 import {
   createStateParams,
   createStatesWithData,
@@ -47,19 +46,10 @@ const paramsOfStates = {
   },
 } as const satisfies Record<string, SnowballStateParams>;
 
-type RecordOfStatesWithData = {
-  [K in keyof typeof paramsOfStates]: {
-    indexOfState: IndexOfState;
-    keyOfState: keyof typeof paramsOfStates;
-    params: SnowballStateParams;
-    state: SnowballState;
-  };
-};
-
 const statesWithDataForUnitTest = createStatesWithData({
   createState: createSnowballState,
   createStateParams: createSnowballStateParams,
   partialParamsOfStates: paramsOfStates,
-}) as RecordOfStatesWithData;
+});
 
 export { statesWithDataForUnitTest };

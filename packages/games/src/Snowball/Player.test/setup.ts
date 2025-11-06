@@ -1,4 +1,3 @@
-import type { IndexOfPlayer } from "@repo/game/Player.js";
 import {
   createPlayerParams,
   createPlayersWithData,
@@ -37,13 +36,6 @@ const playersWithData = createPlayersWithData({
   createPlayer: createSnowballPlayer,
   createPlayerParams: createSnowballPlayerParams,
   partialParamsOfPlayers: paramsOfPlayers,
-}) as {
-  [K in keyof typeof paramsOfPlayers]: {
-    indexOfPlayer: IndexOfPlayer;
-    keyOfPlayer: keyof typeof paramsOfPlayers;
-    params: SnowballPlayerParams;
-    player: SnowballPlayer;
-  };
-};
+});
 
 export { playersWithData };

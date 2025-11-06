@@ -1,10 +1,10 @@
 import { Score } from "@repo/game/Score.js";
 
-class SnowballScore extends Score {
-  public override clone(): this {
+class SnowballScore extends Score<SnowballScore> {
+  public override clone() {
     return new SnowballScore({
       pointsOfEachPlayer: this.getPointsOfEachPlayer(),
-    }) as this;
+    });
   }
 }
 

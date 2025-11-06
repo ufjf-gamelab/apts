@@ -1,5 +1,3 @@
-import type { IndexOfSlot } from "@repo/game/Slot.js";
-
 import { createSlotsWithData } from "@repo/game/Slot.test/setup.js";
 
 import { playersWithData } from "../Player.test/setup.js";
@@ -283,20 +281,11 @@ const paramsOfSlots = {
   },
 } as const satisfies Record<string, SnowballSlotParams>;
 
-type RecordOfSlotsWithData = {
-  [K in keyof typeof paramsOfSlots]: {
-    indexOfSlot: IndexOfSlot;
-    keyOfSlot: keyof typeof paramsOfSlots;
-    params: SnowballSlotParams;
-    slot: SnowballSlot;
-  };
-};
-
 const slotsWithData = createSlotsWithData({
   createSlot,
   createSlotParams: createSnowballSlotParams,
   partialParamsOfSlots: paramsOfSlots,
-}) as RecordOfSlotsWithData;
+});
 
 const slotsWithDataForUnitTest = createSlotsWithData({
   createSlot,
@@ -312,6 +301,6 @@ const slotsWithDataForUnitTest = createSlotsWithData({
       indexOfOccupyingPlayer: playersWithData.bruno.indexOfPlayer,
     },
   },
-}) as RecordOfSlotsWithData;
+});
 
 export { slotsWithData, slotsWithDataForUnitTest };

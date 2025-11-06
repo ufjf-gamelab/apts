@@ -1,5 +1,5 @@
 import type { Integer } from "@repo/engine_core/types.js";
-import type { IndexOfGame } from "@repo/game/Game.js";
+
 import {
   createGameParams,
   createGamesWithData,
@@ -50,19 +50,10 @@ const paramsOfGames = {
   },
 } as const satisfies Record<string, SnowballGameParams>;
 
-type RecordOfGamesWithData = {
-  [K in keyof typeof paramsOfGames]: {
-    game: SnowballGame;
-    indexOfGame: IndexOfGame;
-    keyOfGame: keyof typeof paramsOfGames;
-    params: SnowballGameParams;
-  };
-};
-
 const gamesWithDataForUnitTest = createGamesWithData({
   createGame: createSnowballGame,
   createGameParams: createSnowballGameParams,
   partialParamsOfGames: paramsOfGames,
-}) as RecordOfGamesWithData;
+});
 
 export { gamesWithDataForUnitTest };

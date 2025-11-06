@@ -4,8 +4,8 @@ type IndexOfSlot = Integer;
 
 type SlotParams = object;
 
-abstract class Slot {
-  public static getSlot<Sl extends Slot>({
+abstract class Slot<Sl extends Slot<Sl>> {
+  public static getSlot<Sl extends Slot<Sl>>({
     indexOfSlot,
     slots,
   }: {
@@ -19,7 +19,7 @@ abstract class Slot {
     return slot;
   }
 
-  public abstract clone(): this;
+  public abstract clone(): Sl;
 }
 
 export type { IndexOfSlot, SlotParams };

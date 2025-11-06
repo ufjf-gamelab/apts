@@ -2,11 +2,11 @@ import { expect } from "vitest";
 
 import { Move, type MoveParams } from "../Move.js";
 
-const validateConstructor = ({
+const validateConstructor = <M extends Move<M>>({
   move,
   params,
 }: {
-  move: Move;
+  move: M;
   params: MoveParams;
 }) => {
   expect(move).toBeInstanceOf(Move);

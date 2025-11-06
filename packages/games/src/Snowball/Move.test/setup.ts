@@ -1,4 +1,3 @@
-import type { IndexOfMove } from "@repo/game/Move.js";
 import {
   createMoveParams,
   createMovesWithData,
@@ -401,13 +400,6 @@ const movesWithData = createMovesWithData({
   createMove: createSnowballMove,
   createMoveParams: createSnowballMoveParams,
   partialParamsOfMoves: paramsOfMoves,
-}) as {
-  [K in keyof typeof paramsOfMoves]: {
-    indexOfMove: IndexOfMove;
-    keyOfMove: keyof typeof paramsOfMoves;
-    move: SnowballMove;
-    params: SnowballMoveParams;
-  };
-};
+});
 
 export { movesWithData };
