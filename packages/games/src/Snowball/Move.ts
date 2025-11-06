@@ -30,4 +30,5 @@ class SnowballMove extends Move<SnowballMove> {
   }
 }
 
+export type { SnowballMoveParams };
 export { SnowballMove };

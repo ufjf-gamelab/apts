@@ -6,7 +6,7 @@ import { validateConstructor } from "@repo/game/Move.test/constructor.test.js";
 import { expect, test } from "vitest";
 
 import { SnowballMove } from "../Move.js";
-import { movesWithData } from "./setup.js";
+import { deriveSnowballMoveParams, movesWithData } from "./setup.js";
 
 const createDescription = ({ affix }: { affix: string }) =>
   createDescriptionForTest({
@@ -22,8 +22,8 @@ Object.values(movesWithData).forEach(({ keyOfMove, params }) => {
       affix: keyOfMove,
     }),
     () => {
-      const { description, title } = params;
-      const { indexOfSlotInWhichPlacePiece } = params;
+      const { indexOfSlotInWhichPlacePiece, title } = params;
+      const { description } = deriveSnowballMoveParams(params);
 
       const newMove = new SnowballMove({
         description,

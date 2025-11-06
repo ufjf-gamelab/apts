@@ -1,23 +1,35 @@
+import type { IndexOfMove } from "@repo/game/Move.js";
+
 import {
-  createMoveParams,
   createMovesWithData,
+  type DerivedMoveParams,
+  deriveMoveParams,
+  type RequiredMoveParams,
 } from "@repo/game/Move.test/setup.js";
 
-import { SnowballMove } from "../Move.js";
+import { SnowballMove, type SnowballMoveParams } from "../Move.js";
 import { slotsWithData } from "../Slot.test/setup.js";
 
-type RequiredSnowballMoveParams = Pick<
-  SnowballMoveParams,
-  "indexOfSlotInWhichPlacePiece" | "title"
->;
+type DerivedSnowballMoveParams = Pick<DerivedMoveParams, "description"> &
+  RequiredSnowballMoveParams;
 
-type SnowballMoveParams = ConstructorParameters<typeof SnowballMove>[number];
+type RequiredSnowballMoveParams = Pick<RequiredMoveParams, "title"> &
+  Pick<SnowballMoveParams, "indexOfSlotInWhichPlacePiece">;
 
-const createSnowballMoveParams = ({
+interface SnowballMoveWithData<
+  Params extends RequiredSnowballMoveParams = RequiredSnowballMoveParams,
+> {
+  indexOfMove: IndexOfMove;
+  keyOfMove: string;
+  move: SnowballMove;
+  params: Params;
+}
+
+const deriveSnowballMoveParams = ({
   indexOfSlotInWhichPlacePiece,
   title,
-}: RequiredSnowballMoveParams): SnowballMoveParams => {
-  const moveParams = createMoveParams({ title });
+}: RequiredSnowballMoveParams): DerivedSnowballMoveParams => {
+  const moveParams = deriveMoveParams({ title });
   return {
     ...moveParams,
     indexOfSlotInWhichPlacePiece,
@@ -28,14 +40,14 @@ const createSnowballMove = ({
   description,
   indexOfSlotInWhichPlacePiece,
   title,
-}: SnowballMoveParams): SnowballMove =>
+}: DerivedSnowballMoveParams): SnowballMove =>
   new SnowballMove({
     description,
     indexOfSlotInWhichPlacePiece,
     title,
   });
 
-const paramsOfMoves = {
+const recordOfRequiredParamsOfMoves = {
   // Center
   centerOfCenter: {
     indexOfSlotInWhichPlacePiece: slotsWithData.centerOfCenter.indexOfSlot,
@@ -396,10 +408,20 @@ const paramsOfMoves = {
   },
 } as const satisfies Record<string, RequiredSnowballMoveParams>;
 
-const movesWithData = createMovesWithData({
-  createMove: createSnowballMove,
-  createMoveParams: createSnowballMoveParams,
-  partialParamsOfMoves: paramsOfMoves,
+const movesWithData = createMovesWithData<
+  SnowballMove,
+  RequiredSnowballMoveParams,
+  DerivedSnowballMoveParams,
+  typeof recordOfRequiredParamsOfMoves
+>({
+  create: createSnowballMove,
+  deriveParams: deriveSnowballMoveParams,
+  recordOfRequiredParams: recordOfRequiredParamsOfMoves,
 });
 
-export { movesWithData };
+export type {
+  DerivedSnowballMoveParams,
+  RequiredSnowballMoveParams,
+  SnowballMoveWithData,
+};
+export { createSnowballMove, deriveSnowballMoveParams, movesWithData };

@@ -7,7 +7,7 @@ import { test } from "vitest";
 
 import type { SnowballMove } from "../Move.js";
 
-import { movesWithData } from "./setup.js";
+import { deriveSnowballMoveParams, movesWithData } from "./setup.js";
 
 const createDescription = ({
   affix,
@@ -24,14 +24,16 @@ const createDescription = ({
   });
 
 Object.values(movesWithData).forEach(({ keyOfMove, move, params }) => {
+  const derivedParams = deriveSnowballMoveParams(params);
+
   test(
     createDescription({
       affix: keyOfMove,
-      expectedDescription: params.description,
+      expectedDescription: derivedParams.description,
     }),
     () => {
       validateGetDescription({
-        expectedDescription: params.description,
+        expectedDescription: derivedParams.description,
         move,
       });
     },

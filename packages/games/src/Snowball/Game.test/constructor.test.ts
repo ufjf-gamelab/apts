@@ -6,7 +6,7 @@ import { validateConstructor } from "@repo/game/Game.test/constructor.test.js";
 import { expect, test } from "vitest";
 
 import { SnowballGame } from "../Game.js";
-import { gamesWithDataForUnitTest } from "./setup.js";
+import { deriveSnowballGameParams, gamesWithDataForUnitTest } from "./setup.js";
 
 const createDescription = ({ affix }: { affix: string }) =>
   createDescriptionForTest({
@@ -22,7 +22,9 @@ Object.values(gamesWithDataForUnitTest).forEach(({ keyOfGame, params }) => {
       affix: keyOfGame,
     }),
     () => {
-      const { moves, name, players, quantityOfSlots } = params;
+      const { name, quantityOfSlots } = params;
+      const { moves, players } = deriveSnowballGameParams(params);
+
       const newGame = new SnowballGame({
         moves,
         name,

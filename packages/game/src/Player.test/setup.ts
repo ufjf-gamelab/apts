@@ -4,89 +4,86 @@ import {
   type PlayerParams,
 } from "../Player.js";
 
+type DerivedPlayerParams = RequiredPlayerParams;
+
 interface PlayerWithData<
   P extends Player<P>,
-  PartialParams,
-  DerivedPlayerParams,
-  ParamsRecord extends Record<string, PartialParams>,
+  Params extends DerivedPlayerParams = DerivedPlayerParams,
 > {
   indexOfPlayer: IndexOfPlayer;
-  keyOfPlayer: keyof ParamsRecord;
-  params: DerivedPlayerParams;
+  keyOfPlayer: string;
+  params: Params;
   player: P;
 }
 
-const createPlayerParams = ({
+type RequiredPlayerParams = Pick<PlayerParams, "name" | "symbol">;
+
+const derivePlayerParams = ({
   name,
   symbol,
-}: Pick<PlayerParams, "name" | "symbol">): PlayerParams => ({
+}: RequiredPlayerParams): DerivedPlayerParams => ({
   name,
   symbol,
 });
 
 const createPlayersWithData = <
   P extends Player<P>,
-  PartialParams,
-  DerivedPlayerParams,
-  ParamsRecord extends Record<string, PartialParams>,
+  RequiredParams extends RequiredPlayerParams,
+  DerivedParams extends DerivedPlayerParams,
+  RecordOfRequiredParams extends Record<string, RequiredParams>,
 >({
-  createPlayer: create,
-  createPlayerParams: createParams,
-  partialParamsOfPlayers,
+  create,
+  deriveParams,
+  recordOfRequiredParams,
 }: {
-  createPlayer: (params: DerivedPlayerParams) => P;
-  createPlayerParams: (partialParams: PartialParams) => DerivedPlayerParams;
-  partialParamsOfPlayers: ParamsRecord;
+  create: (params: DerivedParams) => P;
+  deriveParams: (requiredParams: RequiredParams) => DerivedParams;
+  recordOfRequiredParams: RecordOfRequiredParams;
 }): {
-  [K in keyof ParamsRecord]: PlayerWithData<
-    P,
-    PartialParams,
-    DerivedPlayerParams,
-    ParamsRecord
-  >;
+  [K in keyof RecordOfRequiredParams]: {
+    indexOfPlayer: IndexOfPlayer;
+    keyOfPlayer: K;
+    params: RequiredParams;
+    player: P;
+  };
 } => {
   type ResultType = {
-    [K in keyof ParamsRecord]: PlayerWithData<
-      P,
-      PartialParams,
-      DerivedPlayerParams,
-      ParamsRecord
-    >;
+    [K in keyof RecordOfRequiredParams]: {
+      indexOfPlayer: IndexOfPlayer;
+      keyOfPlayer: K;
+      params: RequiredParams;
+      player: P;
+    };
   };
 
   /**
    * TypeScript cannot statically verify that Object.fromEntries produces all required keys since the operation happens at runtime.
-   * This assertion is safe because we're iterating over all entries from partialParamsOfPlayers, which ParamsRecord is derived from.
+   * This assertion is safe because we're iterating over all entries from recordOfRequiredParams, which RecordOfRequiredParams is derived from.
    */
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Object.fromEntries cannot preserve mapped type keys
   return Object.fromEntries(
-    Object.entries(partialParamsOfPlayers).map(
-      ([key, partialParams], index) => {
-        const params = createParams(partialParams);
-        return [
+    Object.entries(recordOfRequiredParams).map(
+      ([key, requiredParams], index) =>
+        [
           key,
           {
             indexOfPlayer: index,
             keyOfPlayer: key,
-            params,
-            player: create(params),
-          },
-        ] as const;
-      },
+            params: requiredParams,
+            player: create(deriveParams(requiredParams)),
+          } satisfies PlayerWithData<P, RequiredParams>,
+        ] as const,
     ),
   ) as ResultType;
 };
 
-const getKeyOfPlayer = <
-  P extends Player<P>,
-  ParamsRecord extends Record<string, unknown>,
->({
+const getKeyOfPlayer = <P extends Player<P>>({
   indexOfPlayer,
   players,
 }: {
   indexOfPlayer: IndexOfPlayer;
-  players: Record<string, PlayerWithData<P, unknown, unknown, ParamsRecord>>;
+  players: Record<string, PlayerWithData<P>>;
 }) => Object.values(players).at(indexOfPlayer)?.keyOfPlayer;
 
-export type { PlayerWithData };
-export { createPlayerParams, createPlayersWithData, getKeyOfPlayer };
+export type { DerivedPlayerParams, PlayerWithData, RequiredPlayerParams };
+export { createPlayersWithData, derivePlayerParams, getKeyOfPlayer };

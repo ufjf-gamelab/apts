@@ -1,10 +1,18 @@
 import type { Move } from "../Move.js";
+import type { MoveWithData } from "../Move.test/setup.js";
 import type { Player } from "../Player.js";
+import type { PlayerWithData } from "../Player.test/setup.js";
 import type { Score } from "../Score.js";
 import type { Slot } from "../Slot.js";
 import type { State } from "../State.js";
 
 import { type Game, type GameParams, type IndexOfGame } from "../Game.js";
+
+type DerivedGameParams<M extends Move<M>, P extends Player<P>> = Pick<
+  GameParams<M, P>,
+  "moves" | "players"
+> &
+  Pick<RequiredGameParams<M, P>, "name" | "quantityOfSlots">;
 
 interface GameWithData<
   G extends Game<G, M, P, S, Sc, Sl>,
@@ -13,17 +21,23 @@ interface GameWithData<
   S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
-  PartialParams,
-  DerivedGameParams,
-  ParamsRecord extends Record<string, PartialParams>,
+  Params extends RequiredGameParams<M, P> = RequiredGameParams<M, P>,
 > {
   game: G;
   indexOfGame: IndexOfGame;
-  keyOfGame: keyof ParamsRecord;
-  params: DerivedGameParams;
+  keyOfGame: string;
+  params: Params;
 }
 
-const createGameParams = <
+type RequiredGameParams<M extends Move<M>, P extends Player<P>> = Pick<
+  GameParams<M, P>,
+  "name" | "quantityOfSlots"
+> & {
+  moves: Record<string, MoveWithData<M>>;
+  players: Record<string, PlayerWithData<P>>;
+};
+
+const deriveGameParams = <
   G extends Game<G, M, P, S, Sc, Sl>,
   M extends Move<M>,
   P extends Player<P>,
@@ -35,13 +49,10 @@ const createGameParams = <
   name,
   players,
   quantityOfSlots,
-}: Pick<
-  GameParams<M, P>,
-  "moves" | "name" | "players" | "quantityOfSlots"
->): GameParams<M, P> => ({
-  moves,
+}: RequiredGameParams<M, P>): DerivedGameParams<M, P> => ({
+  moves: Object.values(moves).map(({ move }) => move),
   name,
-  players,
+  players: Object.values(players).map(({ player }) => player),
   quantityOfSlots,
 });
 
@@ -52,64 +63,54 @@ const createGamesWithData = <
   S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
-  PartialParams,
-  DerivedGameParams,
-  ParamsRecord extends Record<string, PartialParams>,
+  RequiredParams extends RequiredGameParams<M, P>,
+  DerivedParams extends DerivedGameParams<M, P>,
+  RecordOfRequiredParams extends Record<string, RequiredParams>,
 >({
-  createGame: create,
-  createGameParams: createParams,
-  partialParamsOfGames,
+  create,
+  deriveParams,
+  recordOfRequiredParams,
 }: {
-  createGame: (params: DerivedGameParams) => G;
-  createGameParams: (partialParams: PartialParams) => DerivedGameParams;
-  partialParamsOfGames: ParamsRecord;
+  create: (params: DerivedParams) => G;
+  deriveParams: (requiredParams: RequiredParams) => DerivedParams;
+  recordOfRequiredParams: RecordOfRequiredParams;
 }): {
-  [K in keyof ParamsRecord]: GameWithData<
-    G,
-    M,
-    P,
-    S,
-    Sc,
-    Sl,
-    PartialParams,
-    DerivedGameParams,
-    ParamsRecord
-  >;
+  [K in keyof RecordOfRequiredParams]: {
+    game: G;
+    indexOfGame: IndexOfGame;
+    keyOfGame: K;
+    params: RequiredParams;
+  };
 } => {
   type ResultType = {
-    [K in keyof ParamsRecord]: GameWithData<
-      G,
-      M,
-      P,
-      S,
-      Sc,
-      Sl,
-      PartialParams,
-      DerivedGameParams,
-      ParamsRecord
-    >;
+    [K in keyof RecordOfRequiredParams]: {
+      game: G;
+      indexOfGame: IndexOfGame;
+      keyOfGame: K;
+      params: RequiredParams;
+    };
   };
 
   /**
    * TypeScript cannot statically verify that Object.fromEntries produces all required keys since the operation happens at runtime.
-   * This assertion is safe because we're iterating over all entries from partialParamsOfGames, which ParamsRecord is derived from.
+   * This assertion is safe because we're iterating over all entries from recordOfRequiredParams, which RecordOfRequiredParams is derived from.
    */
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Object.fromEntries cannot preserve mapped type keys
   return Object.fromEntries(
-    Object.entries(partialParamsOfGames).map(([key, partialParams], index) => {
-      const params = createParams(partialParams);
-      return [
-        key,
-        {
-          game: create(params),
-          indexOfGame: index,
-          keyOfGame: key,
-          params,
-        },
-      ] as const;
-    }),
+    Object.entries(recordOfRequiredParams).map(
+      ([key, requiredParams], index) =>
+        [
+          key,
+          {
+            game: create(deriveParams(requiredParams)),
+            indexOfGame: index,
+            keyOfGame: key,
+            params: requiredParams,
+          } satisfies GameWithData<G, M, P, S, Sc, Sl, RequiredParams>,
+        ] as const,
+    ),
   ) as ResultType;
 };
 
-export type { GameWithData };
-export { createGameParams, createGamesWithData };
+export type { DerivedGameParams, GameWithData, RequiredGameParams };
+export { createGamesWithData, deriveGameParams };
