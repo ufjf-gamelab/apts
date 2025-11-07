@@ -7,7 +7,7 @@ import { test } from "vitest";
 
 import type { SnowballScore } from "../Score.js";
 
-import { playersWithData } from "../Player.test/setup.js";
+import { getKeyOfPlayer } from "../Game.test/players.js";
 import { scoresWithDataForUnitTest } from "./setup.js";
 
 const createDescription = ({
@@ -23,7 +23,7 @@ const createDescription = ({
     affix,
     description: createDescriptionForTestOfGetPointsOfEachPlayer({
       expectedPointsOfEachPlayer,
-      players: playersWithData,
+      getKeyOfPlayer,
     }),
   });
 

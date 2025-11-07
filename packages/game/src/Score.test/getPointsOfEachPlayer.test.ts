@@ -6,21 +6,16 @@ import { expect } from "vitest";
 import type { IndexOfPlayer, Player } from "../Player.js";
 import type { Points, Score } from "../Score.js";
 
-import { getKeyOfPlayer, type PlayerWithData } from "../Player.test/setup.js";
-
 const INDEX_OF_FIRST_PLAYER = 0;
 const ZERO_POINTS = 0;
 
 const createDescriptionForPlayerAndItsPoints = <P extends Player<P>>({
-  indexOfPlayer,
-  players,
+  keyOfPlayer,
   points,
 }: {
-  indexOfPlayer: IndexOfPlayer;
-  players: Record<string, PlayerWithData<P>>;
+  keyOfPlayer: string;
   points: Points;
-}): string =>
-  `{${String(getKeyOfPlayer({ indexOfPlayer, players }))}}: ${points}}`;
+}): string => `${keyOfPlayer}: ${points}`;
 
 const validateGetPointsOfEachPlayer = <Sc extends Score<Sc>>({
   expectedPointsOfEachPlayer,
@@ -54,17 +49,16 @@ const createDescriptionForTestOfGetPointsOfEachPlayer = <
   P extends Player<P>,
 >({
   expectedPointsOfEachPlayer,
-  players,
+  getKeyOfPlayer,
 }: {
   expectedPointsOfEachPlayer: ReturnType<Sc["getPointsOfEachPlayer"]>;
-  players: Record<string, PlayerWithData<P>>;
+  getKeyOfPlayer: (params: { indexOfPlayer: IndexOfPlayer }) => string;
 }): string => {
   const returnedValueOfEachPlayer = expectedPointsOfEachPlayer
     .entries()
     .map(([indexOfPlayer, points]) =>
       createDescriptionForPlayerAndItsPoints({
-        indexOfPlayer,
-        players,
+        keyOfPlayer: getKeyOfPlayer({ indexOfPlayer }),
         points,
       }),
     )

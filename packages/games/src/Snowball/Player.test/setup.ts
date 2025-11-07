@@ -1,5 +1,3 @@
-import type { IndexOfPlayer } from "@repo/game/Player.js";
-
 import {
   createPlayersWithData,
   derivePlayerParams,
@@ -18,7 +16,6 @@ type RequiredSnowballPlayerParams = Pick<
 interface SnowballPlayerWithData<
   Params extends RequiredSnowballPlayerParams = RequiredSnowballPlayerParams,
 > {
-  indexOfPlayer: IndexOfPlayer;
   keyOfPlayer: string;
   params: Params;
   player: SnowballPlayer;

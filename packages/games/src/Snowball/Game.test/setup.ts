@@ -1,6 +1,3 @@
-import type { Integer } from "@repo/engine_core/types.js";
-import type { IndexOfGame } from "@repo/game/Game.js";
-
 import {
   createGamesWithData,
   type DerivedGameParams,
@@ -10,40 +7,42 @@ import {
 
 import type { SnowballMove } from "../Move.js";
 import type { SnowballPlayer } from "../Player.js";
+import type { SnowballSlot } from "../Slot.js";
 
 import { SnowballGame } from "../Game.js";
-import {
-  movesWithData,
-  type SnowballMoveWithData,
-} from "../Move.test/setup.js";
-import {
-  playersWithData,
-  type SnowballPlayerWithData,
-} from "../Player.test/setup.js";
+import { type SnowballMoveWithData } from "../Move.test/setup.js";
+import { type SnowballPlayerWithData } from "../Player.test/setup.js";
+import { type SnowballSlotWithData } from "../Slot.test/setup.js";
+import { getIndexedSnowballMovesWithData } from "./moves.js";
+import { getIndexedSnowballPlayersWithData } from "./players.js";
+import { getIndexedSnowballSlotsWithData } from "./slots.js";
 
-const COLUMN_LENGTH: Integer = 9;
-const ROW_LENGTH: Integer = 9;
-const QUANTITY_OF_SLOTS: Integer = COLUMN_LENGTH * ROW_LENGTH;
+// const COLUMN_LENGTH: Integer = 9;
+// const ROW_LENGTH: Integer = 9;
+// const QUANTITY_OF_SLOTS: Integer = COLUMN_LENGTH * ROW_LENGTH;
 
 type DerivedSnowballGameParams = DerivedGameParams<
   SnowballMove,
   SnowballPlayer,
+  SnowballSlot,
   SnowballMoveWithData,
-  SnowballPlayerWithData
+  SnowballPlayerWithData,
+  SnowballSlotWithData
 >;
 
 type RequiredSnowballGameParams = RequiredGameParams<
   SnowballMove,
   SnowballPlayer,
+  SnowballSlot,
   SnowballMoveWithData,
-  SnowballPlayerWithData
+  SnowballPlayerWithData,
+  SnowballSlotWithData
 >;
 
 interface SnowballGameWithData<
   Params extends RequiredSnowballGameParams = RequiredSnowballGameParams,
 > {
   game: SnowballGame;
-  indexOfGame: IndexOfGame;
   keyOfGame: string;
   params: Params;
 }
@@ -52,29 +51,29 @@ const deriveSnowballGameParams = ({
   moves,
   name,
   players,
-  quantityOfSlots,
+  slots,
 }: RequiredSnowballGameParams): DerivedSnowballGameParams =>
-  deriveGameParams({ moves, name, players, quantityOfSlots });
+  deriveGameParams({ moves, name, players, slots });
 
 const createSnowballGame = ({
   moves,
   name,
   players,
-  quantityOfSlots,
+  slots,
 }: DerivedSnowballGameParams): SnowballGame =>
   new SnowballGame({
     moves,
     name,
     players,
-    quantityOfSlots,
+    slots,
   });
 
 const recordOfRequiredParamsOfGames = {
   snowballWith9RowsAnd9Columns: {
-    moves: movesWithData,
+    moves: getIndexedSnowballMovesWithData(),
     name: "Snowball",
-    players: playersWithData,
-    quantityOfSlots: QUANTITY_OF_SLOTS,
+    players: getIndexedSnowballPlayersWithData(),
+    slots: getIndexedSnowballSlotsWithData(),
   },
 } as const satisfies Record<string, RequiredSnowballGameParams>;
 

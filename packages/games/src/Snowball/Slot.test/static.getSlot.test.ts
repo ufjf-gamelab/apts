@@ -29,11 +29,11 @@ const createDescription = ({
   });
 
 Object.values(slotsWithDataForUnitTest).forEach(
-  ({ indexOfSlot, keyOfSlot, slot }) => {
+  ({ keyOfSlot, slot }, index) => {
     test(
       createDescription({
         expectedKeyOfSlot: keyOfSlot,
-        indexOfSlot,
+        indexOfSlot: index,
         slots: `[${Object.values(slotsWithDataForUnitTest)
           .map(({ keyOfSlot: innerKeyOfSlot }) => innerKeyOfSlot)
           .join(", ")}]`,
@@ -41,7 +41,7 @@ Object.values(slotsWithDataForUnitTest).forEach(
       () => {
         validateGetSlot({
           expectedSlot: slot,
-          indexOfSlot,
+          indexOfSlot: index,
           slots: Object.values(slotsWithDataForUnitTest).map(
             ({ slot: innerSlot }) => innerSlot,
           ),

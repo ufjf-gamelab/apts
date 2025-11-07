@@ -22,19 +22,19 @@ Object.values(gamesWithDataForUnitTest).forEach(({ keyOfGame, params }) => {
       affix: keyOfGame,
     }),
     () => {
-      const { name, quantityOfSlots } = params;
-      const { moves, players } = deriveSnowballGameParams(params);
+      const { name } = params;
+      const { moves, players, slots } = deriveSnowballGameParams(params);
 
       const newGame = new SnowballGame({
         moves,
         name,
         players,
-        quantityOfSlots,
+        slots,
       });
 
       validateConstructor({
         game: newGame,
-        params: { moves, name, players, quantityOfSlots },
+        params: { moves, name, players, slots },
       });
       expect(newGame).toBeInstanceOf(SnowballGame);
     },

@@ -1,4 +1,4 @@
-import { type IndexOfScore, type Score, type ScoreParams } from "../Score.js";
+import { type Score, type ScoreParams } from "../Score.js";
 
 type DerivedScoreParams = RequiredScoreParams;
 
@@ -8,7 +8,6 @@ interface ScoreWithData<
   Sc extends Score<Sc>,
   Params extends DerivedScoreParams = DerivedScoreParams,
 > {
-  indexOfScore: IndexOfScore;
   keyOfScore: string;
   params: Params;
   score: Sc;
@@ -34,7 +33,6 @@ const createScoresWithData = <
   recordOfRequiredParams: RecordOfRequiredParams;
 }): {
   [K in keyof RecordOfRequiredParams]: {
-    indexOfScore: IndexOfScore;
     keyOfScore: keyof RecordOfRequiredParams;
     params: RequiredParams;
     score: Sc;
@@ -42,7 +40,6 @@ const createScoresWithData = <
 } => {
   type ResultType = {
     [K in keyof RecordOfRequiredParams]: {
-      indexOfScore: IndexOfScore;
       keyOfScore: keyof RecordOfRequiredParams;
       params: RequiredParams;
       score: Sc;
@@ -56,11 +53,10 @@ const createScoresWithData = <
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Object.fromEntries cannot preserve mapped type keys
   return Object.fromEntries(
     Object.entries(recordOfRequiredParams).map(
-      ([key, requiredParams], index) =>
+      ([key, requiredParams]) =>
         [
           key,
           {
-            indexOfScore: index,
             keyOfScore: key,
             params: requiredParams,
             score: create(deriveParams(requiredParams)),

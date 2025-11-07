@@ -5,7 +5,7 @@ import type { Score } from "../Score.js";
 import type { Slot } from "../Slot.js";
 import type { SlotWithData } from "../Slot.test/setup.js";
 
-import { type IndexOfState, type State, type StateParams } from "../State.js";
+import { type State, type StateParams } from "../State.js";
 
 type DerivedStateParams<
   G extends Game<G, M, P, S, Sc, Sl>,
@@ -54,7 +54,6 @@ interface StateWithData<
     ExtendedSlotWithData
   > = RequiredStateParams<G, M, P, S, Sc, Sl, ExtendedSlotWithData>,
 > {
-  indexOfState: IndexOfState;
   keyOfState: string;
   params: Params;
   state: S;
@@ -126,7 +125,6 @@ const createStatesWithData = <
   recordOfRequiredParams: RecordOfRequiredParams;
 }): {
   [K in keyof RecordOfRequiredParams]: {
-    indexOfState: IndexOfState;
     keyOfState: K;
     params: RequiredParams;
     state: S;
@@ -134,7 +132,6 @@ const createStatesWithData = <
 } => {
   type ResultType = {
     [K in keyof RecordOfRequiredParams]: {
-      indexOfState: IndexOfState;
       keyOfState: K;
       params: RequiredParams;
       state: S;
@@ -148,11 +145,10 @@ const createStatesWithData = <
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Object.fromEntries cannot preserve mapped type keys
   return Object.fromEntries(
     Object.entries(recordOfRequiredParams).map(
-      ([key, requiredParams], index) =>
+      ([key, requiredParams]) =>
         [
           key,
           {
-            indexOfState: index,
             keyOfState: key,
             params: requiredParams,
             state: create(deriveParams(requiredParams)),

@@ -25,7 +25,7 @@ const getMove = ({
   const move = moves[indexOfTestingMove];
   if (typeof move === "undefined") {
     const titleOfTestingMove = getTitleOfTestingMove(indexOfTestingMove);
-    throw new Error(`Move ${titleOfTestingMove} is null`);
+    throw new Error(`Move ${titleOfTestingMove} is null.`);
   }
   return move;
 };
@@ -37,7 +37,7 @@ const getIndexesOfSlotsFilledByMoves = ({
   indexesOfTestingMoves: readonly IndexOfTestingMove[];
   moves: readonly TestingMove[];
 }): readonly IndexOfTestingSlot[] =>
-  indexesOfTestingMoves.map(indexOfTestingMove => {
+  indexesOfTestingMoves.map((indexOfTestingMove) => {
     const move = getMove({
       indexOfTestingMove,
       moves,

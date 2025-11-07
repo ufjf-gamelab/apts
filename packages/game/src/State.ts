@@ -60,7 +60,7 @@ abstract class State<
     this.game = game.clone();
     this.indexOfPlayer = indexOfPlayer;
     this.score = score.clone();
-    this.slots = slots.map(slot => slot.clone());
+    this.slots = slots.map((slot) => slot.clone());
   }
 
   public abstract clone(): S;
@@ -99,7 +99,7 @@ abstract class State<
   }
 
   public getSlots() {
-    return this.slots.map(slot => slot.clone());
+    return this.slots.map((slot) => slot.clone());
   }
 }
 

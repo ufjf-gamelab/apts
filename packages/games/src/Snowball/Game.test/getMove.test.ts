@@ -7,6 +7,7 @@ import { expect, test } from "vitest";
 
 import { SnowballMove } from "../Move.js";
 import { createSnowballMove } from "../Move.test/setup.js";
+import { getIndexOfMove } from "./moves.js";
 import { gamesWithDataForUnitTest } from "./setup.js";
 
 const createDescription = ({
@@ -27,30 +28,30 @@ const createDescription = ({
 
 Object.values(gamesWithDataForUnitTest).forEach(
   ({ game, keyOfGame, params }) => {
-    Object.values(params.moves).forEach(
-      ({ indexOfMove, keyOfMove, move, params: paramsOfMove }) => {
-        test(
-          createDescription({
-            affix: keyOfGame,
+    params.moves.forEach(({ keyOfMove, move, params: paramsOfMove }) => {
+      const indexOfMove = getIndexOfMove({ keyOfMove });
+
+      test(
+        createDescription({
+          affix: keyOfGame,
+          indexOfMove,
+          keyOfMove,
+        }),
+        () => {
+          validateGetMove({
+            createMove: (requiredParams) =>
+              createSnowballMove({
+                ...requiredParams,
+                indexOfSlotInWhichPlacePiece:
+                  paramsOfMove.indexOfSlotInWhichPlacePiece,
+              }),
+            expectedMove: move,
+            game,
             indexOfMove,
-            keyOfMove,
-          }),
-          () => {
-            validateGetMove({
-              createMove: requiredParams =>
-                createSnowballMove({
-                  ...requiredParams,
-                  indexOfSlotInWhichPlacePiece:
-                    paramsOfMove.indexOfSlotInWhichPlacePiece,
-                }),
-              expectedMove: move,
-              game,
-              indexOfMove,
-            });
-            expect(move).toBeInstanceOf(SnowballMove);
-          },
-        );
-      },
-    );
+          });
+          expect(move).toBeInstanceOf(SnowballMove);
+        },
+      );
+    });
   },
 );

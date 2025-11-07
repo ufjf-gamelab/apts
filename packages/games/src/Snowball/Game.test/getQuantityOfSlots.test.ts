@@ -28,11 +28,11 @@ Object.values(gamesWithDataForUnitTest).forEach(
     test(
       createDescription({
         affix: keyOfGame,
-        expectedQuantityOfSlots: params.quantityOfSlots,
+        expectedQuantityOfSlots: params.slots.length,
       }),
       () => {
         validateGetQuantityOfSlots({
-          expectedQuantityOfSlots: params.quantityOfSlots,
+          expectedQuantityOfSlots: params.slots.length,
           game,
         });
       },

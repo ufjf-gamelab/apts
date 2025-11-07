@@ -1,4 +1,4 @@
-import { type IndexOfMove, type Move, type MoveParams } from "../Move.js";
+import { type Move, type MoveParams } from "../Move.js";
 
 type DerivedMoveParams = Pick<MoveParams, "description"> & RequiredMoveParams;
 
@@ -6,7 +6,6 @@ interface MoveWithData<
   M extends Move<M>,
   Params extends RequiredMoveParams = RequiredMoveParams,
 > {
-  indexOfMove: IndexOfMove;
   keyOfMove: string;
   move: M;
   params: Params;
@@ -36,7 +35,6 @@ const createMovesWithData = <
   recordOfRequiredParams: RecordOfRequiredParams;
 }): {
   [K in keyof RecordOfRequiredParams]: {
-    indexOfMove: IndexOfMove;
     keyOfMove: K;
     move: M;
     params: RequiredParams;
@@ -44,7 +42,6 @@ const createMovesWithData = <
 } => {
   type ResultType = {
     [K in keyof RecordOfRequiredParams]: {
-      indexOfMove: IndexOfMove;
       keyOfMove: K;
       move: M;
       params: RequiredParams;
@@ -58,11 +55,10 @@ const createMovesWithData = <
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Object.fromEntries cannot preserve mapped type keys
   return Object.fromEntries(
     Object.entries(recordOfRequiredParams).map(
-      ([key, requiredParams], index) =>
+      ([key, requiredParams]) =>
         [
           key,
           {
-            indexOfMove: index,
             keyOfMove: key,
             move: create(deriveParams(requiredParams)),
             params: requiredParams,

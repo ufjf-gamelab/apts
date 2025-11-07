@@ -6,11 +6,15 @@ import type { Score } from "./Score.js";
 import type { Slot } from "./Slot.js";
 import type { State } from "./State.js";
 
-interface GameParams<M extends Move<M>, P extends Player<P>> {
+interface GameParams<
+  M extends Move<M>,
+  P extends Player<P>,
+  Sl extends Slot<Sl>,
+> {
   readonly moves: readonly M[];
   readonly name: string;
   readonly players: readonly P[];
-  readonly quantityOfSlots: Integer;
+  readonly slots: readonly Sl[];
 }
 
 type IndexOfGame = Integer;
@@ -23,21 +27,16 @@ abstract class Game<
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
 > {
-  private readonly moves: GameParams<M, P>["moves"];
-  private readonly name: GameParams<M, P>["name"];
-  private readonly players: GameParams<M, P>["players"];
-  private readonly quantityOfSlots: GameParams<M, P>["quantityOfSlots"];
+  private readonly moves: GameParams<M, P, Sl>["moves"];
+  private readonly name: GameParams<M, P, Sl>["name"];
+  private readonly players: GameParams<M, P, Sl>["players"];
+  private readonly slots: GameParams<M, P, Sl>["slots"];
 
-  public constructor({
-    moves,
-    name,
-    players,
-    quantityOfSlots,
-  }: GameParams<M, P>) {
-    this.moves = moves.map(move => move.clone());
+  public constructor({ moves, name, players, slots }: GameParams<M, P, Sl>) {
+    this.moves = moves.map((move) => move.clone());
     this.name = name;
-    this.players = players.map(player => player.clone());
-    this.quantityOfSlots = quantityOfSlots;
+    this.players = players.map((player) => player.clone());
+    this.slots = slots.map((slot) => slot.clone());
   }
 
   public abstract clone(): G;
@@ -59,7 +58,7 @@ abstract class Game<
   }
 
   public getMoves(): typeof this.moves {
-    return this.moves.map(move => move.clone());
+    return this.moves.map((move) => move.clone());
   }
 
   public getName(): typeof this.name {
@@ -79,15 +78,14 @@ abstract class Game<
   }
 
   public getPlayers(): typeof this.players {
-    return this.players.map(player => player.clone());
+    return this.players.map((player) => player.clone());
   }
-
-  public getQuantityOfPlayers(): typeof this.players.length {
+  public getQuantityOfPlayers() {
     return this.players.length;
   }
 
-  public getQuantityOfSlots(): typeof this.quantityOfSlots {
-    return this.quantityOfSlots;
+  public getQuantityOfSlots() {
+    return this.slots.length;
   }
 
   public abstract getValidMoves({
@@ -105,6 +103,10 @@ abstract class Game<
     indexOfMove: IndexOfMove;
     state: S;
   }): S;
+
+  protected getSlots(): typeof this.slots {
+    return this.slots.map((slot) => slot.clone());
+  }
 }
 
 export type { GameParams, IndexOfGame };

@@ -1,4 +1,4 @@
-import { type IndexOfSlot, type Slot } from "../Slot.js";
+import { type Slot } from "../Slot.js";
 
 type DerivedSlotParams = RequiredSlotParams;
 
@@ -8,7 +8,6 @@ interface SlotWithData<
   Sl extends Slot<Sl>,
   Params extends DerivedSlotParams = DerivedSlotParams,
 > {
-  indexOfSlot: IndexOfSlot;
   keyOfSlot: string;
   params: Params;
   slot: Sl;
@@ -31,7 +30,6 @@ const createSlotsWithData = <
   recordOfRequiredParams: RecordOfRequiredParams;
 }): {
   [K in keyof RecordOfRequiredParams]: {
-    indexOfSlot: IndexOfSlot;
     keyOfSlot: keyof RecordOfRequiredParams;
     params: RequiredParams;
     slot: Sl;
@@ -39,7 +37,6 @@ const createSlotsWithData = <
 } => {
   type ResultType = {
     [K in keyof RecordOfRequiredParams]: {
-      indexOfSlot: IndexOfSlot;
       keyOfSlot: keyof RecordOfRequiredParams;
       params: RequiredParams;
       slot: Sl;
@@ -53,11 +50,10 @@ const createSlotsWithData = <
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Object.fromEntries cannot preserve mapped type keys
   return Object.fromEntries(
     Object.entries(recordOfRequiredParams).map(
-      ([key, requiredParams], index) =>
+      ([key, requiredParams]) =>
         [
           key,
           {
-            indexOfSlot: index,
             keyOfSlot: key,
             params: requiredParams,
             slot: create(deriveParams(requiredParams)),

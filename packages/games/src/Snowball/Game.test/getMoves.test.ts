@@ -26,20 +26,18 @@ const createDescription = ({
 
 Object.values(gamesWithDataForUnitTest).forEach(
   ({ game, keyOfGame, params }) => {
-    const movesWithData = Object.values(params.moves);
-
     test(
       createDescription({
         affix: keyOfGame,
-        keysOfExpectedMoves: movesWithData.map(({ keyOfMove }) => keyOfMove),
+        keysOfExpectedMoves: params.moves.map(({ keyOfMove }) => keyOfMove),
       }),
       () => {
         validateGetMoves({
-          expectedMoves: movesWithData.map(({ move }) => move),
+          expectedMoves: params.moves.map(({ move }) => move),
           game,
         });
-        expect(movesWithData).toBeInstanceOf(Array<SnowballMove>);
-        const [firstMoveWithData] = movesWithData;
+        expect(params.moves).toBeInstanceOf(Array<SnowballMove>);
+        const [firstMoveWithData] = params.moves;
         expect(firstMoveWithData?.move).toBeInstanceOf(SnowballMove);
       },
     );

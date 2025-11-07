@@ -20,13 +20,13 @@ const validateConstructor = <
   params,
 }: {
   game: G;
-  params: GameParams<M, P>;
+  params: GameParams<M, P, Sl>;
 }) => {
   expect(game).toBeInstanceOf(Game);
   expect(game.getMoves()).toStrictEqual(params.moves);
   expect(game.getName()).toBe(params.name);
   expect(game.getPlayers()).toStrictEqual(params.players);
-  expect(game.getQuantityOfSlots()).toBe(params.quantityOfSlots);
+  expect(game.getQuantityOfSlots()).toBe(params.slots.length);
 };
 
 export { validateConstructor };

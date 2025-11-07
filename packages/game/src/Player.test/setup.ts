@@ -1,8 +1,4 @@
-import {
-  type IndexOfPlayer,
-  type Player,
-  type PlayerParams,
-} from "../Player.js";
+import { type Player, type PlayerParams } from "../Player.js";
 
 type DerivedPlayerParams = RequiredPlayerParams;
 
@@ -10,7 +6,6 @@ interface PlayerWithData<
   P extends Player<P>,
   Params extends DerivedPlayerParams = DerivedPlayerParams,
 > {
-  indexOfPlayer: IndexOfPlayer;
   keyOfPlayer: string;
   params: Params;
   player: P;
@@ -41,7 +36,6 @@ const createPlayersWithData = <
   recordOfRequiredParams: RecordOfRequiredParams;
 }): {
   [K in keyof RecordOfRequiredParams]: {
-    indexOfPlayer: IndexOfPlayer;
     keyOfPlayer: K;
     params: RequiredParams;
     player: P;
@@ -49,7 +43,6 @@ const createPlayersWithData = <
 } => {
   type ResultType = {
     [K in keyof RecordOfRequiredParams]: {
-      indexOfPlayer: IndexOfPlayer;
       keyOfPlayer: K;
       params: RequiredParams;
       player: P;
@@ -63,11 +56,10 @@ const createPlayersWithData = <
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Object.fromEntries cannot preserve mapped type keys
   return Object.fromEntries(
     Object.entries(recordOfRequiredParams).map(
-      ([key, requiredParams], index) =>
+      ([key, requiredParams]) =>
         [
           key,
           {
-            indexOfPlayer: index,
             keyOfPlayer: key,
             params: requiredParams,
             player: create(deriveParams(requiredParams)),
@@ -77,13 +69,5 @@ const createPlayersWithData = <
   ) as ResultType;
 };
 
-const getKeyOfPlayer = <P extends Player<P>>({
-  indexOfPlayer,
-  players,
-}: {
-  indexOfPlayer: IndexOfPlayer;
-  players: Record<string, PlayerWithData<P>>;
-}) => Object.values(players).at(indexOfPlayer)?.keyOfPlayer;
-
 export type { DerivedPlayerParams, PlayerWithData, RequiredPlayerParams };
-export { createPlayersWithData, derivePlayerParams, getKeyOfPlayer };
+export { createPlayersWithData, derivePlayerParams };

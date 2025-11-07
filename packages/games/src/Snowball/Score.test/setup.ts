@@ -1,11 +1,10 @@
-import type { IndexOfScore } from "@repo/game/Score.js";
-
 import {
   createScoresWithData,
   deriveScoreParams,
   type RequiredScoreParams,
 } from "@repo/game/Score.test/setup.js";
 
+import { getIndexOfPlayer } from "../Game.test/players.js";
 import { playersWithData } from "../Player.test/setup.js";
 import { SnowballScore } from "../Score.js";
 
@@ -23,7 +22,6 @@ type RequiredSnowballScoreParams = Pick<
 interface SnowballScoreWithData<
   Params extends RequiredSnowballScoreParams = RequiredSnowballScoreParams,
 > {
-  indexOfScore: IndexOfScore;
   keyOfScore: string;
   params: Params;
   player: SnowballScore;
@@ -46,16 +44,16 @@ const createSnowballScore = ({
 const recordOfRequiredParamsOfScores = {
   aliceWith0PointsAndBrunoWith0Points: {
     pointsOfEachPlayer: new Map(
-      Object.values(playersWithData).map(({ indexOfPlayer }) => [
-        indexOfPlayer,
+      Object.values(playersWithData).map(({ keyOfPlayer }) => [
+        getIndexOfPlayer({ keyOfPlayer }),
         ZERO_POINTS,
       ]),
     ),
   },
   aliceWith5PointsAndBrunoWith10Points: {
     pointsOfEachPlayer: new Map([
-      [playersWithData.alice.indexOfPlayer, FIVE_POINTS],
-      [playersWithData.bruno.indexOfPlayer, TEN_POINTS],
+      [getIndexOfPlayer({ keyOfPlayer: "alice" }), FIVE_POINTS],
+      [getIndexOfPlayer({ keyOfPlayer: "bruno" }), TEN_POINTS],
     ]),
   },
 } as const satisfies Record<string, RequiredSnowballScoreParams>;

@@ -7,6 +7,7 @@ import { test } from "vitest";
 
 import type { SnowballScore } from "../Score.js";
 
+import { getIndexOfPlayer } from "../Game.test/players.js";
 import { playersWithData } from "../Player.test/setup.js";
 import { scoresWithDataForUnitTest } from "./setup.js";
 
@@ -31,18 +32,20 @@ const createDescription = ({
 
 Object.values(scoresWithDataForUnitTest).forEach(
   ({ keyOfScore, params, score }) => {
-    Object.values(playersWithData).forEach(({ indexOfPlayer, keyOfPlayer }) => {
+    Object.values(playersWithData).forEach(({ keyOfPlayer }) => {
+      const indexOfPlayer = getIndexOfPlayer({ keyOfPlayer });
+      const expectedPointsOfPlayer =
+        params.pointsOfEachPlayer.get(indexOfPlayer) ?? ZERO_POINTS;
+
       test(
         createDescription({
           affix: keyOfScore,
-          expectedPointsOfPlayer:
-            params.pointsOfEachPlayer.get(indexOfPlayer) ?? ZERO_POINTS,
+          expectedPointsOfPlayer,
           keyOfPlayer,
         }),
         () => {
           validateGetPointsOfPlayer({
-            expectedPointsOfPlayer:
-              params.pointsOfEachPlayer.get(indexOfPlayer) ?? ZERO_POINTS,
+            expectedPointsOfPlayer,
             indexOfPlayer,
             score,
           });

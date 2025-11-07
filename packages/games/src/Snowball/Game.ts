@@ -37,7 +37,7 @@ class SnowballGame extends Game<
       moves: this.getMoves(),
       name: this.getName(),
       players: this.getPlayers(),
-      quantityOfSlots: this.getQuantityOfSlots(),
+      slots: this.getSlots(),
     });
   }
 

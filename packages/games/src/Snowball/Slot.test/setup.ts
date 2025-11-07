@@ -1,8 +1,6 @@
-import type { IndexOfSlot } from "@repo/game/Slot.js";
-
 import { createSlotsWithData } from "@repo/game/Slot.test/setup.js";
 
-import { playersWithData } from "../Player.test/setup.js";
+import { getIndexOfPlayer } from "../Game.test/players.js";
 import { SnowballSlot, type SnowballSlotParams } from "../Slot.js";
 
 type DerivedSnowballSlotParams = RequiredSnowballSlotParams;
@@ -15,7 +13,6 @@ type RequiredSnowballSlotParams = Pick<
 interface SnowballSlotWithData<
   Params extends RequiredSnowballSlotParams = RequiredSnowballSlotParams,
 > {
-  indexOfSlot: IndexOfSlot;
   keyOfSlot: string;
   params: Params;
   slot: SnowballSlot;
@@ -311,10 +308,10 @@ const slotsWithDataForUnitTest = createSlotsWithData({
       indexOfOccupyingPlayer: null,
     },
     northOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithData.alice.indexOfPlayer,
+      indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
     },
     northwestOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithData.bruno.indexOfPlayer,
+      indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
     },
   },
 });
@@ -327,16 +324,8 @@ const editSlotOnSnowballSlotsWithData = ({
   keyOfSlot: keyof typeof slots;
   slots: Record<string, SnowballSlotWithData>;
 }) => {
-  const slotToUpdate = slots[keyOfSlot];
-  if (typeof slotToUpdate === "undefined") {
-    throw new Error(
-      "the inputted keyOfSlot is not in the inputted record of slots.",
-    );
-  }
-
   const newSlot: SnowballSlotWithData = {
-    indexOfSlot: slotToUpdate.indexOfSlot,
-    keyOfSlot: slotToUpdate.keyOfSlot,
+    keyOfSlot,
     params: {
       indexOfOccupyingPlayer,
     },
