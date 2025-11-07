@@ -2,6 +2,7 @@ import type { IndexOfState } from "@repo/game/State.js";
 
 import {
   createStatesWithData,
+  type DerivedStateParams,
   deriveStateParams,
   type RequiredStateParams,
 } from "@repo/game/State.test/setup.js";
@@ -15,10 +16,21 @@ import type { SnowballSlot } from "../Slot.js";
 import { gamesWithDataForUnitTest } from "../Game.test/setup.js";
 import { playersWithData } from "../Player.test/setup.js";
 import { scoresWithDataForUnitTest } from "../Score.test/setup.js";
-import { slotsWithData } from "../Slot.test/setup.js";
+import {
+  slotsWithData,
+  type SnowballSlotWithData,
+} from "../Slot.test/setup.js";
 import { SnowballState } from "../State.js";
 
-type DerivedSnowballStateParams = RequiredSnowballStateParams;
+type DerivedSnowballStateParams = DerivedStateParams<
+  SnowballGame,
+  SnowballMove,
+  SnowballPlayer,
+  SnowballState,
+  SnowballScore,
+  SnowballSlot,
+  SnowballSlotWithData
+>;
 
 type RequiredSnowballStateParams = Pick<
   RequiredStateParams<
@@ -27,7 +39,8 @@ type RequiredSnowballStateParams = Pick<
     SnowballPlayer,
     SnowballState,
     SnowballScore,
-    SnowballSlot
+    SnowballSlot,
+    SnowballSlotWithData
   >,
   "game" | "indexOfPlayer" | "score" | "slots"
 >;
@@ -68,12 +81,22 @@ const createSnowballState = ({
   });
 
 const recordOfRequiredParamsOfStates = {
-  player0WithNoScoreAndAllSlotsEmpty: {
-    game: gamesWithDataForUnitTest.snowballWith9RowsAnd9Columns.game,
-    indexOfPlayer: playersWithData.alice.indexOfPlayer,
-    score: scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
-    slots: [slotsWithData.centerOfCenter.slot],
-  },
+  noSlotsAreFilledAndAliceHasNoPointsAndBrunoHasNoPointsAndAliceIsTheCurrentPlayer:
+    {
+      game: gamesWithDataForUnitTest.snowballWith9RowsAnd9Columns.game,
+      indexOfPlayer: playersWithData.alice.indexOfPlayer,
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
+      slots: slotsWithData,
+    },
+  slotNorthwestOfNorthwestIsFilledByAliceAndAliceHasNoPointsAndBrunoHasNoPointsAndBrunoIsTheCurrentPlayer:
+    {
+      game: gamesWithDataForUnitTest.snowballWith9RowsAnd9Columns.game,
+      indexOfPlayer: playersWithData.alice.indexOfPlayer,
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
+      slots: slotsWithData,
+    },
 } as const satisfies Record<string, RequiredSnowballStateParams>;
 
 const statesWithDataForUnitTest = createStatesWithData({

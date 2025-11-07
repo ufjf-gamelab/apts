@@ -1,3 +1,5 @@
+import type { Linter } from "eslint";
+
 import eslint from "@eslint/js";
 import perfectionistPlugin from "eslint-plugin-perfectionist";
 import turboPlugin from "eslint-plugin-turbo";
@@ -6,7 +8,7 @@ import tseslint from "typescript-eslint";
 /**
  * A shared ESLint configuration for the repository.
  * */
-export const config: import("eslint").Linter.Config[] = [
+export const config: Linter.Config[] = [
   {
     languageOptions: {
       parserOptions: {

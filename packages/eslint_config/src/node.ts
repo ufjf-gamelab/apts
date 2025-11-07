@@ -1,3 +1,5 @@
+import type { Linter } from "eslint";
+
 import globals from "globals";
 
 import { config as baseConfig } from "./base.js";
@@ -5,7 +7,7 @@ import { config as baseConfig } from "./base.js";
 /**
  * A shared ESLint configuration for Node projects in the repository.
  * */
-export const nodeConfig: import("eslint").Linter.Config[] = [
+export const nodeConfig: Linter.Config[] = [
   ...baseConfig,
 
   {

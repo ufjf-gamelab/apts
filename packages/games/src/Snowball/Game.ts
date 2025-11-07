@@ -28,6 +28,10 @@ class SnowballGame extends Game<
   SnowballScore,
   SnowballSlot
 > {
+  public calculateScore({ slots }: { slots: SnowballSlot[] }): SnowballScore {
+    return this.constructScoreForInitialState();
+  }
+
   public override clone() {
     return new SnowballGame({
       moves: this.getMoves(),
@@ -74,7 +78,7 @@ class SnowballGame extends Game<
   public override isFinal({ state }: { state: SnowballState }) {
     const amountOfFilledSlots = state
       .getSlots()
-      .filter(slot => slot.getIndexOfOccupyingPlayer() !== null).length;
+      .filter((slot) => slot.getIndexOfOccupyingPlayer() !== null).length;
     if (amountOfFilledSlots === AMOUNT_OF_SLOTS_TO_FINISH_MATCH) {
       return true;
     }
@@ -87,6 +91,28 @@ class SnowballGame extends Game<
     }
 
     return false;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  public isMoveValid({
+    move,
+    state,
+  }: {
+    move: SnowballMove;
+    state: SnowballState;
+  }): boolean {
+    const indexOfSlotInWhichPlacePiece = move.getIndexOfSlotInWhichPlacePiece();
+
+    const slotInWhichPlacePiece = state.getSlot({
+      indexOfSlot: indexOfSlotInWhichPlacePiece,
+    });
+    if (slotInWhichPlacePiece === null) {
+      return false;
+    }
+
+    const indexOfOccupyingPlayer =
+      slotInWhichPlacePiece.getIndexOfOccupyingPlayer();
+    return indexOfOccupyingPlayer === null;
   }
 
   public override play({
@@ -130,10 +156,6 @@ class SnowballGame extends Game<
     });
   }
 
-  private calculateScore({ slots }: { slots: SnowballSlot[] }): SnowballScore {
-    return this.constructScoreForInitialState();
-  }
-
   private constructScoreForInitialState(): SnowballScore {
     const pointsOfEachPlayer = new Map<IndexOfPlayer, Points>();
     this.getPlayers().forEach((_, indexOfPlayer) => {
@@ -148,28 +170,6 @@ class SnowballGame extends Game<
         indexOfOccupyingPlayer: null,
       }),
     );
-  }
-
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
-  private isMoveValid({
-    move,
-    state,
-  }: {
-    move: SnowballMove;
-    state: SnowballState;
-  }): boolean {
-    const indexOfSlotInWhichPlacePiece = move.getIndexOfSlotInWhichPlacePiece();
-
-    const slotInWhichPlacePiece = state.getSlot({
-      indexOfSlot: indexOfSlotInWhichPlacePiece,
-    });
-    if (slotInWhichPlacePiece === null) {
-      return false;
-    }
-
-    const indexOfOccupyingPlayer =
-      slotInWhichPlacePiece.getIndexOfOccupyingPlayer();
-    return indexOfOccupyingPlayer === null;
   }
 }
 

@@ -1,3 +1,5 @@
+import type { Linter } from "eslint";
+
 import reactPlugin from "eslint-plugin-react";
 import reactHooksPlugin from "eslint-plugin-react-hooks";
 import reactRefreshPlugin from "eslint-plugin-react-refresh";
@@ -8,7 +10,7 @@ import { config as baseConfig } from "./base.js";
 /**
  * A custom ESLint configuration for libraries that use Vite.
  * */
-export const reactConfig: import("eslint").Linter.Config[] = [
+export const reactConfig: Linter.Config[] = [
   ...baseConfig,
 
   /* React plugin rules */
