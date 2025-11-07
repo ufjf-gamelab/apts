@@ -319,6 +319,38 @@ const slotsWithDataForUnitTest = createSlotsWithData({
   },
 });
 
+const editSlotOnSnowballSlotsWithData = ({
+  indexOfOccupyingPlayer,
+  keyOfSlot,
+  slots,
+}: Pick<Parameters<typeof createSnowballSlot>[0], "indexOfOccupyingPlayer"> & {
+  keyOfSlot: keyof typeof slots;
+  slots: Record<string, SnowballSlotWithData>;
+}) => {
+  const slotToUpdate = slots[keyOfSlot];
+  if (typeof slotToUpdate === "undefined") {
+    throw new Error(
+      "the inputted keyOfSlot is not in the inputted record of slots.",
+    );
+  }
+
+  const newSlot: SnowballSlotWithData = {
+    indexOfSlot: slotToUpdate.indexOfSlot,
+    keyOfSlot: slotToUpdate.keyOfSlot,
+    params: {
+      indexOfOccupyingPlayer,
+    },
+    slot: createSnowballSlot({
+      indexOfOccupyingPlayer,
+    }),
+  };
+
+  return {
+    ...slots,
+    [keyOfSlot]: newSlot,
+  };
+};
+
 export type {
   DerivedSnowballSlotParams,
   RequiredSnowballSlotParams,
@@ -327,6 +359,7 @@ export type {
 export {
   createSnowballSlot,
   deriveSnowballSlotParams,
+  editSlotOnSnowballSlotsWithData,
   slotsWithData,
   slotsWithDataForUnitTest,
 };

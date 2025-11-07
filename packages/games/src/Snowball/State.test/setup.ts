@@ -17,6 +17,7 @@ import { gamesWithDataForUnitTest } from "../Game.test/setup.js";
 import { playersWithData } from "../Player.test/setup.js";
 import { scoresWithDataForUnitTest } from "../Score.test/setup.js";
 import {
+  editSlotOnSnowballSlotsWithData,
   slotsWithData,
   type SnowballSlotWithData,
 } from "../Slot.test/setup.js";
@@ -92,10 +93,14 @@ const recordOfRequiredParamsOfStates = {
   slotNorthwestOfNorthwestIsFilledByAliceAndAliceHasNoPointsAndBrunoHasNoPointsAndBrunoIsTheCurrentPlayer:
     {
       game: gamesWithDataForUnitTest.snowballWith9RowsAnd9Columns.game,
-      indexOfPlayer: playersWithData.alice.indexOfPlayer,
+      indexOfPlayer: playersWithData.bruno.indexOfPlayer,
       score:
         scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
-      slots: slotsWithData,
+      slots: editSlotOnSnowballSlotsWithData({
+        indexOfOccupyingPlayer: playersWithData.alice.indexOfPlayer,
+        keyOfSlot: slotsWithData.northwestOfNorthwest.keyOfSlot,
+        slots: slotsWithData,
+      }),
     },
 } as const satisfies Record<string, RequiredSnowballStateParams>;
 
