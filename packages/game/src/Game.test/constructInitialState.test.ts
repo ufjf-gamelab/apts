@@ -23,7 +23,8 @@ const validateConstructInitialState = <
   game: G;
 }) => {
   const initialState = game.constructInitialState();
-  expect(initialState).toBe(expectedInitialState);
+  expect(initialState).not.toBe(expectedInitialState);
+  expect(initialState).toStrictEqual(expectedInitialState);
 
   // Ensure that the returned object does not keep reference to the internal property
   const otherInitialState = game.constructInitialState();

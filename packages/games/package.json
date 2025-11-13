@@ -2,14 +2,15 @@
   "author": "Gabriel Malosto",
   "dependencies": {
     "@repo/engine_core": "workspace:*",
-    "@repo/game": "workspace:*"
+    "@repo/game": "workspace:*",
+    "eslint": "^9.39.1"
   },
   "description": "Collection of tabletop games to be used with the engine.",
   "devDependencies": {
     "@repo/eslint_config": "workspace:*",
     "@repo/typescript_config": "workspace:*",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.7"
+    "vitest": "^4.0.8"
   },
   "exports": {
     "./Snowball/*": "./src/Snowball/*"

@@ -9,7 +9,7 @@
     "@repo/eslint_config": "workspace:*",
     "@repo/typescript_config": "workspace:*",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.7"
+    "vitest": "^4.0.8"
   },
   "exports": {
     "./Snowball/*": {

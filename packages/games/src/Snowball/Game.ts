@@ -46,7 +46,7 @@ class SnowballGame extends Game<
       game: this,
       indexOfPlayer: INDEX_OF_FIRST_PLAYER,
       score: this.constructScoreForInitialState(),
-      slots: this.constructSlotsForInitialState(),
+      slots: this.getSlots(),
     });
   }
 
@@ -162,14 +162,6 @@ class SnowballGame extends Game<
       pointsOfEachPlayer.set(indexOfPlayer, ZERO_POINTS);
     });
     return new SnowballScore({ pointsOfEachPlayer });
-  }
-
-  private constructSlotsForInitialState(): readonly SnowballSlot[] {
-    return new Array<SnowballSlot>(this.getQuantityOfSlots()).fill(
-      new SnowballSlot({
-        indexOfOccupyingPlayer: null,
-      }),
-    );
   }
 }
 
