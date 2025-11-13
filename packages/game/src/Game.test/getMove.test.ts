@@ -2,7 +2,6 @@ import { createDescriptionForTestsOfGetter } from "@repo/engine_core/test.js";
 import { assert, expect } from "vitest";
 
 import type { Game } from "../Game.js";
-import type { createMovesWithData } from "../Move.test/setup.js";
 import type { Player } from "../Player.js";
 import type { Score } from "../Score.js";
 import type { Slot } from "../Slot.js";
@@ -18,12 +17,10 @@ const validateGetMove = <
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
 >({
-  createMove,
   expectedMove,
   game,
   indexOfMove,
 }: {
-  createMove: Parameters<typeof createMovesWithData>[0]["create"];
   expectedMove: ReturnType<G["getMove"]>;
   game: G;
   indexOfMove: Parameters<G["getMove"]>[0]["indexOfMove"];
@@ -38,12 +35,8 @@ const validateGetMove = <
     expect(move).toStrictEqual(expectedMove);
 
     // Ensure that the returned object does not keep reference to the internal property
-    const modifiedMove = createMove({
-      description: "modified",
-      title: "modified",
-    });
-    expect(game.getMove({ indexOfMove })).toStrictEqual(expectedMove);
-    expect(game.getMove({ indexOfMove })).not.toEqual(modifiedMove);
+    const otherMove = game.getMove({ indexOfMove });
+    expect(otherMove).not.toBe(move);
   }
 };
 

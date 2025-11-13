@@ -6,7 +6,6 @@ import {
 import { expect, test } from "vitest";
 
 import { SnowballMove } from "../Move.js";
-import { createSnowballMove } from "../Move.test/setup.js";
 import { getIndexOfMove } from "./moves.js";
 import { gamesWithDataForUnitTest } from "./setup.js";
 
@@ -28,7 +27,7 @@ const createDescription = ({
 
 Object.values(gamesWithDataForUnitTest).forEach(
   ({ game, keyOfGame, params }) => {
-    params.moves.forEach(({ keyOfMove, move, params: paramsOfMove }) => {
+    params.moves.forEach(({ keyOfMove, move }) => {
       const indexOfMove = getIndexOfMove({ keyOfMove });
 
       test(
@@ -39,12 +38,6 @@ Object.values(gamesWithDataForUnitTest).forEach(
         }),
         () => {
           validateGetMove({
-            createMove: (requiredParams) =>
-              createSnowballMove({
-                ...requiredParams,
-                indexOfSlotInWhichPlacePiece:
-                  paramsOfMove.indexOfSlotInWhichPlacePiece,
-              }),
             expectedMove: move,
             game,
             indexOfMove,
