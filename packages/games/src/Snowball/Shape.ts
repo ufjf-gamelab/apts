@@ -1,5 +1,6 @@
 import type { Integer } from "@repo/engine_core/types.js";
 import type { IndexOfPlayer } from "@repo/game/Player.js";
+import type { IndexOfSlot } from "@repo/game/Slot.js";
 
 import { FIRST_INDEX, INCREMENT_ONE } from "@repo/engine_core/constants.js";
 
@@ -35,7 +36,11 @@ interface Rectangle {
 
 type Shape = Line | Rectangle;
 
-const getNameOfDirection = (direction: Line["direction"]): string => {
+const getNameOfDirection = ({
+  direction,
+}: {
+  direction: Line["direction"];
+}): string => {
   switch (direction) {
     case "horizontal":
     case "vertical":
@@ -49,15 +54,17 @@ const getNameOfDirection = (direction: Line["direction"]): string => {
   }
 };
 
-const getNameAndFormattedSizeOfShape = (
-  shape: Shape,
-): {
+const getNameAndFormattedSizeOfShape = ({
+  shape,
+}: {
+  shape: Shape;
+}): {
   name: string;
   size: string;
 } => {
   if (shape.type === "line") {
     return {
-      name: getNameOfDirection(shape.direction),
+      name: getNameOfDirection({ direction: shape.direction }),
       size: shape.size.toString(),
     };
   }
@@ -76,7 +83,7 @@ const getFormattedDescriptorOfShape = ({
   initialIndexOfRow: Integer;
   shape: Shape;
 }): string => {
-  const { name, size } = getNameAndFormattedSizeOfShape(shape);
+  const { name, size } = getNameAndFormattedSizeOfShape({ shape });
   return `${name} of size ${size} beginning on row ${initialIndexOfRow} and column ${initialIndexOfColumn}`;
 };
 
@@ -296,7 +303,7 @@ const getIndexesOfRectangle = ({
   return validIndexes;
 };
 
-const getIndexesOfShape = ({
+const getIndexesOfSlots = ({
   columnLength,
   initialIndexOfColumn,
   initialIndexOfRow,
@@ -308,7 +315,7 @@ const getIndexesOfShape = ({
   initialIndexOfRow: Integer;
   rowLength: Integer;
   shape: Shape;
-}): Integer[] => {
+}): IndexOfSlot[] => {
   const { type } = shape;
   switch (type) {
     case "line": {
@@ -354,7 +361,7 @@ const getIndexOfPlayerWhoIsOccupyingShape = ({
   shape: Shape;
   slots: SnowballSlot[];
 }): IndexOfPlayer | null => {
-  const indexesOfSlots = getIndexesOfShape({
+  const indexesOfSlots = getIndexesOfSlots({
     columnLength,
     initialIndexOfColumn,
     initialIndexOfRow,
@@ -446,8 +453,9 @@ export type { Line, Rectangle, Shape };
 export {
   COLUMN_LENGTH,
   getFormattedDescriptorOfShape,
-  getIndexesOfShape,
+  getIndexesOfSlots,
   getIndexOfPlayerWhoIsOccupyingShape,
+  getNameAndFormattedSizeOfShape,
   getNameOfDirection,
   getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots,
   ROW_LENGTH,

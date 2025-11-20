@@ -108,8 +108,10 @@ const getIndexedSnowballSlotsWithData = () =>
     slotsWithData.southeastOfSoutheast,
   ] satisfies SnowballSlotWithData[];
 
+const indexedSlots = getIndexedSnowballSlotsWithData();
+
 const getIndexOfSlot = ({ keyOfSlot }: { keyOfSlot: string }) => {
-  const indexOfSlot = getIndexedSnowballSlotsWithData().findIndex(
+  const indexOfSlot = indexedSlots.findIndex(
     (slot) => slot.keyOfSlot === keyOfSlot,
   );
   if (indexOfSlot === NOT_FOUND_INDEX) {

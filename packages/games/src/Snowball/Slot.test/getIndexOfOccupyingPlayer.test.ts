@@ -61,7 +61,9 @@ const createDescription = ({
     }),
   });
 
-const testGetIndexOfOccupyingPlayer = (
+const testGetIndexOfOccupyingPlayer = ({
+  slotsWithDataToTest,
+}: {
   slotsWithDataToTest: Record<
     string,
     {
@@ -73,8 +75,8 @@ const testGetIndexOfOccupyingPlayer = (
       };
       slot: SnowballSlot;
     }
-  >,
-) => {
+  >;
+}) => {
   Object.values(slotsWithDataToTest).forEach(({ keyOfSlot, params, slot }) => {
     test(
       createDescription({
@@ -91,5 +93,7 @@ const testGetIndexOfOccupyingPlayer = (
   });
 };
 
-testGetIndexOfOccupyingPlayer(slotsWithData);
-testGetIndexOfOccupyingPlayer(slotsWithDataForUnitTest);
+testGetIndexOfOccupyingPlayer({ slotsWithDataToTest: slotsWithData });
+testGetIndexOfOccupyingPlayer({
+  slotsWithDataToTest: slotsWithDataForUnitTest,
+});
