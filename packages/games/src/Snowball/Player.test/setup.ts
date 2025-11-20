@@ -5,6 +5,7 @@ import {
 } from "@repo/game/Player.test/setup.js";
 
 import { SnowballPlayer } from "../Player.js";
+import { recordOfRequiredParamsOfPlayers } from "./records.js";
 
 type DerivedSnowballPlayerParams = RequiredSnowballPlayerParams;
 
@@ -38,11 +39,6 @@ const createSnowballPlayer = ({
     name,
     symbol,
   });
-
-const recordOfRequiredParamsOfPlayers = {
-  alice: { name: "Alice", symbol: "X" },
-  bruno: { name: "Bruno", symbol: "O" },
-} as const satisfies Record<string, RequiredSnowballPlayerParams>;
 
 const playersWithData = createPlayersWithData({
   create: createSnowballPlayer,

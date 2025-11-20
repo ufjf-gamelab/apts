@@ -108,8 +108,14 @@ const getIndexedSnowballMovesWithData = () =>
     movesWithData.southeastOfSoutheast,
   ] satisfies SnowballMoveWithData[];
 
-const getIndexOfMove = ({ keyOfMove }: { keyOfMove: string }) => {
-  const indexOfMove = getIndexedSnowballMovesWithData().findIndex(
+const getIndexOfMove = ({
+  indexedMoves,
+  keyOfMove,
+}: {
+  indexedMoves: SnowballMoveWithData[];
+  keyOfMove: string;
+}) => {
+  const indexOfMove = indexedMoves.findIndex(
     (move) => move.keyOfMove === keyOfMove,
   );
   if (indexOfMove === NOT_FOUND_INDEX) {
@@ -118,4 +124,16 @@ const getIndexOfMove = ({ keyOfMove }: { keyOfMove: string }) => {
   return indexOfMove;
 };
 
-export { getIndexedSnowballMovesWithData, getIndexOfMove };
+const getIndexOfMoveOnDefaultMoves = ({
+  keyOfMove,
+}: Pick<Parameters<typeof getIndexOfMove>[0], "keyOfMove">) =>
+  getIndexOfMove({
+    indexedMoves: getIndexedSnowballMovesWithData(),
+    keyOfMove,
+  });
+
+export {
+  getIndexedSnowballMovesWithData,
+  getIndexOfMove,
+  getIndexOfMoveOnDefaultMoves,
+};

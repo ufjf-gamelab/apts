@@ -413,7 +413,7 @@ const recordOfRequiredParamsOfSlotsForUnitTest = {
 
   // Southeast
   southeastOfCenter: {
-    indexOfOccupyingPlayer: null,
+    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
   },
   southeastOfEast: {
     indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),

@@ -8,8 +8,11 @@ import {
 } from "@repo/game/State.test/setup.js";
 
 import type { SnowballGame } from "../Game.js";
+import type { SnowballGameWithData } from "../Game.test/setup.js";
 import type { SnowballMove } from "../Move.js";
+import type { SnowballMoveWithData } from "../Move.test/setup.js";
 import type { SnowballPlayer } from "../Player.js";
+import type { SnowballPlayerWithData } from "../Player.test/setup.js";
 import type { SnowballScore } from "../Score.js";
 import type { SnowballSlot } from "../Slot.js";
 
@@ -24,7 +27,10 @@ type DerivedSnowballStateParams = DerivedStateParams<
   SnowballState,
   SnowballScore,
   SnowballSlot,
-  SnowballSlotWithData
+  SnowballMoveWithData,
+  SnowballPlayerWithData,
+  SnowballSlotWithData,
+  SnowballGameWithData
 >;
 
 type RequiredSnowballStateParams = Pick<
@@ -35,9 +41,12 @@ type RequiredSnowballStateParams = Pick<
     SnowballState,
     SnowballScore,
     SnowballSlot,
-    SnowballSlotWithData
+    SnowballMoveWithData,
+    SnowballPlayerWithData,
+    SnowballSlotWithData,
+    SnowballGameWithData
   >,
-  "game" | "indexOfPlayer" | "score" | "slots"
+  "game" | "indexOfPlayer" | "score" | "slots" | "validMoves"
 >;
 
 interface SnowballStateWithData<

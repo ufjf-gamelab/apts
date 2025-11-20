@@ -1,17 +1,6 @@
 import type { RequiredSnowballMoveParams } from "./setup.js";
 
-import {
-  getIndexedSnowballSlotsWithData,
-  getIndexOfSlot,
-} from "../Game.test/slots.js";
-
-const getIndexOfSlotOnDefaultSlots = ({
-  keyOfSlot,
-}: Pick<Parameters<typeof getIndexOfSlot>[0], "keyOfSlot">) =>
-  getIndexOfSlot({
-    indexedSlots: getIndexedSnowballSlotsWithData(),
-    keyOfSlot,
-  });
+import { getIndexOfSlotOnDefaultSlots } from "../Game.test/slots.js";
 
 const recordOfRequiredParamsOfMoves = {
   // Center

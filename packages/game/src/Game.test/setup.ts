@@ -88,13 +88,16 @@ const deriveGameParams = <
   name,
   players,
   slots,
-}: RequiredGameParams<
-  M,
-  P,
-  Sl,
-  ExtendedMoveWithData,
-  ExtendedPlayerWithData,
-  ExtendedSlotWithData
+}: Pick<
+  RequiredGameParams<
+    M,
+    P,
+    Sl,
+    ExtendedMoveWithData,
+    ExtendedPlayerWithData,
+    ExtendedSlotWithData
+  >,
+  "moves" | "name" | "players" | "slots"
 >): DerivedGameParams<
   M,
   P,

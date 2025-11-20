@@ -56,6 +56,16 @@ class SnowballGame extends Game<
     return new SnowballScore({ pointsOfEachPlayer });
   }
 
+  public override getIndexesOfValidMoves({ state }: { state: SnowballState }) {
+    const indexesOfValidMoves = new Set<IndexOfMove>();
+    this.getMoves().forEach((move, indexOfMove) => {
+      if (this.isMoveValid({ move, state })) {
+        indexesOfValidMoves.add(indexOfMove);
+      }
+    });
+    return indexesOfValidMoves;
+  }
+
   public override getIndexOfNextPlayer({
     state,
   }: {
@@ -64,20 +74,6 @@ class SnowballGame extends Game<
     const currentIndexOfPlayer = state.getIndexOfPlayer();
     const quantityOfPlayers = this.getPlayers().length;
     return (currentIndexOfPlayer + ADVANCE_TURN) % quantityOfPlayers;
-  }
-
-  public override getValidMoves({
-    state,
-  }: {
-    state: SnowballState;
-  }): ReadonlyMap<IndexOfMove, SnowballMove> {
-    const validMoves = new Map<IndexOfMove, SnowballMove>();
-    this.getMoves().forEach((move, indexOfMove) => {
-      if (this.isMoveValid({ move, state })) {
-        validMoves.set(indexOfMove, move);
-      }
-    });
-    return validMoves;
   }
 
   // eslint-disable-next-line @typescript-eslint/class-methods-use-this

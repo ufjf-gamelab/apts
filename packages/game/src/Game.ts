@@ -43,6 +43,12 @@ abstract class Game<
 
   public abstract constructInitialState(): S;
 
+  public abstract getIndexesOfValidMoves({
+    state,
+  }: {
+    state: S;
+  }): ReadonlySet<IndexOfMove>;
+
   public abstract getIndexOfNextPlayer({ state }: { state: S }): IndexOfPlayer;
 
   public getMove({
@@ -76,10 +82,10 @@ abstract class Game<
     }
     return player.clone();
   }
-
   public getPlayers(): typeof this.players {
     return this.players.map((player) => player.clone());
   }
+
   public getQuantityOfPlayers() {
     return this.players.length;
   }
@@ -87,12 +93,6 @@ abstract class Game<
   public getQuantityOfSlots() {
     return this.slots.length;
   }
-
-  public abstract getValidMoves({
-    state,
-  }: {
-    state: S;
-  }): ReadonlyMap<IndexOfMove, M>;
 
   public abstract isFinal({ state }: { state: S }): boolean;
 

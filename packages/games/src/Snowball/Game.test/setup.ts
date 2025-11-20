@@ -13,9 +13,7 @@ import { SnowballGame } from "../Game.js";
 import { type SnowballMoveWithData } from "../Move.test/setup.js";
 import { type SnowballPlayerWithData } from "../Player.test/setup.js";
 import { type SnowballSlotWithData } from "../Slot.test/setup.js";
-import { getIndexedSnowballMovesWithData } from "./moves.js";
-import { getIndexedSnowballPlayersWithData } from "./players.js";
-import { getIndexedSnowballSlotsWithData } from "./slots.js";
+import { recordOfRequiredParamsOfGamesForUnitTest } from "./records.js";
 
 type DerivedSnowballGameParams = DerivedGameParams<
   SnowballMove,
@@ -64,19 +62,10 @@ const createSnowballGame = ({
     slots,
   });
 
-const recordOfRequiredParamsOfGames = {
-  snowballWith9RowsAnd9Columns: {
-    moves: getIndexedSnowballMovesWithData(),
-    name: "Snowball",
-    players: getIndexedSnowballPlayersWithData(),
-    slots: getIndexedSnowballSlotsWithData(),
-  },
-} as const satisfies Record<string, RequiredSnowballGameParams>;
-
 const gamesWithDataForUnitTest = createGamesWithData({
   create: createSnowballGame,
   deriveParams: deriveSnowballGameParams,
-  recordOfRequiredParams: recordOfRequiredParamsOfGames,
+  recordOfRequiredParams: recordOfRequiredParamsOfGamesForUnitTest,
 });
 
 export type {

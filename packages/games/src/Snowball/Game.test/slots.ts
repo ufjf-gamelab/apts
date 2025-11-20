@@ -228,8 +228,26 @@ const getIndexOfSlot = ({
   return indexOfSlot;
 };
 
+const getIndexOfSlotOnDefaultSlots = ({
+  keyOfSlot,
+}: Pick<Parameters<typeof getIndexOfSlot>[0], "keyOfSlot">) =>
+  getIndexOfSlot({
+    indexedSlots: getIndexedSnowballSlotsWithData(),
+    keyOfSlot,
+  });
+
+const getIndexOfSlotOnUnitTestSlots = ({
+  keyOfSlot,
+}: Pick<Parameters<typeof getIndexOfSlot>[0], "keyOfSlot">) =>
+  getIndexOfSlot({
+    indexedSlots: getIndexedSnowballSlotsWithDataForUnitTest(),
+    keyOfSlot,
+  });
+
 export {
   getIndexedSnowballSlotsWithData,
   getIndexedSnowballSlotsWithDataForUnitTest,
   getIndexOfSlot,
+  getIndexOfSlotOnDefaultSlots,
+  getIndexOfSlotOnUnitTestSlots,
 };

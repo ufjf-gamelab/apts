@@ -32,7 +32,7 @@ Object.values(statesWithDataForUnitTest).forEach(({ keyOfState, params }) => {
       const extractedSlots = slots.map((slot) => slot.slot);
 
       const newState = new SnowballState({
-        game,
+        game: game.game,
         indexOfPlayer,
         score,
         slots: extractedSlots,
@@ -49,7 +49,7 @@ Object.values(statesWithDataForUnitTest).forEach(({ keyOfState, params }) => {
         SnowballSlot
       >({
         params: {
-          game,
+          game: game.game,
           indexOfPlayer,
           score,
           slots: extractedSlots,

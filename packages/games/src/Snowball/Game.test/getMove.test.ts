@@ -6,7 +6,7 @@ import {
 import { expect, test } from "vitest";
 
 import { SnowballMove } from "../Move.js";
-import { getIndexOfMove } from "./moves.js";
+import { getIndexedSnowballMovesWithData, getIndexOfMove } from "./moves.js";
 import { gamesWithDataForUnitTest } from "./setup.js";
 
 const createDescription = ({
@@ -25,10 +25,12 @@ const createDescription = ({
     }),
   });
 
+const indexedMoves = getIndexedSnowballMovesWithData();
+
 Object.values(gamesWithDataForUnitTest).forEach(
   ({ game, keyOfGame, params }) => {
     params.moves.forEach(({ keyOfMove, move }) => {
-      const indexOfMove = getIndexOfMove({ keyOfMove });
+      const indexOfMove = getIndexOfMove({ indexedMoves, keyOfMove });
 
       test(
         createDescription({

@@ -2,20 +2,9 @@ import type { Shape } from "../Shape.js";
 import type { SnowballShapeParams, SnowballShapeResult } from "./setup.js";
 
 import { getIndexOfPlayer } from "../Game.test/players.js";
-import {
-  getIndexedSnowballSlotsWithDataForUnitTest,
-  getIndexOfSlot,
-} from "../Game.test/slots.js";
+import { getIndexOfSlotOnUnitTestSlots } from "../Game.test/slots.js";
 import { scoresWithDataForUnitTest } from "../Score.test/setup.js";
 import { slotsWithDataForUnitTest } from "../Slot.test/setup.js";
-
-const getIndexOfSlotOnUnitTestSlots = ({
-  keyOfSlot,
-}: Pick<Parameters<typeof getIndexOfSlot>[0], "keyOfSlot">) =>
-  getIndexOfSlot({
-    indexedSlots: getIndexedSnowballSlotsWithDataForUnitTest(),
-    keyOfSlot,
-  });
 
 const horizontalLine = {
   direction: "horizontal",
@@ -1044,7 +1033,9 @@ const recordOfParamsOfShapesForUnitTest = {
   },
   principalDiagonalOfLength5OnRow1AndColumn1: {
     params: {
-      indexOfPlayerWhoIsOccupyingShape: null,
+      indexOfPlayerWhoIsOccupyingShape: getIndexOfPlayer({
+        keyOfPlayer: "alice",
+      }),
       initialIndexOfColumn: 1,
       initialIndexOfRow: 1,
       shape: principalDiagonal,
@@ -1067,8 +1058,7 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfCenter.keyOfSlot,
         }),
       ],
-      score:
-        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
+      score: scoresWithDataForUnitTest.aliceWith1PointAndBrunoWith0Points.score,
     },
   },
 
