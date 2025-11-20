@@ -34,7 +34,8 @@ Object.values(gamesWithDataForUnitTest).forEach(
     Object.values(statesWithDataForUnitTest).forEach(
       ({ keyOfState, params: paramsOfState, state }) => {
         const expectedIndexOfNextPlayer =
-          (paramsOfState.indexOfPlayer + INCREMENT_ONE) % quantityOfPlayers;
+          (paramsOfState.player.indexOfPlayer + INCREMENT_ONE) %
+          quantityOfPlayers;
 
         test(
           createDescription({

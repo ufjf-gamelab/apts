@@ -55,7 +55,7 @@ const createDescriptionForTestOfGetPointsOfPlayer = <
 }): string =>
   createDescriptionForTestsOfGetter({
     methodDescription: `getPointsOfPlayer({ indexOfPlayer: ${keyOfPlayer} })`,
-    returnedValue: `${expectedPointsOfPlayer}`,
+    returnedValue: expectedPointsOfPlayer,
   });
 
 export {

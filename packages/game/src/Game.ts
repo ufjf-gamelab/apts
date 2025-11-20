@@ -63,7 +63,7 @@ abstract class Game<
     return move.clone();
   }
 
-  public getMoves(): typeof this.moves {
+  public getMoves() {
     return this.moves.map((move) => move.clone());
   }
 
@@ -82,7 +82,7 @@ abstract class Game<
     }
     return player.clone();
   }
-  public getPlayers(): typeof this.players {
+  public getPlayers() {
     return this.players.map((player) => player.clone());
   }
 
@@ -104,7 +104,7 @@ abstract class Game<
     state: S;
   }): S;
 
-  protected getSlots(): typeof this.slots {
+  protected getSlots() {
     return this.slots.map((slot) => slot.clone());
   }
 }

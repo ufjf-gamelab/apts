@@ -25,17 +25,17 @@ const validateGetSlot = <Sl extends Slot<Sl>>({
 };
 
 const createDescriptionForTestOfGetSlot = <Sl extends Slot<Sl>>({
-  expectedKeyOfSlot,
   indexOfSlot,
+  keyOfSlot,
   slots,
 }: {
-  expectedKeyOfSlot: string;
   indexOfSlot: PropsOfGetSlot<Sl>["indexOfSlot"];
+  keyOfSlot: string;
   slots: string;
 }): string =>
   createDescriptionForTestsOfGetter({
     methodDescription: `Slot.getSlot({ indexOfSlot: ${indexOfSlot}, slots: ${slots} })`,
-    returnedValue: expectedKeyOfSlot,
+    returnedValue: keyOfSlot,
   });
 
 export { createDescriptionForTestOfGetSlot, validateGetSlot };

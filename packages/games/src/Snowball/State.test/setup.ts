@@ -17,7 +17,7 @@ import type { SnowballSlot } from "../Slot.js";
 
 import { type SnowballSlotWithData } from "../Slot.test/setup.js";
 import { SnowballState } from "../State.js";
-import { recordOfRequiredParamsOfStates } from "./records.js";
+import { recordOfRequiredParamsOfStatesForUnitTest } from "./records.js";
 
 type DerivedSnowballStateParams = DerivedStateParams<
   SnowballGame,
@@ -25,12 +25,7 @@ type DerivedSnowballStateParams = DerivedStateParams<
   SnowballPlayer,
   SnowballState,
   SnowballScore,
-  SnowballSlot,
-  SnowballGameWithData,
-  SnowballMoveWithData,
-  SnowballPlayerWithData,
-  SnowballScoreWithData,
-  SnowballSlotWithData
+  SnowballSlot
 >;
 
 type RequiredSnowballStateParams = Pick<
@@ -47,7 +42,7 @@ type RequiredSnowballStateParams = Pick<
     SnowballScoreWithData,
     SnowballSlotWithData
   >,
-  "game" | "indexOfPlayer" | "score" | "slots" | "validMoves"
+  "game" | "player" | "score" | "slots" | "validMoves"
 >;
 
 interface SnowballStateWithData<
@@ -60,13 +55,13 @@ interface SnowballStateWithData<
 
 const deriveSnowballStateParams = ({
   game,
-  indexOfPlayer,
+  player,
   score,
   slots,
 }: RequiredSnowballStateParams): DerivedSnowballStateParams =>
   deriveStateParams({
     game,
-    indexOfPlayer,
+    player,
     score,
     slots,
   });
@@ -87,7 +82,7 @@ const createSnowballState = ({
 const statesWithDataForUnitTest = createStatesWithData({
   create: createSnowballState,
   deriveParams: deriveSnowballStateParams,
-  recordOfRequiredParams: recordOfRequiredParamsOfStates,
+  recordOfRequiredParams: recordOfRequiredParamsOfStatesForUnitTest,
 });
 
 export type {

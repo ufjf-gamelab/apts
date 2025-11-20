@@ -12,18 +12,18 @@ type PropsOfCreateDescriptionForTestOfGetSlot = Parameters<
 >[0];
 
 const createDescription = ({
-  expectedKeyOfSlot,
   indexOfSlot,
+  keyOfSlot,
   slots,
 }: {
-  expectedKeyOfSlot: PropsOfCreateDescriptionForTestOfGetSlot["expectedKeyOfSlot"];
   indexOfSlot: PropsOfCreateDescriptionForTestOfGetSlot["indexOfSlot"];
+  keyOfSlot: PropsOfCreateDescriptionForTestOfGetSlot["keyOfSlot"];
   slots: PropsOfCreateDescriptionForTestOfGetSlot["slots"];
 }) =>
   createDescriptionForTest({
     description: createDescriptionForTestOfGetSlot({
-      expectedKeyOfSlot,
       indexOfSlot,
+      keyOfSlot,
       slots,
     }),
   });
@@ -32,8 +32,8 @@ Object.values(slotsWithDataForUnitTest).forEach(
   ({ keyOfSlot, slot }, index) => {
     test(
       createDescription({
-        expectedKeyOfSlot: keyOfSlot,
         indexOfSlot: index,
+        keyOfSlot,
         slots: `[${Object.values(slotsWithDataForUnitTest)
           .map(({ keyOfSlot: innerKeyOfSlot }) => innerKeyOfSlot)
           .join(", ")}]`,

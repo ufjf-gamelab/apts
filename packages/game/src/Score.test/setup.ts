@@ -1,4 +1,13 @@
-import { type Score, type ScoreParams } from "../Score.js";
+import type { Player } from "../Player.js";
+import type { Points, Score, ScoreParams } from "../Score.js";
+
+const createDescriptionForPlayerAndItsPoints = <P extends Player<P>>({
+  keyOfPlayer,
+  points,
+}: {
+  keyOfPlayer: string;
+  points: Points;
+}): string => `${keyOfPlayer}: ${points}`;
 
 type DerivedScoreParams = RequiredScoreParams;
 
@@ -67,4 +76,8 @@ const createScoresWithData = <
 };
 
 export type { DerivedScoreParams, RequiredScoreParams, ScoreWithData };
-export { createScoresWithData, deriveScoreParams };
+export {
+  createDescriptionForPlayerAndItsPoints,
+  createScoresWithData,
+  deriveScoreParams,
+};

@@ -30,14 +30,14 @@ Object.values(gamesWithDataForUnitTest).forEach(({ game, keyOfGame }) => {
       affix: keyOfGame,
       expectedInitialState:
         statesWithDataForUnitTest
-          .noSlotsAreFilledAndAliceHasNoPointsAndBrunoHasNoPointsAndAliceIsTheCurrentPlayer
+          .noSlotsAreFilledAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer
           .state,
     }),
     () => {
       validateConstructInitialState({
         expectedInitialState:
           statesWithDataForUnitTest
-            .noSlotsAreFilledAndAliceHasNoPointsAndBrunoHasNoPointsAndAliceIsTheCurrentPlayer
+            .noSlotsAreFilledAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer
             .state,
         game,
       });

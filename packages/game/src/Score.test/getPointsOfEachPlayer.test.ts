@@ -6,16 +6,10 @@ import { expect } from "vitest";
 import type { IndexOfPlayer, Player } from "../Player.js";
 import type { Points, Score } from "../Score.js";
 
+import { createDescriptionForPlayerAndItsPoints } from "./setup.js";
+
 const INDEX_OF_FIRST_PLAYER = 0;
 const ZERO_POINTS = 0;
-
-const createDescriptionForPlayerAndItsPoints = <P extends Player<P>>({
-  keyOfPlayer,
-  points,
-}: {
-  keyOfPlayer: string;
-  points: Points;
-}): string => `${keyOfPlayer}: ${points}`;
 
 const validateGetPointsOfEachPlayer = <Sc extends Score<Sc>>({
   expectedPointsOfEachPlayer,
