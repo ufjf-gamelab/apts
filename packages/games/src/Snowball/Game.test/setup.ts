@@ -17,10 +17,6 @@ import { getIndexedSnowballMovesWithData } from "./moves.js";
 import { getIndexedSnowballPlayersWithData } from "./players.js";
 import { getIndexedSnowballSlotsWithData } from "./slots.js";
 
-// const COLUMN_LENGTH: Integer = 9;
-// const ROW_LENGTH: Integer = 9;
-// const QUANTITY_OF_SLOTS: Integer = COLUMN_LENGTH * ROW_LENGTH;
-
 type DerivedSnowballGameParams = DerivedGameParams<
   SnowballMove,
   SnowballPlayer,

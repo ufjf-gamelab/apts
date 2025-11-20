@@ -9,8 +9,9 @@
   "devDependencies": {
     "@repo/eslint_config": "workspace:*",
     "@repo/typescript_config": "workspace:*",
+    "@vitest/ui": "^4.0.10",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.8"
+    "vitest": "^4.0.10"
   },
   "exports": {
     "./Snowball/*": "./src/Snowball/*"
@@ -20,13 +21,13 @@
   "private": true,
   "scripts": {
     "build": "tsc",
+    "check-types": "tsc",
     "dev": "tsc --watch",
     "format": "prettier . -w",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "test": "vitest run",
-    "test:watch": "vitest --watch",
-    "check-types": "tsc"
+    "test:watch": "vitest --watch"
   },
   "type": "module",
   "version": "0.0.1"

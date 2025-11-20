@@ -9,13 +9,16 @@ import { Game } from "@repo/game/Game.js";
 import type { SnowballMove } from "./Move.js";
 import type { SnowballPlayer } from "./Player.js";
 
-import { SnowballScore } from "./Score.js";
+import {
+  calculateUpdatedScore,
+  constructInitialPointsForEachPlayer,
+  SnowballScore,
+} from "./Score.js";
 import { SnowballSlot } from "./Slot.js";
 import { SnowballState } from "./State.js";
 
 const ADVANCE_TURN = INCREMENT_ONE;
 const INDEX_OF_FIRST_PLAYER: IndexOfPlayer = 0;
-const ZERO_POINTS: Points = 0;
 
 const AMOUNT_OF_POINTS_TO_FINISH_MATCH: Points = 15;
 const AMOUNT_OF_SLOTS_TO_FINISH_MATCH: Integer = 49;
@@ -28,10 +31,6 @@ class SnowballGame extends Game<
   SnowballScore,
   SnowballSlot
 > {
-  public calculateScore({ slots }: { slots: SnowballSlot[] }): SnowballScore {
-    return this.constructScoreForInitialState();
-  }
-
   public override clone() {
     return new SnowballGame({
       moves: this.getMoves(),
@@ -146,7 +145,10 @@ class SnowballGame extends Game<
     }
 
     const indexOfNextPlayer = this.getIndexOfNextPlayer({ state });
-    const updatedScore = this.calculateScore({ slots: updatedSlots });
+    const updatedScore = calculateUpdatedScore({
+      currentScore: state.getScore(),
+      slots: updatedSlots,
+    });
 
     return new SnowballState({
       game: this,
@@ -157,9 +159,8 @@ class SnowballGame extends Game<
   }
 
   private constructScoreForInitialState(): SnowballScore {
-    const pointsOfEachPlayer = new Map<IndexOfPlayer, Points>();
-    this.getPlayers().forEach((_, indexOfPlayer) => {
-      pointsOfEachPlayer.set(indexOfPlayer, ZERO_POINTS);
+    const pointsOfEachPlayer = constructInitialPointsForEachPlayer({
+      quantityOfPlayers: this.getQuantityOfPlayers(),
     });
     return new SnowballScore({ pointsOfEachPlayer });
   }

@@ -88,7 +88,7 @@ export const config: Linter.Config[] = [
         "error",
         {
           builtinGlobals: false,
-          hoist: "all",
+          hoist: "types",
           ignoreFunctionTypeParameterNameValueShadow: false,
           ignoreTypeValueShadow: false,
         },

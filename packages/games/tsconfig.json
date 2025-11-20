@@ -4,8 +4,16 @@
     "outDir": "dist",
     "rootDir": "."
   },
-  "exclude": ["node_modules", "dist"],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
   "extends": "@repo/typescript_config/library.json",
-  "files": ["eslint.config.ts", "vitest.config.ts"],
-  "include": ["src"]
+  "files": [
+    "eslint.config.ts",
+    "vitest.config.ts"
+  ],
+  "include": [
+    "src"
+  ]
 }
