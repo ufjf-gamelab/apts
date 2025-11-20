@@ -34,11 +34,9 @@ Object.values(statesWithDataForUnitTest).forEach(({ keyOfState, params }) => {
       const newState = new SnowballState({
         game: game.game,
         indexOfPlayer,
-        score,
+        score: score.score,
         slots: extractedSlots,
       });
-
-      console.log(newState.toString());
 
       validateConstructor<
         SnowballGame,
@@ -51,7 +49,7 @@ Object.values(statesWithDataForUnitTest).forEach(({ keyOfState, params }) => {
         params: {
           game: game.game,
           indexOfPlayer,
-          score,
+          score: score.score,
           slots: extractedSlots,
         },
         state: newState,

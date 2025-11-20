@@ -19,7 +19,7 @@ interface SnowballScoreWithData<
 > {
   keyOfScore: string;
   params: Params;
-  player: SnowballScore;
+  score: SnowballScore;
 }
 
 const deriveSnowballScoreParams = ({

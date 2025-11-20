@@ -32,8 +32,7 @@ const recordOfRequiredParamsOfStates = {
     {
       game: gamesWithDataForUnitTest.snowballWith9RowsAnd9Columns,
       indexOfPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-      score:
-        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
+      score: scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points,
       slots: getIndexedSnowballSlotsWithData(),
       validMoves: new Map(
         getIndexedSnowballMovesWithData().map((move, indexOfMove) => [
@@ -42,12 +41,11 @@ const recordOfRequiredParamsOfStates = {
         ]),
       ),
     },
-  slotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreDilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
+  slotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     {
       game: gamesWithDataForUnitTest.snowballWith9RowsAnd9Columns,
       indexOfPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-      score:
-        scoresWithDataForUnitTest.aliceWith38PointsAndBrunoWith26Points.score,
+      score: scoresWithDataForUnitTest.aliceWith38PointsAndBrunoWith26Points,
       slots: getIndexedSnowballSlotsWithDataForUnitTest(),
       validMoves: new Map([
         constructTupleForMove({

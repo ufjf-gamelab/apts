@@ -5,6 +5,7 @@ import type { MoveWithData } from "../Move.test/setup.js";
 import type { Player } from "../Player.js";
 import type { PlayerWithData } from "../Player.test/setup.js";
 import type { Score } from "../Score.js";
+import type { ScoreWithData } from "../Score.test/setup.js";
 import type { Slot } from "../Slot.js";
 import type { SlotWithData } from "../Slot.test/setup.js";
 
@@ -17,9 +18,6 @@ type DerivedStateParams<
   S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
-  ExtendedMoveWithData extends MoveWithData<M>,
-  ExtendedPlayerWithData extends PlayerWithData<P>,
-  ExtendedSlotWithData extends SlotWithData<Sl>,
   ExtendedGameWithData extends GameWithData<
     G,
     M,
@@ -31,6 +29,10 @@ type DerivedStateParams<
     ExtendedPlayerWithData,
     ExtendedSlotWithData
   >,
+  ExtendedMoveWithData extends MoveWithData<M>,
+  ExtendedPlayerWithData extends PlayerWithData<P>,
+  ExtendedScoreWithData extends ScoreWithData<Sc>,
+  ExtendedSlotWithData extends SlotWithData<Sl>,
 > = Pick<
   RequiredStateParams<
     G,
@@ -39,14 +41,15 @@ type DerivedStateParams<
     S,
     Sc,
     Sl,
+    ExtendedGameWithData,
     ExtendedMoveWithData,
     ExtendedPlayerWithData,
-    ExtendedSlotWithData,
-    ExtendedGameWithData
+    ExtendedScoreWithData,
+    ExtendedSlotWithData
   >,
-  "indexOfPlayer" | "score"
+  "indexOfPlayer"
 > &
-  Pick<StateParams<G, M, P, S, Sc, Sl>, "game" | "slots">;
+  Pick<StateParams<G, M, P, S, Sc, Sl>, "game" | "score" | "slots">;
 
 type RequiredStateParams<
   G extends Game<G, M, P, S, Sc, Sl>,
@@ -55,9 +58,6 @@ type RequiredStateParams<
   S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
-  ExtendedMoveWithData extends MoveWithData<M>,
-  ExtendedPlayerWithData extends PlayerWithData<P>,
-  ExtendedSlotWithData extends SlotWithData<Sl>,
   ExtendedGameWithData extends GameWithData<
     G,
     M,
@@ -69,8 +69,13 @@ type RequiredStateParams<
     ExtendedPlayerWithData,
     ExtendedSlotWithData
   >,
-> = Pick<StateParams<G, M, P, S, Sc, Sl>, "indexOfPlayer" | "score"> & {
+  ExtendedMoveWithData extends MoveWithData<M>,
+  ExtendedPlayerWithData extends PlayerWithData<P>,
+  ExtendedScoreWithData extends ScoreWithData<Sc>,
+  ExtendedSlotWithData extends SlotWithData<Sl>,
+> = Pick<StateParams<G, M, P, S, Sc, Sl>, "indexOfPlayer"> & {
   game: ExtendedGameWithData;
+  score: ExtendedScoreWithData;
   slots: readonly ExtendedSlotWithData[];
   validMoves: ReadonlyMap<IndexOfMove, ExtendedMoveWithData>;
 };
@@ -82,9 +87,6 @@ interface StateWithData<
   S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
-  ExtendedMoveWithData extends MoveWithData<M>,
-  ExtendedPlayerWithData extends PlayerWithData<P>,
-  ExtendedSlotWithData extends SlotWithData<Sl>,
   ExtendedGameWithData extends GameWithData<
     G,
     M,
@@ -96,6 +98,10 @@ interface StateWithData<
     ExtendedPlayerWithData,
     ExtendedSlotWithData
   >,
+  ExtendedMoveWithData extends MoveWithData<M>,
+  ExtendedPlayerWithData extends PlayerWithData<P>,
+  ExtendedScoreWithData extends ScoreWithData<Sc>,
+  ExtendedSlotWithData extends SlotWithData<Sl>,
   Params extends RequiredStateParams<
     G,
     M,
@@ -103,10 +109,11 @@ interface StateWithData<
     S,
     Sc,
     Sl,
+    ExtendedGameWithData,
     ExtendedMoveWithData,
     ExtendedPlayerWithData,
-    ExtendedSlotWithData,
-    ExtendedGameWithData
+    ExtendedScoreWithData,
+    ExtendedSlotWithData
   > = RequiredStateParams<
     G,
     M,
@@ -114,10 +121,11 @@ interface StateWithData<
     S,
     Sc,
     Sl,
+    ExtendedGameWithData,
     ExtendedMoveWithData,
     ExtendedPlayerWithData,
-    ExtendedSlotWithData,
-    ExtendedGameWithData
+    ExtendedScoreWithData,
+    ExtendedSlotWithData
   >,
 > {
   keyOfState: string;
@@ -132,9 +140,6 @@ const deriveStateParams = <
   S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
-  ExtendedMoveWithData extends MoveWithData<M>,
-  ExtendedPlayerWithData extends PlayerWithData<P>,
-  ExtendedSlotWithData extends SlotWithData<Sl>,
   ExtendedGameWithData extends GameWithData<
     G,
     M,
@@ -146,6 +151,10 @@ const deriveStateParams = <
     ExtendedPlayerWithData,
     ExtendedSlotWithData
   >,
+  ExtendedMoveWithData extends MoveWithData<M>,
+  ExtendedPlayerWithData extends PlayerWithData<P>,
+  ExtendedScoreWithData extends ScoreWithData<Sc>,
+  ExtendedSlotWithData extends SlotWithData<Sl>,
 >({
   game,
   indexOfPlayer,
@@ -159,10 +168,11 @@ const deriveStateParams = <
     S,
     Sc,
     Sl,
+    ExtendedGameWithData,
     ExtendedMoveWithData,
     ExtendedPlayerWithData,
-    ExtendedSlotWithData,
-    ExtendedGameWithData
+    ExtendedScoreWithData,
+    ExtendedSlotWithData
   >,
   "game" | "indexOfPlayer" | "score" | "slots"
 >): DerivedStateParams<
@@ -172,14 +182,15 @@ const deriveStateParams = <
   S,
   Sc,
   Sl,
+  ExtendedGameWithData,
   ExtendedMoveWithData,
   ExtendedPlayerWithData,
-  ExtendedSlotWithData,
-  ExtendedGameWithData
+  ExtendedScoreWithData,
+  ExtendedSlotWithData
 > => ({
   game: game.game,
   indexOfPlayer,
-  score,
+  score: score.score,
   slots: Object.values(slots).map(({ slot }) => slot),
 });
 
@@ -191,9 +202,6 @@ const createStatesWithData = <
   S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
-  ExtendedMoveWithData extends MoveWithData<M>,
-  ExtendedPlayerWithData extends PlayerWithData<P>,
-  ExtendedSlotWithData extends SlotWithData<Sl>,
   ExtendedGameWithData extends GameWithData<
     G,
     M,
@@ -205,6 +213,10 @@ const createStatesWithData = <
     ExtendedPlayerWithData,
     ExtendedSlotWithData
   >,
+  ExtendedMoveWithData extends MoveWithData<M>,
+  ExtendedPlayerWithData extends PlayerWithData<P>,
+  ExtendedScoreWithData extends ScoreWithData<Sc>,
+  ExtendedSlotWithData extends SlotWithData<Sl>,
   RequiredParams extends RequiredStateParams<
     G,
     M,
@@ -212,10 +224,11 @@ const createStatesWithData = <
     S,
     Sc,
     Sl,
+    ExtendedGameWithData,
     ExtendedMoveWithData,
     ExtendedPlayerWithData,
-    ExtendedSlotWithData,
-    ExtendedGameWithData
+    ExtendedScoreWithData,
+    ExtendedSlotWithData
   >,
   DerivedParams extends DerivedStateParams<
     G,
@@ -224,10 +237,11 @@ const createStatesWithData = <
     S,
     Sc,
     Sl,
+    ExtendedGameWithData,
     ExtendedMoveWithData,
     ExtendedPlayerWithData,
-    ExtendedSlotWithData,
-    ExtendedGameWithData
+    ExtendedScoreWithData,
+    ExtendedSlotWithData
   >,
   RecordOfRequiredParams extends Record<string, RequiredParams>,
 >({
@@ -274,10 +288,11 @@ const createStatesWithData = <
             S,
             Sc,
             Sl,
+            ExtendedGameWithData,
             ExtendedMoveWithData,
             ExtendedPlayerWithData,
+            ExtendedScoreWithData,
             ExtendedSlotWithData,
-            ExtendedGameWithData,
             RequiredParams
           >,
         ] as const,

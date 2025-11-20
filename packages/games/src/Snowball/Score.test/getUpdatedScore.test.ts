@@ -92,7 +92,7 @@ const testGetUpdatedScore = ({
     constructTestGetUpdatedScore({
       affix: keyOfState,
       currentScore,
-      expectedScore: params.score,
+      expectedScore: params.score.score,
       slots: params.slots.map((slot) => slot.slot),
     });
   });

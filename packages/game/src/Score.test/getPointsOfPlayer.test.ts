@@ -2,16 +2,14 @@ import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import { createDescriptionForTestsOfGetter } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
-import type { IndexOfPlayer } from "../Player.js";
 import type { Score } from "../Score.js";
 
 const validateGetPointsOfPlayer = <Sc extends Score<Sc>>({
   expectedPointsOfPlayer,
   indexOfPlayer,
   score,
-}: {
+}: Pick<Parameters<Sc["getPointsOfPlayer"]>[0], "indexOfPlayer"> & {
   expectedPointsOfPlayer: ReturnType<Sc["getPointsOfPlayer"]>;
-  indexOfPlayer: IndexOfPlayer;
   score: Sc;
 }) => {
   let pointsOfPlayer = score.getPointsOfPlayer({ indexOfPlayer });
@@ -30,8 +28,10 @@ const validateGetPointsOfPlayer = <Sc extends Score<Sc>>({
 const createDescriptionForTestOfGetPointsOfPlayer = <Sc extends Score<Sc>>({
   expectedPointsOfPlayer,
   keyOfPlayer,
-}: {
-  expectedPointsOfPlayer: ReturnType<Sc["getPointsOfPlayer"]>;
+}: Pick<
+  Parameters<typeof validateGetPointsOfPlayer>[0],
+  "expectedPointsOfPlayer"
+> & {
   keyOfPlayer: string;
 }): string =>
   createDescriptionForTestsOfGetter({

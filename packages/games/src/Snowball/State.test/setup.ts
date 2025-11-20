@@ -1,5 +1,3 @@
-import type { IndexOfState } from "@repo/game/State.js";
-
 import {
   createStatesWithData,
   type DerivedStateParams,
@@ -14,6 +12,7 @@ import type { SnowballMoveWithData } from "../Move.test/setup.js";
 import type { SnowballPlayer } from "../Player.js";
 import type { SnowballPlayerWithData } from "../Player.test/setup.js";
 import type { SnowballScore } from "../Score.js";
+import type { SnowballScoreWithData } from "../Score.test/setup.js";
 import type { SnowballSlot } from "../Slot.js";
 
 import { type SnowballSlotWithData } from "../Slot.test/setup.js";
@@ -27,10 +26,11 @@ type DerivedSnowballStateParams = DerivedStateParams<
   SnowballState,
   SnowballScore,
   SnowballSlot,
+  SnowballGameWithData,
   SnowballMoveWithData,
   SnowballPlayerWithData,
-  SnowballSlotWithData,
-  SnowballGameWithData
+  SnowballScoreWithData,
+  SnowballSlotWithData
 >;
 
 type RequiredSnowballStateParams = Pick<
@@ -41,10 +41,11 @@ type RequiredSnowballStateParams = Pick<
     SnowballState,
     SnowballScore,
     SnowballSlot,
+    SnowballGameWithData,
     SnowballMoveWithData,
     SnowballPlayerWithData,
-    SnowballSlotWithData,
-    SnowballGameWithData
+    SnowballScoreWithData,
+    SnowballSlotWithData
   >,
   "game" | "indexOfPlayer" | "score" | "slots" | "validMoves"
 >;
@@ -52,7 +53,6 @@ type RequiredSnowballStateParams = Pick<
 interface SnowballStateWithData<
   Params extends RequiredSnowballStateParams = RequiredSnowballStateParams,
 > {
-  indexOfState: IndexOfState;
   keyOfState: string;
   params: Params;
   state: SnowballState;
