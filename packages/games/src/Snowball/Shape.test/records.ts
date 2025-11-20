@@ -22,6 +22,12 @@ const horizontalLine = {
   type: "line",
 } satisfies Shape;
 
+const verticalLine = {
+  direction: "vertical",
+  size: 5,
+  type: "line",
+} satisfies Shape;
+
 const recordOfParamsOfShapesForUnitTest = {
   horizontalLineOfLength5OnRow0AndColumn0: {
     params: {
@@ -592,6 +598,721 @@ const recordOfParamsOfShapesForUnitTest = {
       initialIndexOfColumn: -5,
       initialIndexOfRow: 8,
       shape: horizontalLine,
+    },
+    result: {
+      indexesOfSlots: [],
+    },
+  },
+  verticalLineOfLength5OnRow0AndColumn0: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: getIndexOfPlayer({
+        keyOfPlayer: "alice",
+      }),
+      initialIndexOfColumn: 0,
+      initialIndexOfRow: 0,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northwestOfNorthwest.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.westOfNorthwest.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southwestOfNorthwest.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northwestOfWest.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.westOfWest.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRow0AndColumn4: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: getIndexOfPlayer({
+        keyOfPlayer: "alice",
+      }),
+      initialIndexOfColumn: 4,
+      initialIndexOfRow: 0,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northOfNorth.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.centerOfNorth.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southOfNorth.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northOfCenter.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.centerOfCenter.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRow0AndColumn8: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: getIndexOfPlayer({
+        keyOfPlayer: "bruno",
+      }),
+      initialIndexOfColumn: 8,
+      initialIndexOfRow: 0,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northeastOfNortheast.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.eastOfNortheast.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southeastOfNortheast.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northeastOfEast.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.eastOfEast.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRow0AndColumnNegative1: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: -1,
+      initialIndexOfRow: 0,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [],
+    },
+  },
+  verticalLineOfLength5OnRow4AndColumn0: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 0,
+      initialIndexOfRow: 4,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.westOfWest.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southwestOfWest.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northwestOfSouthwest.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.westOfSouthwest.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southwestOfSouthwest.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRow4AndColumn4: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 4,
+      initialIndexOfRow: 4,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.centerOfCenter.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southOfCenter.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northOfSouth.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.centerOfSouth.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southOfSouth.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRow4AndColumn8: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: getIndexOfPlayer({
+        keyOfPlayer: "bruno",
+      }),
+      initialIndexOfColumn: 8,
+      initialIndexOfRow: 4,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.eastOfEast.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southeastOfEast.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northeastOfSoutheast.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.eastOfSoutheast.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRow5AndColumn0: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 0,
+      initialIndexOfRow: 5,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southwestOfWest.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northwestOfSouthwest.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.westOfSouthwest.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southwestOfSouthwest.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRow5AndColumn4: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 4,
+      initialIndexOfRow: 5,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southOfCenter.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northOfSouth.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.centerOfSouth.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southOfSouth.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRow5AndColumn8: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 8,
+      initialIndexOfRow: 5,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southeastOfEast.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northeastOfSoutheast.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.eastOfSoutheast.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRow6AndColumn0: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 0,
+      initialIndexOfRow: 6,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northwestOfSouthwest.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.westOfSouthwest.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southwestOfSouthwest.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRow6AndColumn4: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 4,
+      initialIndexOfRow: 6,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northOfSouth.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.centerOfSouth.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southOfSouth.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRow6AndColumn8: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 8,
+      initialIndexOfRow: 6,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northeastOfSoutheast.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.eastOfSoutheast.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRow7AndColumn0: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 0,
+      initialIndexOfRow: 7,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.westOfSouthwest.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southwestOfSouthwest.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRow7AndColumn4: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 4,
+      initialIndexOfRow: 7,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.centerOfSouth.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southOfSouth.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRow7AndColumn8: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 8,
+      initialIndexOfRow: 7,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.eastOfSoutheast.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRow8AndColumn0: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 0,
+      initialIndexOfRow: 8,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southwestOfSouthwest.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRow8AndColumn4: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 4,
+      initialIndexOfRow: 8,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southOfSouth.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRow8AndColumn8: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 8,
+      initialIndexOfRow: 8,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRow9AndColumn0: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 0,
+      initialIndexOfRow: 9,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [],
+    },
+  },
+  verticalLineOfLength5OnRow9AndColumn4: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 4,
+      initialIndexOfRow: 9,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [],
+    },
+  },
+  verticalLineOfLength5OnRow9AndColumn8: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 8,
+      initialIndexOfRow: 9,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [],
+    },
+  },
+  verticalLineOfLength5OnRowNegative1AndColumn0: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 0,
+      initialIndexOfRow: -1,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northwestOfNorthwest.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.westOfNorthwest.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southwestOfNorthwest.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northwestOfWest.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRowNegative1AndColumn4: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 4,
+      initialIndexOfRow: -1,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northOfNorth.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.centerOfNorth.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southOfNorth.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northOfCenter.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRowNegative1AndColumn8: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 8,
+      initialIndexOfRow: -1,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northeastOfNortheast.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.eastOfNortheast.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southeastOfNortheast.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northeastOfEast.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRowNegative2AndColumn0: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 0,
+      initialIndexOfRow: -2,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northwestOfNorthwest.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.westOfNorthwest.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southwestOfNorthwest.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRowNegative2AndColumn4: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 4,
+      initialIndexOfRow: -2,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northOfNorth.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.centerOfNorth.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southOfNorth.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRowNegative2AndColumn8: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 8,
+      initialIndexOfRow: -2,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northeastOfNortheast.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.eastOfNortheast.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.southeastOfNortheast.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRowNegative3AndColumn0: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 0,
+      initialIndexOfRow: -3,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northwestOfNorthwest.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.westOfNorthwest.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRowNegative3AndColumn4: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 4,
+      initialIndexOfRow: -3,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northOfNorth.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.centerOfNorth.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRowNegative3AndColumn8: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 8,
+      initialIndexOfRow: -3,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northeastOfNortheast.keyOfSlot,
+        }),
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.eastOfNortheast.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRowNegative4AndColumn0: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 0,
+      initialIndexOfRow: -4,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northwestOfNorthwest.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRowNegative4AndColumn4: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 4,
+      initialIndexOfRow: -4,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northOfNorth.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRowNegative4AndColumn8: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 8,
+      initialIndexOfRow: -4,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [
+        getIndexOfSlotOnUnitTestSlots({
+          keyOfSlot: slotsWithDataForUnitTest.northeastOfNortheast.keyOfSlot,
+        }),
+      ],
+    },
+  },
+  verticalLineOfLength5OnRowNegative5AndColumn0: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 0,
+      initialIndexOfRow: -5,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [],
+    },
+  },
+  verticalLineOfLength5OnRowNegative5AndColumn4: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 4,
+      initialIndexOfRow: -5,
+      shape: verticalLine,
+    },
+    result: {
+      indexesOfSlots: [],
+    },
+  },
+  verticalLineOfLength5OnRowNegative5AndColumn8: {
+    params: {
+      indexOfPlayerWhoIsOccupyingShape: null,
+      initialIndexOfColumn: 8,
+      initialIndexOfRow: -5,
+      shape: verticalLine,
     },
     result: {
       indexesOfSlots: [],

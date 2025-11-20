@@ -1,6 +1,5 @@
 import { createSlotsWithData } from "@repo/game/Slot.test/setup.js";
 
-import { getIndexOfPlayer } from "../Game.test/players.js";
 import { SnowballSlot, type SnowballSlotParams } from "../Slot.js";
 import {
   recordOfRequiredParamsOfSlots,

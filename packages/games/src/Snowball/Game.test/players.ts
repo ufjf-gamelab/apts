@@ -1,3 +1,5 @@
+import type { IndexOfPlayer } from "@repo/game/Player.js";
+
 import {
   playersWithData,
   type SnowballPlayerWithData,
