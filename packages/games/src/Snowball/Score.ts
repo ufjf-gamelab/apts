@@ -37,33 +37,33 @@ const constructInitialPointsForEachPlayer = ({
   );
 
 // eslint-disable-next-line max-lines-per-function
-const calculateUpdatedScore = ({
+const getUpdatedScore = ({
   currentScore,
   slots,
 }: {
   currentScore: SnowballScore;
   slots: SnowballSlot[];
 }): SnowballScore => {
-  const score = currentScore;
+  let score = currentScore;
 
   slots.forEach((_, indexOfSlot) => {
     const indexOfRow = Math.floor(indexOfSlot / COLUMN_LENGTH);
     const indexOfColumn = indexOfSlot % COLUMN_LENGTH;
 
     const updateScoreConsideringShape = ({
-      score: scoreToUpdate,
       shape,
     }: {
       score: SnowballScore;
       shape: Shape;
-    }) =>
-      getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots({
+    }) => {
+      score = getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots({
         initialIndexOfColumn: indexOfColumn,
         initialIndexOfRow: indexOfRow,
-        score: scoreToUpdate,
+        score,
         shape,
         slots,
       });
+    };
 
     updateScoreConsideringShape({
       score,
@@ -115,11 +115,7 @@ const calculateUpdatedScore = ({
     });
   });
 
-  return score;
+  return score.clone();
 };
 
-export {
-  calculateUpdatedScore,
-  constructInitialPointsForEachPlayer,
-  SnowballScore,
-};
+export { constructInitialPointsForEachPlayer, getUpdatedScore, SnowballScore };

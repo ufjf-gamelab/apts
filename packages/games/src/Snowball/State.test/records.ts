@@ -47,7 +47,7 @@ const recordOfRequiredParamsOfStates = {
       game: gamesWithDataForUnitTest.snowballWith9RowsAnd9Columns,
       indexOfPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
       score:
-        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
+        scoresWithDataForUnitTest.aliceWith38PointsAndBrunoWith26Points.score,
       slots: getIndexedSnowballSlotsWithDataForUnitTest(),
       validMoves: new Map([
         constructTupleForMove({

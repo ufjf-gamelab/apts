@@ -74,20 +74,7 @@ const getNameAndFormattedSizeOfShape = ({
   };
 };
 
-const getFormattedDescriptorOfShape = ({
-  initialIndexOfColumn,
-  initialIndexOfRow,
-  shape,
-}: {
-  initialIndexOfColumn: Integer;
-  initialIndexOfRow: Integer;
-  shape: Shape;
-}): string => {
-  const { name, size } = getNameAndFormattedSizeOfShape({ shape });
-  return `${name} of size ${size} beginning on row ${initialIndexOfRow} and column ${initialIndexOfColumn}`;
-};
-
-const calculateIndexesOfShapeForHorizontalLine = ({
+const getIndexesOfShapeForHorizontalLine = ({
   columnLength,
   initialIndexOfColumn,
   initialIndexOfRow,
@@ -116,7 +103,7 @@ const calculateIndexesOfShapeForHorizontalLine = ({
   return validIndexes;
 };
 
-const calculateIndexesOfShapeForPrincipalDiagonal = ({
+const getIndexesOfShapeForPrincipalDiagonal = ({
   columnLength,
   initialIndexOfColumn,
   initialIndexOfRow,
@@ -145,7 +132,7 @@ const calculateIndexesOfShapeForPrincipalDiagonal = ({
   return validIndexes;
 };
 
-const calculateIndexesOfShapeForSecondaryDiagonal = ({
+const getIndexesOfShapeForSecondaryDiagonal = ({
   columnLength,
   initialIndexOfColumn,
   initialIndexOfRow,
@@ -174,7 +161,7 @@ const calculateIndexesOfShapeForSecondaryDiagonal = ({
   return validIndexes;
 };
 
-const calculateIndexesOfShapeForVerticalLine = ({
+const getIndexesOfShapeForVerticalLine = ({
   columnLength,
   initialIndexOfColumn,
   initialIndexOfRow,
@@ -220,7 +207,7 @@ const getIndexesOfLine = ({
 }): Integer[] => {
   switch (direction) {
     case "horizontal": {
-      return calculateIndexesOfShapeForHorizontalLine({
+      return getIndexesOfShapeForHorizontalLine({
         columnLength,
         initialIndexOfColumn,
         initialIndexOfRow,
@@ -229,7 +216,7 @@ const getIndexesOfLine = ({
       });
     }
     case "principalDiagonal": {
-      return calculateIndexesOfShapeForPrincipalDiagonal({
+      return getIndexesOfShapeForPrincipalDiagonal({
         columnLength,
         initialIndexOfColumn,
         initialIndexOfRow,
@@ -238,7 +225,7 @@ const getIndexesOfLine = ({
       });
     }
     case "secondaryDiagonal": {
-      return calculateIndexesOfShapeForSecondaryDiagonal({
+      return getIndexesOfShapeForSecondaryDiagonal({
         columnLength,
         initialIndexOfColumn,
         initialIndexOfRow,
@@ -247,7 +234,7 @@ const getIndexesOfLine = ({
       });
     }
     case "vertical": {
-      return calculateIndexesOfShapeForVerticalLine({
+      return getIndexesOfShapeForVerticalLine({
         columnLength,
         initialIndexOfColumn,
         initialIndexOfRow,
@@ -452,7 +439,6 @@ const getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots = ({
 export type { Line, Rectangle, Shape };
 export {
   COLUMN_LENGTH,
-  getFormattedDescriptorOfShape,
   getIndexesOfSlots,
   getIndexOfPlayerWhoIsOccupyingShape,
   getNameAndFormattedSizeOfShape,

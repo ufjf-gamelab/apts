@@ -1,38 +1,40 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { RequiredSnowballScoreParams } from "./setup.js";
 
 import { getIndexOfPlayer } from "../Game.test/players.js";
 import { playersWithData } from "../Player.test/setup.js";
-
-const ZERO_POINTS = 0;
-const ONE_POINT = 1;
-const FIVE_POINTS = 5;
-const TEN_POINTS = 10;
 
 const recordOfRequiredParamsOfScores = {
   aliceWith0PointsAndBrunoWith0Points: {
     pointsOfEachPlayer: new Map(
       Object.values(playersWithData).map(({ keyOfPlayer }) => [
         getIndexOfPlayer({ keyOfPlayer }),
-        ZERO_POINTS,
+        0,
       ]),
     ),
   },
   aliceWith0PointsAndBrunoWith1Point: {
     pointsOfEachPlayer: new Map([
-      [getIndexOfPlayer({ keyOfPlayer: "alice" }), ZERO_POINTS],
-      [getIndexOfPlayer({ keyOfPlayer: "bruno" }), ONE_POINT],
+      [getIndexOfPlayer({ keyOfPlayer: "alice" }), 0],
+      [getIndexOfPlayer({ keyOfPlayer: "bruno" }), 1],
     ]),
   },
   aliceWith1PointAndBrunoWith0Points: {
     pointsOfEachPlayer: new Map([
-      [getIndexOfPlayer({ keyOfPlayer: "alice" }), ONE_POINT],
-      [getIndexOfPlayer({ keyOfPlayer: "bruno" }), ZERO_POINTS],
+      [getIndexOfPlayer({ keyOfPlayer: "alice" }), 1],
+      [getIndexOfPlayer({ keyOfPlayer: "bruno" }), 0],
     ]),
   },
   aliceWith5PointsAndBrunoWith10Points: {
     pointsOfEachPlayer: new Map([
-      [getIndexOfPlayer({ keyOfPlayer: "alice" }), FIVE_POINTS],
-      [getIndexOfPlayer({ keyOfPlayer: "bruno" }), TEN_POINTS],
+      [getIndexOfPlayer({ keyOfPlayer: "alice" }), 5],
+      [getIndexOfPlayer({ keyOfPlayer: "bruno" }), 10],
+    ]),
+  },
+  aliceWith38PointsAndBrunoWith26Points: {
+    pointsOfEachPlayer: new Map([
+      [getIndexOfPlayer({ keyOfPlayer: "alice" }), 38],
+      [getIndexOfPlayer({ keyOfPlayer: "bruno" }), 26],
     ]),
   },
 } as const satisfies Record<string, RequiredSnowballScoreParams>;
