@@ -271,13 +271,13 @@ const recordOfRequiredParamsOfSlotsForUnitTest = {
     indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
   },
   centerOfEast: {
-    indexOfOccupyingPlayer: null,
+    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
   },
   centerOfNorth: {
     indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
   },
   centerOfNortheast: {
-    indexOfOccupyingPlayer: null,
+    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
   },
   centerOfNorthwest: {
     indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
@@ -286,7 +286,7 @@ const recordOfRequiredParamsOfSlotsForUnitTest = {
     indexOfOccupyingPlayer: null,
   },
   centerOfSoutheast: {
-    indexOfOccupyingPlayer: null,
+    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
   },
   centerOfSouthwest: {
     indexOfOccupyingPlayer: null,
@@ -312,7 +312,7 @@ const recordOfRequiredParamsOfSlotsForUnitTest = {
     indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
   },
   eastOfSouth: {
-    indexOfOccupyingPlayer: null,
+    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
   },
   eastOfSoutheast: {
     indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
@@ -341,7 +341,7 @@ const recordOfRequiredParamsOfSlotsForUnitTest = {
     indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
   },
   northeastOfSouth: {
-    indexOfOccupyingPlayer: null,
+    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
   },
   northeastOfSoutheast: {
     indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
@@ -358,13 +358,13 @@ const recordOfRequiredParamsOfSlotsForUnitTest = {
     indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
   },
   northOfEast: {
-    indexOfOccupyingPlayer: null,
+    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
   },
   northOfNorth: {
     indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
   },
   northOfNortheast: {
-    indexOfOccupyingPlayer: null,
+    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
   },
   northOfNorthwest: {
     indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
@@ -373,7 +373,7 @@ const recordOfRequiredParamsOfSlotsForUnitTest = {
     indexOfOccupyingPlayer: null,
   },
   northOfSoutheast: {
-    indexOfOccupyingPlayer: null,
+    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
   },
   northOfSouthwest: {
     indexOfOccupyingPlayer: null,
@@ -402,7 +402,7 @@ const recordOfRequiredParamsOfSlotsForUnitTest = {
     indexOfOccupyingPlayer: null,
   },
   northwestOfSoutheast: {
-    indexOfOccupyingPlayer: null,
+    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
   },
   northwestOfSouthwest: {
     indexOfOccupyingPlayer: null,
@@ -428,7 +428,7 @@ const recordOfRequiredParamsOfSlotsForUnitTest = {
     indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
   },
   southeastOfSouth: {
-    indexOfOccupyingPlayer: null,
+    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
   },
   southeastOfSoutheast: {
     indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
@@ -445,22 +445,22 @@ const recordOfRequiredParamsOfSlotsForUnitTest = {
     indexOfOccupyingPlayer: null,
   },
   southOfEast: {
-    indexOfOccupyingPlayer: null,
+    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
   },
   southOfNorth: {
     indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
   },
   southOfNortheast: {
-    indexOfOccupyingPlayer: null,
+    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
   },
   southOfNorthwest: {
     indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
   },
   southOfSouth: {
-    indexOfOccupyingPlayer: null,
+    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
   },
   southOfSoutheast: {
-    indexOfOccupyingPlayer: null,
+    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
   },
   southOfSouthwest: {
     indexOfOccupyingPlayer: null,
@@ -489,7 +489,7 @@ const recordOfRequiredParamsOfSlotsForUnitTest = {
     indexOfOccupyingPlayer: null,
   },
   southwestOfSoutheast: {
-    indexOfOccupyingPlayer: null,
+    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
   },
   southwestOfSouthwest: {
     indexOfOccupyingPlayer: null,
@@ -518,7 +518,7 @@ const recordOfRequiredParamsOfSlotsForUnitTest = {
     indexOfOccupyingPlayer: null,
   },
   westOfSoutheast: {
-    indexOfOccupyingPlayer: null,
+    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
   },
   westOfSouthwest: {
     indexOfOccupyingPlayer: null,

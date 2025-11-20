@@ -13,15 +13,9 @@ import type { SnowballPlayer } from "../Player.js";
 import type { SnowballScore } from "../Score.js";
 import type { SnowballSlot } from "../Slot.js";
 
-import { getIndexOfPlayer } from "../Game.test/players.js";
-import { gamesWithDataForUnitTest } from "../Game.test/setup.js";
-import { scoresWithDataForUnitTest } from "../Score.test/setup.js";
-import {
-  editSlotOnSnowballSlotsWithData,
-  slotsWithData,
-  type SnowballSlotWithData,
-} from "../Slot.test/setup.js";
+import { type SnowballSlotWithData } from "../Slot.test/setup.js";
 import { SnowballState } from "../State.js";
+import { recordOfRequiredParamsOfStates } from "./records.js";
 
 type DerivedSnowballStateParams = DerivedStateParams<
   SnowballGame,
@@ -80,29 +74,6 @@ const createSnowballState = ({
     score,
     slots,
   });
-
-const recordOfRequiredParamsOfStates = {
-  noSlotsAreFilledAndAliceHasNoPointsAndBrunoHasNoPointsAndAliceIsTheCurrentPlayer:
-    {
-      game: gamesWithDataForUnitTest.snowballWith9RowsAnd9Columns.game,
-      indexOfPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-      score:
-        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
-      slots: slotsWithData,
-    },
-  slotNorthwestOfNorthwestIsFilledByAliceAndAliceHasNoPointsAndBrunoHasNoPointsAndBrunoIsTheCurrentPlayer:
-    {
-      game: gamesWithDataForUnitTest.snowballWith9RowsAnd9Columns.game,
-      indexOfPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-      score:
-        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
-      slots: editSlotOnSnowballSlotsWithData({
-        indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-        keyOfSlot: slotsWithData.northwestOfNorthwest.keyOfSlot,
-        slots: slotsWithData,
-      }),
-    },
-} as const satisfies Record<string, RequiredSnowballStateParams>;
 
 const statesWithDataForUnitTest = createStatesWithData({
   create: createSnowballState,

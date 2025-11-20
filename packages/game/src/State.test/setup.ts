@@ -33,7 +33,7 @@ type RequiredStateParams<
   StateParams<G, M, P, S, Sc, Sl>,
   "game" | "indexOfPlayer" | "score"
 > & {
-  slots: Record<string, ExtendedSlotWithData>;
+  slots: ExtendedSlotWithData[];
 };
 
 interface StateWithData<
