@@ -4,13 +4,8 @@ import {
   type RequiredScoreParams,
 } from "@repo/game/Score.test/setup.js";
 
-import { getIndexOfPlayer } from "../Game.test/players.js";
-import { playersWithData } from "../Player.test/setup.js";
 import { SnowballScore } from "../Score.js";
-
-const ZERO_POINTS = 0;
-const FIVE_POINTS = 5;
-const TEN_POINTS = 10;
+import { recordOfRequiredParamsOfScores } from "./records.js";
 
 type DerivedSnowballScoreParams = RequiredSnowballScoreParams;
 
@@ -40,23 +35,6 @@ const createSnowballScore = ({
   new SnowballScore({
     pointsOfEachPlayer,
   });
-
-const recordOfRequiredParamsOfScores = {
-  aliceWith0PointsAndBrunoWith0Points: {
-    pointsOfEachPlayer: new Map(
-      Object.values(playersWithData).map(({ keyOfPlayer }) => [
-        getIndexOfPlayer({ keyOfPlayer }),
-        ZERO_POINTS,
-      ]),
-    ),
-  },
-  aliceWith5PointsAndBrunoWith10Points: {
-    pointsOfEachPlayer: new Map([
-      [getIndexOfPlayer({ keyOfPlayer: "alice" }), FIVE_POINTS],
-      [getIndexOfPlayer({ keyOfPlayer: "bruno" }), TEN_POINTS],
-    ]),
-  },
-} as const satisfies Record<string, RequiredSnowballScoreParams>;
 
 const scoresWithDataForUnitTest = createScoresWithData({
   create: createSnowballScore,

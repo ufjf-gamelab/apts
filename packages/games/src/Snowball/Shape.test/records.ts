@@ -6,6 +6,7 @@ import {
   getIndexedSnowballSlotsWithDataForUnitTest,
   getIndexOfSlot,
 } from "../Game.test/slots.js";
+import { scoresWithDataForUnitTest } from "../Score.test/setup.js";
 import { slotsWithDataForUnitTest } from "../Slot.test/setup.js";
 
 const getIndexOfSlotOnUnitTestSlots = ({
@@ -80,6 +81,7 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northOfNorth.keyOfSlot,
         }),
       ],
+      score: scoresWithDataForUnitTest.aliceWith1PointAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow0AndColumn4: {
@@ -107,6 +109,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow0AndColumn5: {
@@ -131,6 +135,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow0AndColumn6: {
@@ -152,6 +158,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -171,6 +179,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow0AndColumn8: {
@@ -186,6 +196,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow0AndColumn9: {
@@ -197,6 +209,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -222,6 +236,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfNorth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow0AndColumnNegative2: {
@@ -243,6 +259,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow0AndColumnNegative3: {
@@ -261,6 +279,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow0AndColumnNegative4: {
@@ -276,6 +296,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow0AndColumnNegative5: {
@@ -287,6 +309,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -317,6 +341,7 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.centerOfCenter.keyOfSlot,
         }),
       ],
+      score: scoresWithDataForUnitTest.aliceWith1PointAndBrunoWith0Points.score,
     },
   },
 
@@ -345,6 +370,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfEast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow4AndColumn8: {
@@ -360,6 +387,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfEast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow4AndColumn9: {
@@ -371,6 +400,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow4AndColumnNegative1: {
@@ -395,6 +426,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.westOfCenter.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow4AndColumnNegative2: {
@@ -416,6 +449,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow4AndColumnNegative3: {
@@ -434,6 +469,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.centerOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow4AndColumnNegative4: {
@@ -449,6 +486,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.westOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -461,6 +500,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow8AndColumn0: {
@@ -488,6 +529,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfSouth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow8AndColumn4: {
@@ -517,6 +560,7 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score: scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith1Point.score,
     },
   },
   horizontalLineOfLength5OnRow8AndColumn8: {
@@ -532,6 +576,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow8AndColumn9: {
@@ -543,6 +589,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow8AndColumnNegative1: {
@@ -567,6 +615,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfSouth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow8AndColumnNegative2: {
@@ -588,6 +638,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -607,6 +659,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow8AndColumnNegative4: {
@@ -622,6 +676,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow8AndColumnNegative5: {
@@ -633,6 +689,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -663,6 +721,7 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.centerOfCenter.keyOfSlot,
         }),
       ],
+      score: scoresWithDataForUnitTest.aliceWith1PointAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow0AndColumn1: {
@@ -690,6 +749,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfCenter.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow0AndColumn2: {
@@ -717,6 +778,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.westOfEast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow0AndColumn3: {
@@ -744,6 +807,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.centerOfEast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -772,6 +837,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfEast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -797,6 +864,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfEast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow0AndColumn6: {
@@ -818,6 +887,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow0AndColumn7: {
@@ -836,6 +907,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow0AndColumn8: {
@@ -851,6 +924,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -863,6 +938,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow0AndColumnNegative1: {
@@ -887,6 +964,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.westOfCenter.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow0AndColumnNegative2: {
@@ -908,6 +987,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow0AndColumnNegative3: {
@@ -926,6 +1007,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.centerOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -942,6 +1025,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.westOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow0AndColumnNegative5: {
@@ -953,6 +1038,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow1AndColumn1: {
@@ -980,6 +1067,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfCenter.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -1008,6 +1097,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfEast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow1AndColumn5: {
@@ -1032,6 +1123,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfEast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow1AndColumn7: {
@@ -1050,6 +1143,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow1AndColumnNegative4: {
@@ -1065,6 +1160,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -1093,6 +1190,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow2AndColumn4: {
@@ -1120,6 +1219,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow2AndColumn5: {
@@ -1144,6 +1245,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfEast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -1166,9 +1269,10 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfEast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
-
   principalDiagonalOfLength5OnRow2AndColumnNegative4: {
     params: {
       indexOfPlayerWhoIsOccupyingShape: null,
@@ -1182,6 +1286,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow3AndColumn3: {
@@ -1209,6 +1315,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.centerOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow3AndColumn4: {
@@ -1236,6 +1344,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow3AndColumn5: {
@@ -1260,6 +1370,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow3AndColumnNegative4: {
@@ -1275,6 +1387,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.westOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow4AndColumn0: {
@@ -1302,6 +1416,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfSouth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow4AndColumn4: {
@@ -1329,6 +1445,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow4AndColumnNegative4: {
@@ -1344,6 +1462,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow5AndColumn3: {
@@ -1368,6 +1488,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow5AndColumn4: {
@@ -1392,6 +1514,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow5AndColumn5: {
@@ -1416,6 +1540,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow5AndColumnNegative4: {
@@ -1427,6 +1553,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow6AndColumn2: {
@@ -1448,6 +1576,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfSouth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow6AndColumn4: {
@@ -1469,6 +1599,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow6AndColumn6: {
@@ -1490,6 +1622,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow7AndColumn1: {
@@ -1508,6 +1642,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow7AndColumn4: {
@@ -1526,6 +1662,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSouth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow7AndColumn7: {
@@ -1544,6 +1682,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow8AndColumn0: {
@@ -1559,6 +1699,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow8AndColumn4: {
@@ -1574,6 +1716,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfSouth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow8AndColumn8: {
@@ -1589,6 +1733,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow9AndColumn4: {
@@ -1600,6 +1746,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRow9AndColumn9: {
@@ -1611,6 +1759,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative1AndColumn0: {
@@ -1635,6 +1785,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northOfCenter.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative1AndColumn3: {
@@ -1659,6 +1811,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northOfEast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative1AndColumn4: {
@@ -1683,6 +1837,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfEast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative1AndColumn5: {
@@ -1704,6 +1860,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative1AndColumn9: {
@@ -1715,6 +1873,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative1AndColumnNegative1: {
@@ -1739,6 +1899,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfCenter.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative1AndColumnNegative2: {
@@ -1760,6 +1922,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative1AndColumnNegative3: {
@@ -1778,6 +1942,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative1AndColumnNegative4: {
@@ -1793,6 +1959,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative2AndColumn0: {
@@ -1814,6 +1982,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfNorth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative2AndColumn4: {
@@ -1835,6 +2005,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative2AndColumn5: {
@@ -1853,6 +2025,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative2AndColumnNegative2: {
@@ -1874,6 +2048,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative2AndColumnNegative4: {
@@ -1889,6 +2065,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative3AndColumn0: {
@@ -1907,6 +2085,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.centerOfNorth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative3AndColumn4: {
@@ -1925,6 +2105,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative3AndColumn5: {
@@ -1940,6 +2122,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative3AndColumnNegative3: {
@@ -1958,6 +2142,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.centerOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative3AndColumnNegative4: {
@@ -1973,6 +2159,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.westOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative4AndColumn0: {
@@ -1988,6 +2176,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northOfNorth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative4AndColumn1: {
@@ -2003,6 +2193,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfNorth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative4AndColumn2: {
@@ -2018,6 +2210,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative4AndColumn3: {
@@ -2033,6 +2227,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative4AndColumn4: {
@@ -2048,6 +2244,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative4AndColumn5: {
@@ -2059,6 +2257,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative4AndColumnNegative1: {
@@ -2074,6 +2274,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfNorth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative4AndColumnNegative2: {
@@ -2089,6 +2291,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative4AndColumnNegative3: {
@@ -2104,6 +2308,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   principalDiagonalOfLength5OnRowNegative4AndColumnNegative4: {
@@ -2119,6 +2325,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRow0AndColumn0: {
@@ -2145,6 +2353,7 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.centerOfNorthwest.keyOfSlot,
         }),
       ],
+      score: scoresWithDataForUnitTest.aliceWith1PointAndBrunoWith0Points.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRow0AndColumn1: {
@@ -2171,6 +2380,7 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfNorthwest.keyOfSlot,
         }),
       ],
+      score: scoresWithDataForUnitTest.aliceWith1PointAndBrunoWith0Points.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRow0AndColumn4: {
@@ -2195,6 +2405,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfNorth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRow0AndColumn7: {
@@ -2221,6 +2433,7 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfNortheast.keyOfSlot,
         }),
       ],
+      score: scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith1Point.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRow0AndColumnNegative1: {
@@ -2239,6 +2452,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.westOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRow1AndColumn0: {
@@ -2265,6 +2480,7 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfNorthwest.keyOfSlot,
         }),
       ],
+      score: scoresWithDataForUnitTest.aliceWith1PointAndBrunoWith0Points.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRow1AndColumn1: {
@@ -2291,6 +2507,7 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfNorthwest.keyOfSlot,
         }),
       ],
+      score: scoresWithDataForUnitTest.aliceWith1PointAndBrunoWith0Points.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRow4AndColumn0: {
@@ -2315,6 +2532,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRow4AndColumn4: {
@@ -2339,6 +2558,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfCenter.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRow4AndColumn7: {
@@ -2365,6 +2586,7 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfEast.keyOfSlot,
         }),
       ],
+      score: scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith1Point.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRow7AndColumn0: {
@@ -2389,6 +2611,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRow7AndColumn4: {
@@ -2413,6 +2637,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSouth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRow7AndColumn7: {
@@ -2439,6 +2665,7 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score: scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith1Point.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRow7AndColumn8: {
@@ -2457,6 +2684,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRow8AndColumn7: {
@@ -2475,6 +2704,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRow8AndColumn8: {
@@ -2490,6 +2721,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRow8AndColumn9: {
@@ -2501,6 +2734,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRow9AndColumn8: {
@@ -2512,6 +2747,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRowNegative1AndColumn0: {
@@ -2530,6 +2767,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRowNegative1AndColumnNegative1: {
@@ -2545,6 +2784,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRowNegative1AndColumnNegative2: {
@@ -2556,6 +2797,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf2RowsAnd2ColumnsOnRowNegative2AndColumnNegative1: {
@@ -2567,6 +2810,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow0AndColumn0: {
@@ -2608,6 +2853,7 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfNorthwest.keyOfSlot,
         }),
       ],
+      score: scoresWithDataForUnitTest.aliceWith1PointAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow0AndColumn4: {
@@ -2647,6 +2893,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow0AndColumn6: {
@@ -2686,6 +2934,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow0AndColumnNegative1: {
@@ -2716,6 +2966,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow0AndColumnNegative2: {
@@ -2737,6 +2989,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow3AndColumn3: {
@@ -2776,6 +3030,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfCenter.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow4AndColumn0: {
@@ -2815,6 +3071,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow4AndColumn4: {
@@ -2854,6 +3112,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow4AndColumn6: {
@@ -2893,6 +3153,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow4AndColumn7: {
@@ -2923,6 +3185,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow4AndColumn8: {
@@ -2944,6 +3208,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow4AndColumnNegative1: {
@@ -2974,6 +3240,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow4AndColumnNegative2: {
@@ -2995,6 +3263,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow6AndColumn0: {
@@ -3034,6 +3304,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow6AndColumn4: {
@@ -3073,6 +3345,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow6AndColumn6: {
@@ -3114,6 +3388,7 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score: scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith1Point.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow6AndColumn7: {
@@ -3144,6 +3419,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow6AndColumn8: {
@@ -3165,6 +3442,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow6AndColumnNegative1: {
@@ -3195,6 +3474,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow6AndColumnNegative2: {
@@ -3216,6 +3497,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow7AndColumn6: {
@@ -3246,6 +3529,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow7AndColumn7: {
@@ -3270,6 +3555,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow7AndColumn8: {
@@ -3288,6 +3575,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow8AndColumn6: {
@@ -3309,6 +3598,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow8AndColumn7: {
@@ -3327,6 +3618,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow8AndColumn8: {
@@ -3342,6 +3635,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow8AndColumn9: {
@@ -3353,6 +3648,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRow9AndColumn8: {
@@ -3364,6 +3661,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRowNegative1AndColumn0: {
@@ -3394,6 +3693,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRowNegative1AndColumnNegative1: {
@@ -3418,6 +3719,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.centerOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRowNegative1AndColumnNegative2: {
@@ -3436,6 +3739,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.westOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRowNegative2AndColumnNegative1: {
@@ -3454,6 +3759,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRowNegative2AndColumnNegative2: {
@@ -3469,6 +3776,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -3481,6 +3790,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   rectangleOf3RowsAnd3ColumnsOnRowNegative3AndColumnNegative2: {
@@ -3492,6 +3803,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -3508,6 +3821,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow0AndColumn1: {
@@ -3526,6 +3841,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.westOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow0AndColumn2: {
@@ -3547,6 +3864,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -3572,6 +3891,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow0AndColumn4: {
@@ -3601,6 +3922,7 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.westOfWest.keyOfSlot,
         }),
       ],
+      score: scoresWithDataForUnitTest.aliceWith1PointAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow0AndColumn5: {
@@ -3628,6 +3950,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.centerOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -3656,6 +3980,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow0AndColumn7: {
@@ -3683,6 +4009,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.westOfCenter.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow0AndColumn8: {
@@ -3710,6 +4038,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.centerOfCenter.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow0AndColumn9: {
@@ -3734,6 +4064,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfCenter.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow0AndColumn10: {
@@ -3755,6 +4087,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.westOfEast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -3774,6 +4108,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.centerOfEast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow0AndColumn12: {
@@ -3789,6 +4125,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfEast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow0AndColumn13: {
@@ -3800,6 +4138,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow0AndColumnNegative1: {
@@ -3811,6 +4151,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow1AndColumn0: {
@@ -3826,6 +4168,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.westOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow1AndColumn1: {
@@ -3844,6 +4188,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow1AndColumn4: {
@@ -3871,6 +4217,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow1AndColumn7: {
@@ -3898,6 +4246,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfCenter.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow1AndColumn12: {
@@ -3913,6 +4263,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfEast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow2AndColumn0: {
@@ -3928,6 +4280,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow2AndColumn2: {
@@ -3949,6 +4303,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.westOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow2AndColumn4: {
@@ -3976,6 +4332,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow2AndColumn6: {
@@ -4003,6 +4361,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow2AndColumn12: {
@@ -4018,6 +4378,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow3AndColumn0: {
@@ -4033,6 +4395,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -4058,6 +4422,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow3AndColumn4: {
@@ -4085,6 +4451,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.westOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow3AndColumn5: {
@@ -4112,6 +4480,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.centerOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow3AndColumn12: {
@@ -4127,6 +4497,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow4AndColumn0: {
@@ -4142,6 +4514,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.westOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -4170,6 +4544,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow4AndColumn8: {
@@ -4199,6 +4575,7 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfSouth.keyOfSlot,
         }),
       ],
+      score: scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith1Point.score,
     },
   },
   secondaryDiagonalOfLength5OnRow4AndColumn12: {
@@ -4214,6 +4591,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow5AndColumn0: {
@@ -4229,6 +4608,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow5AndColumn3: {
@@ -4253,6 +4634,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -4278,6 +4661,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow5AndColumn5: {
@@ -4302,6 +4687,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow5AndColumn12: {
@@ -4313,6 +4700,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow6AndColumn0: {
@@ -4328,6 +4717,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow6AndColumn2: {
@@ -4349,6 +4740,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -4371,6 +4764,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow6AndColumn6: {
@@ -4392,6 +4787,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfSouth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow7AndColumn0: {
@@ -4407,6 +4804,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.westOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow7AndColumn1: {
@@ -4425,6 +4824,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -4444,6 +4845,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfSouth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow7AndColumn7: {
@@ -4462,6 +4865,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow8AndColumn0: {
@@ -4477,6 +4882,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow8AndColumn4: {
@@ -4492,6 +4899,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfSouth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow8AndColumn8: {
@@ -4507,6 +4916,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -4519,6 +4930,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRow9AndColumn4: {
@@ -4530,6 +4943,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRowNegative1AndColumn4: {
@@ -4554,6 +4969,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRowNegative1AndColumn5: {
@@ -4578,9 +4995,10 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
-
   secondaryDiagonalOfLength5OnRowNegative1AndColumn8: {
     params: {
       indexOfPlayerWhoIsOccupyingShape: null,
@@ -4603,6 +5021,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northOfCenter.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRowNegative1AndColumn9: {
@@ -4627,6 +5047,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfCenter.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRowNegative1AndColumn12: {
@@ -4642,6 +5064,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfEast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRowNegative2AndColumn4: {
@@ -4663,6 +5087,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -4685,6 +5111,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRowNegative2AndColumn12: {
@@ -4700,6 +5128,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRowNegative3AndColumn4: {
@@ -4718,6 +5148,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.westOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -4737,6 +5169,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.centerOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRowNegative3AndColumn12: {
@@ -4752,6 +5186,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 
@@ -4768,6 +5204,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRowNegative4AndColumn12: {
@@ -4783,6 +5221,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRowNegative5AndColumn4: {
@@ -4794,6 +5234,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   secondaryDiagonalOfLength5OnRowNegative5AndColumn12: {
@@ -4805,6 +5247,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRow0AndColumn4: {
@@ -4834,6 +5278,7 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.centerOfCenter.keyOfSlot,
         }),
       ],
+      score: scoresWithDataForUnitTest.aliceWith1PointAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRow0AndColumn8: {
@@ -4863,6 +5308,7 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfEast.keyOfSlot,
         }),
       ],
+      score: scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith1Point.score,
     },
   },
   verticalLineOfLength5OnRow0AndColumnNegative1: {
@@ -4874,6 +5320,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRow4AndColumn0: {
@@ -4901,6 +5349,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRow4AndColumn4: {
@@ -4928,6 +5378,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfSouth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRow4AndColumn8: {
@@ -4957,6 +5409,7 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score: scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith1Point.score,
     },
   },
   verticalLineOfLength5OnRow5AndColumn0: {
@@ -4981,6 +5434,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRow5AndColumn4: {
@@ -5005,6 +5460,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfSouth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRow5AndColumn8: {
@@ -5029,6 +5486,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRow6AndColumn0: {
@@ -5050,6 +5509,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRow6AndColumn4: {
@@ -5071,6 +5532,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfSouth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRow6AndColumn8: {
@@ -5092,6 +5555,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRow7AndColumn0: {
@@ -5110,6 +5575,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRow7AndColumn4: {
@@ -5128,6 +5595,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfSouth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRow7AndColumn8: {
@@ -5146,6 +5615,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRow8AndColumn0: {
@@ -5161,6 +5632,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfSouthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRow8AndColumn4: {
@@ -5176,6 +5649,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfSouth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRow8AndColumn8: {
@@ -5191,6 +5666,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfSoutheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRow9AndColumn0: {
@@ -5202,6 +5679,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRow9AndColumn4: {
@@ -5213,6 +5692,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRow9AndColumn8: {
@@ -5224,6 +5705,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRowNegative1AndColumn0: {
@@ -5248,6 +5731,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfWest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRowNegative1AndColumn4: {
@@ -5272,6 +5757,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northOfCenter.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRowNegative1AndColumn8: {
@@ -5296,6 +5783,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfEast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRowNegative2AndColumn0: {
@@ -5317,6 +5806,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southwestOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRowNegative2AndColumn4: {
@@ -5338,6 +5829,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southOfNorth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRowNegative2AndColumn8: {
@@ -5359,6 +5852,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.southeastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRowNegative3AndColumn0: {
@@ -5377,6 +5872,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.westOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRowNegative3AndColumn4: {
@@ -5395,6 +5892,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.centerOfNorth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRowNegative3AndColumn8: {
@@ -5413,6 +5912,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.eastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRowNegative4AndColumn0: {
@@ -5428,6 +5929,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northwestOfNorthwest.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRowNegative4AndColumn4: {
@@ -5443,6 +5946,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northOfNorth.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRowNegative4AndColumn8: {
@@ -5458,6 +5963,8 @@ const recordOfParamsOfShapesForUnitTest = {
           keyOfSlot: slotsWithDataForUnitTest.northeastOfNortheast.keyOfSlot,
         }),
       ],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRowNegative5AndColumn0: {
@@ -5469,6 +5976,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRowNegative5AndColumn4: {
@@ -5480,6 +5989,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRowNegative5AndColumn8: {
@@ -5491,6 +6002,8 @@ const recordOfParamsOfShapesForUnitTest = {
     },
     result: {
       indexesOfSlots: [],
+      score:
+        scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
 } as const satisfies Record<

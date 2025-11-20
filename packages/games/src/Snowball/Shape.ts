@@ -419,7 +419,7 @@ const getIncrementedScoreForPlayer = ({
 
     return new SnowballScore({ pointsOfEachPlayer });
   }
-  return score;
+  return score.clone();
 };
 
 const getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots = ({

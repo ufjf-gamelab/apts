@@ -91,7 +91,7 @@ const createDescription = ({
     }),
   });
 
-const testGetIndexOfPlayerWhoIsOccupyingShapeForPlayer = ({
+const constructTestGetIndexOfPlayerWhoIsOccupyingShape = ({
   affix,
   expectedIndexOfPlayerWhoIsOccupyingShape,
   initialIndexOfColumn,
@@ -131,7 +131,7 @@ const testGetIndexOfPlayerWhoIsOccupyingShape = ({
   shapesWithDataToTest,
   slots,
 }: Pick<
-  Parameters<typeof testGetIndexOfPlayerWhoIsOccupyingShapeForPlayer>[0],
+  Parameters<typeof constructTestGetIndexOfPlayerWhoIsOccupyingShape>[0],
   "slots"
 > & {
   shapesWithDataToTest: Record<string, SnowballShapeWithData>;
@@ -146,7 +146,7 @@ const testGetIndexOfPlayerWhoIsOccupyingShape = ({
         shape,
       },
     }) => {
-      testGetIndexOfPlayerWhoIsOccupyingShapeForPlayer({
+      constructTestGetIndexOfPlayerWhoIsOccupyingShape({
         affix: keyOfShape,
         expectedIndexOfPlayerWhoIsOccupyingShape:
           indexOfPlayerWhoIsOccupyingShape,

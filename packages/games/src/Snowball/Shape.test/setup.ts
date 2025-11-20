@@ -3,6 +3,7 @@ import type { Integer } from "@repo/engine_core/types.js";
 import type {
   getIndexesOfSlots,
   getIndexOfPlayerWhoIsOccupyingShape,
+  getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots,
   Shape,
 } from "../Shape.js";
 
@@ -19,6 +20,9 @@ interface SnowballShapeParams {
 
 interface SnowballShapeResult {
   indexesOfSlots: ReturnType<typeof getIndexesOfSlots>;
+  score: ReturnType<
+    typeof getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots
+  >;
 }
 
 interface SnowballShapeWithData {

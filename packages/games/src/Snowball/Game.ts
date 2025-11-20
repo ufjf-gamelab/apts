@@ -49,6 +49,13 @@ class SnowballGame extends Game<
     });
   }
 
+  public constructScoreForInitialState(): SnowballScore {
+    const pointsOfEachPlayer = constructInitialPointsForEachPlayer({
+      quantityOfPlayers: this.getQuantityOfPlayers(),
+    });
+    return new SnowballScore({ pointsOfEachPlayer });
+  }
+
   public override getIndexOfNextPlayer({
     state,
   }: {
@@ -156,13 +163,6 @@ class SnowballGame extends Game<
       score: updatedScore,
       slots: updatedSlots,
     });
-  }
-
-  private constructScoreForInitialState(): SnowballScore {
-    const pointsOfEachPlayer = constructInitialPointsForEachPlayer({
-      quantityOfPlayers: this.getQuantityOfPlayers(),
-    });
-    return new SnowballScore({ pointsOfEachPlayer });
   }
 }
 
