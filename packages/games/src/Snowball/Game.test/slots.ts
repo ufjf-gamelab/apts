@@ -1,5 +1,6 @@
 import {
   slotsWithData,
+  slotsWithDataForUnitTest,
   type SnowballSlotWithData,
 } from "../Slot.test/setup.js";
 
@@ -108,9 +109,116 @@ const getIndexedSnowballSlotsWithData = () =>
     slotsWithData.southeastOfSoutheast,
   ] satisfies SnowballSlotWithData[];
 
-const indexedSlots = getIndexedSnowballSlotsWithData();
+// eslint-disable-next-line max-lines-per-function
+const getIndexedSnowballSlotsWithDataForUnitTest = () =>
+  [
+    // Row 0
+    slotsWithDataForUnitTest.northwestOfNorthwest,
+    slotsWithDataForUnitTest.northOfNorthwest,
+    slotsWithDataForUnitTest.northeastOfNorthwest,
+    slotsWithDataForUnitTest.northwestOfNorth,
+    slotsWithDataForUnitTest.northOfNorth,
+    slotsWithDataForUnitTest.northeastOfNorth,
+    slotsWithDataForUnitTest.northwestOfNortheast,
+    slotsWithDataForUnitTest.northOfNortheast,
+    slotsWithDataForUnitTest.northeastOfNortheast,
 
-const getIndexOfSlot = ({ keyOfSlot }: { keyOfSlot: string }) => {
+    // Row 1
+    slotsWithDataForUnitTest.westOfNorthwest,
+    slotsWithDataForUnitTest.centerOfNorthwest,
+    slotsWithDataForUnitTest.eastOfNorthwest,
+    slotsWithDataForUnitTest.westOfNorth,
+    slotsWithDataForUnitTest.centerOfNorth,
+    slotsWithDataForUnitTest.eastOfNorth,
+    slotsWithDataForUnitTest.westOfNortheast,
+    slotsWithDataForUnitTest.centerOfNortheast,
+    slotsWithDataForUnitTest.eastOfNortheast,
+
+    // Row 2
+    slotsWithDataForUnitTest.southwestOfNorthwest,
+    slotsWithDataForUnitTest.southOfNorthwest,
+    slotsWithDataForUnitTest.southeastOfNorthwest,
+    slotsWithDataForUnitTest.southwestOfNorth,
+    slotsWithDataForUnitTest.southOfNorth,
+    slotsWithDataForUnitTest.southeastOfNorth,
+    slotsWithDataForUnitTest.southwestOfNortheast,
+    slotsWithDataForUnitTest.southOfNortheast,
+    slotsWithDataForUnitTest.southeastOfNortheast,
+
+    // Row 3
+    slotsWithDataForUnitTest.northwestOfWest,
+    slotsWithDataForUnitTest.northOfWest,
+    slotsWithDataForUnitTest.northeastOfWest,
+    slotsWithDataForUnitTest.northwestOfCenter,
+    slotsWithDataForUnitTest.northOfCenter,
+    slotsWithDataForUnitTest.northeastOfCenter,
+    slotsWithDataForUnitTest.northwestOfEast,
+    slotsWithDataForUnitTest.northOfEast,
+    slotsWithDataForUnitTest.northeastOfEast,
+
+    // Row 4
+    slotsWithDataForUnitTest.westOfWest,
+    slotsWithDataForUnitTest.centerOfWest,
+    slotsWithDataForUnitTest.eastOfWest,
+    slotsWithDataForUnitTest.westOfCenter,
+    slotsWithDataForUnitTest.centerOfCenter,
+    slotsWithDataForUnitTest.eastOfCenter,
+    slotsWithDataForUnitTest.westOfEast,
+    slotsWithDataForUnitTest.centerOfEast,
+    slotsWithDataForUnitTest.eastOfEast,
+
+    // Row 5
+    slotsWithDataForUnitTest.southwestOfWest,
+    slotsWithDataForUnitTest.southOfWest,
+    slotsWithDataForUnitTest.southeastOfWest,
+    slotsWithDataForUnitTest.southwestOfCenter,
+    slotsWithDataForUnitTest.southOfCenter,
+    slotsWithDataForUnitTest.southeastOfCenter,
+    slotsWithDataForUnitTest.southwestOfEast,
+    slotsWithDataForUnitTest.southOfEast,
+    slotsWithDataForUnitTest.southeastOfEast,
+
+    // Row 6
+    slotsWithDataForUnitTest.northwestOfSouthwest,
+    slotsWithDataForUnitTest.northOfSouthwest,
+    slotsWithDataForUnitTest.northeastOfSouthwest,
+    slotsWithDataForUnitTest.northwestOfSouth,
+    slotsWithDataForUnitTest.northOfSouth,
+    slotsWithDataForUnitTest.northeastOfSouth,
+    slotsWithDataForUnitTest.northwestOfSoutheast,
+    slotsWithDataForUnitTest.northOfSoutheast,
+    slotsWithDataForUnitTest.northeastOfSoutheast,
+
+    // Row 7
+    slotsWithDataForUnitTest.westOfSouthwest,
+    slotsWithDataForUnitTest.centerOfSouthwest,
+    slotsWithDataForUnitTest.eastOfSouthwest,
+    slotsWithDataForUnitTest.westOfSouth,
+    slotsWithDataForUnitTest.centerOfSouth,
+    slotsWithDataForUnitTest.eastOfSouth,
+    slotsWithDataForUnitTest.westOfSoutheast,
+    slotsWithDataForUnitTest.centerOfSoutheast,
+    slotsWithDataForUnitTest.eastOfSoutheast,
+
+    // Row 8
+    slotsWithDataForUnitTest.southwestOfSouthwest,
+    slotsWithDataForUnitTest.southOfSouthwest,
+    slotsWithDataForUnitTest.southeastOfSouthwest,
+    slotsWithDataForUnitTest.southwestOfSouth,
+    slotsWithDataForUnitTest.southOfSouth,
+    slotsWithDataForUnitTest.southeastOfSouth,
+    slotsWithDataForUnitTest.southwestOfSoutheast,
+    slotsWithDataForUnitTest.southOfSoutheast,
+    slotsWithDataForUnitTest.southeastOfSoutheast,
+  ] satisfies SnowballSlotWithData[];
+
+const getIndexOfSlot = ({
+  indexedSlots,
+  keyOfSlot,
+}: {
+  indexedSlots: SnowballSlotWithData[];
+  keyOfSlot: string;
+}) => {
   const indexOfSlot = indexedSlots.findIndex(
     (slot) => slot.keyOfSlot === keyOfSlot,
   );
@@ -120,4 +228,8 @@ const getIndexOfSlot = ({ keyOfSlot }: { keyOfSlot: string }) => {
   return indexOfSlot;
 };
 
-export { getIndexedSnowballSlotsWithData, getIndexOfSlot };
+export {
+  getIndexedSnowballSlotsWithData,
+  getIndexedSnowballSlotsWithDataForUnitTest,
+  getIndexOfSlot,
+};
