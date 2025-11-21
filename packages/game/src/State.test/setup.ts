@@ -47,6 +47,7 @@ interface RequiredStateParams<
   ExtendedSlotWithData extends SlotWithData<Sl>,
 > {
   game: ExtendedGameWithData;
+  isFinal: boolean;
   player: { indexOfPlayer: IndexOfPlayer; player: ExtendedPlayerWithData };
   score: ExtendedScoreWithData;
   slots: readonly ExtendedSlotWithData[];

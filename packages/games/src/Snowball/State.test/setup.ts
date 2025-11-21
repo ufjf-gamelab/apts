@@ -42,7 +42,7 @@ type RequiredSnowballStateParams = Pick<
     SnowballScoreWithData,
     SnowballSlotWithData
   >,
-  "game" | "player" | "score" | "slots" | "validMoves"
+  "game" | "isFinal" | "player" | "score" | "slots" | "validMoves"
 >;
 
 interface SnowballStateWithData<

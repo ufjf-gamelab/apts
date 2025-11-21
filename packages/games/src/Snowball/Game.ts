@@ -10,8 +10,8 @@ import type { SnowballMove } from "./Move.js";
 import type { SnowballPlayer } from "./Player.js";
 
 import {
-  calculateUpdatedScore,
   constructInitialPointsForEachPlayer,
+  getUpdatedScore,
   SnowballScore,
 } from "./Score.js";
 import { SnowballSlot } from "./Slot.js";
@@ -148,7 +148,7 @@ class SnowballGame extends Game<
     }
 
     const indexOfNextPlayer = this.getIndexOfNextPlayer({ state });
-    const updatedScore = calculateUpdatedScore({
+    const updatedScore = getUpdatedScore({
       currentScore: state.getScore(),
       slots: updatedSlots,
     });
