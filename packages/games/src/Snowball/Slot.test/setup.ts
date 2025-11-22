@@ -1,10 +1,10 @@
-import { createSlotsWithData } from "@repo/game/Slot.test/setup.js";
+import {
+  createSlotsWithData,
+  type SlotWithData,
+} from "@repo/game/Slot.test/setup.js";
 
 import { SnowballSlot, type SnowballSlotParams } from "../Slot.js";
-import {
-  recordOfRequiredParamsOfSlots,
-  recordOfRequiredParamsOfSlotsForUnitTest,
-} from "./records.js";
+import { type RecordOfRequiredSnowballSlotParams } from "./records.js";
 
 type DerivedSnowballSlotParams = RequiredSnowballSlotParams;
 
@@ -13,13 +13,10 @@ type RequiredSnowballSlotParams = Pick<
   "indexOfOccupyingPlayer"
 >;
 
-interface SnowballSlotWithData<
-  Params extends RequiredSnowballSlotParams = RequiredSnowballSlotParams,
-> {
-  keyOfSlot: string;
-  params: Params;
-  slot: SnowballSlot;
-}
+type SnowballSlotWithData = SlotWithData<
+  SnowballSlot,
+  DerivedSnowballSlotParams
+>;
 
 const deriveSnowballSlotParams = ({
   indexOfOccupyingPlayer,
@@ -34,18 +31,32 @@ const createSnowballSlot = ({
     indexOfOccupyingPlayer,
   });
 
-const slotsWithData = createSlotsWithData({
-  create: createSnowballSlot,
-  deriveParams: deriveSnowballSlotParams,
-  recordOfRequiredParams: recordOfRequiredParamsOfSlots,
-});
+type ExtendedSnowballSlotsWithData<
+  ExtendedRecordOfRequiredSnowballSlotParams extends
+    RecordOfRequiredSnowballSlotParams,
+> = {
+  [K in keyof ExtendedRecordOfRequiredSnowballSlotParams]: {
+    keyOfSlot: keyof ExtendedRecordOfRequiredSnowballSlotParams;
+    params: RequiredSnowballSlotParams;
+    slot: SnowballSlot;
+  };
+};
 
-const slotsWithDataForUnitTest = createSlotsWithData({
-  create: createSnowballSlot,
-  deriveParams: deriveSnowballSlotParams,
-  recordOfRequiredParams: recordOfRequiredParamsOfSlotsForUnitTest,
-});
+const createSnowballSlotsWithData = <
+  ExtendedRecordOfRequiredSnowballSlotParams extends
+    RecordOfRequiredSnowballSlotParams,
+>({
+  recordOfRequiredParams,
+}: {
+  recordOfRequiredParams: ExtendedRecordOfRequiredSnowballSlotParams;
+}): ExtendedSnowballSlotsWithData<ExtendedRecordOfRequiredSnowballSlotParams> =>
+  createSlotsWithData({
+    create: createSnowballSlot,
+    deriveParams: deriveSnowballSlotParams,
+    recordOfRequiredParams,
+  });
 
+// TODO: Maybe remove this
 const editSlotOnSnowballSlotsWithData = ({
   indexOfOccupyingPlayer,
   keyOfSlot,
@@ -72,13 +83,13 @@ const editSlotOnSnowballSlotsWithData = ({
 
 export type {
   DerivedSnowballSlotParams,
+  ExtendedSnowballSlotsWithData,
   RequiredSnowballSlotParams,
   SnowballSlotWithData,
 };
 export {
   createSnowballSlot,
+  createSnowballSlotsWithData,
   deriveSnowballSlotParams,
   editSlotOnSnowballSlotsWithData,
-  slotsWithData,
-  slotsWithDataForUnitTest,
 };

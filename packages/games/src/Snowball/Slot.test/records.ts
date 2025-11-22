@@ -1,8 +1,15 @@
-import type { RequiredSnowballSlotParams } from "./setup.js";
+import { snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "../Player.test/indexedRecords.js";
+import {
+  createSnowballSlotsWithData,
+  type RequiredSnowballSlotParams,
+} from "./setup.js";
 
-import { getIndexOfPlayer } from "../Game.test/players.js";
+type RecordOfRequiredSnowballSlotParams = Record<
+  string,
+  RequiredSnowballSlotParams
+>;
 
-const recordOfRequiredParamsOfSlots = {
+const recordOfRequiredParamsOfSlotsInWhichAllSlotsAreEmpty = {
   // Center
   centerOfCenter: {
     indexOfOccupyingPlayer: null,
@@ -263,272 +270,386 @@ const recordOfRequiredParamsOfSlots = {
   westOfWest: {
     indexOfOccupyingPlayer: null,
   },
-} as const satisfies Record<string, RequiredSnowballSlotParams>;
+} as const satisfies RecordOfRequiredSnowballSlotParams;
 
-const recordOfRequiredParamsOfSlotsForUnitTest = {
-  // Center
-  centerOfCenter: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
-  centerOfEast: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  centerOfNorth: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
-  centerOfNortheast: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  centerOfNorthwest: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
-  centerOfSouth: {
-    indexOfOccupyingPlayer: null,
-  },
-  centerOfSoutheast: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  centerOfSouthwest: {
-    indexOfOccupyingPlayer: null,
-  },
-  centerOfWest: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
+const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno =
+  {
+    // Center
+    centerOfCenter: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
+    centerOfEast: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    centerOfNorth: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
+    centerOfNortheast: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    centerOfNorthwest: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
+    centerOfSouth: {
+      indexOfOccupyingPlayer: null,
+    },
+    centerOfSoutheast: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    centerOfSouthwest: {
+      indexOfOccupyingPlayer: null,
+    },
+    centerOfWest: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
 
-  // East
-  eastOfCenter: {
-    indexOfOccupyingPlayer: null,
-  },
-  eastOfEast: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  eastOfNorth: {
-    indexOfOccupyingPlayer: null,
-  },
-  eastOfNortheast: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  eastOfNorthwest: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
-  eastOfSouth: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  eastOfSoutheast: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  eastOfSouthwest: {
-    indexOfOccupyingPlayer: null,
-  },
-  eastOfWest: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
+    // East
+    eastOfCenter: {
+      indexOfOccupyingPlayer: null,
+    },
+    eastOfEast: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    eastOfNorth: {
+      indexOfOccupyingPlayer: null,
+    },
+    eastOfNortheast: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    eastOfNorthwest: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
+    eastOfSouth: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    eastOfSoutheast: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    eastOfSouthwest: {
+      indexOfOccupyingPlayer: null,
+    },
+    eastOfWest: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
 
-  // Northeast
-  northeastOfCenter: {
-    indexOfOccupyingPlayer: null,
-  },
-  northeastOfEast: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  northeastOfNorth: {
-    indexOfOccupyingPlayer: null,
-  },
-  northeastOfNortheast: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  northeastOfNorthwest: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
-  northeastOfSouth: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  northeastOfSoutheast: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  northeastOfSouthwest: {
-    indexOfOccupyingPlayer: null,
-  },
-  northeastOfWest: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
+    // Northeast
+    northeastOfCenter: {
+      indexOfOccupyingPlayer: null,
+    },
+    northeastOfEast: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    northeastOfNorth: {
+      indexOfOccupyingPlayer: null,
+    },
+    northeastOfNortheast: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    northeastOfNorthwest: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
+    northeastOfSouth: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    northeastOfSoutheast: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    northeastOfSouthwest: {
+      indexOfOccupyingPlayer: null,
+    },
+    northeastOfWest: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
 
-  // North
-  northOfCenter: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
-  northOfEast: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  northOfNorth: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
-  northOfNortheast: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  northOfNorthwest: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
-  northOfSouth: {
-    indexOfOccupyingPlayer: null,
-  },
-  northOfSoutheast: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  northOfSouthwest: {
-    indexOfOccupyingPlayer: null,
-  },
-  northOfWest: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
+    // North
+    northOfCenter: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
+    northOfEast: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    northOfNorth: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
+    northOfNortheast: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    northOfNorthwest: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
+    northOfSouth: {
+      indexOfOccupyingPlayer: null,
+    },
+    northOfSoutheast: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    northOfSouthwest: {
+      indexOfOccupyingPlayer: null,
+    },
+    northOfWest: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
 
-  // Northwest
-  northwestOfCenter: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
-  northwestOfEast: {
-    indexOfOccupyingPlayer: null,
-  },
-  northwestOfNorth: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
-  northwestOfNortheast: {
-    indexOfOccupyingPlayer: null,
-  },
-  northwestOfNorthwest: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
-  northwestOfSouth: {
-    indexOfOccupyingPlayer: null,
-  },
-  northwestOfSoutheast: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  northwestOfSouthwest: {
-    indexOfOccupyingPlayer: null,
-  },
-  northwestOfWest: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
+    // Northwest
+    northwestOfCenter: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
+    northwestOfEast: {
+      indexOfOccupyingPlayer: null,
+    },
+    northwestOfNorth: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
+    northwestOfNortheast: {
+      indexOfOccupyingPlayer: null,
+    },
+    northwestOfNorthwest: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
+    northwestOfSouth: {
+      indexOfOccupyingPlayer: null,
+    },
+    northwestOfSoutheast: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    northwestOfSouthwest: {
+      indexOfOccupyingPlayer: null,
+    },
+    northwestOfWest: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
 
-  // Southeast
-  southeastOfCenter: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
-  southeastOfEast: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  southeastOfNorth: {
-    indexOfOccupyingPlayer: null,
-  },
-  southeastOfNortheast: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  southeastOfNorthwest: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
-  southeastOfSouth: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  southeastOfSoutheast: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  southeastOfSouthwest: {
-    indexOfOccupyingPlayer: null,
-  },
-  southeastOfWest: {
-    indexOfOccupyingPlayer: null,
-  },
+    // Southeast
+    southeastOfCenter: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
+    southeastOfEast: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    southeastOfNorth: {
+      indexOfOccupyingPlayer: null,
+    },
+    southeastOfNortheast: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    southeastOfNorthwest: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
+    southeastOfSouth: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    southeastOfSoutheast: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    southeastOfSouthwest: {
+      indexOfOccupyingPlayer: null,
+    },
+    southeastOfWest: {
+      indexOfOccupyingPlayer: null,
+    },
 
-  // South
-  southOfCenter: {
-    indexOfOccupyingPlayer: null,
-  },
-  southOfEast: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  southOfNorth: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
-  southOfNortheast: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  southOfNorthwest: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
-  southOfSouth: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  southOfSoutheast: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  southOfSouthwest: {
-    indexOfOccupyingPlayer: null,
-  },
-  southOfWest: {
-    indexOfOccupyingPlayer: null,
-  },
+    // South
+    southOfCenter: {
+      indexOfOccupyingPlayer: null,
+    },
+    southOfEast: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    southOfNorth: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
+    southOfNortheast: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    southOfNorthwest: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
+    southOfSouth: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    southOfSoutheast: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    southOfSouthwest: {
+      indexOfOccupyingPlayer: null,
+    },
+    southOfWest: {
+      indexOfOccupyingPlayer: null,
+    },
 
-  // Southwest
-  southwestOfCenter: {
-    indexOfOccupyingPlayer: null,
-  },
-  southwestOfEast: {
-    indexOfOccupyingPlayer: null,
-  },
-  southwestOfNorth: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
-  southwestOfNortheast: {
-    indexOfOccupyingPlayer: null,
-  },
-  southwestOfNorthwest: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
-  southwestOfSouth: {
-    indexOfOccupyingPlayer: null,
-  },
-  southwestOfSoutheast: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  southwestOfSouthwest: {
-    indexOfOccupyingPlayer: null,
-  },
-  southwestOfWest: {
-    indexOfOccupyingPlayer: null,
-  },
+    // Southwest
+    southwestOfCenter: {
+      indexOfOccupyingPlayer: null,
+    },
+    southwestOfEast: {
+      indexOfOccupyingPlayer: null,
+    },
+    southwestOfNorth: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
+    southwestOfNortheast: {
+      indexOfOccupyingPlayer: null,
+    },
+    southwestOfNorthwest: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
+    southwestOfSouth: {
+      indexOfOccupyingPlayer: null,
+    },
+    southwestOfSoutheast: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    southwestOfSouthwest: {
+      indexOfOccupyingPlayer: null,
+    },
+    southwestOfWest: {
+      indexOfOccupyingPlayer: null,
+    },
 
-  // West
-  westOfCenter: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
-  westOfEast: {
-    indexOfOccupyingPlayer: null,
-  },
-  westOfNorth: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
-  westOfNortheast: {
-    indexOfOccupyingPlayer: null,
-  },
-  westOfNorthwest: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
-  westOfSouth: {
-    indexOfOccupyingPlayer: null,
-  },
-  westOfSoutheast: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "bruno" }),
-  },
-  westOfSouthwest: {
-    indexOfOccupyingPlayer: null,
-  },
-  westOfWest: {
-    indexOfOccupyingPlayer: getIndexOfPlayer({ keyOfPlayer: "alice" }),
-  },
-} as const satisfies Record<string, RequiredSnowballSlotParams>;
+    // West
+    westOfCenter: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
+    westOfEast: {
+      indexOfOccupyingPlayer: null,
+    },
+    westOfNorth: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
+    westOfNortheast: {
+      indexOfOccupyingPlayer: null,
+    },
+    westOfNorthwest: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
+    westOfSouth: {
+      indexOfOccupyingPlayer: null,
+    },
+    westOfSoutheast: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .bruno.index,
+    },
+    westOfSouthwest: {
+      indexOfOccupyingPlayer: null,
+    },
+    westOfWest: {
+      indexOfOccupyingPlayer:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+          .alice.index,
+    },
+  } as const satisfies RecordOfRequiredSnowballSlotParams;
 
+const slotsWithDataInWhichAllSlotsAreEmpty = createSnowballSlotsWithData({
+  recordOfRequiredParams: recordOfRequiredParamsOfSlotsInWhichAllSlotsAreEmpty,
+});
+
+const slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno =
+  createSnowballSlotsWithData({
+    recordOfRequiredParams:
+      recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+  });
+
+export type { RecordOfRequiredSnowballSlotParams };
 export {
-  recordOfRequiredParamsOfSlots,
-  recordOfRequiredParamsOfSlotsForUnitTest,
+  slotsWithDataInWhichAllSlotsAreEmpty,
+  slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
 };

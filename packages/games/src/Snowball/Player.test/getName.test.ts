@@ -6,14 +6,14 @@ import {
 import { test } from "vitest";
 
 import type { SnowballPlayer } from "../Player.js";
+import type { SnowballPlayerWithData } from "../Player.test/setup.js";
 
-import { playersWithData } from "./setup.js";
+import { indexedSnowballPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "./indexedRecords.js";
 
 const createDescription = ({
   affix,
   expectedName,
-}: {
-  affix: string;
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> & {
   expectedName: ReturnType<SnowballPlayer["getName"]>;
 }) =>
   createDescriptionForTest({
@@ -23,17 +23,28 @@ const createDescription = ({
     }),
   });
 
-Object.values(playersWithData).forEach(({ keyOfPlayer, params, player }) => {
-  test(
-    createDescription({
-      affix: keyOfPlayer,
-      expectedName: params.name,
-    }),
-    () => {
-      validateGetName({
+const testGetName = ({
+  arrayOfPlayersWithData,
+}: {
+  arrayOfPlayersWithData: SnowballPlayerWithData[];
+}) => {
+  arrayOfPlayersWithData.forEach(({ keyOfPlayer, params, player }) => {
+    test(
+      createDescription({
+        affix: keyOfPlayer,
         expectedName: params.name,
-        player,
-      });
-    },
-  );
+      }),
+      () => {
+        validateGetName({
+          expectedName: params.name,
+          player,
+        });
+      },
+    );
+  });
+};
+
+testGetName({
+  arrayOfPlayersWithData:
+    indexedSnowballPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
 });

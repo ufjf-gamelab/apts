@@ -1,13 +1,13 @@
 {
   "devDependencies": {
     "@repo/eslint_config": "workspace:*",
-    "@vitest/coverage-v8": "^4.0.10",
+    "@vitest/coverage-v8": "^4.0.13",
     "eslint": "^9.39.1",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.7.1",
     "turbo": "^2.6.1",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.10"
+    "vitest": "^4.0.13"
   },
   "engines": {
     "node": ">=18"

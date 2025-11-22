@@ -28,12 +28,12 @@ Object.values(statesWithDataForUnitTest).forEach(({ keyOfState, params }) => {
       affix: keyOfState,
     }),
     () => {
-      const { game, indexOfPlayer, score, slots } = params;
+      const { game, player, score, slots } = params;
       const extractedSlots = slots.map((slot) => slot.slot);
 
       const newState = new SnowballState({
         game: game.game,
-        indexOfPlayer,
+        indexOfPlayer: player.indexOfPlayer,
         score: score.score,
         slots: extractedSlots,
       });
@@ -48,7 +48,7 @@ Object.values(statesWithDataForUnitTest).forEach(({ keyOfState, params }) => {
       >({
         params: {
           game: game.game,
-          indexOfPlayer,
+          indexOfPlayer: player.indexOfPlayer,
           score: score.score,
           slots: extractedSlots,
         },

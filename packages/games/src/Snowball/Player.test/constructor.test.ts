@@ -5,10 +5,14 @@ import {
 import { validateConstructor } from "@repo/game/Player.test/constructor.test.js";
 import { expect, test } from "vitest";
 
-import { SnowballPlayer } from "../Player.js";
-import { playersWithData } from "./setup.js";
+import type { SnowballPlayerWithData } from "./setup.js";
 
-const createDescription = ({ affix }: { affix: string }) =>
+import { SnowballPlayer } from "../Player.js";
+import { indexedSnowballPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "./indexedRecords.js";
+
+const createDescription = ({
+  affix,
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix">) =>
   createDescriptionForTest({
     affix,
     description: createDescriptionForTestsOfConstructor({
@@ -16,20 +20,31 @@ const createDescription = ({ affix }: { affix: string }) =>
     }),
   });
 
-Object.values(playersWithData).forEach(({ keyOfPlayer, params }) => {
-  test(
-    createDescription({
-      affix: keyOfPlayer,
-    }),
-    () => {
-      const { name, symbol } = params;
-      const newPlayer = new SnowballPlayer({
-        name,
-        symbol,
-      });
+const testConstructor = ({
+  arrayOfPlayersWithData,
+}: {
+  arrayOfPlayersWithData: SnowballPlayerWithData[];
+}) => {
+  arrayOfPlayersWithData.forEach(({ keyOfPlayer, params }) => {
+    test(
+      createDescription({
+        affix: keyOfPlayer,
+      }),
+      () => {
+        const { name, symbol } = params;
+        const newPlayer = new SnowballPlayer({
+          name,
+          symbol,
+        });
 
-      validateConstructor({ params: { name, symbol }, player: newPlayer });
-      expect(newPlayer).toBeInstanceOf(SnowballPlayer);
-    },
-  );
+        validateConstructor({ params, player: newPlayer });
+        expect(newPlayer).toBeInstanceOf(SnowballPlayer);
+      },
+    );
+  });
+};
+
+testConstructor({
+  arrayOfPlayersWithData:
+    indexedSnowballPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
 });

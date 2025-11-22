@@ -75,7 +75,17 @@ const createShapesWithData = <
   ) as ResultType;
 };
 
-const shapesWithDataForUnitTest = createShapesWithData({
+type RecordOfParamsForShapesWithDataForUnitTest = Record<
+  string,
+  { params: SnowballShapeParams; result: SnowballShapeResult }
+>;
+const shapesWithDataForUnitTest: {
+  [K in keyof RecordOfParamsForShapesWithDataForUnitTest]: {
+    keyOfShape: keyof RecordOfParamsForShapesWithDataForUnitTest;
+    params: SnowballShapeParams;
+    result: SnowballShapeResult;
+  };
+} = createShapesWithData({
   recordOfParams: recordOfParamsOfShapesForUnitTest,
 });
 

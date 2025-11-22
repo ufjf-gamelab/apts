@@ -5,21 +5,21 @@ import {
 } from "@repo/game/Slot.test/static.getSlot.test.js";
 import { test } from "vitest";
 
-import { slotsWithDataForUnitTest } from "./setup.js";
+import type { SnowballSlotWithData } from "./setup.js";
 
-type PropsOfCreateDescriptionForTestOfGetSlot = Parameters<
-  typeof createDescriptionForTestOfGetSlot
->[0];
+import {
+  indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
+  indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+} from "./indexedRecords.js";
 
 const createDescription = ({
   indexOfSlot,
   keyOfSlot,
   slots,
-}: {
-  indexOfSlot: PropsOfCreateDescriptionForTestOfGetSlot["indexOfSlot"];
-  keyOfSlot: PropsOfCreateDescriptionForTestOfGetSlot["keyOfSlot"];
-  slots: PropsOfCreateDescriptionForTestOfGetSlot["slots"];
-}) =>
+}: Pick<
+  Parameters<typeof createDescriptionForTestOfGetSlot>[0],
+  "indexOfSlot" | "keyOfSlot" | "slots"
+>) =>
   createDescriptionForTest({
     description: createDescriptionForTestOfGetSlot({
       indexOfSlot,
@@ -28,25 +28,39 @@ const createDescription = ({
     }),
   });
 
-Object.values(slotsWithDataForUnitTest).forEach(
-  ({ keyOfSlot, slot }, index) => {
+const testGetSlot = ({
+  arrayOfSlotsWithData,
+}: {
+  arrayOfSlotsWithData: SnowballSlotWithData[];
+}) => {
+  const arrayOfSlotsToCreateDescription = `[${arrayOfSlotsWithData
+    .map(({ keyOfSlot: innerKeyOfSlot }) => innerKeyOfSlot)
+    .join(", ")}]`;
+  const arrayOfSlotsToValidateGetSlot = arrayOfSlotsWithData.map(
+    ({ slot: innerSlot }) => innerSlot,
+  );
+  arrayOfSlotsWithData.forEach(({ keyOfSlot, slot }, index) => {
     test(
       createDescription({
         indexOfSlot: index,
         keyOfSlot,
-        slots: `[${Object.values(slotsWithDataForUnitTest)
-          .map(({ keyOfSlot: innerKeyOfSlot }) => innerKeyOfSlot)
-          .join(", ")}]`,
+        slots: arrayOfSlotsToCreateDescription,
       }),
       () => {
         validateGetSlot({
           expectedSlot: slot,
           indexOfSlot: index,
-          slots: Object.values(slotsWithDataForUnitTest).map(
-            ({ slot: innerSlot }) => innerSlot,
-          ),
+          slots: arrayOfSlotsToValidateGetSlot,
         });
       },
     );
-  },
-);
+  });
+};
+
+testGetSlot({
+  arrayOfSlotsWithData: indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
+});
+testGetSlot({
+  arrayOfSlotsWithData:
+    indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+});

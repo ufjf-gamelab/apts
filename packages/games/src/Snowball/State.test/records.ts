@@ -58,7 +58,7 @@ const recordOfRequiredParamsOfStatesForUnitTest = {
   slotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     {
       game: gamesWithDataForUnitTest.snowballWith9RowsAnd9Columns,
-      isFinal: false,
+      isFinal: true,
       player: constructEntryForPlayer({ player: playersWithData.bruno }),
       score: scoresWithDataForUnitTest.aliceWith38PointsAndBrunoWith26Points,
       slots: getIndexedSnowballSlotsWithDataForUnitTest(),

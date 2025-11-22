@@ -4,7 +4,6 @@ import type { SnowballShapeParams, SnowballShapeResult } from "./setup.js";
 import { getIndexOfPlayer } from "../Game.test/players.js";
 import { getIndexOfSlotOnUnitTestSlots } from "../Game.test/slots.js";
 import { scoresWithDataForUnitTest } from "../Score.test/setup.js";
-import { slotsWithDataForUnitTest } from "../Slot.test/setup.js";
 
 const horizontalLine = {
   direction: "horizontal",

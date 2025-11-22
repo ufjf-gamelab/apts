@@ -1,8 +1,27 @@
-import type { RequiredSnowballPlayerParams } from "./setup.js";
+import {
+  createSnowballPlayersWithData,
+  type RequiredSnowballPlayerParams,
+} from "./setup.js";
 
-const recordOfRequiredParamsOfPlayers = {
-  alice: { name: "Alice", symbol: "X" },
-  bruno: { name: "Bruno", symbol: "O" },
-} as const satisfies Record<string, RequiredSnowballPlayerParams>;
+type RecordOfRequiredSnowballPlayerParams = Record<
+  string,
+  RequiredSnowballPlayerParams
+>;
 
-export { recordOfRequiredParamsOfPlayers };
+const recordOfRequiredParamsOfPlayersInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO =
+  {
+    alice: { name: "Alice", symbol: "X" },
+    bruno: { name: "Bruno", symbol: "O" },
+  } as const satisfies RecordOfRequiredSnowballPlayerParams;
+
+const playersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO =
+  createSnowballPlayersWithData({
+    recordOfRequiredParams:
+      recordOfRequiredParamsOfPlayersInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
+  });
+
+export type { RecordOfRequiredSnowballPlayerParams };
+export {
+  playersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
+  recordOfRequiredParamsOfPlayersInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
+};

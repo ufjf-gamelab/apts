@@ -5,10 +5,17 @@ import {
 import { validateClone } from "@repo/game/Slot.test/clone.test.js";
 import { expect, test } from "vitest";
 
-import { SnowballSlot } from "../Slot.js";
-import { slotsWithDataForUnitTest } from "./setup.js";
+import type { SnowballSlotWithData } from "./setup.js";
 
-const createDescription = ({ affix }: { affix: string }) =>
+import { SnowballSlot } from "../Slot.js";
+import {
+  indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
+  indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+} from "./indexedRecords.js";
+
+const createDescription = ({
+  affix,
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix">) =>
   createDescriptionForTest({
     affix,
     description: createDescriptionForTestsOfCloneMethod({
@@ -16,15 +23,29 @@ const createDescription = ({ affix }: { affix: string }) =>
     }),
   });
 
-Object.values(slotsWithDataForUnitTest).forEach(({ keyOfSlot, slot }) => {
-  test(
-    createDescription({
-      affix: keyOfSlot,
-    }),
-    () => {
-      const clonedSlot = slot.clone();
-      validateClone({ clonedSlot, slot });
-      expect(clonedSlot).toBeInstanceOf(SnowballSlot);
-    },
-  );
+const testClone = ({
+  arrayOfSlotsWithData,
+}: {
+  arrayOfSlotsWithData: SnowballSlotWithData[];
+}) => {
+  arrayOfSlotsWithData.forEach(({ keyOfSlot, slot }) => {
+    test(
+      createDescription({
+        affix: keyOfSlot,
+      }),
+      () => {
+        const clonedSlot = slot.clone();
+        validateClone({ clonedSlot, slot });
+        expect(clonedSlot).toBeInstanceOf(SnowballSlot);
+      },
+    );
+  });
+};
+
+testClone({
+  arrayOfSlotsWithData: indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
+});
+testClone({
+  arrayOfSlotsWithData:
+    indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
 });

@@ -9,9 +9,9 @@
   "devDependencies": {
     "@repo/eslint_config": "workspace:*",
     "@repo/typescript_config": "workspace:*",
-    "@vitest/ui": "^4.0.10",
+    "@vitest/ui": "^4.0.13",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.10"
+    "vitest": "^4.0.13"
   },
   "exports": {
     "./Snowball/*": "./src/Snowball/*"

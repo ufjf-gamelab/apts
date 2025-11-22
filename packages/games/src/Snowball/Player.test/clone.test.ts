@@ -5,8 +5,10 @@ import {
 import { validateClone } from "@repo/game/Player.test/clone.test.js";
 import { expect, test } from "vitest";
 
+import type { SnowballPlayerWithData } from "./setup.js";
+
 import { SnowballPlayer } from "../Player.js";
-import { playersWithData } from "./setup.js";
+import { indexedSnowballPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "./indexedRecords.js";
 
 const createDescription = ({ affix }: { affix: string }) =>
   createDescriptionForTest({
@@ -16,15 +18,26 @@ const createDescription = ({ affix }: { affix: string }) =>
     }),
   });
 
-Object.values(playersWithData).forEach(({ keyOfPlayer, player }) => {
-  test(
-    createDescription({
-      affix: keyOfPlayer,
-    }),
-    () => {
-      const clonedPlayer = player.clone();
-      validateClone({ clonedPlayer, player });
-      expect(clonedPlayer).toBeInstanceOf(SnowballPlayer);
-    },
-  );
+const testClone = ({
+  arrayOfPlayersWithData,
+}: {
+  arrayOfPlayersWithData: SnowballPlayerWithData[];
+}) => {
+  arrayOfPlayersWithData.forEach(({ keyOfPlayer, player }) => {
+    test(
+      createDescription({
+        affix: keyOfPlayer,
+      }),
+      () => {
+        const clonedPlayer = player.clone();
+        validateClone({ clonedPlayer, player });
+        expect(clonedPlayer).toBeInstanceOf(SnowballPlayer);
+      },
+    );
+  });
+};
+
+testClone({
+  arrayOfPlayersWithData:
+    indexedSnowballPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
 });

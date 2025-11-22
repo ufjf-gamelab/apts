@@ -4,4 +4,6 @@ packages:
 
 onlyBuiltDependencies:
   - core-js
+  - edgedriver
   - esbuild
+  - geckodriver
