@@ -17,7 +17,7 @@ type RequiredSnowballPlayerParams = Pick<
 
 type SnowballPlayerWithData = PlayerWithData<
   SnowballPlayer,
-  DerivedSnowballPlayerParams
+  RequiredSnowballPlayerParams
 >;
 
 const deriveSnowballPlayerParams = ({

@@ -5,10 +5,14 @@ import {
 import { validateClone } from "@repo/game/Move.test/clone.test.js";
 import { expect, test } from "vitest";
 
-import { SnowballMove } from "../Move.js";
-import { movesWithData } from "./setup.js";
+import type { SnowballMoveWithData } from "./setup.js";
 
-const createDescription = ({ affix }: { affix: string }) =>
+import { SnowballMove } from "../Move.js";
+import { indexedMovesWithData } from "./indexedRecords.js";
+
+const createDescription = ({
+  affix,
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix">) =>
   createDescriptionForTest({
     affix,
     description: createDescriptionForTestsOfCloneMethod({
@@ -16,15 +20,25 @@ const createDescription = ({ affix }: { affix: string }) =>
     }),
   });
 
-Object.values(movesWithData).forEach(({ keyOfMove, move }) => {
-  test(
-    createDescription({
-      affix: keyOfMove,
-    }),
-    () => {
-      const clonedMove = move.clone();
-      validateClone({ clonedMove, move });
-      expect(clonedMove).toBeInstanceOf(SnowballMove);
-    },
-  );
+const testClone = ({
+  arrayOfMovesWithData,
+}: {
+  arrayOfMovesWithData: SnowballMoveWithData[];
+}) => {
+  arrayOfMovesWithData.forEach(({ keyOfMove, move }) => {
+    test(
+      createDescription({
+        affix: keyOfMove,
+      }),
+      () => {
+        const clonedMove = move.clone();
+        validateClone({ clonedMove, move });
+        expect(clonedMove).toBeInstanceOf(SnowballMove);
+      },
+    );
+  });
+};
+
+testClone({
+  arrayOfMovesWithData: indexedMovesWithData,
 });

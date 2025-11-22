@@ -15,7 +15,7 @@ type RequiredSnowballSlotParams = Pick<
 
 type SnowballSlotWithData = SlotWithData<
   SnowballSlot,
-  DerivedSnowballSlotParams
+  RequiredSnowballSlotParams
 >;
 
 const deriveSnowballSlotParams = ({

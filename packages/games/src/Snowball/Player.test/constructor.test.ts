@@ -8,7 +8,7 @@ import { expect, test } from "vitest";
 import type { SnowballPlayerWithData } from "./setup.js";
 
 import { SnowballPlayer } from "../Player.js";
-import { indexedSnowballPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "./indexedRecords.js";
+import { indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "./indexedRecords.js";
 
 const createDescription = ({
   affix,
@@ -46,5 +46,5 @@ const testConstructor = ({
 
 testConstructor({
   arrayOfPlayersWithData:
-    indexedSnowballPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
+    indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
 });

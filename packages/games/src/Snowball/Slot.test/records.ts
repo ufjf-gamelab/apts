@@ -1,4 +1,4 @@
-import { snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "../Player.test/indexedRecords.js";
+import { playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "../Player.test/indexedRecords.js";
 import {
   createSnowballSlotsWithData,
   type RequiredSnowballSlotParams,
@@ -277,27 +277,27 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     // Center
     centerOfCenter: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
     centerOfEast: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     centerOfNorth: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
     centerOfNortheast: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     centerOfNorthwest: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
     centerOfSouth: {
@@ -305,7 +305,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     centerOfSoutheast: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     centerOfSouthwest: {
@@ -313,7 +313,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     centerOfWest: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
 
@@ -323,7 +323,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     eastOfEast: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     eastOfNorth: {
@@ -331,22 +331,22 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     eastOfNortheast: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     eastOfNorthwest: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
     eastOfSouth: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     eastOfSoutheast: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     eastOfSouthwest: {
@@ -354,7 +354,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     eastOfWest: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
 
@@ -364,7 +364,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     northeastOfEast: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     northeastOfNorth: {
@@ -372,22 +372,22 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     northeastOfNortheast: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     northeastOfNorthwest: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
     northeastOfSouth: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     northeastOfSoutheast: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     northeastOfSouthwest: {
@@ -395,34 +395,34 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     northeastOfWest: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
 
     // North
     northOfCenter: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
     northOfEast: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     northOfNorth: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
     northOfNortheast: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     northOfNorthwest: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
     northOfSouth: {
@@ -430,7 +430,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     northOfSoutheast: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     northOfSouthwest: {
@@ -438,14 +438,14 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     northOfWest: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
 
     // Northwest
     northwestOfCenter: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
     northwestOfEast: {
@@ -453,7 +453,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     northwestOfNorth: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
     northwestOfNortheast: {
@@ -461,7 +461,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     northwestOfNorthwest: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
     northwestOfSouth: {
@@ -469,7 +469,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     northwestOfSoutheast: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     northwestOfSouthwest: {
@@ -477,19 +477,19 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     northwestOfWest: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
 
     // Southeast
     southeastOfCenter: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
     southeastOfEast: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     southeastOfNorth: {
@@ -497,22 +497,22 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     southeastOfNortheast: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     southeastOfNorthwest: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
     southeastOfSouth: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     southeastOfSoutheast: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     southeastOfSouthwest: {
@@ -528,32 +528,32 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     southOfEast: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     southOfNorth: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
     southOfNortheast: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     southOfNorthwest: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
     southOfSouth: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     southOfSoutheast: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     southOfSouthwest: {
@@ -572,7 +572,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     southwestOfNorth: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
     southwestOfNortheast: {
@@ -580,7 +580,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     southwestOfNorthwest: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
     southwestOfSouth: {
@@ -588,7 +588,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     southwestOfSoutheast: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     southwestOfSouthwest: {
@@ -601,7 +601,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     // West
     westOfCenter: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
     westOfEast: {
@@ -609,7 +609,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     westOfNorth: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
     westOfNortheast: {
@@ -617,7 +617,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     westOfNorthwest: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
     westOfSouth: {
@@ -625,7 +625,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     westOfSoutheast: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .bruno.index,
     },
     westOfSouthwest: {
@@ -633,7 +633,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
     },
     westOfWest: {
       indexOfOccupyingPlayer:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
           .alice.index,
     },
   } as const satisfies RecordOfRequiredSnowballSlotParams;

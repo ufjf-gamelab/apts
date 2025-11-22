@@ -1,511 +1,441 @@
-import type { RequiredSnowballMoveParams } from "./setup.js";
+import { slotsWithDataAndIndexInWhichAllSlotsAreEmpty } from "../Slot.test/indexedRecords.js";
+import {
+  createSnowballMovesWithData,
+  type RequiredSnowballMoveParams,
+} from "./setup.js";
 
-import { getIndexOfSlotOnDefaultSlots } from "../Game.test/slots.js";
+type RecordOfRequiredSnowballMoveParams = Record<
+  string,
+  RequiredSnowballMoveParams
+>;
 
 const recordOfRequiredParamsOfMoves = {
-  // Center
   centerOfCenter: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "centerOfCenter",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.centerOfCenter.index,
     title: "Center of Center",
   },
   centerOfEast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "centerOfEast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.centerOfEast.index,
     title: "Center of East",
   },
   centerOfNorth: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "centerOfNorth",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.centerOfNorth.index,
     title: "Center of North",
   },
   centerOfNortheast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "centerOfNortheast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.centerOfNortheast.index,
     title: "Center of Northeast",
   },
   centerOfNorthwest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "centerOfNorthwest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.centerOfNorthwest.index,
     title: "Center of Northwest",
   },
   centerOfSouth: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "centerOfSouth",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.centerOfSouth.index,
     title: "Center of South",
   },
   centerOfSoutheast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "centerOfSoutheast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.centerOfSoutheast.index,
     title: "Center of Southeast",
   },
   centerOfSouthwest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "centerOfSouthwest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.centerOfSouthwest.index,
     title: "Center of Southwest",
   },
   centerOfWest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "centerOfWest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.centerOfWest.index,
     title: "Center of West",
   },
 
   // East
   eastOfCenter: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "eastOfCenter",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.eastOfCenter.index,
     title: "East of Center",
   },
   eastOfEast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "eastOfEast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.eastOfEast.index,
     title: "East of East",
   },
   eastOfNorth: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "eastOfNorth",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.eastOfNorth.index,
     title: "East of North",
   },
   eastOfNortheast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "eastOfNortheast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.eastOfNortheast.index,
     title: "East of Northeast",
   },
   eastOfNorthwest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "eastOfNorthwest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.eastOfNorthwest.index,
     title: "East of Northwest",
   },
   eastOfSouth: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "eastOfSouth",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.eastOfSouth.index,
     title: "East of South",
   },
   eastOfSoutheast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "eastOfSoutheast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.eastOfSoutheast.index,
     title: "East of Southeast",
   },
   eastOfSouthwest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "eastOfSouthwest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.eastOfSouthwest.index,
     title: "East of Southwest",
   },
   eastOfWest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "eastOfWest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.eastOfWest.index,
     title: "East of West",
   },
 
   // Northeast
   northeastOfCenter: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northeastOfCenter",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northeastOfCenter.index,
     title: "Northeast of Center",
   },
   northeastOfEast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northeastOfEast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northeastOfEast.index,
     title: "Northeast of East",
   },
   northeastOfNorth: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northeastOfNorth",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northeastOfNorth.index,
     title: "Northeast of North",
   },
   northeastOfNortheast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northeastOfNortheast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northeastOfNortheast.index,
     title: "Northeast of Northeast",
   },
   northeastOfNorthwest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northeastOfNorthwest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northeastOfNorthwest.index,
     title: "Northeast of Northwest",
   },
   northeastOfSouth: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northeastOfSouth",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northeastOfSouth.index,
     title: "Northeast of South",
   },
   northeastOfSoutheast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northeastOfSoutheast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northeastOfSoutheast.index,
     title: "Northeast of Southeast",
   },
   northeastOfSouthwest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northeastOfSouthwest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northeastOfSouthwest.index,
     title: "Northeast of Southwest",
   },
   northeastOfWest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northeastOfWest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northeastOfWest.index,
     title: "Northeast of West",
   },
 
   // North
   northOfCenter: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northOfCenter",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northOfCenter.index,
     title: "North of Center",
   },
   northOfEast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northOfEast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northOfEast.index,
     title: "North of East",
   },
   northOfNorth: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northOfNorth",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northOfNorth.index,
     title: "North of North",
   },
   northOfNortheast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northOfNortheast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northOfNortheast.index,
     title: "North of Northeast",
   },
   northOfNorthwest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northOfNorthwest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northOfNorthwest.index,
     title: "North of Northwest",
   },
   northOfSouth: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northOfSouth",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northOfSouth.index,
     title: "North of South",
   },
   northOfSoutheast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northOfSoutheast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northOfSoutheast.index,
     title: "North of Southeast",
   },
   northOfSouthwest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northOfSouthwest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northOfSouthwest.index,
     title: "North of Southwest",
   },
   northOfWest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northOfWest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northOfWest.index,
     title: "North of West",
   },
 
   // Northwest
   northwestOfCenter: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northwestOfCenter",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northwestOfCenter.index,
     title: "Northwest of Center",
   },
   northwestOfEast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northwestOfEast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northwestOfEast.index,
     title: "Northwest of East",
   },
   northwestOfNorth: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northwestOfNorthwest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northwestOfNorthwest.index,
     title: "Northwest of North",
   },
   northwestOfNortheast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northwestOfNortheast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northwestOfNortheast.index,
     title: "Northwest of Northeast",
   },
   northwestOfNorthwest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northwestOfNorthwest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northwestOfNorthwest.index,
     title: "Northwest of Northwest",
   },
   northwestOfSouth: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northwestOfSouth",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northwestOfSouth.index,
     title: "Northwest of South",
   },
   northwestOfSoutheast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northwestOfSoutheast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northwestOfSoutheast.index,
     title: "Northwest of Southeast",
   },
   northwestOfSouthwest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northwestOfSouthwest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northwestOfSouthwest.index,
     title: "Northwest of Southwest",
   },
   northwestOfWest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "northwestOfWest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northwestOfWest.index,
     title: "Northwest of West",
   },
 
   // Southeast
   southeastOfCenter: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southeastOfCenter",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southeastOfCenter.index,
     title: "Southeast of Center",
   },
   southeastOfEast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southeastOfEast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southeastOfEast.index,
     title: "Southeast of East",
   },
   southeastOfNorth: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southeastOfNorth",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southeastOfNorth.index,
     title: "Southeast of North",
   },
   southeastOfNortheast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southeastOfNortheast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southeastOfNortheast.index,
     title: "Southeast of Northeast",
   },
   southeastOfNorthwest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southeastOfNorthwest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southeastOfNorthwest.index,
     title: "Southeast of Northwest",
   },
   southeastOfSouth: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southeastOfSouth",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southeastOfSouth.index,
     title: "Southeast of South",
   },
   southeastOfSoutheast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southeastOfSoutheast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southeastOfSoutheast.index,
     title: "Southeast of Southeast",
   },
   southeastOfSouthwest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southeastOfSouthwest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southeastOfSouthwest.index,
     title: "Southeast of Southwest",
   },
   southeastOfWest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southeastOfWest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southeastOfWest.index,
     title: "Southeast of West",
   },
 
   // South
   southOfCenter: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southOfCenter",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southOfCenter.index,
     title: "South of Center",
   },
   southOfEast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southOfEast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southOfEast.index,
     title: "South of East",
   },
   southOfNorth: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southOfNorth",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southOfNorth.index,
     title: "South of North",
   },
   southOfNortheast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southOfNortheast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southOfNortheast.index,
     title: "South of Northeast",
   },
   southOfNorthwest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southOfNorthwest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southOfNorthwest.index,
     title: "South of Northwest",
   },
   southOfSouth: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southOfSouth",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southOfSouth.index,
     title: "South of South",
   },
   southOfSoutheast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southOfSoutheast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southOfSoutheast.index,
     title: "South of Southeast",
   },
   southOfSouthwest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southOfSouthwest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southOfSouthwest.index,
     title: "South of Southwest",
   },
   southOfWest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southOfWest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southOfWest.index,
     title: "South of West",
   },
 
   // Southwest
   southwestOfCenter: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southwestOfCenter",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southwestOfCenter.index,
     title: "Southwest of Center",
   },
   southwestOfEast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southwestOfEast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southwestOfEast.index,
     title: "Southwest of East",
   },
   southwestOfNorth: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southwestOfNorth",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southwestOfNorth.index,
     title: "Southwest of North",
   },
   southwestOfNortheast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southwestOfNortheast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southwestOfNortheast.index,
     title: "Southwest of Northeast",
   },
   southwestOfNorthwest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southwestOfNorthwest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southwestOfNorthwest.index,
     title: "Southwest of Northwest",
   },
   southwestOfSouth: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southwestOfSouth",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southwestOfSouth.index,
     title: "Southwest of South",
   },
   southwestOfSoutheast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southwestOfSoutheast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southwestOfSoutheast.index,
     title: "Southwest of Southeast",
   },
   southwestOfSouthwest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southwestOfSouthwest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southwestOfSouthwest.index,
     title: "Southwest of Southwest",
   },
   southwestOfWest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "southwestOfWest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southwestOfWest.index,
     title: "Southwest of West",
   },
 
   // West
   westOfCenter: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "westOfCenter",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.westOfCenter.index,
     title: "West of Center",
   },
   westOfEast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "westOfEast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.westOfEast.index,
     title: "West of East",
   },
   westOfNorth: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "westOfNorth",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.westOfNorth.index,
     title: "West of North",
   },
   westOfNortheast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "westOfNortheast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.westOfNortheast.index,
     title: "West of Northeast",
   },
   westOfNorthwest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "westOfNorthwest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.westOfNorthwest.index,
     title: "West of Northwest",
   },
   westOfSouth: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "westOfSouth",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.westOfSouth.index,
     title: "West of South",
   },
   westOfSoutheast: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "westOfSoutheast",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.westOfSoutheast.index,
     title: "West of Southeast",
   },
   westOfSouthwest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "westOfSouthwest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.westOfSouthwest.index,
     title: "West of Southwest",
   },
   westOfWest: {
-    indexOfSlotInWhichPlacePiece: getIndexOfSlotOnDefaultSlots({
-      keyOfSlot: "westOfWest",
-    }),
+    indexOfSlotInWhichPlacePiece:
+      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.westOfWest.index,
     title: "West of West",
   },
-} as const satisfies Record<string, RequiredSnowballMoveParams>;
+} as const satisfies RecordOfRequiredSnowballMoveParams;
 
-export { recordOfRequiredParamsOfMoves };
+const movesWithData = createSnowballMovesWithData({
+  recordOfRequiredParams: recordOfRequiredParamsOfMoves,
+});
+
+export type { RecordOfRequiredSnowballMoveParams };
+export { movesWithData, recordOfRequiredParamsOfMoves };

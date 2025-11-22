@@ -2,11 +2,12 @@ import {
   createMovesWithData,
   type DerivedMoveParams,
   deriveMoveParams,
+  type MoveWithData,
   type RequiredMoveParams,
 } from "@repo/game/Move.test/setup.js";
 
 import { SnowballMove, type SnowballMoveParams } from "../Move.js";
-import { recordOfRequiredParamsOfMoves } from "./records.js";
+import { type RecordOfRequiredSnowballMoveParams } from "./records.js";
 
 type DerivedSnowballMoveParams = Pick<DerivedMoveParams, "description"> &
   RequiredSnowballMoveParams;
@@ -14,13 +15,10 @@ type DerivedSnowballMoveParams = Pick<DerivedMoveParams, "description"> &
 type RequiredSnowballMoveParams = Pick<RequiredMoveParams, "title"> &
   Pick<SnowballMoveParams, "indexOfSlotInWhichPlacePiece">;
 
-interface SnowballMoveWithData<
-  Params extends RequiredSnowballMoveParams = RequiredSnowballMoveParams,
-> {
-  keyOfMove: string;
-  move: SnowballMove;
-  params: Params;
-}
+type SnowballMoveWithData = MoveWithData<
+  SnowballMove,
+  RequiredSnowballMoveParams
+>;
 
 const deriveSnowballMoveParams = ({
   indexOfSlotInWhichPlacePiece,
@@ -44,20 +42,39 @@ const createSnowballMove = ({
     title,
   });
 
-const movesWithData = createMovesWithData<
-  SnowballMove,
-  RequiredSnowballMoveParams,
-  DerivedSnowballMoveParams,
-  typeof recordOfRequiredParamsOfMoves
+type ExtendedSnowballMovesWithData<
+  ExtendedRecordOfRequiredSnowballMoveParams extends
+    RecordOfRequiredSnowballMoveParams,
+> = {
+  [K in keyof ExtendedRecordOfRequiredSnowballMoveParams]: {
+    keyOfMove: keyof ExtendedRecordOfRequiredSnowballMoveParams;
+    move: SnowballMove;
+    params: RequiredSnowballMoveParams;
+  };
+};
+
+const createSnowballMovesWithData = <
+  ExtendedRecordOfRequiredSnowballMoveParams extends
+    RecordOfRequiredSnowballMoveParams,
 >({
-  create: createSnowballMove,
-  deriveParams: deriveSnowballMoveParams,
-  recordOfRequiredParams: recordOfRequiredParamsOfMoves,
-});
+  recordOfRequiredParams,
+}: {
+  recordOfRequiredParams: ExtendedRecordOfRequiredSnowballMoveParams;
+}): ExtendedSnowballMovesWithData<ExtendedRecordOfRequiredSnowballMoveParams> =>
+  createMovesWithData({
+    create: createSnowballMove,
+    deriveParams: deriveSnowballMoveParams,
+    recordOfRequiredParams,
+  });
 
 export type {
   DerivedSnowballMoveParams,
+  ExtendedSnowballMovesWithData,
   RequiredSnowballMoveParams,
   SnowballMoveWithData,
 };
-export { createSnowballMove, deriveSnowballMoveParams, movesWithData };
+export {
+  createSnowballMove,
+  createSnowballMovesWithData,
+  deriveSnowballMoveParams,
+};

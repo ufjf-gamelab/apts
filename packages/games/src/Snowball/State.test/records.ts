@@ -1,17 +1,17 @@
-import {
-  getIndexedSnowballMovesWithData,
-  getIndexOfMoveOnDefaultMoves,
-} from "../Game.test/moves.js";
+import type { recordOfRequiredParamsOfMoves } from "../Move.test/records.js";
+
 import { gamesWithDataForUnitTest } from "../Game.test/setup.js";
 import {
-  movesWithData,
-  type SnowballMoveWithData,
-} from "../Move.test/setup.js";
-import { snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "../Player.test/indexedRecords.js";
+  indexedMovesWithData,
+  movesWithDataAndIndex,
+  type SnowballMoveWithDataAndIndex,
+} from "../Move.test/indexedRecords.js";
+import { type SnowballMoveWithData } from "../Move.test/setup.js";
+import { playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "../Player.test/indexedRecords.js";
 import { scoresWithDataForUnitTest } from "../Score.test/setup.js";
 import {
-  indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
-  indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+  indexedSlotsWithDataInWhichAllSlotsAreEmpty,
+  indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
 } from "../Slot.test/indexedRecords.js";
 import {
   createSnowballStatesWithData,
@@ -26,13 +26,8 @@ type RecordOfRequiredSnowballStateParams = Record<
 const constructTupleForMove = ({
   move,
 }: {
-  move: SnowballMoveWithData;
-}): [number, SnowballMoveWithData] => [
-  getIndexOfMoveOnDefaultMoves({
-    keyOfMove: move.keyOfMove,
-  }),
-  move,
-];
+  move: SnowballMoveWithDataAndIndex<typeof recordOfRequiredParamsOfMoves>;
+}): [number, SnowballMoveWithData] => [move.index, move.move];
 
 const recordOfRequiredParamsOfStates = {
   allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
@@ -40,14 +35,11 @@ const recordOfRequiredParamsOfStates = {
       game: gamesWithDataForUnitTest.snowballWith9RowsAnd9Columns,
       isFinal: false,
       player:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO.alice,
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO.alice,
       score: scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points,
-      slots: indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
+      slots: indexedSlotsWithDataInWhichAllSlotsAreEmpty,
       validMoves: new Map(
-        getIndexedSnowballMovesWithData().map((move, indexOfMove) => [
-          indexOfMove,
-          move,
-        ]),
+        indexedMovesWithData.map((move, indexOfMove) => [indexOfMove, move]),
       ),
     },
   slotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
@@ -55,100 +47,100 @@ const recordOfRequiredParamsOfStates = {
       game: gamesWithDataForUnitTest.snowballWith9RowsAnd9Columns,
       isFinal: true,
       player:
-        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO.bruno,
+        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO.bruno,
       score: scoresWithDataForUnitTest.aliceWith38PointsAndBrunoWith26Points,
       slots:
-        indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+        indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
       validMoves: new Map([
         constructTupleForMove({
-          move: movesWithData.centerOfSouth,
+          move: movesWithDataAndIndex.centerOfSouth,
         }),
         constructTupleForMove({
-          move: movesWithData.centerOfSouthwest,
+          move: movesWithDataAndIndex.centerOfSouthwest,
         }),
         constructTupleForMove({
-          move: movesWithData.eastOfCenter,
+          move: movesWithDataAndIndex.eastOfCenter,
         }),
         constructTupleForMove({
-          move: movesWithData.eastOfNorth,
+          move: movesWithDataAndIndex.eastOfNorth,
         }),
         constructTupleForMove({
-          move: movesWithData.eastOfSouthwest,
+          move: movesWithDataAndIndex.eastOfSouthwest,
         }),
         constructTupleForMove({
-          move: movesWithData.northeastOfCenter,
+          move: movesWithDataAndIndex.northeastOfCenter,
         }),
         constructTupleForMove({
-          move: movesWithData.northeastOfNorth,
+          move: movesWithDataAndIndex.northeastOfNorth,
         }),
         constructTupleForMove({
-          move: movesWithData.northeastOfSouthwest,
+          move: movesWithDataAndIndex.northeastOfSouthwest,
         }),
         constructTupleForMove({
-          move: movesWithData.northOfSouth,
+          move: movesWithDataAndIndex.northOfSouth,
         }),
         constructTupleForMove({
-          move: movesWithData.northOfSouthwest,
+          move: movesWithDataAndIndex.northOfSouthwest,
         }),
         constructTupleForMove({
-          move: movesWithData.northwestOfEast,
+          move: movesWithDataAndIndex.northwestOfEast,
         }),
         constructTupleForMove({
-          move: movesWithData.northwestOfNortheast,
+          move: movesWithDataAndIndex.northwestOfNortheast,
         }),
         constructTupleForMove({
-          move: movesWithData.northwestOfSouth,
+          move: movesWithDataAndIndex.northwestOfSouth,
         }),
         constructTupleForMove({
-          move: movesWithData.northwestOfSouthwest,
+          move: movesWithDataAndIndex.northwestOfSouthwest,
         }),
         constructTupleForMove({
-          move: movesWithData.southeastOfNorth,
+          move: movesWithDataAndIndex.southeastOfNorth,
         }),
         constructTupleForMove({
-          move: movesWithData.southeastOfSouthwest,
+          move: movesWithDataAndIndex.southeastOfSouthwest,
         }),
         constructTupleForMove({
-          move: movesWithData.southeastOfWest,
+          move: movesWithDataAndIndex.southeastOfWest,
         }),
         constructTupleForMove({
-          move: movesWithData.southOfCenter,
+          move: movesWithDataAndIndex.southOfCenter,
         }),
         constructTupleForMove({
-          move: movesWithData.southOfSouthwest,
+          move: movesWithDataAndIndex.southOfSouthwest,
         }),
         constructTupleForMove({
-          move: movesWithData.southOfWest,
+          move: movesWithDataAndIndex.southOfWest,
         }),
         constructTupleForMove({
-          move: movesWithData.southwestOfCenter,
+          move: movesWithDataAndIndex.southwestOfCenter,
         }),
         constructTupleForMove({
-          move: movesWithData.southwestOfEast,
+          move: movesWithDataAndIndex.southwestOfEast,
         }),
         constructTupleForMove({
-          move: movesWithData.southwestOfNortheast,
+          move: movesWithDataAndIndex.southwestOfNortheast,
         }),
         constructTupleForMove({
-          move: movesWithData.southwestOfSouth,
+          move: movesWithDataAndIndex.southwestOfSouth,
         }),
         constructTupleForMove({
-          move: movesWithData.southwestOfSouthwest,
+          move: movesWithDataAndIndex.southwestOfSouthwest,
         }),
         constructTupleForMove({
-          move: movesWithData.southwestOfWest,
+          move: movesWithDataAndIndex.southwestOfWest,
         }),
         constructTupleForMove({
-          move: movesWithData.westOfEast,
+          move: movesWithDataAndIndex.westOfEast,
         }),
         constructTupleForMove({
-          move: movesWithData.westOfNortheast,
+          move: movesWithDataAndIndex.westOfNortheast,
         }),
         constructTupleForMove({
-          move: movesWithData.westOfSouth,
+          move: movesWithDataAndIndex.westOfSouth,
         }),
         constructTupleForMove({
-          move: movesWithData.westOfSouthwest,
+          move: movesWithDataAndIndex.westOfSouthwest,
         }),
       ]),
     },

@@ -6,7 +6,11 @@ import { validateConstructor } from "@repo/game/Move.test/constructor.test.js";
 import { expect, test } from "vitest";
 
 import { SnowballMove } from "../Move.js";
-import { deriveSnowballMoveParams, movesWithData } from "./setup.js";
+import { indexedMovesWithData } from "./indexedRecords.js";
+import {
+  deriveSnowballMoveParams,
+  type SnowballMoveWithData,
+} from "./setup.js";
 
 const createDescription = ({ affix }: { affix: string }) =>
   createDescriptionForTest({
@@ -16,23 +20,32 @@ const createDescription = ({ affix }: { affix: string }) =>
     }),
   });
 
-Object.values(movesWithData).forEach(({ keyOfMove, params }) => {
-  test(
-    createDescription({
-      affix: keyOfMove,
-    }),
-    () => {
-      const { indexOfSlotInWhichPlacePiece, title } = params;
-      const { description } = deriveSnowballMoveParams(params);
+const testConstructor = ({
+  arrayOfMovesWithData,
+}: {
+  arrayOfMovesWithData: SnowballMoveWithData[];
+}) => {
+  arrayOfMovesWithData.forEach(({ keyOfMove, params }) => {
+    test(
+      createDescription({
+        affix: keyOfMove,
+      }),
+      () => {
+        const { description, indexOfSlotInWhichPlacePiece, title } =
+          deriveSnowballMoveParams(params);
+        const newMove = new SnowballMove({
+          description,
+          indexOfSlotInWhichPlacePiece,
+          title,
+        });
 
-      const newMove = new SnowballMove({
-        description,
-        indexOfSlotInWhichPlacePiece,
-        title,
-      });
+        validateConstructor({ move: newMove, params: { description, title } });
+        expect(newMove).toBeInstanceOf(SnowballMove);
+      },
+    );
+  });
+};
 
-      validateConstructor({ move: newMove, params: { description, title } });
-      expect(newMove).toBeInstanceOf(SnowballMove);
-    },
-  );
+testConstructor({
+  arrayOfMovesWithData: indexedMovesWithData,
 });

@@ -7,7 +7,8 @@ import { test } from "vitest";
 
 import type { SnowballMove } from "../Move.js";
 
-import { movesWithData } from "./setup.js";
+import { indexedMovesWithData } from "./indexedRecords.js";
+import { type SnowballMoveWithData } from "./setup.js";
 
 const createDescription = ({
   affix,
@@ -23,17 +24,27 @@ const createDescription = ({
     }),
   });
 
-Object.values(movesWithData).forEach(({ keyOfMove, move, params }) => {
-  test(
-    createDescription({
-      affix: keyOfMove,
-      expectedTitle: params.title,
-    }),
-    () => {
-      validateGetTitle({
+const testGetTitle = ({
+  arrayOfMovesWithData,
+}: {
+  arrayOfMovesWithData: SnowballMoveWithData[];
+}) => {
+  arrayOfMovesWithData.forEach(({ keyOfMove, move, params }) => {
+    test(
+      createDescription({
+        affix: keyOfMove,
         expectedTitle: params.title,
-        move,
-      });
-    },
-  );
+      }),
+      () => {
+        validateGetTitle({
+          expectedTitle: params.title,
+          move,
+        });
+      },
+    );
+  });
+};
+
+testGetTitle({
+  arrayOfMovesWithData: indexedMovesWithData,
 });

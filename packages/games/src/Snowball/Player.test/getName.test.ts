@@ -8,7 +8,7 @@ import { test } from "vitest";
 import type { SnowballPlayer } from "../Player.js";
 import type { SnowballPlayerWithData } from "../Player.test/setup.js";
 
-import { indexedSnowballPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "./indexedRecords.js";
+import { indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "./indexedRecords.js";
 
 const createDescription = ({
   affix,
@@ -46,5 +46,5 @@ const testGetName = ({
 
 testGetName({
   arrayOfPlayersWithData:
-    indexedSnowballPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
+    indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
 });

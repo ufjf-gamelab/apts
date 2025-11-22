@@ -8,8 +8,8 @@ import { test } from "vitest";
 import type { SnowballSlotWithData } from "./setup.js";
 
 import {
-  indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
-  indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+  indexedSlotsWithDataInWhichAllSlotsAreEmpty,
+  indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
 } from "./indexedRecords.js";
 
 const createDescription = ({
@@ -58,9 +58,9 @@ const testGetSlot = ({
 };
 
 testGetSlot({
-  arrayOfSlotsWithData: indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
+  arrayOfSlotsWithData: indexedSlotsWithDataInWhichAllSlotsAreEmpty,
 });
 testGetSlot({
   arrayOfSlotsWithData:
-    indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+    indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
 });

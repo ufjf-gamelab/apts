@@ -7,7 +7,11 @@ import { test } from "vitest";
 
 import type { SnowballMove } from "../Move.js";
 
-import { deriveSnowballMoveParams, movesWithData } from "./setup.js";
+import { indexedMovesWithData } from "./indexedRecords.js";
+import {
+  deriveSnowballMoveParams,
+  type SnowballMoveWithData,
+} from "./setup.js";
 
 const createDescription = ({
   affix,
@@ -23,19 +27,28 @@ const createDescription = ({
     }),
   });
 
-Object.values(movesWithData).forEach(({ keyOfMove, move, params }) => {
-  const derivedParams = deriveSnowballMoveParams(params);
+const testGetDescription = ({
+  arrayOfMovesWithData,
+}: {
+  arrayOfMovesWithData: SnowballMoveWithData[];
+}) => {
+  arrayOfMovesWithData.forEach(({ keyOfMove, move, params }) => {
+    const { description } = deriveSnowballMoveParams(params);
+    test(
+      createDescription({
+        affix: keyOfMove,
+        expectedDescription: description,
+      }),
+      () => {
+        validateGetDescription({
+          expectedDescription: description,
+          move,
+        });
+      },
+    );
+  });
+};
 
-  test(
-    createDescription({
-      affix: keyOfMove,
-      expectedDescription: derivedParams.description,
-    }),
-    () => {
-      validateGetDescription({
-        expectedDescription: derivedParams.description,
-        move,
-      });
-    },
-  );
+testGetDescription({
+  arrayOfMovesWithData: indexedMovesWithData,
 });

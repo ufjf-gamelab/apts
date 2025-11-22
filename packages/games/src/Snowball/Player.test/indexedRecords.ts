@@ -48,8 +48,8 @@ const createIndexedSnowballPlayersWithData = <
     indexed.push(player);
   });
   return {
-    indexedSnowballPlayersWithData: indexed,
-    snowballPlayersWithDataAndIndex: store,
+    indexedPlayersWithData: indexed,
+    playersWithDataAndIndex: store,
   };
 };
 
@@ -61,10 +61,10 @@ const keysOfSnowballPlayersInOrder = [
 >;
 
 const {
-  indexedSnowballPlayersWithData:
-    indexedSnowballPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
-  snowballPlayersWithDataAndIndex:
-    snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
+  indexedPlayersWithData:
+    indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
+  playersWithDataAndIndex:
+    playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
 } = createIndexedSnowballPlayersWithData({
   keysOfPlayersInOrder: keysOfSnowballPlayersInOrder,
   playersWithData:
@@ -73,6 +73,6 @@ const {
 
 export type { SnowballPlayerWithDataAndIndex };
 export {
-  indexedSnowballPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
-  snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
+  indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
+  playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
 };

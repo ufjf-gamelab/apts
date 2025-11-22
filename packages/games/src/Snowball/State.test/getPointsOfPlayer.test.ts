@@ -5,7 +5,7 @@ import {
 } from "@repo/game/State.test/getPointsOfPlayer.test.js";
 import { test } from "vitest";
 
-import { indexedSnowballPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "../Player.test/indexedRecords.js";
+import { indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "../Player.test/indexedRecords.js";
 import { statesWithData } from "./records.js";
 
 const ZERO_POINTS = 0;
@@ -28,7 +28,7 @@ const createDescription = ({
   });
 
 Object.values(statesWithData).forEach(({ keyOfState, params, state }) => {
-  indexedSnowballPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO.forEach(
+  indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO.forEach(
     ({ keyOfPlayer }, indexOfPlayer) => {
       const expectedPointsOfPlayer =
         params.score.params.pointsOfEachPlayer.get(indexOfPlayer) ??

@@ -49,12 +49,12 @@ const createIndexedSnowballSlotsWithData = <
     indexed.push(slot);
   });
   return {
-    indexedSnowballSlotsWithData: indexed,
-    snowballSlotsWithDataAndIndex: store,
+    indexedSlotsWithData: indexed,
+    slotsWithDataAndIndex: store,
   };
 };
 
-const keysOfSnowballSlotsInOrder = [
+const keysOfSlotsInOrder = [
   // Row 0
   "northwestOfNorthwest",
   "northOfNorthwest",
@@ -158,29 +158,27 @@ const keysOfSnowballSlotsInOrder = [
 >;
 
 const {
-  indexedSnowballSlotsWithData:
-    indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
-  snowballSlotsWithDataAndIndex:
-    snowballSlotsWithDataAndIndexInWhichAllSlotsAreEmpty,
+  indexedSlotsWithData: indexedSlotsWithDataInWhichAllSlotsAreEmpty,
+  slotsWithDataAndIndex: slotsWithDataAndIndexInWhichAllSlotsAreEmpty,
 } = createIndexedSnowballSlotsWithData({
-  keysOfSlotsInOrder: keysOfSnowballSlotsInOrder,
+  keysOfSlotsInOrder,
   slotsWithData: slotsWithDataInWhichAllSlotsAreEmpty,
 });
 
 const {
-  indexedSnowballSlotsWithData:
-    indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
-  snowballSlotsWithDataAndIndex:
-    snowballSlotsWithDataAndIndexInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+  indexedSlotsWithData:
+    indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+  slotsWithDataAndIndex:
+    slotsWithDataAndIndexInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
 } = createIndexedSnowballSlotsWithData({
-  keysOfSlotsInOrder: keysOfSnowballSlotsInOrder,
+  keysOfSlotsInOrder,
   slotsWithData:
     slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
 });
 
 export {
-  indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
-  indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
-  snowballSlotsWithDataAndIndexInWhichAllSlotsAreEmpty,
-  snowballSlotsWithDataAndIndexInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+  indexedSlotsWithDataInWhichAllSlotsAreEmpty,
+  indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+  slotsWithDataAndIndexInWhichAllSlotsAreEmpty,
+  slotsWithDataAndIndexInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
 };

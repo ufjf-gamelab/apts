@@ -8,9 +8,11 @@ import { expect, test } from "vitest";
 import type { SnowballPlayerWithData } from "./setup.js";
 
 import { SnowballPlayer } from "../Player.js";
-import { indexedSnowballPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "./indexedRecords.js";
+import { indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "./indexedRecords.js";
 
-const createDescription = ({ affix }: { affix: string }) =>
+const createDescription = ({
+  affix,
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix">) =>
   createDescriptionForTest({
     affix,
     description: createDescriptionForTestsOfCloneMethod({
@@ -39,5 +41,5 @@ const testClone = ({
 
 testClone({
   arrayOfPlayersWithData:
-    indexedSnowballPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
+    indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
 });

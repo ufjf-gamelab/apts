@@ -9,8 +9,8 @@ import type { SnowballSlotWithData } from "./setup.js";
 
 import { SnowballSlot } from "../Slot.js";
 import {
-  indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
-  indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+  indexedSlotsWithDataInWhichAllSlotsAreEmpty,
+  indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
 } from "./indexedRecords.js";
 
 const createDescription = ({
@@ -47,9 +47,9 @@ const testConstructor = ({
 };
 
 testConstructor({
-  arrayOfSlotsWithData: indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
+  arrayOfSlotsWithData: indexedSlotsWithDataInWhichAllSlotsAreEmpty,
 });
 testConstructor({
   arrayOfSlotsWithData:
-    indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+    indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
 });
