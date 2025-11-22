@@ -5,7 +5,7 @@ import {
 } from "@repo/game/State.test/getSlots.test.js";
 import { test } from "vitest";
 
-import { statesWithDataForUnitTest } from "./setup.js";
+import { statesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
@@ -22,19 +22,17 @@ const createDescription = ({
     }),
   });
 
-Object.values(statesWithDataForUnitTest).forEach(
-  ({ keyOfState, params, state }) => {
-    test(
-      createDescription({
-        affix: keyOfState,
-        keysOfExpectedSlots: params.slots.map((slot) => slot.keyOfSlot),
-      }),
-      () => {
-        validateGetSlots({
-          expectedSlots: params.slots.map((slot) => slot.slot),
-          state,
-        });
-      },
-    );
-  },
-);
+Object.values(statesWithData).forEach(({ keyOfState, params, state }) => {
+  test(
+    createDescription({
+      affix: keyOfState,
+      keysOfExpectedSlots: params.slots.map((slot) => slot.keyOfSlot),
+    }),
+    () => {
+      validateGetSlots({
+        expectedSlots: params.slots.map((slot) => slot.slot),
+        state,
+      });
+    },
+  );
+});

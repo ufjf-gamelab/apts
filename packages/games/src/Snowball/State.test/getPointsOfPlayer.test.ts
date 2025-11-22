@@ -5,9 +5,8 @@ import {
 } from "@repo/game/State.test/getPointsOfPlayer.test.js";
 import { test } from "vitest";
 
-import { getIndexOfPlayer } from "../Game.test/players.js";
-import { playersWithData } from "../Player.test/setup.js";
-import { statesWithDataForUnitTest } from "./setup.js";
+import { indexedSnowballPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "../Player.test/indexedRecords.js";
+import { statesWithData } from "./records.js";
 
 const ZERO_POINTS = 0;
 
@@ -28,10 +27,9 @@ const createDescription = ({
     }),
   });
 
-Object.values(statesWithDataForUnitTest).forEach(
-  ({ keyOfState, params, state }) => {
-    Object.values(playersWithData).forEach(({ keyOfPlayer }) => {
-      const indexOfPlayer = getIndexOfPlayer({ keyOfPlayer });
+Object.values(statesWithData).forEach(({ keyOfState, params, state }) => {
+  indexedSnowballPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO.forEach(
+    ({ keyOfPlayer }, indexOfPlayer) => {
       const expectedPointsOfPlayer =
         params.score.params.pointsOfEachPlayer.get(indexOfPlayer) ??
         ZERO_POINTS;
@@ -50,6 +48,6 @@ Object.values(statesWithDataForUnitTest).forEach(
           });
         },
       );
-    });
-  },
-);
+    },
+  );
+});

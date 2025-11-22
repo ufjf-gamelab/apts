@@ -1,5 +1,3 @@
-import { createStatesWithData } from "@repo/game/State.test/setup.js";
-
 import {
   getIndexedSnowballMovesWithData,
   getIndexOfMoveOnDefaultMoves,
@@ -16,10 +14,14 @@ import {
   indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
 } from "../Slot.test/indexedRecords.js";
 import {
-  createSnowballState,
-  deriveSnowballStateParams,
+  createSnowballStatesWithData,
   type RequiredSnowballStateParams,
 } from "./setup.js";
+
+type RecordOfRequiredSnowballStateParams = Record<
+  string,
+  RequiredSnowballStateParams
+>;
 
 const constructTupleForMove = ({
   move,
@@ -150,12 +152,11 @@ const recordOfRequiredParamsOfStates = {
         }),
       ]),
     },
-} as const satisfies Record<string, RequiredSnowballStateParams>;
+} as const satisfies RecordOfRequiredSnowballStateParams;
 
-const statesWithData = createStatesWithData({
-  create: createSnowballState,
-  deriveParams: deriveSnowballStateParams,
+const statesWithData = createSnowballStatesWithData({
   recordOfRequiredParams: recordOfRequiredParamsOfStates,
 });
 
+export type { RecordOfRequiredSnowballStateParams };
 export { recordOfRequiredParamsOfStates, statesWithData };

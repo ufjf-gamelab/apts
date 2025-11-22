@@ -6,7 +6,7 @@ import { validateClone } from "@repo/game/State.test/clone.test.js";
 import { expect, test } from "vitest";
 
 import { SnowballState } from "../State.js";
-import { statesWithData } from "./setup.js";
+import { statesWithData } from "./records.js";
 
 const createDescription = ({ affix }: { affix: string }) =>
   createDescriptionForTest({

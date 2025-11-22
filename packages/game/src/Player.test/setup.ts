@@ -4,7 +4,7 @@ type DerivedPlayerParams = RequiredPlayerParams;
 
 interface PlayerWithData<
   P extends Player<P>,
-  Params extends DerivedPlayerParams = DerivedPlayerParams,
+  Params extends RequiredPlayerParams = RequiredPlayerParams,
 > {
   keyOfPlayer: string;
   params: Params;

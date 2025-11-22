@@ -153,7 +153,7 @@ const deriveStateParams = <
   game: game.game,
   indexOfPlayer: player.index,
   score: score.score,
-  slots: Object.values(slots).map(({ slot }) => slot),
+  slots: slots.map(({ slot }) => slot),
 });
 
 // eslint-disable-next-line max-lines-per-function

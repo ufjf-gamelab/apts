@@ -5,7 +5,7 @@ import {
 } from "@repo/game/State.test/getScore.test.js";
 import { test } from "vitest";
 
-import { statesWithDataForUnitTest } from "./setup.js";
+import { statesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
@@ -24,21 +24,19 @@ const createDescription = ({
     }),
   });
 
-Object.values(statesWithDataForUnitTest).forEach(
-  ({ keyOfState, params, state }) => {
-    const expectedScore = params.score.score;
-    test(
-      createDescription({
-        affix: keyOfState,
+Object.values(statesWithData).forEach(({ keyOfState, params, state }) => {
+  const expectedScore = params.score.score;
+  test(
+    createDescription({
+      affix: keyOfState,
+      expectedScore,
+      keyOfPlayer: params.player.player.keyOfPlayer,
+    }),
+    () => {
+      validateGetScore({
         expectedScore,
-        keyOfPlayer: params.player.player.keyOfPlayer,
-      }),
-      () => {
-        validateGetScore({
-          expectedScore,
-          state,
-        });
-      },
-    );
-  },
-);
+        state,
+      });
+    },
+  );
+});

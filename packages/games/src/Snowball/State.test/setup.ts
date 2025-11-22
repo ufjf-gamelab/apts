@@ -1,10 +1,9 @@
-import type { StateWithData } from "@repo/game/State.test/setup.js";
-
 import {
   createStatesWithData,
   type DerivedStateParams,
   deriveStateParams,
   type RequiredStateParams,
+  type StateWithData,
 } from "@repo/game/State.test/setup.js";
 
 import type { SnowballGame } from "../Game.js";
@@ -16,6 +15,7 @@ import type { SnowballPlayerWithData } from "../Player.test/setup.js";
 import type { SnowballScore } from "../Score.js";
 import type { SnowballScoreWithData } from "../Score.test/setup.js";
 import type { SnowballSlot } from "../Slot.js";
+import type { RecordOfRequiredSnowballStateParams } from "./records.js";
 
 import { type SnowballSlotWithData } from "../Slot.test/setup.js";
 import { SnowballState } from "../State.js";
@@ -47,8 +47,18 @@ type RequiredSnowballStateParams = Pick<
 >;
 
 type SnowballStateWithData = StateWithData<
+  SnowballGame,
+  SnowballMove,
+  SnowballPlayer,
   SnowballState,
-  DerivedSnowballStateParams
+  SnowballScore,
+  SnowballSlot,
+  SnowballGameWithData,
+  SnowballMoveWithData,
+  SnowballPlayerWithData,
+  SnowballScoreWithData,
+  SnowballSlotWithData,
+  RequiredSnowballStateParams
 >;
 
 const deriveSnowballStateParams = ({
@@ -77,6 +87,17 @@ const createSnowballState = ({
     slots,
   });
 
+type ExtendedSnowballStatesWithData<
+  ExtendedRecordOfRequiredSnowballStateParams extends
+    RecordOfRequiredSnowballStateParams,
+> = {
+  [K in keyof ExtendedRecordOfRequiredSnowballStateParams]: {
+    keyOfState: keyof ExtendedRecordOfRequiredSnowballStateParams;
+    params: RequiredSnowballStateParams;
+    state: SnowballState;
+  };
+};
+
 const createSnowballStatesWithData = <
   ExtendedRecordOfRequiredSnowballStateParams extends
     RecordOfRequiredSnowballStateParams,
@@ -96,4 +117,8 @@ export type {
   RequiredSnowballStateParams,
   SnowballStateWithData,
 };
-export { createSnowballState, deriveSnowballStateParams };
+export {
+  createSnowballState,
+  createSnowballStatesWithData,
+  deriveSnowballStateParams,
+};

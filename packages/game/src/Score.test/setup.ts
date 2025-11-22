@@ -15,7 +15,7 @@ type RequiredScoreParams = Pick<ScoreParams, "pointsOfEachPlayer">;
 
 interface ScoreWithData<
   Sc extends Score<Sc>,
-  Params extends DerivedScoreParams = DerivedScoreParams,
+  Params extends RequiredScoreParams = RequiredScoreParams,
 > {
   keyOfScore: string;
   params: Params;

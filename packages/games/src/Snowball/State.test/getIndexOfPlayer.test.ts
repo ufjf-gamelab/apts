@@ -5,7 +5,7 @@ import {
 } from "@repo/game/State.test/getIndexOfPlayer.test.js";
 import { test } from "vitest";
 
-import { statesWithDataForUnitTest } from "./setup.js";
+import { statesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
@@ -22,19 +22,17 @@ const createDescription = ({
     }),
   });
 
-Object.values(statesWithDataForUnitTest).forEach(
-  ({ keyOfState, params, state }) => {
-    test(
-      createDescription({
-        affix: keyOfState,
-        keyOfPlayer: params.player.player.keyOfPlayer,
-      }),
-      () => {
-        validateGetIndexOfPlayer({
-          expectedIndexOfPlayer: params.player.indexOfPlayer,
-          state,
-        });
-      },
-    );
-  },
-);
+Object.values(statesWithData).forEach(({ keyOfState, params, state }) => {
+  test(
+    createDescription({
+      affix: keyOfState,
+      keyOfPlayer: params.player.player.keyOfPlayer,
+    }),
+    () => {
+      validateGetIndexOfPlayer({
+        expectedIndexOfPlayer: params.player.index,
+        state,
+      });
+    },
+  );
+});

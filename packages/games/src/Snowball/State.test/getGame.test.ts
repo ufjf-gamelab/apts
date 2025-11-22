@@ -5,7 +5,7 @@ import {
 } from "@repo/game/State.test/getGame.test.js";
 import { test } from "vitest";
 
-import { statesWithDataForUnitTest } from "./setup.js";
+import { statesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
@@ -19,19 +19,17 @@ const createDescription = ({
     }),
   });
 
-Object.values(statesWithDataForUnitTest).forEach(
-  ({ keyOfState, params, state }) => {
-    test(
-      createDescription({
-        affix: keyOfState,
-        keyOfGame: params.game.keyOfGame,
-      }),
-      () => {
-        validateGetGame({
-          expectedGame: params.game.game,
-          state,
-        });
-      },
-    );
-  },
-);
+Object.values(statesWithData).forEach(({ keyOfState, params, state }) => {
+  test(
+    createDescription({
+      affix: keyOfState,
+      keyOfGame: params.game.keyOfGame,
+    }),
+    () => {
+      validateGetGame({
+        expectedGame: params.game.game,
+        state,
+      });
+    },
+  );
+});

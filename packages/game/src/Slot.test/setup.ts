@@ -6,7 +6,7 @@ type RequiredSlotParams = object;
 
 interface SlotWithData<
   Sl extends Slot<Sl>,
-  Params extends DerivedSlotParams = DerivedSlotParams,
+  Params extends RequiredSlotParams = RequiredSlotParams,
 > {
   keyOfSlot: string;
   params: Params;

@@ -12,7 +12,7 @@ import type { SnowballScore } from "../Score.js";
 import type { SnowballSlot } from "../Slot.js";
 
 import { SnowballState } from "../State.js";
-import { statesWithDataForUnitTest } from "./setup.js";
+import { statesWithData } from "./records.js";
 
 const createDescription = ({ affix }: { affix: string }) =>
   createDescriptionForTest({
@@ -22,7 +22,7 @@ const createDescription = ({ affix }: { affix: string }) =>
     }),
   });
 
-Object.values(statesWithDataForUnitTest).forEach(({ keyOfState, params }) => {
+Object.values(statesWithData).forEach(({ keyOfState, params }) => {
   test(
     createDescription({
       affix: keyOfState,
@@ -33,7 +33,7 @@ Object.values(statesWithDataForUnitTest).forEach(({ keyOfState, params }) => {
 
       const newState = new SnowballState({
         game: game.game,
-        indexOfPlayer: player.indexOfPlayer,
+        indexOfPlayer: player.index,
         score: score.score,
         slots: extractedSlots,
       });
@@ -48,7 +48,7 @@ Object.values(statesWithDataForUnitTest).forEach(({ keyOfState, params }) => {
       >({
         params: {
           game: game.game,
-          indexOfPlayer: player.indexOfPlayer,
+          indexOfPlayer: player.index,
           score: score.score,
           slots: extractedSlots,
         },
