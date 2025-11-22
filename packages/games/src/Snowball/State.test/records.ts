@@ -1,24 +1,25 @@
-import type { RequiredSnowballStateParams } from "./setup.js";
+import { createStatesWithData } from "@repo/game/State.test/setup.js";
 
 import {
   getIndexedSnowballMovesWithData,
   getIndexOfMoveOnDefaultMoves,
 } from "../Game.test/moves.js";
-import { getIndexOfPlayer } from "../Game.test/players.js";
 import { gamesWithDataForUnitTest } from "../Game.test/setup.js";
-import {
-  getIndexedSnowballSlotsWithData,
-  getIndexedSnowballSlotsWithDataForUnitTest,
-} from "../Game.test/slots.js";
 import {
   movesWithData,
   type SnowballMoveWithData,
 } from "../Move.test/setup.js";
-import {
-  playersWithData,
-  type SnowballPlayerWithData,
-} from "../Player.test/setup.js";
+import { snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "../Player.test/indexedRecords.js";
 import { scoresWithDataForUnitTest } from "../Score.test/setup.js";
+import {
+  indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
+  indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+} from "../Slot.test/indexedRecords.js";
+import {
+  createSnowballState,
+  deriveSnowballStateParams,
+  type RequiredSnowballStateParams,
+} from "./setup.js";
 
 const constructTupleForMove = ({
   move,
@@ -31,23 +32,15 @@ const constructTupleForMove = ({
   move,
 ];
 
-const constructEntryForPlayer = ({
-  player,
-}: {
-  player: SnowballPlayerWithData;
-}): RequiredSnowballStateParams["player"] => ({
-  indexOfPlayer: getIndexOfPlayer({ keyOfPlayer: player.keyOfPlayer }),
-  player,
-});
-
-const recordOfRequiredParamsOfStatesForUnitTest = {
-  noSlotsAreFilledAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
+const recordOfRequiredParamsOfStates = {
+  allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
     {
       game: gamesWithDataForUnitTest.snowballWith9RowsAnd9Columns,
       isFinal: false,
-      player: constructEntryForPlayer({ player: playersWithData.alice }),
+      player:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO.alice,
       score: scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points,
-      slots: getIndexedSnowballSlotsWithData(),
+      slots: indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
       validMoves: new Map(
         getIndexedSnowballMovesWithData().map((move, indexOfMove) => [
           indexOfMove,
@@ -59,9 +52,11 @@ const recordOfRequiredParamsOfStatesForUnitTest = {
     {
       game: gamesWithDataForUnitTest.snowballWith9RowsAnd9Columns,
       isFinal: true,
-      player: constructEntryForPlayer({ player: playersWithData.bruno }),
+      player:
+        snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO.bruno,
       score: scoresWithDataForUnitTest.aliceWith38PointsAndBrunoWith26Points,
-      slots: getIndexedSnowballSlotsWithDataForUnitTest(),
+      slots:
+        indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
       validMoves: new Map([
         constructTupleForMove({
           move: movesWithData.centerOfSouth,
@@ -157,4 +152,10 @@ const recordOfRequiredParamsOfStatesForUnitTest = {
     },
 } as const satisfies Record<string, RequiredSnowballStateParams>;
 
-export { recordOfRequiredParamsOfStatesForUnitTest };
+const statesWithData = createStatesWithData({
+  create: createSnowballState,
+  deriveParams: deriveSnowballStateParams,
+  recordOfRequiredParams: recordOfRequiredParamsOfStates,
+});
+
+export { recordOfRequiredParamsOfStates, statesWithData };

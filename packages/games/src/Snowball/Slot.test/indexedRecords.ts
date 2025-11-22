@@ -1,222 +1,182 @@
-import type { SnowballSlotWithData } from "./setup.js";
+import type { Integer } from "@repo/engine_core/types.js";
+
+import type { ExtendedSnowballSlotsWithData } from "./setup.js";
 
 import {
+  type RecordOfRequiredSnowballSlotParams,
   slotsWithDataInWhichAllSlotsAreEmpty,
   slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
 } from "./records.js";
 
-const indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty = [
+type KeysOfSlotsInOrder<GenericExtendedSnowballSlotsWithData> =
+  (keyof GenericExtendedSnowballSlotsWithData)[];
+
+type SnowballSlotsWithDataAndIndex<
+  ExtendedRecordOfRequiredSnowballSlotParams extends
+    RecordOfRequiredSnowballSlotParams,
+> = Record<
+  KeysOfSlotsInOrder<
+    ExtendedSnowballSlotsWithData<ExtendedRecordOfRequiredSnowballSlotParams>
+  >[number],
+  SnowballSlotWithDataAndIndex<ExtendedRecordOfRequiredSnowballSlotParams>
+>;
+
+interface SnowballSlotWithDataAndIndex<
+  ExtendedRecordOfRequiredSnowballSlotParams extends
+    RecordOfRequiredSnowballSlotParams,
+> {
+  index: Integer;
+  slot: ExtendedSnowballSlotsWithData<ExtendedRecordOfRequiredSnowballSlotParams>[keyof ExtendedSnowballSlotsWithData<ExtendedRecordOfRequiredSnowballSlotParams>];
+}
+
+const createIndexedSnowballSlotsWithData = <
+  ExtendedRecordOfRequiredSnowballSlotParams extends
+    RecordOfRequiredSnowballSlotParams,
+>({
+  keysOfSlotsInOrder,
+  slotsWithData,
+}: {
+  keysOfSlotsInOrder: KeysOfSlotsInOrder<ExtendedRecordOfRequiredSnowballSlotParams>;
+  slotsWithData: ExtendedSnowballSlotsWithData<ExtendedRecordOfRequiredSnowballSlotParams>;
+}) => {
+  const store =
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+    {} as SnowballSlotsWithDataAndIndex<ExtendedRecordOfRequiredSnowballSlotParams>;
+  const indexed: (typeof slotsWithData)[keyof typeof slotsWithData][] = [];
+  keysOfSlotsInOrder.forEach((key, index) => {
+    const slot = slotsWithData[key];
+    store[key] = { index, slot };
+    indexed.push(slot);
+  });
+  return {
+    indexedSnowballSlotsWithData: indexed,
+    snowballSlotsWithDataAndIndex: store,
+  };
+};
+
+const keysOfSnowballSlotsInOrder = [
   // Row 0
-  slotsWithDataInWhichAllSlotsAreEmpty.northwestOfNorthwest,
-  slotsWithDataInWhichAllSlotsAreEmpty.northOfNorthwest,
-  slotsWithDataInWhichAllSlotsAreEmpty.northeastOfNorthwest,
-  slotsWithDataInWhichAllSlotsAreEmpty.northwestOfNorth,
-  slotsWithDataInWhichAllSlotsAreEmpty.northOfNorth,
-  slotsWithDataInWhichAllSlotsAreEmpty.northeastOfNorth,
-  slotsWithDataInWhichAllSlotsAreEmpty.northwestOfNortheast,
-  slotsWithDataInWhichAllSlotsAreEmpty.northOfNortheast,
-  slotsWithDataInWhichAllSlotsAreEmpty.northeastOfNortheast,
+  "northwestOfNorthwest",
+  "northOfNorthwest",
+  "northeastOfNorthwest",
+  "northwestOfNorth",
+  "northOfNorth",
+  "northeastOfNorth",
+  "northwestOfNortheast",
+  "northOfNortheast",
+  "northeastOfNortheast",
 
   // Row 1
-  slotsWithDataInWhichAllSlotsAreEmpty.westOfNorthwest,
-  slotsWithDataInWhichAllSlotsAreEmpty.centerOfNorthwest,
-  slotsWithDataInWhichAllSlotsAreEmpty.eastOfNorthwest,
-  slotsWithDataInWhichAllSlotsAreEmpty.westOfNorth,
-  slotsWithDataInWhichAllSlotsAreEmpty.centerOfNorth,
-  slotsWithDataInWhichAllSlotsAreEmpty.eastOfNorth,
-  slotsWithDataInWhichAllSlotsAreEmpty.westOfNortheast,
-  slotsWithDataInWhichAllSlotsAreEmpty.centerOfNortheast,
-  slotsWithDataInWhichAllSlotsAreEmpty.eastOfNortheast,
+  "westOfNorthwest",
+  "centerOfNorthwest",
+  "eastOfNorthwest",
+  "westOfNorth",
+  "centerOfNorth",
+  "eastOfNorth",
+  "westOfNortheast",
+  "centerOfNortheast",
+  "eastOfNortheast",
 
   // Row 2
-  slotsWithDataInWhichAllSlotsAreEmpty.southwestOfNorthwest,
-  slotsWithDataInWhichAllSlotsAreEmpty.southOfNorthwest,
-  slotsWithDataInWhichAllSlotsAreEmpty.southeastOfNorthwest,
-  slotsWithDataInWhichAllSlotsAreEmpty.southwestOfNorth,
-  slotsWithDataInWhichAllSlotsAreEmpty.southOfNorth,
-  slotsWithDataInWhichAllSlotsAreEmpty.southeastOfNorth,
-  slotsWithDataInWhichAllSlotsAreEmpty.southwestOfNortheast,
-  slotsWithDataInWhichAllSlotsAreEmpty.southOfNortheast,
-  slotsWithDataInWhichAllSlotsAreEmpty.southeastOfNortheast,
+  "southwestOfNorthwest",
+  "southOfNorthwest",
+  "southeastOfNorthwest",
+  "southwestOfNorth",
+  "southOfNorth",
+  "southeastOfNorth",
+  "southwestOfNortheast",
+  "southOfNortheast",
+  "southeastOfNortheast",
 
   // Row 3
-  slotsWithDataInWhichAllSlotsAreEmpty.northwestOfWest,
-  slotsWithDataInWhichAllSlotsAreEmpty.northOfWest,
-  slotsWithDataInWhichAllSlotsAreEmpty.northeastOfWest,
-  slotsWithDataInWhichAllSlotsAreEmpty.northwestOfCenter,
-  slotsWithDataInWhichAllSlotsAreEmpty.northOfCenter,
-  slotsWithDataInWhichAllSlotsAreEmpty.northeastOfCenter,
-  slotsWithDataInWhichAllSlotsAreEmpty.northwestOfEast,
-  slotsWithDataInWhichAllSlotsAreEmpty.northOfEast,
-  slotsWithDataInWhichAllSlotsAreEmpty.northeastOfEast,
+  "northwestOfWest",
+  "northOfWest",
+  "northeastOfWest",
+  "northwestOfCenter",
+  "northOfCenter",
+  "northeastOfCenter",
+  "northwestOfEast",
+  "northOfEast",
+  "northeastOfEast",
 
   // Row 4
-  slotsWithDataInWhichAllSlotsAreEmpty.westOfWest,
-  slotsWithDataInWhichAllSlotsAreEmpty.centerOfWest,
-  slotsWithDataInWhichAllSlotsAreEmpty.eastOfWest,
-  slotsWithDataInWhichAllSlotsAreEmpty.westOfCenter,
-  slotsWithDataInWhichAllSlotsAreEmpty.centerOfCenter,
-  slotsWithDataInWhichAllSlotsAreEmpty.eastOfCenter,
-  slotsWithDataInWhichAllSlotsAreEmpty.westOfEast,
-  slotsWithDataInWhichAllSlotsAreEmpty.centerOfEast,
-  slotsWithDataInWhichAllSlotsAreEmpty.eastOfEast,
+  "westOfWest",
+  "centerOfWest",
+  "eastOfWest",
+  "westOfCenter",
+  "centerOfCenter",
+  "eastOfCenter",
+  "westOfEast",
+  "centerOfEast",
+  "eastOfEast",
 
   // Row 5
-  slotsWithDataInWhichAllSlotsAreEmpty.southwestOfWest,
-  slotsWithDataInWhichAllSlotsAreEmpty.southOfWest,
-  slotsWithDataInWhichAllSlotsAreEmpty.southeastOfWest,
-  slotsWithDataInWhichAllSlotsAreEmpty.southwestOfCenter,
-  slotsWithDataInWhichAllSlotsAreEmpty.southOfCenter,
-  slotsWithDataInWhichAllSlotsAreEmpty.southeastOfCenter,
-  slotsWithDataInWhichAllSlotsAreEmpty.southwestOfEast,
-  slotsWithDataInWhichAllSlotsAreEmpty.southOfEast,
-  slotsWithDataInWhichAllSlotsAreEmpty.southeastOfEast,
+  "southwestOfWest",
+  "southOfWest",
+  "southeastOfWest",
+  "southwestOfCenter",
+  "southOfCenter",
+  "southeastOfCenter",
+  "southwestOfEast",
+  "southOfEast",
+  "southeastOfEast",
 
   // Row 6
-  slotsWithDataInWhichAllSlotsAreEmpty.northwestOfSouthwest,
-  slotsWithDataInWhichAllSlotsAreEmpty.northOfSouthwest,
-  slotsWithDataInWhichAllSlotsAreEmpty.northeastOfSouthwest,
-  slotsWithDataInWhichAllSlotsAreEmpty.northwestOfSouth,
-  slotsWithDataInWhichAllSlotsAreEmpty.northOfSouth,
-  slotsWithDataInWhichAllSlotsAreEmpty.northeastOfSouth,
-  slotsWithDataInWhichAllSlotsAreEmpty.northwestOfSoutheast,
-  slotsWithDataInWhichAllSlotsAreEmpty.northOfSoutheast,
-  slotsWithDataInWhichAllSlotsAreEmpty.northeastOfSoutheast,
+  "northwestOfSouthwest",
+  "northOfSouthwest",
+  "northeastOfSouthwest",
+  "northwestOfSouth",
+  "northOfSouth",
+  "northeastOfSouth",
+  "northwestOfSoutheast",
+  "northOfSoutheast",
+  "northeastOfSoutheast",
 
   // Row 7
-  slotsWithDataInWhichAllSlotsAreEmpty.westOfSouthwest,
-  slotsWithDataInWhichAllSlotsAreEmpty.centerOfSouthwest,
-  slotsWithDataInWhichAllSlotsAreEmpty.eastOfSouthwest,
-  slotsWithDataInWhichAllSlotsAreEmpty.westOfSouth,
-  slotsWithDataInWhichAllSlotsAreEmpty.centerOfSouth,
-  slotsWithDataInWhichAllSlotsAreEmpty.eastOfSouth,
-  slotsWithDataInWhichAllSlotsAreEmpty.westOfSoutheast,
-  slotsWithDataInWhichAllSlotsAreEmpty.centerOfSoutheast,
-  slotsWithDataInWhichAllSlotsAreEmpty.eastOfSoutheast,
+  "westOfSouthwest",
+  "centerOfSouthwest",
+  "eastOfSouthwest",
+  "westOfSouth",
+  "centerOfSouth",
+  "eastOfSouth",
+  "westOfSoutheast",
+  "centerOfSoutheast",
+  "eastOfSoutheast",
 
   // Row 8
-  slotsWithDataInWhichAllSlotsAreEmpty.southwestOfSouthwest,
-  slotsWithDataInWhichAllSlotsAreEmpty.southOfSouthwest,
-  slotsWithDataInWhichAllSlotsAreEmpty.southeastOfSouthwest,
-  slotsWithDataInWhichAllSlotsAreEmpty.southwestOfSouth,
-  slotsWithDataInWhichAllSlotsAreEmpty.southOfSouth,
-  slotsWithDataInWhichAllSlotsAreEmpty.southeastOfSouth,
-  slotsWithDataInWhichAllSlotsAreEmpty.southwestOfSoutheast,
-  slotsWithDataInWhichAllSlotsAreEmpty.southOfSoutheast,
-  slotsWithDataInWhichAllSlotsAreEmpty.southeastOfSoutheast,
-] as const satisfies SnowballSlotWithData[];
+  "southwestOfSouthwest",
+  "southOfSouthwest",
+  "southeastOfSouthwest",
+  "southwestOfSouth",
+  "southOfSouth",
+  "southeastOfSouth",
+  "southwestOfSoutheast",
+  "southOfSoutheast",
+  "southeastOfSoutheast",
+] as const satisfies KeysOfSlotsInOrder<
+  typeof slotsWithDataInWhichAllSlotsAreEmpty
+>;
 
-const indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno =
-  [
-    // Row 0
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northwestOfNorthwest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northOfNorthwest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northeastOfNorthwest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northwestOfNorth,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northOfNorth,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northeastOfNorth,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northwestOfNortheast,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northOfNortheast,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northeastOfNortheast,
+const {
+  indexedSnowballSlotsWithData:
+    indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
+  snowballSlotsWithDataAndIndex:
+    snowballSlotsWithDataAndIndexInWhichAllSlotsAreEmpty,
+} = createIndexedSnowballSlotsWithData({
+  keysOfSlotsInOrder: keysOfSnowballSlotsInOrder,
+  slotsWithData: slotsWithDataInWhichAllSlotsAreEmpty,
+});
 
-    // Row 1
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.westOfNorthwest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.centerOfNorthwest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.eastOfNorthwest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.westOfNorth,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.centerOfNorth,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.eastOfNorth,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.westOfNortheast,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.centerOfNortheast,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.eastOfNortheast,
-
-    // Row 2
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southwestOfNorthwest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southOfNorthwest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southeastOfNorthwest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southwestOfNorth,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southOfNorth,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southeastOfNorth,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southwestOfNortheast,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southOfNortheast,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southeastOfNortheast,
-
-    // Row 3
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northwestOfWest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northOfWest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northeastOfWest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northwestOfCenter,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northOfCenter,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northeastOfCenter,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northwestOfEast,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northOfEast,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northeastOfEast,
-
-    // Row 4
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.westOfWest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.centerOfWest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.eastOfWest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.westOfCenter,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.centerOfCenter,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.eastOfCenter,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.westOfEast,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.centerOfEast,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.eastOfEast,
-
-    // Row 5
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southwestOfWest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southOfWest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southeastOfWest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southwestOfCenter,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southOfCenter,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southeastOfCenter,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southwestOfEast,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southOfEast,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southeastOfEast,
-
-    // Row 6
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northwestOfSouthwest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northOfSouthwest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northeastOfSouthwest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northwestOfSouth,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northOfSouth,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northeastOfSouth,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northwestOfSoutheast,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northOfSoutheast,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.northeastOfSoutheast,
-
-    // Row 7
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.westOfSouthwest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.centerOfSouthwest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.eastOfSouthwest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.westOfSouth,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.centerOfSouth,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.eastOfSouth,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.westOfSoutheast,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.centerOfSoutheast,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.eastOfSoutheast,
-
-    // Row 8
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southwestOfSouthwest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southOfSouthwest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southeastOfSouthwest,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southwestOfSouth,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southOfSouth,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southeastOfSouth,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southwestOfSoutheast,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southOfSoutheast,
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.southeastOfSoutheast,
-  ] as const satisfies SnowballSlotWithData[];
-
-const snowballSlotsWithDataAndIndexInWhichAllSlotsAreEmpty =
-  indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty.map(
-    (slotWithData, index) => ({ index, slot: slotWithData }),
-  );
-
-const snowballSlotsWithDataAndIndexInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno =
-  indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.map(
-    (slotWithData, index) => ({ index, slot: slotWithData }),
-  );
+const {
+  indexedSnowballSlotsWithData:
+    indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+  snowballSlotsWithDataAndIndex:
+    snowballSlotsWithDataAndIndexInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+} = createIndexedSnowballSlotsWithData({
+  keysOfSlotsInOrder: keysOfSnowballSlotsInOrder,
+  slotsWithData:
+    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+});
 
 export {
   indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty,

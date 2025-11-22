@@ -48,7 +48,7 @@ interface RequiredStateParams<
 > {
   game: ExtendedGameWithData;
   isFinal: boolean;
-  player: { indexOfPlayer: IndexOfPlayer; player: ExtendedPlayerWithData };
+  player: { index: IndexOfPlayer; player: ExtendedPlayerWithData };
   score: ExtendedScoreWithData;
   slots: readonly ExtendedSlotWithData[];
   validMoves: ReadonlyMap<IndexOfMove, ExtendedMoveWithData>;
@@ -151,7 +151,7 @@ const deriveStateParams = <
   "game" | "player" | "score" | "slots"
 >): DerivedStateParams<G, M, P, S, Sc, Sl> => ({
   game: game.game,
-  indexOfPlayer: player.indexOfPlayer,
+  indexOfPlayer: player.index,
   score: score.score,
   slots: Object.values(slots).map(({ slot }) => slot),
 });

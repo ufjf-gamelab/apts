@@ -53,10 +53,12 @@ const createIndexedSnowballPlayersWithData = <
   };
 };
 
-const keysOfSnowballPlayersInOrderInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO =
-  ["alice", "bruno"] as const satisfies KeysOfPlayersInOrder<
-    typeof playersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
-  >;
+const keysOfSnowballPlayersInOrder = [
+  "alice",
+  "bruno",
+] as const satisfies KeysOfPlayersInOrder<
+  typeof playersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+>;
 
 const {
   indexedSnowballPlayersWithData:
@@ -64,12 +66,12 @@ const {
   snowballPlayersWithDataAndIndex:
     snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
 } = createIndexedSnowballPlayersWithData({
-  keysOfPlayersInOrder:
-    keysOfSnowballPlayersInOrderInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
+  keysOfPlayersInOrder: keysOfSnowballPlayersInOrder,
   playersWithData:
     playersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
 });
 
+export type { SnowballPlayerWithDataAndIndex };
 export {
   indexedSnowballPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
   snowballPlayersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
