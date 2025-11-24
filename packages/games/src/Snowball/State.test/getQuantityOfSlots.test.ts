@@ -5,6 +5,8 @@ import {
 } from "@repo/game/State.test/getQuantityOfSlots.test.js";
 import { test } from "vitest";
 
+import type { SnowballStateWithData } from "./setup.js";
+
 import { statesWithData } from "./records.js";
 
 const createDescription = ({
@@ -22,18 +24,30 @@ const createDescription = ({
     }),
   });
 
-Object.values(statesWithData).forEach(({ keyOfState, params, state }) => {
-  const expectedQuantityOfSlots = params.slots.length;
-  test(
-    createDescription({
-      affix: keyOfState,
-      expectedQuantityOfSlots,
-    }),
-    () => {
-      validateGetQuantityOfSlots({
+const testGetQuantityOfSlots = ({
+  arrayOfStatesWithData,
+}: {
+  arrayOfStatesWithData: SnowballStateWithData[];
+}) => {
+  arrayOfStatesWithData.forEach(({ keyOfState, params, state }) => {
+    const expectedQuantityOfSlots = params.slots.length;
+
+    test(
+      createDescription({
+        affix: keyOfState,
         expectedQuantityOfSlots,
-        state,
-      });
-    },
-  );
+      }),
+
+      () => {
+        validateGetQuantityOfSlots({
+          expectedQuantityOfSlots,
+          state,
+        });
+      },
+    );
+  });
+};
+
+testGetQuantityOfSlots({
+  arrayOfStatesWithData: Object.values(statesWithData),
 });

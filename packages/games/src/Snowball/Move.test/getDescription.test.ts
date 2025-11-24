@@ -38,6 +38,7 @@ const testGetDescription = ({
         affix: keyOfMove,
         expectedDescription: description,
       }),
+
       () => {
         validateGetDescription({
           expectedDescription: description,

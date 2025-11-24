@@ -100,6 +100,7 @@ const testGetIndexesOfSlots = ({
         initialIndexOfRow: params.initialIndexOfRow,
         shape: params.shape,
       }),
+
       () => {
         validateGetIndexesOfSlots({
           expectedIndexesOfSlots: result.indexesOfSlots,

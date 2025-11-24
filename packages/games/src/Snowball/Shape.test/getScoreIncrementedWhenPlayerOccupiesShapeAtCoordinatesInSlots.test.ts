@@ -10,10 +10,7 @@ import {
   getNameAndFormattedSizeOfShape,
   getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots,
 } from "../Shape.js";
-import {
-  indexedSlotsWithDataInWhichAllSlotsAreEmpty,
-  indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
-} from "../Slot.test/indexedRecords.js";
+import { indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno } from "../Slot.test/indexedRecords.js";
 import {
   shapesWithDataInWhichShapesAreHorizontalLines,
   shapesWithDataInWhichShapesArePrincipalDiagonals,
@@ -134,6 +131,7 @@ const constructTestGetScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlot
         initialIndexOfRow,
         shape,
       }),
+
       () => {
         validateGetScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots({
           expectedScore,

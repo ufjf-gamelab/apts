@@ -30,8 +30,10 @@ const testConstructor = ({
       createDescription({
         affix: keyOfPlayer,
       }),
+
       () => {
         const { name, symbol } = params;
+
         const newPlayer = new SnowballPlayer({
           name,
           symbol,

@@ -34,6 +34,7 @@ const testGetTitle = ({
         affix: keyOfMove,
         expectedTitle: params.title,
       }),
+
       () => {
         validateGetTitle({
           expectedTitle: params.title,

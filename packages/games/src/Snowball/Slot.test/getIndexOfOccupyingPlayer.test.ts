@@ -75,6 +75,7 @@ const testGetIndexOfOccupyingPlayer = ({
         affix: keyOfSlot,
         expectedIndexOfOccupyingPlayer: params.indexOfOccupyingPlayer,
       }),
+
       () => {
         validateGetIndexOfOccupyingPlayer({
           expectedIndexOfOccupyingPlayer: params.indexOfOccupyingPlayer,

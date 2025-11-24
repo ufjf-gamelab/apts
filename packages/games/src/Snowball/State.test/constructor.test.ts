@@ -10,6 +10,7 @@ import type { SnowballMove } from "../Move.js";
 import type { SnowballPlayer } from "../Player.js";
 import type { SnowballScore } from "../Score.js";
 import type { SnowballSlot } from "../Slot.js";
+import type { SnowballStateWithData } from "./setup.js";
 
 import { SnowballState } from "../State.js";
 import { statesWithData } from "./records.js";
@@ -24,39 +25,50 @@ const createDescription = ({
     }),
   });
 
-Object.values(statesWithData).forEach(({ keyOfState, params }) => {
-  test(
-    createDescription({
-      affix: keyOfState,
-    }),
-    () => {
-      const { game, player, score, slots } = params;
-      const extractedSlots = slots.map((slot) => slot.slot);
+const testConstructor = ({
+  arrayOfStatesWithData,
+}: {
+  arrayOfStatesWithData: SnowballStateWithData[];
+}) => {
+  arrayOfStatesWithData.forEach(({ keyOfState, params }) => {
+    test(
+      createDescription({
+        affix: keyOfState,
+      }),
 
-      const newState = new SnowballState({
-        game: game.game,
-        indexOfPlayer: player.index,
-        score: score.score,
-        slots: extractedSlots,
-      });
+      () => {
+        const { game, player, score, slots } = params;
+        const extractedSlots = slots.map((slot) => slot.slot);
 
-      validateConstructor<
-        SnowballGame,
-        SnowballMove,
-        SnowballPlayer,
-        SnowballState,
-        SnowballScore,
-        SnowballSlot
-      >({
-        params: {
+        const newState = new SnowballState({
           game: game.game,
           indexOfPlayer: player.index,
           score: score.score,
           slots: extractedSlots,
-        },
-        state: newState,
-      });
-      expect(newState).toBeInstanceOf(SnowballState);
-    },
-  );
+        });
+
+        validateConstructor<
+          SnowballGame,
+          SnowballMove,
+          SnowballPlayer,
+          SnowballState,
+          SnowballScore,
+          SnowballSlot
+        >({
+          params: {
+            game: game.game,
+            indexOfPlayer: player.index,
+            score: score.score,
+            slots: extractedSlots,
+          },
+          state: newState,
+        });
+        expect(newState).toBeInstanceOf(SnowballState);
+      },
+    );
+  });
+};
+
+testConstructor({
+  arrayOfStatesWithData: Object.values(statesWithData),
 });

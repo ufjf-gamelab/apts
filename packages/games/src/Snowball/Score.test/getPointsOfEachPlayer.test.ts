@@ -32,7 +32,6 @@ const testGetPointsOfEachPlayer = ({
   arrayOfScoresWithData: SnowballScoreWithData[];
 }) => {
   arrayOfScoresWithData.forEach(({ keyOfScore, params, score }) => {
-    const derivedParams = deriveSnowballScoreParams(params);
     test(
       createDescription({
         affix: keyOfScore,
@@ -45,7 +44,10 @@ const testGetPointsOfEachPlayer = ({
             ]),
         ),
       }),
+
       () => {
+        const derivedParams = deriveSnowballScoreParams(params);
+
         validateGetPointsOfEachPlayer({
           expectedPointsOfEachPlayer: derivedParams.pointsOfEachPlayer,
           score,

@@ -5,6 +5,8 @@ import {
 } from "@repo/game/State.test/getSlots.test.js";
 import { test } from "vitest";
 
+import type { SnowballStateWithData } from "./setup.js";
+
 import { statesWithData } from "./records.js";
 
 const createDescription = ({
@@ -22,17 +24,28 @@ const createDescription = ({
     }),
   });
 
-Object.values(statesWithData).forEach(({ keyOfState, params, state }) => {
-  test(
-    createDescription({
-      affix: keyOfState,
-      keysOfExpectedSlots: params.slots.map((slot) => slot.keyOfSlot),
-    }),
-    () => {
-      validateGetSlots({
-        expectedSlots: params.slots.map((slot) => slot.slot),
-        state,
-      });
-    },
-  );
+const testGetSlots = ({
+  arrayOfStatesWithData,
+}: {
+  arrayOfStatesWithData: SnowballStateWithData[];
+}) => {
+  arrayOfStatesWithData.forEach(({ keyOfState, params, state }) => {
+    test(
+      createDescription({
+        affix: keyOfState,
+        keysOfExpectedSlots: params.slots.map((slot) => slot.keyOfSlot),
+      }),
+
+      () => {
+        validateGetSlots({
+          expectedSlots: params.slots.map((slot) => slot.slot),
+          state,
+        });
+      },
+    );
+  });
+};
+
+testGetSlots({
+  arrayOfStatesWithData: Object.values(statesWithData),
 });

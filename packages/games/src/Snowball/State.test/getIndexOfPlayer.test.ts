@@ -5,6 +5,8 @@ import {
 } from "@repo/game/State.test/getIndexOfPlayer.test.js";
 import { test } from "vitest";
 
+import type { SnowballStateWithData } from "./setup.js";
+
 import { statesWithData } from "./records.js";
 
 const createDescription = ({
@@ -22,17 +24,28 @@ const createDescription = ({
     }),
   });
 
-Object.values(statesWithData).forEach(({ keyOfState, params, state }) => {
-  test(
-    createDescription({
-      affix: keyOfState,
-      keyOfPlayer: params.player.player.keyOfPlayer,
-    }),
-    () => {
-      validateGetIndexOfPlayer({
-        expectedIndexOfPlayer: params.player.index,
-        state,
-      });
-    },
-  );
+const testGetIndexOfPlayer = ({
+  arrayOfStatesWithData,
+}: {
+  arrayOfStatesWithData: SnowballStateWithData[];
+}) => {
+  arrayOfStatesWithData.forEach(({ keyOfState, params, state }) => {
+    test(
+      createDescription({
+        affix: keyOfState,
+        keyOfPlayer: params.player.player.keyOfPlayer,
+      }),
+
+      () => {
+        validateGetIndexOfPlayer({
+          expectedIndexOfPlayer: params.player.index,
+          state,
+        });
+      },
+    );
+  });
+};
+
+testGetIndexOfPlayer({
+  arrayOfStatesWithData: Object.values(statesWithData),
 });

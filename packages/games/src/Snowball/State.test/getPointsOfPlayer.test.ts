@@ -5,7 +5,10 @@ import {
 } from "@repo/game/State.test/getPointsOfPlayer.test.js";
 import { test } from "vitest";
 
-import { indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "../Player.test/indexedRecords.js";
+import type { SnowballPlayerWithData } from "../Player.test/setup.js";
+import type { SnowballStateWithData } from "./setup.js";
+
+import { indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO as indexedPlayersWithData } from "../Player.test/indexedRecords.js";
 import { statesWithData } from "./records.js";
 
 const ZERO_POINTS = 0;
@@ -27,11 +30,17 @@ const createDescription = ({
     }),
   });
 
-Object.values(statesWithData).forEach(({ keyOfState, params, state }) => {
-  indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO.forEach(
-    ({ keyOfPlayer }, indexOfPlayer) => {
+const testGetPointsOfPlayer = ({
+  arrayOfPlayersWithData,
+  arrayOfStatesWithData,
+}: {
+  arrayOfPlayersWithData: SnowballPlayerWithData[];
+  arrayOfStatesWithData: SnowballStateWithData[];
+}) => {
+  arrayOfStatesWithData.forEach(({ keyOfState, params, state }) => {
+    arrayOfPlayersWithData.forEach(({ keyOfPlayer }, indexOfPlayer) => {
       const expectedPointsOfPlayer =
-        params.score.params.pointsOfEachPlayer.get(indexOfPlayer) ??
+        params.score.params.pointsOfEachPlayer.get(indexOfPlayer)?.points ??
         ZERO_POINTS;
 
       test(
@@ -48,6 +57,11 @@ Object.values(statesWithData).forEach(({ keyOfState, params, state }) => {
           });
         },
       );
-    },
-  );
+    });
+  });
+};
+
+testGetPointsOfPlayer({
+  arrayOfPlayersWithData: indexedPlayersWithData,
+  arrayOfStatesWithData: Object.values(statesWithData),
 });

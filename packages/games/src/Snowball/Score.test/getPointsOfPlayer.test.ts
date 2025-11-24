@@ -6,7 +6,6 @@ import {
 import { test } from "vitest";
 
 import type { SnowballPlayerWithData } from "../Player.test/setup.js";
-import type { SnowballScore } from "../Score.js";
 
 import { indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO as indexedPlayersWithData } from "../Player.test/indexedRecords.js";
 import { scoresWithData } from "./records.js";
@@ -18,10 +17,11 @@ const createDescription = ({
   affix,
   expectedPointsOfPlayer,
   keyOfPlayer,
-}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> & {
-  expectedPointsOfPlayer: ReturnType<SnowballScore["getPointsOfPlayer"]>;
-  keyOfPlayer: string;
-}) =>
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> &
+  Pick<
+    Parameters<typeof createDescriptionForTestOfGetPointsOfPlayer>[0],
+    "expectedPointsOfPlayer" | "keyOfPlayer"
+  >) =>
   createDescriptionForTest({
     affix,
     description: createDescriptionForTestOfGetPointsOfPlayer({
@@ -48,6 +48,7 @@ const testGetPointsOfPlayer = ({
           expectedPointsOfPlayer,
           keyOfPlayer,
         }),
+
         () => {
           validateGetPointsOfPlayer({
             expectedPointsOfPlayer,

@@ -73,6 +73,7 @@ const testGetIndexOfSlotInWhichPlacePiece = ({
         expectedIndexOfSlotInWhichPlacePiece:
           params.indexOfSlotInWhichPlacePiece,
       }),
+
       () => {
         validateGetIndexOfSlotInWhichPlacePiece({
           expectedIndexOfSlotInWhichPlacePiece:

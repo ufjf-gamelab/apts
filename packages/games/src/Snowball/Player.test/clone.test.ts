@@ -30,8 +30,10 @@ const testClone = ({
       createDescription({
         affix: keyOfPlayer,
       }),
+
       () => {
         const clonedPlayer = player.clone();
+
         validateClone({ clonedPlayer, player });
         expect(clonedPlayer).toBeInstanceOf(SnowballPlayer);
       },

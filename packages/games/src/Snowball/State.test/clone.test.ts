@@ -5,6 +5,8 @@ import {
 import { validateClone } from "@repo/game/State.test/clone.test.js";
 import { expect, test } from "vitest";
 
+import type { SnowballStateWithData } from "./setup.js";
+
 import { SnowballState } from "../State.js";
 import { statesWithData } from "./records.js";
 
@@ -18,15 +20,27 @@ const createDescription = ({
     }),
   });
 
-Object.values(statesWithData).forEach(({ keyOfState, state }) => {
-  test(
-    createDescription({
-      affix: keyOfState,
-    }),
-    () => {
-      const clonedState = state.clone();
-      validateClone({ clonedState, state });
-      expect(clonedState).toBeInstanceOf(SnowballState);
-    },
-  );
+const testClone = ({
+  arrayOfStatesWithData,
+}: {
+  arrayOfStatesWithData: SnowballStateWithData[];
+}) => {
+  arrayOfStatesWithData.forEach(({ keyOfState, state }) => {
+    test(
+      createDescription({
+        affix: keyOfState,
+      }),
+
+      () => {
+        const clonedState = state.clone();
+
+        validateClone({ clonedState, state });
+        expect(clonedState).toBeInstanceOf(SnowballState);
+      },
+    );
+  });
+};
+
+testClone({
+  arrayOfStatesWithData: Object.values(statesWithData),
 });

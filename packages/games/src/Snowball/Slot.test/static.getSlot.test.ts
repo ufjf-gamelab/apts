@@ -46,6 +46,7 @@ const testGetSlot = ({
         keyOfSlot,
         slots: arrayOfSlotsToCreateDescription,
       }),
+
       () => {
         validateGetSlot({
           expectedSlot: slot,

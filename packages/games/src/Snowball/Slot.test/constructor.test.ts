@@ -33,8 +33,10 @@ const testConstructor = ({
       createDescription({
         affix: keyOfSlot,
       }),
+
       () => {
         const { indexOfOccupyingPlayer } = params;
+
         const newSlot = new SnowballSlot({
           indexOfOccupyingPlayer,
         });

@@ -32,9 +32,11 @@ const testConstructor = ({
       createDescription({
         affix: keyOfMove,
       }),
+
       () => {
         const { description, indexOfSlotInWhichPlacePiece, title } =
           deriveSnowballMoveParams(params);
+
         const newMove = new SnowballMove({
           description,
           indexOfSlotInWhichPlacePiece,

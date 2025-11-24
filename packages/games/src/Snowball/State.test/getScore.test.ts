@@ -5,6 +5,8 @@ import {
 } from "@repo/game/State.test/getScore.test.js";
 import { test } from "vitest";
 
+import type { SnowballStateWithData } from "./setup.js";
+
 import { statesWithData } from "./records.js";
 
 const createDescription = ({
@@ -24,19 +26,31 @@ const createDescription = ({
     }),
   });
 
-Object.values(statesWithData).forEach(({ keyOfState, params, state }) => {
-  const expectedScore = params.score.score;
-  test(
-    createDescription({
-      affix: keyOfState,
-      expectedScore,
-      keyOfPlayer: params.player.player.keyOfPlayer,
-    }),
-    () => {
-      validateGetScore({
+const testGetScore = ({
+  arrayOfStatesWithData,
+}: {
+  arrayOfStatesWithData: SnowballStateWithData[];
+}) => {
+  arrayOfStatesWithData.forEach(({ keyOfState, params, state }) => {
+    const expectedScore = params.score.score;
+
+    test(
+      createDescription({
+        affix: keyOfState,
         expectedScore,
-        state,
-      });
-    },
-  );
+        keyOfPlayer: params.player.player.keyOfPlayer,
+      }),
+
+      () => {
+        validateGetScore({
+          expectedScore,
+          state,
+        });
+      },
+    );
+  });
+};
+
+testGetScore({
+  arrayOfStatesWithData: Object.values(statesWithData),
 });

@@ -73,6 +73,7 @@ const constructTestGetUpdatedScore = ({
       currentScore,
       expectedScore,
     }),
+
     () => {
       validateGetUpdatedScore({
         currentScore,

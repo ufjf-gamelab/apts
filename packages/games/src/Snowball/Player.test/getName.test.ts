@@ -34,6 +34,7 @@ const testGetName = ({
         affix: keyOfPlayer,
         expectedName: params.name,
       }),
+
       () => {
         validateGetName({
           expectedName: params.name,

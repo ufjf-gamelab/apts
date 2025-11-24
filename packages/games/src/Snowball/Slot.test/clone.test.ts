@@ -33,8 +33,10 @@ const testClone = ({
       createDescription({
         affix: keyOfSlot,
       }),
+
       () => {
         const clonedSlot = slot.clone();
+
         validateClone({ clonedSlot, slot });
         expect(clonedSlot).toBeInstanceOf(SnowballSlot);
       },

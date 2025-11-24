@@ -34,9 +34,11 @@ const testConstructor = ({
       }),
       () => {
         const { pointsOfEachPlayer } = deriveSnowballScoreParams(params);
+
         const newScore = new SnowballScore({
           pointsOfEachPlayer,
         });
+
         validateConstructor({
           params: { pointsOfEachPlayer },
           score: newScore,

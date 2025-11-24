@@ -34,6 +34,7 @@ const testGetSymbol = ({
         affix: keyOfPlayer,
         expectedSymbol: params.symbol,
       }),
+
       () => {
         validateGetSymbol({
           expectedSymbol: params.symbol,
