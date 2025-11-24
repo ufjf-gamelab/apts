@@ -7,9 +7,25 @@ import type {
   Shape,
 } from "../Shape.js";
 
-import { recordOfParamsOfShapesForUnitTest } from "./records.js";
+import { type RecordOfRequiredParamsAndResultOfSnowballShapes } from "./records.js";
 
-interface SnowballShapeParams {
+type ExtendedSnowballShapesWithData<
+  ExtendedRecordOfRequiredParamsAndResultOfSnowballShapes extends
+    RecordOfRequiredParamsAndResultOfSnowballShapes,
+> = {
+  [K in keyof ExtendedRecordOfRequiredParamsAndResultOfSnowballShapes]: {
+    keyOfShape: keyof ExtendedRecordOfRequiredParamsAndResultOfSnowballShapes;
+    params: RequiredParamsOfSnowballShape;
+    result: ResultOfSnowballShape;
+  };
+};
+
+interface RequiredParamsAndResultOfSnowballShape {
+  params: RequiredParamsOfSnowballShape;
+  result: ResultOfSnowballShape;
+}
+
+interface RequiredParamsOfSnowballShape {
   indexOfPlayerWhoIsOccupyingShape: ReturnType<
     typeof getIndexOfPlayerWhoIsOccupyingShape
   >;
@@ -18,7 +34,7 @@ interface SnowballShapeParams {
   shape: Shape;
 }
 
-interface SnowballShapeResult {
+interface ResultOfSnowballShape {
   indexesOfSlots: ReturnType<typeof getIndexesOfSlots>;
   score: ReturnType<
     typeof getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots
@@ -27,67 +43,50 @@ interface SnowballShapeResult {
 
 interface SnowballShapeWithData {
   keyOfShape: string;
-  params: SnowballShapeParams;
-  result: SnowballShapeResult;
+  params: RequiredParamsOfSnowballShape;
+  result: ResultOfSnowballShape;
 }
 
-const createShapesWithData = <
-  RecordOfParams extends Record<
-    string,
-    { params: SnowballShapeParams; result: SnowballShapeResult }
-  >,
+const createSnowballShapesWithData = <
+  ExtendedRecordOfRequiredParamsAndResultOfSnowballShapes extends
+    RecordOfRequiredParamsAndResultOfSnowballShapes,
 >({
-  recordOfParams,
+  recordOfRequiredParamsAndResult,
 }: {
-  recordOfParams: RecordOfParams;
-}): {
-  [K in keyof RecordOfParams]: {
-    keyOfShape: keyof RecordOfParams;
-    params: SnowballShapeParams;
-    result: SnowballShapeResult;
-  };
-} => {
+  recordOfRequiredParamsAndResult: ExtendedRecordOfRequiredParamsAndResultOfSnowballShapes;
+}): ExtendedSnowballShapesWithData<ExtendedRecordOfRequiredParamsAndResultOfSnowballShapes> => {
   type ResultType = {
-    [K in keyof RecordOfParams]: {
-      keyOfShape: keyof RecordOfParams;
-      params: SnowballShapeParams;
-      result: SnowballShapeResult;
+    [K in keyof ExtendedRecordOfRequiredParamsAndResultOfSnowballShapes]: {
+      keyOfShape: keyof ExtendedRecordOfRequiredParamsAndResultOfSnowballShapes;
+      params: RequiredParamsOfSnowballShape;
+      result: ResultOfSnowballShape;
     };
   };
 
   /**
    * TypeScript cannot statically verify that Object.fromEntries produces all required keys since the operation happens at runtime.
-   * This assertion is safe because we're iterating over all entries from recordOfParams, which RecordOfParams is derived from.
+   * This assertion is safe because we're iterating over all entries from recordOfRequiredParamsAndResult, which RecordOfParams is derived from.
    */
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Object.fromEntries cannot preserve mapped type keys
   return Object.fromEntries(
-    Object.entries(recordOfParams).map(
-      ([key, content]) =>
+    Object.entries(recordOfRequiredParamsAndResult).map(
+      ([key, paramsAndResult]) =>
         [
           key,
           {
             keyOfShape: key,
-            params: content.params,
-            result: content.result,
+            params: paramsAndResult.params,
+            result: paramsAndResult.result,
           } satisfies SnowballShapeWithData,
         ] as const,
     ),
   ) as ResultType;
 };
 
-type RecordOfParamsForShapesWithDataForUnitTest = Record<
-  string,
-  { params: SnowballShapeParams; result: SnowballShapeResult }
->;
-const shapesWithDataForUnitTest: {
-  [K in keyof RecordOfParamsForShapesWithDataForUnitTest]: {
-    keyOfShape: keyof RecordOfParamsForShapesWithDataForUnitTest;
-    params: SnowballShapeParams;
-    result: SnowballShapeResult;
-  };
-} = createShapesWithData({
-  recordOfParams: recordOfParamsOfShapesForUnitTest,
-});
-
-export type { SnowballShapeParams, SnowballShapeResult, SnowballShapeWithData };
-export { shapesWithDataForUnitTest };
+export type {
+  RequiredParamsAndResultOfSnowballShape,
+  RequiredParamsOfSnowballShape,
+  ResultOfSnowballShape,
+  SnowballShapeWithData,
+};
+export { createSnowballShapesWithData };

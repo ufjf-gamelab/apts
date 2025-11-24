@@ -12,9 +12,14 @@ import {
   ROW_LENGTH,
 } from "../Shape.js";
 import {
-  shapesWithDataForUnitTest,
-  type SnowballShapeWithData,
-} from "./setup.js";
+  shapesWithDataInWhichShapesAreHorizontalLines,
+  shapesWithDataInWhichShapesArePrincipalDiagonals,
+  shapesWithDataInWhichShapesAreRectanglesOf2RowsAnd2Columns,
+  shapesWithDataInWhichShapesAreRectanglesOf3RowsAnd3Columns,
+  shapesWithDataInWhichShapesAreSecondaryDiagonals,
+  shapesWithDataInWhichShapesAreVerticalLines,
+} from "./records.js";
+import { type SnowballShapeWithData } from "./setup.js";
 
 const validateGetIndexesOfSlots = ({
   expectedIndexesOfSlots,
@@ -63,15 +68,14 @@ const createDescription = ({
   initialIndexOfColumn,
   initialIndexOfRow,
   shape,
-}: Pick<
-  Parameters<typeof createDescriptionForTestOfGetIndexesOfSlots>[0],
-  | "expectedIndexesOfSlots"
-  | "initialIndexOfColumn"
-  | "initialIndexOfRow"
-  | "shape"
-> & {
-  affix: string;
-}) =>
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> &
+  Pick<
+    Parameters<typeof createDescriptionForTestOfGetIndexesOfSlots>[0],
+    | "expectedIndexesOfSlots"
+    | "initialIndexOfColumn"
+    | "initialIndexOfRow"
+    | "shape"
+  >) =>
   createDescriptionForTest({
     affix,
     description: createDescriptionForTestOfGetIndexesOfSlots({
@@ -83,33 +87,58 @@ const createDescription = ({
   });
 
 const testGetIndexesOfSlots = ({
-  shapesWithDataToTest,
+  arrayOfShapesWithData,
 }: {
-  shapesWithDataToTest: Record<string, SnowballShapeWithData>;
+  arrayOfShapesWithData: SnowballShapeWithData[];
 }) => {
-  Object.values(shapesWithDataToTest).forEach(
-    ({ keyOfShape, params, result }) => {
-      test(
-        createDescription({
-          affix: keyOfShape,
+  arrayOfShapesWithData.forEach(({ keyOfShape, params, result }) => {
+    test(
+      createDescription({
+        affix: keyOfShape,
+        expectedIndexesOfSlots: result.indexesOfSlots,
+        initialIndexOfColumn: params.initialIndexOfColumn,
+        initialIndexOfRow: params.initialIndexOfRow,
+        shape: params.shape,
+      }),
+      () => {
+        validateGetIndexesOfSlots({
           expectedIndexesOfSlots: result.indexesOfSlots,
           initialIndexOfColumn: params.initialIndexOfColumn,
           initialIndexOfRow: params.initialIndexOfRow,
           shape: params.shape,
-        }),
-        () => {
-          validateGetIndexesOfSlots({
-            expectedIndexesOfSlots: result.indexesOfSlots,
-            initialIndexOfColumn: params.initialIndexOfColumn,
-            initialIndexOfRow: params.initialIndexOfRow,
-            shape: params.shape,
-          });
-        },
-      );
-    },
-  );
+        });
+      },
+    );
+  });
 };
 
 testGetIndexesOfSlots({
-  shapesWithDataToTest: shapesWithDataForUnitTest,
+  arrayOfShapesWithData: Object.values(
+    shapesWithDataInWhichShapesAreHorizontalLines,
+  ),
+});
+testGetIndexesOfSlots({
+  arrayOfShapesWithData: Object.values(
+    shapesWithDataInWhichShapesAreVerticalLines,
+  ),
+});
+testGetIndexesOfSlots({
+  arrayOfShapesWithData: Object.values(
+    shapesWithDataInWhichShapesArePrincipalDiagonals,
+  ),
+});
+testGetIndexesOfSlots({
+  arrayOfShapesWithData: Object.values(
+    shapesWithDataInWhichShapesAreSecondaryDiagonals,
+  ),
+});
+testGetIndexesOfSlots({
+  arrayOfShapesWithData: Object.values(
+    shapesWithDataInWhichShapesAreRectanglesOf2RowsAnd2Columns,
+  ),
+});
+testGetIndexesOfSlots({
+  arrayOfShapesWithData: Object.values(
+    shapesWithDataInWhichShapesAreRectanglesOf3RowsAnd3Columns,
+  ),
 });

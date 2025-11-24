@@ -11,12 +11,11 @@ const createDescription = ({
   affix,
   keyOfState,
   keysOfExpectedValidMoves,
-}: Pick<
-  Parameters<typeof createDescriptionForTestOfGetIndexesOfValidMoves>[0],
-  "keyOfState" | "keysOfExpectedValidMoves"
-> & {
-  affix: string;
-}) =>
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> &
+  Pick<
+    Parameters<typeof createDescriptionForTestOfGetIndexesOfValidMoves>[0],
+    "keyOfState" | "keysOfExpectedValidMoves"
+  >) =>
   createDescriptionForTest({
     affix,
     description: createDescriptionForTestOfGetIndexesOfValidMoves({

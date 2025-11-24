@@ -49,8 +49,7 @@ const createDescriptionForTestOfGetIndexOfSlotInWhichPlacePiece = ({
 const createDescription = ({
   affix,
   expectedIndexOfSlotInWhichPlacePiece,
-}: {
-  affix: string;
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> & {
   expectedIndexOfSlotInWhichPlacePiece: ReturnType<
     SnowballMove["getIndexOfSlotInWhichPlacePiece"]
   >;

@@ -13,8 +13,7 @@ import { gamesWithDataForUnitTest } from "./setup.js";
 const createDescription = ({
   affix,
   expectedInitialState,
-}: {
-  affix: string;
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> & {
   expectedInitialState: ReturnType<SnowballGame["constructInitialState"]>;
 }) =>
   createDescriptionForTest({

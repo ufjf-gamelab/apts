@@ -13,10 +13,11 @@ const createDescription = ({
   affix,
   indexOfPlayer,
   keyOfPlayer,
-}: Pick<
-  Parameters<typeof createDescriptionForTestOfGetPlayer>[0],
-  "indexOfPlayer" | "keyOfPlayer"
-> & { affix: string }) =>
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> &
+  Pick<
+    Parameters<typeof createDescriptionForTestOfGetPlayer>[0],
+    "indexOfPlayer" | "keyOfPlayer"
+  >) =>
   createDescriptionForTest({
     affix,
     description: createDescriptionForTestOfGetPlayer({

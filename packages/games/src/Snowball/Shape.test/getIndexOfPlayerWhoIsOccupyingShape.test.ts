@@ -4,7 +4,8 @@ import {
 } from "@repo/engine_core/test.js";
 import { expect, test } from "vitest";
 
-import { getIndexedSnowballSlotsWithDataForUnitTest } from "../Game.test/slots.js";
+import type { SnowballShapeWithData } from "./setup.js";
+
 import {
   COLUMN_LENGTH,
   getIndexOfPlayerWhoIsOccupyingShape,
@@ -12,9 +13,17 @@ import {
   ROW_LENGTH,
 } from "../Shape.js";
 import {
-  shapesWithDataForUnitTest,
-  type SnowballShapeWithData,
-} from "./setup.js";
+  indexedSlotsWithDataInWhichAllSlotsAreEmpty,
+  indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+} from "../Slot.test/indexedRecords.js";
+import {
+  shapesWithDataInWhichShapesAreHorizontalLines,
+  shapesWithDataInWhichShapesArePrincipalDiagonals,
+  shapesWithDataInWhichShapesAreRectanglesOf2RowsAnd2Columns,
+  shapesWithDataInWhichShapesAreRectanglesOf3RowsAnd3Columns,
+  shapesWithDataInWhichShapesAreSecondaryDiagonals,
+  shapesWithDataInWhichShapesAreVerticalLines,
+} from "./records.js";
 
 const validateGetIndexOfPlayerWhoIsOccupyingShape = ({
   expectedIndexOfPlayerWhoIsOccupyingShape,
@@ -70,17 +79,16 @@ const createDescription = ({
   initialIndexOfColumn,
   initialIndexOfRow,
   shape,
-}: Pick<
-  Parameters<
-    typeof createDescriptionForTestOfGetIndexOfPlayerWhoIsOccupyingShape
-  >[0],
-  | "expectedIndexOfPlayerWhoIsOccupyingShape"
-  | "initialIndexOfColumn"
-  | "initialIndexOfRow"
-  | "shape"
-> & {
-  affix: string;
-}) =>
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> &
+  Pick<
+    Parameters<
+      typeof createDescriptionForTestOfGetIndexOfPlayerWhoIsOccupyingShape
+    >[0],
+    | "expectedIndexOfPlayerWhoIsOccupyingShape"
+    | "initialIndexOfColumn"
+    | "initialIndexOfRow"
+    | "shape"
+  >) =>
   createDescriptionForTest({
     affix,
     description: createDescriptionForTestOfGetIndexOfPlayerWhoIsOccupyingShape({
@@ -128,15 +136,15 @@ const constructTestGetIndexOfPlayerWhoIsOccupyingShape = ({
 };
 
 const testGetIndexOfPlayerWhoIsOccupyingShape = ({
-  shapesWithDataToTest,
+  arrayOfShapesWithData,
   slots,
 }: Pick<
   Parameters<typeof constructTestGetIndexOfPlayerWhoIsOccupyingShape>[0],
   "slots"
 > & {
-  shapesWithDataToTest: Record<string, SnowballShapeWithData>;
+  arrayOfShapesWithData: SnowballShapeWithData[];
 }) => {
-  Object.values(shapesWithDataToTest).forEach(
+  arrayOfShapesWithData.forEach(
     ({
       keyOfShape,
       params: {
@@ -159,7 +167,53 @@ const testGetIndexOfPlayerWhoIsOccupyingShape = ({
   );
 };
 
-testGetIndexOfPlayerWhoIsOccupyingShape({
-  shapesWithDataToTest: shapesWithDataForUnitTest,
-  slots: getIndexedSnowballSlotsWithDataForUnitTest().map((slot) => slot.slot),
+const testGetIndexOfPlayerWhoIsOccupyingShapeForAllShapes = ({
+  slots,
+}: Pick<
+  Parameters<typeof testGetIndexOfPlayerWhoIsOccupyingShape>[0],
+  "slots"
+>) => {
+  testGetIndexOfPlayerWhoIsOccupyingShape({
+    arrayOfShapesWithData: Object.values(
+      shapesWithDataInWhichShapesAreHorizontalLines,
+    ),
+    slots,
+  });
+  testGetIndexOfPlayerWhoIsOccupyingShape({
+    arrayOfShapesWithData: Object.values(
+      shapesWithDataInWhichShapesAreVerticalLines,
+    ),
+    slots,
+  });
+  testGetIndexOfPlayerWhoIsOccupyingShape({
+    arrayOfShapesWithData: Object.values(
+      shapesWithDataInWhichShapesArePrincipalDiagonals,
+    ),
+    slots,
+  });
+  testGetIndexOfPlayerWhoIsOccupyingShape({
+    arrayOfShapesWithData: Object.values(
+      shapesWithDataInWhichShapesAreSecondaryDiagonals,
+    ),
+    slots,
+  });
+  testGetIndexOfPlayerWhoIsOccupyingShape({
+    arrayOfShapesWithData: Object.values(
+      shapesWithDataInWhichShapesAreRectanglesOf2RowsAnd2Columns,
+    ),
+    slots,
+  });
+  testGetIndexOfPlayerWhoIsOccupyingShape({
+    arrayOfShapesWithData: Object.values(
+      shapesWithDataInWhichShapesAreRectanglesOf3RowsAnd3Columns,
+    ),
+    slots,
+  });
+};
+
+testGetIndexOfPlayerWhoIsOccupyingShapeForAllShapes({
+  slots:
+    indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.map(
+      (slot) => slot.slot,
+    ),
 });

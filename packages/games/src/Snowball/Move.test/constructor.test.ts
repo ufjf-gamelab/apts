@@ -12,7 +12,9 @@ import {
   type SnowballMoveWithData,
 } from "./setup.js";
 
-const createDescription = ({ affix }: { affix: string }) =>
+const createDescription = ({
+  affix,
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix">) =>
   createDescriptionForTest({
     affix,
     description: createDescriptionForTestsOfConstructor({

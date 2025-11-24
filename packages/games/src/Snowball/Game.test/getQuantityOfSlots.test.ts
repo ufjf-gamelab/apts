@@ -12,8 +12,7 @@ import { gamesWithDataForUnitTest } from "./setup.js";
 const createDescription = ({
   affix,
   expectedQuantityOfSlots,
-}: {
-  affix: string;
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> & {
   expectedQuantityOfSlots: ReturnType<SnowballGame["getQuantityOfSlots"]>;
 }) =>
   createDescriptionForTest({

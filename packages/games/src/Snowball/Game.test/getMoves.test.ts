@@ -11,12 +11,11 @@ import { gamesWithDataForUnitTest } from "./setup.js";
 const createDescription = ({
   affix,
   keysOfExpectedMoves,
-}: Pick<
-  Parameters<typeof createDescriptionForTestOfGetMoves>[0],
-  "keysOfExpectedMoves"
-> & {
-  affix: string;
-}) =>
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> &
+  Pick<
+    Parameters<typeof createDescriptionForTestOfGetMoves>[0],
+    "keysOfExpectedMoves"
+  >) =>
   createDescriptionForTest({
     affix,
     description: createDescriptionForTestOfGetMoves({

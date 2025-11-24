@@ -14,7 +14,9 @@ import type { SnowballSlot } from "../Slot.js";
 import { SnowballState } from "../State.js";
 import { statesWithData } from "./records.js";
 
-const createDescription = ({ affix }: { affix: string }) =>
+const createDescription = ({
+  affix,
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix">) =>
   createDescriptionForTest({
     affix,
     description: createDescriptionForTestsOfConstructor({

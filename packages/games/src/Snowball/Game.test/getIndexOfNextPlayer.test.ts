@@ -13,12 +13,11 @@ const createDescription = ({
   affix,
   expectedIndexOfNextPlayer,
   keyOfState,
-}: Pick<
-  Parameters<typeof createDescriptionForTestOfGetIndexOfNextPlayer>[0],
-  "expectedIndexOfNextPlayer" | "keyOfState"
-> & {
-  affix: string;
-}) =>
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> &
+  Pick<
+    Parameters<typeof createDescriptionForTestOfGetIndexOfNextPlayer>[0],
+    "expectedIndexOfNextPlayer" | "keyOfState"
+  >) =>
   createDescriptionForTest({
     affix,
     description: createDescriptionForTestOfGetIndexOfNextPlayer({

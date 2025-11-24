@@ -13,10 +13,11 @@ const createDescription = ({
   affix,
   indexOfMove,
   keyOfMove,
-}: Pick<
-  Parameters<typeof createDescriptionForTestOfGetMove>[0],
-  "indexOfMove" | "keyOfMove"
-> & { affix: string }) =>
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> &
+  Pick<
+    Parameters<typeof createDescriptionForTestOfGetMove>[0],
+    "indexOfMove" | "keyOfMove"
+  >) =>
   createDescriptionForTest({
     affix,
     description: createDescriptionForTestOfGetMove({

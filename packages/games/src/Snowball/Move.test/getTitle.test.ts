@@ -13,8 +13,7 @@ import { type SnowballMoveWithData } from "./setup.js";
 const createDescription = ({
   affix,
   expectedTitle,
-}: {
-  affix: string;
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> & {
   expectedTitle: ReturnType<SnowballMove["getTitle"]>;
 }) =>
   createDescriptionForTest({

@@ -8,7 +8,9 @@ import { expect, test } from "vitest";
 import { SnowballGame } from "../Game.js";
 import { gamesWithDataForUnitTest } from "./setup.js";
 
-const createDescription = ({ affix }: { affix: string }) =>
+const createDescription = ({
+  affix,
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix">) =>
   createDescriptionForTest({
     affix,
     description: createDescriptionForTestsOfCloneMethod({

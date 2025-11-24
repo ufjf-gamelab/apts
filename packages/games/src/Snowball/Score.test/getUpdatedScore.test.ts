@@ -45,12 +45,11 @@ const createDescription = ({
   affix,
   currentScore,
   expectedScore,
-}: Pick<
-  Parameters<typeof createDescriptionForTestOfGetUpdatedScore>[0],
-  "currentScore" | "expectedScore"
-> & {
-  affix: string;
-}) =>
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> &
+  Pick<
+    Parameters<typeof createDescriptionForTestOfGetUpdatedScore>[0],
+    "currentScore" | "expectedScore"
+  >) =>
   createDescriptionForTest({
     affix,
     description: createDescriptionForTestOfGetUpdatedScore({

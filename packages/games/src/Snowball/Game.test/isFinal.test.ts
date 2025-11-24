@@ -12,10 +12,11 @@ const createDescription = ({
   affix,
   expectedToBeFinal,
   keyOfState,
-}: Pick<
-  Parameters<typeof createDescriptionForTestOfIsFinal>[0],
-  "expectedToBeFinal" | "keyOfState"
-> & { affix: string }) =>
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> &
+  Pick<
+    Parameters<typeof createDescriptionForTestOfIsFinal>[0],
+    "expectedToBeFinal" | "keyOfState"
+  >) =>
   createDescriptionForTest({
     affix,
     description: createDescriptionForTestOfIsFinal({

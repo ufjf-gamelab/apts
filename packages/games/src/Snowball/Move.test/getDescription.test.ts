@@ -16,8 +16,7 @@ import {
 const createDescription = ({
   affix,
   expectedDescription,
-}: {
-  affix: string;
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> & {
   expectedDescription: ReturnType<SnowballMove["getDescription"]>;
 }) =>
   createDescriptionForTest({
