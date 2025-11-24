@@ -88,7 +88,7 @@ const playMoves = ({
     .map((_, index) => index as IndexOfTestingMove);
 
   const indexesOfNotPlayedMoves = indexesOfAllMoves.filter(
-    index => !playedMoves.includes(index),
+    (index) => !playedMoves.includes(index),
   );
 
   const validMoves = indexesOfNotPlayedMoves.reduce<

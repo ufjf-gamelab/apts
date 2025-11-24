@@ -38,18 +38,19 @@ const createIndexedSnowballPlayersWithData = <
   keysOfPlayersInOrder: KeysOfPlayersInOrder<ExtendedRecordOfRequiredSnowballPlayerParams>;
   playersWithData: ExtendedSnowballPlayersWithData<ExtendedRecordOfRequiredSnowballPlayerParams>;
 }) => {
-  const store =
+  const playersWithDataAndIndex =
     // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
     {} as SnowballPlayersWithDataAndIndex<ExtendedRecordOfRequiredSnowballPlayerParams>;
-  const indexed: (typeof playersWithData)[keyof typeof playersWithData][] = [];
-  keysOfPlayersInOrder.forEach((key, index) => {
+  const indexedPlayersWithData: (typeof playersWithData)[keyof typeof playersWithData][] =
+    [];
+  keysOfPlayersInOrder.forEach((key, indexOfPlayer) => {
     const player = playersWithData[key];
-    store[key] = { index, player };
-    indexed.push(player);
+    playersWithDataAndIndex[key] = { index: indexOfPlayer, player };
+    indexedPlayersWithData.push(player);
   });
   return {
-    indexedPlayersWithData: indexed,
-    playersWithDataAndIndex: store,
+    indexedPlayersWithData,
+    playersWithDataAndIndex,
   };
 };
 

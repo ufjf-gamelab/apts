@@ -81,7 +81,7 @@ class SnowballGame extends Game<
     const amountOfFilledSlots = state
       .getSlots()
       .filter((slot) => slot.getIndexOfOccupyingPlayer() !== null).length;
-    if (amountOfFilledSlots === AMOUNT_OF_SLOTS_TO_FINISH_MATCH) {
+    if (amountOfFilledSlots >= AMOUNT_OF_SLOTS_TO_FINISH_MATCH) {
       return true;
     }
 

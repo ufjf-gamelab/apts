@@ -38,18 +38,19 @@ const createIndexedSnowballMovesWithData = <
   keysOfMovesInOrder: KeysOfMovesInOrder<ExtendedRecordOfRequiredSnowballMoveParams>;
   movesWithData: ExtendedSnowballMovesWithData<ExtendedRecordOfRequiredSnowballMoveParams>;
 }) => {
-  const store =
+  const movesWithDataAndIndex =
     // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
     {} as SnowballMovesWithDataAndIndex<ExtendedRecordOfRequiredSnowballMoveParams>;
-  const indexed: (typeof movesWithData)[keyof typeof movesWithData][] = [];
-  keysOfMovesInOrder.forEach((key, index) => {
+  const indexedMovesWithData: (typeof movesWithData)[keyof typeof movesWithData][] =
+    [];
+  keysOfMovesInOrder.forEach((key, indexOfMove) => {
     const move = movesWithData[key];
-    store[key] = { index, move };
-    indexed.push(move);
+    movesWithDataAndIndex[key] = { index: indexOfMove, move };
+    indexedMovesWithData.push(move);
   });
   return {
-    indexedMovesWithData: indexed,
-    movesWithDataAndIndex: store,
+    indexedMovesWithData,
+    movesWithDataAndIndex,
   };
 };
 

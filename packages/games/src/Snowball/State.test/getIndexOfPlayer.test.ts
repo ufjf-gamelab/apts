@@ -11,16 +11,16 @@ import { statesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
-  keyOfPlayer,
+  indexOfPlayer,
 }: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> &
   Pick<
     Parameters<typeof createDescriptionForTestOfGetIndexOfPlayer>[0],
-    "keyOfPlayer"
+    "indexOfPlayer"
   >) =>
   createDescriptionForTest({
     affix,
     description: createDescriptionForTestOfGetIndexOfPlayer({
-      keyOfPlayer,
+      indexOfPlayer,
     }),
   });
 
@@ -33,7 +33,7 @@ const testGetIndexOfPlayer = ({
     test(
       createDescription({
         affix: keyOfState,
-        keyOfPlayer: params.player.player.keyOfPlayer,
+        indexOfPlayer: params.player.index,
       }),
 
       () => {

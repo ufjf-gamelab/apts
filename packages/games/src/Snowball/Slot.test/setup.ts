@@ -56,31 +56,6 @@ const createSnowballSlotsWithData = <
     recordOfRequiredParams,
   });
 
-// TODO: Maybe remove this
-const editSlotOnSnowballSlotsWithData = ({
-  indexOfOccupyingPlayer,
-  keyOfSlot,
-  slots,
-}: Pick<Parameters<typeof createSnowballSlot>[0], "indexOfOccupyingPlayer"> & {
-  keyOfSlot: keyof typeof slots;
-  slots: Record<string, SnowballSlotWithData>;
-}) => {
-  const newSlot: SnowballSlotWithData = {
-    keyOfSlot,
-    params: {
-      indexOfOccupyingPlayer,
-    },
-    slot: createSnowballSlot({
-      indexOfOccupyingPlayer,
-    }),
-  };
-
-  return {
-    ...slots,
-    [keyOfSlot]: newSlot,
-  };
-};
-
 export type {
   DerivedSnowballSlotParams,
   ExtendedSnowballSlotsWithData,
@@ -91,5 +66,4 @@ export {
   createSnowballSlot,
   createSnowballSlotsWithData,
   deriveSnowballSlotParams,
-  editSlotOnSnowballSlotsWithData,
 };

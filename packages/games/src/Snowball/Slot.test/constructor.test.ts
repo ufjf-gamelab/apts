@@ -10,6 +10,7 @@ import type { SnowballSlotWithData } from "./setup.js";
 import { SnowballSlot } from "../Slot.js";
 import {
   indexedSlotsWithDataInWhichAllSlotsAreEmpty,
+  indexedSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
   indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
 } from "./indexedRecords.js";
 
@@ -25,13 +26,15 @@ const createDescription = ({
 
 const testConstructor = ({
   arrayOfSlotsWithData,
+  descriptionOfArrayOfSlotsWithData,
 }: {
   arrayOfSlotsWithData: SnowballSlotWithData[];
+  descriptionOfArrayOfSlotsWithData: string;
 }) => {
   arrayOfSlotsWithData.forEach(({ keyOfSlot, params }) => {
     test(
       createDescription({
-        affix: keyOfSlot,
+        affix: `${descriptionOfArrayOfSlotsWithData} — ${keyOfSlot}`,
       }),
 
       () => {
@@ -51,8 +54,17 @@ const testConstructor = ({
 
 testConstructor({
   arrayOfSlotsWithData: indexedSlotsWithDataInWhichAllSlotsAreEmpty,
+  descriptionOfArrayOfSlotsWithData: "allSlotsAreEmpty",
+});
+testConstructor({
+  arrayOfSlotsWithData:
+    indexedSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
+  descriptionOfArrayOfSlotsWithData:
+    "slotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno",
 });
 testConstructor({
   arrayOfSlotsWithData:
     indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+  descriptionOfArrayOfSlotsWithData:
+    "slotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno",
 });

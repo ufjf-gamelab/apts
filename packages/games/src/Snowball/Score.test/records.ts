@@ -81,6 +81,18 @@ const recordOfRequiredParamsOfScores = {
       }),
     ]),
   },
+  aliceWith15PointsAndBrunoWith14Points: {
+    pointsOfEachPlayer: new Map([
+      constructTupleForPlayer({
+        player: playersWithDataAndIndex.alice,
+        points: 15,
+      }),
+      constructTupleForPlayer({
+        player: playersWithDataAndIndex.bruno,
+        points: 14,
+      }),
+    ]),
+  },
   aliceWith38PointsAndBrunoWith26Points: {
     pointsOfEachPlayer: new Map([
       constructTupleForPlayer({

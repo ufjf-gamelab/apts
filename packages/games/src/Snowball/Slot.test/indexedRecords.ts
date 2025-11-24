@@ -5,6 +5,7 @@ import type { ExtendedSnowballSlotsWithData } from "./setup.js";
 import {
   type RecordOfRequiredSnowballSlotParams,
   slotsWithDataInWhichAllSlotsAreEmpty,
+  slotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
   slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
 } from "./records.js";
 
@@ -39,18 +40,19 @@ const createIndexedSnowballSlotsWithData = <
   keysOfSlotsInOrder: KeysOfSlotsInOrder<ExtendedRecordOfRequiredSnowballSlotParams>;
   slotsWithData: ExtendedSnowballSlotsWithData<ExtendedRecordOfRequiredSnowballSlotParams>;
 }) => {
-  const store =
+  const slotsWithDataAndIndex =
     // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
     {} as SnowballSlotsWithDataAndIndex<ExtendedRecordOfRequiredSnowballSlotParams>;
-  const indexed: (typeof slotsWithData)[keyof typeof slotsWithData][] = [];
-  keysOfSlotsInOrder.forEach((key, index) => {
+  const indexedSlotsWithData: (typeof slotsWithData)[keyof typeof slotsWithData][] =
+    [];
+  keysOfSlotsInOrder.forEach((key, indexOfSlot) => {
     const slot = slotsWithData[key];
-    store[key] = { index, slot };
-    indexed.push(slot);
+    slotsWithDataAndIndex[key] = { index: indexOfSlot, slot };
+    indexedSlotsWithData.push(slot);
   });
   return {
-    indexedSlotsWithData: indexed,
-    slotsWithDataAndIndex: store,
+    indexedSlotsWithData,
+    slotsWithDataAndIndex,
   };
 };
 
@@ -167,6 +169,17 @@ const {
 
 const {
   indexedSlotsWithData:
+    indexedSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
+  slotsWithDataAndIndex:
+    slotsWithDataAndIndexInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
+} = createIndexedSnowballSlotsWithData({
+  keysOfSlotsInOrder,
+  slotsWithData:
+    slotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
+});
+
+const {
+  indexedSlotsWithData:
     indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
   slotsWithDataAndIndex:
     slotsWithDataAndIndexInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
@@ -178,7 +191,9 @@ const {
 
 export {
   indexedSlotsWithDataInWhichAllSlotsAreEmpty,
+  indexedSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
   indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
   slotsWithDataAndIndexInWhichAllSlotsAreEmpty,
+  slotsWithDataAndIndexInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
   slotsWithDataAndIndexInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
 };

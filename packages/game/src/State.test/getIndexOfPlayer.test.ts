@@ -3,7 +3,7 @@ import { expect } from "vitest";
 
 import type { Game } from "../Game.js";
 import type { Move } from "../Move.js";
-import type { Player } from "../Player.js";
+import type { IndexOfPlayer, Player } from "../Player.js";
 import type { Score } from "../Score.js";
 import type { Slot } from "../Slot.js";
 import type { State } from "../State.js";
@@ -34,13 +34,13 @@ const createDescriptionForTestOfGetIndexOfPlayer = <
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
 >({
-  keyOfPlayer,
+  indexOfPlayer,
 }: {
-  keyOfPlayer: string;
+  indexOfPlayer: IndexOfPlayer;
 }): string =>
   createDescriptionForTestsOfGetter({
     methodDescription: `getIndexOfPlayer()`,
-    returnedValue: keyOfPlayer,
+    returnedValue: indexOfPlayer,
   });
 
 export { createDescriptionForTestOfGetIndexOfPlayer, validateGetIndexOfPlayer };
