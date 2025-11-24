@@ -5,9 +5,11 @@ import {
 } from "@repo/engine_core/test.js";
 import { expect, test } from "vitest";
 
+import type { SnowballStateWithData } from "../State.test/setup.js";
+
 import { getUpdatedScore } from "../Score.js";
-import { statesWithDataForUnitTest } from "../State.test/setup.js";
-import { scoresWithDataForUnitTest } from "./setup.js";
+import { statesWithData } from "../State.test/records.js";
+import { scoresWithData } from "./records.js";
 
 const validateGetUpdatedScore = ({
   currentScore,
@@ -83,12 +85,12 @@ const constructTestGetUpdatedScore = ({
 };
 
 const testGetUpdatedScore = ({
+  arrayOfStatesWithData,
   currentScore,
-}: Pick<
-  Parameters<typeof constructTestGetUpdatedScore>[0],
-  "currentScore"
->) => {
-  Object.values(statesWithDataForUnitTest).forEach(({ keyOfState, params }) => {
+}: Pick<Parameters<typeof constructTestGetUpdatedScore>[0], "currentScore"> & {
+  arrayOfStatesWithData: SnowballStateWithData[];
+}) => {
+  arrayOfStatesWithData.forEach(({ keyOfState, params }) => {
     constructTestGetUpdatedScore({
       affix: keyOfState,
       currentScore,
@@ -99,6 +101,6 @@ const testGetUpdatedScore = ({
 };
 
 testGetUpdatedScore({
-  currentScore:
-    scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points.score,
+  arrayOfStatesWithData: Object.values(statesWithData),
+  currentScore: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
 });

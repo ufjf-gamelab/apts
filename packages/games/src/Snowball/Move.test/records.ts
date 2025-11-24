@@ -1,4 +1,4 @@
-import { slotsWithDataAndIndexInWhichAllSlotsAreEmpty } from "../Slot.test/indexedRecords.js";
+import { slotsWithDataAndIndexInWhichAllSlotsAreEmpty as slotsWithDataAndIndex } from "../Slot.test/indexedRecords.js";
 import {
   createSnowballMovesWithData,
   type RequiredSnowballMoveParams,
@@ -11,424 +11,360 @@ type RecordOfRequiredSnowballMoveParams = Record<
 
 const recordOfRequiredParamsOfMoves = {
   centerOfCenter: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.centerOfCenter.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.centerOfCenter.index,
     title: "Center of Center",
   },
   centerOfEast: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.centerOfEast.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.centerOfEast.index,
     title: "Center of East",
   },
   centerOfNorth: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.centerOfNorth.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.centerOfNorth.index,
     title: "Center of North",
   },
   centerOfNortheast: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.centerOfNortheast.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.centerOfNortheast.index,
     title: "Center of Northeast",
   },
   centerOfNorthwest: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.centerOfNorthwest.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.centerOfNorthwest.index,
     title: "Center of Northwest",
   },
   centerOfSouth: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.centerOfSouth.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.centerOfSouth.index,
     title: "Center of South",
   },
   centerOfSoutheast: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.centerOfSoutheast.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.centerOfSoutheast.index,
     title: "Center of Southeast",
   },
   centerOfSouthwest: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.centerOfSouthwest.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.centerOfSouthwest.index,
     title: "Center of Southwest",
   },
   centerOfWest: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.centerOfWest.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.centerOfWest.index,
     title: "Center of West",
   },
 
   // East
   eastOfCenter: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.eastOfCenter.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.eastOfCenter.index,
     title: "East of Center",
   },
   eastOfEast: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.eastOfEast.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.eastOfEast.index,
     title: "East of East",
   },
   eastOfNorth: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.eastOfNorth.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.eastOfNorth.index,
     title: "East of North",
   },
   eastOfNortheast: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.eastOfNortheast.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.eastOfNortheast.index,
     title: "East of Northeast",
   },
   eastOfNorthwest: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.eastOfNorthwest.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.eastOfNorthwest.index,
     title: "East of Northwest",
   },
   eastOfSouth: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.eastOfSouth.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.eastOfSouth.index,
     title: "East of South",
   },
   eastOfSoutheast: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.eastOfSoutheast.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.eastOfSoutheast.index,
     title: "East of Southeast",
   },
   eastOfSouthwest: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.eastOfSouthwest.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.eastOfSouthwest.index,
     title: "East of Southwest",
   },
   eastOfWest: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.eastOfWest.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.eastOfWest.index,
     title: "East of West",
   },
 
   // Northeast
   northeastOfCenter: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northeastOfCenter.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.northeastOfCenter.index,
     title: "Northeast of Center",
   },
   northeastOfEast: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northeastOfEast.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.northeastOfEast.index,
     title: "Northeast of East",
   },
   northeastOfNorth: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northeastOfNorth.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.northeastOfNorth.index,
     title: "Northeast of North",
   },
   northeastOfNortheast: {
     indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northeastOfNortheast.index,
+      slotsWithDataAndIndex.northeastOfNortheast.index,
     title: "Northeast of Northeast",
   },
   northeastOfNorthwest: {
     indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northeastOfNorthwest.index,
+      slotsWithDataAndIndex.northeastOfNorthwest.index,
     title: "Northeast of Northwest",
   },
   northeastOfSouth: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northeastOfSouth.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.northeastOfSouth.index,
     title: "Northeast of South",
   },
   northeastOfSoutheast: {
     indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northeastOfSoutheast.index,
+      slotsWithDataAndIndex.northeastOfSoutheast.index,
     title: "Northeast of Southeast",
   },
   northeastOfSouthwest: {
     indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northeastOfSouthwest.index,
+      slotsWithDataAndIndex.northeastOfSouthwest.index,
     title: "Northeast of Southwest",
   },
   northeastOfWest: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northeastOfWest.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.northeastOfWest.index,
     title: "Northeast of West",
   },
 
   // North
   northOfCenter: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northOfCenter.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.northOfCenter.index,
     title: "North of Center",
   },
   northOfEast: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northOfEast.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.northOfEast.index,
     title: "North of East",
   },
   northOfNorth: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northOfNorth.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.northOfNorth.index,
     title: "North of North",
   },
   northOfNortheast: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northOfNortheast.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.northOfNortheast.index,
     title: "North of Northeast",
   },
   northOfNorthwest: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northOfNorthwest.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.northOfNorthwest.index,
     title: "North of Northwest",
   },
   northOfSouth: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northOfSouth.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.northOfSouth.index,
     title: "North of South",
   },
   northOfSoutheast: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northOfSoutheast.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.northOfSoutheast.index,
     title: "North of Southeast",
   },
   northOfSouthwest: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northOfSouthwest.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.northOfSouthwest.index,
     title: "North of Southwest",
   },
   northOfWest: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northOfWest.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.northOfWest.index,
     title: "North of West",
   },
 
   // Northwest
   northwestOfCenter: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northwestOfCenter.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.northwestOfCenter.index,
     title: "Northwest of Center",
   },
   northwestOfEast: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northwestOfEast.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.northwestOfEast.index,
     title: "Northwest of East",
   },
   northwestOfNorth: {
     indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northwestOfNorthwest.index,
+      slotsWithDataAndIndex.northwestOfNorthwest.index,
     title: "Northwest of North",
   },
   northwestOfNortheast: {
     indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northwestOfNortheast.index,
+      slotsWithDataAndIndex.northwestOfNortheast.index,
     title: "Northwest of Northeast",
   },
   northwestOfNorthwest: {
     indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northwestOfNorthwest.index,
+      slotsWithDataAndIndex.northwestOfNorthwest.index,
     title: "Northwest of Northwest",
   },
   northwestOfSouth: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northwestOfSouth.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.northwestOfSouth.index,
     title: "Northwest of South",
   },
   northwestOfSoutheast: {
     indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northwestOfSoutheast.index,
+      slotsWithDataAndIndex.northwestOfSoutheast.index,
     title: "Northwest of Southeast",
   },
   northwestOfSouthwest: {
     indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northwestOfSouthwest.index,
+      slotsWithDataAndIndex.northwestOfSouthwest.index,
     title: "Northwest of Southwest",
   },
   northwestOfWest: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.northwestOfWest.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.northwestOfWest.index,
     title: "Northwest of West",
   },
 
   // Southeast
   southeastOfCenter: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southeastOfCenter.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.southeastOfCenter.index,
     title: "Southeast of Center",
   },
   southeastOfEast: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southeastOfEast.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.southeastOfEast.index,
     title: "Southeast of East",
   },
   southeastOfNorth: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southeastOfNorth.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.southeastOfNorth.index,
     title: "Southeast of North",
   },
   southeastOfNortheast: {
     indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southeastOfNortheast.index,
+      slotsWithDataAndIndex.southeastOfNortheast.index,
     title: "Southeast of Northeast",
   },
   southeastOfNorthwest: {
     indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southeastOfNorthwest.index,
+      slotsWithDataAndIndex.southeastOfNorthwest.index,
     title: "Southeast of Northwest",
   },
   southeastOfSouth: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southeastOfSouth.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.southeastOfSouth.index,
     title: "Southeast of South",
   },
   southeastOfSoutheast: {
     indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southeastOfSoutheast.index,
+      slotsWithDataAndIndex.southeastOfSoutheast.index,
     title: "Southeast of Southeast",
   },
   southeastOfSouthwest: {
     indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southeastOfSouthwest.index,
+      slotsWithDataAndIndex.southeastOfSouthwest.index,
     title: "Southeast of Southwest",
   },
   southeastOfWest: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southeastOfWest.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.southeastOfWest.index,
     title: "Southeast of West",
   },
 
   // South
   southOfCenter: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southOfCenter.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.southOfCenter.index,
     title: "South of Center",
   },
   southOfEast: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southOfEast.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.southOfEast.index,
     title: "South of East",
   },
   southOfNorth: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southOfNorth.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.southOfNorth.index,
     title: "South of North",
   },
   southOfNortheast: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southOfNortheast.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.southOfNortheast.index,
     title: "South of Northeast",
   },
   southOfNorthwest: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southOfNorthwest.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.southOfNorthwest.index,
     title: "South of Northwest",
   },
   southOfSouth: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southOfSouth.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.southOfSouth.index,
     title: "South of South",
   },
   southOfSoutheast: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southOfSoutheast.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.southOfSoutheast.index,
     title: "South of Southeast",
   },
   southOfSouthwest: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southOfSouthwest.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.southOfSouthwest.index,
     title: "South of Southwest",
   },
   southOfWest: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southOfWest.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.southOfWest.index,
     title: "South of West",
   },
 
   // Southwest
   southwestOfCenter: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southwestOfCenter.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.southwestOfCenter.index,
     title: "Southwest of Center",
   },
   southwestOfEast: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southwestOfEast.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.southwestOfEast.index,
     title: "Southwest of East",
   },
   southwestOfNorth: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southwestOfNorth.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.southwestOfNorth.index,
     title: "Southwest of North",
   },
   southwestOfNortheast: {
     indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southwestOfNortheast.index,
+      slotsWithDataAndIndex.southwestOfNortheast.index,
     title: "Southwest of Northeast",
   },
   southwestOfNorthwest: {
     indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southwestOfNorthwest.index,
+      slotsWithDataAndIndex.southwestOfNorthwest.index,
     title: "Southwest of Northwest",
   },
   southwestOfSouth: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southwestOfSouth.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.southwestOfSouth.index,
     title: "Southwest of South",
   },
   southwestOfSoutheast: {
     indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southwestOfSoutheast.index,
+      slotsWithDataAndIndex.southwestOfSoutheast.index,
     title: "Southwest of Southeast",
   },
   southwestOfSouthwest: {
     indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southwestOfSouthwest.index,
+      slotsWithDataAndIndex.southwestOfSouthwest.index,
     title: "Southwest of Southwest",
   },
   southwestOfWest: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.southwestOfWest.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.southwestOfWest.index,
     title: "Southwest of West",
   },
 
   // West
   westOfCenter: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.westOfCenter.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.westOfCenter.index,
     title: "West of Center",
   },
   westOfEast: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.westOfEast.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.westOfEast.index,
     title: "West of East",
   },
   westOfNorth: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.westOfNorth.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.westOfNorth.index,
     title: "West of North",
   },
   westOfNortheast: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.westOfNortheast.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.westOfNortheast.index,
     title: "West of Northeast",
   },
   westOfNorthwest: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.westOfNorthwest.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.westOfNorthwest.index,
     title: "West of Northwest",
   },
   westOfSouth: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.westOfSouth.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.westOfSouth.index,
     title: "West of South",
   },
   westOfSoutheast: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.westOfSoutheast.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.westOfSoutheast.index,
     title: "West of Southeast",
   },
   westOfSouthwest: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.westOfSouthwest.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.westOfSouthwest.index,
     title: "West of Southwest",
   },
   westOfWest: {
-    indexOfSlotInWhichPlacePiece:
-      slotsWithDataAndIndexInWhichAllSlotsAreEmpty.westOfWest.index,
+    indexOfSlotInWhichPlacePiece: slotsWithDataAndIndex.westOfWest.index,
     title: "West of West",
   },
 } as const satisfies RecordOfRequiredSnowballMoveParams;

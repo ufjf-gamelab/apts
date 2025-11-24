@@ -1,4 +1,5 @@
-import type { Player } from "../Player.js";
+import type { IndexOfPlayer, Player } from "../Player.js";
+import type { PlayerWithData } from "../Player.test/setup.js";
 import type { Points, Score, ScoreParams } from "../Score.js";
 
 const createDescriptionForPlayerAndItsPoints = <P extends Player<P>>({
@@ -9,28 +10,45 @@ const createDescriptionForPlayerAndItsPoints = <P extends Player<P>>({
   points: Points;
 }): string => `${keyOfPlayer}: ${points}`;
 
-type DerivedScoreParams = RequiredScoreParams;
+type DerivedScoreParams<P extends Player<P>> = ScoreParams;
 
-type RequiredScoreParams = Pick<ScoreParams, "pointsOfEachPlayer">;
+interface RequiredScoreParams<P extends Player<P>> {
+  pointsOfEachPlayer: Map<
+    IndexOfPlayer,
+    {
+      player: PlayerWithData<P>;
+      points: Points;
+    }
+  >;
+}
 
 interface ScoreWithData<
+  P extends Player<P>,
   Sc extends Score<Sc>,
-  Params extends RequiredScoreParams = RequiredScoreParams,
+  Params extends RequiredScoreParams<P> = RequiredScoreParams<P>,
 > {
   keyOfScore: string;
   params: Params;
   score: Sc;
 }
-const deriveScoreParams = ({
+const deriveScoreParams = <P extends Player<P>>({
   pointsOfEachPlayer,
-}: RequiredScoreParams): DerivedScoreParams => ({
-  pointsOfEachPlayer,
+}: RequiredScoreParams<P>): DerivedScoreParams<P> => ({
+  pointsOfEachPlayer: new Map(
+    pointsOfEachPlayer
+      .entries()
+      .map(([indexOfPlayer, playerWithData]) => [
+        indexOfPlayer,
+        playerWithData.points,
+      ]),
+  ),
 });
 
 const createScoresWithData = <
+  P extends Player<P>,
   Sc extends Score<Sc>,
-  RequiredParams extends RequiredScoreParams,
-  DerivedParams extends DerivedScoreParams,
+  RequiredParams extends RequiredScoreParams<P>,
+  DerivedParams extends DerivedScoreParams<P>,
   RecordOfRequiredParams extends Record<string, RequiredParams>,
 >({
   create,
@@ -69,7 +87,7 @@ const createScoresWithData = <
             keyOfScore: key,
             params: requiredParams,
             score: create(deriveParams(requiredParams)),
-          } satisfies ScoreWithData<Sc, RequiredParams>,
+          } satisfies ScoreWithData<P, Sc, RequiredParams>,
         ] as const,
     ),
   ) as ResultType;

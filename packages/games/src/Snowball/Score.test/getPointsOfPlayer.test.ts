@@ -5,11 +5,12 @@ import {
 } from "@repo/game/Score.test/getPointsOfPlayer.test.js";
 import { test } from "vitest";
 
+import type { SnowballPlayerWithData } from "../Player.test/setup.js";
 import type { SnowballScore } from "../Score.js";
 
-import { getIndexOfPlayer } from "../Game.test/players.js";
-import { playersWithData } from "../Player.test/setup.js";
-import { scoresWithDataForUnitTest } from "./setup.js";
+import { indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO as indexedPlayersWithData } from "../Player.test/indexedRecords.js";
+import { scoresWithData } from "./records.js";
+import { type SnowballScoreWithData } from "./setup.js";
 
 const ZERO_POINTS = 0;
 
@@ -17,8 +18,7 @@ const createDescription = ({
   affix,
   expectedPointsOfPlayer,
   keyOfPlayer,
-}: {
-  affix: string;
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> & {
   expectedPointsOfPlayer: ReturnType<SnowballScore["getPointsOfPlayer"]>;
   keyOfPlayer: string;
 }) =>
@@ -30,12 +30,17 @@ const createDescription = ({
     }),
   });
 
-Object.values(scoresWithDataForUnitTest).forEach(
-  ({ keyOfScore, params, score }) => {
-    Object.values(playersWithData).forEach(({ keyOfPlayer }) => {
-      const indexOfPlayer = getIndexOfPlayer({ keyOfPlayer });
+const testGetPointsOfPlayer = ({
+  arrayOfPlayersWithData,
+  arrayOfScoresWithData,
+}: {
+  arrayOfPlayersWithData: SnowballPlayerWithData[];
+  arrayOfScoresWithData: SnowballScoreWithData[];
+}) => {
+  arrayOfScoresWithData.forEach(({ keyOfScore, params, score }) => {
+    arrayOfPlayersWithData.forEach(({ keyOfPlayer }, indexOfPlayer) => {
       const expectedPointsOfPlayer =
-        params.pointsOfEachPlayer.get(indexOfPlayer) ?? ZERO_POINTS;
+        params.pointsOfEachPlayer.get(indexOfPlayer)?.points ?? ZERO_POINTS;
 
       test(
         createDescription({
@@ -52,5 +57,10 @@ Object.values(scoresWithDataForUnitTest).forEach(
         },
       );
     });
-  },
-);
+  });
+};
+
+testGetPointsOfPlayer({
+  arrayOfPlayersWithData: indexedPlayersWithData,
+  arrayOfScoresWithData: Object.values(scoresWithData),
+});

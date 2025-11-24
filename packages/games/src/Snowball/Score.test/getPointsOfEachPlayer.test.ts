@@ -5,41 +5,56 @@ import {
 } from "@repo/game/Score.test/getPointsOfEachPlayer.test.js";
 import { test } from "vitest";
 
-import type { SnowballScore } from "../Score.js";
-
-import { getKeyOfPlayer } from "../Game.test/players.js";
-import { scoresWithDataForUnitTest } from "./setup.js";
+import { scoresWithData } from "./records.js";
+import {
+  deriveSnowballScoreParams,
+  type SnowballScoreWithData,
+} from "./setup.js";
 
 const createDescription = ({
   affix,
   expectedPointsOfEachPlayer,
-}: {
-  affix: string;
-  expectedPointsOfEachPlayer: ReturnType<
-    SnowballScore["getPointsOfEachPlayer"]
-  >;
-}) =>
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> &
+  Pick<
+    Parameters<typeof createDescriptionForTestOfGetPointsOfEachPlayer>[0],
+    "expectedPointsOfEachPlayer"
+  >) =>
   createDescriptionForTest({
     affix,
     description: createDescriptionForTestOfGetPointsOfEachPlayer({
       expectedPointsOfEachPlayer,
-      getKeyOfPlayer,
     }),
   });
 
-Object.values(scoresWithDataForUnitTest).forEach(
-  ({ keyOfScore, params, score }) => {
+const testGetPointsOfEachPlayer = ({
+  arrayOfScoresWithData,
+}: {
+  arrayOfScoresWithData: SnowballScoreWithData[];
+}) => {
+  arrayOfScoresWithData.forEach(({ keyOfScore, params, score }) => {
+    const derivedParams = deriveSnowballScoreParams(params);
     test(
       createDescription({
         affix: keyOfScore,
-        expectedPointsOfEachPlayer: params.pointsOfEachPlayer,
+        expectedPointsOfEachPlayer: new Map(
+          params.pointsOfEachPlayer
+            .values()
+            .map((playerWithData) => [
+              playerWithData.player.keyOfPlayer,
+              playerWithData.points,
+            ]),
+        ),
       }),
       () => {
         validateGetPointsOfEachPlayer({
-          expectedPointsOfEachPlayer: params.pointsOfEachPlayer,
+          expectedPointsOfEachPlayer: derivedParams.pointsOfEachPlayer,
           score,
         });
       },
     );
-  },
-);
+  });
+};
+
+testGetPointsOfEachPlayer({
+  arrayOfScoresWithData: Object.values(scoresWithData),
+});

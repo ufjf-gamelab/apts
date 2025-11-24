@@ -43,16 +43,14 @@ const createDescriptionForTestOfGetPointsOfEachPlayer = <
   P extends Player<P>,
 >({
   expectedPointsOfEachPlayer,
-  getKeyOfPlayer,
 }: {
-  expectedPointsOfEachPlayer: ReturnType<Sc["getPointsOfEachPlayer"]>;
-  getKeyOfPlayer: (params: { indexOfPlayer: IndexOfPlayer }) => string;
+  expectedPointsOfEachPlayer: Map<string, Points>;
 }): string => {
   const returnedValueOfEachPlayer = expectedPointsOfEachPlayer
     .entries()
-    .map(([indexOfPlayer, points]) =>
+    .map(([key, points]) =>
       createDescriptionForPlayerAndItsPoints({
-        keyOfPlayer: getKeyOfPlayer({ indexOfPlayer }),
+        keyOfPlayer: key,
         points,
       }),
     )

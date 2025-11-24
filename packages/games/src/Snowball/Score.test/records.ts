@@ -1,42 +1,103 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers */
-import type { RequiredSnowballScoreParams } from "./setup.js";
+import type { Points } from "@repo/game/Score.js";
 
-import { getIndexOfPlayer } from "../Game.test/players.js";
-import { playersWithData } from "../Player.test/setup.js";
+import type { recordOfRequiredParamsOfPlayersInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO as recordOfRequiredParamsOfPlayers } from "../Player.test/records.js";
+
+import {
+  playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO as playersWithDataAndIndex,
+  type SnowballPlayerWithDataAndIndex,
+} from "../Player.test/indexedRecords.js";
+import {
+  createSnowballScoresWithData,
+  type RequiredSnowballScoreParams,
+} from "./setup.js";
+
+type PointsOfEachPlayer = ReturnType<
+  ReturnType<
+    RequiredSnowballScoreParams["pointsOfEachPlayer"]["entries"]
+  >["toArray"]
+>[number];
+
+type RecordOfRequiredSnowballScoreParams = Record<
+  string,
+  RequiredSnowballScoreParams
+>;
+
+const constructTupleForPlayer = ({
+  player,
+  points,
+}: {
+  player: SnowballPlayerWithDataAndIndex<
+    typeof recordOfRequiredParamsOfPlayers
+  >;
+  points: Points;
+}): PointsOfEachPlayer => [player.index, { player: player.player, points }];
 
 const recordOfRequiredParamsOfScores = {
   aliceWith0PointsAndBrunoWith0Points: {
-    pointsOfEachPlayer: new Map(
-      Object.values(playersWithData).map(({ keyOfPlayer }) => [
-        getIndexOfPlayer({ keyOfPlayer }),
-        0,
-      ]),
-    ),
+    pointsOfEachPlayer: new Map([
+      constructTupleForPlayer({
+        player: playersWithDataAndIndex.alice,
+        points: 0,
+      }),
+      constructTupleForPlayer({
+        player: playersWithDataAndIndex.bruno,
+        points: 0,
+      }),
+    ]),
   },
   aliceWith0PointsAndBrunoWith1Point: {
     pointsOfEachPlayer: new Map([
-      [getIndexOfPlayer({ keyOfPlayer: "alice" }), 0],
-      [getIndexOfPlayer({ keyOfPlayer: "bruno" }), 1],
+      constructTupleForPlayer({
+        player: playersWithDataAndIndex.alice,
+        points: 0,
+      }),
+      constructTupleForPlayer({
+        player: playersWithDataAndIndex.bruno,
+        points: 1,
+      }),
     ]),
   },
   aliceWith1PointAndBrunoWith0Points: {
     pointsOfEachPlayer: new Map([
-      [getIndexOfPlayer({ keyOfPlayer: "alice" }), 1],
-      [getIndexOfPlayer({ keyOfPlayer: "bruno" }), 0],
+      constructTupleForPlayer({
+        player: playersWithDataAndIndex.alice,
+        points: 1,
+      }),
+      constructTupleForPlayer({
+        player: playersWithDataAndIndex.bruno,
+        points: 0,
+      }),
     ]),
   },
   aliceWith5PointsAndBrunoWith10Points: {
     pointsOfEachPlayer: new Map([
-      [getIndexOfPlayer({ keyOfPlayer: "alice" }), 5],
-      [getIndexOfPlayer({ keyOfPlayer: "bruno" }), 10],
+      constructTupleForPlayer({
+        player: playersWithDataAndIndex.alice,
+        points: 5,
+      }),
+      constructTupleForPlayer({
+        player: playersWithDataAndIndex.bruno,
+        points: 10,
+      }),
     ]),
   },
   aliceWith38PointsAndBrunoWith26Points: {
     pointsOfEachPlayer: new Map([
-      [getIndexOfPlayer({ keyOfPlayer: "alice" }), 38],
-      [getIndexOfPlayer({ keyOfPlayer: "bruno" }), 26],
+      constructTupleForPlayer({
+        player: playersWithDataAndIndex.alice,
+        points: 38,
+      }),
+      constructTupleForPlayer({
+        player: playersWithDataAndIndex.bruno,
+        points: 26,
+      }),
     ]),
   },
-} as const satisfies Record<string, RequiredSnowballScoreParams>;
+} as const satisfies RecordOfRequiredSnowballScoreParams;
 
-export { recordOfRequiredParamsOfScores };
+const scoresWithData = createSnowballScoresWithData({
+  recordOfRequiredParams: recordOfRequiredParamsOfScores,
+});
+
+export type { RecordOfRequiredSnowballScoreParams };
+export { recordOfRequiredParamsOfScores, scoresWithData };

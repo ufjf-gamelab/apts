@@ -7,7 +7,7 @@ import {
   type SnowballMoveWithDataAndIndex,
 } from "../Move.test/indexedRecords.js";
 import { type SnowballMoveWithData } from "../Move.test/setup.js";
-import { playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "../Player.test/indexedRecords.js";
+import { playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO as playersWithDataAndIndex } from "../Player.test/indexedRecords.js";
 import { scoresWithDataForUnitTest } from "../Score.test/setup.js";
 import {
   indexedSlotsWithDataInWhichAllSlotsAreEmpty,
@@ -34,8 +34,7 @@ const recordOfRequiredParamsOfStates = {
     {
       game: gamesWithDataForUnitTest.snowballWith9RowsAnd9Columns,
       isFinal: false,
-      player:
-        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO.alice,
+      player: playersWithDataAndIndex.alice,
       score: scoresWithDataForUnitTest.aliceWith0PointsAndBrunoWith0Points,
       slots: indexedSlotsWithDataInWhichAllSlotsAreEmpty,
       validMoves: new Map(
@@ -46,8 +45,7 @@ const recordOfRequiredParamsOfStates = {
     {
       game: gamesWithDataForUnitTest.snowballWith9RowsAnd9Columns,
       isFinal: true,
-      player:
-        playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO.bruno,
+      player: playersWithDataAndIndex.bruno,
       score: scoresWithDataForUnitTest.aliceWith38PointsAndBrunoWith26Points,
       slots:
         indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,

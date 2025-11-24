@@ -6,9 +6,15 @@ import { validateConstructor } from "@repo/game/Score.test/constructor.test.js";
 import { expect, test } from "vitest";
 
 import { SnowballScore } from "../Score.js";
-import { scoresWithDataForUnitTest } from "./setup.js";
+import { scoresWithData } from "./records.js";
+import {
+  deriveSnowballScoreParams,
+  type SnowballScoreWithData,
+} from "./setup.js";
 
-const createDescription = ({ affix }: { affix: string }) =>
+const createDescription = ({
+  affix,
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix">) =>
   createDescriptionForTest({
     affix,
     description: createDescriptionForTestsOfConstructor({
@@ -16,19 +22,31 @@ const createDescription = ({ affix }: { affix: string }) =>
     }),
   });
 
-Object.values(scoresWithDataForUnitTest).forEach(({ keyOfScore, params }) => {
-  test(
-    createDescription({
-      affix: keyOfScore,
-    }),
-    () => {
-      const { pointsOfEachPlayer } = params;
-      const newScore = new SnowballScore({
-        pointsOfEachPlayer,
-      });
+const testConstructor = ({
+  arrayOfScoresWithData,
+}: {
+  arrayOfScoresWithData: SnowballScoreWithData[];
+}) => {
+  arrayOfScoresWithData.forEach(({ keyOfScore, params }) => {
+    test(
+      createDescription({
+        affix: keyOfScore,
+      }),
+      () => {
+        const { pointsOfEachPlayer } = deriveSnowballScoreParams(params);
+        const newScore = new SnowballScore({
+          pointsOfEachPlayer,
+        });
+        validateConstructor({
+          params: { pointsOfEachPlayer },
+          score: newScore,
+        });
+        expect(newScore).toBeInstanceOf(SnowballScore);
+      },
+    );
+  });
+};
 
-      validateConstructor({ params: { pointsOfEachPlayer }, score: newScore });
-      expect(newScore).toBeInstanceOf(SnowballScore);
-    },
-  );
+testConstructor({
+  arrayOfScoresWithData: Object.values(scoresWithData),
 });
