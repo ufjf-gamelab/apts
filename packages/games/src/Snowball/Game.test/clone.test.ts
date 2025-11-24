@@ -5,8 +5,10 @@ import {
 import { validateClone } from "@repo/game/Game.test/clone.test.js";
 import { expect, test } from "vitest";
 
+import type { SnowballGameWithData } from "./setup.js";
+
 import { SnowballGame } from "../Game.js";
-import { gamesWithDataForUnitTest } from "./setup.js";
+import { gamesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
@@ -18,15 +20,28 @@ const createDescription = ({
     }),
   });
 
-Object.values(gamesWithDataForUnitTest).forEach(({ game, keyOfGame }) => {
-  test(
-    createDescription({
-      affix: keyOfGame,
-    }),
-    () => {
-      const clonedGame = game.clone();
-      validateClone({ clonedGame, game });
-      expect(clonedGame).toBeInstanceOf(SnowballGame);
-    },
-  );
+const testClone = ({
+  arrayOfGamesWithData,
+}: {
+  arrayOfGamesWithData: SnowballGameWithData[];
+}) => {
+  arrayOfGamesWithData.forEach(({ game, keyOfGame }) => {
+    test(
+      createDescription({
+        affix: keyOfGame,
+      }),
+
+      () => {
+        const clonedGame = game.clone();
+
+        validateClone({ clonedGame, game });
+
+        expect(clonedGame).toBeInstanceOf(SnowballGame);
+      },
+    );
+  });
+};
+
+testClone({
+  arrayOfGamesWithData: Object.values(gamesWithData),
 });

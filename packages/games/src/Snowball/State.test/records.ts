@@ -1,6 +1,6 @@
 import type { recordOfRequiredParamsOfMoves } from "../Move.test/records.js";
 
-import { gamesWithDataForUnitTest } from "../Game.test/setup.js";
+import { gamesWithData } from "../Game.test/records.js";
 import {
   indexedMovesWithData,
   movesWithDataAndIndex,
@@ -32,8 +32,9 @@ const constructTupleForMove = ({
 const recordOfRequiredParamsOfStates = {
   allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
     {
-      game: gamesWithDataForUnitTest.snowballWith9RowsAnd9Columns,
+      game: gamesWithData.snowballWith9RowsAnd9Columns,
       isFinal: false,
+      nextPlayer: playersWithDataAndIndex.bruno,
       player: playersWithDataAndIndex.alice,
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points,
       slots: indexedSlotsWithDataInWhichAllSlotsAreEmpty,
@@ -43,8 +44,9 @@ const recordOfRequiredParamsOfStates = {
     },
   slotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     {
-      game: gamesWithDataForUnitTest.snowballWith9RowsAnd9Columns,
+      game: gamesWithData.snowballWith9RowsAnd9Columns,
       isFinal: true,
+      nextPlayer: playersWithDataAndIndex.alice,
       player: playersWithDataAndIndex.bruno,
       score: scoresWithData.aliceWith38PointsAndBrunoWith26Points,
       slots:

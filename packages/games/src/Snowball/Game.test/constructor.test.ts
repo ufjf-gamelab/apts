@@ -6,7 +6,11 @@ import { validateConstructor } from "@repo/game/Game.test/constructor.test.js";
 import { expect, test } from "vitest";
 
 import { SnowballGame } from "../Game.js";
-import { deriveSnowballGameParams, gamesWithDataForUnitTest } from "./setup.js";
+import { gamesWithData } from "./records.js";
+import {
+  deriveSnowballGameParams,
+  type SnowballGameWithData,
+} from "./setup.js";
 
 const createDescription = ({
   affix,
@@ -18,27 +22,39 @@ const createDescription = ({
     }),
   });
 
-Object.values(gamesWithDataForUnitTest).forEach(({ keyOfGame, params }) => {
-  test(
-    createDescription({
-      affix: keyOfGame,
-    }),
-    () => {
-      const { name } = params;
-      const { moves, players, slots } = deriveSnowballGameParams(params);
+const testConstructor = ({
+  arrayOfGamesWithData,
+}: {
+  arrayOfGamesWithData: SnowballGameWithData[];
+}) => {
+  arrayOfGamesWithData.forEach(({ keyOfGame, params }) => {
+    test(
+      createDescription({
+        affix: keyOfGame,
+      }),
 
-      const newGame = new SnowballGame({
-        moves,
-        name,
-        players,
-        slots,
-      });
+      () => {
+        const { moves, name, players, slots } =
+          deriveSnowballGameParams(params);
 
-      validateConstructor({
-        game: newGame,
-        params: { moves, name, players, slots },
-      });
-      expect(newGame).toBeInstanceOf(SnowballGame);
-    },
-  );
+        const newGame = new SnowballGame({
+          moves,
+          name,
+          players,
+          slots,
+        });
+
+        validateConstructor({
+          game: newGame,
+          params: { moves, name, players, slots },
+        });
+
+        expect(newGame).toBeInstanceOf(SnowballGame);
+      },
+    );
+  });
+};
+
+testConstructor({
+  arrayOfGamesWithData: Object.values(gamesWithData),
 });

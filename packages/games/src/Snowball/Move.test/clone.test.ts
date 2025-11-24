@@ -35,6 +35,7 @@ const testClone = ({
         const clonedMove = move.clone();
 
         validateClone({ clonedMove, move });
+
         expect(clonedMove).toBeInstanceOf(SnowballMove);
       },
     );

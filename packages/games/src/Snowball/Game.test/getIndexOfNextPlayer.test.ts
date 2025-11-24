@@ -1,4 +1,3 @@
-import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import { createDescriptionForTest } from "@repo/engine_core/test.js";
 import {
   createDescriptionForTestOfGetIndexOfNextPlayer,
@@ -6,8 +5,9 @@ import {
 } from "@repo/game/Game.test/getIndexOfNextPlayer.test.js";
 import { test } from "vitest";
 
-import { statesWithDataForUnitTest } from "../State.test/setup.js";
-import { gamesWithDataForUnitTest } from "./setup.js";
+import type { SnowballStateWithData } from "../State.test/setup.js";
+
+import { statesWithData } from "../State.test/records.js";
 
 const createDescription = ({
   affix,
@@ -26,31 +26,30 @@ const createDescription = ({
     }),
   });
 
-Object.values(gamesWithDataForUnitTest).forEach(
-  ({ game, keyOfGame, params }) => {
-    const quantityOfPlayers = Object.values(params.players).length;
+const testGetIndexOfNextPlayer = ({
+  arrayOfStatesWithData,
+}: {
+  arrayOfStatesWithData: SnowballStateWithData[];
+}) => {
+  arrayOfStatesWithData.forEach(({ keyOfState, params, state }) => {
+    test(
+      createDescription({
+        affix: params.game.keyOfGame,
+        expectedIndexOfNextPlayer: params.nextPlayer.index,
+        keyOfState,
+      }),
 
-    Object.values(statesWithDataForUnitTest).forEach(
-      ({ keyOfState, params: paramsOfState, state }) => {
-        const expectedIndexOfNextPlayer =
-          (paramsOfState.player.indexOfPlayer + INCREMENT_ONE) %
-          quantityOfPlayers;
-
-        test(
-          createDescription({
-            affix: keyOfGame,
-            expectedIndexOfNextPlayer,
-            keyOfState,
-          }),
-          () => {
-            validateGetIndexOfNextPlayer({
-              expectedIndexOfNextPlayer,
-              game,
-              state,
-            });
-          },
-        );
+      () => {
+        validateGetIndexOfNextPlayer({
+          expectedIndexOfNextPlayer: params.nextPlayer.index,
+          game: params.game.game,
+          state,
+        });
       },
     );
-  },
-);
+  });
+};
+
+testGetIndexOfNextPlayer({
+  arrayOfStatesWithData: Object.values(statesWithData),
+});

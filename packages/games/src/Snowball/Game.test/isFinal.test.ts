@@ -5,8 +5,9 @@ import {
 } from "@repo/game/Game.test/isFinal.test.js";
 import { test } from "vitest";
 
-import { statesWithDataForUnitTest } from "../State.test/setup.js";
-import { gamesWithDataForUnitTest } from "./setup.js";
+import type { SnowballStateWithData } from "../State.test/setup.js";
+
+import { statesWithData } from "../State.test/records.js";
 
 const createDescription = ({
   affix,
@@ -25,24 +26,32 @@ const createDescription = ({
     }),
   });
 
-Object.values(gamesWithDataForUnitTest).forEach(({ game, keyOfGame }) => {
-  Object.values(statesWithDataForUnitTest).forEach(
-    ({ keyOfState, params, state }) => {
-      const expectedToBeFinal = params.isFinal;
-      test(
-        createDescription({
-          affix: keyOfGame,
+const testIsFinal = ({
+  arrayOfStatesWithData,
+}: {
+  arrayOfStatesWithData: SnowballStateWithData[];
+}) => {
+  arrayOfStatesWithData.forEach(({ keyOfState, params, state }) => {
+    const expectedToBeFinal = params.isFinal;
+
+    test(
+      createDescription({
+        affix: params.game.keyOfGame,
+        expectedToBeFinal,
+        keyOfState,
+      }),
+
+      () => {
+        validateIsFinal({
           expectedToBeFinal,
-          keyOfState,
-        }),
-        () => {
-          validateIsFinal({
-            expectedToBeFinal,
-            game,
-            state,
-          });
-        },
-      );
-    },
-  );
+          game: params.game.game,
+          state,
+        });
+      },
+    );
+  });
+};
+
+testIsFinal({
+  arrayOfStatesWithData: Object.values(statesWithData),
 });

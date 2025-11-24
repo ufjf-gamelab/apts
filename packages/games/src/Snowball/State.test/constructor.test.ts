@@ -63,6 +63,7 @@ const testConstructor = ({
           },
           state: newState,
         });
+
         expect(newState).toBeInstanceOf(SnowballState);
       },
     );

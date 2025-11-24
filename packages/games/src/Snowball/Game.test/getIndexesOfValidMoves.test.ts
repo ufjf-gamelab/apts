@@ -5,7 +5,9 @@ import {
 } from "@repo/game/Game.test/getIndexesOfValidMoves.test.js";
 import { test } from "vitest";
 
-import { statesWithDataForUnitTest } from "../State.test/setup.js";
+import type { SnowballStateWithData } from "../State.test/setup.js";
+
+import { statesWithData } from "../State.test/records.js";
 
 const createDescription = ({
   affix,
@@ -24,17 +26,23 @@ const createDescription = ({
     }),
   });
 
-Object.values(statesWithDataForUnitTest).forEach(
-  ({ keyOfState, params, state }) => {
+const testGetIndexesOfValidMoves = ({
+  arrayOfStatesWithData,
+}: {
+  arrayOfStatesWithData: SnowballStateWithData[];
+}) => {
+  arrayOfStatesWithData.forEach(({ keyOfState, params, state }) => {
     const indexesOfValidMoves = new Set(params.validMoves.keys());
+
     test(
       createDescription({
-        affix: params.game.keyOfGame,
+        affix: keyOfState,
         keyOfState,
         keysOfExpectedValidMoves: params.game.params.moves.map(
           ({ keyOfMove }) => keyOfMove,
         ),
       }),
+
       () => {
         validateGetIndexesOfValidMoves({
           expectedIndexesOfValidMoves: indexesOfValidMoves,
@@ -43,5 +51,9 @@ Object.values(statesWithDataForUnitTest).forEach(
         });
       },
     );
-  },
-);
+  });
+};
+
+testGetIndexesOfValidMoves({
+  arrayOfStatesWithData: Object.values(statesWithData),
+});

@@ -35,6 +35,7 @@ const testClone = ({
         const clonedState = state.clone();
 
         validateClone({ clonedState, state });
+
         expect(clonedState).toBeInstanceOf(SnowballState);
       },
     );

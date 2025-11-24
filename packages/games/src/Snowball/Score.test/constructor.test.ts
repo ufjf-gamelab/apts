@@ -43,6 +43,7 @@ const testConstructor = ({
           params: { pointsOfEachPlayer },
           score: newScore,
         });
+
         expect(newScore).toBeInstanceOf(SnowballScore);
       },
     );

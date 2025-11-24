@@ -35,6 +35,7 @@ const testClone = ({
         const clonedPlayer = player.clone();
 
         validateClone({ clonedPlayer, player });
+
         expect(clonedPlayer).toBeInstanceOf(SnowballPlayer);
       },
     );

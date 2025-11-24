@@ -2,8 +2,11 @@ import type { Game } from "../Game.js";
 import type { GameWithData } from "../Game.test/setup.js";
 import type { IndexOfMove, Move } from "../Move.js";
 import type { MoveWithData } from "../Move.test/setup.js";
-import type { IndexOfPlayer, Player } from "../Player.js";
-import type { PlayerWithData } from "../Player.test/setup.js";
+import type { Player } from "../Player.js";
+import type {
+  PlayerWithData,
+  PlayerWithDataAndIndex,
+} from "../Player.test/setup.js";
 import type { Score } from "../Score.js";
 import type { ScoreWithData } from "../Score.test/setup.js";
 import type { Slot } from "../Slot.js";
@@ -43,12 +46,13 @@ interface RequiredStateParams<
   >,
   ExtendedMoveWithData extends MoveWithData<M>,
   ExtendedPlayerWithData extends PlayerWithData<P>,
-  ExtendedScoreWithData extends ScoreWithData<Sc>,
+  ExtendedScoreWithData extends ScoreWithData<P, Sc>,
   ExtendedSlotWithData extends SlotWithData<Sl>,
 > {
   game: ExtendedGameWithData;
   isFinal: boolean;
-  player: { index: IndexOfPlayer; player: ExtendedPlayerWithData };
+  nextPlayer: PlayerWithDataAndIndex<P, ExtendedPlayerWithData>;
+  player: PlayerWithDataAndIndex<P, ExtendedPlayerWithData>;
   score: ExtendedScoreWithData;
   slots: readonly ExtendedSlotWithData[];
   validMoves: ReadonlyMap<IndexOfMove, ExtendedMoveWithData>;
@@ -74,7 +78,7 @@ interface StateWithData<
   >,
   ExtendedMoveWithData extends MoveWithData<M>,
   ExtendedPlayerWithData extends PlayerWithData<P>,
-  ExtendedScoreWithData extends ScoreWithData<Sc>,
+  ExtendedScoreWithData extends ScoreWithData<P, Sc>,
   ExtendedSlotWithData extends SlotWithData<Sl>,
   Params extends RequiredStateParams<
     G,
@@ -127,7 +131,7 @@ const deriveStateParams = <
   >,
   ExtendedMoveWithData extends MoveWithData<M>,
   ExtendedPlayerWithData extends PlayerWithData<P>,
-  ExtendedScoreWithData extends ScoreWithData<Sc>,
+  ExtendedScoreWithData extends ScoreWithData<P, Sc>,
   ExtendedSlotWithData extends SlotWithData<Sl>,
 >({
   game,
@@ -177,7 +181,7 @@ const createStatesWithData = <
   >,
   ExtendedMoveWithData extends MoveWithData<M>,
   ExtendedPlayerWithData extends PlayerWithData<P>,
-  ExtendedScoreWithData extends ScoreWithData<Sc>,
+  ExtendedScoreWithData extends ScoreWithData<P, Sc>,
   ExtendedSlotWithData extends SlotWithData<Sl>,
   RequiredParams extends RequiredStateParams<
     G,

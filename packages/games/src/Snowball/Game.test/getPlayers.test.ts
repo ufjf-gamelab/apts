@@ -5,8 +5,10 @@ import {
 } from "@repo/game/Game.test/getPlayers.test.js";
 import { expect, test } from "vitest";
 
+import type { SnowballGameWithData } from "./setup.js";
+
 import { SnowballPlayer } from "../Player.js";
-import { gamesWithDataForUnitTest } from "./setup.js";
+import { gamesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
@@ -23,8 +25,12 @@ const createDescription = ({
     }),
   });
 
-Object.values(gamesWithDataForUnitTest).forEach(
-  ({ game, keyOfGame, params }) => {
+const testGetPlayers = ({
+  arrayOfGamesWithData,
+}: {
+  arrayOfGamesWithData: SnowballGameWithData[];
+}) => {
+  arrayOfGamesWithData.forEach(({ game, keyOfGame, params }) => {
     test(
       createDescription({
         affix: keyOfGame,
@@ -32,15 +38,21 @@ Object.values(gamesWithDataForUnitTest).forEach(
           ({ keyOfPlayer }) => keyOfPlayer,
         ),
       }),
+
       () => {
         validateGetPlayers({
           expectedPlayers: params.players.map(({ player }) => player),
           game,
         });
+
         expect(params.players).toBeInstanceOf(Array<SnowballPlayer>);
         const [firstPlayerWithData] = params.players;
         expect(firstPlayerWithData?.player).toBeInstanceOf(SnowballPlayer);
       },
     );
-  },
-);
+  });
+};
+
+testGetPlayers({
+  arrayOfGamesWithData: Object.values(gamesWithData),
+});

@@ -44,6 +44,7 @@ const testConstructor = ({
         });
 
         validateConstructor({ move: newMove, params: { description, title } });
+
         expect(newMove).toBeInstanceOf(SnowballMove);
       },
     );

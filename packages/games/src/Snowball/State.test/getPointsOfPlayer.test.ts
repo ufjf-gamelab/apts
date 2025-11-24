@@ -49,6 +49,7 @@ const testGetPointsOfPlayer = ({
           expectedPointsOfPlayer,
           keyOfPlayer,
         }),
+
         () => {
           validateGetPointsOfPlayer({
             expectedPointsOfPlayer,

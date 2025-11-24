@@ -40,6 +40,7 @@ const testConstructor = ({
         });
 
         validateConstructor({ params, player: newPlayer });
+
         expect(newPlayer).toBeInstanceOf(SnowballPlayer);
       },
     );

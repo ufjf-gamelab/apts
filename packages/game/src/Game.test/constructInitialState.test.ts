@@ -39,13 +39,13 @@ const createDescriptionForTestOfConstructInitialState = <
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
 >({
-  expectedInitialState,
+  keyOfExpectedInitialState,
 }: {
-  expectedInitialState: ReturnType<G["constructInitialState"]>;
+  keyOfExpectedInitialState: string;
 }): string =>
   createDescriptionForTestsOfGetter({
     methodDescription: "constructInitialState()",
-    returnedValue: `"${expectedInitialState}"`,
+    returnedValue: `"${keyOfExpectedInitialState}"`,
   });
 
 export {

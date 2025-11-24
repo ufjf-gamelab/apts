@@ -6,8 +6,9 @@ import {
 import { test } from "vitest";
 
 import type { SnowballGame } from "../Game.js";
+import type { SnowballGameWithData } from "./setup.js";
 
-import { gamesWithDataForUnitTest } from "./setup.js";
+import { gamesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
@@ -22,20 +23,30 @@ const createDescription = ({
     }),
   });
 
-Object.values(gamesWithDataForUnitTest).forEach(
-  ({ game, keyOfGame, params }) => {
-    const quantityOfPlayers = Object.values(params.players).length;
+const testGetQuantityOfPlayers = ({
+  arrayOfGamesWithData,
+}: {
+  arrayOfGamesWithData: SnowballGameWithData[];
+}) => {
+  arrayOfGamesWithData.forEach(({ game, keyOfGame, params }) => {
+    const expectedQuantityOfPlayers = params.players.length;
+
     test(
       createDescription({
         affix: keyOfGame,
-        expectedQuantityOfPlayers: quantityOfPlayers,
+        expectedQuantityOfPlayers,
       }),
+
       () => {
         validateGetQuantityOfPlayers({
-          expectedQuantityOfPlayers: quantityOfPlayers,
+          expectedQuantityOfPlayers,
           game,
         });
       },
     );
-  },
-);
+  });
+};
+
+testGetQuantityOfPlayers({
+  arrayOfGamesWithData: Object.values(gamesWithData),
+});

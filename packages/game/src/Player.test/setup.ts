@@ -1,4 +1,8 @@
-import { type Player, type PlayerParams } from "../Player.js";
+import {
+  type IndexOfPlayer,
+  type Player,
+  type PlayerParams,
+} from "../Player.js";
 
 type DerivedPlayerParams = RequiredPlayerParams;
 
@@ -9,6 +13,14 @@ interface PlayerWithData<
   keyOfPlayer: string;
   params: Params;
   player: P;
+}
+
+interface PlayerWithDataAndIndex<
+  P extends Player<P>,
+  ExtendedPlayerWithData extends PlayerWithData<P>,
+> {
+  index: IndexOfPlayer;
+  player: ExtendedPlayerWithData;
 }
 
 type RequiredPlayerParams = Pick<PlayerParams, "name" | "symbol">;
@@ -69,5 +81,10 @@ const createPlayersWithData = <
   ) as ResultType;
 };
 
-export type { DerivedPlayerParams, PlayerWithData, RequiredPlayerParams };
+export type {
+  DerivedPlayerParams,
+  PlayerWithData,
+  PlayerWithDataAndIndex,
+  RequiredPlayerParams,
+};
 export { createPlayersWithData, derivePlayerParams };

@@ -35,6 +35,7 @@ const testClone = ({
         const clonedScore = score.clone();
 
         validateClone({ clonedScore, score });
+
         expect(clonedScore).toBeInstanceOf(SnowballScore);
       },
     );

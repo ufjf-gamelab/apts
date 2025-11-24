@@ -5,41 +5,53 @@ import {
 } from "@repo/game/Game.test/constructInitialState.test.js";
 import { test } from "vitest";
 
-import type { SnowballGame } from "../Game.js";
+import type { SnowballStateWithData } from "../State.test/setup.js";
+import type { SnowballGameWithData } from "./setup.js";
 
-import { statesWithDataForUnitTest } from "../State.test/setup.js";
-import { gamesWithDataForUnitTest } from "./setup.js";
+import { statesWithData } from "../State.test/records.js";
+import { gamesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
-  expectedInitialState,
-}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> & {
-  expectedInitialState: ReturnType<SnowballGame["constructInitialState"]>;
-}) =>
+  keyOfExpectedInitialState,
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> &
+  Pick<
+    Parameters<typeof createDescriptionForTestOfConstructInitialState>[0],
+    "keyOfExpectedInitialState"
+  >) =>
   createDescriptionForTest({
     affix,
     description: createDescriptionForTestOfConstructInitialState({
-      expectedInitialState,
+      keyOfExpectedInitialState,
     }),
   });
 
-Object.values(gamesWithDataForUnitTest).forEach(({ game, keyOfGame }) => {
-  test(
-    createDescription({
-      affix: keyOfGame,
-      expectedInitialState:
-        statesWithDataForUnitTest
-          .noSlotsAreFilledAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer
-          .state,
-    }),
-    () => {
-      validateConstructInitialState({
-        expectedInitialState:
-          statesWithDataForUnitTest
-            .noSlotsAreFilledAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer
-            .state,
-        game,
-      });
-    },
-  );
+const testConstructInitialState = ({
+  arrayOfGamesWithData,
+  expectedInitialState,
+}: {
+  arrayOfGamesWithData: SnowballGameWithData[];
+  expectedInitialState: SnowballStateWithData;
+}) => {
+  arrayOfGamesWithData.forEach(({ game, keyOfGame }) => {
+    test(
+      createDescription({
+        affix: keyOfGame,
+        keyOfExpectedInitialState: expectedInitialState.keyOfState,
+      }),
+
+      () => {
+        validateConstructInitialState({
+          expectedInitialState: expectedInitialState.state,
+          game,
+        });
+      },
+    );
+  });
+};
+
+testConstructInitialState({
+  arrayOfGamesWithData: Object.values(gamesWithData),
+  expectedInitialState:
+    statesWithData.allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
 });

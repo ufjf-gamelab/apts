@@ -6,8 +6,9 @@ import {
 import { test } from "vitest";
 
 import type { SnowballGame } from "../Game.js";
+import type { SnowballGameWithData } from "./setup.js";
 
-import { gamesWithDataForUnitTest } from "./setup.js";
+import { gamesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
@@ -22,13 +23,18 @@ const createDescription = ({
     }),
   });
 
-Object.values(gamesWithDataForUnitTest).forEach(
-  ({ game, keyOfGame, params }) => {
+const testGetName = ({
+  arrayOfGamesWithData,
+}: {
+  arrayOfGamesWithData: SnowballGameWithData[];
+}) => {
+  arrayOfGamesWithData.forEach(({ game, keyOfGame, params }) => {
     test(
       createDescription({
         affix: keyOfGame,
         expectedName: params.name,
       }),
+
       () => {
         validateGetName({
           expectedName: params.name,
@@ -36,5 +42,9 @@ Object.values(gamesWithDataForUnitTest).forEach(
         });
       },
     );
-  },
-);
+  });
+};
+
+testGetName({
+  arrayOfGamesWithData: Object.values(gamesWithData),
+});

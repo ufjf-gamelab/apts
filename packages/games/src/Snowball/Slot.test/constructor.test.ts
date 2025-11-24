@@ -42,6 +42,7 @@ const testConstructor = ({
         });
 
         validateConstructor({ slot: newSlot });
+
         expect(newSlot).toBeInstanceOf(SnowballSlot);
       },
     );

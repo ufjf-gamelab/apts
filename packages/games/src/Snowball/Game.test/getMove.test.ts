@@ -5,9 +5,10 @@ import {
 } from "@repo/game/Game.test/getMove.test.js";
 import { expect, test } from "vitest";
 
+import type { SnowballGameWithData } from "./setup.js";
+
 import { SnowballMove } from "../Move.js";
-import { getIndexedSnowballMovesWithData, getIndexOfMove } from "./moves.js";
-import { gamesWithDataForUnitTest } from "./setup.js";
+import { gamesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
@@ -26,28 +27,34 @@ const createDescription = ({
     }),
   });
 
-const indexedMoves = getIndexedSnowballMovesWithData();
-
-Object.values(gamesWithDataForUnitTest).forEach(
-  ({ game, keyOfGame, params }) => {
-    params.moves.forEach(({ keyOfMove, move }) => {
-      const indexOfMove = getIndexOfMove({ indexedMoves, keyOfMove });
-
+const testGetMove = ({
+  arrayOfGamesWithData,
+}: {
+  arrayOfGamesWithData: SnowballGameWithData[];
+}) => {
+  arrayOfGamesWithData.forEach(({ game, keyOfGame, params }) => {
+    params.moves.forEach(({ keyOfMove, move }, indexOfMove) => {
       test(
         createDescription({
           affix: keyOfGame,
           indexOfMove,
           keyOfMove,
         }),
+
         () => {
           validateGetMove({
             expectedMove: move,
             game,
             indexOfMove,
           });
+
           expect(move).toBeInstanceOf(SnowballMove);
         },
       );
     });
-  },
-);
+  });
+};
+
+testGetMove({
+  arrayOfGamesWithData: Object.values(gamesWithData),
+});
