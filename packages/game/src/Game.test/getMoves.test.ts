@@ -11,12 +11,12 @@ import type { State } from "../State.js";
 import { Move } from "../Move.js";
 
 const validateGetMoves = <
-  G extends Game<G, M, P, S, Sc, Sl>,
+  G extends Game<G, M, P, Sc, Sl, St>,
   M extends Move<M>,
   P extends Player<P>,
-  S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
+  St extends State<G, M, P, Sc, Sl, St>,
 >({
   expectedMoves,
   game,
@@ -42,12 +42,12 @@ const validateGetMoves = <
 };
 
 const createDescriptionForTestOfGetMoves = <
-  G extends Game<G, M, P, S, Sc, Sl>,
+  G extends Game<G, M, P, Sc, Sl, St>,
   M extends Move<M>,
   P extends Player<P>,
-  S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
+  St extends State<G, M, P, Sc, Sl, St>,
 >({
   keysOfExpectedMoves,
 }: {

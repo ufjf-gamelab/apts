@@ -9,30 +9,30 @@ import type { Slot } from "../Slot.js";
 import type { State } from "../State.js";
 
 const validateGetIndexOfPlayer = <
-  G extends Game<G, M, P, S, Sc, Sl>,
+  G extends Game<G, M, P, Sc, Sl, St>,
   M extends Move<M>,
   P extends Player<P>,
-  S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
+  St extends State<G, M, P, Sc, Sl, St>,
 >({
   expectedIndexOfPlayer,
   state,
 }: {
-  expectedIndexOfPlayer: ReturnType<S["getIndexOfPlayer"]>;
-  state: S;
+  expectedIndexOfPlayer: ReturnType<St["getIndexOfPlayer"]>;
+  state: St;
 }) => {
   const indexOfPlayer = state.getIndexOfPlayer();
   expect(indexOfPlayer).toBe(expectedIndexOfPlayer);
 };
 
 const createDescriptionForTestOfGetIndexOfPlayer = <
-  G extends Game<G, M, P, S, Sc, Sl>,
+  G extends Game<G, M, P, Sc, Sl, St>,
   M extends Move<M>,
   P extends Player<P>,
-  S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
+  St extends State<G, M, P, Sc, Sl, St>,
 >({
   indexOfPlayer,
 }: {

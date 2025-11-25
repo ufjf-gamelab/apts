@@ -70,9 +70,9 @@ const testPlayForAState = ({
       SnowballGame,
       SnowballMove,
       SnowballPlayer,
-      SnowballState,
       SnowballScore,
-      SnowballSlot
+      SnowballSlot,
+      SnowballState
     >
   >[0],
   "expectedState"
@@ -93,9 +93,9 @@ const testPlayForAState = ({
         SnowballGame,
         SnowballMove,
         SnowballPlayer,
-        SnowballState,
         SnowballScore,
-        SnowballSlot
+        SnowballSlot,
+        SnowballState
       >({
         expectedState,
         indexOfMove: moveWithDataAndIndex.indexOfMove,
@@ -129,9 +129,9 @@ const testPlayForAStateWhenItIsInvalid = ({
         SnowballGame,
         SnowballMove,
         SnowballPlayer,
-        SnowballState,
         SnowballScore,
-        SnowballSlot
+        SnowballSlot,
+        SnowballState
       >({
         expectedError,
         indexOfMove: moveWithDataAndIndex.indexOfMove,

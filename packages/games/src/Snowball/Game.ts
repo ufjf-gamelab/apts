@@ -38,9 +38,9 @@ class SnowballGame extends Game<
   SnowballGame,
   SnowballMove,
   SnowballPlayer,
-  SnowballState,
   SnowballScore,
-  SnowballSlot
+  SnowballSlot,
+  SnowballState
 > {
   public override clone() {
     return new SnowballGame({

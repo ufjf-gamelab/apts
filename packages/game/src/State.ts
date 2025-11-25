@@ -10,12 +10,12 @@ import { type IndexOfSlot, Slot } from "./Slot.js";
 type IndexOfState = Integer;
 
 interface ParamsOfState<
-  G extends Game<G, M, P, S, Sc, Sl>,
+  G extends Game<G, M, P, Sc, Sl, St>,
   M extends Move<M>,
   P extends Player<P>,
-  S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
+  St extends State<G, M, P, Sc, Sl, St>,
 > {
   readonly game: G;
   readonly indexOfPlayer: IndexOfPlayer;
@@ -24,31 +24,31 @@ interface ParamsOfState<
 }
 
 abstract class State<
-  G extends Game<G, M, P, S, Sc, Sl>,
+  G extends Game<G, M, P, Sc, Sl, St>,
   M extends Move<M>,
   P extends Player<P>,
-  S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
+  St extends State<G, M, P, Sc, Sl, St>,
 > {
-  private readonly game: ParamsOfState<G, M, P, S, Sc, Sl>["game"];
+  private readonly game: ParamsOfState<G, M, P, Sc, Sl, St>["game"];
   private readonly indexOfPlayer: ParamsOfState<
     G,
     M,
     P,
-    S,
     Sc,
-    Sl
+    Sl,
+    St
   >["indexOfPlayer"];
-  private readonly score: ParamsOfState<G, M, P, S, Sc, Sl>["score"];
-  private readonly slots: ParamsOfState<G, M, P, S, Sc, Sl>["slots"];
+  private readonly score: ParamsOfState<G, M, P, Sc, Sl, St>["score"];
+  private readonly slots: ParamsOfState<G, M, P, Sc, Sl, St>["slots"];
 
   public constructor({
     game,
     indexOfPlayer,
     score,
     slots,
-  }: ParamsOfState<G, M, P, S, Sc, Sl>) {
+  }: ParamsOfState<G, M, P, Sc, Sl, St>) {
     if (slots.length !== game.getQuantityOfSlots()) {
       throw new Error(
         `The number of slots (${
@@ -63,7 +63,7 @@ abstract class State<
     this.slots = slots.map((slot) => slot.clone());
   }
 
-  public abstract clone(): S;
+  public abstract clone(): St;
 
   public getGame() {
     return this.game.clone();

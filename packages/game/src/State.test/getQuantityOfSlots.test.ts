@@ -9,30 +9,30 @@ import type { Slot } from "../Slot.js";
 import type { State } from "../State.js";
 
 const validateGetQuantityOfSlots = <
-  G extends Game<G, M, P, S, Sc, Sl>,
+  G extends Game<G, M, P, Sc, Sl, St>,
   M extends Move<M>,
   P extends Player<P>,
-  S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
+  St extends State<G, M, P, Sc, Sl, St>,
 >({
   expectedQuantityOfSlots,
   state,
 }: {
-  expectedQuantityOfSlots: ReturnType<S["getQuantityOfSlots"]>;
-  state: S;
+  expectedQuantityOfSlots: ReturnType<St["getQuantityOfSlots"]>;
+  state: St;
 }) => {
   const game = state.getQuantityOfSlots();
   expect(game).toBe(expectedQuantityOfSlots);
 };
 
 const createDescriptionForTestOfGetQuantityOfSlots = <
-  G extends Game<G, M, P, S, Sc, Sl>,
+  G extends Game<G, M, P, Sc, Sl, St>,
   M extends Move<M>,
   P extends Player<P>,
-  S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
+  St extends State<G, M, P, Sc, Sl, St>,
 >({
   expectedQuantityOfSlots,
 }: Pick<

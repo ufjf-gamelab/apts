@@ -1,7 +1,5 @@
 import { InvalidArgumentError } from "commander";
-import type {
-  ReadStream,
-  WriteStream} from "fs";
+import type { ReadStream, WriteStream } from "fs";
 import {
   createReadStream as createReadStreamFromFs,
   existsSync as existsSyncFromFs,

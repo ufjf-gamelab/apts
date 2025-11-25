@@ -51,9 +51,9 @@ const testConstructor = ({
           SnowballGame,
           SnowballMove,
           SnowballPlayer,
-          SnowballState,
           SnowballScore,
-          SnowballSlot
+          SnowballSlot,
+          SnowballState
         >({
           params: {
             game: game.game,

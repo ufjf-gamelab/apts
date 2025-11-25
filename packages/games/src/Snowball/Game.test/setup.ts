@@ -40,9 +40,9 @@ type SnowballGameWithData = GameWithData<
   SnowballGame,
   SnowballMove,
   SnowballPlayer,
-  SnowballState,
   SnowballScore,
   SnowballSlot,
+  SnowballState,
   SnowballMoveWithData,
   SnowballPlayerWithData,
   SnowballSlotWithData

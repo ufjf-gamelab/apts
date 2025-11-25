@@ -11,18 +11,18 @@ import type { State } from "../State.js";
 import { Slot } from "../Slot.js";
 
 const validateGetSlots = <
-  G extends Game<G, M, P, S, Sc, Sl>,
+  G extends Game<G, M, P, Sc, Sl, St>,
   M extends Move<M>,
   P extends Player<P>,
-  S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
+  St extends State<G, M, P, Sc, Sl, St>,
 >({
   expectedSlots,
   state,
 }: {
-  expectedSlots: ReturnType<S["getSlots"]>;
-  state: S;
+  expectedSlots: ReturnType<St["getSlots"]>;
+  state: St;
 }) => {
   const slots = state.getSlots();
   expect(slots).toBeInstanceOf(Array<Sl>);
@@ -42,12 +42,12 @@ const validateGetSlots = <
 };
 
 const createDescriptionForTestOfGetSlots = <
-  G extends Game<G, M, P, S, Sc, Sl>,
+  G extends Game<G, M, P, Sc, Sl, St>,
   M extends Move<M>,
   P extends Player<P>,
-  S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
+  St extends State<G, M, P, Sc, Sl, St>,
 >({
   keysOfExpectedSlots,
 }: {

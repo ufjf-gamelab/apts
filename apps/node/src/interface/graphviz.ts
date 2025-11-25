@@ -1,4 +1,4 @@
-import type { PathLike} from "fs";
+import type { PathLike } from "fs";
 import { promises as promisesFromFs } from "fs";
 import { toFile } from "ts-graphviz/adapter";
 

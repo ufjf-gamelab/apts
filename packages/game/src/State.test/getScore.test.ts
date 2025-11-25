@@ -12,18 +12,18 @@ import { Score } from "../Score.js";
 import { createDescriptionForPlayerAndItsPoints } from "../Score.test/setup.js";
 
 const validateGetScore = <
-  G extends Game<G, M, P, S, Sc, Sl>,
+  G extends Game<G, M, P, Sc, Sl, St>,
   M extends Move<M>,
   P extends Player<P>,
-  S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
+  St extends State<G, M, P, Sc, Sl, St>,
 >({
   expectedScore,
   state,
 }: {
-  expectedScore: ReturnType<S["getScore"]>;
-  state: S;
+  expectedScore: ReturnType<St["getScore"]>;
+  state: St;
 }) => {
   const score = state.getScore();
   expect(score).toBeInstanceOf(Score);
@@ -36,12 +36,12 @@ const validateGetScore = <
 };
 
 const createDescriptionForTestOfGetScore = <
-  G extends Game<G, M, P, S, Sc, Sl>,
+  G extends Game<G, M, P, Sc, Sl, St>,
   M extends Move<M>,
   P extends Player<P>,
-  S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
+  St extends State<G, M, P, Sc, Sl, St>,
 >({
   expectedScore,
   keyOfPlayer,

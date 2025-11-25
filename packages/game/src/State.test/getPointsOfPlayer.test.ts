@@ -10,19 +10,19 @@ import type { Slot } from "../Slot.js";
 import type { State } from "../State.js";
 
 const validateGetPointsOfPlayer = <
-  G extends Game<G, M, P, S, Sc, Sl>,
+  G extends Game<G, M, P, Sc, Sl, St>,
   M extends Move<M>,
   P extends Player<P>,
-  S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
+  St extends State<G, M, P, Sc, Sl, St>,
 >({
   expectedPointsOfPlayer,
   indexOfPlayer,
   state,
-}: Pick<Parameters<S["getPointsOfPlayer"]>[0], "indexOfPlayer"> & {
-  expectedPointsOfPlayer: ReturnType<S["getPointsOfPlayer"]>;
-  state: S;
+}: Pick<Parameters<St["getPointsOfPlayer"]>[0], "indexOfPlayer"> & {
+  expectedPointsOfPlayer: ReturnType<St["getPointsOfPlayer"]>;
+  state: St;
 }) => {
   let pointsOfPlayer = state.getPointsOfPlayer({ indexOfPlayer });
   expect(pointsOfPlayer).toBe(expectedPointsOfPlayer);
@@ -38,12 +38,12 @@ const validateGetPointsOfPlayer = <
 };
 
 const createDescriptionForTestOfGetPointsOfPlayer = <
-  G extends Game<G, M, P, S, Sc, Sl>,
+  G extends Game<G, M, P, Sc, Sl, St>,
   M extends Move<M>,
   P extends Player<P>,
-  S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
+  St extends State<G, M, P, Sc, Sl, St>,
 >({
   expectedPointsOfPlayer,
   keyOfPlayer,

@@ -30,12 +30,12 @@ type DerivedParamsOfGame<
   >;
 
 interface GameWithData<
-  G extends Game<G, M, P, S, Sc, Sl>,
+  G extends Game<G, M, P, Sc, Sl, St>,
   M extends Move<M>,
   P extends Player<P>,
-  S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
+  St extends State<G, M, P, Sc, Sl, St>,
   ExtendedMoveWithData extends MoveWithData<M>,
   ExtendedPlayerWithData extends PlayerWithData<P>,
   ExtendedSlotWithData extends SlotWithData<Sl>,
@@ -74,12 +74,12 @@ type RequiredParamsOfGame<
 };
 
 const deriveParamsOfGame = <
-  G extends Game<G, M, P, S, Sc, Sl>,
+  G extends Game<G, M, P, Sc, Sl, St>,
   M extends Move<M>,
   P extends Player<P>,
-  S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
+  St extends State<G, M, P, Sc, Sl, St>,
   ExtendedMoveWithData extends MoveWithData<M>,
   ExtendedPlayerWithData extends PlayerWithData<P>,
   ExtendedSlotWithData extends SlotWithData<Sl>,
@@ -114,12 +114,12 @@ const deriveParamsOfGame = <
 
 // eslint-disable-next-line max-lines-per-function
 const createGamesWithData = <
-  G extends Game<G, M, P, S, Sc, Sl>,
+  G extends Game<G, M, P, Sc, Sl, St>,
   M extends Move<M>,
   P extends Player<P>,
-  S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
+  St extends State<G, M, P, Sc, Sl, St>,
   ExtendedMoveWithData extends MoveWithData<M>,
   ExtendedPlayerWithData extends PlayerWithData<P>,
   ExtendedSlotWithData extends SlotWithData<Sl>,
@@ -181,9 +181,9 @@ const createGamesWithData = <
             G,
             M,
             P,
-            S,
             Sc,
             Sl,
+            St,
             ExtendedMoveWithData,
             ExtendedPlayerWithData,
             ExtendedSlotWithData,

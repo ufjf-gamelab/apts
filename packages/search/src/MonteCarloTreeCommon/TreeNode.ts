@@ -176,7 +176,7 @@ class TreeNode<
     }
 
     const expandedChildren = Array.from(this.children.values()).filter(
-      child => child !== null,
+      (child) => child !== null,
     );
 
     let bestChild: null | TreeNode<G, S, M, Sl, P> = null;

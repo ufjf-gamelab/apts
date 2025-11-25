@@ -10,18 +10,18 @@ import type { State } from "../State.js";
 import { Game } from "../Game.js";
 
 const validateGetGame = <
-  G extends Game<G, M, P, S, Sc, Sl>,
+  G extends Game<G, M, P, Sc, Sl, St>,
   M extends Move<M>,
   P extends Player<P>,
-  S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
+  St extends State<G, M, P, Sc, Sl, St>,
 >({
   expectedGame,
   state,
 }: {
-  expectedGame: ReturnType<S["getGame"]>;
-  state: S;
+  expectedGame: ReturnType<St["getGame"]>;
+  state: St;
 }) => {
   const game = state.getGame();
   expect(game).toBeInstanceOf(Game);
@@ -34,12 +34,12 @@ const validateGetGame = <
 };
 
 const createDescriptionForTestOfGetGame = <
-  G extends Game<G, M, P, S, Sc, Sl>,
+  G extends Game<G, M, P, Sc, Sl, St>,
   M extends Move<M>,
   P extends Player<P>,
-  S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
+  St extends State<G, M, P, Sc, Sl, St>,
 >({
   keyOfGame,
 }: {

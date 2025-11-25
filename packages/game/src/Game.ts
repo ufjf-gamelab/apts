@@ -20,12 +20,12 @@ interface ParamsOfGame<
 }
 
 abstract class Game<
-  G extends Game<G, M, P, S, Sc, Sl>,
+  G extends Game<G, M, P, Sc, Sl, St>,
   M extends Move<M>,
   P extends Player<P>,
-  S extends State<G, M, P, S, Sc, Sl>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
+  St extends State<G, M, P, Sc, Sl, St>,
 > {
   private readonly moves: ParamsOfGame<M, P, Sl>["moves"];
   private readonly name: ParamsOfGame<M, P, Sl>["name"];
@@ -41,15 +41,15 @@ abstract class Game<
 
   public abstract clone(): G;
 
-  public abstract constructInitialState(): S;
+  public abstract constructInitialState(): St;
 
   public abstract getIndexesOfValidMoves({
     state,
   }: {
-    state: S;
+    state: St;
   }): ReadonlySet<IndexOfMove>;
 
-  public abstract getIndexOfNextPlayer({ state }: { state: S }): IndexOfPlayer;
+  public abstract getIndexOfNextPlayer({ state }: { state: St }): IndexOfPlayer;
 
   public getMove({
     indexOfMove,
@@ -94,15 +94,15 @@ abstract class Game<
     return this.slots.length;
   }
 
-  public abstract isFinal({ state }: { state: S }): boolean;
+  public abstract isFinal({ state }: { state: St }): boolean;
 
   public abstract play({
     indexOfMove,
     state,
   }: {
     indexOfMove: IndexOfMove;
-    state: S;
-  }): S;
+    state: St;
+  }): St;
 
   protected getSlots() {
     return this.slots.map((slot) => slot.clone());
