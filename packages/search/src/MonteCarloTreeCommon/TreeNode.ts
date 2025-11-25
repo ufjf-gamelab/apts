@@ -1,7 +1,4 @@
 import type { Integer } from "@repo/engine_core/types.js";
-import type Game from "@repo/engine_game/Game.js";
-import type Player from "@repo/engine_game/Player.js";
-import type Slot from "@repo/engine_game/Slot.js";
 
 import {
   EMPTY_LIST,

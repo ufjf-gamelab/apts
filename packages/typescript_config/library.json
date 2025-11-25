@@ -3,9 +3,7 @@
   "compilerOptions": {
     "allowArbitraryExtensions": false,
     "allowJs": false,
-    "allowSyntheticDefaultImports": false,
-    "resolvePackageJsonExports": false,
-    "resolvePackageJsonImports": false
+    "allowSyntheticDefaultImports": false
   },
   "exclude": ["dist", "node_modules"],
   "extends": "./base.json"

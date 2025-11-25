@@ -9,9 +9,7 @@
     "vitest": "^4.0.14"
   },
   "exports": {
-    "./MonteCarloTreeCommon/*": {
-      "import": "./src/MonteCarloTreeCommon/*"
-    }
+    "./*": "./src/*"
   },
   "license": "AGPL-3.0-only",
   "name": "@repo/search",

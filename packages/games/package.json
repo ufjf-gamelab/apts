@@ -14,7 +14,7 @@
     "vitest": "^4.0.14"
   },
   "exports": {
-    "./Snowball/*": "./src/Snowball/*"
+    "./*": "./src/*"
   },
   "license": "AGPL-3.0-only",
   "name": "@repo/games",
