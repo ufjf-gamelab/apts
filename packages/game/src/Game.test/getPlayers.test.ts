@@ -24,8 +24,7 @@ const validateGetPlayers = <
   expectedPlayers: ReturnType<G["getPlayers"]>;
   game: G;
 }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
-  const players = game.getPlayers() as P[];
+  const players = game.getPlayers();
   expect(players).toBeInstanceOf(Array<P>);
   expect(players).not.toBe(expectedPlayers);
   expect(players).toStrictEqual(expectedPlayers);

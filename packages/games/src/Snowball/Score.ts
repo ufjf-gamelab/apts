@@ -14,14 +14,6 @@ import {
 
 const ZERO_POINTS = 0;
 
-class SnowballScore extends Score<SnowballScore> {
-  public override clone() {
-    return new SnowballScore({
-      pointsOfEachPlayer: this.getPointsOfEachPlayer(),
-    });
-  }
-}
-
 const constructInitialPointsForEachPlayer = ({
   quantityOfPlayers,
 }: {
@@ -36,86 +28,102 @@ const constructInitialPointsForEachPlayer = ({
     ),
   );
 
-// eslint-disable-next-line max-lines-per-function
-const getUpdatedScore = ({
-  currentScore,
-  slots,
-}: {
-  currentScore: SnowballScore;
-  slots: SnowballSlot[];
-}): SnowballScore => {
-  let score = currentScore;
+class SnowballScore extends Score<SnowballScore> {
+  public static constructInitialScore({
+    quantityOfPlayers,
+  }: Pick<
+    Parameters<typeof constructInitialPointsForEachPlayer>[0],
+    "quantityOfPlayers"
+  >): SnowballScore {
+    const pointsOfEachPlayer = constructInitialPointsForEachPlayer({
+      quantityOfPlayers,
+    });
+    return new SnowballScore({ pointsOfEachPlayer });
+  }
 
-  slots.forEach((_, indexOfSlot) => {
-    const indexOfRow = Math.floor(indexOfSlot / COLUMN_LENGTH);
-    const indexOfColumn = indexOfSlot % COLUMN_LENGTH;
+  public override clone() {
+    return new SnowballScore({
+      pointsOfEachPlayer: this.getPointsOfEachPlayer(),
+    });
+  }
 
-    const updateScoreConsideringShape = ({
-      shape,
-    }: {
-      score: SnowballScore;
-      shape: Shape;
-    }) => {
-      score = getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots({
-        initialIndexOfColumn: indexOfColumn,
-        initialIndexOfRow: indexOfRow,
-        score,
+  // eslint-disable-next-line max-lines-per-function
+  public getUpdatedScore({ slots }: { slots: SnowballSlot[] }): SnowballScore {
+    let score = SnowballScore.constructInitialScore({
+      quantityOfPlayers: this.getQuantityOfPlayers(),
+    });
+
+    slots.forEach((_, indexOfSlot) => {
+      const indexOfRow = Math.floor(indexOfSlot / COLUMN_LENGTH);
+      const indexOfColumn = indexOfSlot % COLUMN_LENGTH;
+
+      const updateScoreConsideringShape = ({
         shape,
-        slots,
+      }: {
+        score: SnowballScore;
+        shape: Shape;
+      }) => {
+        score = getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots({
+          initialIndexOfColumn: indexOfColumn,
+          initialIndexOfRow: indexOfRow,
+          score,
+          shape,
+          slots,
+        });
+      };
+
+      updateScoreConsideringShape({
+        score,
+        shape: {
+          direction: "horizontal",
+          size: sizeOfPatternsUsedForCalculatingPoints.line,
+          type: "line",
+        },
       });
-    };
+      updateScoreConsideringShape({
+        score,
+        shape: {
+          direction: "vertical",
+          size: sizeOfPatternsUsedForCalculatingPoints.line,
+          type: "line",
+        },
+      });
+      updateScoreConsideringShape({
+        score,
+        shape: {
+          direction: "principalDiagonal",
+          size: sizeOfPatternsUsedForCalculatingPoints.line,
+          type: "line",
+        },
+      });
+      updateScoreConsideringShape({
+        score,
+        shape: {
+          direction: "secondaryDiagonal",
+          size: sizeOfPatternsUsedForCalculatingPoints.line,
+          type: "line",
+        },
+      });
+      updateScoreConsideringShape({
+        score,
+        shape: {
+          horizontalSize: sizeOfPatternsUsedForCalculatingPoints.smallSquare,
+          type: "rectangle",
+          verticalSize: sizeOfPatternsUsedForCalculatingPoints.smallSquare,
+        },
+      });
+      updateScoreConsideringShape({
+        score,
+        shape: {
+          horizontalSize: sizeOfPatternsUsedForCalculatingPoints.largeSquare,
+          type: "rectangle",
+          verticalSize: sizeOfPatternsUsedForCalculatingPoints.largeSquare,
+        },
+      });
+    });
 
-    updateScoreConsideringShape({
-      score,
-      shape: {
-        direction: "horizontal",
-        size: sizeOfPatternsUsedForCalculatingPoints.line,
-        type: "line",
-      },
-    });
-    updateScoreConsideringShape({
-      score,
-      shape: {
-        direction: "vertical",
-        size: sizeOfPatternsUsedForCalculatingPoints.line,
-        type: "line",
-      },
-    });
-    updateScoreConsideringShape({
-      score,
-      shape: {
-        direction: "principalDiagonal",
-        size: sizeOfPatternsUsedForCalculatingPoints.line,
-        type: "line",
-      },
-    });
-    updateScoreConsideringShape({
-      score,
-      shape: {
-        direction: "secondaryDiagonal",
-        size: sizeOfPatternsUsedForCalculatingPoints.line,
-        type: "line",
-      },
-    });
-    updateScoreConsideringShape({
-      score,
-      shape: {
-        horizontalSize: sizeOfPatternsUsedForCalculatingPoints.smallSquare,
-        type: "rectangle",
-        verticalSize: sizeOfPatternsUsedForCalculatingPoints.smallSquare,
-      },
-    });
-    updateScoreConsideringShape({
-      score,
-      shape: {
-        horizontalSize: sizeOfPatternsUsedForCalculatingPoints.largeSquare,
-        type: "rectangle",
-        verticalSize: sizeOfPatternsUsedForCalculatingPoints.largeSquare,
-      },
-    });
-  });
+    return score.clone();
+  }
+}
 
-  return score.clone();
-};
-
-export { constructInitialPointsForEachPlayer, getUpdatedScore, SnowballScore };
+export { SnowballScore };

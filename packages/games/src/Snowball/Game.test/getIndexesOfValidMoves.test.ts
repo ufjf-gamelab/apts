@@ -38,15 +38,15 @@ const testGetIndexesOfValidMoves = ({
       createDescription({
         affix: keyOfState,
         keyOfState,
-        keysOfExpectedValidMoves: params.game.params.moves.map(
-          ({ keyOfMove }) => keyOfMove,
-        ),
+        keysOfExpectedValidMoves: params.validMoves
+          .values()
+          .map((validMove) => validMove.keyOfMove)
+          .toArray(),
       }),
 
       () => {
         validateGetIndexesOfValidMoves({
           expectedIndexesOfValidMoves: indexesOfValidMoves,
-          game: params.game.game,
           state,
         });
       },

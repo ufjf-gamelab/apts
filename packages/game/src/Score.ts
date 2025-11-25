@@ -37,6 +37,10 @@ abstract class Score<Sc extends Score<Sc>> {
     }
     return scoreOfPlayer;
   }
+
+  protected getQuantityOfPlayers() {
+    return this.pointsOfEachPlayer.size;
+  }
 }
 
 export type { IndexOfScore, Points, ScoreParams };

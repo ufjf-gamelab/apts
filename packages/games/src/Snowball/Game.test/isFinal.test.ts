@@ -44,7 +44,6 @@ const testIsFinal = ({
       () => {
         validateIsFinal({
           expectedToBeFinal,
-          game: params.game.game,
           state,
         });
       },

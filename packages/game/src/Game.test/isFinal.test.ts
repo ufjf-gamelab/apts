@@ -17,12 +17,11 @@ const validateIsFinal = <
   Sl extends Slot<Sl>,
 >({
   expectedToBeFinal,
-  game,
   state,
 }: Pick<Parameters<G["isFinal"]>[0], "state"> & {
   expectedToBeFinal: ReturnType<G["isFinal"]>;
-  game: G;
 }) => {
+  const game = state.getGame();
   const isFinal = game.isFinal({
     state,
   });

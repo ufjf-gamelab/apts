@@ -45,7 +45,7 @@ const createDescriptionForTestOfConstructInitialState = <
 }): string =>
   createDescriptionForTestsOfGetter({
     methodDescription: "constructInitialState()",
-    returnedValue: `"${keyOfExpectedInitialState}"`,
+    returnedValue: keyOfExpectedInitialState,
   });
 
 export {

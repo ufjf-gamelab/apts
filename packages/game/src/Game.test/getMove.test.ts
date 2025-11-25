@@ -20,10 +20,9 @@ const validateGetMove = <
   expectedMove,
   game,
   indexOfMove,
-}: {
+}: Pick<Parameters<G["getMove"]>[0], "indexOfMove"> & {
   expectedMove: ReturnType<G["getMove"]>;
   game: G;
-  indexOfMove: Parameters<G["getMove"]>[0]["indexOfMove"];
 }) => {
   const move = game.getMove({ indexOfMove });
 

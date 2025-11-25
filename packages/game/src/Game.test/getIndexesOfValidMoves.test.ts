@@ -1,6 +1,6 @@
 import { formatArray } from "@repo/engine_core/format.js";
 import { createDescriptionForTestsOfGetter } from "@repo/engine_core/test.js";
-import { expect } from "vitest";
+import { assert, expect } from "vitest";
 
 import type { Game } from "../Game.js";
 import type { IndexOfMove, Move } from "../Move.js";
@@ -18,17 +18,17 @@ const validateGetIndexesOfValidMoves = <
   Sl extends Slot<Sl>,
 >({
   expectedIndexesOfValidMoves,
-  game,
   state,
 }: {
   expectedIndexesOfValidMoves: ReturnType<G["getIndexesOfValidMoves"]>;
-  game: G;
   state: Parameters<G["getIndexesOfValidMoves"]>[0]["state"];
 }) => {
+  const game = state.getGame();
   const indexesOfValidMoves = game.getIndexesOfValidMoves({ state });
+
   expect(indexesOfValidMoves).toBeInstanceOf(Set<IndexOfMove>);
   expect(indexesOfValidMoves).not.toBe(expectedIndexesOfValidMoves);
-  expect(indexesOfValidMoves).toStrictEqual(expectedIndexesOfValidMoves);
+  assert.isEmpty(indexesOfValidMoves.difference(expectedIndexesOfValidMoves));
 };
 
 const createDescriptionForTestOfGetIndexesOfValidMoves = <

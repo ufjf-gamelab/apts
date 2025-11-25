@@ -1,0 +1,206 @@
+import { createDescriptionForTest } from "@repo/engine_core/test.js";
+import {
+  createDescriptionForTestOfPlay,
+  createDescriptionForTestOfPlayWhenItIsInvalid,
+  validatePlay,
+  validatePlayWhenItIsInvalid,
+} from "@repo/game/Game.test/play.test.js";
+import { test } from "vitest";
+
+import type { SnowballMove } from "../Move.js";
+import type { SnowballPlayer } from "../Player.js";
+import type { SnowballScore } from "../Score.js";
+import type { SnowballSlot } from "../Slot.js";
+import type { SnowballState } from "../State.js";
+import type { SnowballStateWithData } from "../State.test/setup.js";
+
+import {
+  constructErrorForFinalState,
+  constructErrorForInvalidMove,
+  type SnowballGame,
+} from "../Game.js";
+import { movesWithDataAndIndex } from "../Move.test/indexedRecords.js";
+import { statesWithData } from "../State.test/records.js";
+
+const createDescription = ({
+  affix,
+  keyOfExpectedState,
+  keyOfMove,
+  keyOfState,
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> &
+  Pick<
+    Parameters<typeof createDescriptionForTestOfPlay>[0],
+    "keyOfExpectedState" | "keyOfMove" | "keyOfState"
+  >) =>
+  createDescriptionForTest({
+    affix,
+    description: createDescriptionForTestOfPlay({
+      keyOfExpectedState,
+      keyOfMove,
+      keyOfState,
+    }),
+  });
+
+const createDescriptionWhenPlayIsInvalid = ({
+  affix,
+  expectedError,
+  keyOfMove,
+  keyOfState,
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> &
+  Pick<
+    Parameters<typeof createDescriptionForTestOfPlayWhenItIsInvalid>[0],
+    "expectedError" | "keyOfMove" | "keyOfState"
+  >) =>
+  createDescriptionForTest({
+    affix,
+    description: createDescriptionForTestOfPlayWhenItIsInvalid({
+      expectedError,
+      keyOfMove,
+      keyOfState,
+    }),
+  });
+
+const testPlayForAState = ({
+  expectedState,
+  moveWithDataAndIndex,
+  stateWithData,
+}: Pick<
+  Parameters<
+    typeof validatePlay<
+      SnowballGame,
+      SnowballMove,
+      SnowballPlayer,
+      SnowballState,
+      SnowballScore,
+      SnowballSlot
+    >
+  >[0],
+  "expectedState"
+> & {
+  moveWithDataAndIndex: (typeof movesWithDataAndIndex)["centerOfCenter"];
+  stateWithData: SnowballStateWithData;
+}) => {
+  test(
+    createDescription({
+      affix: stateWithData.params.game.keyOfGame,
+      keyOfExpectedState: stateWithData.keyOfState,
+      keyOfMove: moveWithDataAndIndex.move.keyOfMove,
+      keyOfState: stateWithData.keyOfState,
+    }),
+
+    () => {
+      validatePlay<
+        SnowballGame,
+        SnowballMove,
+        SnowballPlayer,
+        SnowballState,
+        SnowballScore,
+        SnowballSlot
+      >({
+        expectedState,
+        indexOfMove: moveWithDataAndIndex.index,
+        state: stateWithData.state,
+      });
+    },
+  );
+};
+
+const testPlayForAStateWhenItIsInvalid = ({
+  expectedError,
+  moveWithDataAndIndex,
+  stateWithData,
+}: Pick<
+  Parameters<typeof createDescriptionWhenPlayIsInvalid>[0],
+  "expectedError"
+> & {
+  moveWithDataAndIndex: (typeof movesWithDataAndIndex)["centerOfCenter"];
+  stateWithData: SnowballStateWithData;
+}) => {
+  test(
+    createDescriptionWhenPlayIsInvalid({
+      affix: stateWithData.params.game.keyOfGame,
+      expectedError,
+      keyOfMove: moveWithDataAndIndex.move.keyOfMove,
+      keyOfState: stateWithData.keyOfState,
+    }),
+
+    () => {
+      validatePlayWhenItIsInvalid<
+        SnowballGame,
+        SnowballMove,
+        SnowballPlayer,
+        SnowballState,
+        SnowballScore,
+        SnowballSlot
+      >({
+        expectedError,
+        indexOfMove: moveWithDataAndIndex.index,
+        state: stateWithData.state,
+      });
+    },
+  );
+};
+
+const testPlayForAStateWhenTheStateIsFinal = ({
+  moveWithDataAndIndex,
+  stateWithData,
+}: {
+  moveWithDataAndIndex: (typeof movesWithDataAndIndex)["centerOfCenter"];
+  stateWithData: SnowballStateWithData;
+}) => {
+  testPlayForAStateWhenItIsInvalid({
+    expectedError: constructErrorForFinalState({
+      indexOfMove: moveWithDataAndIndex.index,
+    }),
+    moveWithDataAndIndex,
+    stateWithData,
+  });
+};
+
+const testPlayForAStateWhenTheMoveIsInvalid = ({
+  moveWithDataAndIndex,
+  stateWithData,
+}: {
+  moveWithDataAndIndex: (typeof movesWithDataAndIndex)["centerOfCenter"];
+  stateWithData: SnowballStateWithData;
+}) => {
+  testPlayForAStateWhenItIsInvalid({
+    expectedError: constructErrorForInvalidMove({
+      indexOfMove: moveWithDataAndIndex.index,
+    }),
+    moveWithDataAndIndex,
+    stateWithData,
+  });
+};
+
+testPlayForAState({
+  expectedState:
+    statesWithData
+      .slotR0C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer
+      .state,
+  moveWithDataAndIndex: movesWithDataAndIndex.northwestOfNorthwest,
+  stateWithData:
+    statesWithData.allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
+});
+
+testPlayForAState({
+  expectedState:
+    statesWithData
+      .slotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer
+      .state,
+  moveWithDataAndIndex: movesWithDataAndIndex.eastOfWest,
+  stateWithData:
+    statesWithData.slotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
+});
+
+testPlayForAStateWhenTheMoveIsInvalid({
+  moveWithDataAndIndex: movesWithDataAndIndex.northwestOfNorthwest,
+  stateWithData:
+    statesWithData.slotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
+});
+
+testPlayForAStateWhenTheStateIsFinal({
+  moveWithDataAndIndex: movesWithDataAndIndex.eastOfWest,
+  stateWithData:
+    statesWithData.slotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
+});

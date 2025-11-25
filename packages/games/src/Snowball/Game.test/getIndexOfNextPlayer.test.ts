@@ -42,7 +42,6 @@ const testGetIndexOfNextPlayer = ({
       () => {
         validateGetIndexOfNextPlayer({
           expectedIndexOfNextPlayer: params.nextPlayer.index,
-          game: params.game.game,
           state,
         });
       },

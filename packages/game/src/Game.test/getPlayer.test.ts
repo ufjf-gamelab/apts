@@ -20,10 +20,9 @@ const validateGetPlayer = <
   expectedPlayer,
   game,
   indexOfPlayer,
-}: {
+}: Pick<Parameters<G["getPlayer"]>[0], "indexOfPlayer"> & {
   expectedPlayer: ReturnType<G["getPlayer"]>;
   game: G;
-  indexOfPlayer: Parameters<G["getPlayer"]>[0]["indexOfPlayer"];
 }) => {
   const player = game.getPlayer({ indexOfPlayer });
 

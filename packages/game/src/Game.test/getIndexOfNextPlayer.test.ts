@@ -18,13 +18,11 @@ const validateGetIndexOfNextPlayer = <
   Sl extends Slot<Sl>,
 >({
   expectedIndexOfNextPlayer,
-  game,
   state,
-}: {
+}: Pick<Parameters<G["getIndexOfNextPlayer"]>[0], "state"> & {
   expectedIndexOfNextPlayer: ReturnType<G["getIndexOfNextPlayer"]>;
-  game: G;
-  state: Parameters<G["getIndexOfNextPlayer"]>[0]["state"];
 }) => {
+  const game = state.getGame();
   let indexOfNextPlayer = game.getIndexOfNextPlayer({ state });
   expect(indexOfNextPlayer).toBe(expectedIndexOfNextPlayer);
 
@@ -50,7 +48,7 @@ const createDescriptionForTestOfGetIndexOfNextPlayer = <
 }): string =>
   createDescriptionForTestsOfGetter({
     methodDescription: `getIndexOfNextPlayer({ state: ${keyOfState} })`,
-    returnedValue: `"${expectedIndexOfNextPlayer}"`,
+    returnedValue: expectedIndexOfNextPlayer,
   });
 
 export {

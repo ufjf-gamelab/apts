@@ -9,11 +9,7 @@ import { Game } from "@repo/game/Game.js";
 import type { SnowballMove } from "./Move.js";
 import type { SnowballPlayer } from "./Player.js";
 
-import {
-  constructInitialPointsForEachPlayer,
-  getUpdatedScore,
-  SnowballScore,
-} from "./Score.js";
+import { SnowballScore } from "./Score.js";
 import { SnowballSlot } from "./Slot.js";
 import { SnowballState } from "./State.js";
 
@@ -22,6 +18,21 @@ const INDEX_OF_FIRST_PLAYER: IndexOfPlayer = 0;
 
 const AMOUNT_OF_POINTS_TO_FINISH_MATCH: Points = 15;
 const AMOUNT_OF_SLOTS_TO_FINISH_MATCH: Integer = 49;
+
+const constructErrorForFinalState = ({
+  indexOfMove,
+}: {
+  indexOfMove: IndexOfMove;
+}) =>
+  new Error(
+    `Cannot play move ${indexOfMove} because this state is already final.`,
+  );
+
+const constructErrorForInvalidMove = ({
+  indexOfMove,
+}: {
+  indexOfMove: IndexOfMove;
+}) => new Error(`Cannot play move ${indexOfMove} because it is not valid.`);
 
 class SnowballGame extends Game<
   SnowballGame,
@@ -44,16 +55,11 @@ class SnowballGame extends Game<
     return new SnowballState({
       game: this,
       indexOfPlayer: INDEX_OF_FIRST_PLAYER,
-      score: this.constructScoreForInitialState(),
+      score: SnowballScore.constructInitialScore({
+        quantityOfPlayers: this.getQuantityOfPlayers(),
+      }),
       slots: this.getSlots(),
     });
-  }
-
-  public constructScoreForInitialState(): SnowballScore {
-    const pointsOfEachPlayer = constructInitialPointsForEachPlayer({
-      quantityOfPlayers: this.getQuantityOfPlayers(),
-    });
-    return new SnowballScore({ pointsOfEachPlayer });
   }
 
   public override getIndexesOfValidMoves({ state }: { state: SnowballState }) {
@@ -124,6 +130,10 @@ class SnowballGame extends Game<
     indexOfMove: IndexOfMove;
     state: SnowballState;
   }): SnowballState {
+    if (this.isFinal({ state })) {
+      throw constructErrorForFinalState({ indexOfMove });
+    }
+
     const move = this.getMove({ indexOfMove });
     if (move === null) {
       return state.clone();
@@ -131,9 +141,9 @@ class SnowballGame extends Game<
 
     const moveIsValid = this.isMoveValid({ move, state });
     if (!moveIsValid) {
-      throw new Error(
-        `Cannot play move ${indexOfMove} because it is not valid.`,
-      );
+      throw constructErrorForInvalidMove({
+        indexOfMove,
+      });
     }
 
     const indexOfSlotInWhichPlacePiece = move.getIndexOfSlotInWhichPlacePiece();
@@ -148,8 +158,7 @@ class SnowballGame extends Game<
     }
 
     const indexOfNextPlayer = this.getIndexOfNextPlayer({ state });
-    const updatedScore = getUpdatedScore({
-      currentScore: state.getScore(),
+    const updatedScore = state.getScore().getUpdatedScore({
       slots: updatedSlots,
     });
 
@@ -162,4 +171,8 @@ class SnowballGame extends Game<
   }
 }
 
-export { SnowballGame };
+export {
+  constructErrorForFinalState,
+  constructErrorForInvalidMove,
+  SnowballGame,
+};
