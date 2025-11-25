@@ -33,12 +33,12 @@ const testGetIndexOfPlayer = ({
     test(
       createDescription({
         affix: keyOfState,
-        indexOfPlayer: params.player.index,
+        indexOfPlayer: params.player.indexOfPlayer,
       }),
 
       () => {
         validateGetIndexOfPlayer({
-          expectedIndexOfPlayer: params.player.index,
+          expectedIndexOfPlayer: params.player.indexOfPlayer,
           state,
         });
       },

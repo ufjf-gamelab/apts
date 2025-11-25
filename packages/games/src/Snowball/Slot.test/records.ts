@@ -1,16 +1,16 @@
 import { playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO as playersWithDataAndIndex } from "../Player.test/indexedRecords.js";
 import {
   createSnowballSlotsWithData,
-  type RequiredSnowballSlotParams,
+  type RequiredParamsOfSnowballSlot,
 } from "./setup.js";
 
-type RecordOfRequiredSnowballSlotParams = Record<
+type RecordOfRequiredParamsOfSnowballSlots = Record<
   string,
-  RequiredSnowballSlotParams
+  RequiredParamsOfSnowballSlot
 >;
 
 const recordOfRequiredParamsOfSlotsInWhichAllSlotsAreEmpty = {
-  // Center
+  /* Center */
   centerOfCenter: {
     indexOfOccupyingPlayer: null,
   },
@@ -39,7 +39,7 @@ const recordOfRequiredParamsOfSlotsInWhichAllSlotsAreEmpty = {
     indexOfOccupyingPlayer: null,
   },
 
-  // East
+  /* East */
   eastOfCenter: {
     indexOfOccupyingPlayer: null,
   },
@@ -68,7 +68,7 @@ const recordOfRequiredParamsOfSlotsInWhichAllSlotsAreEmpty = {
     indexOfOccupyingPlayer: null,
   },
 
-  // Northeast
+  /* Northeast */
   northeastOfCenter: {
     indexOfOccupyingPlayer: null,
   },
@@ -97,7 +97,7 @@ const recordOfRequiredParamsOfSlotsInWhichAllSlotsAreEmpty = {
     indexOfOccupyingPlayer: null,
   },
 
-  // North
+  /* North */
   northOfCenter: {
     indexOfOccupyingPlayer: null,
   },
@@ -126,7 +126,7 @@ const recordOfRequiredParamsOfSlotsInWhichAllSlotsAreEmpty = {
     indexOfOccupyingPlayer: null,
   },
 
-  // Northwest
+  /* Northwest */
   northwestOfCenter: {
     indexOfOccupyingPlayer: null,
   },
@@ -155,7 +155,7 @@ const recordOfRequiredParamsOfSlotsInWhichAllSlotsAreEmpty = {
     indexOfOccupyingPlayer: null,
   },
 
-  // Southeast
+  /* Southeast */
   southeastOfCenter: {
     indexOfOccupyingPlayer: null,
   },
@@ -184,7 +184,7 @@ const recordOfRequiredParamsOfSlotsInWhichAllSlotsAreEmpty = {
     indexOfOccupyingPlayer: null,
   },
 
-  // South
+  /* South */
   southOfCenter: {
     indexOfOccupyingPlayer: null,
   },
@@ -213,7 +213,7 @@ const recordOfRequiredParamsOfSlotsInWhichAllSlotsAreEmpty = {
     indexOfOccupyingPlayer: null,
   },
 
-  // Southwest
+  /* Southwest */
   southwestOfCenter: {
     indexOfOccupyingPlayer: null,
   },
@@ -242,7 +242,7 @@ const recordOfRequiredParamsOfSlotsInWhichAllSlotsAreEmpty = {
     indexOfOccupyingPlayer: null,
   },
 
-  // West
+  /* West */
   westOfCenter: {
     indexOfOccupyingPlayer: null,
   },
@@ -270,10 +270,10 @@ const recordOfRequiredParamsOfSlotsInWhichAllSlotsAreEmpty = {
   westOfWest: {
     indexOfOccupyingPlayer: null,
   },
-} as const satisfies RecordOfRequiredSnowballSlotParams;
+} as const satisfies RecordOfRequiredParamsOfSnowballSlots;
 
 const recordOfRequiredParamsOfSlotsInWhichSlotR0C0IsFilledByAlice = {
-  // Center
+  /* Center */
   centerOfCenter: {
     indexOfOccupyingPlayer: null,
   },
@@ -302,7 +302,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotR0C0IsFilledByAlice = {
     indexOfOccupyingPlayer: null,
   },
 
-  // East
+  /* East */
   eastOfCenter: {
     indexOfOccupyingPlayer: null,
   },
@@ -331,7 +331,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotR0C0IsFilledByAlice = {
     indexOfOccupyingPlayer: null,
   },
 
-  // Northeast
+  /* Northeast */
   northeastOfCenter: {
     indexOfOccupyingPlayer: null,
   },
@@ -360,7 +360,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotR0C0IsFilledByAlice = {
     indexOfOccupyingPlayer: null,
   },
 
-  // North
+  /* North */
   northOfCenter: {
     indexOfOccupyingPlayer: null,
   },
@@ -389,7 +389,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotR0C0IsFilledByAlice = {
     indexOfOccupyingPlayer: null,
   },
 
-  // Northwest
+  /* Northwest */
   northwestOfCenter: {
     indexOfOccupyingPlayer: null,
   },
@@ -403,7 +403,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotR0C0IsFilledByAlice = {
     indexOfOccupyingPlayer: null,
   },
   northwestOfNorthwest: {
-    indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+    indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
   },
   northwestOfSouth: {
     indexOfOccupyingPlayer: null,
@@ -418,7 +418,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotR0C0IsFilledByAlice = {
     indexOfOccupyingPlayer: null,
   },
 
-  // Southeast
+  /* Southeast */
   southeastOfCenter: {
     indexOfOccupyingPlayer: null,
   },
@@ -447,7 +447,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotR0C0IsFilledByAlice = {
     indexOfOccupyingPlayer: null,
   },
 
-  // South
+  /* South */
   southOfCenter: {
     indexOfOccupyingPlayer: null,
   },
@@ -476,7 +476,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotR0C0IsFilledByAlice = {
     indexOfOccupyingPlayer: null,
   },
 
-  // Southwest
+  /* Southwest */
   southwestOfCenter: {
     indexOfOccupyingPlayer: null,
   },
@@ -505,7 +505,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotR0C0IsFilledByAlice = {
     indexOfOccupyingPlayer: null,
   },
 
-  // West
+  /* West */
   westOfCenter: {
     indexOfOccupyingPlayer: null,
   },
@@ -533,11 +533,11 @@ const recordOfRequiredParamsOfSlotsInWhichSlotR0C0IsFilledByAlice = {
   westOfWest: {
     indexOfOccupyingPlayer: null,
   },
-} as const satisfies RecordOfRequiredSnowballSlotParams;
+} as const satisfies RecordOfRequiredParamsOfSnowballSlots;
 
 const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno =
   {
-    // Center
+    /* Center */
     centerOfCenter: {
       indexOfOccupyingPlayer: null,
     },
@@ -545,13 +545,13 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAlice
       indexOfOccupyingPlayer: null,
     },
     centerOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     centerOfNortheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     centerOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     centerOfSouth: {
       indexOfOccupyingPlayer: null,
@@ -566,7 +566,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAlice
       indexOfOccupyingPlayer: null,
     },
 
-    // East
+    /* East */
     eastOfCenter: {
       indexOfOccupyingPlayer: null,
     },
@@ -574,13 +574,13 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAlice
       indexOfOccupyingPlayer: null,
     },
     eastOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     eastOfNortheast: {
       indexOfOccupyingPlayer: null,
     },
     eastOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     eastOfSouth: {
       indexOfOccupyingPlayer: null,
@@ -595,21 +595,21 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAlice
       indexOfOccupyingPlayer: null,
     },
 
-    // Northeast
+    /* Northeast */
     northeastOfCenter: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northeastOfEast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northeastOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northeastOfNortheast: {
       indexOfOccupyingPlayer: null,
     },
     northeastOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     northeastOfSouth: {
       indexOfOccupyingPlayer: null,
@@ -621,24 +621,24 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAlice
       indexOfOccupyingPlayer: null,
     },
     northeastOfWest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
 
-    // North
+    /* North */
     northOfCenter: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northOfEast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northOfNortheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     northOfSouth: {
       indexOfOccupyingPlayer: null,
@@ -650,24 +650,24 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAlice
       indexOfOccupyingPlayer: null,
     },
     northOfWest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
 
-    // Northwest
+    /* Northwest */
     northwestOfCenter: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     northwestOfEast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northwestOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     northwestOfNortheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northwestOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     northwestOfSouth: {
       indexOfOccupyingPlayer: null,
@@ -679,10 +679,10 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAlice
       indexOfOccupyingPlayer: null,
     },
     northwestOfWest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
 
-    // Southeast
+    /* Southeast */
     southeastOfCenter: {
       indexOfOccupyingPlayer: null,
     },
@@ -690,13 +690,13 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAlice
       indexOfOccupyingPlayer: null,
     },
     southeastOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     southeastOfNortheast: {
       indexOfOccupyingPlayer: null,
     },
     southeastOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     southeastOfSouth: {
       indexOfOccupyingPlayer: null,
@@ -711,7 +711,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAlice
       indexOfOccupyingPlayer: null,
     },
 
-    // South
+    /* South */
     southOfCenter: {
       indexOfOccupyingPlayer: null,
     },
@@ -719,13 +719,13 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAlice
       indexOfOccupyingPlayer: null,
     },
     southOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     southOfNortheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     southOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     southOfSouth: {
       indexOfOccupyingPlayer: null,
@@ -740,7 +740,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAlice
       indexOfOccupyingPlayer: null,
     },
 
-    // Southwest
+    /* Southwest */
     southwestOfCenter: {
       indexOfOccupyingPlayer: null,
     },
@@ -748,13 +748,13 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAlice
       indexOfOccupyingPlayer: null,
     },
     southwestOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     southwestOfNortheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     southwestOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     southwestOfSouth: {
       indexOfOccupyingPlayer: null,
@@ -769,7 +769,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAlice
       indexOfOccupyingPlayer: null,
     },
 
-    // West
+    /* West */
     westOfCenter: {
       indexOfOccupyingPlayer: null,
     },
@@ -777,13 +777,13 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAlice
       indexOfOccupyingPlayer: null,
     },
     westOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     westOfNortheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     westOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     westOfSouth: {
       indexOfOccupyingPlayer: null,
@@ -795,13 +795,13 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAlice
       indexOfOccupyingPlayer: null,
     },
     westOfWest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
-  } as const satisfies RecordOfRequiredSnowballSlotParams;
+  } as const satisfies RecordOfRequiredParamsOfSnowballSlots;
 
 const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno =
   {
-    // Center
+    /* Center */
     centerOfCenter: {
       indexOfOccupyingPlayer: null,
     },
@@ -809,13 +809,13 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilled
       indexOfOccupyingPlayer: null,
     },
     centerOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     centerOfNortheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     centerOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     centerOfSouth: {
       indexOfOccupyingPlayer: null,
@@ -830,7 +830,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilled
       indexOfOccupyingPlayer: null,
     },
 
-    // East
+    /* East */
     eastOfCenter: {
       indexOfOccupyingPlayer: null,
     },
@@ -838,13 +838,13 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilled
       indexOfOccupyingPlayer: null,
     },
     eastOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     eastOfNortheast: {
       indexOfOccupyingPlayer: null,
     },
     eastOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     eastOfSouth: {
       indexOfOccupyingPlayer: null,
@@ -856,24 +856,24 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilled
       indexOfOccupyingPlayer: null,
     },
     eastOfWest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
 
-    // Northeast
+    /* Northeast */
     northeastOfCenter: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northeastOfEast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northeastOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northeastOfNortheast: {
       indexOfOccupyingPlayer: null,
     },
     northeastOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     northeastOfSouth: {
       indexOfOccupyingPlayer: null,
@@ -885,24 +885,24 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilled
       indexOfOccupyingPlayer: null,
     },
     northeastOfWest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
 
-    // North
+    /* North */
     northOfCenter: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northOfEast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northOfNortheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     northOfSouth: {
       indexOfOccupyingPlayer: null,
@@ -914,24 +914,24 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilled
       indexOfOccupyingPlayer: null,
     },
     northOfWest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
 
-    // Northwest
+    /* Northwest */
     northwestOfCenter: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     northwestOfEast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northwestOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     northwestOfNortheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northwestOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     northwestOfSouth: {
       indexOfOccupyingPlayer: null,
@@ -943,10 +943,10 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilled
       indexOfOccupyingPlayer: null,
     },
     northwestOfWest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
 
-    // Southeast
+    /* Southeast */
     southeastOfCenter: {
       indexOfOccupyingPlayer: null,
     },
@@ -954,13 +954,13 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilled
       indexOfOccupyingPlayer: null,
     },
     southeastOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     southeastOfNortheast: {
       indexOfOccupyingPlayer: null,
     },
     southeastOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     southeastOfSouth: {
       indexOfOccupyingPlayer: null,
@@ -975,7 +975,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilled
       indexOfOccupyingPlayer: null,
     },
 
-    // South
+    /* South */
     southOfCenter: {
       indexOfOccupyingPlayer: null,
     },
@@ -983,13 +983,13 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilled
       indexOfOccupyingPlayer: null,
     },
     southOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     southOfNortheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     southOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     southOfSouth: {
       indexOfOccupyingPlayer: null,
@@ -1004,7 +1004,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilled
       indexOfOccupyingPlayer: null,
     },
 
-    // Southwest
+    /* Southwest */
     southwestOfCenter: {
       indexOfOccupyingPlayer: null,
     },
@@ -1012,13 +1012,13 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilled
       indexOfOccupyingPlayer: null,
     },
     southwestOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     southwestOfNortheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     southwestOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     southwestOfSouth: {
       indexOfOccupyingPlayer: null,
@@ -1033,7 +1033,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilled
       indexOfOccupyingPlayer: null,
     },
 
-    // West
+    /* West */
     westOfCenter: {
       indexOfOccupyingPlayer: null,
     },
@@ -1041,13 +1041,13 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilled
       indexOfOccupyingPlayer: null,
     },
     westOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     westOfNortheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     westOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     westOfSouth: {
       indexOfOccupyingPlayer: null,
@@ -1059,178 +1059,178 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilled
       indexOfOccupyingPlayer: null,
     },
     westOfWest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
-  } as const satisfies RecordOfRequiredSnowballSlotParams;
+  } as const satisfies RecordOfRequiredParamsOfSnowballSlots;
 
 const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno =
   {
-    // Center
+    /* Center */
     centerOfCenter: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     centerOfEast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     centerOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     centerOfNortheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     centerOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     centerOfSouth: {
       indexOfOccupyingPlayer: null,
     },
     centerOfSoutheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     centerOfSouthwest: {
       indexOfOccupyingPlayer: null,
     },
     centerOfWest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
 
-    // East
+    /* East */
     eastOfCenter: {
       indexOfOccupyingPlayer: null,
     },
     eastOfEast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     eastOfNorth: {
       indexOfOccupyingPlayer: null,
     },
     eastOfNortheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     eastOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     eastOfSouth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     eastOfSoutheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     eastOfSouthwest: {
       indexOfOccupyingPlayer: null,
     },
     eastOfWest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
 
-    // Northeast
+    /* Northeast */
     northeastOfCenter: {
       indexOfOccupyingPlayer: null,
     },
     northeastOfEast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northeastOfNorth: {
       indexOfOccupyingPlayer: null,
     },
     northeastOfNortheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northeastOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     northeastOfSouth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northeastOfSoutheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northeastOfSouthwest: {
       indexOfOccupyingPlayer: null,
     },
     northeastOfWest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
 
-    // North
+    /* North */
     northOfCenter: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     northOfEast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     northOfNortheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     northOfSouth: {
       indexOfOccupyingPlayer: null,
     },
     northOfSoutheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northOfSouthwest: {
       indexOfOccupyingPlayer: null,
     },
     northOfWest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
 
-    // Northwest
+    /* Northwest */
     northwestOfCenter: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     northwestOfEast: {
       indexOfOccupyingPlayer: null,
     },
     northwestOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     northwestOfNortheast: {
       indexOfOccupyingPlayer: null,
     },
     northwestOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     northwestOfSouth: {
       indexOfOccupyingPlayer: null,
     },
     northwestOfSoutheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     northwestOfSouthwest: {
       indexOfOccupyingPlayer: null,
     },
     northwestOfWest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
 
-    // Southeast
+    /* Southeast */
     southeastOfCenter: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     southeastOfEast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     southeastOfNorth: {
       indexOfOccupyingPlayer: null,
     },
     southeastOfNortheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     southeastOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     southeastOfSouth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     southeastOfSoutheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     southeastOfSouthwest: {
       indexOfOccupyingPlayer: null,
@@ -1239,27 +1239,27 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
       indexOfOccupyingPlayer: null,
     },
 
-    // South
+    /* South */
     southOfCenter: {
       indexOfOccupyingPlayer: null,
     },
     southOfEast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     southOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     southOfNortheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     southOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     southOfSouth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     southOfSoutheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     southOfSouthwest: {
       indexOfOccupyingPlayer: null,
@@ -1268,7 +1268,7 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
       indexOfOccupyingPlayer: null,
     },
 
-    // Southwest
+    /* Southwest */
     southwestOfCenter: {
       indexOfOccupyingPlayer: null,
     },
@@ -1276,19 +1276,19 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
       indexOfOccupyingPlayer: null,
     },
     southwestOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     southwestOfNortheast: {
       indexOfOccupyingPlayer: null,
     },
     southwestOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     southwestOfSouth: {
       indexOfOccupyingPlayer: null,
     },
     southwestOfSoutheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     southwestOfSouthwest: {
       indexOfOccupyingPlayer: null,
@@ -1297,35 +1297,35 @@ const recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAlice
       indexOfOccupyingPlayer: null,
     },
 
-    // West
+    /* West */
     westOfCenter: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     westOfEast: {
       indexOfOccupyingPlayer: null,
     },
     westOfNorth: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     westOfNortheast: {
       indexOfOccupyingPlayer: null,
     },
     westOfNorthwest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
     westOfSouth: {
       indexOfOccupyingPlayer: null,
     },
     westOfSoutheast: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.bruno.indexOfPlayer,
     },
     westOfSouthwest: {
       indexOfOccupyingPlayer: null,
     },
     westOfWest: {
-      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.index,
+      indexOfOccupyingPlayer: playersWithDataAndIndex.alice.indexOfPlayer,
     },
-  } as const satisfies RecordOfRequiredSnowballSlotParams;
+  } as const satisfies RecordOfRequiredParamsOfSnowballSlots;
 
 const slotsWithDataInWhichAllSlotsAreEmpty = createSnowballSlotsWithData({
   recordOfRequiredParams: recordOfRequiredParamsOfSlotsInWhichAllSlotsAreEmpty,
@@ -1356,7 +1356,7 @@ const slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR
       recordOfRequiredParamsOfSlotsInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
   });
 
-export type { RecordOfRequiredSnowballSlotParams };
+export type { RecordOfRequiredParamsOfSnowballSlots };
 export {
   slotsWithDataInWhichAllSlotsAreEmpty,
   slotsWithDataInWhichSlotR0C0IsFilledByAlice,

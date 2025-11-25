@@ -1,9 +1,9 @@
-import type { Integer } from "@repo/engine_core/types.js";
+import type { IndexOfSlot } from "@repo/game/Slot.js";
 
 import type { ExtendedSnowballSlotsWithData } from "./setup.js";
 
 import {
-  type RecordOfRequiredSnowballSlotParams,
+  type RecordOfRequiredParamsOfSnowballSlots,
   slotsWithDataInWhichAllSlotsAreEmpty,
   slotsWithDataInWhichSlotR0C0IsFilledByAlice,
   slotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
@@ -15,41 +15,41 @@ type KeysOfSlotsInOrder<GenericExtendedSnowballSlotsWithData> =
   (keyof GenericExtendedSnowballSlotsWithData)[];
 
 type SnowballSlotsWithDataAndIndex<
-  ExtendedRecordOfRequiredSnowballSlotParams extends
-    RecordOfRequiredSnowballSlotParams,
+  ExtendedRecordOfRequiredParamsOfSnowballSlots extends
+    RecordOfRequiredParamsOfSnowballSlots,
 > = Record<
   KeysOfSlotsInOrder<
-    ExtendedSnowballSlotsWithData<ExtendedRecordOfRequiredSnowballSlotParams>
+    ExtendedSnowballSlotsWithData<ExtendedRecordOfRequiredParamsOfSnowballSlots>
   >[number],
-  SnowballSlotWithDataAndIndex<ExtendedRecordOfRequiredSnowballSlotParams>
+  SnowballSlotWithDataAndIndex<ExtendedRecordOfRequiredParamsOfSnowballSlots>
 >;
 
 interface SnowballSlotWithDataAndIndex<
-  ExtendedRecordOfRequiredSnowballSlotParams extends
-    RecordOfRequiredSnowballSlotParams,
+  ExtendedRecordOfRequiredParamsOfSnowballSlots extends
+    RecordOfRequiredParamsOfSnowballSlots,
 > {
-  index: Integer;
-  slot: ExtendedSnowballSlotsWithData<ExtendedRecordOfRequiredSnowballSlotParams>[keyof ExtendedSnowballSlotsWithData<ExtendedRecordOfRequiredSnowballSlotParams>];
+  indexOfSlot: IndexOfSlot;
+  slot: ExtendedSnowballSlotsWithData<ExtendedRecordOfRequiredParamsOfSnowballSlots>[keyof ExtendedSnowballSlotsWithData<ExtendedRecordOfRequiredParamsOfSnowballSlots>];
 }
 
 const createIndexedSnowballSlotsWithData = <
-  ExtendedRecordOfRequiredSnowballSlotParams extends
-    RecordOfRequiredSnowballSlotParams,
+  ExtendedRecordOfRequiredParamsOfSnowballSlots extends
+    RecordOfRequiredParamsOfSnowballSlots,
 >({
   keysOfSlotsInOrder,
   slotsWithData,
 }: {
-  keysOfSlotsInOrder: KeysOfSlotsInOrder<ExtendedRecordOfRequiredSnowballSlotParams>;
-  slotsWithData: ExtendedSnowballSlotsWithData<ExtendedRecordOfRequiredSnowballSlotParams>;
+  keysOfSlotsInOrder: KeysOfSlotsInOrder<ExtendedRecordOfRequiredParamsOfSnowballSlots>;
+  slotsWithData: ExtendedSnowballSlotsWithData<ExtendedRecordOfRequiredParamsOfSnowballSlots>;
 }) => {
   const slotsWithDataAndIndex =
     // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
-    {} as SnowballSlotsWithDataAndIndex<ExtendedRecordOfRequiredSnowballSlotParams>;
+    {} as SnowballSlotsWithDataAndIndex<ExtendedRecordOfRequiredParamsOfSnowballSlots>;
   const indexedSlotsWithData: (typeof slotsWithData)[keyof typeof slotsWithData][] =
     [];
-  keysOfSlotsInOrder.forEach((key, indexOfSlot) => {
-    const slot = slotsWithData[key];
-    slotsWithDataAndIndex[key] = { index: indexOfSlot, slot };
+  keysOfSlotsInOrder.forEach((keyOfSlot, indexOfSlot) => {
+    const slot = slotsWithData[keyOfSlot];
+    slotsWithDataAndIndex[keyOfSlot] = { indexOfSlot, slot };
     indexedSlotsWithData.push(slot);
   });
   return {

@@ -70,11 +70,11 @@ const createSnowballShapesWithData = <
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Object.fromEntries cannot preserve mapped type keys
   return Object.fromEntries(
     Object.entries(recordOfRequiredParamsAndResult).map(
-      ([key, paramsAndResult]) =>
+      ([keyOfShape, paramsAndResult]) =>
         [
-          key,
+          keyOfShape,
           {
-            keyOfShape: key,
+            keyOfShape,
             params: paramsAndResult.params,
             result: paramsAndResult.result,
           } satisfies SnowballShapeWithData,

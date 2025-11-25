@@ -1,6 +1,6 @@
 import type { IndexOfPlayer, Player } from "../Player.js";
 import type { PlayerWithData } from "../Player.test/setup.js";
-import type { Points, Score, ScoreParams } from "../Score.js";
+import type { ParamsOfScore, Points, Score } from "../Score.js";
 
 const createDescriptionForPlayerAndItsPoints = <P extends Player<P>>({
   keyOfPlayer,
@@ -10,9 +10,9 @@ const createDescriptionForPlayerAndItsPoints = <P extends Player<P>>({
   points: Points;
 }): string => `${keyOfPlayer}: ${points}`;
 
-type DerivedScoreParams<P extends Player<P>> = ScoreParams;
+type DerivedParamsOfScore<P extends Player<P>> = ParamsOfScore;
 
-interface RequiredScoreParams<P extends Player<P>> {
+interface RequiredParamsOfScore<P extends Player<P>> {
   pointsOfEachPlayer: Map<
     IndexOfPlayer,
     {
@@ -25,15 +25,15 @@ interface RequiredScoreParams<P extends Player<P>> {
 interface ScoreWithData<
   P extends Player<P>,
   Sc extends Score<Sc>,
-  Params extends RequiredScoreParams<P> = RequiredScoreParams<P>,
+  Params extends RequiredParamsOfScore<P> = RequiredParamsOfScore<P>,
 > {
   keyOfScore: string;
   params: Params;
   score: Sc;
 }
-const deriveScoreParams = <P extends Player<P>>({
+const deriveParamsOfScore = <P extends Player<P>>({
   pointsOfEachPlayer,
-}: RequiredScoreParams<P>): DerivedScoreParams<P> => ({
+}: RequiredParamsOfScore<P>): DerivedParamsOfScore<P> => ({
   pointsOfEachPlayer: new Map(
     pointsOfEachPlayer
       .entries()
@@ -47,8 +47,8 @@ const deriveScoreParams = <P extends Player<P>>({
 const createScoresWithData = <
   P extends Player<P>,
   Sc extends Score<Sc>,
-  RequiredParams extends RequiredScoreParams<P>,
-  DerivedParams extends DerivedScoreParams<P>,
+  RequiredParams extends RequiredParamsOfScore<P>,
+  DerivedParams extends DerivedParamsOfScore<P>,
   RecordOfRequiredParams extends Record<string, RequiredParams>,
 >({
   create,
@@ -80,11 +80,11 @@ const createScoresWithData = <
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Object.fromEntries cannot preserve mapped type keys
   return Object.fromEntries(
     Object.entries(recordOfRequiredParams).map(
-      ([key, requiredParams]) =>
+      ([keyOfScore, requiredParams]) =>
         [
-          key,
+          keyOfScore,
           {
-            keyOfScore: key,
+            keyOfScore,
             params: requiredParams,
             score: create(deriveParams(requiredParams)),
           } satisfies ScoreWithData<P, Sc, RequiredParams>,
@@ -93,9 +93,9 @@ const createScoresWithData = <
   ) as ResultType;
 };
 
-export type { DerivedScoreParams, RequiredScoreParams, ScoreWithData };
+export type { DerivedParamsOfScore, RequiredParamsOfScore, ScoreWithData };
 export {
   createDescriptionForPlayerAndItsPoints,
   createScoresWithData,
-  deriveScoreParams,
+  deriveParamsOfScore,
 };

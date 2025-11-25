@@ -1,12 +1,12 @@
 import { expect } from "vitest";
 
-import { Score, type ScoreParams } from "../Score.js";
+import { type ParamsOfScore, Score } from "../Score.js";
 
 const validateConstructor = <Sc extends Score<Sc>>({
   params,
   score,
 }: {
-  params: ScoreParams;
+  params: ParamsOfScore;
   score: Sc;
 }) => {
   expect(score).toBeInstanceOf(Score);

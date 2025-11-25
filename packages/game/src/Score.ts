@@ -3,16 +3,16 @@ import type { Integer } from "@repo/engine_core/types.js";
 import type { IndexOfPlayer } from "./Player.js";
 
 type IndexOfScore = Integer;
-type Points = number;
-
-interface ScoreParams {
+interface ParamsOfScore {
   readonly pointsOfEachPlayer: ReadonlyMap<IndexOfPlayer, Points>;
 }
 
-abstract class Score<Sc extends Score<Sc>> {
-  private readonly pointsOfEachPlayer: ScoreParams["pointsOfEachPlayer"];
+type Points = number;
 
-  public constructor({ pointsOfEachPlayer }: ScoreParams) {
+abstract class Score<Sc extends Score<Sc>> {
+  private readonly pointsOfEachPlayer: ParamsOfScore["pointsOfEachPlayer"];
+
+  public constructor({ pointsOfEachPlayer }: ParamsOfScore) {
     this.pointsOfEachPlayer = pointsOfEachPlayer;
   }
 
@@ -43,5 +43,5 @@ abstract class Score<Sc extends Score<Sc>> {
   }
 }
 
-export type { IndexOfScore, Points, ScoreParams };
+export type { IndexOfScore, ParamsOfScore, Points };
 export { Score };

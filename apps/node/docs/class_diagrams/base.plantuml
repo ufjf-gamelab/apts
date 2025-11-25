@@ -43,20 +43,20 @@ package move_package as "Move" {
 
   }
 
-  interface MoveParams {
+  interface ParamsOfMove {
     title: string
     description: string
   }
 
   abstract class Move {
-    - title: MoveParams::title
-    - description: MoveParams::description
+    - title: ParamsOfMove::title
+    - description: ParamsOfMove::description
     --
-    + getTitle(): MoveParams::title
-    + getDescription(): MoveParams::description
+    + getTitle(): ParamsOfMove::title
+    + getDescription(): ParamsOfMove::description
   }
-  Move::title --> MoveParams::title
-  Move::description --> MoveParams::description
+  Move::title --> ParamsOfMove::title
+  Move::description --> ParamsOfMove::description
 
   interface KeyedMove<M extends Move>  {
     move: M
@@ -81,34 +81,34 @@ package game_package as "Game" {
     name: string
   }
 
-  interface GameParams $M {
+  interface ParamsOfGame $M {
     name: string
     players: Map<Player, PlayerData>
     quantityOfSlots: Integer
     moves: M[]
   }
-  GameParams::players --> Player
-  GameParams::players --> PlayerData
-  GameParams::moves --> Move
+  ParamsOfGame::players --> Player
+  ParamsOfGame::players --> PlayerData
+  ParamsOfGame::moves --> Move
 
   abstract class Game $M {
-    - name: GameParams::name
-    - players: GameParams::players
-    # quantityOfSlots: GameParams::quantityOfSlots
+    - name: ParamsOfGame::name
+    - players: ParamsOfGame::players
+    # quantityOfSlots: ParamsOfGame::quantityOfSlots
     # moves: Map<MoveKey, M>
     --
     + getMove(key: MoveKey): M
     + getMoves(): Map<MoveKey, M>
-    + getName(): GameParams::name
+    + getName(): ParamsOfGame::name
     + getPlayerData(player: Player): PlayerData
-    + getPlayers(): GameParams::players
-    + getQuantityOfSlots(): GameParams::quantityOfSlots
+    + getPlayers(): ParamsOfGame::players
+    + getQuantityOfSlots(): ParamsOfGame::quantityOfSlots
     .. abstract ..
     + {abstract} getInitialState(): State<this>
   }
-  Game::name --> GameParams::name
-  Game::players --> GameParams::players
-  Game::quantityOfSlots --> GameParams::quantityOfSlots
+  Game::name --> ParamsOfGame::name
+  Game::players --> ParamsOfGame::players
+  Game::quantityOfSlots --> ParamsOfGame::quantityOfSlots
   Game::moves --> MoveKey
   Game::moves --> Move
   
@@ -160,31 +160,31 @@ package state_package as "State" {
   TurnOutcome::winner --> Player
   TurnOutcome::score --> Score
 
-  interface StateParams $G {
+  interface ParamsOfState $G {
     game: G
     player: Player
     score: Score
     slots: Slot[]
     keysOfTheValidMoves: Set<MoveKey>
   }
-  StateParams::game --> Game
-  StateParams::player --> Player
-  StateParams::score --> Score
-  StateParams::slots --> Slot
-  StateParams::keysOfTheValidMoves --> MoveKey
+  ParamsOfState::game --> Game
+  ParamsOfState::player --> Player
+  ParamsOfState::score --> Score
+  ParamsOfState::slots --> Slot
+  ParamsOfState::keysOfTheValidMoves --> MoveKey
 
   abstract class State $G {
-    # game: StateParams::game
-    # slots: StateParams::slots
+    # game: ParamsOfState::game
+    # slots: ParamsOfState::slots
     ..
-    # player: StateParams::player
-    # score: StateParams::score
-    # keysOfTheValidMoves: StateParams::keysOfTheValidMoves
+    # player: ParamsOfState::player
+    # score: ParamsOfState::score
+    # keysOfTheValidMoves: ParamsOfState::keysOfTheValidMoves
     --
-    + getGame(): StateParams::game
+    + getGame(): ParamsOfState::game
     + getKeysOfTheValidMoves(): Set<MoveKey>
     + getMaskFromValidMoves(): boolean[]
-    + getPlayer(): StateParams::lastPlayer
+    + getPlayer(): ParamsOfState::lastPlayer
     + getSlotAt(position: Position): Slot
     .. abstract ..
     + {abstract} getEncodedState(): EncodedState
@@ -196,10 +196,10 @@ package state_package as "State" {
     .. static ..
     + {static} setSlotInEncodedState(indexOfRow: Integer, indexOfColumn: Integer, channel: Channel, encodedState: EncodedState): void
   }
-  State::game --> StateParams::game
-  State::slots --> StateParams::slots
-  State::player --> StateParams::player
-  State::score --> StateParams::score
+  State::game --> ParamsOfState::game
+  State::slots --> ParamsOfState::slots
+  State::player --> ParamsOfState::player
+  State::score --> ParamsOfState::score
 
 }
 

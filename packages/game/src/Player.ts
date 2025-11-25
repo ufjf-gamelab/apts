@@ -2,16 +2,16 @@ import type { Char, Integer } from "@repo/engine_core/types.js";
 
 type IndexOfPlayer = Integer;
 
-interface PlayerParams {
+interface ParamsOfPlayer {
   readonly name: string;
   readonly symbol: Char;
 }
 
 abstract class Player<P extends Player<P>> {
-  private readonly name: PlayerParams["name"];
-  private readonly symbol: PlayerParams["symbol"];
+  private readonly name: ParamsOfPlayer["name"];
+  private readonly symbol: ParamsOfPlayer["symbol"];
 
-  public constructor({ name, symbol }: PlayerParams) {
+  public constructor({ name, symbol }: ParamsOfPlayer) {
     this.symbol = symbol;
     this.name = name;
   }
@@ -27,5 +27,5 @@ abstract class Player<P extends Player<P>> {
   }
 }
 
-export type { IndexOfPlayer, PlayerParams };
+export type { IndexOfPlayer, ParamsOfPlayer };
 export { Player };

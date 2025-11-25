@@ -98,7 +98,7 @@ const testPlayForAState = ({
         SnowballSlot
       >({
         expectedState,
-        indexOfMove: moveWithDataAndIndex.index,
+        indexOfMove: moveWithDataAndIndex.indexOfMove,
         state: stateWithData.state,
       });
     },
@@ -134,7 +134,7 @@ const testPlayForAStateWhenItIsInvalid = ({
         SnowballSlot
       >({
         expectedError,
-        indexOfMove: moveWithDataAndIndex.index,
+        indexOfMove: moveWithDataAndIndex.indexOfMove,
         state: stateWithData.state,
       });
     },
@@ -150,7 +150,7 @@ const testPlayForAStateWhenTheStateIsFinal = ({
 }) => {
   testPlayForAStateWhenItIsInvalid({
     expectedError: constructErrorForFinalState({
-      indexOfMove: moveWithDataAndIndex.index,
+      indexOfMove: moveWithDataAndIndex.indexOfMove,
     }),
     moveWithDataAndIndex,
     stateWithData,
@@ -166,7 +166,7 @@ const testPlayForAStateWhenTheMoveIsInvalid = ({
 }) => {
   testPlayForAStateWhenItIsInvalid({
     expectedError: constructErrorForInvalidMove({
-      indexOfMove: moveWithDataAndIndex.index,
+      indexOfMove: moveWithDataAndIndex.indexOfMove,
     }),
     moveWithDataAndIndex,
     stateWithData,

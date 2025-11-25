@@ -3,67 +3,67 @@ import {
   type SlotWithData,
 } from "@repo/game/Slot.test/setup.js";
 
-import { SnowballSlot, type SnowballSlotParams } from "../Slot.js";
-import { type RecordOfRequiredSnowballSlotParams } from "./records.js";
+import { type ParamsOfSnowballSlot, SnowballSlot } from "../Slot.js";
+import { type RecordOfRequiredParamsOfSnowballSlots } from "./records.js";
 
-type DerivedSnowballSlotParams = RequiredSnowballSlotParams;
+type DerivedParamsOfSnowballSlot = RequiredParamsOfSnowballSlot;
 
-type RequiredSnowballSlotParams = Pick<
-  SnowballSlotParams,
+type RequiredParamsOfSnowballSlot = Pick<
+  ParamsOfSnowballSlot,
   "indexOfOccupyingPlayer"
 >;
 
 type SnowballSlotWithData = SlotWithData<
   SnowballSlot,
-  RequiredSnowballSlotParams
+  RequiredParamsOfSnowballSlot
 >;
 
-const deriveSnowballSlotParams = ({
+const deriveParamsOfSnowballSlot = ({
   indexOfOccupyingPlayer,
-}: RequiredSnowballSlotParams): DerivedSnowballSlotParams => ({
+}: RequiredParamsOfSnowballSlot): DerivedParamsOfSnowballSlot => ({
   indexOfOccupyingPlayer,
 });
 
 const createSnowballSlot = ({
   indexOfOccupyingPlayer,
-}: DerivedSnowballSlotParams): SnowballSlot =>
+}: DerivedParamsOfSnowballSlot): SnowballSlot =>
   new SnowballSlot({
     indexOfOccupyingPlayer,
   });
 
 type ExtendedSnowballSlotsWithData<
-  ExtendedRecordOfRequiredSnowballSlotParams extends
-    RecordOfRequiredSnowballSlotParams,
+  ExtendedRecordOfRequiredParamsOfSnowballSlots extends
+    RecordOfRequiredParamsOfSnowballSlots,
 > = {
-  [K in keyof ExtendedRecordOfRequiredSnowballSlotParams]: {
-    keyOfSlot: keyof ExtendedRecordOfRequiredSnowballSlotParams;
-    params: RequiredSnowballSlotParams;
+  [K in keyof ExtendedRecordOfRequiredParamsOfSnowballSlots]: {
+    keyOfSlot: keyof ExtendedRecordOfRequiredParamsOfSnowballSlots;
+    params: RequiredParamsOfSnowballSlot;
     slot: SnowballSlot;
   };
 };
 
 const createSnowballSlotsWithData = <
-  ExtendedRecordOfRequiredSnowballSlotParams extends
-    RecordOfRequiredSnowballSlotParams,
+  ExtendedRecordOfRequiredParamsOfSnowballSlots extends
+    RecordOfRequiredParamsOfSnowballSlots,
 >({
   recordOfRequiredParams,
 }: {
-  recordOfRequiredParams: ExtendedRecordOfRequiredSnowballSlotParams;
-}): ExtendedSnowballSlotsWithData<ExtendedRecordOfRequiredSnowballSlotParams> =>
+  recordOfRequiredParams: ExtendedRecordOfRequiredParamsOfSnowballSlots;
+}): ExtendedSnowballSlotsWithData<ExtendedRecordOfRequiredParamsOfSnowballSlots> =>
   createSlotsWithData({
     create: createSnowballSlot,
-    deriveParams: deriveSnowballSlotParams,
+    deriveParams: deriveParamsOfSnowballSlot,
     recordOfRequiredParams,
   });
 
 export type {
-  DerivedSnowballSlotParams,
+  DerivedParamsOfSnowballSlot,
   ExtendedSnowballSlotsWithData,
-  RequiredSnowballSlotParams,
+  RequiredParamsOfSnowballSlot,
   SnowballSlotWithData,
 };
 export {
   createSnowballSlot,
   createSnowballSlotsWithData,
-  deriveSnowballSlotParams,
+  deriveParamsOfSnowballSlot,
 };

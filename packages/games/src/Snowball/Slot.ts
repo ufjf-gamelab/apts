@@ -1,15 +1,15 @@
 import type { IndexOfPlayer } from "@repo/game/Player.js";
 
-import { Slot, type SlotParams } from "@repo/game/Slot.js";
+import { type ParamsOfSlot, Slot } from "@repo/game/Slot.js";
 
-type SnowballSlotParams = SlotParams & {
+type ParamsOfSnowballSlot = ParamsOfSlot & {
   indexOfOccupyingPlayer: IndexOfPlayer | null;
 };
 
 class SnowballSlot extends Slot<SnowballSlot> {
-  private readonly indexOfOccupyingPlayer: SnowballSlotParams["indexOfOccupyingPlayer"];
+  private readonly indexOfOccupyingPlayer: ParamsOfSnowballSlot["indexOfOccupyingPlayer"];
 
-  public constructor({ indexOfOccupyingPlayer }: SnowballSlotParams) {
+  public constructor({ indexOfOccupyingPlayer }: ParamsOfSnowballSlot) {
     super();
     this.indexOfOccupyingPlayer = indexOfOccupyingPlayer;
   }
@@ -25,5 +25,5 @@ class SnowballSlot extends Slot<SnowballSlot> {
   }
 }
 
-export type { SnowballSlotParams };
+export type { ParamsOfSnowballSlot };
 export { SnowballSlot };

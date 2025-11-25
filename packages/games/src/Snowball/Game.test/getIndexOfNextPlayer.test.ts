@@ -35,13 +35,13 @@ const testGetIndexOfNextPlayer = ({
     test(
       createDescription({
         affix: params.game.keyOfGame,
-        expectedIndexOfNextPlayer: params.nextPlayer.index,
+        expectedIndexOfNextPlayer: params.nextPlayer.indexOfPlayer,
         keyOfState,
       }),
 
       () => {
         validateGetIndexOfNextPlayer({
-          expectedIndexOfNextPlayer: params.nextPlayer.index,
+          expectedIndexOfNextPlayer: params.nextPlayer.indexOfPlayer,
           state,
         });
       },

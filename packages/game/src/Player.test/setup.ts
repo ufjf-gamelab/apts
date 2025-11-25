@@ -1,14 +1,14 @@
 import {
   type IndexOfPlayer,
+  type ParamsOfPlayer,
   type Player,
-  type PlayerParams,
 } from "../Player.js";
 
-type DerivedPlayerParams = RequiredPlayerParams;
+type DerivedParamsOfPlayer = RequiredParamsOfPlayer;
 
 interface PlayerWithData<
   P extends Player<P>,
-  Params extends RequiredPlayerParams = RequiredPlayerParams,
+  Params extends RequiredParamsOfPlayer = RequiredParamsOfPlayer,
 > {
   keyOfPlayer: string;
   params: Params;
@@ -19,24 +19,24 @@ interface PlayerWithDataAndIndex<
   P extends Player<P>,
   ExtendedPlayerWithData extends PlayerWithData<P>,
 > {
-  index: IndexOfPlayer;
+  indexOfPlayer: IndexOfPlayer;
   player: ExtendedPlayerWithData;
 }
 
-type RequiredPlayerParams = Pick<PlayerParams, "name" | "symbol">;
+type RequiredParamsOfPlayer = Pick<ParamsOfPlayer, "name" | "symbol">;
 
-const derivePlayerParams = ({
+const deriveParamsOfPlayer = ({
   name,
   symbol,
-}: RequiredPlayerParams): DerivedPlayerParams => ({
+}: RequiredParamsOfPlayer): DerivedParamsOfPlayer => ({
   name,
   symbol,
 });
 
 const createPlayersWithData = <
   P extends Player<P>,
-  RequiredParams extends RequiredPlayerParams,
-  DerivedParams extends DerivedPlayerParams,
+  RequiredParams extends RequiredParamsOfPlayer,
+  DerivedParams extends DerivedParamsOfPlayer,
   RecordOfRequiredParams extends Record<string, RequiredParams>,
 >({
   create,
@@ -68,11 +68,11 @@ const createPlayersWithData = <
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Object.fromEntries cannot preserve mapped type keys
   return Object.fromEntries(
     Object.entries(recordOfRequiredParams).map(
-      ([key, requiredParams]) =>
+      ([keyOfPlayer, requiredParams]) =>
         [
-          key,
+          keyOfPlayer,
           {
-            keyOfPlayer: key,
+            keyOfPlayer,
             params: requiredParams,
             player: create(deriveParams(requiredParams)),
           } satisfies PlayerWithData<P, RequiredParams>,
@@ -82,9 +82,9 @@ const createPlayersWithData = <
 };
 
 export type {
-  DerivedPlayerParams,
+  DerivedParamsOfPlayer,
   PlayerWithData,
   PlayerWithDataAndIndex,
-  RequiredPlayerParams,
+  RequiredParamsOfPlayer,
 };
-export { createPlayersWithData, derivePlayerParams };
+export { createPlayersWithData, deriveParamsOfPlayer };

@@ -6,7 +6,9 @@ import type { Score } from "./Score.js";
 import type { Slot } from "./Slot.js";
 import type { State } from "./State.js";
 
-interface GameParams<
+type IndexOfGame = Integer;
+
+interface ParamsOfGame<
   M extends Move<M>,
   P extends Player<P>,
   Sl extends Slot<Sl>,
@@ -17,8 +19,6 @@ interface GameParams<
   readonly slots: readonly Sl[];
 }
 
-type IndexOfGame = Integer;
-
 abstract class Game<
   G extends Game<G, M, P, S, Sc, Sl>,
   M extends Move<M>,
@@ -27,12 +27,12 @@ abstract class Game<
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
 > {
-  private readonly moves: GameParams<M, P, Sl>["moves"];
-  private readonly name: GameParams<M, P, Sl>["name"];
-  private readonly players: GameParams<M, P, Sl>["players"];
-  private readonly slots: GameParams<M, P, Sl>["slots"];
+  private readonly moves: ParamsOfGame<M, P, Sl>["moves"];
+  private readonly name: ParamsOfGame<M, P, Sl>["name"];
+  private readonly players: ParamsOfGame<M, P, Sl>["players"];
+  private readonly slots: ParamsOfGame<M, P, Sl>["slots"];
 
-  public constructor({ moves, name, players, slots }: GameParams<M, P, Sl>) {
+  public constructor({ moves, name, players, slots }: ParamsOfGame<M, P, Sl>) {
     this.moves = moves.map((move) => move.clone());
     this.name = name;
     this.players = players.map((player) => player.clone());
@@ -109,5 +109,5 @@ abstract class Game<
   }
 }
 
-export type { GameParams, IndexOfGame };
+export type { IndexOfGame, ParamsOfGame };
 export { Game };

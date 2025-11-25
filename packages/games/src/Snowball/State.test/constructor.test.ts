@@ -42,7 +42,7 @@ const testConstructor = ({
 
         const newState = new SnowballState({
           game: game.game,
-          indexOfPlayer: player.index,
+          indexOfPlayer: player.indexOfPlayer,
           score: score.score,
           slots: extractedSlots,
         });
@@ -57,7 +57,7 @@ const testConstructor = ({
         >({
           params: {
             game: game.game,
-            indexOfPlayer: player.index,
+            indexOfPlayer: player.indexOfPlayer,
             score: score.score,
             slots: extractedSlots,
           },

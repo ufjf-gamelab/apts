@@ -1,18 +1,18 @@
 import {
   createSnowballPlayersWithData,
-  type RequiredSnowballPlayerParams,
+  type RequiredParamsOfSnowballPlayer,
 } from "./setup.js";
 
-type RecordOfRequiredSnowballPlayerParams = Record<
+type RecordOfRequiredParamsOfSnowballPlayers = Record<
   string,
-  RequiredSnowballPlayerParams
+  RequiredParamsOfSnowballPlayer
 >;
 
 const recordOfRequiredParamsOfPlayersInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO =
   {
     alice: { name: "Alice", symbol: "X" },
     bruno: { name: "Bruno", symbol: "O" },
-  } as const satisfies RecordOfRequiredSnowballPlayerParams;
+  } as const satisfies RecordOfRequiredParamsOfSnowballPlayers;
 
 const playersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO =
   createSnowballPlayersWithData({
@@ -20,7 +20,7 @@ const playersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO =
       recordOfRequiredParamsOfPlayersInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
   });
 
-export type { RecordOfRequiredSnowballPlayerParams };
+export type { RecordOfRequiredParamsOfSnowballPlayers };
 export {
   playersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
   recordOfRequiredParamsOfPlayersInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,

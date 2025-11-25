@@ -1,12 +1,12 @@
 import { expect } from "vitest";
 
-import { Player, type PlayerParams } from "../Player.js";
+import { type ParamsOfPlayer, Player } from "../Player.js";
 
 const validateConstructor = <P extends Player<P>>({
   params,
   player,
 }: {
-  params: PlayerParams;
+  params: ParamsOfPlayer;
   player: P;
 }) => {
   expect(player).toBeInstanceOf(Player);

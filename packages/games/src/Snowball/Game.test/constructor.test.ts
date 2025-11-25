@@ -8,7 +8,7 @@ import { expect, test } from "vitest";
 import { SnowballGame } from "../Game.js";
 import { gamesWithData } from "./records.js";
 import {
-  deriveSnowballGameParams,
+  deriveParamsOfSnowballGame,
   type SnowballGameWithData,
 } from "./setup.js";
 
@@ -35,7 +35,7 @@ const testConstructor = ({
 
       () => {
         const { moves, name, players, slots } =
-          deriveSnowballGameParams(params);
+          deriveParamsOfSnowballGame(params);
 
         const newGame = new SnowballGame({
           moves,

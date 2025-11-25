@@ -1,78 +1,78 @@
 import {
   createScoresWithData,
-  type DerivedScoreParams,
-  deriveScoreParams,
-  type RequiredScoreParams,
+  type DerivedParamsOfScore,
+  deriveParamsOfScore,
+  type RequiredParamsOfScore,
   type ScoreWithData,
 } from "@repo/game/Score.test/setup.js";
 
 import type { SnowballPlayer } from "../Player.js";
-import type { RecordOfRequiredSnowballScoreParams } from "./records.js";
+import type { RecordOfRequiredParamsOfSnowballScores } from "./records.js";
 
 import { SnowballScore } from "../Score.js";
 
-type DerivedSnowballScoreParams = Pick<
-  DerivedScoreParams<SnowballPlayer>,
+type DerivedParamsOfSnowballScore = Pick<
+  DerivedParamsOfScore<SnowballPlayer>,
   "pointsOfEachPlayer"
 >;
 
-type RequiredSnowballScoreParams = Pick<
-  RequiredScoreParams<SnowballPlayer>,
+type RequiredParamsOfSnowballScore = Pick<
+  RequiredParamsOfScore<SnowballPlayer>,
   "pointsOfEachPlayer"
 >;
 
 type SnowballScoreWithData = ScoreWithData<
   SnowballPlayer,
   SnowballScore,
-  RequiredSnowballScoreParams
+  RequiredParamsOfSnowballScore
 >;
 
-const deriveSnowballScoreParams = ({
+const deriveParamsOfSnowballScore = ({
   pointsOfEachPlayer,
-}: RequiredSnowballScoreParams): DerivedSnowballScoreParams =>
-  deriveScoreParams({
+}: RequiredParamsOfSnowballScore): DerivedParamsOfSnowballScore =>
+  deriveParamsOfScore({
     pointsOfEachPlayer,
   });
 
 const createSnowballScore = ({
   pointsOfEachPlayer,
-}: DerivedSnowballScoreParams): SnowballScore =>
+}: DerivedParamsOfSnowballScore): SnowballScore =>
   new SnowballScore({
     pointsOfEachPlayer,
   });
 
 type ExtendedSnowballScoresWithData<
-  ExtendedRecordOfRequiredSnowballScoreParams extends
-    RecordOfRequiredSnowballScoreParams,
+  ExtendedRecordOfRequiredParamsOfSnowballScores extends
+    RecordOfRequiredParamsOfSnowballScores,
 > = {
-  [K in keyof ExtendedRecordOfRequiredSnowballScoreParams]: {
-    keyOfScore: keyof ExtendedRecordOfRequiredSnowballScoreParams;
-    params: RequiredSnowballScoreParams;
+  [K in keyof ExtendedRecordOfRequiredParamsOfSnowballScores]: {
+    keyOfScore: keyof ExtendedRecordOfRequiredParamsOfSnowballScores;
+    params: RequiredParamsOfSnowballScore;
     score: SnowballScore;
   };
 };
 
 const createSnowballScoresWithData = <
-  ExtendedRecordOfRequiredSnowballScoreParams extends
-    RecordOfRequiredSnowballScoreParams,
+  ExtendedRecordOfRequiredParamsOfSnowballScores extends
+    RecordOfRequiredParamsOfSnowballScores,
 >({
   recordOfRequiredParams,
 }: {
-  recordOfRequiredParams: ExtendedRecordOfRequiredSnowballScoreParams;
-}): ExtendedSnowballScoresWithData<ExtendedRecordOfRequiredSnowballScoreParams> =>
+  recordOfRequiredParams: ExtendedRecordOfRequiredParamsOfSnowballScores;
+}): ExtendedSnowballScoresWithData<ExtendedRecordOfRequiredParamsOfSnowballScores> =>
   createScoresWithData({
     create: createSnowballScore,
-    deriveParams: deriveSnowballScoreParams,
+    deriveParams: deriveParamsOfSnowballScore,
     recordOfRequiredParams,
   });
 
 export type {
-  DerivedSnowballScoreParams,
-  RequiredSnowballScoreParams,
+  DerivedParamsOfSnowballScore,
+  RequiredParamsOfSnowballScore,
   SnowballScoreWithData,
 };
 export {
   createSnowballScore,
   createSnowballScoresWithData,
-  deriveSnowballScoreParams,
+  deriveParamsOfSnowballScore,
 };

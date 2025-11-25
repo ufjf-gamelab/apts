@@ -48,9 +48,9 @@ const createDescriptionForTestOfGetPointsOfEachPlayer = <
 }): string => {
   const returnedValueOfEachPlayer = expectedPointsOfEachPlayer
     .entries()
-    .map(([key, points]) =>
+    .map(([keyOfPlayer, points]) =>
       createDescriptionForPlayerAndItsPoints({
-        keyOfPlayer: key,
+        keyOfPlayer,
         points,
       }),
     )

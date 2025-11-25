@@ -6,7 +6,7 @@ import type { Score } from "../Score.js";
 import type { Slot } from "../Slot.js";
 import type { State } from "../State.js";
 
-import { Game, type GameParams } from "../Game.js";
+import { Game, type ParamsOfGame } from "../Game.js";
 
 const validateConstructor = <
   G extends Game<G, M, P, S, Sc, Sl>,
@@ -20,7 +20,7 @@ const validateConstructor = <
   params,
 }: {
   game: G;
-  params: GameParams<M, P, Sl>;
+  params: ParamsOfGame<M, P, Sl>;
 }) => {
   expect(game).toBeInstanceOf(Game);
   expect(game.getMoves()).toStrictEqual(params.moves);

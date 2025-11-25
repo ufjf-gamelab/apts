@@ -3,12 +3,12 @@ import { indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbol
 import { indexedSlotsWithDataInWhichAllSlotsAreEmpty } from "../Slot.test/indexedRecords.js";
 import {
   createSnowballGamesWithData,
-  type RequiredSnowballGameParams,
+  type RequiredParamsOfSnowballGame,
 } from "./setup.js";
 
-type RecordOfRequiredSnowballGameParams = Record<
+type RecordOfRequiredParamsOfSnowballGames = Record<
   string,
-  RequiredSnowballGameParams
+  RequiredParamsOfSnowballGame
 >;
 
 const recordOfRequiredParamsOfGames = {
@@ -18,11 +18,11 @@ const recordOfRequiredParamsOfGames = {
     players: indexedPlayersWithData,
     slots: indexedSlotsWithDataInWhichAllSlotsAreEmpty,
   },
-} as const satisfies RecordOfRequiredSnowballGameParams;
+} as const satisfies RecordOfRequiredParamsOfSnowballGames;
 
 const gamesWithData = createSnowballGamesWithData({
   recordOfRequiredParams: recordOfRequiredParamsOfGames,
 });
 
-export type { RecordOfRequiredSnowballGameParams };
+export type { RecordOfRequiredParamsOfSnowballGames };
 export { gamesWithData };

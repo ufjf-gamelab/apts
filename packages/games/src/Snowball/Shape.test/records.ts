@@ -53,18 +53,19 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
   /* Row 0 */
   horizontalLineOfLength5OnRow0AndColumn0: {
     params: {
-      indexOfPlayerWhoIsOccupyingShape: playersWithDataAndIndex.alice.index,
+      indexOfPlayerWhoIsOccupyingShape:
+        playersWithDataAndIndex.alice.indexOfPlayer,
       initialIndexOfColumn: 0,
       initialIndexOfRow: 0,
       shape: horizontalLine,
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northwestOfNorthwest.index,
-        slotsWithDataAndIndex.northOfNorthwest.index,
-        slotsWithDataAndIndex.northeastOfNorthwest.index,
-        slotsWithDataAndIndex.northwestOfNorth.index,
-        slotsWithDataAndIndex.northOfNorth.index,
+        slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+        slotsWithDataAndIndex.northOfNorthwest.indexOfSlot,
+        slotsWithDataAndIndex.northeastOfNorthwest.indexOfSlot,
+        slotsWithDataAndIndex.northwestOfNorth.indexOfSlot,
+        slotsWithDataAndIndex.northOfNorth.indexOfSlot,
       ],
       score: scoresWithData.aliceWith1PointAndBrunoWith0Points.score,
     },
@@ -78,11 +79,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northOfNorth.index,
-        slotsWithDataAndIndex.northeastOfNorth.index,
-        slotsWithDataAndIndex.northwestOfNortheast.index,
-        slotsWithDataAndIndex.northOfNortheast.index,
-        slotsWithDataAndIndex.northeastOfNortheast.index,
+        slotsWithDataAndIndex.northOfNorth.indexOfSlot,
+        slotsWithDataAndIndex.northeastOfNorth.indexOfSlot,
+        slotsWithDataAndIndex.northwestOfNortheast.indexOfSlot,
+        slotsWithDataAndIndex.northOfNortheast.indexOfSlot,
+        slotsWithDataAndIndex.northeastOfNortheast.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -96,10 +97,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northeastOfNorth.index,
-        slotsWithDataAndIndex.northwestOfNortheast.index,
-        slotsWithDataAndIndex.northOfNortheast.index,
-        slotsWithDataAndIndex.northeastOfNortheast.index,
+        slotsWithDataAndIndex.northeastOfNorth.indexOfSlot,
+        slotsWithDataAndIndex.northwestOfNortheast.indexOfSlot,
+        slotsWithDataAndIndex.northOfNortheast.indexOfSlot,
+        slotsWithDataAndIndex.northeastOfNortheast.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -113,9 +114,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northwestOfNortheast.index,
-        slotsWithDataAndIndex.northOfNortheast.index,
-        slotsWithDataAndIndex.northeastOfNortheast.index,
+        slotsWithDataAndIndex.northwestOfNortheast.indexOfSlot,
+        slotsWithDataAndIndex.northOfNortheast.indexOfSlot,
+        slotsWithDataAndIndex.northeastOfNortheast.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -129,8 +130,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northOfNortheast.index,
-        slotsWithDataAndIndex.northeastOfNortheast.index,
+        slotsWithDataAndIndex.northOfNortheast.indexOfSlot,
+        slotsWithDataAndIndex.northeastOfNortheast.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -143,7 +144,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
       shape: horizontalLine,
     },
     result: {
-      indexesOfSlots: [slotsWithDataAndIndex.northeastOfNortheast.index],
+      indexesOfSlots: [slotsWithDataAndIndex.northeastOfNortheast.indexOfSlot],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
@@ -168,10 +169,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northwestOfNorthwest.index,
-        slotsWithDataAndIndex.northOfNorthwest.index,
-        slotsWithDataAndIndex.northeastOfNorthwest.index,
-        slotsWithDataAndIndex.northwestOfNorth.index,
+        slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+        slotsWithDataAndIndex.northOfNorthwest.indexOfSlot,
+        slotsWithDataAndIndex.northeastOfNorthwest.indexOfSlot,
+        slotsWithDataAndIndex.northwestOfNorth.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -185,9 +186,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northwestOfNorthwest.index,
-        slotsWithDataAndIndex.northOfNorthwest.index,
-        slotsWithDataAndIndex.northeastOfNorthwest.index,
+        slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+        slotsWithDataAndIndex.northOfNorthwest.indexOfSlot,
+        slotsWithDataAndIndex.northeastOfNorthwest.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -201,8 +202,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northwestOfNorthwest.index,
-        slotsWithDataAndIndex.northOfNorthwest.index,
+        slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+        slotsWithDataAndIndex.northOfNorthwest.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -215,7 +216,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
       shape: horizontalLine,
     },
     result: {
-      indexesOfSlots: [slotsWithDataAndIndex.northwestOfNorthwest.index],
+      indexesOfSlots: [slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
@@ -235,18 +236,19 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
   /* Row 4 */
   horizontalLineOfLength5OnRow4AndColumn0: {
     params: {
-      indexOfPlayerWhoIsOccupyingShape: playersWithDataAndIndex.alice.index,
+      indexOfPlayerWhoIsOccupyingShape:
+        playersWithDataAndIndex.alice.indexOfPlayer,
       initialIndexOfColumn: 0,
       initialIndexOfRow: 4,
       shape: horizontalLine,
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.westOfWest.index,
-        slotsWithDataAndIndex.centerOfWest.index,
-        slotsWithDataAndIndex.eastOfWest.index,
-        slotsWithDataAndIndex.westOfCenter.index,
-        slotsWithDataAndIndex.centerOfCenter.index,
+        slotsWithDataAndIndex.westOfWest.indexOfSlot,
+        slotsWithDataAndIndex.centerOfWest.indexOfSlot,
+        slotsWithDataAndIndex.eastOfWest.indexOfSlot,
+        slotsWithDataAndIndex.westOfCenter.indexOfSlot,
+        slotsWithDataAndIndex.centerOfCenter.indexOfSlot,
       ],
       score: scoresWithData.aliceWith1PointAndBrunoWith0Points.score,
     },
@@ -260,11 +262,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.centerOfCenter.index,
-        slotsWithDataAndIndex.eastOfCenter.index,
-        slotsWithDataAndIndex.westOfEast.index,
-        slotsWithDataAndIndex.centerOfEast.index,
-        slotsWithDataAndIndex.eastOfEast.index,
+        slotsWithDataAndIndex.centerOfCenter.indexOfSlot,
+        slotsWithDataAndIndex.eastOfCenter.indexOfSlot,
+        slotsWithDataAndIndex.westOfEast.indexOfSlot,
+        slotsWithDataAndIndex.centerOfEast.indexOfSlot,
+        slotsWithDataAndIndex.eastOfEast.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -277,7 +279,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
       shape: horizontalLine,
     },
     result: {
-      indexesOfSlots: [slotsWithDataAndIndex.eastOfEast.index],
+      indexesOfSlots: [slotsWithDataAndIndex.eastOfEast.indexOfSlot],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
@@ -302,10 +304,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.westOfWest.index,
-        slotsWithDataAndIndex.centerOfWest.index,
-        slotsWithDataAndIndex.eastOfWest.index,
-        slotsWithDataAndIndex.westOfCenter.index,
+        slotsWithDataAndIndex.westOfWest.indexOfSlot,
+        slotsWithDataAndIndex.centerOfWest.indexOfSlot,
+        slotsWithDataAndIndex.eastOfWest.indexOfSlot,
+        slotsWithDataAndIndex.westOfCenter.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -319,9 +321,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.westOfWest.index,
-        slotsWithDataAndIndex.centerOfWest.index,
-        slotsWithDataAndIndex.eastOfWest.index,
+        slotsWithDataAndIndex.westOfWest.indexOfSlot,
+        slotsWithDataAndIndex.centerOfWest.indexOfSlot,
+        slotsWithDataAndIndex.eastOfWest.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -335,8 +337,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.westOfWest.index,
-        slotsWithDataAndIndex.centerOfWest.index,
+        slotsWithDataAndIndex.westOfWest.indexOfSlot,
+        slotsWithDataAndIndex.centerOfWest.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -349,7 +351,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
       shape: horizontalLine,
     },
     result: {
-      indexesOfSlots: [slotsWithDataAndIndex.westOfWest.index],
+      indexesOfSlots: [slotsWithDataAndIndex.westOfWest.indexOfSlot],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
@@ -376,29 +378,30 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.southwestOfSouthwest.index,
-        slotsWithDataAndIndex.southOfSouthwest.index,
-        slotsWithDataAndIndex.southeastOfSouthwest.index,
-        slotsWithDataAndIndex.southwestOfSouth.index,
-        slotsWithDataAndIndex.southOfSouth.index,
+        slotsWithDataAndIndex.southwestOfSouthwest.indexOfSlot,
+        slotsWithDataAndIndex.southOfSouthwest.indexOfSlot,
+        slotsWithDataAndIndex.southeastOfSouthwest.indexOfSlot,
+        slotsWithDataAndIndex.southwestOfSouth.indexOfSlot,
+        slotsWithDataAndIndex.southOfSouth.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   horizontalLineOfLength5OnRow8AndColumn4: {
     params: {
-      indexOfPlayerWhoIsOccupyingShape: playersWithDataAndIndex.bruno.index,
+      indexOfPlayerWhoIsOccupyingShape:
+        playersWithDataAndIndex.bruno.indexOfPlayer,
       initialIndexOfColumn: 4,
       initialIndexOfRow: 8,
       shape: horizontalLine,
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.southOfSouth.index,
-        slotsWithDataAndIndex.southeastOfSouth.index,
-        slotsWithDataAndIndex.southwestOfSoutheast.index,
-        slotsWithDataAndIndex.southOfSoutheast.index,
-        slotsWithDataAndIndex.southeastOfSoutheast.index,
+        slotsWithDataAndIndex.southOfSouth.indexOfSlot,
+        slotsWithDataAndIndex.southeastOfSouth.indexOfSlot,
+        slotsWithDataAndIndex.southwestOfSoutheast.indexOfSlot,
+        slotsWithDataAndIndex.southOfSoutheast.indexOfSlot,
+        slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith1Point.score,
     },
@@ -411,7 +414,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
       shape: horizontalLine,
     },
     result: {
-      indexesOfSlots: [slotsWithDataAndIndex.southeastOfSoutheast.index],
+      indexesOfSlots: [slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
@@ -436,10 +439,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.southwestOfSouthwest.index,
-        slotsWithDataAndIndex.southOfSouthwest.index,
-        slotsWithDataAndIndex.southeastOfSouthwest.index,
-        slotsWithDataAndIndex.southwestOfSouth.index,
+        slotsWithDataAndIndex.southwestOfSouthwest.indexOfSlot,
+        slotsWithDataAndIndex.southOfSouthwest.indexOfSlot,
+        slotsWithDataAndIndex.southeastOfSouthwest.indexOfSlot,
+        slotsWithDataAndIndex.southwestOfSouth.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -453,9 +456,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.southwestOfSouthwest.index,
-        slotsWithDataAndIndex.southOfSouthwest.index,
-        slotsWithDataAndIndex.southeastOfSouthwest.index,
+        slotsWithDataAndIndex.southwestOfSouthwest.indexOfSlot,
+        slotsWithDataAndIndex.southOfSouthwest.indexOfSlot,
+        slotsWithDataAndIndex.southeastOfSouthwest.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -470,8 +473,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.southwestOfSouthwest.index,
-        slotsWithDataAndIndex.southOfSouthwest.index,
+        slotsWithDataAndIndex.southwestOfSouthwest.indexOfSlot,
+        slotsWithDataAndIndex.southOfSouthwest.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -484,7 +487,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
       shape: horizontalLine,
     },
     result: {
-      indexesOfSlots: [slotsWithDataAndIndex.southwestOfSouthwest.index],
+      indexesOfSlots: [slotsWithDataAndIndex.southwestOfSouthwest.indexOfSlot],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
@@ -505,36 +508,38 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreHorizontalLines = {
 const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
   verticalLineOfLength5OnRow0AndColumn4: {
     params: {
-      indexOfPlayerWhoIsOccupyingShape: playersWithDataAndIndex.alice.index,
+      indexOfPlayerWhoIsOccupyingShape:
+        playersWithDataAndIndex.alice.indexOfPlayer,
       initialIndexOfColumn: 4,
       initialIndexOfRow: 0,
       shape: verticalLine,
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northOfNorth.index,
-        slotsWithDataAndIndex.centerOfNorth.index,
-        slotsWithDataAndIndex.southOfNorth.index,
-        slotsWithDataAndIndex.northOfCenter.index,
-        slotsWithDataAndIndex.centerOfCenter.index,
+        slotsWithDataAndIndex.northOfNorth.indexOfSlot,
+        slotsWithDataAndIndex.centerOfNorth.indexOfSlot,
+        slotsWithDataAndIndex.southOfNorth.indexOfSlot,
+        slotsWithDataAndIndex.northOfCenter.indexOfSlot,
+        slotsWithDataAndIndex.centerOfCenter.indexOfSlot,
       ],
       score: scoresWithData.aliceWith1PointAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRow0AndColumn8: {
     params: {
-      indexOfPlayerWhoIsOccupyingShape: playersWithDataAndIndex.bruno.index,
+      indexOfPlayerWhoIsOccupyingShape:
+        playersWithDataAndIndex.bruno.indexOfPlayer,
       initialIndexOfColumn: 8,
       initialIndexOfRow: 0,
       shape: verticalLine,
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northeastOfNortheast.index,
-        slotsWithDataAndIndex.eastOfNortheast.index,
-        slotsWithDataAndIndex.southeastOfNortheast.index,
-        slotsWithDataAndIndex.northeastOfEast.index,
-        slotsWithDataAndIndex.eastOfEast.index,
+        slotsWithDataAndIndex.northeastOfNortheast.indexOfSlot,
+        slotsWithDataAndIndex.eastOfNortheast.indexOfSlot,
+        slotsWithDataAndIndex.southeastOfNortheast.indexOfSlot,
+        slotsWithDataAndIndex.northeastOfEast.indexOfSlot,
+        slotsWithDataAndIndex.eastOfEast.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith1Point.score,
     },
@@ -560,11 +565,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.westOfWest.index,
-        slotsWithDataAndIndex.southwestOfWest.index,
-        slotsWithDataAndIndex.northwestOfSouthwest.index,
-        slotsWithDataAndIndex.westOfSouthwest.index,
-        slotsWithDataAndIndex.southwestOfSouthwest.index,
+        slotsWithDataAndIndex.westOfWest.indexOfSlot,
+        slotsWithDataAndIndex.southwestOfWest.indexOfSlot,
+        slotsWithDataAndIndex.northwestOfSouthwest.indexOfSlot,
+        slotsWithDataAndIndex.westOfSouthwest.indexOfSlot,
+        slotsWithDataAndIndex.southwestOfSouthwest.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -578,29 +583,30 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.centerOfCenter.index,
-        slotsWithDataAndIndex.southOfCenter.index,
-        slotsWithDataAndIndex.northOfSouth.index,
-        slotsWithDataAndIndex.centerOfSouth.index,
-        slotsWithDataAndIndex.southOfSouth.index,
+        slotsWithDataAndIndex.centerOfCenter.indexOfSlot,
+        slotsWithDataAndIndex.southOfCenter.indexOfSlot,
+        slotsWithDataAndIndex.northOfSouth.indexOfSlot,
+        slotsWithDataAndIndex.centerOfSouth.indexOfSlot,
+        slotsWithDataAndIndex.southOfSouth.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
   verticalLineOfLength5OnRow4AndColumn8: {
     params: {
-      indexOfPlayerWhoIsOccupyingShape: playersWithDataAndIndex.bruno.index,
+      indexOfPlayerWhoIsOccupyingShape:
+        playersWithDataAndIndex.bruno.indexOfPlayer,
       initialIndexOfColumn: 8,
       initialIndexOfRow: 4,
       shape: verticalLine,
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.eastOfEast.index,
-        slotsWithDataAndIndex.southeastOfEast.index,
-        slotsWithDataAndIndex.northeastOfSoutheast.index,
-        slotsWithDataAndIndex.eastOfSoutheast.index,
-        slotsWithDataAndIndex.southeastOfSoutheast.index,
+        slotsWithDataAndIndex.eastOfEast.indexOfSlot,
+        slotsWithDataAndIndex.southeastOfEast.indexOfSlot,
+        slotsWithDataAndIndex.northeastOfSoutheast.indexOfSlot,
+        slotsWithDataAndIndex.eastOfSoutheast.indexOfSlot,
+        slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith1Point.score,
     },
@@ -614,10 +620,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.southwestOfWest.index,
-        slotsWithDataAndIndex.northwestOfSouthwest.index,
-        slotsWithDataAndIndex.westOfSouthwest.index,
-        slotsWithDataAndIndex.southwestOfSouthwest.index,
+        slotsWithDataAndIndex.southwestOfWest.indexOfSlot,
+        slotsWithDataAndIndex.northwestOfSouthwest.indexOfSlot,
+        slotsWithDataAndIndex.westOfSouthwest.indexOfSlot,
+        slotsWithDataAndIndex.southwestOfSouthwest.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -631,10 +637,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.southOfCenter.index,
-        slotsWithDataAndIndex.northOfSouth.index,
-        slotsWithDataAndIndex.centerOfSouth.index,
-        slotsWithDataAndIndex.southOfSouth.index,
+        slotsWithDataAndIndex.southOfCenter.indexOfSlot,
+        slotsWithDataAndIndex.northOfSouth.indexOfSlot,
+        slotsWithDataAndIndex.centerOfSouth.indexOfSlot,
+        slotsWithDataAndIndex.southOfSouth.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -648,10 +654,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.southeastOfEast.index,
-        slotsWithDataAndIndex.northeastOfSoutheast.index,
-        slotsWithDataAndIndex.eastOfSoutheast.index,
-        slotsWithDataAndIndex.southeastOfSoutheast.index,
+        slotsWithDataAndIndex.southeastOfEast.indexOfSlot,
+        slotsWithDataAndIndex.northeastOfSoutheast.indexOfSlot,
+        slotsWithDataAndIndex.eastOfSoutheast.indexOfSlot,
+        slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -665,9 +671,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northwestOfSouthwest.index,
-        slotsWithDataAndIndex.westOfSouthwest.index,
-        slotsWithDataAndIndex.southwestOfSouthwest.index,
+        slotsWithDataAndIndex.northwestOfSouthwest.indexOfSlot,
+        slotsWithDataAndIndex.westOfSouthwest.indexOfSlot,
+        slotsWithDataAndIndex.southwestOfSouthwest.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -681,9 +687,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northOfSouth.index,
-        slotsWithDataAndIndex.centerOfSouth.index,
-        slotsWithDataAndIndex.southOfSouth.index,
+        slotsWithDataAndIndex.northOfSouth.indexOfSlot,
+        slotsWithDataAndIndex.centerOfSouth.indexOfSlot,
+        slotsWithDataAndIndex.southOfSouth.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -697,9 +703,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northeastOfSoutheast.index,
-        slotsWithDataAndIndex.eastOfSoutheast.index,
-        slotsWithDataAndIndex.southeastOfSoutheast.index,
+        slotsWithDataAndIndex.northeastOfSoutheast.indexOfSlot,
+        slotsWithDataAndIndex.eastOfSoutheast.indexOfSlot,
+        slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -713,8 +719,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.westOfSouthwest.index,
-        slotsWithDataAndIndex.southwestOfSouthwest.index,
+        slotsWithDataAndIndex.westOfSouthwest.indexOfSlot,
+        slotsWithDataAndIndex.southwestOfSouthwest.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -728,8 +734,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.centerOfSouth.index,
-        slotsWithDataAndIndex.southOfSouth.index,
+        slotsWithDataAndIndex.centerOfSouth.indexOfSlot,
+        slotsWithDataAndIndex.southOfSouth.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -743,8 +749,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.eastOfSoutheast.index,
-        slotsWithDataAndIndex.southeastOfSoutheast.index,
+        slotsWithDataAndIndex.eastOfSoutheast.indexOfSlot,
+        slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -757,7 +763,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
       shape: verticalLine,
     },
     result: {
-      indexesOfSlots: [slotsWithDataAndIndex.southwestOfSouthwest.index],
+      indexesOfSlots: [slotsWithDataAndIndex.southwestOfSouthwest.indexOfSlot],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
@@ -769,7 +775,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
       shape: verticalLine,
     },
     result: {
-      indexesOfSlots: [slotsWithDataAndIndex.southOfSouth.index],
+      indexesOfSlots: [slotsWithDataAndIndex.southOfSouth.indexOfSlot],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
@@ -781,7 +787,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
       shape: verticalLine,
     },
     result: {
-      indexesOfSlots: [slotsWithDataAndIndex.southeastOfSoutheast.index],
+      indexesOfSlots: [slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
@@ -830,10 +836,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northwestOfNorthwest.index,
-        slotsWithDataAndIndex.westOfNorthwest.index,
-        slotsWithDataAndIndex.southwestOfNorthwest.index,
-        slotsWithDataAndIndex.northwestOfWest.index,
+        slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+        slotsWithDataAndIndex.westOfNorthwest.indexOfSlot,
+        slotsWithDataAndIndex.southwestOfNorthwest.indexOfSlot,
+        slotsWithDataAndIndex.northwestOfWest.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -847,10 +853,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northOfNorth.index,
-        slotsWithDataAndIndex.centerOfNorth.index,
-        slotsWithDataAndIndex.southOfNorth.index,
-        slotsWithDataAndIndex.northOfCenter.index,
+        slotsWithDataAndIndex.northOfNorth.indexOfSlot,
+        slotsWithDataAndIndex.centerOfNorth.indexOfSlot,
+        slotsWithDataAndIndex.southOfNorth.indexOfSlot,
+        slotsWithDataAndIndex.northOfCenter.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -864,10 +870,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northeastOfNortheast.index,
-        slotsWithDataAndIndex.eastOfNortheast.index,
-        slotsWithDataAndIndex.southeastOfNortheast.index,
-        slotsWithDataAndIndex.northeastOfEast.index,
+        slotsWithDataAndIndex.northeastOfNortheast.indexOfSlot,
+        slotsWithDataAndIndex.eastOfNortheast.indexOfSlot,
+        slotsWithDataAndIndex.southeastOfNortheast.indexOfSlot,
+        slotsWithDataAndIndex.northeastOfEast.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -881,9 +887,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northwestOfNorthwest.index,
-        slotsWithDataAndIndex.westOfNorthwest.index,
-        slotsWithDataAndIndex.southwestOfNorthwest.index,
+        slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+        slotsWithDataAndIndex.westOfNorthwest.indexOfSlot,
+        slotsWithDataAndIndex.southwestOfNorthwest.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -897,9 +903,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northOfNorth.index,
-        slotsWithDataAndIndex.centerOfNorth.index,
-        slotsWithDataAndIndex.southOfNorth.index,
+        slotsWithDataAndIndex.northOfNorth.indexOfSlot,
+        slotsWithDataAndIndex.centerOfNorth.indexOfSlot,
+        slotsWithDataAndIndex.southOfNorth.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -913,9 +919,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northeastOfNortheast.index,
-        slotsWithDataAndIndex.eastOfNortheast.index,
-        slotsWithDataAndIndex.southeastOfNortheast.index,
+        slotsWithDataAndIndex.northeastOfNortheast.indexOfSlot,
+        slotsWithDataAndIndex.eastOfNortheast.indexOfSlot,
+        slotsWithDataAndIndex.southeastOfNortheast.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -929,8 +935,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northwestOfNorthwest.index,
-        slotsWithDataAndIndex.westOfNorthwest.index,
+        slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+        slotsWithDataAndIndex.westOfNorthwest.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -944,8 +950,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northOfNorth.index,
-        slotsWithDataAndIndex.centerOfNorth.index,
+        slotsWithDataAndIndex.northOfNorth.indexOfSlot,
+        slotsWithDataAndIndex.centerOfNorth.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -959,8 +965,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
     },
     result: {
       indexesOfSlots: [
-        slotsWithDataAndIndex.northeastOfNortheast.index,
-        slotsWithDataAndIndex.eastOfNortheast.index,
+        slotsWithDataAndIndex.northeastOfNortheast.indexOfSlot,
+        slotsWithDataAndIndex.eastOfNortheast.indexOfSlot,
       ],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
@@ -973,7 +979,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
       shape: verticalLine,
     },
     result: {
-      indexesOfSlots: [slotsWithDataAndIndex.northwestOfNorthwest.index],
+      indexesOfSlots: [slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
@@ -985,7 +991,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
       shape: verticalLine,
     },
     result: {
-      indexesOfSlots: [slotsWithDataAndIndex.northOfNorth.index],
+      indexesOfSlots: [slotsWithDataAndIndex.northOfNorth.indexOfSlot],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
@@ -997,7 +1003,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreVerticalLines = {
       shape: verticalLine,
     },
     result: {
-      indexesOfSlots: [slotsWithDataAndIndex.northeastOfNortheast.index],
+      indexesOfSlots: [slotsWithDataAndIndex.northeastOfNortheast.indexOfSlot],
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
     },
   },
@@ -1044,18 +1050,19 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
     /* Row 0 */
     principalDiagonalOfLength5OnRow0AndColumn0: {
       params: {
-        indexOfPlayerWhoIsOccupyingShape: playersWithDataAndIndex.alice.index,
+        indexOfPlayerWhoIsOccupyingShape:
+          playersWithDataAndIndex.alice.indexOfPlayer,
         initialIndexOfColumn: 0,
         initialIndexOfRow: 0,
         shape: principalDiagonal,
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNorthwest.index,
-          slotsWithDataAndIndex.centerOfNorthwest.index,
-          slotsWithDataAndIndex.southeastOfNorthwest.index,
-          slotsWithDataAndIndex.northwestOfCenter.index,
-          slotsWithDataAndIndex.centerOfCenter.index,
+          slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.centerOfCenter.indexOfSlot,
         ],
         score: scoresWithData.aliceWith1PointAndBrunoWith0Points.score,
       },
@@ -1069,11 +1076,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfNorthwest.index,
-          slotsWithDataAndIndex.eastOfNorthwest.index,
-          slotsWithDataAndIndex.southwestOfNorth.index,
-          slotsWithDataAndIndex.northOfCenter.index,
-          slotsWithDataAndIndex.eastOfCenter.index,
+          slotsWithDataAndIndex.northOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.eastOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.northOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.eastOfCenter.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1087,11 +1094,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northeastOfNorthwest.index,
-          slotsWithDataAndIndex.westOfNorth.index,
-          slotsWithDataAndIndex.southOfNorth.index,
-          slotsWithDataAndIndex.northeastOfCenter.index,
-          slotsWithDataAndIndex.westOfEast.index,
+          slotsWithDataAndIndex.northeastOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.westOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.southOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.westOfEast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1105,11 +1112,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNorth.index,
-          slotsWithDataAndIndex.centerOfNorth.index,
-          slotsWithDataAndIndex.southeastOfNorth.index,
-          slotsWithDataAndIndex.northwestOfEast.index,
-          slotsWithDataAndIndex.centerOfEast.index,
+          slotsWithDataAndIndex.northwestOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfEast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfEast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1123,11 +1130,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfNorth.index,
-          slotsWithDataAndIndex.eastOfNorth.index,
-          slotsWithDataAndIndex.southwestOfNortheast.index,
-          slotsWithDataAndIndex.northOfEast.index,
-          slotsWithDataAndIndex.eastOfEast.index,
+          slotsWithDataAndIndex.northOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.eastOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.northOfEast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfEast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1141,10 +1148,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northeastOfNorth.index,
-          slotsWithDataAndIndex.westOfNortheast.index,
-          slotsWithDataAndIndex.southOfNortheast.index,
-          slotsWithDataAndIndex.northeastOfEast.index,
+          slotsWithDataAndIndex.northeastOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.westOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.southOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfEast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1158,9 +1165,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNortheast.index,
-          slotsWithDataAndIndex.centerOfNortheast.index,
-          slotsWithDataAndIndex.southeastOfNortheast.index,
+          slotsWithDataAndIndex.northwestOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfNortheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1174,8 +1181,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfNortheast.index,
-          slotsWithDataAndIndex.eastOfNortheast.index,
+          slotsWithDataAndIndex.northOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfNortheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1188,7 +1195,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northeastOfNortheast.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.northeastOfNortheast.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -1213,10 +1222,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.westOfNorthwest.index,
-          slotsWithDataAndIndex.southOfNorthwest.index,
-          slotsWithDataAndIndex.northeastOfWest.index,
-          slotsWithDataAndIndex.westOfCenter.index,
+          slotsWithDataAndIndex.westOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfWest.indexOfSlot,
+          slotsWithDataAndIndex.westOfCenter.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1230,9 +1239,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.southwestOfNorthwest.index,
-          slotsWithDataAndIndex.northOfWest.index,
-          slotsWithDataAndIndex.eastOfWest.index,
+          slotsWithDataAndIndex.southwestOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northOfWest.indexOfSlot,
+          slotsWithDataAndIndex.eastOfWest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1246,8 +1255,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfWest.index,
-          slotsWithDataAndIndex.centerOfWest.index,
+          slotsWithDataAndIndex.northwestOfWest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfWest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1260,7 +1269,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.westOfWest.index],
+        indexesOfSlots: [slotsWithDataAndIndex.westOfWest.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -1280,18 +1289,19 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
     /* Row 1 */
     principalDiagonalOfLength5OnRow1AndColumn1: {
       params: {
-        indexOfPlayerWhoIsOccupyingShape: playersWithDataAndIndex.alice.index,
+        indexOfPlayerWhoIsOccupyingShape:
+          playersWithDataAndIndex.alice.indexOfPlayer,
         initialIndexOfColumn: 1,
         initialIndexOfRow: 1,
         shape: principalDiagonal,
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfNorthwest.index,
-          slotsWithDataAndIndex.southeastOfNorthwest.index,
-          slotsWithDataAndIndex.northwestOfCenter.index,
-          slotsWithDataAndIndex.centerOfCenter.index,
-          slotsWithDataAndIndex.southeastOfCenter.index,
+          slotsWithDataAndIndex.centerOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.centerOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfCenter.indexOfSlot,
         ],
         score: scoresWithData.aliceWith1PointAndBrunoWith0Points.score,
       },
@@ -1305,11 +1315,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfNorth.index,
-          slotsWithDataAndIndex.southeastOfNorth.index,
-          slotsWithDataAndIndex.northwestOfEast.index,
-          slotsWithDataAndIndex.centerOfEast.index,
-          slotsWithDataAndIndex.southeastOfEast.index,
+          slotsWithDataAndIndex.centerOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfEast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfEast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfEast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1323,10 +1333,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.eastOfNorth.index,
-          slotsWithDataAndIndex.southwestOfNortheast.index,
-          slotsWithDataAndIndex.northOfEast.index,
-          slotsWithDataAndIndex.eastOfEast.index,
+          slotsWithDataAndIndex.eastOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.northOfEast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfEast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1340,8 +1350,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfNortheast.index,
-          slotsWithDataAndIndex.southeastOfNortheast.index,
+          slotsWithDataAndIndex.centerOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfNortheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1354,7 +1364,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.southwestOfWest.index],
+        indexesOfSlots: [slotsWithDataAndIndex.southwestOfWest.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -1369,11 +1379,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.southeastOfNorthwest.index,
-          slotsWithDataAndIndex.northwestOfCenter.index,
-          slotsWithDataAndIndex.centerOfCenter.index,
-          slotsWithDataAndIndex.southeastOfCenter.index,
-          slotsWithDataAndIndex.northwestOfSoutheast.index,
+          slotsWithDataAndIndex.southeastOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.centerOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1387,11 +1397,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.southOfNorth.index,
-          slotsWithDataAndIndex.northeastOfCenter.index,
-          slotsWithDataAndIndex.westOfEast.index,
-          slotsWithDataAndIndex.southOfEast.index,
-          slotsWithDataAndIndex.northeastOfSoutheast.index,
+          slotsWithDataAndIndex.southOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.westOfEast.indexOfSlot,
+          slotsWithDataAndIndex.southOfEast.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1405,10 +1415,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.southeastOfNorth.index,
-          slotsWithDataAndIndex.northwestOfEast.index,
-          slotsWithDataAndIndex.centerOfEast.index,
-          slotsWithDataAndIndex.southeastOfEast.index,
+          slotsWithDataAndIndex.southeastOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfEast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfEast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfEast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1422,9 +1432,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.southwestOfNortheast.index,
-          slotsWithDataAndIndex.northOfEast.index,
-          slotsWithDataAndIndex.eastOfEast.index,
+          slotsWithDataAndIndex.southwestOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.northOfEast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfEast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1437,7 +1447,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northwestOfSouthwest.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.northwestOfSouthwest.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -1452,11 +1464,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfCenter.index,
-          slotsWithDataAndIndex.centerOfCenter.index,
-          slotsWithDataAndIndex.southeastOfCenter.index,
-          slotsWithDataAndIndex.northwestOfSoutheast.index,
-          slotsWithDataAndIndex.centerOfSoutheast.index,
+          slotsWithDataAndIndex.northwestOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.centerOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1470,11 +1482,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfCenter.index,
-          slotsWithDataAndIndex.eastOfCenter.index,
-          slotsWithDataAndIndex.southwestOfEast.index,
-          slotsWithDataAndIndex.northOfSoutheast.index,
-          slotsWithDataAndIndex.eastOfSoutheast.index,
+          slotsWithDataAndIndex.northOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.eastOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfEast.indexOfSlot,
+          slotsWithDataAndIndex.northOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1488,10 +1500,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northeastOfCenter.index,
-          slotsWithDataAndIndex.westOfEast.index,
-          slotsWithDataAndIndex.southOfEast.index,
-          slotsWithDataAndIndex.northeastOfSoutheast.index,
+          slotsWithDataAndIndex.northeastOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.westOfEast.indexOfSlot,
+          slotsWithDataAndIndex.southOfEast.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1504,7 +1516,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.westOfSouthwest.index],
+        indexesOfSlots: [slotsWithDataAndIndex.westOfSouthwest.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -1519,11 +1531,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.westOfWest.index,
-          slotsWithDataAndIndex.southOfWest.index,
-          slotsWithDataAndIndex.northeastOfSouthwest.index,
-          slotsWithDataAndIndex.westOfSouth.index,
-          slotsWithDataAndIndex.southOfSouth.index,
+          slotsWithDataAndIndex.westOfWest.indexOfSlot,
+          slotsWithDataAndIndex.southOfWest.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.westOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.southOfSouth.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1537,11 +1549,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfCenter.index,
-          slotsWithDataAndIndex.southeastOfCenter.index,
-          slotsWithDataAndIndex.northwestOfSoutheast.index,
-          slotsWithDataAndIndex.centerOfSoutheast.index,
-          slotsWithDataAndIndex.southeastOfSoutheast.index,
+          slotsWithDataAndIndex.centerOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1554,7 +1566,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.southwestOfSouthwest.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.southwestOfSouthwest.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -1569,10 +1583,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.southwestOfCenter.index,
-          slotsWithDataAndIndex.northOfSouth.index,
-          slotsWithDataAndIndex.eastOfSouth.index,
-          slotsWithDataAndIndex.southwestOfSoutheast.index,
+          slotsWithDataAndIndex.southwestOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.northOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.eastOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1586,10 +1600,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.southOfCenter.index,
-          slotsWithDataAndIndex.northeastOfSouth.index,
-          slotsWithDataAndIndex.westOfSoutheast.index,
-          slotsWithDataAndIndex.southOfSoutheast.index,
+          slotsWithDataAndIndex.southOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.westOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1603,10 +1617,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.southeastOfCenter.index,
-          slotsWithDataAndIndex.northwestOfSoutheast.index,
-          slotsWithDataAndIndex.centerOfSoutheast.index,
-          slotsWithDataAndIndex.southeastOfSoutheast.index,
+          slotsWithDataAndIndex.southeastOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1634,9 +1648,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northeastOfSouthwest.index,
-          slotsWithDataAndIndex.westOfSouth.index,
-          slotsWithDataAndIndex.southOfSouth.index,
+          slotsWithDataAndIndex.northeastOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.westOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.southOfSouth.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1650,9 +1664,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfSouth.index,
-          slotsWithDataAndIndex.eastOfSouth.index,
-          slotsWithDataAndIndex.southwestOfSoutheast.index,
+          slotsWithDataAndIndex.northOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.eastOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1666,9 +1680,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfSoutheast.index,
-          slotsWithDataAndIndex.centerOfSoutheast.index,
-          slotsWithDataAndIndex.southeastOfSoutheast.index,
+          slotsWithDataAndIndex.northwestOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1684,8 +1698,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfSouthwest.index,
-          slotsWithDataAndIndex.southeastOfSouthwest.index,
+          slotsWithDataAndIndex.centerOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSouthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1699,8 +1713,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfSouth.index,
-          slotsWithDataAndIndex.southeastOfSouth.index,
+          slotsWithDataAndIndex.centerOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSouth.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1714,8 +1728,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfSoutheast.index,
-          slotsWithDataAndIndex.southeastOfSoutheast.index,
+          slotsWithDataAndIndex.centerOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1730,7 +1744,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.southwestOfSouthwest.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.southwestOfSouthwest.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -1742,7 +1758,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.southOfSouth.index],
+        indexesOfSlots: [slotsWithDataAndIndex.southOfSouth.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -1754,7 +1770,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.southeastOfSoutheast.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -1795,10 +1813,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfNorthwest.index,
-          slotsWithDataAndIndex.eastOfNorthwest.index,
-          slotsWithDataAndIndex.southwestOfNorth.index,
-          slotsWithDataAndIndex.northOfCenter.index,
+          slotsWithDataAndIndex.northOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.eastOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.northOfCenter.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1812,10 +1830,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfNorth.index,
-          slotsWithDataAndIndex.eastOfNorth.index,
-          slotsWithDataAndIndex.southwestOfNortheast.index,
-          slotsWithDataAndIndex.northOfEast.index,
+          slotsWithDataAndIndex.northOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.eastOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.northOfEast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1829,10 +1847,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northeastOfNorth.index,
-          slotsWithDataAndIndex.westOfNortheast.index,
-          slotsWithDataAndIndex.southOfNortheast.index,
-          slotsWithDataAndIndex.northeastOfEast.index,
+          slotsWithDataAndIndex.northeastOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.westOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.southOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfEast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1846,9 +1864,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNortheast.index,
-          slotsWithDataAndIndex.centerOfNortheast.index,
-          slotsWithDataAndIndex.southeastOfNortheast.index,
+          slotsWithDataAndIndex.northwestOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfNortheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1874,10 +1892,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNorthwest.index,
-          slotsWithDataAndIndex.centerOfNorthwest.index,
-          slotsWithDataAndIndex.southeastOfNorthwest.index,
-          slotsWithDataAndIndex.northwestOfCenter.index,
+          slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfCenter.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1891,9 +1909,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.westOfNorthwest.index,
-          slotsWithDataAndIndex.southOfNorthwest.index,
-          slotsWithDataAndIndex.northeastOfWest.index,
+          slotsWithDataAndIndex.westOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfWest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1907,8 +1925,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.southwestOfNorthwest.index,
-          slotsWithDataAndIndex.northOfWest.index,
+          slotsWithDataAndIndex.southwestOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northOfWest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1921,7 +1939,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northwestOfWest.index],
+        indexesOfSlots: [slotsWithDataAndIndex.northwestOfWest.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -1936,9 +1954,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northeastOfNorthwest.index,
-          slotsWithDataAndIndex.westOfNorth.index,
-          slotsWithDataAndIndex.southOfNorth.index,
+          slotsWithDataAndIndex.northeastOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.westOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.southOfNorth.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1952,9 +1970,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNortheast.index,
-          slotsWithDataAndIndex.centerOfNortheast.index,
-          slotsWithDataAndIndex.southeastOfNortheast.index,
+          slotsWithDataAndIndex.northwestOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfNortheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1968,8 +1986,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfNortheast.index,
-          slotsWithDataAndIndex.eastOfNortheast.index,
+          slotsWithDataAndIndex.northOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfNortheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1983,9 +2001,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNorthwest.index,
-          slotsWithDataAndIndex.centerOfNorthwest.index,
-          slotsWithDataAndIndex.southeastOfNorthwest.index,
+          slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfNorthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -1998,7 +2016,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.southwestOfNorthwest.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.southwestOfNorthwest.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2013,8 +2033,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNorth.index,
-          slotsWithDataAndIndex.centerOfNorth.index,
+          slotsWithDataAndIndex.northwestOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNorth.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2028,8 +2048,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfNortheast.index,
-          slotsWithDataAndIndex.eastOfNortheast.index,
+          slotsWithDataAndIndex.northOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfNortheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2042,7 +2062,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northeastOfNortheast.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.northeastOfNortheast.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2055,8 +2077,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNorthwest.index,
-          slotsWithDataAndIndex.centerOfNorthwest.index,
+          slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNorthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2069,7 +2091,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.westOfNorthwest.index],
+        indexesOfSlots: [slotsWithDataAndIndex.westOfNorthwest.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2083,7 +2105,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northOfNorth.index],
+        indexesOfSlots: [slotsWithDataAndIndex.northOfNorth.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2095,7 +2117,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northeastOfNorth.index],
+        indexesOfSlots: [slotsWithDataAndIndex.northeastOfNorth.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2107,7 +2129,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northwestOfNortheast.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.northwestOfNortheast.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2119,7 +2143,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northOfNortheast.index],
+        indexesOfSlots: [slotsWithDataAndIndex.northOfNortheast.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2131,7 +2155,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northeastOfNortheast.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.northeastOfNortheast.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2155,7 +2181,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northwestOfNorth.index],
+        indexesOfSlots: [slotsWithDataAndIndex.northwestOfNorth.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2167,7 +2193,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northeastOfNorthwest.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.northeastOfNorthwest.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2179,7 +2207,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northOfNorthwest.index],
+        indexesOfSlots: [slotsWithDataAndIndex.northOfNorthwest.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2191,7 +2219,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesArePrincipalDiagonals 
         shape: principalDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northwestOfNorthwest.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2208,7 +2238,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
         shape: secondaryDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northwestOfNorthwest.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2221,8 +2253,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfNorthwest.index,
-          slotsWithDataAndIndex.westOfNorthwest.index,
+          slotsWithDataAndIndex.northOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.westOfNorthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2236,9 +2268,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northeastOfNorthwest.index,
-          slotsWithDataAndIndex.centerOfNorthwest.index,
-          slotsWithDataAndIndex.southwestOfNorthwest.index,
+          slotsWithDataAndIndex.northeastOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfNorthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2252,28 +2284,29 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNorth.index,
-          slotsWithDataAndIndex.eastOfNorthwest.index,
-          slotsWithDataAndIndex.southOfNorthwest.index,
-          slotsWithDataAndIndex.northwestOfWest.index,
+          slotsWithDataAndIndex.northwestOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.eastOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfWest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
     secondaryDiagonalOfLength5OnRow0AndColumn4: {
       params: {
-        indexOfPlayerWhoIsOccupyingShape: playersWithDataAndIndex.alice.index,
+        indexOfPlayerWhoIsOccupyingShape:
+          playersWithDataAndIndex.alice.indexOfPlayer,
         initialIndexOfColumn: 4,
         initialIndexOfRow: 0,
         shape: secondaryDiagonal,
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfNorth.index,
-          slotsWithDataAndIndex.westOfNorth.index,
-          slotsWithDataAndIndex.southeastOfNorthwest.index,
-          slotsWithDataAndIndex.northOfWest.index,
-          slotsWithDataAndIndex.westOfWest.index,
+          slotsWithDataAndIndex.northOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.westOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northOfWest.indexOfSlot,
+          slotsWithDataAndIndex.westOfWest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith1PointAndBrunoWith0Points.score,
       },
@@ -2287,11 +2320,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northeastOfNorth.index,
-          slotsWithDataAndIndex.centerOfNorth.index,
-          slotsWithDataAndIndex.southwestOfNorth.index,
-          slotsWithDataAndIndex.northeastOfWest.index,
-          slotsWithDataAndIndex.centerOfWest.index,
+          slotsWithDataAndIndex.northeastOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfWest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfWest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2305,11 +2338,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNortheast.index,
-          slotsWithDataAndIndex.eastOfNorth.index,
-          slotsWithDataAndIndex.southOfNorth.index,
-          slotsWithDataAndIndex.northwestOfCenter.index,
-          slotsWithDataAndIndex.eastOfWest.index,
+          slotsWithDataAndIndex.northwestOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.southOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.eastOfWest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2323,11 +2356,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfNortheast.index,
-          slotsWithDataAndIndex.westOfNortheast.index,
-          slotsWithDataAndIndex.southeastOfNorth.index,
-          slotsWithDataAndIndex.northOfCenter.index,
-          slotsWithDataAndIndex.westOfCenter.index,
+          slotsWithDataAndIndex.northOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.westOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.northOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.westOfCenter.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2341,11 +2374,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northeastOfNortheast.index,
-          slotsWithDataAndIndex.centerOfNortheast.index,
-          slotsWithDataAndIndex.southwestOfNortheast.index,
-          slotsWithDataAndIndex.northeastOfCenter.index,
-          slotsWithDataAndIndex.centerOfCenter.index,
+          slotsWithDataAndIndex.northeastOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.centerOfCenter.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2359,10 +2392,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.eastOfNortheast.index,
-          slotsWithDataAndIndex.southOfNortheast.index,
-          slotsWithDataAndIndex.northwestOfEast.index,
-          slotsWithDataAndIndex.eastOfCenter.index,
+          slotsWithDataAndIndex.eastOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.southOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfEast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfCenter.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2376,9 +2409,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.southeastOfNortheast.index,
-          slotsWithDataAndIndex.northOfEast.index,
-          slotsWithDataAndIndex.westOfEast.index,
+          slotsWithDataAndIndex.southeastOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.northOfEast.indexOfSlot,
+          slotsWithDataAndIndex.westOfEast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2392,8 +2425,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northeastOfEast.index,
-          slotsWithDataAndIndex.centerOfEast.index,
+          slotsWithDataAndIndex.northeastOfEast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfEast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2406,7 +2439,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
         shape: secondaryDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.eastOfEast.index],
+        indexesOfSlots: [slotsWithDataAndIndex.eastOfEast.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2444,7 +2477,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
         shape: secondaryDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.westOfNorthwest.index],
+        indexesOfSlots: [slotsWithDataAndIndex.westOfNorthwest.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2457,8 +2490,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfNorthwest.index,
-          slotsWithDataAndIndex.southwestOfNorthwest.index,
+          slotsWithDataAndIndex.centerOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfNorthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2472,11 +2505,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfNorth.index,
-          slotsWithDataAndIndex.southwestOfNorth.index,
-          slotsWithDataAndIndex.northeastOfWest.index,
-          slotsWithDataAndIndex.centerOfWest.index,
-          slotsWithDataAndIndex.southwestOfWest.index,
+          slotsWithDataAndIndex.centerOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfWest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfWest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfWest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2490,11 +2523,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfNortheast.index,
-          slotsWithDataAndIndex.southwestOfNortheast.index,
-          slotsWithDataAndIndex.northeastOfCenter.index,
-          slotsWithDataAndIndex.centerOfCenter.index,
-          slotsWithDataAndIndex.southwestOfCenter.index,
+          slotsWithDataAndIndex.centerOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.centerOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfCenter.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2507,7 +2540,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
         shape: secondaryDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.southeastOfEast.index],
+        indexesOfSlots: [slotsWithDataAndIndex.southeastOfEast.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2521,7 +2554,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
         shape: secondaryDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.southwestOfNorthwest.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.southwestOfNorthwest.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2534,9 +2569,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.southeastOfNorthwest.index,
-          slotsWithDataAndIndex.northOfWest.index,
-          slotsWithDataAndIndex.westOfWest.index,
+          slotsWithDataAndIndex.southeastOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northOfWest.indexOfSlot,
+          slotsWithDataAndIndex.westOfWest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2550,11 +2585,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.southOfNorth.index,
-          slotsWithDataAndIndex.northwestOfCenter.index,
-          slotsWithDataAndIndex.eastOfWest.index,
-          slotsWithDataAndIndex.southOfWest.index,
-          slotsWithDataAndIndex.northwestOfSouthwest.index,
+          slotsWithDataAndIndex.southOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.eastOfWest.indexOfSlot,
+          slotsWithDataAndIndex.southOfWest.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfSouthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2568,11 +2603,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.southwestOfNortheast.index,
-          slotsWithDataAndIndex.northeastOfCenter.index,
-          slotsWithDataAndIndex.centerOfCenter.index,
-          slotsWithDataAndIndex.southwestOfCenter.index,
-          slotsWithDataAndIndex.northeastOfSouthwest.index,
+          slotsWithDataAndIndex.southwestOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.centerOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfSouthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2585,7 +2620,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
         shape: secondaryDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northeastOfSoutheast.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.northeastOfSoutheast.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2599,7 +2636,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
         shape: secondaryDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northwestOfWest.index],
+        indexesOfSlots: [slotsWithDataAndIndex.northwestOfWest.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2612,10 +2649,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfCenter.index,
-          slotsWithDataAndIndex.eastOfWest.index,
-          slotsWithDataAndIndex.southOfWest.index,
-          slotsWithDataAndIndex.northwestOfSouthwest.index,
+          slotsWithDataAndIndex.northwestOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.eastOfWest.indexOfSlot,
+          slotsWithDataAndIndex.southOfWest.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfSouthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2629,11 +2666,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfCenter.index,
-          slotsWithDataAndIndex.westOfCenter.index,
-          slotsWithDataAndIndex.southeastOfWest.index,
-          slotsWithDataAndIndex.northOfSouthwest.index,
-          slotsWithDataAndIndex.westOfSouthwest.index,
+          slotsWithDataAndIndex.northOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.westOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfWest.indexOfSlot,
+          slotsWithDataAndIndex.northOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.westOfSouthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2647,11 +2684,11 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northeastOfCenter.index,
-          slotsWithDataAndIndex.centerOfCenter.index,
-          slotsWithDataAndIndex.southwestOfCenter.index,
-          slotsWithDataAndIndex.northeastOfSouthwest.index,
-          slotsWithDataAndIndex.centerOfSouthwest.index,
+          slotsWithDataAndIndex.northeastOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.centerOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfSouthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2664,7 +2701,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
         shape: secondaryDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.eastOfSoutheast.index],
+        indexesOfSlots: [slotsWithDataAndIndex.eastOfSoutheast.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2678,7 +2715,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
         shape: secondaryDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.westOfWest.index],
+        indexesOfSlots: [slotsWithDataAndIndex.westOfWest.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2691,29 +2728,30 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfCenter.index,
-          slotsWithDataAndIndex.southwestOfCenter.index,
-          slotsWithDataAndIndex.northeastOfSouthwest.index,
-          slotsWithDataAndIndex.centerOfSouthwest.index,
-          slotsWithDataAndIndex.southwestOfSouthwest.index,
+          slotsWithDataAndIndex.centerOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfSouthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
     secondaryDiagonalOfLength5OnRow4AndColumn8: {
       params: {
-        indexOfPlayerWhoIsOccupyingShape: playersWithDataAndIndex.bruno.index,
+        indexOfPlayerWhoIsOccupyingShape:
+          playersWithDataAndIndex.bruno.indexOfPlayer,
         initialIndexOfColumn: 8,
         initialIndexOfRow: 4,
         shape: secondaryDiagonal,
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.eastOfEast.index,
-          slotsWithDataAndIndex.southOfEast.index,
-          slotsWithDataAndIndex.northwestOfSoutheast.index,
-          slotsWithDataAndIndex.eastOfSouth.index,
-          slotsWithDataAndIndex.southOfSouth.index,
+          slotsWithDataAndIndex.eastOfEast.indexOfSlot,
+          slotsWithDataAndIndex.southOfEast.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.southOfSouth.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith1Point.score,
       },
@@ -2726,7 +2764,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
         shape: secondaryDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.southeastOfSoutheast.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2740,7 +2780,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
         shape: secondaryDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.southwestOfWest.index],
+        indexesOfSlots: [slotsWithDataAndIndex.southwestOfWest.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2753,10 +2793,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.southwestOfCenter.index,
-          slotsWithDataAndIndex.northeastOfSouthwest.index,
-          slotsWithDataAndIndex.centerOfSouthwest.index,
-          slotsWithDataAndIndex.southwestOfSouthwest.index,
+          slotsWithDataAndIndex.southwestOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfSouthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2770,10 +2810,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.southOfCenter.index,
-          slotsWithDataAndIndex.northwestOfSouth.index,
-          slotsWithDataAndIndex.eastOfSouthwest.index,
-          slotsWithDataAndIndex.southOfSouthwest.index,
+          slotsWithDataAndIndex.southOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.eastOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.southOfSouthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2787,10 +2827,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.southeastOfCenter.index,
-          slotsWithDataAndIndex.northOfSouth.index,
-          slotsWithDataAndIndex.westOfSouth.index,
-          slotsWithDataAndIndex.southeastOfSouthwest.index,
+          slotsWithDataAndIndex.southeastOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.northOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.westOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSouthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2817,7 +2857,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
         shape: secondaryDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northwestOfSouthwest.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.northwestOfSouthwest.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2830,9 +2872,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northeastOfSouthwest.index,
-          slotsWithDataAndIndex.centerOfSouthwest.index,
-          slotsWithDataAndIndex.southwestOfSouthwest.index,
+          slotsWithDataAndIndex.northeastOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfSouthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2847,9 +2889,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfSouth.index,
-          slotsWithDataAndIndex.westOfSouth.index,
-          slotsWithDataAndIndex.southeastOfSouthwest.index,
+          slotsWithDataAndIndex.northOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.westOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSouthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2863,9 +2905,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfSoutheast.index,
-          slotsWithDataAndIndex.eastOfSouth.index,
-          slotsWithDataAndIndex.southOfSouth.index,
+          slotsWithDataAndIndex.northwestOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.southOfSouth.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2880,7 +2922,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
         shape: secondaryDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.westOfSouthwest.index],
+        indexesOfSlots: [slotsWithDataAndIndex.westOfSouthwest.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2893,8 +2935,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfSouthwest.index,
-          slotsWithDataAndIndex.southwestOfSouthwest.index,
+          slotsWithDataAndIndex.centerOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfSouthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2908,8 +2950,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfSouth.index,
-          slotsWithDataAndIndex.southwestOfSouth.index,
+          slotsWithDataAndIndex.centerOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfSouth.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2923,8 +2965,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfSoutheast.index,
-          slotsWithDataAndIndex.southwestOfSoutheast.index,
+          slotsWithDataAndIndex.centerOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -2939,7 +2981,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
         shape: secondaryDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.southwestOfSouthwest.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.southwestOfSouthwest.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2951,7 +2995,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
         shape: secondaryDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.southOfSouth.index],
+        indexesOfSlots: [slotsWithDataAndIndex.southOfSouth.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -2963,7 +3007,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
         shape: secondaryDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.southeastOfSoutheast.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -3004,10 +3050,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNorth.index,
-          slotsWithDataAndIndex.eastOfNorthwest.index,
-          slotsWithDataAndIndex.southOfNorthwest.index,
-          slotsWithDataAndIndex.northwestOfWest.index,
+          slotsWithDataAndIndex.northwestOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.eastOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfWest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3021,10 +3067,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfNorth.index,
-          slotsWithDataAndIndex.westOfNorth.index,
-          slotsWithDataAndIndex.southeastOfNorthwest.index,
-          slotsWithDataAndIndex.northOfWest.index,
+          slotsWithDataAndIndex.northOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.westOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northOfWest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3038,10 +3084,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfNortheast.index,
-          slotsWithDataAndIndex.westOfNortheast.index,
-          slotsWithDataAndIndex.southeastOfNorth.index,
-          slotsWithDataAndIndex.northOfCenter.index,
+          slotsWithDataAndIndex.northOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.westOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.northOfCenter.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3055,10 +3101,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northeastOfNortheast.index,
-          slotsWithDataAndIndex.centerOfNortheast.index,
-          slotsWithDataAndIndex.southwestOfNortheast.index,
-          slotsWithDataAndIndex.northeastOfCenter.index,
+          slotsWithDataAndIndex.northeastOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfCenter.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3071,7 +3117,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
         shape: secondaryDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northeastOfEast.index],
+        indexesOfSlots: [slotsWithDataAndIndex.northeastOfEast.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -3086,9 +3132,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northeastOfNorthwest.index,
-          slotsWithDataAndIndex.centerOfNorthwest.index,
-          slotsWithDataAndIndex.southwestOfNorthwest.index,
+          slotsWithDataAndIndex.northeastOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfNorthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3102,9 +3148,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northeastOfNortheast.index,
-          slotsWithDataAndIndex.centerOfNortheast.index,
-          slotsWithDataAndIndex.southwestOfNortheast.index,
+          slotsWithDataAndIndex.northeastOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfNortheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3117,7 +3163,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
         shape: secondaryDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.southeastOfNortheast.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.southeastOfNortheast.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -3132,8 +3180,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfNorthwest.index,
-          slotsWithDataAndIndex.westOfNorthwest.index,
+          slotsWithDataAndIndex.northOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.westOfNorthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3147,8 +3195,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northeastOfNortheast.index,
-          slotsWithDataAndIndex.centerOfNortheast.index,
+          slotsWithDataAndIndex.northeastOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNortheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3161,7 +3209,7 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
         shape: secondaryDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.eastOfNortheast.index],
+        indexesOfSlots: [slotsWithDataAndIndex.eastOfNortheast.indexOfSlot],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -3175,7 +3223,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
         shape: secondaryDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northwestOfNorthwest.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -3187,7 +3237,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreSecondaryDiagonals 
         shape: secondaryDiagonal,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northeastOfNortheast.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.northeastOfNortheast.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -3224,34 +3276,36 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf2RowsAn
     /* Row 0 */
     rectangleOf2RowsAnd2ColumnsOnRow0AndColumn0: {
       params: {
-        indexOfPlayerWhoIsOccupyingShape: playersWithDataAndIndex.alice.index,
+        indexOfPlayerWhoIsOccupyingShape:
+          playersWithDataAndIndex.alice.indexOfPlayer,
         initialIndexOfColumn: 0,
         initialIndexOfRow: 0,
         shape: rectangleOf2RowsAnd2Columns,
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNorthwest.index,
-          slotsWithDataAndIndex.northOfNorthwest.index,
-          slotsWithDataAndIndex.westOfNorthwest.index,
-          slotsWithDataAndIndex.centerOfNorthwest.index,
+          slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.westOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNorthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith1PointAndBrunoWith0Points.score,
       },
     },
     rectangleOf2RowsAnd2ColumnsOnRow0AndColumn1: {
       params: {
-        indexOfPlayerWhoIsOccupyingShape: playersWithDataAndIndex.alice.index,
+        indexOfPlayerWhoIsOccupyingShape:
+          playersWithDataAndIndex.alice.indexOfPlayer,
         initialIndexOfColumn: 1,
         initialIndexOfRow: 0,
         shape: rectangleOf2RowsAnd2Columns,
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfNorthwest.index,
-          slotsWithDataAndIndex.northeastOfNorthwest.index,
-          slotsWithDataAndIndex.centerOfNorthwest.index,
-          slotsWithDataAndIndex.eastOfNorthwest.index,
+          slotsWithDataAndIndex.northOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.eastOfNorthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith1PointAndBrunoWith0Points.score,
       },
@@ -3265,27 +3319,28 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf2RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfNorth.index,
-          slotsWithDataAndIndex.northeastOfNorth.index,
-          slotsWithDataAndIndex.centerOfNorth.index,
-          slotsWithDataAndIndex.eastOfNorth.index,
+          slotsWithDataAndIndex.northOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.eastOfNorth.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
     rectangleOf2RowsAnd2ColumnsOnRow0AndColumn7: {
       params: {
-        indexOfPlayerWhoIsOccupyingShape: playersWithDataAndIndex.bruno.index,
+        indexOfPlayerWhoIsOccupyingShape:
+          playersWithDataAndIndex.bruno.indexOfPlayer,
         initialIndexOfColumn: 7,
         initialIndexOfRow: 0,
         shape: rectangleOf2RowsAnd2Columns,
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfNortheast.index,
-          slotsWithDataAndIndex.northeastOfNortheast.index,
-          slotsWithDataAndIndex.centerOfNortheast.index,
-          slotsWithDataAndIndex.eastOfNortheast.index,
+          slotsWithDataAndIndex.northOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfNortheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith1Point.score,
       },
@@ -3299,8 +3354,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf2RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNorthwest.index,
-          slotsWithDataAndIndex.westOfNorthwest.index,
+          slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.westOfNorthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3309,34 +3364,36 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf2RowsAn
     /* Row 1 */
     rectangleOf2RowsAnd2ColumnsOnRow1AndColumn0: {
       params: {
-        indexOfPlayerWhoIsOccupyingShape: playersWithDataAndIndex.alice.index,
+        indexOfPlayerWhoIsOccupyingShape:
+          playersWithDataAndIndex.alice.indexOfPlayer,
         initialIndexOfColumn: 0,
         initialIndexOfRow: 1,
         shape: rectangleOf2RowsAnd2Columns,
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.westOfNorthwest.index,
-          slotsWithDataAndIndex.centerOfNorthwest.index,
-          slotsWithDataAndIndex.southwestOfNorthwest.index,
-          slotsWithDataAndIndex.southOfNorthwest.index,
+          slotsWithDataAndIndex.westOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southOfNorthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith1PointAndBrunoWith0Points.score,
       },
     },
     rectangleOf2RowsAnd2ColumnsOnRow1AndColumn1: {
       params: {
-        indexOfPlayerWhoIsOccupyingShape: playersWithDataAndIndex.alice.index,
+        indexOfPlayerWhoIsOccupyingShape:
+          playersWithDataAndIndex.alice.indexOfPlayer,
         initialIndexOfColumn: 1,
         initialIndexOfRow: 1,
         shape: rectangleOf2RowsAnd2Columns,
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfNorthwest.index,
-          slotsWithDataAndIndex.eastOfNorthwest.index,
-          slotsWithDataAndIndex.southOfNorthwest.index,
-          slotsWithDataAndIndex.southeastOfNorthwest.index,
+          slotsWithDataAndIndex.centerOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.eastOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfNorthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith1PointAndBrunoWith0Points.score,
       },
@@ -3352,10 +3409,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf2RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.westOfWest.index,
-          slotsWithDataAndIndex.centerOfWest.index,
-          slotsWithDataAndIndex.southwestOfWest.index,
-          slotsWithDataAndIndex.southOfWest.index,
+          slotsWithDataAndIndex.westOfWest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfWest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfWest.indexOfSlot,
+          slotsWithDataAndIndex.southOfWest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3369,27 +3426,28 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf2RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfCenter.index,
-          slotsWithDataAndIndex.eastOfCenter.index,
-          slotsWithDataAndIndex.southOfCenter.index,
-          slotsWithDataAndIndex.southeastOfCenter.index,
+          slotsWithDataAndIndex.centerOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.eastOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.southOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfCenter.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
     rectangleOf2RowsAnd2ColumnsOnRow4AndColumn7: {
       params: {
-        indexOfPlayerWhoIsOccupyingShape: playersWithDataAndIndex.bruno.index,
+        indexOfPlayerWhoIsOccupyingShape:
+          playersWithDataAndIndex.bruno.indexOfPlayer,
         initialIndexOfColumn: 7,
         initialIndexOfRow: 4,
         shape: rectangleOf2RowsAnd2Columns,
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfEast.index,
-          slotsWithDataAndIndex.eastOfEast.index,
-          slotsWithDataAndIndex.southOfEast.index,
-          slotsWithDataAndIndex.southeastOfEast.index,
+          slotsWithDataAndIndex.centerOfEast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfEast.indexOfSlot,
+          slotsWithDataAndIndex.southOfEast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfEast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith1Point.score,
       },
@@ -3405,10 +3463,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf2RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.westOfSouthwest.index,
-          slotsWithDataAndIndex.centerOfSouthwest.index,
-          slotsWithDataAndIndex.southwestOfSouthwest.index,
-          slotsWithDataAndIndex.southOfSouthwest.index,
+          slotsWithDataAndIndex.westOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.southOfSouthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3422,27 +3480,28 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf2RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfSouth.index,
-          slotsWithDataAndIndex.eastOfSouth.index,
-          slotsWithDataAndIndex.southOfSouth.index,
-          slotsWithDataAndIndex.southeastOfSouth.index,
+          slotsWithDataAndIndex.centerOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.eastOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.southOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSouth.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
     rectangleOf2RowsAnd2ColumnsOnRow7AndColumn7: {
       params: {
-        indexOfPlayerWhoIsOccupyingShape: playersWithDataAndIndex.bruno.index,
+        indexOfPlayerWhoIsOccupyingShape:
+          playersWithDataAndIndex.bruno.indexOfPlayer,
         initialIndexOfColumn: 7,
         initialIndexOfRow: 7,
         shape: rectangleOf2RowsAnd2Columns,
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfSoutheast.index,
-          slotsWithDataAndIndex.eastOfSoutheast.index,
-          slotsWithDataAndIndex.southOfSoutheast.index,
-          slotsWithDataAndIndex.southeastOfSoutheast.index,
+          slotsWithDataAndIndex.centerOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith1Point.score,
       },
@@ -3456,8 +3515,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf2RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.eastOfSoutheast.index,
-          slotsWithDataAndIndex.southeastOfSoutheast.index,
+          slotsWithDataAndIndex.eastOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3473,8 +3532,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf2RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.southOfSoutheast.index,
-          slotsWithDataAndIndex.southeastOfSoutheast.index,
+          slotsWithDataAndIndex.southOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3487,7 +3546,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf2RowsAn
         shape: rectangleOf2RowsAnd2Columns,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.southeastOfSoutheast.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -3528,8 +3589,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf2RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNorthwest.index,
-          slotsWithDataAndIndex.northOfNorthwest.index,
+          slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northOfNorthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3542,7 +3603,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf2RowsAn
         shape: rectangleOf2RowsAnd2Columns,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northwestOfNorthwest.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -3579,22 +3642,23 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
     /* Row 0 */
     rectangleOf3RowsAnd3ColumnsOnRow0AndColumn0: {
       params: {
-        indexOfPlayerWhoIsOccupyingShape: playersWithDataAndIndex.alice.index,
+        indexOfPlayerWhoIsOccupyingShape:
+          playersWithDataAndIndex.alice.indexOfPlayer,
         initialIndexOfColumn: 0,
         initialIndexOfRow: 0,
         shape: rectangleOf3RowsAnd3Columns,
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNorthwest.index,
-          slotsWithDataAndIndex.northOfNorthwest.index,
-          slotsWithDataAndIndex.northeastOfNorthwest.index,
-          slotsWithDataAndIndex.westOfNorthwest.index,
-          slotsWithDataAndIndex.centerOfNorthwest.index,
-          slotsWithDataAndIndex.eastOfNorthwest.index,
-          slotsWithDataAndIndex.southwestOfNorthwest.index,
-          slotsWithDataAndIndex.southOfNorthwest.index,
-          slotsWithDataAndIndex.southeastOfNorthwest.index,
+          slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.westOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.eastOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfNorthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith1PointAndBrunoWith0Points.score,
       },
@@ -3608,15 +3672,15 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfNorth.index,
-          slotsWithDataAndIndex.northeastOfNorth.index,
-          slotsWithDataAndIndex.northwestOfNortheast.index,
-          slotsWithDataAndIndex.centerOfNorth.index,
-          slotsWithDataAndIndex.eastOfNorth.index,
-          slotsWithDataAndIndex.westOfNortheast.index,
-          slotsWithDataAndIndex.southOfNorth.index,
-          slotsWithDataAndIndex.southeastOfNorth.index,
-          slotsWithDataAndIndex.southwestOfNortheast.index,
+          slotsWithDataAndIndex.northOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.eastOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.westOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.southOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfNorth.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfNortheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3630,15 +3694,15 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNortheast.index,
-          slotsWithDataAndIndex.northOfNortheast.index,
-          slotsWithDataAndIndex.northeastOfNortheast.index,
-          slotsWithDataAndIndex.westOfNortheast.index,
-          slotsWithDataAndIndex.centerOfNortheast.index,
-          slotsWithDataAndIndex.eastOfNortheast.index,
-          slotsWithDataAndIndex.southwestOfNortheast.index,
-          slotsWithDataAndIndex.southOfNortheast.index,
-          slotsWithDataAndIndex.southeastOfNortheast.index,
+          slotsWithDataAndIndex.northwestOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.northOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.westOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.southOfNortheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfNortheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3652,12 +3716,12 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNorthwest.index,
-          slotsWithDataAndIndex.northOfNorthwest.index,
-          slotsWithDataAndIndex.westOfNorthwest.index,
-          slotsWithDataAndIndex.centerOfNorthwest.index,
-          slotsWithDataAndIndex.southwestOfNorthwest.index,
-          slotsWithDataAndIndex.southOfNorthwest.index,
+          slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.westOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southOfNorthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3671,9 +3735,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNorthwest.index,
-          slotsWithDataAndIndex.westOfNorthwest.index,
-          slotsWithDataAndIndex.southwestOfNorthwest.index,
+          slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.westOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfNorthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3689,15 +3753,15 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfCenter.index,
-          slotsWithDataAndIndex.northOfCenter.index,
-          slotsWithDataAndIndex.northeastOfCenter.index,
-          slotsWithDataAndIndex.westOfCenter.index,
-          slotsWithDataAndIndex.centerOfCenter.index,
-          slotsWithDataAndIndex.eastOfCenter.index,
-          slotsWithDataAndIndex.southwestOfCenter.index,
-          slotsWithDataAndIndex.southOfCenter.index,
-          slotsWithDataAndIndex.southeastOfCenter.index,
+          slotsWithDataAndIndex.northwestOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.northOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.westOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.centerOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.eastOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.southOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfCenter.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3713,15 +3777,15 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.westOfWest.index,
-          slotsWithDataAndIndex.centerOfWest.index,
-          slotsWithDataAndIndex.eastOfWest.index,
-          slotsWithDataAndIndex.southwestOfWest.index,
-          slotsWithDataAndIndex.southOfWest.index,
-          slotsWithDataAndIndex.southeastOfWest.index,
-          slotsWithDataAndIndex.northwestOfSouthwest.index,
-          slotsWithDataAndIndex.northOfSouthwest.index,
-          slotsWithDataAndIndex.northeastOfSouthwest.index,
+          slotsWithDataAndIndex.westOfWest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfWest.indexOfSlot,
+          slotsWithDataAndIndex.eastOfWest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfWest.indexOfSlot,
+          slotsWithDataAndIndex.southOfWest.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfWest.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.northOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfSouthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3735,15 +3799,15 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfCenter.index,
-          slotsWithDataAndIndex.eastOfCenter.index,
-          slotsWithDataAndIndex.westOfEast.index,
-          slotsWithDataAndIndex.southOfCenter.index,
-          slotsWithDataAndIndex.southeastOfCenter.index,
-          slotsWithDataAndIndex.southwestOfEast.index,
-          slotsWithDataAndIndex.northOfSouth.index,
-          slotsWithDataAndIndex.northeastOfSouth.index,
-          slotsWithDataAndIndex.northwestOfSoutheast.index,
+          slotsWithDataAndIndex.centerOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.eastOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.westOfEast.indexOfSlot,
+          slotsWithDataAndIndex.southOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfCenter.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfEast.indexOfSlot,
+          slotsWithDataAndIndex.northOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3757,15 +3821,15 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.westOfEast.index,
-          slotsWithDataAndIndex.centerOfEast.index,
-          slotsWithDataAndIndex.eastOfEast.index,
-          slotsWithDataAndIndex.southwestOfEast.index,
-          slotsWithDataAndIndex.southOfEast.index,
-          slotsWithDataAndIndex.southeastOfEast.index,
-          slotsWithDataAndIndex.northwestOfSoutheast.index,
-          slotsWithDataAndIndex.northOfSoutheast.index,
-          slotsWithDataAndIndex.northeastOfSoutheast.index,
+          slotsWithDataAndIndex.westOfEast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfEast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfEast.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfEast.indexOfSlot,
+          slotsWithDataAndIndex.southOfEast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfEast.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.northOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3779,12 +3843,12 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfEast.index,
-          slotsWithDataAndIndex.eastOfEast.index,
-          slotsWithDataAndIndex.southOfEast.index,
-          slotsWithDataAndIndex.southeastOfEast.index,
-          slotsWithDataAndIndex.northOfSoutheast.index,
-          slotsWithDataAndIndex.northeastOfSoutheast.index,
+          slotsWithDataAndIndex.centerOfEast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfEast.indexOfSlot,
+          slotsWithDataAndIndex.southOfEast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfEast.indexOfSlot,
+          slotsWithDataAndIndex.northOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3798,9 +3862,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.eastOfEast.index,
-          slotsWithDataAndIndex.southeastOfEast.index,
-          slotsWithDataAndIndex.northeastOfSoutheast.index,
+          slotsWithDataAndIndex.eastOfEast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfEast.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3814,12 +3878,12 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.westOfWest.index,
-          slotsWithDataAndIndex.centerOfWest.index,
-          slotsWithDataAndIndex.southwestOfWest.index,
-          slotsWithDataAndIndex.southOfWest.index,
-          slotsWithDataAndIndex.northwestOfSouthwest.index,
-          slotsWithDataAndIndex.northOfSouthwest.index,
+          slotsWithDataAndIndex.westOfWest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfWest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfWest.indexOfSlot,
+          slotsWithDataAndIndex.southOfWest.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.northOfSouthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3833,9 +3897,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.westOfWest.index,
-          slotsWithDataAndIndex.southwestOfWest.index,
-          slotsWithDataAndIndex.northwestOfSouthwest.index,
+          slotsWithDataAndIndex.westOfWest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfWest.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfSouthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3851,15 +3915,15 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfSouthwest.index,
-          slotsWithDataAndIndex.northOfSouthwest.index,
-          slotsWithDataAndIndex.northeastOfSouthwest.index,
-          slotsWithDataAndIndex.westOfSouthwest.index,
-          slotsWithDataAndIndex.centerOfSouthwest.index,
-          slotsWithDataAndIndex.eastOfSouthwest.index,
-          slotsWithDataAndIndex.southwestOfSouthwest.index,
-          slotsWithDataAndIndex.southOfSouthwest.index,
-          slotsWithDataAndIndex.southeastOfSouthwest.index,
+          slotsWithDataAndIndex.northwestOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.northOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.westOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.eastOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.southOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSouthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3873,37 +3937,38 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfSouth.index,
-          slotsWithDataAndIndex.northeastOfSouth.index,
-          slotsWithDataAndIndex.northwestOfSoutheast.index,
-          slotsWithDataAndIndex.centerOfSouth.index,
-          slotsWithDataAndIndex.eastOfSouth.index,
-          slotsWithDataAndIndex.westOfSoutheast.index,
-          slotsWithDataAndIndex.southOfSouth.index,
-          slotsWithDataAndIndex.southeastOfSouth.index,
-          slotsWithDataAndIndex.southwestOfSoutheast.index,
+          slotsWithDataAndIndex.northOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.northwestOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.eastOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.westOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSouth.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
     rectangleOf3RowsAnd3ColumnsOnRow6AndColumn6: {
       params: {
-        indexOfPlayerWhoIsOccupyingShape: playersWithDataAndIndex.bruno.index,
+        indexOfPlayerWhoIsOccupyingShape:
+          playersWithDataAndIndex.bruno.indexOfPlayer,
         initialIndexOfColumn: 6,
         initialIndexOfRow: 6,
         shape: rectangleOf3RowsAnd3Columns,
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfSoutheast.index,
-          slotsWithDataAndIndex.northOfSoutheast.index,
-          slotsWithDataAndIndex.northeastOfSoutheast.index,
-          slotsWithDataAndIndex.westOfSoutheast.index,
-          slotsWithDataAndIndex.centerOfSoutheast.index,
-          slotsWithDataAndIndex.eastOfSoutheast.index,
-          slotsWithDataAndIndex.southwestOfSoutheast.index,
-          slotsWithDataAndIndex.southOfSoutheast.index,
-          slotsWithDataAndIndex.southeastOfSoutheast.index,
+          slotsWithDataAndIndex.northwestOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.northOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.westOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith1Point.score,
       },
@@ -3917,12 +3982,12 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northOfSoutheast.index,
-          slotsWithDataAndIndex.northeastOfSoutheast.index,
-          slotsWithDataAndIndex.centerOfSoutheast.index,
-          slotsWithDataAndIndex.eastOfSoutheast.index,
-          slotsWithDataAndIndex.southOfSoutheast.index,
-          slotsWithDataAndIndex.southeastOfSoutheast.index,
+          slotsWithDataAndIndex.northOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3936,9 +4001,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northeastOfSoutheast.index,
-          slotsWithDataAndIndex.eastOfSoutheast.index,
-          slotsWithDataAndIndex.southeastOfSoutheast.index,
+          slotsWithDataAndIndex.northeastOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3952,12 +4017,12 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfSouthwest.index,
-          slotsWithDataAndIndex.northOfSouthwest.index,
-          slotsWithDataAndIndex.westOfSouthwest.index,
-          slotsWithDataAndIndex.centerOfSouthwest.index,
-          slotsWithDataAndIndex.southwestOfSouthwest.index,
-          slotsWithDataAndIndex.southOfSouthwest.index,
+          slotsWithDataAndIndex.northwestOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.northOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.westOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.southOfSouthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3971,9 +4036,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfSouthwest.index,
-          slotsWithDataAndIndex.westOfSouthwest.index,
-          slotsWithDataAndIndex.southwestOfSouthwest.index,
+          slotsWithDataAndIndex.northwestOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.westOfSouthwest.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfSouthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -3989,12 +4054,12 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.westOfSoutheast.index,
-          slotsWithDataAndIndex.centerOfSoutheast.index,
-          slotsWithDataAndIndex.eastOfSoutheast.index,
-          slotsWithDataAndIndex.southwestOfSoutheast.index,
-          slotsWithDataAndIndex.southOfSoutheast.index,
-          slotsWithDataAndIndex.southeastOfSoutheast.index,
+          slotsWithDataAndIndex.westOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.centerOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southwestOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -4008,10 +4073,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.centerOfSoutheast.index,
-          slotsWithDataAndIndex.eastOfSoutheast.index,
-          slotsWithDataAndIndex.southOfSoutheast.index,
-          slotsWithDataAndIndex.southeastOfSoutheast.index,
+          slotsWithDataAndIndex.centerOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.eastOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -4025,8 +4090,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.eastOfSoutheast.index,
-          slotsWithDataAndIndex.southeastOfSoutheast.index,
+          slotsWithDataAndIndex.eastOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -4042,9 +4107,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.southwestOfSoutheast.index,
-          slotsWithDataAndIndex.southOfSoutheast.index,
-          slotsWithDataAndIndex.southeastOfSoutheast.index,
+          slotsWithDataAndIndex.southwestOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -4058,8 +4123,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.southOfSoutheast.index,
-          slotsWithDataAndIndex.southeastOfSoutheast.index,
+          slotsWithDataAndIndex.southOfSoutheast.indexOfSlot,
+          slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -4072,7 +4137,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
         shape: rectangleOf3RowsAnd3Columns,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.southeastOfSoutheast.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.southeastOfSoutheast.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },
@@ -4113,12 +4180,12 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNorthwest.index,
-          slotsWithDataAndIndex.northOfNorthwest.index,
-          slotsWithDataAndIndex.northeastOfNorthwest.index,
-          slotsWithDataAndIndex.westOfNorthwest.index,
-          slotsWithDataAndIndex.centerOfNorthwest.index,
-          slotsWithDataAndIndex.eastOfNorthwest.index,
+          slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northeastOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.westOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.eastOfNorthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -4132,10 +4199,10 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNorthwest.index,
-          slotsWithDataAndIndex.northOfNorthwest.index,
-          slotsWithDataAndIndex.westOfNorthwest.index,
-          slotsWithDataAndIndex.centerOfNorthwest.index,
+          slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.westOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.centerOfNorthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -4149,8 +4216,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNorthwest.index,
-          slotsWithDataAndIndex.westOfNorthwest.index,
+          slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.westOfNorthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -4166,8 +4233,8 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
       },
       result: {
         indexesOfSlots: [
-          slotsWithDataAndIndex.northwestOfNorthwest.index,
-          slotsWithDataAndIndex.northOfNorthwest.index,
+          slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+          slotsWithDataAndIndex.northOfNorthwest.indexOfSlot,
         ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
@@ -4180,7 +4247,9 @@ const recordOfRequiredParamsAndResultOfShapesInWhichShapesAreRectanglesOf3RowsAn
         shape: rectangleOf3RowsAnd3Columns,
       },
       result: {
-        indexesOfSlots: [slotsWithDataAndIndex.northwestOfNorthwest.index],
+        indexesOfSlots: [
+          slotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+        ],
         score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
       },
     },

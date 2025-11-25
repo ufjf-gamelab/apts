@@ -7,7 +7,7 @@ import { test } from "vitest";
 
 import { scoresWithData } from "./records.js";
 import {
-  deriveSnowballScoreParams,
+  deriveParamsOfSnowballScore,
   type SnowballScoreWithData,
 } from "./setup.js";
 
@@ -46,7 +46,7 @@ const testGetPointsOfEachPlayer = ({
       }),
 
       () => {
-        const derivedParams = deriveSnowballScoreParams(params);
+        const derivedParams = deriveParamsOfSnowballScore(params);
 
         validateGetPointsOfEachPlayer({
           expectedPointsOfEachPlayer: derivedParams.pointsOfEachPlayer,

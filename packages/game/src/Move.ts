@@ -2,16 +2,16 @@ import type { Integer } from "@repo/engine_core/types.js";
 
 type IndexOfMove = Integer;
 
-interface MoveParams {
+interface ParamsOfMove {
   readonly description: string;
   readonly title: string;
 }
 
 abstract class Move<M extends Move<M>> {
-  private readonly description: MoveParams["description"];
-  private readonly title: MoveParams["title"];
+  private readonly description: ParamsOfMove["description"];
+  private readonly title: ParamsOfMove["title"];
 
-  public constructor({ description, title }: MoveParams) {
+  public constructor({ description, title }: ParamsOfMove) {
     this.title = title;
     this.description = description;
   }
@@ -27,5 +27,5 @@ abstract class Move<M extends Move<M>> {
   }
 }
 
-export type { IndexOfMove, MoveParams };
+export type { IndexOfMove, ParamsOfMove };
 export { Move };

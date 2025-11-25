@@ -8,7 +8,7 @@ import { expect, test } from "vitest";
 import { SnowballMove } from "../Move.js";
 import { indexedMovesWithData } from "./indexedRecords.js";
 import {
-  deriveSnowballMoveParams,
+  deriveParamsOfSnowballMove,
   type SnowballMoveWithData,
 } from "./setup.js";
 
@@ -35,7 +35,7 @@ const testConstructor = ({
 
       () => {
         const { description, indexOfSlotInWhichPlacePiece, title } =
-          deriveSnowballMoveParams(params);
+          deriveParamsOfSnowballMove(params);
 
         const newMove = new SnowballMove({
           description,

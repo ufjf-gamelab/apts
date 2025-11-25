@@ -17,19 +17,19 @@ import {
 } from "../Slot.test/indexedRecords.js";
 import {
   createSnowballStatesWithData,
-  type RequiredSnowballStateParams,
+  type RequiredParamsOfSnowballState,
 } from "./setup.js";
 
-type RecordOfRequiredSnowballStateParams = Record<
+type RecordOfRequiredParamsOfSnowballStates = Record<
   string,
-  RequiredSnowballStateParams
+  RequiredParamsOfSnowballState
 >;
 
 const constructTupleForMove = ({
   move,
 }: {
   move: SnowballMoveWithDataAndIndex<typeof recordOfRequiredParamsOfMoves>;
-}): [number, SnowballMoveWithData] => [move.index, move.move];
+}): [number, SnowballMoveWithData] => [move.indexOfMove, move.move];
 
 const recordOfRequiredParamsOfStates = {
   allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
@@ -542,11 +542,11 @@ const recordOfRequiredParamsOfStates = {
         constructTupleForMove({ move: movesWithDataAndIndex.westOfSouth }),
       ]),
     },
-} as const satisfies RecordOfRequiredSnowballStateParams;
+} as const satisfies RecordOfRequiredParamsOfSnowballStates;
 
 const statesWithData = createSnowballStatesWithData({
   recordOfRequiredParams: recordOfRequiredParamsOfStates,
 });
 
-export type { RecordOfRequiredSnowballStateParams };
+export type { RecordOfRequiredParamsOfSnowballStates };
 export { recordOfRequiredParamsOfStates, statesWithData };

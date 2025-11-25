@@ -6,7 +6,7 @@ import type { Player } from "../Player.js";
 import type { Score } from "../Score.js";
 import type { Slot } from "../Slot.js";
 
-import { State, type StateParams } from "../State.js";
+import { type ParamsOfState, State } from "../State.js";
 
 const validateConstructor = <
   G extends Game<G, M, P, S, Sc, Sl>,
@@ -19,7 +19,7 @@ const validateConstructor = <
   params,
   state,
 }: {
-  params: StateParams<G, M, P, S, Sc, Sl>;
+  params: ParamsOfState<G, M, P, S, Sc, Sl>;
   state: S;
 }) => {
   expect(state).toBeInstanceOf(State);

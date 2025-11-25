@@ -1,29 +1,30 @@
-import { type Move, type MoveParams } from "../Move.js";
+import { type Move, type ParamsOfMove } from "../Move.js";
 
-type DerivedMoveParams = Pick<MoveParams, "description"> & RequiredMoveParams;
+type DerivedParamsOfMove = Pick<ParamsOfMove, "description"> &
+  RequiredParamsOfMove;
 
 interface MoveWithData<
   M extends Move<M>,
-  Params extends RequiredMoveParams = RequiredMoveParams,
+  Params extends RequiredParamsOfMove = RequiredParamsOfMove,
 > {
   keyOfMove: string;
   move: M;
   params: Params;
 }
 
-type RequiredMoveParams = Pick<MoveParams, "title">;
+type RequiredParamsOfMove = Pick<ParamsOfMove, "title">;
 
-const deriveMoveParams = ({
+const deriveParamsOfMove = ({
   title,
-}: RequiredMoveParams): DerivedMoveParams => ({
+}: RequiredParamsOfMove): DerivedParamsOfMove => ({
   description: `Control the move on ${title}`,
   title,
 });
 
 const createMovesWithData = <
   M extends Move<M>,
-  RequiredParams extends RequiredMoveParams,
-  DerivedParams extends DerivedMoveParams,
+  RequiredParams extends RequiredParamsOfMove,
+  DerivedParams extends DerivedParamsOfMove,
   RecordOfRequiredParams extends Record<string, RequiredParams>,
 >({
   create,
@@ -55,11 +56,11 @@ const createMovesWithData = <
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Object.fromEntries cannot preserve mapped type keys
   return Object.fromEntries(
     Object.entries(recordOfRequiredParams).map(
-      ([key, requiredParams]) =>
+      ([keyOfMove, requiredParams]) =>
         [
-          key,
+          keyOfMove,
           {
-            keyOfMove: key,
+            keyOfMove,
             move: create(deriveParams(requiredParams)),
             params: requiredParams,
           } satisfies MoveWithData<M, RequiredParams>,
@@ -68,5 +69,5 @@ const createMovesWithData = <
   ) as ResultType;
 };
 
-export type { DerivedMoveParams, MoveWithData, RequiredMoveParams };
-export { createMovesWithData, deriveMoveParams };
+export type { DerivedParamsOfMove, MoveWithData, RequiredParamsOfMove };
+export { createMovesWithData, deriveParamsOfMove };

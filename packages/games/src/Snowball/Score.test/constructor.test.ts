@@ -8,7 +8,7 @@ import { expect, test } from "vitest";
 import { SnowballScore } from "../Score.js";
 import { scoresWithData } from "./records.js";
 import {
-  deriveSnowballScoreParams,
+  deriveParamsOfSnowballScore,
   type SnowballScoreWithData,
 } from "./setup.js";
 
@@ -33,7 +33,7 @@ const testConstructor = ({
         affix: keyOfScore,
       }),
       () => {
-        const { pointsOfEachPlayer } = deriveSnowballScoreParams(params);
+        const { pointsOfEachPlayer } = deriveParamsOfSnowballScore(params);
 
         const newScore = new SnowballScore({
           pointsOfEachPlayer,

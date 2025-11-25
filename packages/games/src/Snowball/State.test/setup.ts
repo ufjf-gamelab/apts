@@ -1,8 +1,8 @@
 import {
   createStatesWithData,
-  type DerivedStateParams,
-  deriveStateParams,
-  type RequiredStateParams,
+  type DerivedParamsOfState,
+  deriveParamsOfState,
+  type RequiredParamsOfState,
   type StateWithData,
 } from "@repo/game/State.test/setup.js";
 
@@ -15,12 +15,12 @@ import type { SnowballPlayerWithData } from "../Player.test/setup.js";
 import type { SnowballScore } from "../Score.js";
 import type { SnowballScoreWithData } from "../Score.test/setup.js";
 import type { SnowballSlot } from "../Slot.js";
-import type { RecordOfRequiredSnowballStateParams } from "./records.js";
+import type { RecordOfRequiredParamsOfSnowballStates } from "./records.js";
 
 import { type SnowballSlotWithData } from "../Slot.test/setup.js";
 import { SnowballState } from "../State.js";
 
-type DerivedSnowballStateParams = DerivedStateParams<
+type DerivedParamsOfSnowballState = DerivedParamsOfState<
   SnowballGame,
   SnowballMove,
   SnowballPlayer,
@@ -29,8 +29,8 @@ type DerivedSnowballStateParams = DerivedStateParams<
   SnowballSlot
 >;
 
-type RequiredSnowballStateParams = Pick<
-  RequiredStateParams<
+type RequiredParamsOfSnowballState = Pick<
+  RequiredParamsOfState<
     SnowballGame,
     SnowballMove,
     SnowballPlayer,
@@ -64,16 +64,16 @@ type SnowballStateWithData = StateWithData<
   SnowballPlayerWithData,
   SnowballScoreWithData,
   SnowballSlotWithData,
-  RequiredSnowballStateParams
+  RequiredParamsOfSnowballState
 >;
 
-const deriveSnowballStateParams = ({
+const deriveParamsOfSnowballState = ({
   game,
   player,
   score,
   slots,
-}: RequiredSnowballStateParams): DerivedSnowballStateParams =>
-  deriveStateParams({
+}: RequiredParamsOfSnowballState): DerivedParamsOfSnowballState =>
+  deriveParamsOfState({
     game,
     player,
     score,
@@ -85,7 +85,7 @@ const createSnowballState = ({
   indexOfPlayer,
   score,
   slots,
-}: DerivedSnowballStateParams): SnowballState =>
+}: DerivedParamsOfSnowballState): SnowballState =>
   new SnowballState({
     game,
     indexOfPlayer,
@@ -94,37 +94,37 @@ const createSnowballState = ({
   });
 
 type ExtendedSnowballStatesWithData<
-  ExtendedRecordOfRequiredSnowballStateParams extends
-    RecordOfRequiredSnowballStateParams,
+  ExtendedRecordOfRequiredParamsOfSnowballStates extends
+    RecordOfRequiredParamsOfSnowballStates,
 > = {
-  [K in keyof ExtendedRecordOfRequiredSnowballStateParams]: {
-    keyOfState: keyof ExtendedRecordOfRequiredSnowballStateParams;
-    params: RequiredSnowballStateParams;
+  [K in keyof ExtendedRecordOfRequiredParamsOfSnowballStates]: {
+    keyOfState: keyof ExtendedRecordOfRequiredParamsOfSnowballStates;
+    params: RequiredParamsOfSnowballState;
     state: SnowballState;
   };
 };
 
 const createSnowballStatesWithData = <
-  ExtendedRecordOfRequiredSnowballStateParams extends
-    RecordOfRequiredSnowballStateParams,
+  ExtendedRecordOfRequiredParamsOfSnowballStates extends
+    RecordOfRequiredParamsOfSnowballStates,
 >({
   recordOfRequiredParams,
 }: {
-  recordOfRequiredParams: ExtendedRecordOfRequiredSnowballStateParams;
-}): ExtendedSnowballStatesWithData<ExtendedRecordOfRequiredSnowballStateParams> =>
+  recordOfRequiredParams: ExtendedRecordOfRequiredParamsOfSnowballStates;
+}): ExtendedSnowballStatesWithData<ExtendedRecordOfRequiredParamsOfSnowballStates> =>
   createStatesWithData({
     create: createSnowballState,
-    deriveParams: deriveSnowballStateParams,
+    deriveParams: deriveParamsOfSnowballState,
     recordOfRequiredParams,
   });
 
 export type {
-  DerivedSnowballStateParams,
-  RequiredSnowballStateParams,
+  DerivedParamsOfSnowballState,
+  RequiredParamsOfSnowballState,
   SnowballStateWithData,
 };
 export {
   createSnowballState,
   createSnowballStatesWithData,
-  deriveSnowballStateParams,
+  deriveParamsOfSnowballState,
 };

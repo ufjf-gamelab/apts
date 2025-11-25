@@ -9,7 +9,7 @@ import { type IndexOfSlot, Slot } from "./Slot.js";
 
 type IndexOfState = Integer;
 
-interface StateParams<
+interface ParamsOfState<
   G extends Game<G, M, P, S, Sc, Sl>,
   M extends Move<M>,
   P extends Player<P>,
@@ -31,8 +31,8 @@ abstract class State<
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
 > {
-  private readonly game: StateParams<G, M, P, S, Sc, Sl>["game"];
-  private readonly indexOfPlayer: StateParams<
+  private readonly game: ParamsOfState<G, M, P, S, Sc, Sl>["game"];
+  private readonly indexOfPlayer: ParamsOfState<
     G,
     M,
     P,
@@ -40,15 +40,15 @@ abstract class State<
     Sc,
     Sl
   >["indexOfPlayer"];
-  private readonly score: StateParams<G, M, P, S, Sc, Sl>["score"];
-  private readonly slots: StateParams<G, M, P, S, Sc, Sl>["slots"];
+  private readonly score: ParamsOfState<G, M, P, S, Sc, Sl>["score"];
+  private readonly slots: ParamsOfState<G, M, P, S, Sc, Sl>["slots"];
 
   public constructor({
     game,
     indexOfPlayer,
     score,
     slots,
-  }: StateParams<G, M, P, S, Sc, Sl>) {
+  }: ParamsOfState<G, M, P, S, Sc, Sl>) {
     if (slots.length !== game.getQuantityOfSlots()) {
       throw new Error(
         `The number of slots (${
@@ -103,5 +103,5 @@ abstract class State<
   }
 }
 
-export type { IndexOfState, StateParams };
+export type { IndexOfState, ParamsOfState };
 export { State };

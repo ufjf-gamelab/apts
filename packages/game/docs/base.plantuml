@@ -40,20 +40,20 @@ package player_package as "Player" {
 
   }
 
-  interface PlayerParams {
+  interface ParamsOfPlayer {
     name: string
     symbol: Char
   }
 
   abstract class Player {
-    - name: PlayerParams::name
-    - symbol: PlayerParams::symbol
+    - name: ParamsOfPlayer::name
+    - symbol: ParamsOfPlayer::symbol
     --
     + getName(): this::name
     + getSymbol(): this::symbol
   }
-  Player::name -> PlayerParams::name
-  Player::symbol -> PlayerParams::symbol
+  Player::name -> ParamsOfPlayer::name
+  Player::symbol -> ParamsOfPlayer::symbol
 
 }
 
@@ -66,7 +66,7 @@ package slot_package as "Slot" {
 
   }
 
-  interface SlotParams {}
+  interface ParamsOfSlot {}
 
   abstract class Slot {
     + {static} getSlot({indexOfSlot: IndexOfSlot; slots: Slot[];}): null | Slot
@@ -83,39 +83,39 @@ package move_package as "Move" {
 
   }
 
-  interface MoveParams {
+  interface ParamsOfMove {
     title: string
     description: string
   }
 
   abstract class Move {
-    - title: MoveParams::title
-    - description: MoveParams::description
+    - title: ParamsOfMove::title
+    - description: ParamsOfMove::description
     --
     + getTitle(): this::title
     + getDescription(): this::description
   }
-  Move::title -> MoveParams::title
-  Move::description -> MoveParams::description
+  Move::title -> ParamsOfMove::title
+  Move::description -> ParamsOfMove::description
 
 }
 
 package game_package as "Game" {
 
-  interface GameParams {
+  interface ParamsOfGame {
     moves: Move[]
     name: string
     players: Player[]
     quantityOfSlots: Integer
   }
-  GameParams::players --> Player
-  GameParams::moves --> Move
+  ParamsOfGame::players --> Player
+  ParamsOfGame::moves --> Move
 
   abstract class Game {
-    - moves: GameParams::moves
-    - name: GameParams::name
-    - players: GameParams::players
-    - quantityOfSlots: GameParams::quantityOfSlots
+    - moves: ParamsOfGame::moves
+    - name: ParamsOfGame::name
+    - players: ParamsOfGame::players
+    - quantityOfSlots: ParamsOfGame::quantityOfSlots
     --
     + getMove(indexOfMove: IndexOfMove): null | Move
     + getMoves(): this::moves
@@ -132,10 +132,10 @@ package game_package as "Game" {
     + {abstract} isFinal(state: State): boolean
     + {abstract} play(indexOfMove: IndexOfMove, state: State): State
   }
-  Game::moves -> GameParams::moves
-  Game::name -> GameParams::name
-  Game::players -> GameParams::players
-  Game::quantityOfSlots -> GameParams::quantityOfSlots
+  Game::moves -> ParamsOfGame::moves
+  Game::name -> ParamsOfGame::name
+  Game::players -> ParamsOfGame::players
+  Game::quantityOfSlots -> ParamsOfGame::quantityOfSlots
   
 }
 
@@ -153,22 +153,22 @@ package state_package as "State" {
   }
   Score::0 --> Points
 
-  interface StateParams {
+  interface ParamsOfState {
     game: Game
     indexOfPlayer: IndexOfPlayer
     score: Score
     slots: Slot[]
   }
-  StateParams::game --> Game
-  StateParams::indexOfPlayer --> IndexOfPlayer
-  StateParams::score --> Score
-  StateParams::slots --> Slot
+  ParamsOfState::game --> Game
+  ParamsOfState::indexOfPlayer --> IndexOfPlayer
+  ParamsOfState::score --> Score
+  ParamsOfState::slots --> Slot
 
   abstract class State {
-    # game: StateParams::game
-    # indexOfPlayer: StateParams::indexOfPlayer
-    # score: StateParams::score
-    # slots: StateParams::slots
+    # game: ParamsOfState::game
+    # indexOfPlayer: ParamsOfState::indexOfPlayer
+    # score: ParamsOfState::score
+    # slots: ParamsOfState::slots
     --
     + getGame(): this::game
     + getIndexOfPlayer(): this::indexOfPlayer
@@ -177,10 +177,10 @@ package state_package as "State" {
     + getSlot(indexOfSlot: IndexOfSlot): null | Slot
     + getSlots(): this::slots
   }
-  State::game -> StateParams::game
-  State::indexOfPlayer -> StateParams::indexOfPlayer
-  State::score -> StateParams::score
-  State::slots -> StateParams::slots
+  State::game -> ParamsOfState::game
+  State::indexOfPlayer -> ParamsOfState::indexOfPlayer
+  State::score -> ParamsOfState::score
+  State::slots -> ParamsOfState::slots
 
 }
 
