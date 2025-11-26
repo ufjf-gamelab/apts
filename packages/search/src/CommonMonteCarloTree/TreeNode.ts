@@ -16,59 +16,122 @@ const MINIMUM_QUALITY_OF_MATCH = 0;
 const MINIMUM_QUANTITY_OF_VISITS = 0;
 
 interface ParamsOfTreeNode<
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 > {
   readonly explorationConstant: number;
   readonly indexOfPlayedMove: IndexOfMove | null;
-  readonly parent: null | TreeNode<G, M, P, Sc, Sl, St>;
-  readonly state: St;
+  readonly parent: null | TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >;
+  readonly state: GenericState;
 }
 
 class TreeNode<
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 > {
   private readonly children: Map<
     IndexOfMove,
-    null | TreeNode<G, M, P, Sc, Sl, St>
+    null | TreeNode<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >
   >;
   private readonly explorationConstant: ParamsOfTreeNode<
-    G,
-    M,
-    P,
-    Sc,
-    Sl,
-    St
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
   >["explorationConstant"];
-  private readonly game: G;
+  private readonly game: GenericGame;
   private readonly indexOfPlayedMove: ParamsOfTreeNode<
-    G,
-    M,
-    P,
-    Sc,
-    Sl,
-    St
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
   >["indexOfPlayedMove"];
-  private readonly parent: ParamsOfTreeNode<G, M, P, Sc, Sl, St>["parent"];
+  private readonly parent: ParamsOfTreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >["parent"];
   private qualityOfMatch: number = MINIMUM_QUALITY_OF_MATCH;
   private quantityOfVisits: Integer = MINIMUM_QUANTITY_OF_VISITS;
-  private readonly state: ParamsOfTreeNode<G, M, P, Sc, Sl, St>["state"];
+  private readonly state: ParamsOfTreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >["state"];
 
   public constructor({
     explorationConstant,
     indexOfPlayedMove,
     parent,
     state,
-  }: ParamsOfTreeNode<G, M, P, Sc, Sl, St>) {
+  }: ParamsOfTreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >) {
     this.state = state.clone();
     this.game = state.getGame();
     this.indexOfPlayedMove = indexOfPlayedMove;
@@ -84,7 +147,14 @@ class TreeNode<
   }
 
   /// Pick a random action and perform it, returning the outcome state as a child node.
-  public expand(): TreeNode<G, M, P, Sc, Sl, St> {
+  public expand(): TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  > {
     const selectedIndexOfMove = this.pickIndexOfRandomMove();
     const nextState = this.game.play({
       indexOfMove: selectedIndexOfMove,
@@ -116,7 +186,14 @@ class TreeNode<
   }
 
   /// Select the best node among children, i.e. the one with the highest UCB.
-  public selectBestChild(): null | TreeNode<G, M, P, Sc, Sl, St> {
+  public selectBestChild(): null | TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  > {
     if (this.children.size === LENGTH_OF_EMPTY_LIST) {
       throw new Error("No children to select from");
     }
@@ -125,7 +202,14 @@ class TreeNode<
       (child) => child !== null,
     );
 
-    let bestChild: null | TreeNode<G, M, P, Sc, Sl, St> = null;
+    let bestChild: null | TreeNode<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    > = null;
     let bestUcb = Number.NEGATIVE_INFINITY;
 
     for (const child of expandedChildren) {
@@ -140,7 +224,7 @@ class TreeNode<
   }
 
   /// Simulate a game from the current state, returning the outcome value.
-  public simulateMatch(): Score<Sc> {
+  public simulateMatch(): Score<GenericScore> {
     // Copy the state and play random actions, with alternate players, until the game is over.
     let stateThatIsCurrentlyBeingSimulated = this.state.clone();
     for (;;) {
@@ -162,7 +246,7 @@ class TreeNode<
 
   /// Backpropagate the outcome value to the root node.
   public updateQualityOfMatchAndQuantityOfVisitsOnBranch(
-    score: Score<Sc>,
+    score: Score<GenericScore>,
   ): void {
     const indexOfPlayer = this.state.getIndexOfPlayer();
     const pointsOfPlayer = score.getPointsOfPlayer({ indexOfPlayer });
@@ -175,7 +259,16 @@ class TreeNode<
     }
   }
 
-  private getFitnessOfChild(child: TreeNode<G, M, P, Sc, Sl, St>): number {
+  private getFitnessOfChild(
+    child: TreeNode<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >,
+  ): number {
     // Privileges the child with the lowest exploitation, as it means the opponent will have the lowest chance of winning
 
     const exploitation =
