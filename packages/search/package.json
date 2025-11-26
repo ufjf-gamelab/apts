@@ -1,9 +1,11 @@
 {
   "author": "Gabriel Malosto",
-  "devDependencies": {
+  "dependencies": {
     "@repo/engine_core": "workspace:*",
+    "@repo/game": "workspace:*"
+  },
+  "devDependencies": {
     "@repo/eslint_config": "workspace:*",
-    "@repo/game": "workspace:*",
     "@repo/typescript_config": "workspace:*",
     "typescript": "^5.9.3",
     "vitest": "^4.0.14"
@@ -16,13 +18,13 @@
   "private": true,
   "scripts": {
     "build": "tsc",
+    "check-types": "tsc",
     "dev": "tsc --watch",
     "format": "prettier . -w",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "test": "vitest run",
-    "test:watch": "vitest --watch",
-    "check-types": "tsc"
+    "test:watch": "vitest --watch"
   },
   "type": "module",
   "version": "4.3.0"

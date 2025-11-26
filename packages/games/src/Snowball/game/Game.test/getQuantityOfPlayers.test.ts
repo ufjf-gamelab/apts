@@ -28,23 +28,25 @@ const testGetQuantityOfPlayers = ({
 }: {
   arrayOfGamesWithData: SnowballGameWithData[];
 }) => {
-  arrayOfGamesWithData.forEach(({ game, keyOfGame, params }) => {
-    const expectedQuantityOfPlayers = params.players.length;
+  arrayOfGamesWithData.forEach(
+    ({ game, keyOfGame, requiredParams: { playersWithData } }) => {
+      const expectedQuantityOfPlayers = playersWithData.length;
 
-    test(
-      createDescription({
-        affix: keyOfGame,
-        expectedQuantityOfPlayers,
-      }),
-
-      () => {
-        validateGetQuantityOfPlayers({
+      test(
+        createDescription({
+          affix: keyOfGame,
           expectedQuantityOfPlayers,
-          game,
-        });
-      },
-    );
-  });
+        }),
+
+        () => {
+          validateGetQuantityOfPlayers({
+            expectedQuantityOfPlayers,
+            game,
+          });
+        },
+      );
+    },
+  );
 };
 
 testGetQuantityOfPlayers({

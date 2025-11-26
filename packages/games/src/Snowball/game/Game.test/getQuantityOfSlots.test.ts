@@ -28,23 +28,25 @@ const testGetQuantityOfSlots = ({
 }: {
   arrayOfGamesWithData: SnowballGameWithData[];
 }) => {
-  arrayOfGamesWithData.forEach(({ game, keyOfGame, params }) => {
-    const expectedQuantityOfSlots = params.slots.length;
+  arrayOfGamesWithData.forEach(
+    ({ game, keyOfGame, requiredParams: { slotsWithData } }) => {
+      const expectedQuantityOfSlots = slotsWithData.length;
 
-    test(
-      createDescription({
-        affix: keyOfGame,
-        expectedQuantityOfSlots,
-      }),
-
-      () => {
-        validateGetQuantityOfSlots({
+      test(
+        createDescription({
+          affix: keyOfGame,
           expectedQuantityOfSlots,
-          game,
-        });
-      },
-    );
-  });
+        }),
+
+        () => {
+          validateGetQuantityOfSlots({
+            expectedQuantityOfSlots,
+            game,
+          });
+        },
+      );
+    },
+  );
 };
 
 testGetQuantityOfSlots({

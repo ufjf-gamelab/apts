@@ -30,25 +30,29 @@ const testGetMoves = ({
 }: {
   arrayOfGamesWithData: SnowballGameWithData[];
 }) => {
-  arrayOfGamesWithData.forEach(({ game, keyOfGame, params }) => {
-    test(
-      createDescription({
-        affix: keyOfGame,
-        keysOfExpectedMoves: params.moves.map(({ keyOfMove }) => keyOfMove),
-      }),
+  arrayOfGamesWithData.forEach(
+    ({ game, keyOfGame, requiredParams: { movesWithData } }) => {
+      const moves = movesWithData.map(({ move }) => move);
 
-      () => {
-        validateGetMoves({
-          expectedMoves: params.moves.map(({ move }) => move),
-          game,
-        });
+      test(
+        createDescription({
+          affix: keyOfGame,
+          keysOfExpectedMoves: movesWithData.map(({ keyOfMove }) => keyOfMove),
+        }),
 
-        expect(params.moves).toBeInstanceOf(Array<SnowballMove>);
-        const [firstMoveWithData] = params.moves;
-        expect(firstMoveWithData?.move).toBeInstanceOf(SnowballMove);
-      },
-    );
-  });
+        () => {
+          validateGetMoves({
+            expectedMoves: moves,
+            game,
+          });
+
+          expect(moves).toBeInstanceOf(Array<SnowballMove>);
+          const [firstMoveWithData] = movesWithData;
+          expect(firstMoveWithData?.move).toBeInstanceOf(SnowballMove);
+        },
+      );
+    },
+  );
 };
 
 testGetMoves({

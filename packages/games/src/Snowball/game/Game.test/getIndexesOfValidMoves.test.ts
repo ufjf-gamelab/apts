@@ -31,27 +31,30 @@ const testGetIndexesOfValidMoves = ({
 }: {
   arrayOfStatesWithData: SnowballStateWithData[];
 }) => {
-  arrayOfStatesWithData.forEach(({ keyOfState, params, state }) => {
-    const indexesOfValidMoves = new Set(params.validMoves.keys());
+  arrayOfStatesWithData.forEach(
+    ({ keyOfState, params: { validMoves }, state }) => {
+      const indexesOfValidMoves = new Set(validMoves.keys());
+      const keysOfExpectedValidMoves = validMoves
+        .values()
+        .map((validMove) => validMove.keyOfMove)
+        .toArray();
 
-    test(
-      createDescription({
-        affix: keyOfState,
-        keyOfState,
-        keysOfExpectedValidMoves: params.validMoves
-          .values()
-          .map((validMove) => validMove.keyOfMove)
-          .toArray(),
-      }),
+      test(
+        createDescription({
+          affix: keyOfState,
+          keyOfState,
+          keysOfExpectedValidMoves,
+        }),
 
-      () => {
-        validateGetIndexesOfValidMoves({
-          expectedIndexesOfValidMoves: indexesOfValidMoves,
-          state,
-        });
-      },
-    );
-  });
+        () => {
+          validateGetIndexesOfValidMoves({
+            expectedIndexesOfValidMoves: indexesOfValidMoves,
+            state,
+          });
+        },
+      );
+    },
+  );
 };
 
 testGetIndexesOfValidMoves({

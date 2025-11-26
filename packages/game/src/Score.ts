@@ -3,6 +3,7 @@ import type { Integer } from "@repo/engine_core/types.js";
 import type { IndexOfPlayer } from "./Player.js";
 
 type IndexOfScore = Integer;
+
 interface ParamsOfScore {
   readonly pointsOfEachPlayer: ReadonlyMap<IndexOfPlayer, Points>;
 }

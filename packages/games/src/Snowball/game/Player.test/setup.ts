@@ -1,5 +1,6 @@
 import {
   createPlayersWithData,
+  type DerivedParamsOfPlayer,
   deriveParamsOfPlayer,
   type PlayerWithData,
   type RequiredParamsOfPlayer,
@@ -8,17 +9,11 @@ import {
 import { SnowballPlayer } from "../Player.js";
 import { type RecordOfRequiredParamsOfSnowballPlayers } from "./records.js";
 
-type DerivedParamsOfSnowballPlayer = RequiredParamsOfSnowballPlayer;
+type DerivedParamsOfSnowballPlayer = DerivedParamsOfPlayer;
 
-type RequiredParamsOfSnowballPlayer = Pick<
-  RequiredParamsOfPlayer,
-  "name" | "symbol"
->;
+type RequiredParamsOfSnowballPlayer = RequiredParamsOfPlayer;
 
-type SnowballPlayerWithData = PlayerWithData<
-  SnowballPlayer,
-  RequiredParamsOfSnowballPlayer
->;
+type SnowballPlayerWithData = PlayerWithData<SnowballPlayer>;
 
 const deriveParamsOfSnowballPlayer = ({
   name,

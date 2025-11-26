@@ -3,6 +3,7 @@
   "dependencies": {
     "@repo/engine_core": "workspace:*",
     "@repo/game": "workspace:*",
+    "@repo/search": "workspace:*",
     "eslint": "^9.39.1"
   },
   "description": "Collection of tabletop games to be used with the engine.",

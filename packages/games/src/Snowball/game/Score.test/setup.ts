@@ -11,15 +11,9 @@ import type { RecordOfRequiredParamsOfSnowballScores } from "./records.js";
 
 import { SnowballScore } from "../Score.js";
 
-type DerivedParamsOfSnowballScore = Pick<
-  DerivedParamsOfScore<SnowballPlayer>,
-  "pointsOfEachPlayer"
->;
+type DerivedParamsOfSnowballScore = DerivedParamsOfScore;
 
-type RequiredParamsOfSnowballScore = Pick<
-  RequiredParamsOfScore<SnowballPlayer>,
-  "pointsOfEachPlayer"
->;
+type RequiredParamsOfSnowballScore = RequiredParamsOfScore<SnowballPlayer>;
 
 type SnowballScoreWithData = ScoreWithData<
   SnowballPlayer,

@@ -32,8 +32,8 @@ const testGetMove = ({
 }: {
   arrayOfGamesWithData: SnowballGameWithData[];
 }) => {
-  arrayOfGamesWithData.forEach(({ game, keyOfGame, params }) => {
-    params.moves.forEach(({ keyOfMove, move }, indexOfMove) => {
+  arrayOfGamesWithData.forEach(({ game, keyOfGame, requiredParams }) => {
+    requiredParams.movesWithData.forEach(({ keyOfMove, move }, indexOfMove) => {
       test(
         createDescription({
           affix: keyOfGame,

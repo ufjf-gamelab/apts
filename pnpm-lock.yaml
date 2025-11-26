@@ -204,6 +204,9 @@ importers:
       '@repo/game':
         specifier: workspace:*
         version: link:../game
+      '@repo/search':
+        specifier: workspace:*
+        version: link:../search
       eslint:
         specifier: ^9.39.1
         version: 9.39.1(jiti@2.6.1)
@@ -244,16 +247,17 @@ importers:
         version: 5.9.3
 
   packages/search:
-    devDependencies:
+    dependencies:
       '@repo/engine_core':
         specifier: workspace:*
         version: link:../engine_core
-      '@repo/eslint_config':
-        specifier: workspace:*
-        version: link:../eslint_config
       '@repo/game':
         specifier: workspace:*
         version: link:../game
+    devDependencies:
+      '@repo/eslint_config':
+        specifier: workspace:*
+        version: link:../eslint_config
       '@repo/typescript_config':
         specifier: workspace:*
         version: link:../typescript_config

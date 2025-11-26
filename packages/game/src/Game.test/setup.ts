@@ -13,21 +13,7 @@ type DerivedParamsOfGame<
   M extends Move<M>,
   P extends Player<P>,
   Sl extends Slot<Sl>,
-  ExtendedMoveWithData extends MoveWithData<M>,
-  ExtendedPlayerWithData extends PlayerWithData<P>,
-  ExtendedSlotWithData extends SlotWithData<Sl>,
-> = Pick<ParamsOfGame<M, P, Sl>, "moves" | "players" | "slots"> &
-  Pick<
-    RequiredParamsOfGame<
-      M,
-      P,
-      Sl,
-      ExtendedMoveWithData,
-      ExtendedPlayerWithData,
-      ExtendedSlotWithData
-    >,
-    "name"
-  >;
+> = ParamsOfGame<M, P, Sl>;
 
 interface GameWithData<
   G extends Game<G, M, P, Sc, Sl, St>,
@@ -39,7 +25,7 @@ interface GameWithData<
   ExtendedMoveWithData extends MoveWithData<M>,
   ExtendedPlayerWithData extends PlayerWithData<P>,
   ExtendedSlotWithData extends SlotWithData<Sl>,
-  Params extends RequiredParamsOfGame<
+  RequiredParams extends RequiredParamsOfGame<
     M,
     P,
     Sl,
@@ -54,10 +40,11 @@ interface GameWithData<
     ExtendedPlayerWithData,
     ExtendedSlotWithData
   >,
+  Key extends PropertyKey = string,
 > {
   game: G;
-  keyOfGame: string;
-  params: Params;
+  keyOfGame: Key;
+  requiredParams: RequiredParams;
 }
 
 type RequiredParamsOfGame<
@@ -68,9 +55,9 @@ type RequiredParamsOfGame<
   ExtendedPlayerWithData extends PlayerWithData<P>,
   ExtendedSlotWithData extends SlotWithData<Sl>,
 > = Pick<ParamsOfGame<M, P, Sl>, "name"> & {
-  moves: readonly ExtendedMoveWithData[];
-  players: readonly ExtendedPlayerWithData[];
-  slots: readonly ExtendedSlotWithData[];
+  movesWithData: readonly ExtendedMoveWithData[];
+  playersWithData: readonly ExtendedPlayerWithData[];
+  slotsWithData: readonly ExtendedSlotWithData[];
 };
 
 const deriveParamsOfGame = <
@@ -84,10 +71,10 @@ const deriveParamsOfGame = <
   ExtendedPlayerWithData extends PlayerWithData<P>,
   ExtendedSlotWithData extends SlotWithData<Sl>,
 >({
-  moves,
+  movesWithData,
   name,
-  players,
-  slots,
+  playersWithData,
+  slotsWithData,
 }: Pick<
   RequiredParamsOfGame<
     M,
@@ -97,19 +84,12 @@ const deriveParamsOfGame = <
     ExtendedPlayerWithData,
     ExtendedSlotWithData
   >,
-  "moves" | "name" | "players" | "slots"
->): DerivedParamsOfGame<
-  M,
-  P,
-  Sl,
-  ExtendedMoveWithData,
-  ExtendedPlayerWithData,
-  ExtendedSlotWithData
-> => ({
-  moves: Object.values(moves).map(({ move }) => move),
+  "movesWithData" | "name" | "playersWithData" | "slotsWithData"
+>): DerivedParamsOfGame<M, P, Sl> => ({
+  moves: movesWithData.map(({ move }) => move),
   name,
-  players: Object.values(players).map(({ player }) => player),
-  slots: slots.map((slot) => slot.slot),
+  players: playersWithData.map(({ player }) => player),
+  slots: slotsWithData.map(({ slot }) => slot),
 });
 
 // eslint-disable-next-line max-lines-per-function
@@ -131,43 +111,52 @@ const createGamesWithData = <
     ExtendedPlayerWithData,
     ExtendedSlotWithData
   >,
-  DerivedParams extends DerivedParamsOfGame<
-    M,
-    P,
-    Sl,
-    ExtendedMoveWithData,
-    ExtendedPlayerWithData,
-    ExtendedSlotWithData
-  >,
+  DerivedParams extends DerivedParamsOfGame<M, P, Sl>,
   RecordOfRequiredParams extends Record<string, RequiredParams>,
 >({
   create,
   deriveParams,
   recordOfRequiredParams,
 }: {
-  create: (params: DerivedParams) => G;
+  create: (derivedParams: DerivedParams) => G;
   deriveParams: (requiredParams: RequiredParams) => DerivedParams;
   recordOfRequiredParams: RecordOfRequiredParams;
 }): {
-  [K in keyof RecordOfRequiredParams]: {
-    game: G;
-    keyOfGame: K;
-    params: RequiredParams;
-  };
+  [Key in keyof RecordOfRequiredParams]: GameWithData<
+    G,
+    M,
+    P,
+    Sc,
+    Sl,
+    St,
+    ExtendedMoveWithData,
+    ExtendedPlayerWithData,
+    ExtendedSlotWithData,
+    RequiredParams,
+    Key
+  >;
 } => {
   type ResultType = {
-    [K in keyof RecordOfRequiredParams]: {
-      game: G;
-      keyOfGame: K;
-      params: RequiredParams;
-    };
+    [Key in keyof RecordOfRequiredParams]: GameWithData<
+      G,
+      M,
+      P,
+      Sc,
+      Sl,
+      St,
+      ExtendedMoveWithData,
+      ExtendedPlayerWithData,
+      ExtendedSlotWithData,
+      RequiredParams,
+      Key
+    >;
   };
 
   /**
    * TypeScript cannot statically verify that Object.fromEntries produces all required keys since the operation happens at runtime.
    * This assertion is safe because we're iterating over all entries from recordOfRequiredParams, which RecordOfRequiredParams is derived from.
    */
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Object.fromEntries cannot preserve mapped type keys
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
   return Object.fromEntries(
     Object.entries(recordOfRequiredParams).map(
       ([keyOfGame, requiredParams]) =>
@@ -176,7 +165,7 @@ const createGamesWithData = <
           {
             game: create(deriveParams(requiredParams)),
             keyOfGame,
-            params: requiredParams,
+            requiredParams,
           } satisfies GameWithData<
             G,
             M,

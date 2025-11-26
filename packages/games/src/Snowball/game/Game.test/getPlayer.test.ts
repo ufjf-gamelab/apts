@@ -32,27 +32,29 @@ const testGetPlayer = ({
 }: {
   arrayOfGamesWithData: SnowballGameWithData[];
 }) => {
-  arrayOfGamesWithData.forEach(({ game, keyOfGame, params }) => {
-    params.players.forEach(({ keyOfPlayer, player }, indexOfPlayer) => {
-      test(
-        createDescription({
-          affix: keyOfGame,
-          indexOfPlayer,
-          keyOfPlayer,
-        }),
-
-        () => {
-          validateGetPlayer({
-            expectedPlayer: player,
-            game,
+  arrayOfGamesWithData.forEach(
+    ({ game, keyOfGame, requiredParams: { playersWithData } }) => {
+      playersWithData.forEach(({ keyOfPlayer, player }, indexOfPlayer) => {
+        test(
+          createDescription({
+            affix: keyOfGame,
             indexOfPlayer,
-          });
+            keyOfPlayer,
+          }),
 
-          expect(player).toBeInstanceOf(SnowballPlayer);
-        },
-      );
-    });
-  });
+          () => {
+            validateGetPlayer({
+              expectedPlayer: player,
+              game,
+              indexOfPlayer,
+            });
+
+            expect(player).toBeInstanceOf(SnowballPlayer);
+          },
+        );
+      });
+    },
+  );
 };
 
 testGetPlayer({

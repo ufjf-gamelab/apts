@@ -21,10 +21,7 @@ import { type SnowballSlotWithData } from "../Slot.test/setup.js";
 type DerivedParamsOfSnowballGame = DerivedParamsOfGame<
   SnowballMove,
   SnowballPlayer,
-  SnowballSlot,
-  SnowballMoveWithData,
-  SnowballPlayerWithData,
-  SnowballSlotWithData
+  SnowballSlot
 >;
 
 type RequiredParamsOfSnowballGame = RequiredParamsOfGame<
@@ -36,7 +33,7 @@ type RequiredParamsOfSnowballGame = RequiredParamsOfGame<
   SnowballSlotWithData
 >;
 
-type SnowballGameWithData = GameWithData<
+type SnowballGameWithData<Key extends PropertyKey = string> = GameWithData<
   SnowballGame,
   SnowballMove,
   SnowballPlayer,
@@ -45,16 +42,18 @@ type SnowballGameWithData = GameWithData<
   SnowballState,
   SnowballMoveWithData,
   SnowballPlayerWithData,
-  SnowballSlotWithData
+  SnowballSlotWithData,
+  RequiredParamsOfSnowballGame,
+  Key
 >;
 
 const deriveParamsOfSnowballGame = ({
-  moves,
+  movesWithData,
   name,
-  players,
-  slots,
+  playersWithData,
+  slotsWithData,
 }: RequiredParamsOfSnowballGame): DerivedParamsOfSnowballGame =>
-  deriveParamsOfGame({ moves, name, players, slots });
+  deriveParamsOfGame({ movesWithData, name, playersWithData, slotsWithData });
 
 const createSnowballGame = ({
   moves,
@@ -73,12 +72,9 @@ type ExtendedSnowballGamesWithData<
   ExtendedRecordOfRequiredParamsOfSnowballGames extends
     RecordOfRequiredParamsOfSnowballGames,
 > = {
-  [K in keyof ExtendedRecordOfRequiredParamsOfSnowballGames]: {
-    game: SnowballGame;
-    keyOfGame: keyof ExtendedRecordOfRequiredParamsOfSnowballGames;
-    params: RequiredParamsOfSnowballGame;
-  };
+  [Key in keyof ExtendedRecordOfRequiredParamsOfSnowballGames]: SnowballGameWithData<Key>;
 };
+
 const createSnowballGamesWithData = <
   ExtendedRecordOfRequiredParamsOfSnowballGames extends
     RecordOfRequiredParamsOfSnowballGames,

@@ -4,7 +4,7 @@ import {
   type Player,
 } from "../Player.js";
 
-type DerivedParamsOfPlayer = RequiredParamsOfPlayer;
+type DerivedParamsOfPlayer = ParamsOfPlayer;
 
 interface PlayerWithData<
   P extends Player<P>,
@@ -23,7 +23,7 @@ interface PlayerWithDataAndIndex<
   player: ExtendedPlayerWithData;
 }
 
-type RequiredParamsOfPlayer = Pick<ParamsOfPlayer, "name" | "symbol">;
+type RequiredParamsOfPlayer = ParamsOfPlayer;
 
 const deriveParamsOfPlayer = ({
   name,

@@ -10,16 +10,15 @@ const createDescriptionForPlayerAndItsPoints = <P extends Player<P>>({
   points: Points;
 }): string => `${keyOfPlayer}: ${points}`;
 
-type DerivedParamsOfScore<P extends Player<P>> = ParamsOfScore;
+type DerivedParamsOfScore = ParamsOfScore;
+
+interface PlayerWithDataAndPoints<P extends Player<P>> {
+  player: PlayerWithData<P>;
+  points: Points;
+}
 
 interface RequiredParamsOfScore<P extends Player<P>> {
-  pointsOfEachPlayer: Map<
-    IndexOfPlayer,
-    {
-      player: PlayerWithData<P>;
-      points: Points;
-    }
-  >;
+  pointsOfEachPlayer: Map<IndexOfPlayer, PlayerWithDataAndPoints<P>>;
 }
 
 interface ScoreWithData<
@@ -33,7 +32,7 @@ interface ScoreWithData<
 }
 const deriveParamsOfScore = <P extends Player<P>>({
   pointsOfEachPlayer,
-}: RequiredParamsOfScore<P>): DerivedParamsOfScore<P> => ({
+}: RequiredParamsOfScore<P>): DerivedParamsOfScore => ({
   pointsOfEachPlayer: new Map(
     pointsOfEachPlayer
       .entries()
@@ -48,7 +47,7 @@ const createScoresWithData = <
   P extends Player<P>,
   Sc extends Score<Sc>,
   RequiredParams extends RequiredParamsOfScore<P>,
-  DerivedParams extends DerivedParamsOfScore<P>,
+  DerivedParams extends DerivedParamsOfScore,
   RecordOfRequiredParams extends Record<string, RequiredParams>,
 >({
   create,
@@ -93,7 +92,12 @@ const createScoresWithData = <
   ) as ResultType;
 };
 
-export type { DerivedParamsOfScore, RequiredParamsOfScore, ScoreWithData };
+export type {
+  DerivedParamsOfScore,
+  PlayerWithDataAndPoints,
+  RequiredParamsOfScore,
+  ScoreWithData,
+};
 export {
   createDescriptionForPlayerAndItsPoints,
   createScoresWithData,

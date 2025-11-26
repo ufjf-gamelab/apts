@@ -1,8 +1,8 @@
-import { type Slot } from "../Slot.js";
+import type { ParamsOfSlot, Slot } from "../Slot.js";
 
-type DerivedParamsOfSlot = RequiredParamsOfSlot;
+type DerivedParamsOfSlot = ParamsOfSlot;
 
-type RequiredParamsOfSlot = object;
+type RequiredParamsOfSlot = ParamsOfSlot;
 
 interface SlotWithData<
   Sl extends Slot<Sl>,

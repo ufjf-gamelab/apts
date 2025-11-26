@@ -13,10 +13,10 @@ type RecordOfRequiredParamsOfSnowballGames = Record<
 
 const recordOfRequiredParamsOfGames = {
   snowballWith9RowsAnd9Columns: {
-    moves: indexedMovesWithData,
+    movesWithData: indexedMovesWithData,
     name: "Snowball",
-    players: indexedPlayersWithData,
-    slots: indexedSlotsWithDataInWhichAllSlotsAreEmpty,
+    playersWithData: indexedPlayersWithData,
+    slotsWithData: indexedSlotsWithDataInWhichAllSlotsAreEmpty,
   },
 } as const satisfies RecordOfRequiredParamsOfSnowballGames;
 

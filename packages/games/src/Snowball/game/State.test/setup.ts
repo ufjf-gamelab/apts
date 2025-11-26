@@ -29,27 +29,18 @@ type DerivedParamsOfSnowballState = DerivedParamsOfState<
   SnowballState
 >;
 
-type RequiredParamsOfSnowballState = Pick<
-  RequiredParamsOfState<
-    SnowballGame,
-    SnowballMove,
-    SnowballPlayer,
-    SnowballScore,
-    SnowballSlot,
-    SnowballState,
-    SnowballGameWithData,
-    SnowballMoveWithData,
-    SnowballPlayerWithData,
-    SnowballScoreWithData,
-    SnowballSlotWithData
-  >,
-  | "game"
-  | "isFinal"
-  | "nextPlayer"
-  | "player"
-  | "score"
-  | "slots"
-  | "validMoves"
+type RequiredParamsOfSnowballState = RequiredParamsOfState<
+  SnowballGame,
+  SnowballMove,
+  SnowballPlayer,
+  SnowballScore,
+  SnowballSlot,
+  SnowballState,
+  SnowballGameWithData,
+  SnowballMoveWithData,
+  SnowballPlayerWithData,
+  SnowballScoreWithData,
+  SnowballSlotWithData
 >;
 
 type SnowballStateWithData = StateWithData<

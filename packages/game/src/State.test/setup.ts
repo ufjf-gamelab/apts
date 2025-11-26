@@ -21,10 +21,7 @@ type DerivedParamsOfState<
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
   St extends State<G, M, P, Sc, Sl, St>,
-> = Pick<
-  ParamsOfState<G, M, P, Sc, Sl, St>,
-  "game" | "indexOfPlayer" | "score" | "slots"
->;
+> = ParamsOfState<G, M, P, Sc, Sl, St>;
 
 interface RequiredParamsOfState<
   G extends Game<G, M, P, Sc, Sl, St>,

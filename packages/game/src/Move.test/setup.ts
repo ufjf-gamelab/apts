@@ -1,7 +1,6 @@
-import { type Move, type ParamsOfMove } from "../Move.js";
+import type { IndexOfMove, Move, ParamsOfMove } from "../Move.js";
 
-type DerivedParamsOfMove = Pick<ParamsOfMove, "description"> &
-  RequiredParamsOfMove;
+type DerivedParamsOfMove = ParamsOfMove;
 
 interface MoveWithData<
   M extends Move<M>,
@@ -10,6 +9,14 @@ interface MoveWithData<
   keyOfMove: string;
   move: M;
   params: Params;
+}
+
+interface MoveWithDataAndIndex<
+  M extends Move<M>,
+  ExtendedMoveWithData extends MoveWithData<M>,
+> {
+  indexOfMove: IndexOfMove;
+  move: ExtendedMoveWithData;
 }
 
 type RequiredParamsOfMove = Pick<ParamsOfMove, "title">;
@@ -69,5 +76,10 @@ const createMovesWithData = <
   ) as ResultType;
 };
 
-export type { DerivedParamsOfMove, MoveWithData, RequiredParamsOfMove };
+export type {
+  DerivedParamsOfMove,
+  MoveWithData,
+  MoveWithDataAndIndex,
+  RequiredParamsOfMove,
+};
 export { createMovesWithData, deriveParamsOfMove };

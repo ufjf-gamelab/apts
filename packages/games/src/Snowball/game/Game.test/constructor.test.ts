@@ -27,7 +27,7 @@ const testConstructor = ({
 }: {
   arrayOfGamesWithData: SnowballGameWithData[];
 }) => {
-  arrayOfGamesWithData.forEach(({ keyOfGame, params }) => {
+  arrayOfGamesWithData.forEach(({ keyOfGame, requiredParams }) => {
     test(
       createDescription({
         affix: keyOfGame,
@@ -35,7 +35,7 @@ const testConstructor = ({
 
       () => {
         const { moves, name, players, slots } =
-          deriveParamsOfSnowballGame(params);
+          deriveParamsOfSnowballGame(requiredParams);
 
         const newGame = new SnowballGame({
           moves,

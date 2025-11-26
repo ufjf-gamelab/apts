@@ -1,21 +1,27 @@
 import {
   createSlotsWithData,
+  type DerivedParamsOfSlot,
+  type RequiredParamsOfSlot,
   type SlotWithData,
 } from "@repo/game/Slot.test/setup.js";
 
 import { type ParamsOfSnowballSlot, SnowballSlot } from "../Slot.js";
 import { type RecordOfRequiredParamsOfSnowballSlots } from "./records.js";
 
-type DerivedParamsOfSnowballSlot = RequiredParamsOfSnowballSlot;
+// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+type DerivedParamsOfSnowballSlot = DerivedParamsOfSlot &
+  Pick<ParamsOfSnowballSlot, "indexOfOccupyingPlayer">;
 
 type RequiredParamsOfSnowballSlot = Pick<
   ParamsOfSnowballSlot,
   "indexOfOccupyingPlayer"
->;
+> &
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+  RequiredParamsOfSlot;
 
 type SnowballSlotWithData = SlotWithData<
   SnowballSlot,
-  RequiredParamsOfSnowballSlot
+  DerivedParamsOfSnowballSlot
 >;
 
 const deriveParamsOfSnowballSlot = ({

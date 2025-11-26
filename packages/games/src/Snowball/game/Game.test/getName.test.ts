@@ -28,21 +28,23 @@ const testGetName = ({
 }: {
   arrayOfGamesWithData: SnowballGameWithData[];
 }) => {
-  arrayOfGamesWithData.forEach(({ game, keyOfGame, params }) => {
-    test(
-      createDescription({
-        affix: keyOfGame,
-        expectedName: params.name,
-      }),
+  arrayOfGamesWithData.forEach(
+    ({ game, keyOfGame, requiredParams: { name } }) => {
+      test(
+        createDescription({
+          affix: keyOfGame,
+          expectedName: name,
+        }),
 
-      () => {
-        validateGetName({
-          expectedName: params.name,
-          game,
-        });
-      },
-    );
-  });
+        () => {
+          validateGetName({
+            expectedName: name,
+            game,
+          });
+        },
+      );
+    },
+  );
 };
 
 testGetName({

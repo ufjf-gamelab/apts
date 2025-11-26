@@ -9,14 +9,14 @@ import {
 import { type ParamsOfSnowballMove, SnowballMove } from "../Move.js";
 import { type RecordOfRequiredParamsOfSnowballMoves } from "./records.js";
 
-type DerivedParamsOfSnowballMove = Pick<DerivedParamsOfMove, "description"> &
-  RequiredParamsOfSnowballMove;
+type DerivedParamsOfSnowballMove = DerivedParamsOfMove &
+  Pick<RequiredParamsOfSnowballMove, "indexOfSlotInWhichPlacePiece">;
 
 type RequiredParamsOfSnowballMove = Pick<
   ParamsOfSnowballMove,
   "indexOfSlotInWhichPlacePiece"
 > &
-  Pick<RequiredParamsOfMove, "title">;
+  RequiredParamsOfMove;
 
 type SnowballMoveWithData = MoveWithData<
   SnowballMove,
