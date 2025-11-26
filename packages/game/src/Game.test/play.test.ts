@@ -9,21 +9,44 @@ import type { Slot } from "../Slot.js";
 import type { State } from "../State.js";
 
 const validatePlay = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   expectedState,
   indexOfMove,
   state,
 }: Pick<
-  Parameters<Game<G, M, P, Sc, Sl, St>["play"]>[0],
+  Parameters<
+    Game<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >["play"]
+  >[0],
   "indexOfMove" | "state"
 > & {
-  expectedState: ReturnType<G["play"]>;
+  expectedState: ReturnType<GenericGame["play"]>;
 }) => {
   const game = state.getGame();
   const newState = game.play({ indexOfMove, state });
@@ -36,18 +59,41 @@ const validatePlay = <
 };
 
 const validatePlayWhenItIsInvalid = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   expectedError,
   indexOfMove,
   state,
 }: Pick<
-  Parameters<Game<G, M, P, Sc, Sl, St>["play"]>[0],
+  Parameters<
+    Game<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >["play"]
+  >[0],
   "indexOfMove" | "state"
 > & {
   expectedError: Error;
@@ -56,14 +102,7 @@ const validatePlayWhenItIsInvalid = <
   expect(() => game.play({ indexOfMove, state })).toThrowError(expectedError);
 };
 
-const createDescriptionForTestOfPlay = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
->({
+const createDescriptionForTestOfPlay = ({
   keyOfExpectedState,
   keyOfMove,
   keyOfState,
@@ -77,14 +116,7 @@ const createDescriptionForTestOfPlay = <
     returnedValue: keyOfExpectedState,
   });
 
-const createDescriptionForTestOfPlayWhenItIsInvalid = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
->({
+const createDescriptionForTestOfPlayWhenItIsInvalid = ({
   expectedError,
   keyOfMove,
   keyOfState,

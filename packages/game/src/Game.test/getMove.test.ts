@@ -10,19 +10,33 @@ import type { State } from "../State.js";
 import { Move } from "../Move.js";
 
 const validateGetMove = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   expectedMove,
   game,
   indexOfMove,
-}: Pick<Parameters<G["getMove"]>[0], "indexOfMove"> & {
-  expectedMove: ReturnType<G["getMove"]>;
-  game: G;
+}: Pick<Parameters<GenericGame["getMove"]>[0], "indexOfMove"> & {
+  expectedMove: ReturnType<GenericGame["getMove"]>;
+  game: GenericGame;
 }) => {
   const move = game.getMove({ indexOfMove });
 
@@ -40,17 +54,30 @@ const validateGetMove = <
 };
 
 const createDescriptionForTestOfGetMove = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   indexOfMove,
   keyOfMove,
-}: {
-  indexOfMove: Parameters<G["getMove"]>[0]["indexOfMove"];
+}: Pick<Parameters<GenericGame["getMove"]>[0], "indexOfMove"> & {
   keyOfMove: string;
 }): string =>
   createDescriptionForTestsOfGetter({

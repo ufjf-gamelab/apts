@@ -1,56 +1,69 @@
-import type { IndexOfMove } from "@repo/game/Move.js";
+import type {
+  MoveWithDataAndIndex,
+  RecordOfMovesWithDataAndIndex,
+} from "@repo/game/Move.test/setup.js";
 
-import type { ExtendedSnowballMovesWithData } from "./setup.js";
+import type { SnowballMove } from "../Move.js";
+import type {
+  RecordOfRequiredParamsOfSnowballMoves,
+  RecordOfSnowballMovesWithData,
+  RequiredParamsOfSnowballMove,
+  SnowballMoveWithData,
+} from "./setup.js";
 
 import {
-  movesWithData as defaultMovesWithData,
-  type RecordOfRequiredParamsOfSnowballMoves,
+  type recordOfRequiredParamsOfSnowballMoves,
+  recordOfSnowballMovesWithData,
 } from "./records.js";
 
-type KeysOfMovesInOrder<GenericExtendedSnowballMovesWithData> =
-  (keyof GenericExtendedSnowballMovesWithData)[];
-
-type SnowballMovesWithDataAndIndex<
-  ExtendedRecordOfRequiredParamsOfSnowballMoves extends
+type KeysOfMovesInOrder<
+  GenericRecordOfRequiredParamsOfSnowballMoves extends
     RecordOfRequiredParamsOfSnowballMoves,
-> = Record<
-  KeysOfMovesInOrder<
-    ExtendedSnowballMovesWithData<ExtendedRecordOfRequiredParamsOfSnowballMoves>
-  >[number],
-  SnowballMoveWithDataAndIndex<ExtendedRecordOfRequiredParamsOfSnowballMoves>
+> = (keyof GenericRecordOfRequiredParamsOfSnowballMoves)[];
+
+type RecordOfSnowballMovesWithDataAndIndex<
+  GenericRecordOfRequiredParamsOfSnowballMoves extends
+    RecordOfRequiredParamsOfSnowballMoves,
+> = RecordOfMovesWithDataAndIndex<
+  SnowballMove,
+  RequiredParamsOfSnowballMove,
+  GenericRecordOfRequiredParamsOfSnowballMoves,
+  SnowballMoveWithData
 >;
 
-interface SnowballMoveWithDataAndIndex<
-  ExtendedRecordOfRequiredParamsOfSnowballMoves extends
-    RecordOfRequiredParamsOfSnowballMoves,
-> {
-  indexOfMove: IndexOfMove;
-  move: ExtendedSnowballMovesWithData<ExtendedRecordOfRequiredParamsOfSnowballMoves>[keyof ExtendedSnowballMovesWithData<ExtendedRecordOfRequiredParamsOfSnowballMoves>];
-}
+type SnowballMoveWithDataAndIndex = MoveWithDataAndIndex<
+  SnowballMove,
+  RequiredParamsOfSnowballMove,
+  SnowballMoveWithData
+>;
 
 const createIndexedSnowballMovesWithData = <
-  ExtendedRecordOfRequiredParamsOfSnowballMoves extends
+  GenericRecordOfRequiredParamsOfSnowballMoves extends
     RecordOfRequiredParamsOfSnowballMoves,
 >({
   keysOfMovesInOrder,
   movesWithData,
 }: {
-  keysOfMovesInOrder: KeysOfMovesInOrder<ExtendedRecordOfRequiredParamsOfSnowballMoves>;
-  movesWithData: ExtendedSnowballMovesWithData<ExtendedRecordOfRequiredParamsOfSnowballMoves>;
+  keysOfMovesInOrder: KeysOfMovesInOrder<GenericRecordOfRequiredParamsOfSnowballMoves>;
+  movesWithData: RecordOfSnowballMovesWithData<GenericRecordOfRequiredParamsOfSnowballMoves>;
 }) => {
-  const movesWithDataAndIndex =
+  const recordOfMovesWithDataAndIndex =
     // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
-    {} as SnowballMovesWithDataAndIndex<ExtendedRecordOfRequiredParamsOfSnowballMoves>;
+    {} as RecordOfSnowballMovesWithDataAndIndex<GenericRecordOfRequiredParamsOfSnowballMoves>;
   const indexedMovesWithData: (typeof movesWithData)[keyof typeof movesWithData][] =
     [];
+
   keysOfMovesInOrder.forEach((keyOfMove, indexOfMove) => {
-    const move = movesWithData[keyOfMove];
-    movesWithDataAndIndex[keyOfMove] = { indexOfMove, move };
-    indexedMovesWithData.push(move);
+    const moveWithData = movesWithData[keyOfMove];
+    recordOfMovesWithDataAndIndex[keyOfMove] = {
+      indexOfMove,
+      moveWithData,
+    } as RecordOfSnowballMovesWithDataAndIndex<GenericRecordOfRequiredParamsOfSnowballMoves>[typeof keyOfMove];
+    indexedMovesWithData.push(moveWithData);
   });
   return {
     indexedMovesWithData,
-    movesWithDataAndIndex,
+    recordOfMovesWithDataAndIndex,
   };
 };
 
@@ -153,13 +166,17 @@ const keysOfSnowballMovesInOrder = [
   "southwestOfSoutheast",
   "southOfSoutheast",
   "southeastOfSoutheast",
-] as const satisfies KeysOfMovesInOrder<typeof defaultMovesWithData>;
+] as const satisfies KeysOfMovesInOrder<
+  typeof recordOfRequiredParamsOfSnowballMoves
+>;
 
-const { indexedMovesWithData, movesWithDataAndIndex } =
-  createIndexedSnowballMovesWithData({
-    keysOfMovesInOrder: keysOfSnowballMovesInOrder,
-    movesWithData: defaultMovesWithData,
-  });
+const {
+  indexedMovesWithData: indexedSnowballMovesWithData,
+  recordOfMovesWithDataAndIndex: recordOfSnowballMovesWithDataAndIndex,
+} = createIndexedSnowballMovesWithData({
+  keysOfMovesInOrder: keysOfSnowballMovesInOrder,
+  movesWithData: recordOfSnowballMovesWithData,
+});
 
 export type { SnowballMoveWithDataAndIndex };
-export { indexedMovesWithData, movesWithDataAndIndex };
+export { indexedSnowballMovesWithData, recordOfSnowballMovesWithDataAndIndex };

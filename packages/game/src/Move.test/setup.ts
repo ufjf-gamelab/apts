@@ -3,83 +3,117 @@ import type { IndexOfMove, Move, ParamsOfMove } from "../Move.js";
 type DerivedParamsOfMove = ParamsOfMove;
 
 interface MoveWithData<
-  M extends Move<M>,
-  Params extends RequiredParamsOfMove = RequiredParamsOfMove,
+  GenericMove extends Move<GenericMove>,
+  GenericRequiredParamsOfMove,
+  GenericKeyOfMove extends string = string,
 > {
-  keyOfMove: string;
-  move: M;
-  params: Params;
+  keyOfMove: GenericKeyOfMove;
+  move: GenericMove;
+  requiredParams: GenericRequiredParamsOfMove;
 }
 
 interface MoveWithDataAndIndex<
-  M extends Move<M>,
-  ExtendedMoveWithData extends MoveWithData<M>,
+  GenericMove extends Move<GenericMove>,
+  GenericRequiredParamsOfMove,
+  GenericMoveWithData extends MoveWithData<
+    GenericMove,
+    GenericRequiredParamsOfMove
+  >,
 > {
   indexOfMove: IndexOfMove;
-  move: ExtendedMoveWithData;
+  moveWithData: GenericMoveWithData;
 }
 
-type RequiredParamsOfMove = Pick<ParamsOfMove, "title">;
+type RecordOfMovesWithData<
+  GenericMove extends Move<GenericMove>,
+  GenericRequiredParamsOfMove,
+  GenericRecordOfRequiredParamsOfMoves extends
+    RecordOfRequiredParamsOfMoves<GenericRequiredParamsOfMove> = RecordOfRequiredParamsOfMoves<GenericRequiredParamsOfMove>,
+> = {
+  [GenericKeyOfMove in keyof GenericRecordOfRequiredParamsOfMoves]: MoveWithData<
+    GenericMove,
+    GenericRequiredParamsOfMove,
+    GenericKeyOfMove & string
+  >;
+};
+
+type RecordOfMovesWithDataAndIndex<
+  GenericMove extends Move<GenericMove>,
+  GenericRequiredParamsOfMove,
+  GenericRecordOfRequiredParamsOfMoves extends
+    RecordOfRequiredParamsOfMoves<GenericRequiredParamsOfMove> = RecordOfRequiredParamsOfMoves<GenericRequiredParamsOfMove>,
+  GenericMoveWithData extends MoveWithData<
+    GenericMove,
+    GenericRequiredParamsOfMove
+  > = MoveWithData<GenericMove, GenericRequiredParamsOfMove>,
+> = {
+  [GenericKeyOfMove in keyof GenericRecordOfRequiredParamsOfMoves]: MoveWithDataAndIndex<
+    GenericMove,
+    GenericRequiredParamsOfMove,
+    GenericMoveWithData
+  >;
+};
+
+type RecordOfRequiredParamsOfMoves<GenericRequiredParamsOfMove> = Record<
+  string,
+  GenericRequiredParamsOfMove
+>;
+
+type RequiredParamsOfMove = ParamsOfMove;
 
 const deriveParamsOfMove = ({
+  description,
   title,
 }: RequiredParamsOfMove): DerivedParamsOfMove => ({
-  description: `Control the move on ${title}`,
+  description,
   title,
 });
 
-const createMovesWithData = <
-  M extends Move<M>,
-  RequiredParams extends RequiredParamsOfMove,
-  DerivedParams extends DerivedParamsOfMove,
-  RecordOfRequiredParams extends Record<string, RequiredParams>,
+const createRecordOfMovesWithData = <
+  GenericMove extends Move<GenericMove>,
+  GenericDerivedParamsOfMove extends DerivedParamsOfMove,
+  GenericRequiredParamsOfMove,
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
+  GenericRecordOfMovesWithData extends RecordOfMovesWithData<
+    GenericMove,
+    GenericRequiredParamsOfMove
+  >,
 >({
   create,
   deriveParams,
-  recordOfRequiredParams,
+  recordOfRequiredParamsOfMoves,
 }: {
-  create: (params: DerivedParams) => M;
-  deriveParams: (params: RequiredParams) => DerivedParams;
-  recordOfRequiredParams: RecordOfRequiredParams;
-}): {
-  [K in keyof RecordOfRequiredParams]: {
-    keyOfMove: K;
-    move: M;
-    params: RequiredParams;
-  };
-} => {
-  type ResultType = {
-    [K in keyof RecordOfRequiredParams]: {
-      keyOfMove: K;
-      move: M;
-      params: RequiredParams;
-    };
-  };
-
+  create: (derivedParams: GenericDerivedParamsOfMove) => GenericMove;
+  deriveParams: (
+    requiredParams: GenericRequiredParamsOfMove,
+  ) => GenericDerivedParamsOfMove;
+  recordOfRequiredParamsOfMoves: RecordOfRequiredParamsOfMoves<GenericRequiredParamsOfMove>;
+}) =>
   /**
    * TypeScript cannot statically verify that Object.fromEntries produces all required keys since the operation happens at runtime.
-   * This assertion is safe because we're iterating over all entries from recordOfRequiredParams, which RecordOfRequiredParams is derived from.
+   * This assertion is safe because we're iterating over all entries from recordOfRequiredParamsOfMoves, which RecordOfRequiredParams is derived from.
    */
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Object.fromEntries cannot preserve mapped type keys
-  return Object.fromEntries(
-    Object.entries(recordOfRequiredParams).map(
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+  Object.fromEntries(
+    Object.entries(recordOfRequiredParamsOfMoves).map(
       ([keyOfMove, requiredParams]) =>
         [
           keyOfMove,
           {
             keyOfMove,
             move: create(deriveParams(requiredParams)),
-            params: requiredParams,
-          } satisfies MoveWithData<M, RequiredParams>,
+            requiredParams,
+          } satisfies MoveWithData<GenericMove, GenericRequiredParamsOfMove>,
         ] as const,
     ),
-  ) as ResultType;
-};
+  ) as GenericRecordOfMovesWithData;
 
 export type {
   DerivedParamsOfMove,
   MoveWithData,
   MoveWithDataAndIndex,
+  RecordOfMovesWithData,
+  RecordOfMovesWithDataAndIndex,
   RequiredParamsOfMove,
 };
-export { createMovesWithData, deriveParamsOfMove };
+export { createRecordOfMovesWithData, deriveParamsOfMove };

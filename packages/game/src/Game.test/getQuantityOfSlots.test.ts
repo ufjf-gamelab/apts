@@ -10,18 +10,32 @@ import type { Slot } from "../Slot.js";
 import type { State } from "../State.js";
 
 const validateGetQuantityOfSlots = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   expectedQuantityOfSlots,
   game,
 }: {
-  expectedQuantityOfSlots: ReturnType<G["getQuantityOfSlots"]>;
-  game: G;
+  expectedQuantityOfSlots: ReturnType<GenericGame["getQuantityOfSlots"]>;
+  game: GenericGame;
 }) => {
   let quantityOfSlots = game.getQuantityOfSlots();
   expect(quantityOfSlots).toBe(expectedQuantityOfSlots);
@@ -33,16 +47,30 @@ const validateGetQuantityOfSlots = <
 };
 
 const createDescriptionForTestOfGetQuantityOfSlots = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   expectedQuantityOfSlots,
 }: {
-  expectedQuantityOfSlots: ReturnType<G["getQuantityOfSlots"]>;
+  expectedQuantityOfSlots: ReturnType<GenericGame["getQuantityOfSlots"]>;
 }): string =>
   createDescriptionForTestsOfGetter({
     methodDescription: "getQuantityOfSlots()",

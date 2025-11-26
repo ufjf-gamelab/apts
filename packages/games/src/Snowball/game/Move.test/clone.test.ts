@@ -8,7 +8,7 @@ import { expect, test } from "vitest";
 import type { SnowballMoveWithData } from "./setup.js";
 
 import { SnowballMove } from "../Move.js";
-import { indexedMovesWithData } from "./indexedRecords.js";
+import { indexedSnowballMovesWithData } from "./indexedRecords.js";
 
 const createDescription = ({
   affix,
@@ -43,5 +43,5 @@ const testClone = ({
 };
 
 testClone({
-  arrayOfMovesWithData: indexedMovesWithData,
+  arrayOfMovesWithData: indexedSnowballMovesWithData,
 });

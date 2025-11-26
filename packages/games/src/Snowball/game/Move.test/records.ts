@@ -1,15 +1,10 @@
 import { slotsWithDataAndIndexInWhichAllSlotsAreEmpty as slotsWithDataAndIndex } from "../Slot.test/indexedRecords.js";
 import {
-  createSnowballMovesWithData,
-  type RequiredParamsOfSnowballMove,
+  createRecordOfSnowballMovesWithData,
+  type RecordOfRequiredParamsOfSnowballMoves,
 } from "./setup.js";
 
-type RecordOfRequiredParamsOfSnowballMoves = Record<
-  string,
-  RequiredParamsOfSnowballMove
->;
-
-const recordOfRequiredParamsOfMoves = {
+const recordOfRequiredParamsOfSnowballMoves = {
   centerOfCenter: {
     indexOfSlotInWhichPlacePiece:
       slotsWithDataAndIndex.centerOfCenter.indexOfSlot,
@@ -421,9 +416,8 @@ const recordOfRequiredParamsOfMoves = {
   },
 } as const satisfies RecordOfRequiredParamsOfSnowballMoves;
 
-const movesWithData = createSnowballMovesWithData({
-  recordOfRequiredParams: recordOfRequiredParamsOfMoves,
+const recordOfSnowballMovesWithData = createRecordOfSnowballMovesWithData({
+  recordOfRequiredParamsOfMoves: recordOfRequiredParamsOfSnowballMoves,
 });
 
-export type { RecordOfRequiredParamsOfSnowballMoves };
-export { movesWithData, recordOfRequiredParamsOfMoves };
+export { recordOfRequiredParamsOfSnowballMoves, recordOfSnowballMovesWithData };

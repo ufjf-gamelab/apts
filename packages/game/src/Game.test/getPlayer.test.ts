@@ -10,19 +10,33 @@ import type { State } from "../State.js";
 import { Player } from "../Player.js";
 
 const validateGetPlayer = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   expectedPlayer,
   game,
   indexOfPlayer,
-}: Pick<Parameters<G["getPlayer"]>[0], "indexOfPlayer"> & {
-  expectedPlayer: ReturnType<G["getPlayer"]>;
-  game: G;
+}: Pick<Parameters<GenericGame["getPlayer"]>[0], "indexOfPlayer"> & {
+  expectedPlayer: ReturnType<GenericGame["getPlayer"]>;
+  game: GenericGame;
 }) => {
   const player = game.getPlayer({ indexOfPlayer });
 
@@ -40,17 +54,30 @@ const validateGetPlayer = <
 };
 
 const createDescriptionForTestOfGetPlayer = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   indexOfPlayer,
   keyOfPlayer,
-}: {
-  indexOfPlayer: Parameters<G["getPlayer"]>[0]["indexOfPlayer"];
+}: Pick<Parameters<GenericGame["getPlayer"]>[0], "indexOfPlayer"> & {
   keyOfPlayer: string;
 }): string =>
   createDescriptionForTestsOfGetter({

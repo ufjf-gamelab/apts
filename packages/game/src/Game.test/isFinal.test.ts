@@ -9,17 +9,31 @@ import type { Slot } from "../Slot.js";
 import type { State } from "../State.js";
 
 const validateIsFinal = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   expectedToBeFinal,
   state,
-}: Pick<Parameters<G["isFinal"]>[0], "state"> & {
-  expectedToBeFinal: ReturnType<G["isFinal"]>;
+}: Pick<Parameters<GenericGame["isFinal"]>[0], "state"> & {
+  expectedToBeFinal: ReturnType<GenericGame["isFinal"]>;
 }) => {
   const game = state.getGame();
   const isFinal = game.isFinal({
@@ -29,17 +43,31 @@ const validateIsFinal = <
 };
 
 const createDescriptionForTestOfIsFinal = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   expectedToBeFinal,
   keyOfState,
 }: {
-  expectedToBeFinal: ReturnType<G["isFinal"]>;
+  expectedToBeFinal: ReturnType<GenericGame["isFinal"]>;
   keyOfState: string;
 }): string =>
   createDescriptionForTestsOfGetter({

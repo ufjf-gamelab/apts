@@ -1,8 +1,6 @@
-import type { recordOfRequiredParamsOfMoves } from "../Move.test/records.js";
-
-import { gamesWithData } from "../Game.test/records.js";
+import { recordOfSnowballGamesWithData } from "../Game.test/records.js";
 import {
-  movesWithDataAndIndex,
+  recordOfSnowballMovesWithDataAndIndex,
   type SnowballMoveWithDataAndIndex,
 } from "../Move.test/indexedRecords.js";
 import { type SnowballMoveWithData } from "../Move.test/setup.js";
@@ -26,292 +24,684 @@ type RecordOfRequiredParamsOfSnowballStates = Record<
 >;
 
 const constructTupleForMove = ({
-  move,
+  moveWithDataAndIndex,
 }: {
-  move: SnowballMoveWithDataAndIndex<typeof recordOfRequiredParamsOfMoves>;
-}): [number, SnowballMoveWithData] => [move.indexOfMove, move.move];
+  moveWithDataAndIndex: SnowballMoveWithDataAndIndex;
+}): [number, SnowballMoveWithData] => [
+  moveWithDataAndIndex.indexOfMove,
+  moveWithDataAndIndex.moveWithData,
+];
 
 const recordOfRequiredParamsOfStates = {
   allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
     {
-      game: gamesWithData.snowballWith9RowsAnd9Columns,
+      game: recordOfSnowballGamesWithData.snowballWith9RowsAnd9Columns,
       isFinal: false,
       nextPlayer: playersWithDataAndIndex.bruno,
       player: playersWithDataAndIndex.alice,
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points,
       slots: indexedSlotsWithDataInWhichAllSlotsAreEmpty,
       validMoves: new Map([
-        constructTupleForMove({ move: movesWithDataAndIndex.centerOfCenter }),
-        constructTupleForMove({ move: movesWithDataAndIndex.centerOfEast }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.centerOfNortheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfCenter,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.centerOfNorthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.centerOfNorth }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.centerOfSoutheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfEast,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.centerOfSouthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.centerOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.centerOfWest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfCenter }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfEast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfNortheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfNorthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfNorth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfSoutheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfSouthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfWest }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.northeastOfCenter,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northeastOfEast }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.northeastOfNortheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfNorth,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.northeastOfNorthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northeastOfNorth }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.northeastOfSoutheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfNortheast,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.northeastOfSouthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northeastOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northeastOfWest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfCenter }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfEast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfNortheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfNorthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfNorth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfSoutheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfSouthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfWest }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.northwestOfCenter,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northwestOfEast }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.northwestOfNortheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfNorthwest,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.northwestOfNorthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northwestOfNorth }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.northwestOfSoutheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfSouth,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.northwestOfSouthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northwestOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northwestOfWest }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southeastOfCenter,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southeastOfEast }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southeastOfNortheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfSoutheast,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.southeastOfNorthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southeastOfNorth }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southeastOfSoutheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfSouthwest,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.southeastOfSouthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southeastOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southeastOfWest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfCenter }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfEast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfNortheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfNorthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfNorth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfSoutheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfSouthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfWest }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southwestOfCenter,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southwestOfEast }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southwestOfNortheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfWest,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.southwestOfNorthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southwestOfNorth }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southwestOfSoutheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfCenter,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.southwestOfSouthwest,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfEast,
         }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southwestOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southwestOfWest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfCenter }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfEast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfNortheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfNorthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfNorth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfSoutheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfSouthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfWest }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfNorth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfNorthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfNorth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfNorthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfNorth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfNorthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfNorth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfNorthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfNorth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfNorthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfNorth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfNorthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfNorth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfNorthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfNorth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfNorthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfWest,
+        }),
       ]),
     },
   slotR0C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     {
-      game: gamesWithData.snowballWith9RowsAnd9Columns,
+      game: recordOfSnowballGamesWithData.snowballWith9RowsAnd9Columns,
       isFinal: false,
       nextPlayer: playersWithDataAndIndex.alice,
       player: playersWithDataAndIndex.bruno,
       score: scoresWithData.aliceWith0PointsAndBrunoWith0Points,
       slots: indexedSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
       validMoves: new Map([
-        constructTupleForMove({ move: movesWithDataAndIndex.centerOfCenter }),
-        constructTupleForMove({ move: movesWithDataAndIndex.centerOfEast }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.centerOfNortheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfCenter,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.centerOfNorthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.centerOfNorth }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.centerOfSoutheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfEast,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.centerOfSouthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.centerOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.centerOfWest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfCenter }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfEast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfNortheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfNorthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfNorth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfSoutheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfSouthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfWest }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.northeastOfCenter,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northeastOfEast }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.northeastOfNortheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfNorth,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.northeastOfNorthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northeastOfNorth }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.northeastOfSoutheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfNortheast,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.northeastOfSouthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northeastOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northeastOfWest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfCenter }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfEast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfNortheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfNorthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfNorth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfSoutheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfSouthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfWest }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.northwestOfCenter,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northwestOfEast }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.northwestOfNortheast,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northwestOfNorth }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.northwestOfSoutheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfNorthwest,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.northwestOfSouthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northwestOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northwestOfWest }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southeastOfCenter,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southeastOfEast }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southeastOfNortheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfSouth,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.southeastOfNorthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southeastOfNorth }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southeastOfSoutheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfSoutheast,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.southeastOfSouthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southeastOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southeastOfWest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfCenter }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfEast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfNortheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfNorthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfNorth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfSoutheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfSouthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfWest }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southwestOfCenter,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southwestOfEast }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southwestOfNortheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfSouthwest,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.southwestOfNorthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southwestOfNorth }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southwestOfSoutheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfWest,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.southwestOfSouthwest,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfCenter,
         }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southwestOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southwestOfWest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfCenter }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfEast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfNortheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfNorthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfNorth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfSoutheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfSouthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfWest }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfNorth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfNorthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfNorth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfNorthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfNorth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfNorthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfNorth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfNorth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfNorthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfNorth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfNorthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfNorth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfNorthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfNorth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfNorthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfWest,
+        }),
       ]),
     },
   slotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     {
-      game: gamesWithData.snowballWith9RowsAnd9Columns,
+      game: recordOfSnowballGamesWithData.snowballWith9RowsAnd9Columns,
       isFinal: true,
       nextPlayer: playersWithDataAndIndex.alice,
       player: playersWithDataAndIndex.bruno,
@@ -319,85 +709,195 @@ const recordOfRequiredParamsOfStates = {
       slots:
         indexedSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
       validMoves: new Map([
-        constructTupleForMove({ move: movesWithDataAndIndex.centerOfCenter }),
-        constructTupleForMove({ move: movesWithDataAndIndex.centerOfEast }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.centerOfSoutheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfCenter,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.centerOfSouthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.centerOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.centerOfWest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfCenter }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfEast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfNortheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfSoutheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfSouthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfSouth }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.northeastOfNortheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfEast,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.northeastOfSoutheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfSouth,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.northeastOfSouthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northeastOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfSoutheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfSouthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfSouth }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.northwestOfSoutheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfSoutheast,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.northwestOfSouthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northwestOfSouth }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southeastOfCenter,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southeastOfEast }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southeastOfNortheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfSouthwest,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.southeastOfSoutheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfWest,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.southeastOfSouthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southeastOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southeastOfWest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfCenter }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfEast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfSoutheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfSouthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfWest }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southwestOfCenter,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southwestOfEast }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southwestOfSoutheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfCenter,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.southwestOfSouthwest,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfEast,
         }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southwestOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southwestOfWest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfCenter }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfEast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfSoutheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfSouthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfSouth }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfSouthwest,
+        }),
       ]),
     },
   slotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
     {
-      game: gamesWithData.snowballWith9RowsAnd9Columns,
+      game: recordOfSnowballGamesWithData.snowballWith9RowsAnd9Columns,
       isFinal: false,
       nextPlayer: playersWithDataAndIndex.bruno,
       player: playersWithDataAndIndex.alice,
@@ -405,86 +905,199 @@ const recordOfRequiredParamsOfStates = {
       slots:
         indexedSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
       validMoves: new Map([
-        constructTupleForMove({ move: movesWithDataAndIndex.centerOfCenter }),
-        constructTupleForMove({ move: movesWithDataAndIndex.centerOfEast }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.centerOfSoutheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfCenter,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.centerOfSouthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.centerOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.centerOfWest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfCenter }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfEast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfNortheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfSoutheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfSouthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfWest }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.northeastOfNortheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfEast,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.northeastOfSoutheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfSouth,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.northeastOfSouthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northeastOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfSoutheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfSouthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfSouth }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.northwestOfSoutheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfSoutheast,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.northwestOfSouthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northwestOfSouth }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southeastOfCenter,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southeastOfEast }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southeastOfNortheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfSouthwest,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.southeastOfSoutheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfWest,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.southeastOfSouthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southeastOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southeastOfWest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfCenter }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfEast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfSoutheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfSouthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfWest }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southwestOfCenter,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southwestOfEast }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southwestOfSoutheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfCenter,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.southwestOfSouthwest,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfEast,
         }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southwestOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southwestOfWest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfCenter }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfEast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfSoutheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfSouthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfSouth }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfSoutheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfSouthwest,
+        }),
       ]),
     },
   slotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     {
-      game: gamesWithData.snowballWith9RowsAnd9Columns,
+      game: recordOfSnowballGamesWithData.snowballWith9RowsAnd9Columns,
       isFinal: true,
       nextPlayer: playersWithDataAndIndex.alice,
       player: playersWithDataAndIndex.bruno,
@@ -493,53 +1106,125 @@ const recordOfRequiredParamsOfStates = {
         indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
       validMoves: new Map([
         constructTupleForMove({
-          move: movesWithDataAndIndex.centerOfSouthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.centerOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfCenter }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfNorth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.eastOfSouthwest }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.northeastOfCenter,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northeastOfNorth }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.northeastOfSouthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfSouthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northwestOfEast }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.northwestOfNortheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfSouth,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.northwestOfSouthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.northwestOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southeastOfNorth }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southeastOfSouthwest,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southeastOfWest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfCenter }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfSouthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southOfWest }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southwestOfCenter,
-        }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southwestOfEast }),
-        constructTupleForMove({
-          move: movesWithDataAndIndex.southwestOfNortheast,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfSouthwest,
         }),
         constructTupleForMove({
-          move: movesWithDataAndIndex.southwestOfSouthwest,
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfCenter,
         }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southwestOfSouth }),
-        constructTupleForMove({ move: movesWithDataAndIndex.southwestOfWest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfEast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfNortheast }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfSouthwest }),
-        constructTupleForMove({ move: movesWithDataAndIndex.westOfSouth }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfNorth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.eastOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfNorth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northeastOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.northwestOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfNorth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southeastOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfSouthwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southwestOfWest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfEast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfNortheast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfSouth,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.westOfSouthwest,
+        }),
       ]),
     },
 } as const satisfies RecordOfRequiredParamsOfSnowballStates;

@@ -6,7 +6,7 @@ import { validateConstructor } from "@repo/game/Move.test/constructor.test.js";
 import { expect, test } from "vitest";
 
 import { SnowballMove } from "../Move.js";
-import { indexedMovesWithData } from "./indexedRecords.js";
+import { indexedSnowballMovesWithData } from "./indexedRecords.js";
 import {
   deriveParamsOfSnowballMove,
   type SnowballMoveWithData,
@@ -27,7 +27,7 @@ const testConstructor = ({
 }: {
   arrayOfMovesWithData: SnowballMoveWithData[];
 }) => {
-  arrayOfMovesWithData.forEach(({ keyOfMove, params }) => {
+  arrayOfMovesWithData.forEach(({ keyOfMove, requiredParams }) => {
     test(
       createDescription({
         affix: keyOfMove,
@@ -35,7 +35,7 @@ const testConstructor = ({
 
       () => {
         const { description, indexOfSlotInWhichPlacePiece, title } =
-          deriveParamsOfSnowballMove(params);
+          deriveParamsOfSnowballMove(requiredParams);
 
         const newMove = new SnowballMove({
           description,
@@ -52,5 +52,5 @@ const testConstructor = ({
 };
 
 testConstructor({
-  arrayOfMovesWithData: indexedMovesWithData,
+  arrayOfMovesWithData: indexedSnowballMovesWithData,
 });

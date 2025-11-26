@@ -1,28 +1,23 @@
-import { indexedMovesWithData } from "../Move.test/indexedRecords.js";
+import { indexedSnowballMovesWithData } from "../Move.test/indexedRecords.js";
 import { indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO as indexedPlayersWithData } from "../Player.test/indexedRecords.js";
 import { indexedSlotsWithDataInWhichAllSlotsAreEmpty } from "../Slot.test/indexedRecords.js";
 import {
-  createSnowballGamesWithData,
-  type RequiredParamsOfSnowballGame,
+  createRecordOfSnowballGamesWithData,
+  type RecordOfRequiredParamsOfSnowballGames,
 } from "./setup.js";
 
-type RecordOfRequiredParamsOfSnowballGames = Record<
-  string,
-  RequiredParamsOfSnowballGame
->;
-
-const recordOfRequiredParamsOfGames = {
+const recordOfRequiredParamsOfSnowballGames = {
   snowballWith9RowsAnd9Columns: {
-    movesWithData: indexedMovesWithData,
+    movesWithData: indexedSnowballMovesWithData,
     name: "Snowball",
     playersWithData: indexedPlayersWithData,
     slotsWithData: indexedSlotsWithDataInWhichAllSlotsAreEmpty,
   },
 } as const satisfies RecordOfRequiredParamsOfSnowballGames;
 
-const gamesWithData = createSnowballGamesWithData({
-  recordOfRequiredParams: recordOfRequiredParamsOfGames,
+const recordOfSnowballGamesWithData = createRecordOfSnowballGamesWithData({
+  recordOfRequiredParamsOfGames: recordOfRequiredParamsOfSnowballGames,
 });
 
 export type { RecordOfRequiredParamsOfSnowballGames };
-export { gamesWithData };
+export { recordOfSnowballGamesWithData };

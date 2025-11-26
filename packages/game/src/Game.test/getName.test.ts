@@ -9,18 +9,32 @@ import type { Slot } from "../Slot.js";
 import type { State } from "../State.js";
 
 const validateGetName = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   expectedName,
   game,
 }: {
-  expectedName: ReturnType<G["getName"]>;
-  game: G;
+  expectedName: ReturnType<GenericGame["getName"]>;
+  game: GenericGame;
 }) => {
   let name = game.getName();
   expect(name).toBe(expectedName);
@@ -32,16 +46,30 @@ const validateGetName = <
 };
 
 const createDescriptionForTestOfGetName = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   expectedName,
 }: {
-  expectedName: ReturnType<G["getName"]>;
+  expectedName: ReturnType<GenericGame["getName"]>;
 }): string =>
   createDescriptionForTestsOfGetter({
     methodDescription: "getName()",

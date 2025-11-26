@@ -10,18 +10,32 @@ import type { Slot } from "../Slot.js";
 import type { State } from "../State.js";
 
 const validateGetQuantityOfPlayers = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   expectedQuantityOfPlayers,
   game,
 }: {
-  expectedQuantityOfPlayers: ReturnType<G["getQuantityOfPlayers"]>;
-  game: G;
+  expectedQuantityOfPlayers: ReturnType<GenericGame["getQuantityOfPlayers"]>;
+  game: GenericGame;
 }) => {
   let quantityOfPlayers = game.getQuantityOfPlayers();
   expect(quantityOfPlayers).toBe(expectedQuantityOfPlayers);
@@ -33,16 +47,30 @@ const validateGetQuantityOfPlayers = <
 };
 
 const createDescriptionForTestOfGetQuantityOfPlayers = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  St extends State<G, M, P, Sc, Sl, St>,
-  Sc extends Score<Sc>,
-  Sl extends Player<Sl>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   expectedQuantityOfPlayers,
 }: {
-  expectedQuantityOfPlayers: ReturnType<G["getQuantityOfPlayers"]>;
+  expectedQuantityOfPlayers: ReturnType<GenericGame["getQuantityOfPlayers"]>;
 }): string =>
   createDescriptionForTestsOfGetter({
     methodDescription: "getQuantityOfPlayers()",

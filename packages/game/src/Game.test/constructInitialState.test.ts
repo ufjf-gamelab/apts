@@ -9,18 +9,32 @@ import type { Slot } from "../Slot.js";
 import type { State } from "../State.js";
 
 const validateConstructInitialState = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   expectedInitialState,
   game,
 }: {
-  expectedInitialState: ReturnType<G["constructInitialState"]>;
-  game: G;
+  expectedInitialState: ReturnType<GenericGame["constructInitialState"]>;
+  game: GenericGame;
 }) => {
   const initialState = game.constructInitialState();
   expect(initialState).not.toBe(expectedInitialState);
@@ -32,12 +46,12 @@ const validateConstructInitialState = <
 };
 
 const createDescriptionForTestOfConstructInitialState = <
-  G extends Game<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<GenericGame, M, P, Sc, Sl, St>,
   M extends Move<M>,
   P extends Player<P>,
   Sc extends Score<Sc>,
   Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  St extends State<GenericGame, M, P, Sc, Sl, St>,
 >({
   keyOfExpectedInitialState,
 }: {

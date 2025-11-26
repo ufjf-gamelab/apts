@@ -10,17 +10,31 @@ import type { Slot } from "../Slot.js";
 import type { State } from "../State.js";
 
 const validateGetIndexOfNextPlayer = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   expectedIndexOfNextPlayer,
   state,
-}: Pick<Parameters<G["getIndexOfNextPlayer"]>[0], "state"> & {
-  expectedIndexOfNextPlayer: ReturnType<G["getIndexOfNextPlayer"]>;
+}: Pick<Parameters<GenericGame["getIndexOfNextPlayer"]>[0], "state"> & {
+  expectedIndexOfNextPlayer: ReturnType<GenericGame["getIndexOfNextPlayer"]>;
 }) => {
   const game = state.getGame();
   let indexOfNextPlayer = game.getIndexOfNextPlayer({ state });
@@ -33,17 +47,31 @@ const validateGetIndexOfNextPlayer = <
 };
 
 const createDescriptionForTestOfGetIndexOfNextPlayer = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   expectedIndexOfNextPlayer,
   keyOfState,
 }: {
-  expectedIndexOfNextPlayer: ReturnType<G["getIndexOfNextPlayer"]>;
+  expectedIndexOfNextPlayer: ReturnType<GenericGame["getIndexOfNextPlayer"]>;
   keyOfState: string;
 }): string =>
   createDescriptionForTestsOfGetter({

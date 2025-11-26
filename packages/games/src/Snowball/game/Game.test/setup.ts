@@ -1,20 +1,23 @@
 import {
-  createGamesWithData,
+  createRecordOfGamesWithData,
   type DerivedParamsOfGame,
   deriveParamsOfGame,
   type GameWithData,
+  type RecordOfGamesWithData,
   type RequiredParamsOfGame,
 } from "@repo/game/Game.test/setup.js";
 
 import type { SnowballMove } from "../Move.js";
+import type {
+  RequiredParamsOfSnowballMove,
+  SnowballMoveWithData,
+} from "../Move.test/setup.js";
 import type { SnowballPlayer } from "../Player.js";
 import type { SnowballScore } from "../Score.js";
 import type { SnowballSlot } from "../Slot.js";
 import type { SnowballState } from "../State.js";
-import type { RecordOfRequiredParamsOfSnowballGames } from "./records.js";
 
 import { SnowballGame } from "../Game.js";
-import { type SnowballMoveWithData } from "../Move.test/setup.js";
 import { type SnowballPlayerWithData } from "../Player.test/setup.js";
 import { type SnowballSlotWithData } from "../Slot.test/setup.js";
 
@@ -24,28 +27,46 @@ type DerivedParamsOfSnowballGame = DerivedParamsOfGame<
   SnowballSlot
 >;
 
-type RequiredParamsOfSnowballGame = RequiredParamsOfGame<
-  SnowballMove,
-  SnowballPlayer,
-  SnowballSlot,
-  SnowballMoveWithData,
-  SnowballPlayerWithData,
-  SnowballSlotWithData
+type RecordOfRequiredParamsOfSnowballGames = Record<
+  string,
+  RequiredParamsOfSnowballGame
 >;
 
-type SnowballGameWithData<Key extends PropertyKey = string> = GameWithData<
+type RecordOfSnowballGamesWithData<
+  GenericRecordOfRequiredParamsOfSnowballGames extends
+    RecordOfRequiredParamsOfSnowballGames,
+> = RecordOfGamesWithData<
   SnowballGame,
   SnowballMove,
   SnowballPlayer,
   SnowballScore,
   SnowballSlot,
   SnowballState,
+  RequiredParamsOfSnowballGame,
+  GenericRecordOfRequiredParamsOfSnowballGames
+>;
+
+type RequiredParamsOfSnowballGame = RequiredParamsOfGame<
+  SnowballMove,
+  SnowballPlayer,
+  SnowballSlot,
+  RequiredParamsOfSnowballMove,
   SnowballMoveWithData,
   SnowballPlayerWithData,
-  SnowballSlotWithData,
-  RequiredParamsOfSnowballGame,
-  Key
+  SnowballSlotWithData
 >;
+
+type SnowballGameWithData<GenericKeyOfSnowballGame extends string = string> =
+  GameWithData<
+    SnowballGame,
+    SnowballMove,
+    SnowballPlayer,
+    SnowballScore,
+    SnowballSlot,
+    SnowballState,
+    RequiredParamsOfSnowballGame,
+    GenericKeyOfSnowballGame
+  >;
 
 const deriveParamsOfSnowballGame = ({
   movesWithData,
@@ -68,31 +89,35 @@ const createSnowballGame = ({
     slots,
   });
 
-type ExtendedSnowballGamesWithData<
-  ExtendedRecordOfRequiredParamsOfSnowballGames extends
-    RecordOfRequiredParamsOfSnowballGames,
-> = {
-  [Key in keyof ExtendedRecordOfRequiredParamsOfSnowballGames]: SnowballGameWithData<Key>;
-};
-
-const createSnowballGamesWithData = <
-  ExtendedRecordOfRequiredParamsOfSnowballGames extends
+const createRecordOfSnowballGamesWithData = <
+  GenericRecordOfRequiredParamsOfSnowballGames extends
     RecordOfRequiredParamsOfSnowballGames,
 >({
-  recordOfRequiredParams,
+  recordOfRequiredParamsOfGames,
 }: {
-  recordOfRequiredParams: ExtendedRecordOfRequiredParamsOfSnowballGames;
-}): ExtendedSnowballGamesWithData<ExtendedRecordOfRequiredParamsOfSnowballGames> =>
-  createGamesWithData({
+  recordOfRequiredParamsOfGames: GenericRecordOfRequiredParamsOfSnowballGames;
+}) =>
+  createRecordOfGamesWithData<
+    SnowballGame,
+    SnowballMove,
+    SnowballPlayer,
+    SnowballScore,
+    SnowballSlot,
+    SnowballState,
+    DerivedParamsOfSnowballGame,
+    RequiredParamsOfSnowballGame,
+    RecordOfSnowballGamesWithData<GenericRecordOfRequiredParamsOfSnowballGames>
+  >({
     create: createSnowballGame,
     deriveParams: deriveParamsOfSnowballGame,
-    recordOfRequiredParams,
+    recordOfRequiredParamsOfGames,
   });
 
 export type {
   DerivedParamsOfSnowballGame,
-  ExtendedSnowballGamesWithData,
+  RecordOfGamesWithData,
+  RecordOfRequiredParamsOfSnowballGames,
   RequiredParamsOfSnowballGame,
   SnowballGameWithData,
 };
-export { createSnowballGamesWithData, deriveParamsOfSnowballGame };
+export { createRecordOfSnowballGamesWithData, deriveParamsOfSnowballGame };

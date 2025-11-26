@@ -19,7 +19,7 @@ import {
   constructErrorForInvalidMove,
   type SnowballGame,
 } from "../Game.js";
-import { movesWithDataAndIndex } from "../Move.test/indexedRecords.js";
+import { recordOfSnowballMovesWithDataAndIndex } from "../Move.test/indexedRecords.js";
 import { statesWithData } from "../State.test/records.js";
 
 const createDescription = ({
@@ -77,14 +77,14 @@ const testPlayForAState = ({
   >[0],
   "expectedState"
 > & {
-  moveWithDataAndIndex: (typeof movesWithDataAndIndex)["centerOfCenter"];
+  moveWithDataAndIndex: (typeof recordOfSnowballMovesWithDataAndIndex)["centerOfCenter"];
   stateWithData: SnowballStateWithData;
 }) => {
   test(
     createDescription({
       affix: stateWithData.params.game.keyOfGame,
       keyOfExpectedState: stateWithData.keyOfState,
-      keyOfMove: moveWithDataAndIndex.move.keyOfMove,
+      keyOfMove: moveWithDataAndIndex.moveWithData.keyOfMove,
       keyOfState: stateWithData.keyOfState,
     }),
 
@@ -113,14 +113,14 @@ const testPlayForAStateWhenItIsInvalid = ({
   Parameters<typeof createDescriptionWhenPlayIsInvalid>[0],
   "expectedError"
 > & {
-  moveWithDataAndIndex: (typeof movesWithDataAndIndex)["centerOfCenter"];
+  moveWithDataAndIndex: (typeof recordOfSnowballMovesWithDataAndIndex)["centerOfCenter"];
   stateWithData: SnowballStateWithData;
 }) => {
   test(
     createDescriptionWhenPlayIsInvalid({
       affix: stateWithData.params.game.keyOfGame,
       expectedError,
-      keyOfMove: moveWithDataAndIndex.move.keyOfMove,
+      keyOfMove: moveWithDataAndIndex.moveWithData.keyOfMove,
       keyOfState: stateWithData.keyOfState,
     }),
 
@@ -145,7 +145,7 @@ const testPlayForAStateWhenTheStateIsFinal = ({
   moveWithDataAndIndex,
   stateWithData,
 }: {
-  moveWithDataAndIndex: (typeof movesWithDataAndIndex)["centerOfCenter"];
+  moveWithDataAndIndex: (typeof recordOfSnowballMovesWithDataAndIndex)["centerOfCenter"];
   stateWithData: SnowballStateWithData;
 }) => {
   testPlayForAStateWhenItIsInvalid({
@@ -161,7 +161,7 @@ const testPlayForAStateWhenTheMoveIsInvalid = ({
   moveWithDataAndIndex,
   stateWithData,
 }: {
-  moveWithDataAndIndex: (typeof movesWithDataAndIndex)["centerOfCenter"];
+  moveWithDataAndIndex: (typeof recordOfSnowballMovesWithDataAndIndex)["centerOfCenter"];
   stateWithData: SnowballStateWithData;
 }) => {
   testPlayForAStateWhenItIsInvalid({
@@ -178,7 +178,8 @@ testPlayForAState({
     statesWithData
       .slotR0C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer
       .state,
-  moveWithDataAndIndex: movesWithDataAndIndex.northwestOfNorthwest,
+  moveWithDataAndIndex:
+    recordOfSnowballMovesWithDataAndIndex.northwestOfNorthwest,
   stateWithData:
     statesWithData.allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
 });
@@ -188,19 +189,20 @@ testPlayForAState({
     statesWithData
       .slotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer
       .state,
-  moveWithDataAndIndex: movesWithDataAndIndex.eastOfWest,
+  moveWithDataAndIndex: recordOfSnowballMovesWithDataAndIndex.eastOfWest,
   stateWithData:
     statesWithData.slotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
 });
 
 testPlayForAStateWhenTheMoveIsInvalid({
-  moveWithDataAndIndex: movesWithDataAndIndex.northwestOfNorthwest,
+  moveWithDataAndIndex:
+    recordOfSnowballMovesWithDataAndIndex.northwestOfNorthwest,
   stateWithData:
     statesWithData.slotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
 });
 
 testPlayForAStateWhenTheStateIsFinal({
-  moveWithDataAndIndex: movesWithDataAndIndex.eastOfWest,
+  moveWithDataAndIndex: recordOfSnowballMovesWithDataAndIndex.eastOfWest,
   stateWithData:
     statesWithData.slotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
 });

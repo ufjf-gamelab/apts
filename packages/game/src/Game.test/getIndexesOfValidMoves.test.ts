@@ -10,18 +10,34 @@ import type { Slot } from "../Slot.js";
 import type { State } from "../State.js";
 
 const validateGetIndexesOfValidMoves = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   expectedIndexesOfValidMoves,
   state,
 }: {
-  expectedIndexesOfValidMoves: ReturnType<G["getIndexesOfValidMoves"]>;
-  state: Parameters<G["getIndexesOfValidMoves"]>[0]["state"];
+  expectedIndexesOfValidMoves: ReturnType<
+    GenericGame["getIndexesOfValidMoves"]
+  >;
+  state: Parameters<GenericGame["getIndexesOfValidMoves"]>[0]["state"];
 }) => {
   const game = state.getGame();
   const indexesOfValidMoves = game.getIndexesOfValidMoves({ state });
@@ -31,14 +47,7 @@ const validateGetIndexesOfValidMoves = <
   assert.isEmpty(indexesOfValidMoves.difference(expectedIndexesOfValidMoves));
 };
 
-const createDescriptionForTestOfGetIndexesOfValidMoves = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
->({
+const createDescriptionForTestOfGetIndexesOfValidMoves = ({
   keyOfState,
   keysOfExpectedValidMoves,
 }: {

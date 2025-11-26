@@ -8,7 +8,7 @@ import { expect, test } from "vitest";
 import type { SnowballGameWithData } from "./setup.js";
 
 import { SnowballMove } from "../Move.js";
-import { gamesWithData } from "./records.js";
+import { recordOfSnowballGamesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
@@ -56,5 +56,5 @@ const testGetMove = ({
 };
 
 testGetMove({
-  arrayOfGamesWithData: Object.values(gamesWithData),
+  arrayOfGamesWithData: Object.values(recordOfSnowballGamesWithData),
 });

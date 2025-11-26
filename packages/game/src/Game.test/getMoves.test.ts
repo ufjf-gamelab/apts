@@ -11,21 +11,35 @@ import type { State } from "../State.js";
 import { Move } from "../Move.js";
 
 const validateGetMoves = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   expectedMoves,
   game,
 }: {
-  expectedMoves: ReturnType<G["getMoves"]>;
-  game: G;
+  expectedMoves: ReturnType<GenericGame["getMoves"]>;
+  game: GenericGame;
 }) => {
   const moves = game.getMoves();
-  expect(moves).toBeInstanceOf(Array<M>);
+  expect(moves).toBeInstanceOf(Array<GenericMove>);
   expect(moves).not.toBe(expectedMoves);
   expect(moves).toStrictEqual(expectedMoves);
 
@@ -41,14 +55,7 @@ const validateGetMoves = <
   expect(game.getMoves()).not.toEqual(moves);
 };
 
-const createDescriptionForTestOfGetMoves = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
->({
+const createDescriptionForTestOfGetMoves = ({
   keysOfExpectedMoves,
 }: {
   keysOfExpectedMoves: string[];

@@ -8,7 +8,7 @@ import { test } from "vitest";
 import type { SnowballGame } from "../Game.js";
 import type { SnowballGameWithData } from "./setup.js";
 
-import { gamesWithData } from "./records.js";
+import { recordOfSnowballGamesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
@@ -48,5 +48,5 @@ const testGetName = ({
 };
 
 testGetName({
-  arrayOfGamesWithData: Object.values(gamesWithData),
+  arrayOfGamesWithData: Object.values(recordOfSnowballGamesWithData),
 });

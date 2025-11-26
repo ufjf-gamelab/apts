@@ -9,7 +9,7 @@ import type { SnowballStateWithData } from "../State.test/setup.js";
 import type { SnowballGameWithData } from "./setup.js";
 
 import { statesWithData } from "../State.test/records.js";
-import { gamesWithData } from "./records.js";
+import { recordOfSnowballGamesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
@@ -51,7 +51,7 @@ const testConstructInitialState = ({
 };
 
 testConstructInitialState({
-  arrayOfGamesWithData: Object.values(gamesWithData),
+  arrayOfGamesWithData: Object.values(recordOfSnowballGamesWithData),
   expectedInitialState:
     statesWithData.allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
 });

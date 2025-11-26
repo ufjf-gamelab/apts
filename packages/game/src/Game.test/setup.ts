@@ -10,66 +10,131 @@ import type { State } from "../State.js";
 import { type Game, type ParamsOfGame } from "../Game.js";
 
 type DerivedParamsOfGame<
-  M extends Move<M>,
-  P extends Player<P>,
-  Sl extends Slot<Sl>,
-> = ParamsOfGame<M, P, Sl>;
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericSlot extends Slot<GenericSlot>,
+> = ParamsOfGame<GenericMove, GenericPlayer, GenericSlot>;
 
 interface GameWithData<
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
-  ExtendedMoveWithData extends MoveWithData<M>,
-  ExtendedPlayerWithData extends PlayerWithData<P>,
-  ExtendedSlotWithData extends SlotWithData<Sl>,
-  RequiredParams extends RequiredParamsOfGame<
-    M,
-    P,
-    Sl,
-    ExtendedMoveWithData,
-    ExtendedPlayerWithData,
-    ExtendedSlotWithData
-  > = RequiredParamsOfGame<
-    M,
-    P,
-    Sl,
-    ExtendedMoveWithData,
-    ExtendedPlayerWithData,
-    ExtendedSlotWithData
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
   >,
-  Key extends PropertyKey = string,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericRequiredParamsOfGame,
+  GenericKeyOfGame extends string = string,
 > {
-  game: G;
-  keyOfGame: Key;
-  requiredParams: RequiredParams;
+  game: GenericGame;
+  keyOfGame: GenericKeyOfGame;
+  requiredParams: GenericRequiredParamsOfGame;
 }
 
+type RecordOfGamesWithData<
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericRequiredParamsOfGame,
+  GenericRecordOfRequiredParamsOfGames extends
+    RecordOfRequiredParamsOfGames<GenericRequiredParamsOfGame> = RecordOfRequiredParamsOfGames<GenericRequiredParamsOfGame>,
+> = {
+  [GenericKeyOfGame in keyof GenericRecordOfRequiredParamsOfGames]: GameWithData<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState,
+    GenericRequiredParamsOfGame,
+    GenericKeyOfGame & string
+  >;
+};
+
+type RecordOfRequiredParamsOfGames<GenericRequiredParamsOfGame> = Record<
+  string,
+  GenericRequiredParamsOfGame
+>;
+
 type RequiredParamsOfGame<
-  M extends Move<M>,
-  P extends Player<P>,
-  Sl extends Slot<Sl>,
-  ExtendedMoveWithData extends MoveWithData<M>,
-  ExtendedPlayerWithData extends PlayerWithData<P>,
-  ExtendedSlotWithData extends SlotWithData<Sl>,
-> = Pick<ParamsOfGame<M, P, Sl>, "name"> & {
-  movesWithData: readonly ExtendedMoveWithData[];
-  playersWithData: readonly ExtendedPlayerWithData[];
-  slotsWithData: readonly ExtendedSlotWithData[];
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericRequiredParamsOfMove,
+  GenericMoveWithData extends MoveWithData<
+    GenericMove,
+    GenericRequiredParamsOfMove
+  > = MoveWithData<GenericMove, GenericRequiredParamsOfMove>,
+  GenericPlayerWithData extends
+    PlayerWithData<GenericPlayer> = PlayerWithData<GenericPlayer>,
+  GenericSlotWithData extends
+    SlotWithData<GenericSlot> = SlotWithData<GenericSlot>,
+> = Pick<ParamsOfGame<GenericMove, GenericPlayer, GenericSlot>, "name"> & {
+  movesWithData: readonly GenericMoveWithData[];
+  playersWithData: readonly GenericPlayerWithData[];
+  slotsWithData: readonly GenericSlotWithData[];
 };
 
 const deriveParamsOfGame = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
-  ExtendedMoveWithData extends MoveWithData<M>,
-  ExtendedPlayerWithData extends PlayerWithData<P>,
-  ExtendedSlotWithData extends SlotWithData<Sl>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericRequiredParamsOfMove,
+  GenericMoveWithData extends MoveWithData<
+    GenericMove,
+    GenericRequiredParamsOfMove
+  > = MoveWithData<GenericMove, GenericRequiredParamsOfMove>,
+  GenericPlayerWithData extends
+    PlayerWithData<GenericPlayer> = PlayerWithData<GenericPlayer>,
+  GenericSlotWithData extends
+    SlotWithData<GenericSlot> = SlotWithData<GenericSlot>,
 >({
   movesWithData,
   name,
@@ -77,15 +142,16 @@ const deriveParamsOfGame = <
   slotsWithData,
 }: Pick<
   RequiredParamsOfGame<
-    M,
-    P,
-    Sl,
-    ExtendedMoveWithData,
-    ExtendedPlayerWithData,
-    ExtendedSlotWithData
+    GenericMove,
+    GenericPlayer,
+    GenericSlot,
+    GenericRequiredParamsOfMove,
+    GenericMoveWithData,
+    GenericPlayerWithData,
+    GenericSlotWithData
   >,
   "movesWithData" | "name" | "playersWithData" | "slotsWithData"
->): DerivedParamsOfGame<M, P, Sl> => ({
+>): DerivedParamsOfGame<GenericMove, GenericPlayer, GenericSlot> => ({
   moves: movesWithData.map(({ move }) => move),
   name,
   players: playersWithData.map(({ player }) => player),
@@ -93,72 +159,61 @@ const deriveParamsOfGame = <
 });
 
 // eslint-disable-next-line max-lines-per-function
-const createGamesWithData = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
-  ExtendedMoveWithData extends MoveWithData<M>,
-  ExtendedPlayerWithData extends PlayerWithData<P>,
-  ExtendedSlotWithData extends SlotWithData<Sl>,
-  RequiredParams extends RequiredParamsOfGame<
-    M,
-    P,
-    Sl,
-    ExtendedMoveWithData,
-    ExtendedPlayerWithData,
-    ExtendedSlotWithData
+const createRecordOfGamesWithData = <
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
   >,
-  DerivedParams extends DerivedParamsOfGame<M, P, Sl>,
-  RecordOfRequiredParams extends Record<string, RequiredParams>,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericDerivedParamsOfGame extends DerivedParamsOfGame<
+    GenericMove,
+    GenericPlayer,
+    GenericSlot
+  >,
+  GenericRequiredParamsOfGame,
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
+  GenericRecordOfGamesWithData extends RecordOfGamesWithData<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState,
+    GenericRequiredParamsOfGame
+  >,
 >({
   create,
   deriveParams,
-  recordOfRequiredParams,
+  recordOfRequiredParamsOfGames,
 }: {
-  create: (derivedParams: DerivedParams) => G;
-  deriveParams: (requiredParams: RequiredParams) => DerivedParams;
-  recordOfRequiredParams: RecordOfRequiredParams;
-}): {
-  [Key in keyof RecordOfRequiredParams]: GameWithData<
-    G,
-    M,
-    P,
-    Sc,
-    Sl,
-    St,
-    ExtendedMoveWithData,
-    ExtendedPlayerWithData,
-    ExtendedSlotWithData,
-    RequiredParams,
-    Key
-  >;
-} => {
-  type ResultType = {
-    [Key in keyof RecordOfRequiredParams]: GameWithData<
-      G,
-      M,
-      P,
-      Sc,
-      Sl,
-      St,
-      ExtendedMoveWithData,
-      ExtendedPlayerWithData,
-      ExtendedSlotWithData,
-      RequiredParams,
-      Key
-    >;
-  };
-
+  create: (derivedParams: GenericDerivedParamsOfGame) => GenericGame;
+  deriveParams: (
+    requiredParams: GenericRequiredParamsOfGame,
+  ) => GenericDerivedParamsOfGame;
+  recordOfRequiredParamsOfGames: RecordOfRequiredParamsOfGames<GenericRequiredParamsOfGame>;
+}) =>
   /**
    * TypeScript cannot statically verify that Object.fromEntries produces all required keys since the operation happens at runtime.
-   * This assertion is safe because we're iterating over all entries from recordOfRequiredParams, which RecordOfRequiredParams is derived from.
+   * This assertion is safe because we're iterating over all entries from recordOfRequiredParamsOfGames, which RecordOfRequiredParams is derived from.
    */
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
-  return Object.fromEntries(
-    Object.entries(recordOfRequiredParams).map(
+  Object.fromEntries(
+    Object.entries(recordOfRequiredParamsOfGames).map(
       ([keyOfGame, requiredParams]) =>
         [
           keyOfGame,
@@ -167,21 +222,23 @@ const createGamesWithData = <
             keyOfGame,
             requiredParams,
           } satisfies GameWithData<
-            G,
-            M,
-            P,
-            Sc,
-            Sl,
-            St,
-            ExtendedMoveWithData,
-            ExtendedPlayerWithData,
-            ExtendedSlotWithData,
-            RequiredParams
+            GenericGame,
+            GenericMove,
+            GenericPlayer,
+            GenericScore,
+            GenericSlot,
+            GenericState,
+            GenericRequiredParamsOfGame
           >,
         ] as const,
     ),
-  ) as ResultType;
-};
+  ) as GenericRecordOfGamesWithData;
 
-export type { DerivedParamsOfGame, GameWithData, RequiredParamsOfGame };
-export { createGamesWithData, deriveParamsOfGame };
+export type {
+  DerivedParamsOfGame,
+  GameWithData,
+  RecordOfGamesWithData,
+  RecordOfRequiredParamsOfGames,
+  RequiredParamsOfGame,
+};
+export { createRecordOfGamesWithData, deriveParamsOfGame };

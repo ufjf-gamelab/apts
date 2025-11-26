@@ -8,7 +8,7 @@ import { expect, test } from "vitest";
 import type { SnowballGameWithData } from "./setup.js";
 
 import { SnowballGame } from "../Game.js";
-import { gamesWithData } from "./records.js";
+import { recordOfSnowballGamesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
@@ -43,5 +43,5 @@ const testClone = ({
 };
 
 testClone({
-  arrayOfGamesWithData: Object.values(gamesWithData),
+  arrayOfGamesWithData: Object.values(recordOfSnowballGamesWithData),
 });

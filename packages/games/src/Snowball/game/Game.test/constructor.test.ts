@@ -6,7 +6,7 @@ import { validateConstructor } from "@repo/game/Game.test/constructor.test.js";
 import { expect, test } from "vitest";
 
 import { SnowballGame } from "../Game.js";
-import { gamesWithData } from "./records.js";
+import { recordOfSnowballGamesWithData } from "./records.js";
 import {
   deriveParamsOfSnowballGame,
   type SnowballGameWithData,
@@ -56,5 +56,5 @@ const testConstructor = ({
 };
 
 testConstructor({
-  arrayOfGamesWithData: Object.values(gamesWithData),
+  arrayOfGamesWithData: Object.values(recordOfSnowballGamesWithData),
 });

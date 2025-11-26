@@ -3,12 +3,12 @@ import { expect } from "vitest";
 
 import type { Move } from "../Move.js";
 
-const validateGetTitle = <M extends Move<M>>({
+const validateGetTitle = <GenericMove extends Move<GenericMove>>({
   expectedTitle,
   move,
 }: {
-  expectedTitle: ReturnType<M["getTitle"]>;
-  move: M;
+  expectedTitle: ReturnType<GenericMove["getTitle"]>;
+  move: GenericMove;
 }) => {
   let title = move.getTitle();
   expect(title).toBe(expectedTitle);
@@ -19,10 +19,12 @@ const validateGetTitle = <M extends Move<M>>({
   expect(move.getTitle()).not.toEqual(title);
 };
 
-const createDescriptionForTestOfGetTitle = <M extends Move<M>>({
+const createDescriptionForTestOfGetTitle = <
+  GenericMove extends Move<GenericMove>,
+>({
   expectedTitle,
 }: {
-  expectedTitle: ReturnType<M["getTitle"]>;
+  expectedTitle: ReturnType<GenericMove["getTitle"]>;
 }): string =>
   createDescriptionForTestsOfGetter({
     methodDescription: "getTitle()",

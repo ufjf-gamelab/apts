@@ -7,7 +7,7 @@ import { expect, test } from "vitest";
 
 import type { SnowballMove } from "../Move.js";
 
-import { indexedMovesWithData } from "./indexedRecords.js";
+import { indexedSnowballMovesWithData } from "./indexedRecords.js";
 import { type SnowballMoveWithData } from "./setup.js";
 
 const validateGetIndexOfSlotInWhichPlacePiece = ({
@@ -66,25 +66,25 @@ const testGetIndexOfSlotInWhichPlacePiece = ({
 }: {
   arrayOfMovesWithData: SnowballMoveWithData[];
 }) => {
-  arrayOfMovesWithData.forEach(({ keyOfMove, move, params }) => {
-    test(
-      createDescription({
-        affix: keyOfMove,
-        expectedIndexOfSlotInWhichPlacePiece:
-          params.indexOfSlotInWhichPlacePiece,
-      }),
+  arrayOfMovesWithData.forEach(
+    ({ keyOfMove, move, requiredParams: { indexOfSlotInWhichPlacePiece } }) => {
+      test(
+        createDescription({
+          affix: keyOfMove,
+          expectedIndexOfSlotInWhichPlacePiece: indexOfSlotInWhichPlacePiece,
+        }),
 
-      () => {
-        validateGetIndexOfSlotInWhichPlacePiece({
-          expectedIndexOfSlotInWhichPlacePiece:
-            params.indexOfSlotInWhichPlacePiece,
-          move,
-        });
-      },
-    );
-  });
+        () => {
+          validateGetIndexOfSlotInWhichPlacePiece({
+            expectedIndexOfSlotInWhichPlacePiece: indexOfSlotInWhichPlacePiece,
+            move,
+          });
+        },
+      );
+    },
+  );
 };
 
 testGetIndexOfSlotInWhichPlacePiece({
-  arrayOfMovesWithData: indexedMovesWithData,
+  arrayOfMovesWithData: indexedSnowballMovesWithData,
 });
