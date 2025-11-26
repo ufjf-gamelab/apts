@@ -92,6 +92,7 @@ type RequiredParamsOfGame<
   GenericSlot extends Slot<GenericSlot>,
   GenericRequiredParamsOfMove,
   GenericRequiredParamsOfPlayer,
+  GenericRequiredParamsOfSlot,
   GenericMoveWithData extends MoveWithData<
     GenericMove,
     GenericRequiredParamsOfMove
@@ -100,8 +101,10 @@ type RequiredParamsOfGame<
     GenericPlayer,
     GenericRequiredParamsOfPlayer
   > = PlayerWithData<GenericPlayer, GenericRequiredParamsOfPlayer>,
-  GenericSlotWithData extends
-    SlotWithData<GenericSlot> = SlotWithData<GenericSlot>,
+  GenericSlotWithData extends SlotWithData<
+    GenericSlot,
+    GenericRequiredParamsOfSlot
+  > = SlotWithData<GenericSlot, GenericRequiredParamsOfSlot>,
 > = Pick<ParamsOfGame<GenericMove, GenericPlayer, GenericSlot>, "name"> & {
   movesWithData: readonly GenericMoveWithData[];
   playersWithData: readonly GenericPlayerWithData[];
@@ -131,6 +134,7 @@ const deriveParamsOfGame = <
   >,
   GenericRequiredParamsOfMove,
   GenericRequiredParamsOfPlayer,
+  GenericRequiredParamsOfSlot,
   GenericMoveWithData extends MoveWithData<
     GenericMove,
     GenericRequiredParamsOfMove
@@ -139,8 +143,10 @@ const deriveParamsOfGame = <
     GenericPlayer,
     GenericRequiredParamsOfPlayer
   > = PlayerWithData<GenericPlayer, GenericRequiredParamsOfPlayer>,
-  GenericSlotWithData extends
-    SlotWithData<GenericSlot> = SlotWithData<GenericSlot>,
+  GenericSlotWithData extends SlotWithData<
+    GenericSlot,
+    GenericRequiredParamsOfSlot
+  > = SlotWithData<GenericSlot, GenericRequiredParamsOfSlot>,
 >({
   movesWithData,
   name,
@@ -153,6 +159,7 @@ const deriveParamsOfGame = <
     GenericSlot,
     GenericRequiredParamsOfMove,
     GenericRequiredParamsOfPlayer,
+    GenericRequiredParamsOfSlot,
     GenericMoveWithData,
     GenericPlayerWithData,
     GenericSlotWithData

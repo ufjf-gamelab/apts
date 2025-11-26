@@ -1,16 +1,30 @@
 import {
-  createSlotsWithData,
+  createRecordOfSlotsWithData,
   type DerivedParamsOfSlot,
+  type RecordOfSlotsWithData,
   type RequiredParamsOfSlot,
   type SlotWithData,
 } from "@repo/game/Slot.test/setup.js";
 
 import { type ParamsOfSnowballSlot, SnowballSlot } from "../Slot.js";
-import { type RecordOfRequiredParamsOfSnowballSlots } from "./records.js";
 
 // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 type DerivedParamsOfSnowballSlot = DerivedParamsOfSlot &
   Pick<ParamsOfSnowballSlot, "indexOfOccupyingPlayer">;
+
+type RecordOfRequiredParamsOfSnowballSlots = Record<
+  string,
+  RequiredParamsOfSnowballSlot
+>;
+
+type RecordOfSnowballSlotsWithData<
+  GenericRecordOfRequiredParamsOfSnowballSlots extends
+    RecordOfRequiredParamsOfSnowballSlots,
+> = RecordOfSlotsWithData<
+  SnowballSlot,
+  RequiredParamsOfSnowballSlot,
+  GenericRecordOfRequiredParamsOfSnowballSlots
+>;
 
 type RequiredParamsOfSnowballSlot = Pick<
   ParamsOfSnowballSlot,
@@ -19,10 +33,12 @@ type RequiredParamsOfSnowballSlot = Pick<
   // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   RequiredParamsOfSlot;
 
-type SnowballSlotWithData = SlotWithData<
-  SnowballSlot,
-  DerivedParamsOfSnowballSlot
->;
+type SnowballSlotWithData<GenericKeyOfSnowballSlot extends string = string> =
+  SlotWithData<
+    SnowballSlot,
+    RequiredParamsOfSnowballSlot,
+    GenericKeyOfSnowballSlot
+  >;
 
 const deriveParamsOfSnowballSlot = ({
   indexOfOccupyingPlayer,
@@ -37,39 +53,34 @@ const createSnowballSlot = ({
     indexOfOccupyingPlayer,
   });
 
-type ExtendedSnowballSlotsWithData<
-  ExtendedRecordOfRequiredParamsOfSnowballSlots extends
-    RecordOfRequiredParamsOfSnowballSlots,
-> = {
-  [K in keyof ExtendedRecordOfRequiredParamsOfSnowballSlots]: {
-    keyOfSlot: keyof ExtendedRecordOfRequiredParamsOfSnowballSlots;
-    params: RequiredParamsOfSnowballSlot;
-    slot: SnowballSlot;
-  };
-};
-
-const createSnowballSlotsWithData = <
-  ExtendedRecordOfRequiredParamsOfSnowballSlots extends
+const createRecordOfSnowballSlotsWithData = <
+  GenericRecordOfRequiredParamsOfSnowballSlots extends
     RecordOfRequiredParamsOfSnowballSlots,
 >({
-  recordOfRequiredParams,
+  recordOfRequiredParamsOfSlots,
 }: {
-  recordOfRequiredParams: ExtendedRecordOfRequiredParamsOfSnowballSlots;
-}): ExtendedSnowballSlotsWithData<ExtendedRecordOfRequiredParamsOfSnowballSlots> =>
-  createSlotsWithData({
+  recordOfRequiredParamsOfSlots: GenericRecordOfRequiredParamsOfSnowballSlots;
+}) =>
+  createRecordOfSlotsWithData<
+    SnowballSlot,
+    DerivedParamsOfSnowballSlot,
+    RequiredParamsOfSnowballSlot,
+    RecordOfSnowballSlotsWithData<GenericRecordOfRequiredParamsOfSnowballSlots>
+  >({
     create: createSnowballSlot,
     deriveParams: deriveParamsOfSnowballSlot,
-    recordOfRequiredParams,
+    recordOfRequiredParamsOfSlots,
   });
 
 export type {
   DerivedParamsOfSnowballSlot,
-  ExtendedSnowballSlotsWithData,
+  RecordOfRequiredParamsOfSnowballSlots,
+  RecordOfSnowballSlotsWithData,
   RequiredParamsOfSnowballSlot,
   SnowballSlotWithData,
 };
 export {
+  createRecordOfSnowballSlotsWithData,
   createSnowballSlot,
-  createSnowballSlotsWithData,
   deriveParamsOfSnowballSlot,
 };

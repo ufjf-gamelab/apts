@@ -3,33 +3,33 @@ import { expect } from "vitest";
 
 import { Slot } from "../Slot.js";
 
-type PropsOfGetSlot<Sl extends Slot<Sl>> = Parameters<
-  typeof Slot.getSlot<Sl>
+type PropsOfGetSlot<GenericSlot extends Slot<GenericSlot>> = Parameters<
+  typeof Slot.getSlot<GenericSlot>
 >[0];
-type ReturnTypeOfGetSlot<Sl extends Slot<Sl>> = ReturnType<
-  typeof Slot.getSlot<Sl>
+
+type ReturnTypeOfGetSlot<GenericSlot extends Slot<GenericSlot>> = ReturnType<
+  typeof Slot.getSlot<GenericSlot>
 >;
 
-const validateGetSlot = <Sl extends Slot<Sl>>({
+const validateGetSlot = <GenericSlot extends Slot<GenericSlot>>({
   expectedSlot,
   indexOfSlot,
   slots,
-}: {
-  expectedSlot: ReturnTypeOfGetSlot<Sl>;
-  indexOfSlot: PropsOfGetSlot<Sl>["indexOfSlot"];
-  slots: PropsOfGetSlot<Sl>["slots"];
+}: Pick<PropsOfGetSlot<GenericSlot>, "indexOfSlot" | "slots"> & {
+  expectedSlot: ReturnTypeOfGetSlot<GenericSlot>;
 }) => {
   const slot = Slot.getSlot({ indexOfSlot, slots });
   expect(slot).toBeInstanceOf(Slot);
   expect(slot).toBe(expectedSlot);
 };
 
-const createDescriptionForTestOfGetSlot = <Sl extends Slot<Sl>>({
+const createDescriptionForTestOfGetSlot = <
+  GenericSlot extends Slot<GenericSlot>,
+>({
   indexOfSlot,
   keyOfSlot,
   slots,
-}: {
-  indexOfSlot: PropsOfGetSlot<Sl>["indexOfSlot"];
+}: Pick<PropsOfGetSlot<GenericSlot>, "indexOfSlot"> & {
   keyOfSlot: string;
   slots: string;
 }): string =>

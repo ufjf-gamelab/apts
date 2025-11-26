@@ -1,6 +1,6 @@
 import { indexedSnowballMovesWithData } from "../Move.test/indexedRecords.js";
 import { indexedSnowballPlayersWithData } from "../Player.test/indexedRecords.js";
-import { indexedSlotsWithDataInWhichAllSlotsAreEmpty } from "../Slot.test/indexedRecords.js";
+import { indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty } from "../Slot.test/indexedRecords.js";
 import {
   createRecordOfSnowballGamesWithData,
   type RecordOfRequiredParamsOfSnowballGames,
@@ -11,7 +11,7 @@ const recordOfRequiredParamsOfSnowballGames = {
     movesWithData: indexedSnowballMovesWithData,
     name: "Snowball",
     playersWithData: indexedSnowballPlayersWithData,
-    slotsWithData: indexedSlotsWithDataInWhichAllSlotsAreEmpty,
+    slotsWithData: indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
   },
 } as const satisfies RecordOfRequiredParamsOfSnowballGames;
 

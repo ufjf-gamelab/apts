@@ -1,67 +1,115 @@
-import type { ParamsOfSlot, Slot } from "../Slot.js";
+import type { IndexOfSlot, ParamsOfSlot, Slot } from "../Slot.js";
 
 type DerivedParamsOfSlot = ParamsOfSlot;
+
+type RecordOfRequiredParamsOfSlots<GenericRequiredParamsOfSlot> = Record<
+  string,
+  GenericRequiredParamsOfSlot
+>;
+
+type RecordOfSlotsWithData<
+  GenericSlot extends Slot<GenericSlot>,
+  GenericRequiredParamsOfSlot,
+  GenericRecordOfRequiredParamsOfSlots extends
+    RecordOfRequiredParamsOfSlots<GenericRequiredParamsOfSlot> = RecordOfRequiredParamsOfSlots<GenericRequiredParamsOfSlot>,
+> = {
+  [GenericKeyOfSlot in keyof GenericRecordOfRequiredParamsOfSlots]: SlotWithData<
+    GenericSlot,
+    GenericRequiredParamsOfSlot,
+    GenericKeyOfSlot & string
+  >;
+};
+
+type RecordOfSlotsWithDataAndIndex<
+  GenericSlot extends Slot<GenericSlot>,
+  GenericRequiredParamsOfSlot,
+  GenericRecordOfRequiredParamsOfSlots extends
+    RecordOfRequiredParamsOfSlots<GenericRequiredParamsOfSlot> = RecordOfRequiredParamsOfSlots<GenericRequiredParamsOfSlot>,
+  GenericSlotWithData extends SlotWithData<
+    GenericSlot,
+    GenericRequiredParamsOfSlot
+  > = SlotWithData<GenericSlot, GenericRequiredParamsOfSlot>,
+> = {
+  [GenericKeyOfSlot in keyof GenericRecordOfRequiredParamsOfSlots]: SlotWithDataAndIndex<
+    GenericSlot,
+    GenericRequiredParamsOfSlot,
+    GenericSlotWithData
+  >;
+};
 
 type RequiredParamsOfSlot = ParamsOfSlot;
 
 interface SlotWithData<
-  Sl extends Slot<Sl>,
-  Params extends RequiredParamsOfSlot = RequiredParamsOfSlot,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericRequiredParamsOfSlot,
+  GenericKeyOfSlot extends string = string,
 > {
-  keyOfSlot: string;
-  params: Params;
-  slot: Sl;
+  keyOfSlot: GenericKeyOfSlot;
+  requiredParams: GenericRequiredParamsOfSlot;
+  slot: GenericSlot;
 }
 
-const deriveParamsOfSlot = (_: RequiredParamsOfSlot): DerivedParamsOfSlot => _;
+interface SlotWithDataAndIndex<
+  GenericSlot extends Slot<GenericSlot>,
+  GenericRequiredParamsOfSlot,
+  GenericSlotWithData extends SlotWithData<
+    GenericSlot,
+    GenericRequiredParamsOfSlot
+  >,
+> {
+  indexOfSlot: IndexOfSlot;
+  slotWithData: GenericSlotWithData;
+}
 
-const createSlotsWithData = <
-  Sl extends Slot<Sl>,
-  RequiredParams extends RequiredParamsOfSlot,
-  DerivedParams extends DerivedParamsOfSlot,
-  RecordOfRequiredParams extends Record<string, RequiredParams>,
+const deriveParamsOfSlot = (
+  requiredParamsOfSlot: RequiredParamsOfSlot,
+): DerivedParamsOfSlot => requiredParamsOfSlot;
+
+const createRecordOfSlotsWithData = <
+  GenericSlot extends Slot<GenericSlot>,
+  GenericDerivedParamsOfSlot extends DerivedParamsOfSlot,
+  GenericRequiredParamsOfSlot,
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
+  GenericRecordOfSlotsWithData extends RecordOfSlotsWithData<
+    GenericSlot,
+    GenericRequiredParamsOfSlot
+  >,
 >({
   create,
   deriveParams,
-  recordOfRequiredParams,
+  recordOfRequiredParamsOfSlots,
 }: {
-  create: (params: DerivedParams) => Sl;
-  deriveParams: (requiredParams: RequiredParams) => DerivedParams;
-  recordOfRequiredParams: RecordOfRequiredParams;
-}): {
-  [K in keyof RecordOfRequiredParams]: {
-    keyOfSlot: keyof RecordOfRequiredParams;
-    params: RequiredParams;
-    slot: Sl;
-  };
-} => {
-  type ResultType = {
-    [K in keyof RecordOfRequiredParams]: {
-      keyOfSlot: keyof RecordOfRequiredParams;
-      params: RequiredParams;
-      slot: Sl;
-    };
-  };
-
+  create: (derivedParams: GenericDerivedParamsOfSlot) => GenericSlot;
+  deriveParams: (
+    requiredParams: GenericRequiredParamsOfSlot,
+  ) => GenericDerivedParamsOfSlot;
+  recordOfRequiredParamsOfSlots: RecordOfRequiredParamsOfSlots<GenericRequiredParamsOfSlot>;
+}) =>
   /**
    * TypeScript cannot statically verify that Object.fromEntries produces all required keys since the operation happens at runtime.
-   * This assertion is safe because we're iterating over all entries from recordOfRequiredParams, which RecordOfRequiredParams is derived from.
+   * This assertion is safe because we're iterating over all entries from recordOfRequiredParamsOfSlots, which RecordOfRequiredParams is derived from.
    */
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Object.fromEntries cannot preserve mapped type keys
-  return Object.fromEntries(
-    Object.entries(recordOfRequiredParams).map(
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+  Object.fromEntries(
+    Object.entries(recordOfRequiredParamsOfSlots).map(
       ([keyOfSlot, requiredParams]) =>
         [
           keyOfSlot,
           {
             keyOfSlot,
-            params: requiredParams,
+            requiredParams,
             slot: create(deriveParams(requiredParams)),
-          } satisfies SlotWithData<Sl, RequiredParams>,
+          } satisfies SlotWithData<GenericSlot, GenericRequiredParamsOfSlot>,
         ] as const,
     ),
-  ) as ResultType;
-};
+  ) as GenericRecordOfSlotsWithData;
 
-export type { DerivedParamsOfSlot, RequiredParamsOfSlot, SlotWithData };
-export { createSlotsWithData, deriveParamsOfSlot };
+export type {
+  DerivedParamsOfSlot,
+  RecordOfSlotsWithData,
+  RecordOfSlotsWithDataAndIndex,
+  RequiredParamsOfSlot,
+  SlotWithData,
+  SlotWithDataAndIndex,
+};
+export { createRecordOfSlotsWithData, deriveParamsOfSlot };

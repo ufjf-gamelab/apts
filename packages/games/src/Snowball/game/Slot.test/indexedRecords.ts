@@ -1,64 +1,77 @@
-import type { IndexOfSlot } from "@repo/game/Slot.js";
+import type {
+  RecordOfSlotsWithDataAndIndex,
+  SlotWithDataAndIndex,
+} from "@repo/game/Slot.test/setup.js";
 
-import type { ExtendedSnowballSlotsWithData } from "./setup.js";
+import type { SnowballSlot } from "../Slot.js";
+import type {
+  RecordOfRequiredParamsOfSnowballSlots,
+  RecordOfSnowballSlotsWithData,
+  RequiredParamsOfSnowballSlot,
+  SnowballSlotWithData,
+} from "./setup.js";
 
 import {
-  type RecordOfRequiredParamsOfSnowballSlots,
-  slotsWithDataInWhichAllSlotsAreEmpty,
-  slotsWithDataInWhichSlotR0C0IsFilledByAlice,
-  slotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
-  slotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
-  slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+  type recordOfRequiredParamsOfSnowballSlotsInWhichAllSlotsAreEmpty,
+  recordOfSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
+  recordOfSnowballSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
+  recordOfSnowballSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
+  recordOfSnowballSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
+  recordOfSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
 } from "./records.js";
 
-type KeysOfSlotsInOrder<GenericExtendedSnowballSlotsWithData> =
-  (keyof GenericExtendedSnowballSlotsWithData)[];
-
-type SnowballSlotsWithDataAndIndex<
-  ExtendedRecordOfRequiredParamsOfSnowballSlots extends
+type KeysOfSlotsInOrder<
+  GenericRecordOfRequiredParamsOfSnowballSlots extends
     RecordOfRequiredParamsOfSnowballSlots,
-> = Record<
-  KeysOfSlotsInOrder<
-    ExtendedSnowballSlotsWithData<ExtendedRecordOfRequiredParamsOfSnowballSlots>
-  >[number],
-  SnowballSlotWithDataAndIndex<ExtendedRecordOfRequiredParamsOfSnowballSlots>
+> = (keyof GenericRecordOfRequiredParamsOfSnowballSlots)[];
+
+type RecordOfSnowballSlotsWithDataAndIndex<
+  GenericRecordOfRequiredParamsOfSnowballSlots extends
+    RecordOfRequiredParamsOfSnowballSlots,
+> = RecordOfSlotsWithDataAndIndex<
+  SnowballSlot,
+  RequiredParamsOfSnowballSlot,
+  GenericRecordOfRequiredParamsOfSnowballSlots,
+  SnowballSlotWithData
 >;
 
-interface SnowballSlotWithDataAndIndex<
-  ExtendedRecordOfRequiredParamsOfSnowballSlots extends
-    RecordOfRequiredParamsOfSnowballSlots,
-> {
-  indexOfSlot: IndexOfSlot;
-  slot: ExtendedSnowballSlotsWithData<ExtendedRecordOfRequiredParamsOfSnowballSlots>[keyof ExtendedSnowballSlotsWithData<ExtendedRecordOfRequiredParamsOfSnowballSlots>];
-}
+type SnowballSlotWithDataAndIndex = SlotWithDataAndIndex<
+  SnowballSlot,
+  RequiredParamsOfSnowballSlot,
+  SnowballSlotWithData
+>;
 
 const createIndexedSnowballSlotsWithData = <
-  ExtendedRecordOfRequiredParamsOfSnowballSlots extends
+  GenericRecordOfRequiredParamsOfSnowballSlots extends
     RecordOfRequiredParamsOfSnowballSlots,
 >({
-  keysOfSlotsInOrder,
-  slotsWithData,
+  keysOfSnowballSlotsInOrder,
+  snowballSlotsWithData,
 }: {
-  keysOfSlotsInOrder: KeysOfSlotsInOrder<ExtendedRecordOfRequiredParamsOfSnowballSlots>;
-  slotsWithData: ExtendedSnowballSlotsWithData<ExtendedRecordOfRequiredParamsOfSnowballSlots>;
+  keysOfSnowballSlotsInOrder: KeysOfSlotsInOrder<GenericRecordOfRequiredParamsOfSnowballSlots>;
+  snowballSlotsWithData: RecordOfSnowballSlotsWithData<GenericRecordOfRequiredParamsOfSnowballSlots>;
 }) => {
-  const slotsWithDataAndIndex =
+  const recordOfSnowballSlotsWithDataAndIndex =
     // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
-    {} as SnowballSlotsWithDataAndIndex<ExtendedRecordOfRequiredParamsOfSnowballSlots>;
-  const indexedSlotsWithData: (typeof slotsWithData)[keyof typeof slotsWithData][] =
+    {} as RecordOfSnowballSlotsWithDataAndIndex<GenericRecordOfRequiredParamsOfSnowballSlots>;
+  const indexedSnowballSlotsWithData: (typeof snowballSlotsWithData)[keyof typeof snowballSlotsWithData][] =
     [];
-  keysOfSlotsInOrder.forEach((keyOfSlot, indexOfSlot) => {
-    const slot = slotsWithData[keyOfSlot];
-    slotsWithDataAndIndex[keyOfSlot] = { indexOfSlot, slot };
-    indexedSlotsWithData.push(slot);
+
+  keysOfSnowballSlotsInOrder.forEach((keyOfSlot, indexOfSlot) => {
+    const slotWithData = snowballSlotsWithData[keyOfSlot];
+    recordOfSnowballSlotsWithDataAndIndex[keyOfSlot] = {
+      indexOfSlot,
+      slotWithData,
+    } as RecordOfSnowballSlotsWithDataAndIndex<GenericRecordOfRequiredParamsOfSnowballSlots>[typeof keyOfSlot];
+    indexedSnowballSlotsWithData.push(slotWithData);
   });
   return {
-    indexedSlotsWithData,
-    slotsWithDataAndIndex,
+    indexedSnowballSlotsWithData,
+    recordOfSnowballSlotsWithDataAndIndex,
   };
 };
 
-const keysOfSlotsInOrder = [
+const keysOfSnowballSlotsInOrder = [
   // Row 0
   "northwestOfNorthwest",
   "northOfNorthwest",
@@ -158,67 +171,73 @@ const keysOfSlotsInOrder = [
   "southOfSoutheast",
   "southeastOfSoutheast",
 ] as const satisfies KeysOfSlotsInOrder<
-  typeof slotsWithDataInWhichAllSlotsAreEmpty
+  typeof recordOfRequiredParamsOfSnowballSlotsInWhichAllSlotsAreEmpty
 >;
 
 const {
-  indexedSlotsWithData: indexedSlotsWithDataInWhichAllSlotsAreEmpty,
-  slotsWithDataAndIndex: slotsWithDataAndIndexInWhichAllSlotsAreEmpty,
+  indexedSnowballSlotsWithData:
+    indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
+  recordOfSnowballSlotsWithDataAndIndex:
+    recordOfSnowballSlotsWithDataAndIndexInWhichAllSlotsAreEmpty,
 } = createIndexedSnowballSlotsWithData({
-  keysOfSlotsInOrder,
-  slotsWithData: slotsWithDataInWhichAllSlotsAreEmpty,
+  keysOfSnowballSlotsInOrder,
+  snowballSlotsWithData: recordOfSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
 });
 
 const {
-  indexedSlotsWithData: indexedSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
-  slotsWithDataAndIndex: slotsWithDataAndIndexInWhichSlotR0C0IsFilledByAlice,
+  indexedSnowballSlotsWithData:
+    indexedSnowballSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
+  recordOfSnowballSlotsWithDataAndIndex:
+    recordOfSnowballSlotsWithDataAndIndexInWhichSlotR0C0IsFilledByAlice,
 } = createIndexedSnowballSlotsWithData({
-  keysOfSlotsInOrder,
-  slotsWithData: slotsWithDataInWhichSlotR0C0IsFilledByAlice,
+  keysOfSnowballSlotsInOrder,
+  snowballSlotsWithData:
+    recordOfSnowballSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
 });
 
 const {
-  indexedSlotsWithData:
-    indexedSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
-  slotsWithDataAndIndex:
-    slotsWithDataAndIndexInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
+  indexedSnowballSlotsWithData:
+    indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
+  recordOfSnowballSlotsWithDataAndIndex:
+    recordOfSnowballSlotsWithDataAndIndexInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
 } = createIndexedSnowballSlotsWithData({
-  keysOfSlotsInOrder,
-  slotsWithData:
-    slotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
+  keysOfSnowballSlotsInOrder,
+  snowballSlotsWithData:
+    recordOfSnowballSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
 });
 
 const {
-  indexedSlotsWithData:
-    indexedSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
-  slotsWithDataAndIndex:
-    slotsWithDataAndIndexInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
+  indexedSnowballSlotsWithData:
+    indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
+  recordOfSnowballSlotsWithDataAndIndex:
+    recordOfSnowballSlotsWithDataAndIndexInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
 } = createIndexedSnowballSlotsWithData({
-  keysOfSlotsInOrder,
-  slotsWithData:
-    slotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
+  keysOfSnowballSlotsInOrder,
+  snowballSlotsWithData:
+    recordOfSnowballSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
 });
 
 const {
-  indexedSlotsWithData:
-    indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
-  slotsWithDataAndIndex:
-    slotsWithDataAndIndexInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+  indexedSnowballSlotsWithData:
+    indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+  recordOfSnowballSlotsWithDataAndIndex:
+    recordOfSnowballSlotsWithDataAndIndexInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
 } = createIndexedSnowballSlotsWithData({
-  keysOfSlotsInOrder,
-  slotsWithData:
-    slotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+  keysOfSnowballSlotsInOrder,
+  snowballSlotsWithData:
+    recordOfSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
 });
 
+export type { SnowballSlotWithDataAndIndex };
 export {
-  indexedSlotsWithDataInWhichAllSlotsAreEmpty,
-  indexedSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
-  indexedSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
-  indexedSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
-  indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
-  slotsWithDataAndIndexInWhichAllSlotsAreEmpty,
-  slotsWithDataAndIndexInWhichSlotR0C0IsFilledByAlice,
-  slotsWithDataAndIndexInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
-  slotsWithDataAndIndexInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
-  slotsWithDataAndIndexInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+  indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
+  indexedSnowballSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
+  indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
+  indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
+  indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+  recordOfSnowballSlotsWithDataAndIndexInWhichAllSlotsAreEmpty,
+  recordOfSnowballSlotsWithDataAndIndexInWhichSlotR0C0IsFilledByAlice,
+  recordOfSnowballSlotsWithDataAndIndexInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
+  recordOfSnowballSlotsWithDataAndIndexInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
+  recordOfSnowballSlotsWithDataAndIndexInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
 };
