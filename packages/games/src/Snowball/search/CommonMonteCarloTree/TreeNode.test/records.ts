@@ -1,5 +1,4 @@
-import { recordOfSnowballStatesWithData } from "src/Snowball/game/State.test/records.js";
-
+import { recordOfSnowballStatesWithData } from "../../../game/State.test/records.js";
 import {
   createRecordOfSnowballTreeNodesWithData,
   type RecordOfRequiredParamsOfSnowballTreeNodes,

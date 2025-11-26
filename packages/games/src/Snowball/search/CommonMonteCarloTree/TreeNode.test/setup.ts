@@ -13,7 +13,7 @@ import type {
   SnowballStateWithData,
 } from "src/Snowball/game/State.test/setup.js";
 
-import TreeNode from "@repo/search/CommonMonteCarloTree/TreeNode.js";
+import { TreeNode } from "@repo/search/CommonMonteCarloTree/TreeNode.js";
 import {
   createRecordOfTreeNodesWithData,
   type DerivedParamsOfTreeNode,

@@ -336,4 +336,4 @@ class TreeNode<
 }
 
 export type { ParamsOfTreeNode };
-export { TreeNode as default };
+export { TreeNode };

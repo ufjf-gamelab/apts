@@ -10,8 +10,7 @@ import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 import type { StateWithData } from "@repo/game/State.test/setup.js";
 
-import type { ParamsOfTreeNode } from "../TreeNode.js";
-import type TreeNode from "../TreeNode.js";
+import type { ParamsOfTreeNode, TreeNode } from "../TreeNode.js";
 
 type DerivedParamsOfTreeNode<
   GenericGame extends Game<
