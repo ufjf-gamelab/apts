@@ -11,12 +11,14 @@ import { createDescriptionForPlayerAndItsPoints } from "./setup.js";
 const INDEX_OF_FIRST_PLAYER = 0;
 const ZERO_POINTS = 0;
 
-const validateGetPointsOfEachPlayer = <Sc extends Score<Sc>>({
+const validateGetPointsOfEachPlayer = <
+  GenericScore extends Score<GenericScore>,
+>({
   expectedPointsOfEachPlayer,
   score,
 }: {
-  expectedPointsOfEachPlayer: ReturnType<Sc["getPointsOfEachPlayer"]>;
-  score: Sc;
+  expectedPointsOfEachPlayer: ReturnType<GenericScore["getPointsOfEachPlayer"]>;
+  score: GenericScore;
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
   const pointsOfEachPlayer = score.getPointsOfEachPlayer() as Map<
@@ -39,8 +41,8 @@ const validateGetPointsOfEachPlayer = <Sc extends Score<Sc>>({
 };
 
 const createDescriptionForTestOfGetPointsOfEachPlayer = <
-  Sc extends Score<Sc>,
-  P extends Player<P>,
+  GenericScore extends Score<GenericScore>,
+  GenericPlayer extends Player<GenericPlayer>,
 >({
   expectedPointsOfEachPlayer,
 }: {

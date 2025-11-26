@@ -2,12 +2,12 @@ import { expect } from "vitest";
 
 import { type ParamsOfScore, Score } from "../Score.js";
 
-const validateConstructor = <Sc extends Score<Sc>>({
+const validateConstructor = <GenericScore extends Score<GenericScore>>({
   params,
   score,
 }: {
   params: ParamsOfScore;
-  score: Sc;
+  score: GenericScore;
 }) => {
   expect(score).toBeInstanceOf(Score);
   expect(score.getPointsOfEachPlayer()).toStrictEqual(

@@ -1,25 +1,46 @@
 import {
-  createScoresWithData,
+  createRecordOfScoresWithData,
   type DerivedParamsOfScore,
   deriveParamsOfScore,
+  type RecordOfScoresWithData,
   type RequiredParamsOfScore,
   type ScoreWithData,
 } from "@repo/game/Score.test/setup.js";
 
 import type { SnowballPlayer } from "../Player.js";
-import type { RecordOfRequiredParamsOfSnowballScores } from "./records.js";
+import type { RequiredParamsOfSnowballPlayer } from "../Player.test/setup.js";
 
 import { SnowballScore } from "../Score.js";
 
 type DerivedParamsOfSnowballScore = DerivedParamsOfScore;
 
-type RequiredParamsOfSnowballScore = RequiredParamsOfScore<SnowballPlayer>;
-
-type SnowballScoreWithData = ScoreWithData<
-  SnowballPlayer,
-  SnowballScore,
+type RecordOfRequiredParamsOfSnowballScores = Record<
+  string,
   RequiredParamsOfSnowballScore
 >;
+
+type RecordOfSnowballScoresWithData<
+  GenericRecordOfRequiredParamsOfSnowballScores extends
+    RecordOfRequiredParamsOfSnowballScores,
+> = RecordOfScoresWithData<
+  SnowballPlayer,
+  SnowballScore,
+  RequiredParamsOfSnowballScore,
+  GenericRecordOfRequiredParamsOfSnowballScores
+>;
+
+type RequiredParamsOfSnowballScore = RequiredParamsOfScore<
+  SnowballPlayer,
+  RequiredParamsOfSnowballPlayer
+>;
+
+type SnowballScoreWithData<GenericKeyOfSnowballScore extends string = string> =
+  ScoreWithData<
+    SnowballPlayer,
+    SnowballScore,
+    RequiredParamsOfSnowballScore,
+    GenericKeyOfSnowballScore
+  >;
 
 const deriveParamsOfSnowballScore = ({
   pointsOfEachPlayer,
@@ -35,38 +56,35 @@ const createSnowballScore = ({
     pointsOfEachPlayer,
   });
 
-type ExtendedSnowballScoresWithData<
-  ExtendedRecordOfRequiredParamsOfSnowballScores extends
-    RecordOfRequiredParamsOfSnowballScores,
-> = {
-  [K in keyof ExtendedRecordOfRequiredParamsOfSnowballScores]: {
-    keyOfScore: keyof ExtendedRecordOfRequiredParamsOfSnowballScores;
-    params: RequiredParamsOfSnowballScore;
-    score: SnowballScore;
-  };
-};
-
-const createSnowballScoresWithData = <
-  ExtendedRecordOfRequiredParamsOfSnowballScores extends
+const createRecordOfSnowballScoresWithData = <
+  GenericRecordOfRequiredParamsOfSnowballScores extends
     RecordOfRequiredParamsOfSnowballScores,
 >({
-  recordOfRequiredParams,
+  recordOfRequiredParamsOfScores,
 }: {
-  recordOfRequiredParams: ExtendedRecordOfRequiredParamsOfSnowballScores;
-}): ExtendedSnowballScoresWithData<ExtendedRecordOfRequiredParamsOfSnowballScores> =>
-  createScoresWithData({
+  recordOfRequiredParamsOfScores: GenericRecordOfRequiredParamsOfSnowballScores;
+}) =>
+  createRecordOfScoresWithData<
+    SnowballPlayer,
+    SnowballScore,
+    DerivedParamsOfSnowballScore,
+    RequiredParamsOfSnowballScore,
+    RecordOfSnowballScoresWithData<GenericRecordOfRequiredParamsOfSnowballScores>
+  >({
     create: createSnowballScore,
     deriveParams: deriveParamsOfSnowballScore,
-    recordOfRequiredParams,
+    recordOfRequiredParamsOfScores,
   });
 
 export type {
   DerivedParamsOfSnowballScore,
+  RecordOfRequiredParamsOfSnowballScores,
+  RecordOfSnowballScoresWithData,
   RequiredParamsOfSnowballScore,
   SnowballScoreWithData,
 };
 export {
+  createRecordOfSnowballScoresWithData,
   createSnowballScore,
-  createSnowballScoresWithData,
   deriveParamsOfSnowballScore,
 };

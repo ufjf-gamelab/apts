@@ -2,12 +2,12 @@ import { expect } from "vitest";
 
 import { Score } from "../Score.js";
 
-const validateClone = <Sc extends Score<Sc>>({
+const validateClone = <GenericScore extends Score<GenericScore>>({
   clonedScore,
   score,
 }: {
   clonedScore: unknown;
-  score: Sc;
+  score: GenericScore;
 }) => {
   expect(clonedScore).toBeInstanceOf(Score);
   expect(clonedScore).not.toBe(score);

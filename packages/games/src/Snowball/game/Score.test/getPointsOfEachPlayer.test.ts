@@ -5,7 +5,7 @@ import {
 } from "@repo/game/Score.test/getPointsOfEachPlayer.test.js";
 import { test } from "vitest";
 
-import { scoresWithData } from "./records.js";
+import { recordOfSnowballScoresWithData } from "./records.js";
 import {
   deriveParamsOfSnowballScore,
   type SnowballScoreWithData,
@@ -31,22 +31,22 @@ const testGetPointsOfEachPlayer = ({
 }: {
   arrayOfScoresWithData: SnowballScoreWithData[];
 }) => {
-  arrayOfScoresWithData.forEach(({ keyOfScore, params, score }) => {
+  arrayOfScoresWithData.forEach(({ keyOfScore, requiredParams, score }) => {
     test(
       createDescription({
         affix: keyOfScore,
         expectedPointsOfEachPlayer: new Map(
-          params.pointsOfEachPlayer
+          requiredParams.pointsOfEachPlayer
             .values()
             .map((playerWithData) => [
-              playerWithData.player.keyOfPlayer,
+              playerWithData.playerWithData.keyOfPlayer,
               playerWithData.points,
             ]),
         ),
       }),
 
       () => {
-        const derivedParams = deriveParamsOfSnowballScore(params);
+        const derivedParams = deriveParamsOfSnowballScore(requiredParams);
 
         validateGetPointsOfEachPlayer({
           expectedPointsOfEachPlayer: derivedParams.pointsOfEachPlayer,
@@ -58,5 +58,5 @@ const testGetPointsOfEachPlayer = ({
 };
 
 testGetPointsOfEachPlayer({
-  arrayOfScoresWithData: Object.values(scoresWithData),
+  arrayOfScoresWithData: Object.values(recordOfSnowballScoresWithData),
 });

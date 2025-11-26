@@ -2,9 +2,7 @@ import type { IndexOfPlayer, Player } from "../Player.js";
 import type { PlayerWithData } from "../Player.test/setup.js";
 import type { ParamsOfScore, Points, Score } from "../Score.js";
 
-const createDescriptionForPlayerAndItsPoints = <
-  GenericPlayer extends Player<GenericPlayer>,
->({
+const createDescriptionForPlayerAndItsPoints = ({
   keyOfPlayer,
   points,
 }: {
@@ -22,6 +20,26 @@ interface PlayerWithDataAndPoints<
   points: Points;
 }
 
+type RecordOfRequiredParamsOfScores<GenericRequiredParamsOfScore> = Record<
+  string,
+  GenericRequiredParamsOfScore
+>;
+
+type RecordOfScoresWithData<
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericRequiredParamsOfScore,
+  GenericRecordOfRequiredParamsOfScores extends
+    RecordOfRequiredParamsOfScores<GenericRequiredParamsOfScore> = RecordOfRequiredParamsOfScores<GenericRequiredParamsOfScore>,
+> = {
+  [GenericKeyOfScore in keyof GenericRecordOfRequiredParamsOfScores]: ScoreWithData<
+    GenericPlayer,
+    GenericScore,
+    GenericRequiredParamsOfScore,
+    GenericKeyOfScore & string
+  >;
+};
+
 interface RequiredParamsOfScore<
   GenericPlayer extends Player<GenericPlayer>,
   GenericRequiredParamsOfPlayer,
@@ -34,17 +52,24 @@ interface RequiredParamsOfScore<
 
 interface ScoreWithData<
   GenericPlayer extends Player<GenericPlayer>,
-  Sc extends Score<Sc>,
-  Params extends
-    RequiredParamsOfScore<GenericPlayer> = RequiredParamsOfScore<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericRequiredParamsOfScore,
+  GenericKeyOfScore extends string = string,
 > {
-  keyOfScore: string;
-  params: Params;
-  score: Sc;
+  keyOfScore: GenericKeyOfScore;
+  requiredParams: GenericRequiredParamsOfScore;
+  score: GenericScore;
 }
-const deriveParamsOfScore = <GenericPlayer extends Player<GenericPlayer>>({
+
+const deriveParamsOfScore = <
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericRequiredParamsOfPlayer,
+>({
   pointsOfEachPlayer,
-}: RequiredParamsOfScore<GenericPlayer>): DerivedParamsOfScore => ({
+}: RequiredParamsOfScore<
+  GenericPlayer,
+  GenericRequiredParamsOfPlayer
+>): DerivedParamsOfScore => ({
   pointsOfEachPlayer: new Map(
     pointsOfEachPlayer
       .entries()
@@ -55,63 +80,60 @@ const deriveParamsOfScore = <GenericPlayer extends Player<GenericPlayer>>({
   ),
 });
 
-const createScoresWithData = <
+const createRecordOfScoresWithData = <
   GenericPlayer extends Player<GenericPlayer>,
-  Sc extends Score<Sc>,
-  RequiredParams extends RequiredParamsOfScore<GenericPlayer>,
-  DerivedParams extends DerivedParamsOfScore,
-  RecordOfRequiredParams extends Record<string, RequiredParams>,
+  GenericScore extends Score<GenericScore>,
+  GenericDerivedParamsOfScore extends DerivedParamsOfScore,
+  GenericRequiredParamsOfScore,
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
+  GenericRecordOfScoresWithData extends RecordOfScoresWithData<
+    GenericPlayer,
+    GenericScore,
+    GenericRequiredParamsOfScore
+  >,
 >({
   create,
   deriveParams,
-  recordOfRequiredParams,
+  recordOfRequiredParamsOfScores,
 }: {
-  create: (params: DerivedParams) => Sc;
-  deriveParams: (partialParams: RequiredParams) => DerivedParams;
-  recordOfRequiredParams: RecordOfRequiredParams;
-}): {
-  [K in keyof RecordOfRequiredParams]: {
-    keyOfScore: keyof RecordOfRequiredParams;
-    params: RequiredParams;
-    score: Sc;
-  };
-} => {
-  type ResultType = {
-    [K in keyof RecordOfRequiredParams]: {
-      keyOfScore: keyof RecordOfRequiredParams;
-      params: RequiredParams;
-      score: Sc;
-    };
-  };
-
+  create: (derivedParams: GenericDerivedParamsOfScore) => GenericScore;
+  deriveParams: (
+    requiredParams: GenericRequiredParamsOfScore,
+  ) => GenericDerivedParamsOfScore;
+  recordOfRequiredParamsOfScores: RecordOfRequiredParamsOfScores<GenericRequiredParamsOfScore>;
+}) =>
   /**
    * TypeScript cannot statically verify that Object.fromEntries produces all required keys since the operation happens at runtime.
-   * This assertion is safe because we're iterating over all entries from recordOfRequiredParams, which RecordOfRequiredParams is derived from.
+   * This assertion is safe because we're iterating over all entries from recordOfRequiredParamsOfScores, which RecordOfRequiredParams is derived from.
    */
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Object.fromEntries cannot preserve mapped type keys
-  return Object.fromEntries(
-    Object.entries(recordOfRequiredParams).map(
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+  Object.fromEntries(
+    Object.entries(recordOfRequiredParamsOfScores).map(
       ([keyOfScore, requiredParams]) =>
         [
           keyOfScore,
           {
             keyOfScore,
-            params: requiredParams,
+            requiredParams,
             score: create(deriveParams(requiredParams)),
-          } satisfies ScoreWithData<GenericPlayer, Sc, RequiredParams>,
+          } satisfies ScoreWithData<
+            GenericPlayer,
+            GenericScore,
+            GenericRequiredParamsOfScore
+          >,
         ] as const,
     ),
-  ) as ResultType;
-};
+  ) as GenericRecordOfScoresWithData;
 
 export type {
   DerivedParamsOfScore,
   PlayerWithDataAndPoints,
+  RecordOfScoresWithData,
   RequiredParamsOfScore,
   ScoreWithData,
 };
 export {
   createDescriptionForPlayerAndItsPoints,
-  createScoresWithData,
+  createRecordOfScoresWithData,
   deriveParamsOfScore,
 };

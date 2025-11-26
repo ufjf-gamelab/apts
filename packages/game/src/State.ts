@@ -10,45 +10,101 @@ import { type IndexOfSlot, Slot } from "./Slot.js";
 type IndexOfState = Integer;
 
 interface ParamsOfState<
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 > {
-  readonly game: G;
+  readonly game: GenericGame;
   readonly indexOfPlayer: IndexOfPlayer;
-  readonly score: Sc;
-  readonly slots: readonly Sl[];
+  readonly score: GenericScore;
+  readonly slots: readonly GenericSlot[];
 }
 
 abstract class State<
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 > {
-  private readonly game: ParamsOfState<G, M, P, Sc, Sl, St>["game"];
+  private readonly game: ParamsOfState<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >["game"];
   private readonly indexOfPlayer: ParamsOfState<
-    G,
-    M,
-    P,
-    Sc,
-    Sl,
-    St
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
   >["indexOfPlayer"];
-  private readonly score: ParamsOfState<G, M, P, Sc, Sl, St>["score"];
-  private readonly slots: ParamsOfState<G, M, P, Sc, Sl, St>["slots"];
+  private readonly score: ParamsOfState<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >["score"];
+  private readonly slots: ParamsOfState<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >["slots"];
 
   public constructor({
     game,
     indexOfPlayer,
     score,
     slots,
-  }: ParamsOfState<G, M, P, Sc, Sl, St>) {
+  }: ParamsOfState<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >) {
     if (slots.length !== game.getQuantityOfSlots()) {
       throw new Error(
         `The number of slots (${
@@ -63,7 +119,7 @@ abstract class State<
     this.slots = slots.map((slot) => slot.clone());
   }
 
-  public abstract clone(): St;
+  public abstract clone(): GenericState;
 
   public getGame() {
     return this.game.clone();

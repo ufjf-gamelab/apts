@@ -10,14 +10,14 @@ interface ParamsOfScore {
 
 type Points = number;
 
-abstract class Score<Sc extends Score<Sc>> {
+abstract class Score<GenericScore extends Score<GenericScore>> {
   private readonly pointsOfEachPlayer: ParamsOfScore["pointsOfEachPlayer"];
 
   public constructor({ pointsOfEachPlayer }: ParamsOfScore) {
     this.pointsOfEachPlayer = pointsOfEachPlayer;
   }
 
-  public abstract clone(): Sc;
+  public abstract clone(): GenericScore;
 
   public getPointsOfEachPlayer(): typeof this.pointsOfEachPlayer {
     return new Map(this.pointsOfEachPlayer);

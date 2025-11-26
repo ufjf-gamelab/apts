@@ -4,14 +4,14 @@ type IndexOfSlot = Integer;
 
 type ParamsOfSlot = object;
 
-abstract class Slot<Sl extends Slot<Sl>> {
-  public static getSlot<Sl extends Slot<Sl>>({
+abstract class Slot<GenericSlot extends Slot<GenericSlot>> {
+  public static getSlot<GenericSlot extends Slot<GenericSlot>>({
     indexOfSlot,
     slots,
   }: {
     indexOfSlot: IndexOfSlot;
-    slots: readonly Sl[];
-  }): null | Sl {
+    slots: readonly GenericSlot[];
+  }): GenericSlot | null {
     const slot = slots[indexOfSlot];
     if (typeof slot === "undefined") {
       return null;
@@ -19,7 +19,7 @@ abstract class Slot<Sl extends Slot<Sl>> {
     return slot;
   }
 
-  public abstract clone(): Sl;
+  public abstract clone(): GenericSlot;
 }
 
 export type { IndexOfSlot, ParamsOfSlot };

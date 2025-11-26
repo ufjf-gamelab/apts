@@ -9,7 +9,7 @@ import type { SnowballScore } from "../Score.js";
 import type { SnowballStateWithData } from "../State.test/setup.js";
 
 import { statesWithData } from "../State.test/records.js";
-import { scoresWithData } from "./records.js";
+import { recordOfSnowballScoresWithData } from "./records.js";
 
 const validateGetUpdatedScore = ({
   expectedScore,
@@ -104,5 +104,6 @@ const testGetUpdatedScore = ({
 
 testGetUpdatedScore({
   arrayOfStatesWithData: Object.values(statesWithData),
-  score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
+  score:
+    recordOfSnowballScoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
 });

@@ -9,47 +9,86 @@ import type { State } from "./State.js";
 type IndexOfGame = Integer;
 
 interface ParamsOfGame<
-  M extends Move<M>,
-  P extends Player<P>,
-  Sl extends Slot<Sl>,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericSlot extends Slot<GenericSlot>,
 > {
-  readonly moves: readonly M[];
+  readonly moves: readonly GenericMove[];
   readonly name: string;
-  readonly players: readonly P[];
-  readonly slots: readonly Sl[];
+  readonly players: readonly GenericPlayer[];
+  readonly slots: readonly GenericSlot[];
 }
 
 abstract class Game<
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 > {
-  private readonly moves: ParamsOfGame<M, P, Sl>["moves"];
-  private readonly name: ParamsOfGame<M, P, Sl>["name"];
-  private readonly players: ParamsOfGame<M, P, Sl>["players"];
-  private readonly slots: ParamsOfGame<M, P, Sl>["slots"];
+  private readonly moves: ParamsOfGame<
+    GenericMove,
+    GenericPlayer,
+    GenericSlot
+  >["moves"];
+  private readonly name: ParamsOfGame<
+    GenericMove,
+    GenericPlayer,
+    GenericSlot
+  >["name"];
+  private readonly players: ParamsOfGame<
+    GenericMove,
+    GenericPlayer,
+    GenericSlot
+  >["players"];
+  private readonly slots: ParamsOfGame<
+    GenericMove,
+    GenericPlayer,
+    GenericSlot
+  >["slots"];
 
-  public constructor({ moves, name, players, slots }: ParamsOfGame<M, P, Sl>) {
+  public constructor({
+    moves,
+    name,
+    players,
+    slots,
+  }: ParamsOfGame<GenericMove, GenericPlayer, GenericSlot>) {
     this.moves = moves.map((move) => move.clone());
     this.name = name;
     this.players = players.map((player) => player.clone());
     this.slots = slots.map((slot) => slot.clone());
   }
 
-  public abstract clone(): G;
+  public abstract clone(): GenericGame;
 
-  public abstract constructInitialState(): St;
+  public abstract constructInitialState(): GenericState;
 
   public abstract getIndexesOfValidMoves({
     state,
   }: {
-    state: St;
+    state: GenericState;
   }): ReadonlySet<IndexOfMove>;
 
-  public abstract getIndexOfNextPlayer({ state }: { state: St }): IndexOfPlayer;
+  public abstract getIndexOfNextPlayer({
+    state,
+  }: {
+    state: GenericState;
+  }): IndexOfPlayer;
 
   public getMove({
     indexOfMove,
@@ -94,15 +133,15 @@ abstract class Game<
     return this.slots.length;
   }
 
-  public abstract isFinal({ state }: { state: St }): boolean;
+  public abstract isFinal({ state }: { state: GenericState }): boolean;
 
   public abstract play({
     indexOfMove,
     state,
   }: {
     indexOfMove: IndexOfMove;
-    state: St;
-  }): St;
+    state: GenericState;
+  }): GenericState;
 
   protected getSlots() {
     return this.slots.map((slot) => slot.clone());

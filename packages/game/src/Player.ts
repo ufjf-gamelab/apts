@@ -7,7 +7,7 @@ interface ParamsOfPlayer {
   readonly symbol: Char;
 }
 
-abstract class Player<P extends Player<P>> {
+abstract class Player<GenericPlayer extends Player<GenericPlayer>> {
   private readonly name: ParamsOfPlayer["name"];
   private readonly symbol: ParamsOfPlayer["symbol"];
 
@@ -16,7 +16,7 @@ abstract class Player<P extends Player<P>> {
     this.name = name;
   }
 
-  public abstract clone(): P;
+  public abstract clone(): GenericPlayer;
 
   public getName(): typeof this.name {
     return this.name;

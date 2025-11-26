@@ -5,7 +5,8 @@ import {
   type SnowballPlayerWithDataAndIndex,
 } from "../Player.test/indexedRecords.js";
 import {
-  createSnowballScoresWithData,
+  createRecordOfSnowballScoresWithData,
+  type RecordOfRequiredParamsOfSnowballScores,
   type RequiredParamsOfSnowballScore,
 } from "./setup.js";
 
@@ -15,11 +16,6 @@ type PointsOfEachPlayer = ReturnType<
   >["toArray"]
 >[number];
 
-type RecordOfRequiredParamsOfSnowballScores = Record<
-  string,
-  RequiredParamsOfSnowballScore
->;
-
 const constructTupleForPlayer = ({
   playerWithDataAndIndex,
   points,
@@ -28,11 +24,10 @@ const constructTupleForPlayer = ({
   points: Points;
 }): PointsOfEachPlayer => [
   playerWithDataAndIndex.indexOfPlayer,
-  // TODO: Change this player for playerWithData
-  { player: playerWithDataAndIndex.playerWithData, points },
+  { playerWithData: playerWithDataAndIndex.playerWithData, points },
 ];
 
-const recordOfRequiredParamsOfScores = {
+const recordOfRequiredParamsOfSnowballScores = {
   aliceWith0PointsAndBrunoWith0Points: {
     pointsOfEachPlayer: new Map([
       constructTupleForPlayer({
@@ -119,9 +114,12 @@ const recordOfRequiredParamsOfScores = {
   },
 } as const satisfies RecordOfRequiredParamsOfSnowballScores;
 
-const scoresWithData = createSnowballScoresWithData({
-  recordOfRequiredParams: recordOfRequiredParamsOfScores,
+const recordOfSnowballScoresWithData = createRecordOfSnowballScoresWithData({
+  recordOfRequiredParamsOfScores: recordOfRequiredParamsOfSnowballScores,
 });
 
 export type { RecordOfRequiredParamsOfSnowballScores };
-export { recordOfRequiredParamsOfScores, scoresWithData };
+export {
+  recordOfRequiredParamsOfSnowballScores,
+  recordOfSnowballScoresWithData,
+};

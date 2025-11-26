@@ -8,7 +8,7 @@ import { test } from "vitest";
 import type { SnowballPlayerWithData } from "../Player.test/setup.js";
 
 import { indexedSnowballPlayersWithData } from "../Player.test/indexedRecords.js";
-import { scoresWithData } from "./records.js";
+import { recordOfSnowballScoresWithData } from "./records.js";
 import { type SnowballScoreWithData } from "./setup.js";
 
 const ZERO_POINTS = 0;
@@ -37,31 +37,33 @@ const testGetPointsOfPlayer = ({
   arrayOfPlayersWithData: SnowballPlayerWithData[];
   arrayOfScoresWithData: SnowballScoreWithData[];
 }) => {
-  arrayOfScoresWithData.forEach(({ keyOfScore, params, score }) => {
-    arrayOfPlayersWithData.forEach(({ keyOfPlayer }, indexOfPlayer) => {
-      const expectedPointsOfPlayer =
-        params.pointsOfEachPlayer.get(indexOfPlayer)?.points ?? ZERO_POINTS;
+  arrayOfScoresWithData.forEach(
+    ({ keyOfScore, requiredParams: { pointsOfEachPlayer }, score }) => {
+      arrayOfPlayersWithData.forEach(({ keyOfPlayer }, indexOfPlayer) => {
+        const expectedPointsOfPlayer =
+          pointsOfEachPlayer.get(indexOfPlayer)?.points ?? ZERO_POINTS;
 
-      test(
-        createDescription({
-          affix: keyOfScore,
-          expectedPointsOfPlayer,
-          keyOfPlayer,
-        }),
-
-        () => {
-          validateGetPointsOfPlayer({
+        test(
+          createDescription({
+            affix: keyOfScore,
             expectedPointsOfPlayer,
-            indexOfPlayer,
-            score,
-          });
-        },
-      );
-    });
-  });
+            keyOfPlayer,
+          }),
+
+          () => {
+            validateGetPointsOfPlayer({
+              expectedPointsOfPlayer,
+              indexOfPlayer,
+              score,
+            });
+          },
+        );
+      });
+    },
+  );
 };
 
 testGetPointsOfPlayer({
   arrayOfPlayersWithData: indexedSnowballPlayersWithData,
-  arrayOfScoresWithData: Object.values(scoresWithData),
+  arrayOfScoresWithData: Object.values(recordOfSnowballScoresWithData),
 });

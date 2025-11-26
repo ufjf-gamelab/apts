@@ -6,7 +6,7 @@ import { validateConstructor } from "@repo/game/Score.test/constructor.test.js";
 import { expect, test } from "vitest";
 
 import { SnowballScore } from "../Score.js";
-import { scoresWithData } from "./records.js";
+import { recordOfSnowballScoresWithData } from "./records.js";
 import {
   deriveParamsOfSnowballScore,
   type SnowballScoreWithData,
@@ -27,13 +27,14 @@ const testConstructor = ({
 }: {
   arrayOfScoresWithData: SnowballScoreWithData[];
 }) => {
-  arrayOfScoresWithData.forEach(({ keyOfScore, params }) => {
+  arrayOfScoresWithData.forEach(({ keyOfScore, requiredParams }) => {
     test(
       createDescription({
         affix: keyOfScore,
       }),
       () => {
-        const { pointsOfEachPlayer } = deriveParamsOfSnowballScore(params);
+        const { pointsOfEachPlayer } =
+          deriveParamsOfSnowballScore(requiredParams);
 
         const newScore = new SnowballScore({
           pointsOfEachPlayer,
@@ -51,5 +52,5 @@ const testConstructor = ({
 };
 
 testConstructor({
-  arrayOfScoresWithData: Object.values(scoresWithData),
+  arrayOfScoresWithData: Object.values(recordOfSnowballScoresWithData),
 });

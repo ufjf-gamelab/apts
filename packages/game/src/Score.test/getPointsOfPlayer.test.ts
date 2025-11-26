@@ -4,13 +4,13 @@ import { expect } from "vitest";
 
 import type { Score } from "../Score.js";
 
-const validateGetPointsOfPlayer = <Sc extends Score<Sc>>({
+const validateGetPointsOfPlayer = <GenericScore extends Score<GenericScore>>({
   expectedPointsOfPlayer,
   indexOfPlayer,
   score,
-}: Pick<Parameters<Sc["getPointsOfPlayer"]>[0], "indexOfPlayer"> & {
-  expectedPointsOfPlayer: ReturnType<Sc["getPointsOfPlayer"]>;
-  score: Sc;
+}: Pick<Parameters<GenericScore["getPointsOfPlayer"]>[0], "indexOfPlayer"> & {
+  expectedPointsOfPlayer: ReturnType<GenericScore["getPointsOfPlayer"]>;
+  score: GenericScore;
 }) => {
   let pointsOfPlayer = score.getPointsOfPlayer({ indexOfPlayer });
   expect(pointsOfPlayer).toBe(expectedPointsOfPlayer);
@@ -25,7 +25,9 @@ const validateGetPointsOfPlayer = <Sc extends Score<Sc>>({
   );
 };
 
-const createDescriptionForTestOfGetPointsOfPlayer = <Sc extends Score<Sc>>({
+const createDescriptionForTestOfGetPointsOfPlayer = <
+  GenericScore extends Score<GenericScore>,
+>({
   expectedPointsOfPlayer,
   keyOfPlayer,
 }: Pick<

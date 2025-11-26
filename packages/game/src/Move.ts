@@ -7,7 +7,7 @@ interface ParamsOfMove {
   readonly title: string;
 }
 
-abstract class Move<M extends Move<M>> {
+abstract class Move<GenericMove extends Move<GenericMove>> {
   private readonly description: ParamsOfMove["description"];
   private readonly title: ParamsOfMove["title"];
 
@@ -16,7 +16,7 @@ abstract class Move<M extends Move<M>> {
     this.description = description;
   }
 
-  public abstract clone(): M;
+  public abstract clone(): GenericMove;
 
   public getDescription(): typeof this.description {
     return this.description;
