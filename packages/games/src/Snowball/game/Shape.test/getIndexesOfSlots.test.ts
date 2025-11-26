@@ -12,12 +12,12 @@ import {
   ROW_LENGTH,
 } from "../Shape.js";
 import {
-  shapesWithDataInWhichShapesAreHorizontalLines,
-  shapesWithDataInWhichShapesArePrincipalDiagonals,
-  shapesWithDataInWhichShapesAreRectanglesOf2RowsAnd2Columns,
-  shapesWithDataInWhichShapesAreRectanglesOf3RowsAnd3Columns,
-  shapesWithDataInWhichShapesAreSecondaryDiagonals,
-  shapesWithDataInWhichShapesAreVerticalLines,
+  recordOfSnowballShapesWithDataInWhichShapesAreHorizontalLines,
+  recordOfSnowballShapesWithDataInWhichShapesArePrincipalDiagonals,
+  recordOfSnowballShapesWithDataInWhichShapesAreRectanglesOf2RowsAnd2Columns,
+  recordOfSnowballShapesWithDataInWhichShapesAreRectanglesOf3RowsAnd3Columns,
+  recordOfSnowballShapesWithDataInWhichShapesAreSecondaryDiagonals,
+  recordOfSnowballShapesWithDataInWhichShapesAreVerticalLines,
 } from "./records.js";
 import { type SnowballShapeWithData } from "./setup.js";
 
@@ -91,55 +91,61 @@ const testGetIndexesOfSlots = ({
 }: {
   arrayOfShapesWithData: SnowballShapeWithData[];
 }) => {
-  arrayOfShapesWithData.forEach(({ keyOfShape, params, result }) => {
-    test(
-      createDescription({
-        affix: keyOfShape,
-        expectedIndexesOfSlots: result.indexesOfSlots,
-        initialIndexOfColumn: params.initialIndexOfColumn,
-        initialIndexOfRow: params.initialIndexOfRow,
-        shape: params.shape,
-      }),
-
-      () => {
-        validateGetIndexesOfSlots({
+  arrayOfShapesWithData.forEach(
+    ({
+      keyOfShape,
+      requiredParams: { initialIndexOfColumn, initialIndexOfRow, shape },
+      result,
+    }) => {
+      test(
+        createDescription({
+          affix: keyOfShape,
           expectedIndexesOfSlots: result.indexesOfSlots,
-          initialIndexOfColumn: params.initialIndexOfColumn,
-          initialIndexOfRow: params.initialIndexOfRow,
-          shape: params.shape,
-        });
-      },
-    );
-  });
+          initialIndexOfColumn,
+          initialIndexOfRow,
+          shape,
+        }),
+
+        () => {
+          validateGetIndexesOfSlots({
+            expectedIndexesOfSlots: result.indexesOfSlots,
+            initialIndexOfColumn,
+            initialIndexOfRow,
+            shape,
+          });
+        },
+      );
+    },
+  );
 };
 
 testGetIndexesOfSlots({
   arrayOfShapesWithData: Object.values(
-    shapesWithDataInWhichShapesAreHorizontalLines,
+    recordOfSnowballShapesWithDataInWhichShapesAreHorizontalLines,
   ),
 });
 testGetIndexesOfSlots({
   arrayOfShapesWithData: Object.values(
-    shapesWithDataInWhichShapesAreVerticalLines,
+    recordOfSnowballShapesWithDataInWhichShapesAreVerticalLines,
   ),
 });
 testGetIndexesOfSlots({
   arrayOfShapesWithData: Object.values(
-    shapesWithDataInWhichShapesArePrincipalDiagonals,
+    recordOfSnowballShapesWithDataInWhichShapesArePrincipalDiagonals,
   ),
 });
 testGetIndexesOfSlots({
   arrayOfShapesWithData: Object.values(
-    shapesWithDataInWhichShapesAreSecondaryDiagonals,
+    recordOfSnowballShapesWithDataInWhichShapesAreSecondaryDiagonals,
   ),
 });
 testGetIndexesOfSlots({
   arrayOfShapesWithData: Object.values(
-    shapesWithDataInWhichShapesAreRectanglesOf2RowsAnd2Columns,
+    recordOfSnowballShapesWithDataInWhichShapesAreRectanglesOf2RowsAnd2Columns,
   ),
 });
 testGetIndexesOfSlots({
   arrayOfShapesWithData: Object.values(
-    shapesWithDataInWhichShapesAreRectanglesOf3RowsAnd3Columns,
+    recordOfSnowballShapesWithDataInWhichShapesAreRectanglesOf3RowsAnd3Columns,
   ),
 });

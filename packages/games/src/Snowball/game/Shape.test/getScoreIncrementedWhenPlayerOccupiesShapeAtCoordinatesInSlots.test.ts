@@ -5,19 +5,19 @@ import {
 } from "@repo/engine_core/test.js";
 import { expect, test } from "vitest";
 
-import { scoresWithData } from "../Score.test/records.js";
+import { recordOfSnowballScoresWithData } from "../Score.test/records.js";
 import {
   getNameAndFormattedSizeOfShape,
   getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots,
 } from "../Shape.js";
-import { indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno } from "../Slot.test/indexedRecords.js";
+import { indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno } from "../Slot.test/indexedRecords.js";
 import {
-  shapesWithDataInWhichShapesAreHorizontalLines,
-  shapesWithDataInWhichShapesArePrincipalDiagonals,
-  shapesWithDataInWhichShapesAreRectanglesOf2RowsAnd2Columns,
-  shapesWithDataInWhichShapesAreRectanglesOf3RowsAnd3Columns,
-  shapesWithDataInWhichShapesAreSecondaryDiagonals,
-  shapesWithDataInWhichShapesAreVerticalLines,
+  recordOfSnowballShapesWithDataInWhichShapesAreHorizontalLines,
+  recordOfSnowballShapesWithDataInWhichShapesArePrincipalDiagonals,
+  recordOfSnowballShapesWithDataInWhichShapesAreRectanglesOf2RowsAnd2Columns,
+  recordOfSnowballShapesWithDataInWhichShapesAreRectanglesOf3RowsAnd3Columns,
+  recordOfSnowballShapesWithDataInWhichShapesAreSecondaryDiagonals,
+  recordOfSnowballShapesWithDataInWhichShapesAreVerticalLines,
 } from "./records.js";
 import { type SnowballShapeWithData } from "./setup.js";
 
@@ -157,19 +157,25 @@ const testGetScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots = ({
 > & {
   arrayOfShapesWithData: SnowballShapeWithData[];
 }) => {
-  arrayOfShapesWithData.forEach(({ keyOfShape, params, result }) => {
-    constructTestGetScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots(
-      {
-        affix: keyOfShape,
-        expectedScore: result.score,
-        initialIndexOfColumn: params.initialIndexOfColumn,
-        initialIndexOfRow: params.initialIndexOfRow,
-        score,
-        shape: params.shape,
-        slots,
-      },
-    );
-  });
+  arrayOfShapesWithData.forEach(
+    ({
+      keyOfShape,
+      requiredParams: { initialIndexOfColumn, initialIndexOfRow, shape },
+      result,
+    }) => {
+      constructTestGetScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots(
+        {
+          affix: keyOfShape,
+          expectedScore: result.score,
+          initialIndexOfColumn,
+          initialIndexOfRow,
+          score,
+          shape,
+          slots,
+        },
+      );
+    },
+  );
 };
 
 const testGetScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlotsForAllShapes =
@@ -184,42 +190,42 @@ const testGetScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlotsForAllSh
   >) => {
     testGetScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots({
       arrayOfShapesWithData: Object.values(
-        shapesWithDataInWhichShapesAreHorizontalLines,
+        recordOfSnowballShapesWithDataInWhichShapesAreHorizontalLines,
       ),
       score,
       slots,
     });
     testGetScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots({
       arrayOfShapesWithData: Object.values(
-        shapesWithDataInWhichShapesAreVerticalLines,
+        recordOfSnowballShapesWithDataInWhichShapesAreVerticalLines,
       ),
       score,
       slots,
     });
     testGetScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots({
       arrayOfShapesWithData: Object.values(
-        shapesWithDataInWhichShapesArePrincipalDiagonals,
+        recordOfSnowballShapesWithDataInWhichShapesArePrincipalDiagonals,
       ),
       score,
       slots,
     });
     testGetScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots({
       arrayOfShapesWithData: Object.values(
-        shapesWithDataInWhichShapesAreSecondaryDiagonals,
+        recordOfSnowballShapesWithDataInWhichShapesAreSecondaryDiagonals,
       ),
       score,
       slots,
     });
     testGetScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots({
       arrayOfShapesWithData: Object.values(
-        shapesWithDataInWhichShapesAreRectanglesOf2RowsAnd2Columns,
+        recordOfSnowballShapesWithDataInWhichShapesAreRectanglesOf2RowsAnd2Columns,
       ),
       score,
       slots,
     });
     testGetScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots({
       arrayOfShapesWithData: Object.values(
-        shapesWithDataInWhichShapesAreRectanglesOf3RowsAnd3Columns,
+        recordOfSnowballShapesWithDataInWhichShapesAreRectanglesOf3RowsAnd3Columns,
       ),
       score,
       slots,
@@ -227,9 +233,10 @@ const testGetScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlotsForAllSh
   };
 
 testGetScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlotsForAllShapes({
-  score: scoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
+  score:
+    recordOfSnowballScoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
   slots:
-    indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.map(
-      (slot) => slot.slot,
+    indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.map(
+      (slotWithData) => slotWithData.slot,
     ),
 });

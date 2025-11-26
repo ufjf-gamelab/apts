@@ -7,21 +7,22 @@ import type {
   Shape,
 } from "../Shape.js";
 
-import { type RecordOfRequiredParamsAndResultOfSnowballShapes } from "./records.js";
+type RecordOfRequiredParamsAndResultOfSnowballShapes = Record<
+  string,
+  RequiredParamsAndResultOfSnowballShape
+>;
 
-type ExtendedSnowballShapesWithData<
-  ExtendedRecordOfRequiredParamsAndResultOfSnowballShapes extends
+type RecordOfSnowballShapesWithData<
+  GenericRecordOfRequiredParamsAndResultOfSnowballShapes extends
     RecordOfRequiredParamsAndResultOfSnowballShapes,
 > = {
-  [K in keyof ExtendedRecordOfRequiredParamsAndResultOfSnowballShapes]: {
-    keyOfShape: keyof ExtendedRecordOfRequiredParamsAndResultOfSnowballShapes;
-    params: RequiredParamsOfSnowballShape;
-    result: ResultOfSnowballShape;
-  };
+  [GenericKeyOfSnowballShape in keyof GenericRecordOfRequiredParamsAndResultOfSnowballShapes]: SnowballShapeWithData<
+    GenericKeyOfSnowballShape & string
+  >;
 };
 
 interface RequiredParamsAndResultOfSnowballShape {
-  params: RequiredParamsOfSnowballShape;
+  requiredParams: RequiredParamsOfSnowballShape;
   result: ResultOfSnowballShape;
 }
 
@@ -41,49 +42,43 @@ interface ResultOfSnowballShape {
   >;
 }
 
-interface SnowballShapeWithData {
-  keyOfShape: string;
-  params: RequiredParamsOfSnowballShape;
+interface SnowballShapeWithData<
+  GenericKeyOfSnowballShape extends string = string,
+> {
+  keyOfShape: GenericKeyOfSnowballShape;
+  requiredParams: RequiredParamsOfSnowballShape;
   result: ResultOfSnowballShape;
 }
 
 const createSnowballShapesWithData = <
-  ExtendedRecordOfRequiredParamsAndResultOfSnowballShapes extends
+  GenericRecordOfRequiredParamsAndResultOfSnowballShapes extends
     RecordOfRequiredParamsAndResultOfSnowballShapes,
 >({
   recordOfRequiredParamsAndResult,
 }: {
-  recordOfRequiredParamsAndResult: ExtendedRecordOfRequiredParamsAndResultOfSnowballShapes;
-}): ExtendedSnowballShapesWithData<ExtendedRecordOfRequiredParamsAndResultOfSnowballShapes> => {
-  type ResultType = {
-    [K in keyof ExtendedRecordOfRequiredParamsAndResultOfSnowballShapes]: {
-      keyOfShape: keyof ExtendedRecordOfRequiredParamsAndResultOfSnowballShapes;
-      params: RequiredParamsOfSnowballShape;
-      result: ResultOfSnowballShape;
-    };
-  };
-
+  recordOfRequiredParamsAndResult: GenericRecordOfRequiredParamsAndResultOfSnowballShapes;
+}) =>
   /**
    * TypeScript cannot statically verify that Object.fromEntries produces all required keys since the operation happens at runtime.
    * This assertion is safe because we're iterating over all entries from recordOfRequiredParamsAndResult, which RecordOfParams is derived from.
    */
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Object.fromEntries cannot preserve mapped type keys
-  return Object.fromEntries(
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+  Object.fromEntries(
     Object.entries(recordOfRequiredParamsAndResult).map(
       ([keyOfShape, paramsAndResult]) =>
         [
           keyOfShape,
           {
             keyOfShape,
-            params: paramsAndResult.params,
+            requiredParams: paramsAndResult.requiredParams,
             result: paramsAndResult.result,
           } satisfies SnowballShapeWithData,
         ] as const,
     ),
-  ) as ResultType;
-};
+  ) as RecordOfSnowballShapesWithData<GenericRecordOfRequiredParamsAndResultOfSnowballShapes>;
 
 export type {
+  RecordOfRequiredParamsAndResultOfSnowballShapes,
   RequiredParamsAndResultOfSnowballShape,
   RequiredParamsOfSnowballShape,
   ResultOfSnowballShape,

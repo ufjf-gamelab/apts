@@ -12,14 +12,14 @@ import {
   getNameAndFormattedSizeOfShape,
   ROW_LENGTH,
 } from "../Shape.js";
-import { indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno } from "../Slot.test/indexedRecords.js";
+import { indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno } from "../Slot.test/indexedRecords.js";
 import {
-  shapesWithDataInWhichShapesAreHorizontalLines,
-  shapesWithDataInWhichShapesArePrincipalDiagonals,
-  shapesWithDataInWhichShapesAreRectanglesOf2RowsAnd2Columns,
-  shapesWithDataInWhichShapesAreRectanglesOf3RowsAnd3Columns,
-  shapesWithDataInWhichShapesAreSecondaryDiagonals,
-  shapesWithDataInWhichShapesAreVerticalLines,
+  recordOfSnowballShapesWithDataInWhichShapesAreHorizontalLines,
+  recordOfSnowballShapesWithDataInWhichShapesArePrincipalDiagonals,
+  recordOfSnowballShapesWithDataInWhichShapesAreRectanglesOf2RowsAnd2Columns,
+  recordOfSnowballShapesWithDataInWhichShapesAreRectanglesOf3RowsAnd3Columns,
+  recordOfSnowballShapesWithDataInWhichShapesAreSecondaryDiagonals,
+  recordOfSnowballShapesWithDataInWhichShapesAreVerticalLines,
 } from "./records.js";
 
 const validateGetIndexOfPlayerWhoIsOccupyingShape = ({
@@ -145,7 +145,7 @@ const testGetIndexOfPlayerWhoIsOccupyingShape = ({
   arrayOfShapesWithData.forEach(
     ({
       keyOfShape,
-      params: {
+      requiredParams: {
         indexOfPlayerWhoIsOccupyingShape,
         initialIndexOfColumn,
         initialIndexOfRow,
@@ -173,37 +173,37 @@ const testGetIndexOfPlayerWhoIsOccupyingShapeForAllShapes = ({
 >) => {
   testGetIndexOfPlayerWhoIsOccupyingShape({
     arrayOfShapesWithData: Object.values(
-      shapesWithDataInWhichShapesAreHorizontalLines,
+      recordOfSnowballShapesWithDataInWhichShapesAreHorizontalLines,
     ),
     slots,
   });
   testGetIndexOfPlayerWhoIsOccupyingShape({
     arrayOfShapesWithData: Object.values(
-      shapesWithDataInWhichShapesAreVerticalLines,
+      recordOfSnowballShapesWithDataInWhichShapesAreVerticalLines,
     ),
     slots,
   });
   testGetIndexOfPlayerWhoIsOccupyingShape({
     arrayOfShapesWithData: Object.values(
-      shapesWithDataInWhichShapesArePrincipalDiagonals,
+      recordOfSnowballShapesWithDataInWhichShapesArePrincipalDiagonals,
     ),
     slots,
   });
   testGetIndexOfPlayerWhoIsOccupyingShape({
     arrayOfShapesWithData: Object.values(
-      shapesWithDataInWhichShapesAreSecondaryDiagonals,
+      recordOfSnowballShapesWithDataInWhichShapesAreSecondaryDiagonals,
     ),
     slots,
   });
   testGetIndexOfPlayerWhoIsOccupyingShape({
     arrayOfShapesWithData: Object.values(
-      shapesWithDataInWhichShapesAreRectanglesOf2RowsAnd2Columns,
+      recordOfSnowballShapesWithDataInWhichShapesAreRectanglesOf2RowsAnd2Columns,
     ),
     slots,
   });
   testGetIndexOfPlayerWhoIsOccupyingShape({
     arrayOfShapesWithData: Object.values(
-      shapesWithDataInWhichShapesAreRectanglesOf3RowsAnd3Columns,
+      recordOfSnowballShapesWithDataInWhichShapesAreRectanglesOf3RowsAnd3Columns,
     ),
     slots,
   });
@@ -211,7 +211,7 @@ const testGetIndexOfPlayerWhoIsOccupyingShapeForAllShapes = ({
 
 testGetIndexOfPlayerWhoIsOccupyingShapeForAllShapes({
   slots:
-    indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.map(
+    indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno.map(
       (slot) => slot.slot,
     ),
 });
