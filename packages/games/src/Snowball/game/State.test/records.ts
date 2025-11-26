@@ -4,7 +4,7 @@ import {
   type SnowballMoveWithDataAndIndex,
 } from "../Move.test/indexedRecords.js";
 import { type SnowballMoveWithData } from "../Move.test/setup.js";
-import { playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO as playersWithDataAndIndex } from "../Player.test/indexedRecords.js";
+import { playersWithDataAndIndex as playersWithDataAndIndex } from "../Player.test/indexedRecords.js";
 import { scoresWithData } from "../Score.test/records.js";
 import {
   indexedSlotsWithDataInWhichAllSlotsAreEmpty,

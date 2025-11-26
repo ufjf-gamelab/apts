@@ -2,7 +2,9 @@ import type { IndexOfPlayer, Player } from "../Player.js";
 import type { PlayerWithData } from "../Player.test/setup.js";
 import type { ParamsOfScore, Points, Score } from "../Score.js";
 
-const createDescriptionForPlayerAndItsPoints = <P extends Player<P>>({
+const createDescriptionForPlayerAndItsPoints = <
+  GenericPlayer extends Player<GenericPlayer>,
+>({
   keyOfPlayer,
   points,
 }: {
@@ -12,27 +14,37 @@ const createDescriptionForPlayerAndItsPoints = <P extends Player<P>>({
 
 type DerivedParamsOfScore = ParamsOfScore;
 
-interface PlayerWithDataAndPoints<P extends Player<P>> {
-  player: PlayerWithData<P>;
+interface PlayerWithDataAndPoints<
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericRequiredParamsOfPlayer,
+> {
+  playerWithData: PlayerWithData<GenericPlayer, GenericRequiredParamsOfPlayer>;
   points: Points;
 }
 
-interface RequiredParamsOfScore<P extends Player<P>> {
-  pointsOfEachPlayer: Map<IndexOfPlayer, PlayerWithDataAndPoints<P>>;
+interface RequiredParamsOfScore<
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericRequiredParamsOfPlayer,
+> {
+  pointsOfEachPlayer: Map<
+    IndexOfPlayer,
+    PlayerWithDataAndPoints<GenericPlayer, GenericRequiredParamsOfPlayer>
+  >;
 }
 
 interface ScoreWithData<
-  P extends Player<P>,
+  GenericPlayer extends Player<GenericPlayer>,
   Sc extends Score<Sc>,
-  Params extends RequiredParamsOfScore<P> = RequiredParamsOfScore<P>,
+  Params extends
+    RequiredParamsOfScore<GenericPlayer> = RequiredParamsOfScore<GenericPlayer>,
 > {
   keyOfScore: string;
   params: Params;
   score: Sc;
 }
-const deriveParamsOfScore = <P extends Player<P>>({
+const deriveParamsOfScore = <GenericPlayer extends Player<GenericPlayer>>({
   pointsOfEachPlayer,
-}: RequiredParamsOfScore<P>): DerivedParamsOfScore => ({
+}: RequiredParamsOfScore<GenericPlayer>): DerivedParamsOfScore => ({
   pointsOfEachPlayer: new Map(
     pointsOfEachPlayer
       .entries()
@@ -44,9 +56,9 @@ const deriveParamsOfScore = <P extends Player<P>>({
 });
 
 const createScoresWithData = <
-  P extends Player<P>,
+  GenericPlayer extends Player<GenericPlayer>,
   Sc extends Score<Sc>,
-  RequiredParams extends RequiredParamsOfScore<P>,
+  RequiredParams extends RequiredParamsOfScore<GenericPlayer>,
   DerivedParams extends DerivedParamsOfScore,
   RecordOfRequiredParams extends Record<string, RequiredParams>,
 >({
@@ -86,7 +98,7 @@ const createScoresWithData = <
             keyOfScore,
             params: requiredParams,
             score: create(deriveParams(requiredParams)),
-          } satisfies ScoreWithData<P, Sc, RequiredParams>,
+          } satisfies ScoreWithData<GenericPlayer, Sc, RequiredParams>,
         ] as const,
     ),
   ) as ResultType;

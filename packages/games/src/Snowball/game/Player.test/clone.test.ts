@@ -8,7 +8,7 @@ import { expect, test } from "vitest";
 import type { SnowballPlayerWithData } from "./setup.js";
 
 import { SnowballPlayer } from "../Player.js";
-import { indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "./indexedRecords.js";
+import { indexedSnowballPlayersWithData } from "./indexedRecords.js";
 
 const createDescription = ({
   affix,
@@ -43,6 +43,5 @@ const testClone = ({
 };
 
 testClone({
-  arrayOfPlayersWithData:
-    indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
+  arrayOfPlayersWithData: indexedSnowballPlayersWithData,
 });

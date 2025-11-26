@@ -1,4 +1,4 @@
-import { playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO as playersWithDataAndIndex } from "../Player.test/indexedRecords.js";
+import { playersWithDataAndIndex as playersWithDataAndIndex } from "../Player.test/indexedRecords.js";
 import {
   createSnowballSlotsWithData,
   type RequiredParamsOfSnowballSlot,

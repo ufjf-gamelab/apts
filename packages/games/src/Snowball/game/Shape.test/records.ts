@@ -1,6 +1,6 @@
 import type { Shape } from "../Shape.js";
 
-import { playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO as playersWithDataAndIndex } from "../Player.test/indexedRecords.js";
+import { playersWithDataAndIndex as playersWithDataAndIndex } from "../Player.test/indexedRecords.js";
 import { scoresWithData } from "../Score.test/records.js";
 import { slotsWithDataAndIndexInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno as slotsWithDataAndIndex } from "../Slot.test/indexedRecords.js";
 import {

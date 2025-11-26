@@ -7,7 +7,7 @@ import { test } from "vitest";
 
 import type { SnowballPlayerWithData } from "../Player.test/setup.js";
 
-import { indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO as indexedPlayersWithData } from "../Player.test/indexedRecords.js";
+import { indexedSnowballPlayersWithData } from "../Player.test/indexedRecords.js";
 import { scoresWithData } from "./records.js";
 import { type SnowballScoreWithData } from "./setup.js";
 
@@ -62,6 +62,6 @@ const testGetPointsOfPlayer = ({
 };
 
 testGetPointsOfPlayer({
-  arrayOfPlayersWithData: indexedPlayersWithData,
+  arrayOfPlayersWithData: indexedSnowballPlayersWithData,
   arrayOfScoresWithData: Object.values(scoresWithData),
 });

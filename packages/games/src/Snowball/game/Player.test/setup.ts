@@ -1,19 +1,39 @@
 import {
-  createPlayersWithData,
+  createRecordOfPlayersWithData,
   type DerivedParamsOfPlayer,
   deriveParamsOfPlayer,
   type PlayerWithData,
+  type RecordOfPlayersWithData,
   type RequiredParamsOfPlayer,
 } from "@repo/game/Player.test/setup.js";
 
 import { SnowballPlayer } from "../Player.js";
-import { type RecordOfRequiredParamsOfSnowballPlayers } from "./records.js";
 
 type DerivedParamsOfSnowballPlayer = DerivedParamsOfPlayer;
 
+type RecordOfRequiredParamsOfSnowballPlayers = Record<
+  string,
+  RequiredParamsOfSnowballPlayer
+>;
+
+type RecordOfSnowballPlayersWithData<
+  GenericRecordOfRequiredParamsOfSnowballPlayers extends
+    RecordOfRequiredParamsOfSnowballPlayers,
+> = RecordOfPlayersWithData<
+  SnowballPlayer,
+  RequiredParamsOfSnowballPlayer,
+  GenericRecordOfRequiredParamsOfSnowballPlayers
+>;
+
 type RequiredParamsOfSnowballPlayer = RequiredParamsOfPlayer;
 
-type SnowballPlayerWithData = PlayerWithData<SnowballPlayer>;
+type SnowballPlayerWithData<
+  GenericKeyOfSnowballPlayer extends string = string,
+> = PlayerWithData<
+  SnowballPlayer,
+  RequiredParamsOfSnowballPlayer,
+  GenericKeyOfSnowballPlayer
+>;
 
 const deriveParamsOfSnowballPlayer = ({
   name,
@@ -33,39 +53,34 @@ const createSnowballPlayer = ({
     symbol,
   });
 
-type ExtendedSnowballPlayersWithData<
-  ExtendedRecordOfRequiredParamsOfSnowballPlayers extends
-    RecordOfRequiredParamsOfSnowballPlayers,
-> = {
-  [K in keyof ExtendedRecordOfRequiredParamsOfSnowballPlayers]: {
-    keyOfPlayer: keyof ExtendedRecordOfRequiredParamsOfSnowballPlayers;
-    params: RequiredParamsOfSnowballPlayer;
-    player: SnowballPlayer;
-  };
-};
-
-const createSnowballPlayersWithData = <
-  ExtendedRecordOfRequiredParamsOfSnowballPlayers extends
+const createRecordOfSnowballPlayersWithData = <
+  GenericRecordOfRequiredParamsOfSnowballPlayers extends
     RecordOfRequiredParamsOfSnowballPlayers,
 >({
-  recordOfRequiredParams,
+  recordOfRequiredParamsOfPlayers,
 }: {
-  recordOfRequiredParams: ExtendedRecordOfRequiredParamsOfSnowballPlayers;
-}): ExtendedSnowballPlayersWithData<ExtendedRecordOfRequiredParamsOfSnowballPlayers> =>
-  createPlayersWithData({
+  recordOfRequiredParamsOfPlayers: GenericRecordOfRequiredParamsOfSnowballPlayers;
+}) =>
+  createRecordOfPlayersWithData<
+    SnowballPlayer,
+    DerivedParamsOfSnowballPlayer,
+    RequiredParamsOfSnowballPlayer,
+    RecordOfSnowballPlayersWithData<GenericRecordOfRequiredParamsOfSnowballPlayers>
+  >({
     create: createSnowballPlayer,
     deriveParams: deriveParamsOfSnowballPlayer,
-    recordOfRequiredParams,
+    recordOfRequiredParamsOfPlayers,
   });
 
 export type {
   DerivedParamsOfSnowballPlayer,
-  ExtendedSnowballPlayersWithData,
+  RecordOfRequiredParamsOfSnowballPlayers,
+  RecordOfSnowballPlayersWithData,
   RequiredParamsOfSnowballPlayer,
   SnowballPlayerWithData,
 };
 export {
+  createRecordOfSnowballPlayersWithData,
   createSnowballPlayer,
-  createSnowballPlayersWithData,
   deriveParamsOfSnowballPlayer,
 };

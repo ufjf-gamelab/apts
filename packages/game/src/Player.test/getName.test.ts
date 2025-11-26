@@ -3,12 +3,12 @@ import { expect } from "vitest";
 
 import type { Player } from "../Player.js";
 
-const validateGetName = <P extends Player<P>>({
+const validateGetName = <GenericPlayer extends Player<GenericPlayer>>({
   expectedName,
   player,
 }: {
-  expectedName: ReturnType<P["getName"]>;
-  player: P;
+  expectedName: ReturnType<GenericPlayer["getName"]>;
+  player: GenericPlayer;
 }) => {
   let name = player.getName();
   expect(name).toBe(expectedName);
@@ -19,10 +19,12 @@ const validateGetName = <P extends Player<P>>({
   expect(player.getName()).not.toEqual(name);
 };
 
-const createDescriptionForTestOfGetName = <P extends Player<P>>({
+const createDescriptionForTestOfGetName = <
+  GenericPlayer extends Player<GenericPlayer>,
+>({
   expectedName,
 }: {
-  expectedName: ReturnType<P["getName"]>;
+  expectedName: ReturnType<GenericPlayer["getName"]>;
 }): string =>
   createDescriptionForTestsOfGetter({
     methodDescription: "getName()",

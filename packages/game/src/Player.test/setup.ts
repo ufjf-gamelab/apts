@@ -7,21 +7,61 @@ import {
 type DerivedParamsOfPlayer = ParamsOfPlayer;
 
 interface PlayerWithData<
-  P extends Player<P>,
-  Params extends RequiredParamsOfPlayer = RequiredParamsOfPlayer,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericRequiredParamsOfPlayer,
+  GenericKeyOfPlayer extends string = string,
 > {
-  keyOfPlayer: string;
-  params: Params;
-  player: P;
+  keyOfPlayer: GenericKeyOfPlayer;
+  player: GenericPlayer;
+  requiredParams: GenericRequiredParamsOfPlayer;
 }
 
 interface PlayerWithDataAndIndex<
-  P extends Player<P>,
-  ExtendedPlayerWithData extends PlayerWithData<P>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericRequiredParamsOfPlayer,
+  GenericPlayerWithData extends PlayerWithData<
+    GenericPlayer,
+    GenericRequiredParamsOfPlayer
+  >,
 > {
   indexOfPlayer: IndexOfPlayer;
-  player: ExtendedPlayerWithData;
+  playerWithData: GenericPlayerWithData;
 }
+
+type RecordOfPlayersWithData<
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericRequiredParamsOfPlayer,
+  GenericRecordOfRequiredParamsOfPlayers extends
+    RecordOfRequiredParamsOfPlayers<GenericRequiredParamsOfPlayer> = RecordOfRequiredParamsOfPlayers<GenericRequiredParamsOfPlayer>,
+> = {
+  [GenericKeyOfPlayer in keyof GenericRecordOfRequiredParamsOfPlayers]: PlayerWithData<
+    GenericPlayer,
+    GenericRequiredParamsOfPlayer,
+    GenericKeyOfPlayer & string
+  >;
+};
+
+type RecordOfPlayersWithDataAndIndex<
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericRequiredParamsOfPlayer,
+  GenericRecordOfRequiredParamsOfPlayers extends
+    RecordOfRequiredParamsOfPlayers<GenericRequiredParamsOfPlayer> = RecordOfRequiredParamsOfPlayers<GenericRequiredParamsOfPlayer>,
+  GenericPlayerWithData extends PlayerWithData<
+    GenericPlayer,
+    GenericRequiredParamsOfPlayer
+  > = PlayerWithData<GenericPlayer, GenericRequiredParamsOfPlayer>,
+> = {
+  [GenericKeyOfPlayer in keyof GenericRecordOfRequiredParamsOfPlayers]: PlayerWithDataAndIndex<
+    GenericPlayer,
+    GenericRequiredParamsOfPlayer,
+    GenericPlayerWithData
+  >;
+};
+
+type RecordOfRequiredParamsOfPlayers<GenericRequiredParamsOfPlayer> = Record<
+  string,
+  GenericRequiredParamsOfPlayer
+>;
 
 type RequiredParamsOfPlayer = ParamsOfPlayer;
 
@@ -33,58 +73,54 @@ const deriveParamsOfPlayer = ({
   symbol,
 });
 
-const createPlayersWithData = <
-  P extends Player<P>,
-  RequiredParams extends RequiredParamsOfPlayer,
-  DerivedParams extends DerivedParamsOfPlayer,
-  RecordOfRequiredParams extends Record<string, RequiredParams>,
+const createRecordOfPlayersWithData = <
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericDerivedParamsOfPlayer extends DerivedParamsOfPlayer,
+  GenericRequiredParamsOfPlayer,
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
+  GenericRecordOfPlayersWithData extends RecordOfPlayersWithData<
+    GenericPlayer,
+    GenericRequiredParamsOfPlayer
+  >,
 >({
   create,
   deriveParams,
-  recordOfRequiredParams,
+  recordOfRequiredParamsOfPlayers,
 }: {
-  create: (params: DerivedParams) => P;
-  deriveParams: (requiredParams: RequiredParams) => DerivedParams;
-  recordOfRequiredParams: RecordOfRequiredParams;
-}): {
-  [K in keyof RecordOfRequiredParams]: {
-    keyOfPlayer: K;
-    params: RequiredParams;
-    player: P;
-  };
-} => {
-  type ResultType = {
-    [K in keyof RecordOfRequiredParams]: {
-      keyOfPlayer: K;
-      params: RequiredParams;
-      player: P;
-    };
-  };
-
+  create: (derivedParams: GenericDerivedParamsOfPlayer) => GenericPlayer;
+  deriveParams: (
+    requiredParams: GenericRequiredParamsOfPlayer,
+  ) => GenericDerivedParamsOfPlayer;
+  recordOfRequiredParamsOfPlayers: RecordOfRequiredParamsOfPlayers<GenericRequiredParamsOfPlayer>;
+}) =>
   /**
    * TypeScript cannot statically verify that Object.fromEntries produces all required keys since the operation happens at runtime.
-   * This assertion is safe because we're iterating over all entries from recordOfRequiredParams, which RecordOfRequiredParams is derived from.
+   * This assertion is safe because we're iterating over all entries from recordOfRequiredParamsOfPlayers, which RecordOfRequiredParams is derived from.
    */
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Object.fromEntries cannot preserve mapped type keys
-  return Object.fromEntries(
-    Object.entries(recordOfRequiredParams).map(
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+  Object.fromEntries(
+    Object.entries(recordOfRequiredParamsOfPlayers).map(
       ([keyOfPlayer, requiredParams]) =>
         [
           keyOfPlayer,
           {
             keyOfPlayer,
-            params: requiredParams,
             player: create(deriveParams(requiredParams)),
-          } satisfies PlayerWithData<P, RequiredParams>,
+            requiredParams,
+          } satisfies PlayerWithData<
+            GenericPlayer,
+            GenericRequiredParamsOfPlayer
+          >,
         ] as const,
     ),
-  ) as ResultType;
-};
+  ) as GenericRecordOfPlayersWithData;
 
 export type {
   DerivedParamsOfPlayer,
   PlayerWithData,
   PlayerWithDataAndIndex,
+  RecordOfPlayersWithData,
+  RecordOfPlayersWithDataAndIndex,
   RequiredParamsOfPlayer,
 };
-export { createPlayersWithData, deriveParamsOfPlayer };
+export { createRecordOfPlayersWithData, deriveParamsOfPlayer };

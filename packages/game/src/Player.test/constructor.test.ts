@@ -2,12 +2,12 @@ import { expect } from "vitest";
 
 import { type ParamsOfPlayer, Player } from "../Player.js";
 
-const validateConstructor = <P extends Player<P>>({
+const validateConstructor = <GenericPlayer extends Player<GenericPlayer>>({
   params,
   player,
 }: {
   params: ParamsOfPlayer;
-  player: P;
+  player: GenericPlayer;
 }) => {
   expect(player).toBeInstanceOf(Player);
   expect(player.getName()).toBe(params.name);

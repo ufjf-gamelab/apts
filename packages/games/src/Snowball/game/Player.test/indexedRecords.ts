@@ -1,56 +1,69 @@
-import type { IndexOfPlayer } from "@repo/game/Player.js";
+import type {
+  PlayerWithDataAndIndex,
+  RecordOfPlayersWithDataAndIndex,
+} from "@repo/game/Player.test/setup.js";
 
-import type { ExtendedSnowballPlayersWithData } from "./setup.js";
+import type { SnowballPlayer } from "../Player.js";
+import type {
+  RecordOfSnowballPlayersWithData,
+  RequiredParamsOfSnowballPlayer,
+  SnowballPlayerWithData,
+} from "./setup.js";
 
 import {
-  playersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
+  type recordOfRequiredParamsOfSnowballPlayers,
   type RecordOfRequiredParamsOfSnowballPlayers,
+  recordOfSnowballPlayersWithData,
 } from "./records.js";
 
-type KeysOfPlayersInOrder<GenericExtendedSnowballPlayersWithData> =
-  (keyof GenericExtendedSnowballPlayersWithData)[];
-
-type SnowballPlayersWithDataAndIndex<
-  ExtendedRecordOfRequiredParamsOfSnowballPlayers extends
+type KeysOfPlayersInOrder<
+  GenericRecordOfRequiredParamsOfSnowballPlayers extends
     RecordOfRequiredParamsOfSnowballPlayers,
-> = Record<
-  KeysOfPlayersInOrder<
-    ExtendedSnowballPlayersWithData<ExtendedRecordOfRequiredParamsOfSnowballPlayers>
-  >[number],
-  SnowballPlayerWithDataAndIndex<ExtendedRecordOfRequiredParamsOfSnowballPlayers>
+> = (keyof GenericRecordOfRequiredParamsOfSnowballPlayers)[];
+
+type RecordOfSnowballPlayersWithDataAndIndex<
+  GenericRecordOfRequiredParamsOfSnowballPlayers extends
+    RecordOfRequiredParamsOfSnowballPlayers,
+> = RecordOfPlayersWithDataAndIndex<
+  SnowballPlayer,
+  RequiredParamsOfSnowballPlayer,
+  GenericRecordOfRequiredParamsOfSnowballPlayers,
+  SnowballPlayerWithData
 >;
 
-interface SnowballPlayerWithDataAndIndex<
-  ExtendedRecordOfRequiredParamsOfSnowballPlayers extends
-    RecordOfRequiredParamsOfSnowballPlayers,
-> {
-  indexOfPlayer: IndexOfPlayer;
-  player: ExtendedSnowballPlayersWithData<ExtendedRecordOfRequiredParamsOfSnowballPlayers>[keyof ExtendedSnowballPlayersWithData<ExtendedRecordOfRequiredParamsOfSnowballPlayers>];
-}
+type SnowballPlayerWithDataAndIndex = PlayerWithDataAndIndex<
+  SnowballPlayer,
+  RequiredParamsOfSnowballPlayer,
+  SnowballPlayerWithData
+>;
 
 const createIndexedSnowballPlayersWithData = <
-  ExtendedRecordOfRequiredParamsOfSnowballPlayers extends
+  GenericRecordOfRequiredParamsOfSnowballPlayers extends
     RecordOfRequiredParamsOfSnowballPlayers,
 >({
-  keysOfPlayersInOrder,
-  playersWithData,
+  keysOfSnowballPlayersInOrder,
+  snowballPlayersWithData,
 }: {
-  keysOfPlayersInOrder: KeysOfPlayersInOrder<ExtendedRecordOfRequiredParamsOfSnowballPlayers>;
-  playersWithData: ExtendedSnowballPlayersWithData<ExtendedRecordOfRequiredParamsOfSnowballPlayers>;
+  keysOfSnowballPlayersInOrder: KeysOfPlayersInOrder<GenericRecordOfRequiredParamsOfSnowballPlayers>;
+  snowballPlayersWithData: RecordOfSnowballPlayersWithData<GenericRecordOfRequiredParamsOfSnowballPlayers>;
 }) => {
-  const playersWithDataAndIndex =
+  const recordOfSnowballPlayersWithDataAndIndex =
     // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
-    {} as SnowballPlayersWithDataAndIndex<ExtendedRecordOfRequiredParamsOfSnowballPlayers>;
-  const indexedPlayersWithData: (typeof playersWithData)[keyof typeof playersWithData][] =
+    {} as RecordOfSnowballPlayersWithDataAndIndex<GenericRecordOfRequiredParamsOfSnowballPlayers>;
+  const indexedSnowballPlayersWithData: (typeof snowballPlayersWithData)[keyof typeof snowballPlayersWithData][] =
     [];
-  keysOfPlayersInOrder.forEach((keyOfPlayers, indexOfPlayer) => {
-    const player = playersWithData[keyOfPlayers];
-    playersWithDataAndIndex[keyOfPlayers] = { indexOfPlayer, player };
-    indexedPlayersWithData.push(player);
+
+  keysOfSnowballPlayersInOrder.forEach((keyOfPlayer, indexOfPlayer) => {
+    const playerWithData = snowballPlayersWithData[keyOfPlayer];
+    recordOfSnowballPlayersWithDataAndIndex[keyOfPlayer] = {
+      indexOfPlayer,
+      playerWithData,
+    } as RecordOfSnowballPlayersWithDataAndIndex<GenericRecordOfRequiredParamsOfSnowballPlayers>[typeof keyOfPlayer];
+    indexedSnowballPlayersWithData.push(playerWithData);
   });
   return {
-    indexedPlayersWithData,
-    playersWithDataAndIndex,
+    indexedSnowballPlayersWithData,
+    recordOfSnowballPlayersWithDataAndIndex,
   };
 };
 
@@ -58,22 +71,19 @@ const keysOfSnowballPlayersInOrder = [
   "alice",
   "bruno",
 ] as const satisfies KeysOfPlayersInOrder<
-  typeof playersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO
+  typeof recordOfRequiredParamsOfSnowballPlayers
 >;
 
 const {
-  indexedPlayersWithData:
-    indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
-  playersWithDataAndIndex:
-    playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
+  indexedSnowballPlayersWithData,
+  recordOfSnowballPlayersWithDataAndIndex,
 } = createIndexedSnowballPlayersWithData({
-  keysOfPlayersInOrder: keysOfSnowballPlayersInOrder,
-  playersWithData:
-    playersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
+  keysOfSnowballPlayersInOrder,
+  snowballPlayersWithData: recordOfSnowballPlayersWithData,
 });
 
 export type { SnowballPlayerWithDataAndIndex };
 export {
-  indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
-  playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
+  indexedSnowballPlayersWithData,
+  recordOfSnowballPlayersWithDataAndIndex,
 };

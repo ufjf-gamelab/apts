@@ -8,7 +8,7 @@ import { expect, test } from "vitest";
 import type { SnowballPlayerWithData } from "./setup.js";
 
 import { SnowballPlayer } from "../Player.js";
-import { indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO } from "./indexedRecords.js";
+import { indexedSnowballPlayersWithData } from "./indexedRecords.js";
 
 const createDescription = ({
   affix,
@@ -25,21 +25,21 @@ const testConstructor = ({
 }: {
   arrayOfPlayersWithData: SnowballPlayerWithData[];
 }) => {
-  arrayOfPlayersWithData.forEach(({ keyOfPlayer, params }) => {
+  arrayOfPlayersWithData.forEach(({ keyOfPlayer, requiredParams }) => {
     test(
       createDescription({
         affix: keyOfPlayer,
       }),
 
       () => {
-        const { name, symbol } = params;
+        const { name, symbol } = requiredParams;
 
         const newPlayer = new SnowballPlayer({
           name,
           symbol,
         });
 
-        validateConstructor({ params, player: newPlayer });
+        validateConstructor({ params: { name, symbol }, player: newPlayer });
 
         expect(newPlayer).toBeInstanceOf(SnowballPlayer);
       },
@@ -48,6 +48,5 @@ const testConstructor = ({
 };
 
 testConstructor({
-  arrayOfPlayersWithData:
-    indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO,
+  arrayOfPlayersWithData: indexedSnowballPlayersWithData,
 });

@@ -8,7 +8,7 @@ import { test } from "vitest";
 import type { SnowballPlayerWithData } from "../Player.test/setup.js";
 import type { SnowballStateWithData } from "./setup.js";
 
-import { indexedPlayersWithDataInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO as indexedPlayersWithData } from "../Player.test/indexedRecords.js";
+import { indexedPlayersWithData } from "../Player.test/indexedRecords.js";
 import { statesWithData } from "./records.js";
 
 const ZERO_POINTS = 0;

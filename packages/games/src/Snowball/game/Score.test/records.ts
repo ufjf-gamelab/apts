@@ -1,9 +1,7 @@
 import type { Points } from "@repo/game/Score.js";
 
-import type { recordOfRequiredParamsOfPlayersInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO as recordOfRequiredParamsOfPlayers } from "../Player.test/records.js";
-
 import {
-  playersWithDataAndIndexInWhichThereAreAliceWithSymbolXAndBrunoWithSymbolO as playersWithDataAndIndex,
+  recordOfSnowballPlayersWithDataAndIndex,
   type SnowballPlayerWithDataAndIndex,
 } from "../Player.test/indexedRecords.js";
 import {
@@ -23,27 +21,26 @@ type RecordOfRequiredParamsOfSnowballScores = Record<
 >;
 
 const constructTupleForPlayer = ({
-  player,
+  playerWithDataAndIndex,
   points,
 }: {
-  player: SnowballPlayerWithDataAndIndex<
-    typeof recordOfRequiredParamsOfPlayers
-  >;
+  playerWithDataAndIndex: SnowballPlayerWithDataAndIndex;
   points: Points;
 }): PointsOfEachPlayer => [
-  player.indexOfPlayer,
-  { player: player.player, points },
+  playerWithDataAndIndex.indexOfPlayer,
+  // TODO: Change this player for playerWithData
+  { player: playerWithDataAndIndex.playerWithData, points },
 ];
 
 const recordOfRequiredParamsOfScores = {
   aliceWith0PointsAndBrunoWith0Points: {
     pointsOfEachPlayer: new Map([
       constructTupleForPlayer({
-        player: playersWithDataAndIndex.alice,
+        playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.alice,
         points: 0,
       }),
       constructTupleForPlayer({
-        player: playersWithDataAndIndex.bruno,
+        playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.bruno,
         points: 0,
       }),
     ]),
@@ -51,11 +48,11 @@ const recordOfRequiredParamsOfScores = {
   aliceWith0PointsAndBrunoWith1Point: {
     pointsOfEachPlayer: new Map([
       constructTupleForPlayer({
-        player: playersWithDataAndIndex.alice,
+        playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.alice,
         points: 0,
       }),
       constructTupleForPlayer({
-        player: playersWithDataAndIndex.bruno,
+        playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.bruno,
         points: 1,
       }),
     ]),
@@ -63,11 +60,11 @@ const recordOfRequiredParamsOfScores = {
   aliceWith1PointAndBrunoWith0Points: {
     pointsOfEachPlayer: new Map([
       constructTupleForPlayer({
-        player: playersWithDataAndIndex.alice,
+        playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.alice,
         points: 1,
       }),
       constructTupleForPlayer({
-        player: playersWithDataAndIndex.bruno,
+        playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.bruno,
         points: 0,
       }),
     ]),
@@ -75,11 +72,11 @@ const recordOfRequiredParamsOfScores = {
   aliceWith5PointsAndBrunoWith10Points: {
     pointsOfEachPlayer: new Map([
       constructTupleForPlayer({
-        player: playersWithDataAndIndex.alice,
+        playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.alice,
         points: 5,
       }),
       constructTupleForPlayer({
-        player: playersWithDataAndIndex.bruno,
+        playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.bruno,
         points: 10,
       }),
     ]),
@@ -87,11 +84,11 @@ const recordOfRequiredParamsOfScores = {
   aliceWith14PointsAndBrunoWith14Points: {
     pointsOfEachPlayer: new Map([
       constructTupleForPlayer({
-        player: playersWithDataAndIndex.alice,
+        playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.alice,
         points: 14,
       }),
       constructTupleForPlayer({
-        player: playersWithDataAndIndex.bruno,
+        playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.bruno,
         points: 14,
       }),
     ]),
@@ -99,11 +96,11 @@ const recordOfRequiredParamsOfScores = {
   aliceWith15PointsAndBrunoWith14Points: {
     pointsOfEachPlayer: new Map([
       constructTupleForPlayer({
-        player: playersWithDataAndIndex.alice,
+        playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.alice,
         points: 15,
       }),
       constructTupleForPlayer({
-        player: playersWithDataAndIndex.bruno,
+        playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.bruno,
         points: 14,
       }),
     ]),
@@ -111,11 +108,11 @@ const recordOfRequiredParamsOfScores = {
   aliceWith38PointsAndBrunoWith26Points: {
     pointsOfEachPlayer: new Map([
       constructTupleForPlayer({
-        player: playersWithDataAndIndex.alice,
+        playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.alice,
         points: 38,
       }),
       constructTupleForPlayer({
-        player: playersWithDataAndIndex.bruno,
+        playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.bruno,
         points: 26,
       }),
     ]),

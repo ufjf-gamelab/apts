@@ -13,12 +13,15 @@ import type {
   SnowballMoveWithData,
 } from "../Move.test/setup.js";
 import type { SnowballPlayer } from "../Player.js";
+import type {
+  RequiredParamsOfSnowballPlayer,
+  SnowballPlayerWithData,
+} from "../Player.test/setup.js";
 import type { SnowballScore } from "../Score.js";
 import type { SnowballSlot } from "../Slot.js";
 import type { SnowballState } from "../State.js";
 
 import { SnowballGame } from "../Game.js";
-import { type SnowballPlayerWithData } from "../Player.test/setup.js";
 import { type SnowballSlotWithData } from "../Slot.test/setup.js";
 
 type DerivedParamsOfSnowballGame = DerivedParamsOfGame<
@@ -51,6 +54,7 @@ type RequiredParamsOfSnowballGame = RequiredParamsOfGame<
   SnowballPlayer,
   SnowballSlot,
   RequiredParamsOfSnowballMove,
+  RequiredParamsOfSnowballPlayer,
   SnowballMoveWithData,
   SnowballPlayerWithData,
   SnowballSlotWithData
