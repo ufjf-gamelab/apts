@@ -36,7 +36,7 @@ const testGetPointsOfEachPlayer = ({
       createDescription({
         affix: keyOfScore,
         expectedPointsOfEachPlayer: new Map(
-          requiredParams.pointsOfEachPlayer
+          requiredParams.pointsOfEachPlayerWithData
             .values()
             .map((playerWithData) => [
               playerWithData.playerWithData.keyOfPlayer,

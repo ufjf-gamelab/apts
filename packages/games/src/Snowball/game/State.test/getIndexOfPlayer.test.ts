@@ -7,7 +7,7 @@ import { test } from "vitest";
 
 import type { SnowballStateWithData } from "./setup.js";
 
-import { statesWithData } from "./records.js";
+import { recordOfSnowballStatesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
@@ -29,23 +29,25 @@ const testGetIndexOfPlayer = ({
 }: {
   arrayOfStatesWithData: SnowballStateWithData[];
 }) => {
-  arrayOfStatesWithData.forEach(({ keyOfState, params, state }) => {
-    test(
-      createDescription({
-        affix: keyOfState,
-        indexOfPlayer: params.player.indexOfPlayer,
-      }),
+  arrayOfStatesWithData.forEach(
+    ({ keyOfState, requiredParams: { playerWithDataAndIndex }, state }) => {
+      test(
+        createDescription({
+          affix: keyOfState,
+          indexOfPlayer: playerWithDataAndIndex.indexOfPlayer,
+        }),
 
-      () => {
-        validateGetIndexOfPlayer({
-          expectedIndexOfPlayer: params.player.indexOfPlayer,
-          state,
-        });
-      },
-    );
-  });
+        () => {
+          validateGetIndexOfPlayer({
+            expectedIndexOfPlayer: playerWithDataAndIndex.indexOfPlayer,
+            state,
+          });
+        },
+      );
+    },
+  );
 };
 
 testGetIndexOfPlayer({
-  arrayOfStatesWithData: Object.values(statesWithData),
+  arrayOfStatesWithData: Object.values(recordOfSnowballStatesWithData),
 });

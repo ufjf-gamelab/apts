@@ -47,7 +47,6 @@ class SnowballScore extends Score<SnowballScore> {
     });
   }
 
-  // eslint-disable-next-line max-lines-per-function
   public getUpdatedScore({ slots }: { slots: SnowballSlot[] }): SnowballScore {
     let score = SnowballScore.constructInitialScore({
       quantityOfPlayers: this.getQuantityOfPlayers(),

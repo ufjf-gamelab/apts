@@ -43,10 +43,10 @@ type SnowballScoreWithData<GenericKeyOfSnowballScore extends string = string> =
   >;
 
 const deriveParamsOfSnowballScore = ({
-  pointsOfEachPlayer,
+  pointsOfEachPlayerWithData,
 }: RequiredParamsOfSnowballScore): DerivedParamsOfSnowballScore =>
   deriveParamsOfScore({
-    pointsOfEachPlayer,
+    pointsOfEachPlayerWithData,
   });
 
 const createSnowballScore = ({

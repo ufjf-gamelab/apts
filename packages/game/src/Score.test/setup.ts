@@ -44,7 +44,7 @@ interface RequiredParamsOfScore<
   GenericPlayer extends Player<GenericPlayer>,
   GenericRequiredParamsOfPlayer,
 > {
-  pointsOfEachPlayer: Map<
+  pointsOfEachPlayerWithData: ReadonlyMap<
     IndexOfPlayer,
     PlayerWithDataAndPoints<GenericPlayer, GenericRequiredParamsOfPlayer>
   >;
@@ -65,13 +65,13 @@ const deriveParamsOfScore = <
   GenericPlayer extends Player<GenericPlayer>,
   GenericRequiredParamsOfPlayer,
 >({
-  pointsOfEachPlayer,
+  pointsOfEachPlayerWithData,
 }: RequiredParamsOfScore<
   GenericPlayer,
   GenericRequiredParamsOfPlayer
 >): DerivedParamsOfScore => ({
   pointsOfEachPlayer: new Map(
-    pointsOfEachPlayer
+    pointsOfEachPlayerWithData
       .entries()
       .map(([indexOfPlayer, playerWithData]) => [
         indexOfPlayer,

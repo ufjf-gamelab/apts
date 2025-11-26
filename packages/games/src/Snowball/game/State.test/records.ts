@@ -4,24 +4,19 @@ import {
   type SnowballMoveWithDataAndIndex,
 } from "../Move.test/indexedRecords.js";
 import { type SnowballMoveWithData } from "../Move.test/setup.js";
-import { playersWithDataAndIndex as playersWithDataAndIndex } from "../Player.test/indexedRecords.js";
-import { scoresWithData } from "../Score.test/records.js";
+import { recordOfSnowballPlayersWithDataAndIndex } from "../Player.test/indexedRecords.js";
+import { recordOfSnowballScoresWithData } from "../Score.test/records.js";
 import {
-  indexedSlotsWithDataInWhichAllSlotsAreEmpty,
-  indexedSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
-  indexedSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
-  indexedSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
-  indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+  indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
+  indexedSnowballSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
+  indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
+  indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
+  indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
 } from "../Slot.test/indexedRecords.js";
 import {
-  createSnowballStatesWithData,
-  type RequiredParamsOfSnowballState,
+  createRecordOfSnowballStatesWithData,
+  type RecordOfRequiredParamsOfSnowballStates,
 } from "./setup.js";
-
-type RecordOfRequiredParamsOfSnowballStates = Record<
-  string,
-  RequiredParamsOfSnowballState
->;
 
 const constructTupleForMove = ({
   moveWithDataAndIndex,
@@ -32,16 +27,17 @@ const constructTupleForMove = ({
   moveWithDataAndIndex.moveWithData,
 ];
 
-const recordOfRequiredParamsOfStates = {
+const recordOfRequiredParamsOfSnowballStates = {
   allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
     {
-      game: recordOfSnowballGamesWithData.snowballWith9RowsAnd9Columns,
+      gameWithData: recordOfSnowballGamesWithData.snowballWith9RowsAnd9Columns,
       isFinal: false,
-      nextPlayer: playersWithDataAndIndex.bruno,
-      player: playersWithDataAndIndex.alice,
-      score: scoresWithData.aliceWith0PointsAndBrunoWith0Points,
-      slots: indexedSlotsWithDataInWhichAllSlotsAreEmpty,
-      validMoves: new Map([
+      nextPlayerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.bruno,
+      playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.alice,
+      scoreWithData:
+        recordOfSnowballScoresWithData.aliceWith0PointsAndBrunoWith0Points,
+      slotsWithData: indexedSnowballSlotsWithDataInWhichAllSlotsAreEmpty,
+      validMovesWithData: new Map([
         constructTupleForMove({
           moveWithDataAndIndex:
             recordOfSnowballMovesWithDataAndIndex.centerOfCenter,
@@ -370,13 +366,14 @@ const recordOfRequiredParamsOfStates = {
     },
   slotR0C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     {
-      game: recordOfSnowballGamesWithData.snowballWith9RowsAnd9Columns,
+      gameWithData: recordOfSnowballGamesWithData.snowballWith9RowsAnd9Columns,
       isFinal: false,
-      nextPlayer: playersWithDataAndIndex.alice,
-      player: playersWithDataAndIndex.bruno,
-      score: scoresWithData.aliceWith0PointsAndBrunoWith0Points,
-      slots: indexedSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
-      validMoves: new Map([
+      nextPlayerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.alice,
+      playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.bruno,
+      scoreWithData:
+        recordOfSnowballScoresWithData.aliceWith0PointsAndBrunoWith0Points,
+      slotsWithData: indexedSnowballSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
+      validMovesWithData: new Map([
         constructTupleForMove({
           moveWithDataAndIndex:
             recordOfSnowballMovesWithDataAndIndex.centerOfCenter,
@@ -701,14 +698,15 @@ const recordOfRequiredParamsOfStates = {
     },
   slotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     {
-      game: recordOfSnowballGamesWithData.snowballWith9RowsAnd9Columns,
+      gameWithData: recordOfSnowballGamesWithData.snowballWith9RowsAnd9Columns,
       isFinal: true,
-      nextPlayer: playersWithDataAndIndex.alice,
-      player: playersWithDataAndIndex.bruno,
-      score: scoresWithData.aliceWith15PointsAndBrunoWith14Points,
-      slots:
-        indexedSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
-      validMoves: new Map([
+      nextPlayerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.alice,
+      playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.bruno,
+      scoreWithData:
+        recordOfSnowballScoresWithData.aliceWith15PointsAndBrunoWith14Points,
+      slotsWithData:
+        indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
+      validMovesWithData: new Map([
         constructTupleForMove({
           moveWithDataAndIndex:
             recordOfSnowballMovesWithDataAndIndex.centerOfCenter,
@@ -897,14 +895,15 @@ const recordOfRequiredParamsOfStates = {
     },
   slotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
     {
-      game: recordOfSnowballGamesWithData.snowballWith9RowsAnd9Columns,
+      gameWithData: recordOfSnowballGamesWithData.snowballWith9RowsAnd9Columns,
       isFinal: false,
-      nextPlayer: playersWithDataAndIndex.bruno,
-      player: playersWithDataAndIndex.alice,
-      score: scoresWithData.aliceWith14PointsAndBrunoWith14Points,
-      slots:
-        indexedSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
-      validMoves: new Map([
+      nextPlayerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.bruno,
+      playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.alice,
+      scoreWithData:
+        recordOfSnowballScoresWithData.aliceWith14PointsAndBrunoWith14Points,
+      slotsWithData:
+        indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBruno,
+      validMovesWithData: new Map([
         constructTupleForMove({
           moveWithDataAndIndex:
             recordOfSnowballMovesWithDataAndIndex.centerOfCenter,
@@ -1097,14 +1096,15 @@ const recordOfRequiredParamsOfStates = {
     },
   slotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     {
-      game: recordOfSnowballGamesWithData.snowballWith9RowsAnd9Columns,
+      gameWithData: recordOfSnowballGamesWithData.snowballWith9RowsAnd9Columns,
       isFinal: true,
-      nextPlayer: playersWithDataAndIndex.alice,
-      player: playersWithDataAndIndex.bruno,
-      score: scoresWithData.aliceWith38PointsAndBrunoWith26Points,
-      slots:
-        indexedSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
-      validMoves: new Map([
+      nextPlayerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.alice,
+      playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.bruno,
+      scoreWithData:
+        recordOfSnowballScoresWithData.aliceWith38PointsAndBrunoWith26Points,
+      slotsWithData:
+        indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
+      validMovesWithData: new Map([
         constructTupleForMove({
           moveWithDataAndIndex:
             recordOfSnowballMovesWithDataAndIndex.centerOfSouth,
@@ -1229,9 +1229,12 @@ const recordOfRequiredParamsOfStates = {
     },
 } as const satisfies RecordOfRequiredParamsOfSnowballStates;
 
-const statesWithData = createSnowballStatesWithData({
-  recordOfRequiredParams: recordOfRequiredParamsOfStates,
+const recordOfSnowballStatesWithData = createRecordOfSnowballStatesWithData({
+  recordOfRequiredParamsOfStates: recordOfRequiredParamsOfSnowballStates,
 });
 
 export type { RecordOfRequiredParamsOfSnowballStates };
-export { recordOfRequiredParamsOfStates, statesWithData };
+export {
+  recordOfRequiredParamsOfSnowballStates,
+  recordOfSnowballStatesWithData,
+};

@@ -7,7 +7,7 @@ import { test } from "vitest";
 
 import type { SnowballStateWithData } from "../State.test/setup.js";
 
-import { statesWithData } from "../State.test/records.js";
+import { recordOfSnowballStatesWithData } from "../State.test/records.js";
 
 const createDescription = ({
   affix,
@@ -31,26 +31,26 @@ const testIsFinal = ({
 }: {
   arrayOfStatesWithData: SnowballStateWithData[];
 }) => {
-  arrayOfStatesWithData.forEach(({ keyOfState, params, state }) => {
-    const expectedToBeFinal = params.isFinal;
+  arrayOfStatesWithData.forEach(
+    ({ keyOfState, requiredParams: { gameWithData, isFinal }, state }) => {
+      test(
+        createDescription({
+          affix: gameWithData.keyOfGame,
+          expectedToBeFinal: isFinal,
+          keyOfState,
+        }),
 
-    test(
-      createDescription({
-        affix: params.game.keyOfGame,
-        expectedToBeFinal,
-        keyOfState,
-      }),
-
-      () => {
-        validateIsFinal({
-          expectedToBeFinal,
-          state,
-        });
-      },
-    );
-  });
+        () => {
+          validateIsFinal({
+            expectedToBeFinal: isFinal,
+            state,
+          });
+        },
+      );
+    },
+  );
 };
 
 testIsFinal({
-  arrayOfStatesWithData: Object.values(statesWithData),
+  arrayOfStatesWithData: Object.values(recordOfSnowballStatesWithData),
 });

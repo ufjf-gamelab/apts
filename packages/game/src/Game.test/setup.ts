@@ -166,13 +166,12 @@ const deriveParamsOfGame = <
   >,
   "movesWithData" | "name" | "playersWithData" | "slotsWithData"
 >): DerivedParamsOfGame<GenericMove, GenericPlayer, GenericSlot> => ({
-  moves: movesWithData.map(({ move }) => move),
+  moves: movesWithData.map((moveWithData) => moveWithData.move),
   name,
-  players: playersWithData.map(({ player }) => player),
-  slots: slotsWithData.map(({ slot }) => slot),
+  players: playersWithData.map((playerWithData) => playerWithData.player),
+  slots: slotsWithData.map((slotWithData) => slotWithData.slot),
 });
 
-// eslint-disable-next-line max-lines-per-function
 const createRecordOfGamesWithData = <
   GenericGame extends Game<
     GenericGame,

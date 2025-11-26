@@ -8,8 +8,8 @@ import { test } from "vitest";
 import type { SnowballPlayerWithData } from "../Player.test/setup.js";
 import type { SnowballStateWithData } from "./setup.js";
 
-import { indexedPlayersWithData } from "../Player.test/indexedRecords.js";
-import { statesWithData } from "./records.js";
+import { indexedSnowballPlayersWithData } from "../Player.test/indexedRecords.js";
+import { recordOfSnowballStatesWithData } from "./records.js";
 
 const ZERO_POINTS = 0;
 
@@ -37,32 +37,35 @@ const testGetPointsOfPlayer = ({
   arrayOfPlayersWithData: SnowballPlayerWithData[];
   arrayOfStatesWithData: SnowballStateWithData[];
 }) => {
-  arrayOfStatesWithData.forEach(({ keyOfState, params, state }) => {
-    arrayOfPlayersWithData.forEach(({ keyOfPlayer }, indexOfPlayer) => {
-      const expectedPointsOfPlayer =
-        params.score.params.pointsOfEachPlayer.get(indexOfPlayer)?.points ??
-        ZERO_POINTS;
-
-      test(
-        createDescription({
-          affix: keyOfState,
-          expectedPointsOfPlayer,
-          keyOfPlayer,
-        }),
-
-        () => {
-          validateGetPointsOfPlayer({
-            expectedPointsOfPlayer,
+  arrayOfStatesWithData.forEach(
+    ({ keyOfState, requiredParams: { scoreWithData }, state }) => {
+      arrayOfPlayersWithData.forEach(({ keyOfPlayer }, indexOfPlayer) => {
+        const expectedPointsOfPlayer =
+          scoreWithData.requiredParams.pointsOfEachPlayerWithData.get(
             indexOfPlayer,
-            state,
-          });
-        },
-      );
-    });
-  });
+          )?.points ?? ZERO_POINTS;
+
+        test(
+          createDescription({
+            affix: keyOfState,
+            expectedPointsOfPlayer,
+            keyOfPlayer,
+          }),
+
+          () => {
+            validateGetPointsOfPlayer({
+              expectedPointsOfPlayer,
+              indexOfPlayer,
+              state,
+            });
+          },
+        );
+      });
+    },
+  );
 };
 
 testGetPointsOfPlayer({
-  arrayOfPlayersWithData: indexedPlayersWithData,
-  arrayOfStatesWithData: Object.values(statesWithData),
+  arrayOfPlayersWithData: indexedSnowballPlayersWithData,
+  arrayOfStatesWithData: Object.values(recordOfSnowballStatesWithData),
 });

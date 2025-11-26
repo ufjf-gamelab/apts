@@ -8,7 +8,7 @@ import { expect, test } from "vitest";
 import type { SnowballStateWithData } from "./setup.js";
 
 import { SnowballState } from "../State.js";
-import { statesWithData } from "./records.js";
+import { recordOfSnowballStatesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
@@ -43,5 +43,5 @@ const testClone = ({
 };
 
 testClone({
-  arrayOfStatesWithData: Object.values(statesWithData),
+  arrayOfStatesWithData: Object.values(recordOfSnowballStatesWithData),
 });

@@ -29,7 +29,7 @@ export const config: Linter.Config[] = [
       "default-param-last": "off",
       "id-length": ["error", { exceptions: ["_"] }],
       "max-lines": "off",
-      "max-lines-per-function": ["warn", 70],
+      "max-lines-per-function": ["off", 70],
       "max-statements": ["error", 20],
       "no-alert": "off",
       "no-console": "warn",

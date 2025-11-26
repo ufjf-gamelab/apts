@@ -7,7 +7,7 @@ import { test } from "vitest";
 
 import type { SnowballStateWithData } from "./setup.js";
 
-import { statesWithData } from "./records.js";
+import { recordOfSnowballStatesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
@@ -26,23 +26,25 @@ const testGetGame = ({
 }: {
   arrayOfStatesWithData: SnowballStateWithData[];
 }) => {
-  arrayOfStatesWithData.forEach(({ keyOfState, params, state }) => {
-    test(
-      createDescription({
-        affix: keyOfState,
-        keyOfGame: params.game.keyOfGame,
-      }),
+  arrayOfStatesWithData.forEach(
+    ({ keyOfState, requiredParams: { gameWithData }, state }) => {
+      test(
+        createDescription({
+          affix: keyOfState,
+          keyOfGame: gameWithData.keyOfGame,
+        }),
 
-      () => {
-        validateGetGame({
-          expectedGame: params.game.game,
-          state,
-        });
-      },
-    );
-  });
+        () => {
+          validateGetGame({
+            expectedGame: gameWithData.game,
+            state,
+          });
+        },
+      );
+    },
+  );
 };
 
 testGetGame({
-  arrayOfStatesWithData: Object.values(statesWithData),
+  arrayOfStatesWithData: Object.values(recordOfSnowballStatesWithData),
 });

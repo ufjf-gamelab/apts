@@ -7,7 +7,7 @@ import { test } from "vitest";
 
 import type { SnowballStateWithData } from "../State.test/setup.js";
 
-import { statesWithData } from "../State.test/records.js";
+import { recordOfSnowballStatesWithData } from "../State.test/records.js";
 
 const createDescription = ({
   affix,
@@ -32,11 +32,12 @@ const testGetIndexesOfValidMoves = ({
   arrayOfStatesWithData: SnowballStateWithData[];
 }) => {
   arrayOfStatesWithData.forEach(
-    ({ keyOfState, params: { validMoves }, state }) => {
-      const indexesOfValidMoves = new Set(validMoves.keys());
-      const keysOfExpectedValidMoves = validMoves
+    ({ keyOfState, requiredParams: { validMovesWithData }, state }) => {
+      const indexesOfValidMoves = new Set(validMovesWithData.keys());
+
+      const keysOfExpectedValidMoves = validMovesWithData
         .values()
-        .map((validMove) => validMove.keyOfMove)
+        .map((validMoveWithData) => validMoveWithData.keyOfMove)
         .toArray();
 
       test(
@@ -58,5 +59,5 @@ const testGetIndexesOfValidMoves = ({
 };
 
 testGetIndexesOfValidMoves({
-  arrayOfStatesWithData: Object.values(statesWithData),
+  arrayOfStatesWithData: Object.values(recordOfSnowballStatesWithData),
 });

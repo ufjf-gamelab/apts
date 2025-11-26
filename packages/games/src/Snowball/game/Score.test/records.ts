@@ -12,7 +12,7 @@ import {
 
 type PointsOfEachPlayer = ReturnType<
   ReturnType<
-    RequiredParamsOfSnowballScore["pointsOfEachPlayer"]["entries"]
+    RequiredParamsOfSnowballScore["pointsOfEachPlayerWithData"]["entries"]
   >["toArray"]
 >[number];
 
@@ -29,7 +29,7 @@ const constructTupleForPlayer = ({
 
 const recordOfRequiredParamsOfSnowballScores = {
   aliceWith0PointsAndBrunoWith0Points: {
-    pointsOfEachPlayer: new Map([
+    pointsOfEachPlayerWithData: new Map([
       constructTupleForPlayer({
         playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.alice,
         points: 0,
@@ -41,7 +41,7 @@ const recordOfRequiredParamsOfSnowballScores = {
     ]),
   },
   aliceWith0PointsAndBrunoWith1Point: {
-    pointsOfEachPlayer: new Map([
+    pointsOfEachPlayerWithData: new Map([
       constructTupleForPlayer({
         playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.alice,
         points: 0,
@@ -53,7 +53,7 @@ const recordOfRequiredParamsOfSnowballScores = {
     ]),
   },
   aliceWith1PointAndBrunoWith0Points: {
-    pointsOfEachPlayer: new Map([
+    pointsOfEachPlayerWithData: new Map([
       constructTupleForPlayer({
         playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.alice,
         points: 1,
@@ -65,7 +65,7 @@ const recordOfRequiredParamsOfSnowballScores = {
     ]),
   },
   aliceWith5PointsAndBrunoWith10Points: {
-    pointsOfEachPlayer: new Map([
+    pointsOfEachPlayerWithData: new Map([
       constructTupleForPlayer({
         playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.alice,
         points: 5,
@@ -77,7 +77,7 @@ const recordOfRequiredParamsOfSnowballScores = {
     ]),
   },
   aliceWith14PointsAndBrunoWith14Points: {
-    pointsOfEachPlayer: new Map([
+    pointsOfEachPlayerWithData: new Map([
       constructTupleForPlayer({
         playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.alice,
         points: 14,
@@ -89,7 +89,7 @@ const recordOfRequiredParamsOfSnowballScores = {
     ]),
   },
   aliceWith15PointsAndBrunoWith14Points: {
-    pointsOfEachPlayer: new Map([
+    pointsOfEachPlayerWithData: new Map([
       constructTupleForPlayer({
         playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.alice,
         points: 15,
@@ -101,7 +101,7 @@ const recordOfRequiredParamsOfSnowballScores = {
     ]),
   },
   aliceWith38PointsAndBrunoWith26Points: {
-    pointsOfEachPlayer: new Map([
+    pointsOfEachPlayerWithData: new Map([
       constructTupleForPlayer({
         playerWithDataAndIndex: recordOfSnowballPlayersWithDataAndIndex.alice,
         points: 38,

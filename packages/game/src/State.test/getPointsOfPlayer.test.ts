@@ -10,19 +10,33 @@ import type { Slot } from "../Slot.js";
 import type { State } from "../State.js";
 
 const validateGetPointsOfPlayer = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   expectedPointsOfPlayer,
   indexOfPlayer,
   state,
-}: Pick<Parameters<St["getPointsOfPlayer"]>[0], "indexOfPlayer"> & {
-  expectedPointsOfPlayer: ReturnType<St["getPointsOfPlayer"]>;
-  state: St;
+}: Pick<Parameters<GenericState["getPointsOfPlayer"]>[0], "indexOfPlayer"> & {
+  expectedPointsOfPlayer: ReturnType<GenericState["getPointsOfPlayer"]>;
+  state: GenericState;
 }) => {
   let pointsOfPlayer = state.getPointsOfPlayer({ indexOfPlayer });
   expect(pointsOfPlayer).toBe(expectedPointsOfPlayer);
@@ -38,12 +52,26 @@ const validateGetPointsOfPlayer = <
 };
 
 const createDescriptionForTestOfGetPointsOfPlayer = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   expectedPointsOfPlayer,
   keyOfPlayer,

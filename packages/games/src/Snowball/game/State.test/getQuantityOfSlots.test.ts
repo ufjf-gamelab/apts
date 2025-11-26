@@ -7,7 +7,7 @@ import { test } from "vitest";
 
 import type { SnowballStateWithData } from "./setup.js";
 
-import { statesWithData } from "./records.js";
+import { recordOfSnowballStatesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
@@ -29,25 +29,27 @@ const testGetQuantityOfSlots = ({
 }: {
   arrayOfStatesWithData: SnowballStateWithData[];
 }) => {
-  arrayOfStatesWithData.forEach(({ keyOfState, params, state }) => {
-    const expectedQuantityOfSlots = params.slots.length;
+  arrayOfStatesWithData.forEach(
+    ({ keyOfState, requiredParams: { slotsWithData }, state }) => {
+      const expectedQuantityOfSlots = slotsWithData.length;
 
-    test(
-      createDescription({
-        affix: keyOfState,
-        expectedQuantityOfSlots,
-      }),
-
-      () => {
-        validateGetQuantityOfSlots({
+      test(
+        createDescription({
+          affix: keyOfState,
           expectedQuantityOfSlots,
-          state,
-        });
-      },
-    );
-  });
+        }),
+
+        () => {
+          validateGetQuantityOfSlots({
+            expectedQuantityOfSlots,
+            state,
+          });
+        },
+      );
+    },
+  );
 };
 
 testGetQuantityOfSlots({
-  arrayOfStatesWithData: Object.values(statesWithData),
+  arrayOfStatesWithData: Object.values(recordOfSnowballStatesWithData),
 });

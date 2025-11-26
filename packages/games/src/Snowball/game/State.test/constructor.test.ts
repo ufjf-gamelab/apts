@@ -13,7 +13,7 @@ import type { SnowballSlot } from "../Slot.js";
 import type { SnowballStateWithData } from "./setup.js";
 
 import { SnowballState } from "../State.js";
-import { statesWithData } from "./records.js";
+import { recordOfSnowballStatesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
@@ -30,21 +30,26 @@ const testConstructor = ({
 }: {
   arrayOfStatesWithData: SnowballStateWithData[];
 }) => {
-  arrayOfStatesWithData.forEach(({ keyOfState, params }) => {
+  arrayOfStatesWithData.forEach(({ keyOfState, requiredParams }) => {
     test(
       createDescription({
         affix: keyOfState,
       }),
 
       () => {
-        const { game, player, score, slots } = params;
-        const extractedSlots = slots.map((slot) => slot.slot);
+        const {
+          gameWithData,
+          playerWithDataAndIndex,
+          scoreWithData,
+          slotsWithData,
+        } = requiredParams;
+        const slots = slotsWithData.map((slot) => slot.slot);
 
         const newState = new SnowballState({
-          game: game.game,
-          indexOfPlayer: player.indexOfPlayer,
-          score: score.score,
-          slots: extractedSlots,
+          game: gameWithData.game,
+          indexOfPlayer: playerWithDataAndIndex.indexOfPlayer,
+          score: scoreWithData.score,
+          slots,
         });
 
         validateConstructor<
@@ -56,10 +61,10 @@ const testConstructor = ({
           SnowballState
         >({
           params: {
-            game: game.game,
-            indexOfPlayer: player.indexOfPlayer,
-            score: score.score,
-            slots: extractedSlots,
+            game: gameWithData.game,
+            indexOfPlayer: playerWithDataAndIndex.indexOfPlayer,
+            score: scoreWithData.score,
+            slots,
           },
           state: newState,
         });
@@ -71,5 +76,5 @@ const testConstructor = ({
 };
 
 testConstructor({
-  arrayOfStatesWithData: Object.values(statesWithData),
+  arrayOfStatesWithData: Object.values(recordOfSnowballStatesWithData),
 });

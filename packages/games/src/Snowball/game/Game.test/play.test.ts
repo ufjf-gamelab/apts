@@ -20,7 +20,7 @@ import {
   type SnowballGame,
 } from "../Game.js";
 import { recordOfSnowballMovesWithDataAndIndex } from "../Move.test/indexedRecords.js";
-import { statesWithData } from "../State.test/records.js";
+import { recordOfSnowballStatesWithData } from "../State.test/records.js";
 
 const createDescription = ({
   affix,
@@ -82,7 +82,7 @@ const testPlayForAState = ({
 }) => {
   test(
     createDescription({
-      affix: stateWithData.params.game.keyOfGame,
+      affix: stateWithData.requiredParams.gameWithData.keyOfGame,
       keyOfExpectedState: stateWithData.keyOfState,
       keyOfMove: moveWithDataAndIndex.moveWithData.keyOfMove,
       keyOfState: stateWithData.keyOfState,
@@ -118,7 +118,7 @@ const testPlayForAStateWhenItIsInvalid = ({
 }) => {
   test(
     createDescriptionWhenPlayIsInvalid({
-      affix: stateWithData.params.game.keyOfGame,
+      affix: stateWithData.requiredParams.gameWithData.keyOfGame,
       expectedError,
       keyOfMove: moveWithDataAndIndex.moveWithData.keyOfMove,
       keyOfState: stateWithData.keyOfState,
@@ -175,34 +175,34 @@ const testPlayForAStateWhenTheMoveIsInvalid = ({
 
 testPlayForAState({
   expectedState:
-    statesWithData
+    recordOfSnowballStatesWithData
       .slotR0C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer
       .state,
   moveWithDataAndIndex:
     recordOfSnowballMovesWithDataAndIndex.northwestOfNorthwest,
   stateWithData:
-    statesWithData.allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
+    recordOfSnowballStatesWithData.allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
 });
 
 testPlayForAState({
   expectedState:
-    statesWithData
+    recordOfSnowballStatesWithData
       .slotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer
       .state,
   moveWithDataAndIndex: recordOfSnowballMovesWithDataAndIndex.eastOfWest,
   stateWithData:
-    statesWithData.slotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
+    recordOfSnowballStatesWithData.slotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
 });
 
 testPlayForAStateWhenTheMoveIsInvalid({
   moveWithDataAndIndex:
     recordOfSnowballMovesWithDataAndIndex.northwestOfNorthwest,
   stateWithData:
-    statesWithData.slotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
+    recordOfSnowballStatesWithData.slotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
 });
 
 testPlayForAStateWhenTheStateIsFinal({
   moveWithDataAndIndex: recordOfSnowballMovesWithDataAndIndex.eastOfWest,
   stateWithData:
-    statesWithData.slotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
+    recordOfSnowballStatesWithData.slotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
 });

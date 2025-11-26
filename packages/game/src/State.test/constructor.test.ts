@@ -9,18 +9,39 @@ import type { Slot } from "../Slot.js";
 import { type ParamsOfState, State } from "../State.js";
 
 const validateConstructor = <
-  G extends Game<G, M, P, Sc, Sl, St>,
-  M extends Move<M>,
-  P extends Player<P>,
-  Sc extends Score<Sc>,
-  Sl extends Slot<Sl>,
-  St extends State<G, M, P, Sc, Sl, St>,
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
   params,
   state,
 }: {
-  params: ParamsOfState<G, M, P, Sc, Sl, St>;
-  state: St;
+  params: ParamsOfState<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >;
+  state: GenericState;
 }) => {
   expect(state).toBeInstanceOf(State);
   expect(state.getGame()).toStrictEqual(params.game);

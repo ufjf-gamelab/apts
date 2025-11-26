@@ -8,7 +8,7 @@ import { expect, test } from "vitest";
 import type { SnowballScore } from "../Score.js";
 import type { SnowballStateWithData } from "../State.test/setup.js";
 
-import { statesWithData } from "../State.test/records.js";
+import { recordOfSnowballStatesWithData } from "../State.test/records.js";
 import { recordOfSnowballScoresWithData } from "./records.js";
 
 const validateGetUpdatedScore = ({
@@ -92,18 +92,20 @@ const testGetUpdatedScore = ({
 }: Pick<Parameters<typeof constructTestGetUpdatedScore>[0], "score"> & {
   arrayOfStatesWithData: SnowballStateWithData[];
 }) => {
-  arrayOfStatesWithData.forEach(({ keyOfState, params }) => {
-    constructTestGetUpdatedScore({
-      affix: keyOfState,
-      expectedScore: params.score.score,
-      score,
-      slots: params.slots.map((slot) => slot.slot),
-    });
-  });
+  arrayOfStatesWithData.forEach(
+    ({ keyOfState, requiredParams: { scoreWithData, slotsWithData } }) => {
+      constructTestGetUpdatedScore({
+        affix: keyOfState,
+        expectedScore: scoreWithData.score,
+        score,
+        slots: slotsWithData.map((slotWithData) => slotWithData.slot),
+      });
+    },
+  );
 };
 
 testGetUpdatedScore({
-  arrayOfStatesWithData: Object.values(statesWithData),
+  arrayOfStatesWithData: Object.values(recordOfSnowballStatesWithData),
   score:
     recordOfSnowballScoresWithData.aliceWith0PointsAndBrunoWith0Points.score,
 });

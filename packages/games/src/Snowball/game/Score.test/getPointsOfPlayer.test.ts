@@ -38,10 +38,10 @@ const testGetPointsOfPlayer = ({
   arrayOfScoresWithData: SnowballScoreWithData[];
 }) => {
   arrayOfScoresWithData.forEach(
-    ({ keyOfScore, requiredParams: { pointsOfEachPlayer }, score }) => {
+    ({ keyOfScore, requiredParams: { pointsOfEachPlayerWithData }, score }) => {
       arrayOfPlayersWithData.forEach(({ keyOfPlayer }, indexOfPlayer) => {
         const expectedPointsOfPlayer =
-          pointsOfEachPlayer.get(indexOfPlayer)?.points ?? ZERO_POINTS;
+          pointsOfEachPlayerWithData.get(indexOfPlayer)?.points ?? ZERO_POINTS;
 
         test(
           createDescription({

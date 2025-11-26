@@ -7,7 +7,7 @@ import { test } from "vitest";
 
 import type { SnowballStateWithData } from "./setup.js";
 
-import { statesWithData } from "./records.js";
+import { recordOfSnowballStatesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
@@ -29,23 +29,29 @@ const testGetSlots = ({
 }: {
   arrayOfStatesWithData: SnowballStateWithData[];
 }) => {
-  arrayOfStatesWithData.forEach(({ keyOfState, params, state }) => {
-    test(
-      createDescription({
-        affix: keyOfState,
-        keysOfExpectedSlots: params.slots.map((slot) => slot.keyOfSlot),
-      }),
+  arrayOfStatesWithData.forEach(
+    ({ keyOfState, requiredParams: { slotsWithData }, state }) => {
+      test(
+        createDescription({
+          affix: keyOfState,
+          keysOfExpectedSlots: slotsWithData.map(
+            (slotWithData) => slotWithData.keyOfSlot,
+          ),
+        }),
 
-      () => {
-        validateGetSlots({
-          expectedSlots: params.slots.map((slot) => slot.slot),
-          state,
-        });
-      },
-    );
-  });
+        () => {
+          validateGetSlots({
+            expectedSlots: slotsWithData.map(
+              (slotWithData) => slotWithData.slot,
+            ),
+            state,
+          });
+        },
+      );
+    },
+  );
 };
 
 testGetSlots({
-  arrayOfStatesWithData: Object.values(statesWithData),
+  arrayOfStatesWithData: Object.values(recordOfSnowballStatesWithData),
 });
