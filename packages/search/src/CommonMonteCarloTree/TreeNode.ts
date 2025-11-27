@@ -185,6 +185,22 @@ class TreeNode<
     return this.getQuantityOfExpandedMoves() === this.children.size;
   }
 
+  public pickIndexOfRandomMove(): IndexOfMove {
+    const indexesOfNotExpandedMoves = Array.from(
+      this.getIndexesOfNotExpandedMoves(),
+    );
+
+    const randomIndex = Math.floor(
+      Math.random() * indexesOfNotExpandedMoves.length,
+    );
+    const indexOfMove = indexesOfNotExpandedMoves[randomIndex];
+    if (typeof indexOfMove === "undefined") {
+      throw new Error("No indexes of not expanded moves to pick from");
+    }
+
+    return indexOfMove;
+  }
+
   /// Select the best node among children, i.e. the one with the highest UCB.
   public selectBestChild(): null | TreeNode<
     GenericGame,
@@ -301,22 +317,6 @@ class TreeNode<
           (child === null ? NOT_INCREMENT : INCREMENT_ONE),
         LENGTH_OF_EMPTY_LIST,
       );
-  }
-
-  private pickIndexOfRandomMove(): IndexOfMove {
-    const indexesOfNotExpandedMoves = Array.from(
-      this.getIndexesOfNotExpandedMoves(),
-    );
-
-    const randomIndex = Math.floor(
-      Math.random() * indexesOfNotExpandedMoves.length,
-    );
-    const indexOfMove = indexesOfNotExpandedMoves[randomIndex];
-    if (typeof indexOfMove === "undefined") {
-      throw new Error("No indexes of not expanded moves to pick from");
-    }
-
-    return indexOfMove;
   }
 
   // public toGraphvizNode(id: Integer): NodeFromGraphviz {
