@@ -1,4 +1,4 @@
-import { createDescriptionForTestsOfGetter } from "@repo/engine_core/test.js";
+import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
 import type { Game } from "../Game.js";
@@ -111,7 +111,7 @@ const createDescriptionForTestOfPlay = ({
   keyOfMove: string;
   keyOfState: string;
 }): string =>
-  createDescriptionForTestsOfGetter({
+  createDescriptionForTestsOfMethod({
     methodDescription: `play({ indexOfMove: ${keyOfMove}, state: ${keyOfState} })`,
     returnedValue: keyOfExpectedState,
   });
@@ -125,7 +125,7 @@ const createDescriptionForTestOfPlayWhenItIsInvalid = ({
   keyOfMove: string;
   keyOfState: string;
 }): string =>
-  createDescriptionForTestsOfGetter({
+  createDescriptionForTestsOfMethod({
     methodDescription: `play({ indexOfMove: ${keyOfMove}, state: ${keyOfState} })`,
     returnedValue: `(Error: { message: "${expectedError.message}" })`,
   });

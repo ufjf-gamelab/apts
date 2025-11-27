@@ -72,7 +72,8 @@ type RecordOfStatesWithData<
   >,
   GenericRequiredParamsOfState,
   GenericRecordOfRequiredParamsOfStates extends
-    RecordOfRequiredParamsOfStates<GenericRequiredParamsOfState> = RecordOfRequiredParamsOfStates<GenericRequiredParamsOfState>,
+    RecordOfRequiredParamsOfStates<GenericRequiredParamsOfState> =
+    RecordOfRequiredParamsOfStates<GenericRequiredParamsOfState>,
 > = {
   [GenericKeyOfState in keyof GenericRecordOfRequiredParamsOfStates]: StateWithData<
     GenericGame,

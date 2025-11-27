@@ -1,7 +1,7 @@
 import { formatArray } from "@repo/engine_core/format.js";
 import {
   createDescriptionForTest,
-  createDescriptionForTestsOfGetter,
+  createDescriptionForTestsOfMethod,
 } from "@repo/engine_core/test.js";
 import { expect, test } from "vitest";
 
@@ -33,7 +33,7 @@ const createDescriptionForTestOfGetUpdatedScore = ({
   expectedScore: ReturnType<SnowballScore["getUpdatedScore"]>;
   score: SnowballScore;
 }): string =>
-  createDescriptionForTestsOfGetter({
+  createDescriptionForTestsOfMethod({
     methodDescription: `getUpdatedScore({ score: ${formatArray({
       array: score.getPointsOfEachPlayer().values().toArray(),
     })} })`,

@@ -11,7 +11,8 @@ type RecordOfSlotsWithData<
   GenericSlot extends Slot<GenericSlot>,
   GenericRequiredParamsOfSlot,
   GenericRecordOfRequiredParamsOfSlots extends
-    RecordOfRequiredParamsOfSlots<GenericRequiredParamsOfSlot> = RecordOfRequiredParamsOfSlots<GenericRequiredParamsOfSlot>,
+    RecordOfRequiredParamsOfSlots<GenericRequiredParamsOfSlot> =
+    RecordOfRequiredParamsOfSlots<GenericRequiredParamsOfSlot>,
 > = {
   [GenericKeyOfSlot in keyof GenericRecordOfRequiredParamsOfSlots]: SlotWithData<
     GenericSlot,
@@ -24,7 +25,8 @@ type RecordOfSlotsWithDataAndIndex<
   GenericSlot extends Slot<GenericSlot>,
   GenericRequiredParamsOfSlot,
   GenericRecordOfRequiredParamsOfSlots extends
-    RecordOfRequiredParamsOfSlots<GenericRequiredParamsOfSlot> = RecordOfRequiredParamsOfSlots<GenericRequiredParamsOfSlot>,
+    RecordOfRequiredParamsOfSlots<GenericRequiredParamsOfSlot> =
+    RecordOfRequiredParamsOfSlots<GenericRequiredParamsOfSlot>,
   GenericSlotWithData extends SlotWithData<
     GenericSlot,
     GenericRequiredParamsOfSlot

@@ -9,6 +9,7 @@ const EXPLORATION_CONSTANT = 2;
 const recordOfRequiredParamsOfSnowballTreeNodes = {
   root: {
     explorationConstant: EXPLORATION_CONSTANT,
+    isFullyExpanded: false,
     parentTreeNodeWithData: null,
     playedMoveWithDataAndIndex: null,
     stateWithData:

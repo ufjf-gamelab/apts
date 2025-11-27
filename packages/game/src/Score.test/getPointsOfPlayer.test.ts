@@ -1,5 +1,5 @@
 import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
-import { createDescriptionForTestsOfGetter } from "@repo/engine_core/test.js";
+import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
 import type { Score } from "../Score.js";
@@ -36,7 +36,7 @@ const createDescriptionForTestOfGetPointsOfPlayer = <
 > & {
   keyOfPlayer: string;
 }): string =>
-  createDescriptionForTestsOfGetter({
+  createDescriptionForTestsOfMethod({
     methodDescription: `getPointsOfPlayer({ indexOfPlayer: ${keyOfPlayer} })`,
     returnedValue: expectedPointsOfPlayer,
   });

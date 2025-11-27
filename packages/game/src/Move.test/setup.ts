@@ -28,7 +28,8 @@ type RecordOfMovesWithData<
   GenericMove extends Move<GenericMove>,
   GenericRequiredParamsOfMove,
   GenericRecordOfRequiredParamsOfMoves extends
-    RecordOfRequiredParamsOfMoves<GenericRequiredParamsOfMove> = RecordOfRequiredParamsOfMoves<GenericRequiredParamsOfMove>,
+    RecordOfRequiredParamsOfMoves<GenericRequiredParamsOfMove> =
+    RecordOfRequiredParamsOfMoves<GenericRequiredParamsOfMove>,
 > = {
   [GenericKeyOfMove in keyof GenericRecordOfRequiredParamsOfMoves]: MoveWithData<
     GenericMove,
@@ -41,7 +42,8 @@ type RecordOfMovesWithDataAndIndex<
   GenericMove extends Move<GenericMove>,
   GenericRequiredParamsOfMove,
   GenericRecordOfRequiredParamsOfMoves extends
-    RecordOfRequiredParamsOfMoves<GenericRequiredParamsOfMove> = RecordOfRequiredParamsOfMoves<GenericRequiredParamsOfMove>,
+    RecordOfRequiredParamsOfMoves<GenericRequiredParamsOfMove> =
+    RecordOfRequiredParamsOfMoves<GenericRequiredParamsOfMove>,
   GenericMoveWithData extends MoveWithData<
     GenericMove,
     GenericRequiredParamsOfMove

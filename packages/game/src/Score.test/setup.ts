@@ -30,7 +30,8 @@ type RecordOfScoresWithData<
   GenericScore extends Score<GenericScore>,
   GenericRequiredParamsOfScore,
   GenericRecordOfRequiredParamsOfScores extends
-    RecordOfRequiredParamsOfScores<GenericRequiredParamsOfScore> = RecordOfRequiredParamsOfScores<GenericRequiredParamsOfScore>,
+    RecordOfRequiredParamsOfScores<GenericRequiredParamsOfScore> =
+    RecordOfRequiredParamsOfScores<GenericRequiredParamsOfScore>,
 > = {
   [GenericKeyOfScore in keyof GenericRecordOfRequiredParamsOfScores]: ScoreWithData<
     GenericPlayer,

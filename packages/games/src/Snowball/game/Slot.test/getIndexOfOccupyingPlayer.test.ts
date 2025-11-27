@@ -1,7 +1,7 @@
 import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import {
   createDescriptionForTest,
-  createDescriptionForTestsOfGetter,
+  createDescriptionForTestsOfMethod,
 } from "@repo/engine_core/test.js";
 import { expect, test } from "vitest";
 
@@ -47,7 +47,7 @@ const createDescriptionForTestOfGetIndexOfOccupyingPlayer = ({
     SnowballSlot["getIndexOfOccupyingPlayer"]
   >;
 }): string =>
-  createDescriptionForTestsOfGetter({
+  createDescriptionForTestsOfMethod({
     methodDescription: "getIndexOfOccupyingPlayer()",
     returnedValue: expectedIndexOfOccupyingPlayer,
   });

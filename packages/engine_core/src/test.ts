@@ -10,7 +10,7 @@ const createDescriptionForTest = ({
 }): string =>
   `${typeof affix === "undefined" ? "" : `${affix} — `}${description}`;
 
-const createDescriptionForTestsOfGetter = ({
+const createDescriptionForTestsOfMethod = ({
   methodDescription,
   returnedValue,
 }: {
@@ -41,5 +41,5 @@ export {
   createDescriptionForTest,
   createDescriptionForTestsOfCloneMethod,
   createDescriptionForTestsOfConstructor,
-  createDescriptionForTestsOfGetter,
+  createDescriptionForTestsOfMethod,
 };

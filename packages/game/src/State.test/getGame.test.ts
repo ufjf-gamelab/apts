@@ -1,4 +1,4 @@
-import { createDescriptionForTestsOfGetter } from "@repo/engine_core/test.js";
+import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
 import type { Move } from "../Move.js";
@@ -73,7 +73,7 @@ const createDescriptionForTestOfGetGame = <
 }: {
   keyOfGame: string;
 }): string =>
-  createDescriptionForTestsOfGetter({
+  createDescriptionForTestsOfMethod({
     methodDescription: `getGame()`,
     returnedValue: keyOfGame,
   });

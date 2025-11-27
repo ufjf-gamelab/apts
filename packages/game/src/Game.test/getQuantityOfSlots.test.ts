@@ -1,5 +1,5 @@
 import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
-import { createDescriptionForTestsOfGetter } from "@repo/engine_core/test.js";
+import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
 import type { Game } from "../Game.js";
@@ -72,7 +72,7 @@ const createDescriptionForTestOfGetQuantityOfSlots = <
 }: {
   expectedQuantityOfSlots: ReturnType<GenericGame["getQuantityOfSlots"]>;
 }): string =>
-  createDescriptionForTestsOfGetter({
+  createDescriptionForTestsOfMethod({
     methodDescription: "getQuantityOfSlots()",
     returnedValue: expectedQuantityOfSlots,
   });

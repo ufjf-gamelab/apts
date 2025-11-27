@@ -1,5 +1,5 @@
 import { formatArray } from "@repo/engine_core/format.js";
-import { createDescriptionForTestsOfGetter } from "@repo/engine_core/test.js";
+import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
 import type { Game } from "../Game.js";
@@ -89,7 +89,7 @@ const createDescriptionForTestOfGetScore = <
     )
     .toArray();
 
-  return createDescriptionForTestsOfGetter({
+  return createDescriptionForTestsOfMethod({
     methodDescription: "getScore()",
     returnedValue: formatArray({ array: returnedValueOfEachPlayer }),
   });

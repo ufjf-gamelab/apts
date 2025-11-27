@@ -1,4 +1,4 @@
-import { createDescriptionForTestsOfGetter } from "@repo/engine_core/test.js";
+import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
 import type { Game } from "../Game.js";
@@ -71,7 +71,7 @@ const createDescriptionForTestOfGetName = <
 }: {
   expectedName: ReturnType<GenericGame["getName"]>;
 }): string =>
-  createDescriptionForTestsOfGetter({
+  createDescriptionForTestsOfMethod({
     methodDescription: "getName()",
     returnedValue: `"${expectedName}"`,
   });

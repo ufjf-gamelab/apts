@@ -1,6 +1,6 @@
 import type { Char } from "@repo/engine_core/types.js";
 
-import { createDescriptionForTestsOfGetter } from "@repo/engine_core/test.js";
+import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
 import type { Player } from "../Player.js";
@@ -29,7 +29,7 @@ const createDescriptionForTestOfGetSymbol = <
 }: {
   expectedSymbol: ReturnType<GenericPlayer["getSymbol"]>;
 }): string =>
-  createDescriptionForTestsOfGetter({
+  createDescriptionForTestsOfMethod({
     methodDescription: "getSymbol()",
     returnedValue: `'${expectedSymbol}'`,
   });

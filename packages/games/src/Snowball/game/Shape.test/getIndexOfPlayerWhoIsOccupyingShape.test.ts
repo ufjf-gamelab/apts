@@ -1,6 +1,6 @@
 import {
   createDescriptionForTest,
-  createDescriptionForTestsOfGetter,
+  createDescriptionForTestsOfMethod,
 } from "@repo/engine_core/test.js";
 import { expect, test } from "vitest";
 
@@ -64,7 +64,7 @@ const createDescriptionForTestOfGetIndexOfPlayerWhoIsOccupyingShape = ({
   >;
 }): string => {
   const shapeDescription = getNameAndFormattedSizeOfShape({ shape });
-  return createDescriptionForTestsOfGetter({
+  return createDescriptionForTestsOfMethod({
     methodDescription: `getIndexOfPlayerWhoIsOccupyingShape({ initialIndexOfColumn: ${initialIndexOfColumn}, initialIndexOfRow: ${initialIndexOfRow}, shape: { name: "${shapeDescription.name}", size: ${shapeDescription.size} } })`,
     returnedValue: expectedIndexOfPlayerWhoIsOccupyingShape,
   });

@@ -32,7 +32,8 @@ type RecordOfPlayersWithData<
   GenericPlayer extends Player<GenericPlayer>,
   GenericRequiredParamsOfPlayer,
   GenericRecordOfRequiredParamsOfPlayers extends
-    RecordOfRequiredParamsOfPlayers<GenericRequiredParamsOfPlayer> = RecordOfRequiredParamsOfPlayers<GenericRequiredParamsOfPlayer>,
+    RecordOfRequiredParamsOfPlayers<GenericRequiredParamsOfPlayer> =
+    RecordOfRequiredParamsOfPlayers<GenericRequiredParamsOfPlayer>,
 > = {
   [GenericKeyOfPlayer in keyof GenericRecordOfRequiredParamsOfPlayers]: PlayerWithData<
     GenericPlayer,
@@ -45,7 +46,8 @@ type RecordOfPlayersWithDataAndIndex<
   GenericPlayer extends Player<GenericPlayer>,
   GenericRequiredParamsOfPlayer,
   GenericRecordOfRequiredParamsOfPlayers extends
-    RecordOfRequiredParamsOfPlayers<GenericRequiredParamsOfPlayer> = RecordOfRequiredParamsOfPlayers<GenericRequiredParamsOfPlayer>,
+    RecordOfRequiredParamsOfPlayers<GenericRequiredParamsOfPlayer> =
+    RecordOfRequiredParamsOfPlayers<GenericRequiredParamsOfPlayer>,
   GenericPlayerWithData extends PlayerWithData<
     GenericPlayer,
     GenericRequiredParamsOfPlayer

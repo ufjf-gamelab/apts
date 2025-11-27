@@ -1,7 +1,7 @@
 import { formatArray } from "@repo/engine_core/format.js";
 import {
   createDescriptionForTest,
-  createDescriptionForTestsOfGetter,
+  createDescriptionForTestsOfMethod,
 } from "@repo/engine_core/test.js";
 import { expect, test } from "vitest";
 
@@ -69,7 +69,7 @@ const createDescriptionForTestOfGetScoreIncrementedWhenPlayerOccupiesShapeAtCoor
     >;
   }): string => {
     const shapeDescription = getNameAndFormattedSizeOfShape({ shape });
-    return createDescriptionForTestsOfGetter({
+    return createDescriptionForTestsOfMethod({
       methodDescription: `getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots({ initialIndexOfColumn: ${initialIndexOfColumn}, initialIndexOfRow: ${initialIndexOfRow}, shape: { name: "${shapeDescription.name}", size: ${shapeDescription.size} } })`,
       returnedValue: formatArray({
         array: expectedScore.getPointsOfEachPlayer().values().toArray(),

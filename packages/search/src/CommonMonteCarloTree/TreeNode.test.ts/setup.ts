@@ -174,6 +174,7 @@ type RequiredParamsOfTreeNode<
   >,
   "explorationConstant"
 > & {
+  isFullyExpanded: boolean;
   parentTreeNodeWithData: GenericTreeNodeWithData | null;
   playedMoveWithDataAndIndex: MoveWithDataAndIndex<
     GenericMove,

@@ -1,4 +1,4 @@
-import { createDescriptionForTestsOfGetter } from "@repo/engine_core/test.js";
+import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
 import type { Game } from "../Game.js";
@@ -70,7 +70,7 @@ const createDescriptionForTestOfIsFinal = <
   expectedToBeFinal: ReturnType<GenericGame["isFinal"]>;
   keyOfState: string;
 }): string =>
-  createDescriptionForTestsOfGetter({
+  createDescriptionForTestsOfMethod({
     methodDescription: `isFinal({ state: ${keyOfState} })`,
     returnedValue: expectedToBeFinal,
   });

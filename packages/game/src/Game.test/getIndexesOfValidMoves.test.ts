@@ -1,5 +1,5 @@
 import { formatArray } from "@repo/engine_core/format.js";
-import { createDescriptionForTestsOfGetter } from "@repo/engine_core/test.js";
+import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
 import { assert, expect } from "vitest";
 
 import type { Game } from "../Game.js";
@@ -54,7 +54,7 @@ const createDescriptionForTestOfGetIndexesOfValidMoves = ({
   keyOfState: string;
   keysOfExpectedValidMoves: string[];
 }): string =>
-  createDescriptionForTestsOfGetter({
+  createDescriptionForTestsOfMethod({
     methodDescription: `getIndexesOfValidMoves({ state: ${keyOfState} })`,
     returnedValue: formatArray({ array: keysOfExpectedValidMoves }),
   });

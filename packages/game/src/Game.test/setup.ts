@@ -67,7 +67,8 @@ type RecordOfGamesWithData<
   >,
   GenericRequiredParamsOfGame,
   GenericRecordOfRequiredParamsOfGames extends
-    RecordOfRequiredParamsOfGames<GenericRequiredParamsOfGame> = RecordOfRequiredParamsOfGames<GenericRequiredParamsOfGame>,
+    RecordOfRequiredParamsOfGames<GenericRequiredParamsOfGame> =
+    RecordOfRequiredParamsOfGames<GenericRequiredParamsOfGame>,
 > = {
   [GenericKeyOfGame in keyof GenericRecordOfRequiredParamsOfGames]: GameWithData<
     GenericGame,
