@@ -15,7 +15,7 @@ import type {
 
 import { TreeNode } from "@repo/search/CommonMonteCarloTree/TreeNode.js";
 import {
-  createRecordOfTreeNodesWithData,
+  createTreeNodeWithData,
   type DerivedParamsOfTreeNode,
   deriveParamsOfTreeNode,
   type RecordOfTreeNodesWithData,
@@ -37,10 +37,7 @@ type RecordOfRequiredParamsOfSnowballTreeNodes = Record<
   RequiredParamsOfSnowballTreeNode
 >;
 
-type RecordOfSnowballTreeNodesWithData<
-  GenericRecordOfRequiredParamsOfSnowballTreeNodes extends
-    RecordOfRequiredParamsOfSnowballTreeNodes,
-> = RecordOfTreeNodesWithData<
+type RecordOfSnowballTreeNodesWithData = RecordOfTreeNodesWithData<
   SnowballGame,
   SnowballMove,
   SnowballPlayer,
@@ -48,26 +45,26 @@ type RecordOfSnowballTreeNodesWithData<
   SnowballSlot,
   SnowballState,
   SnowballTreeNode,
-  RequiredParamsOfSnowballTreeNode,
-  GenericRecordOfRequiredParamsOfSnowballTreeNodes
+  RequiredParamsOfSnowballTreeNode
 >;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface RequiredParamsOfSnowballTreeNode extends RequiredParamsOfTreeNode<
-  SnowballGame,
-  SnowballMove,
-  SnowballPlayer,
-  SnowballScore,
-  SnowballSlot,
-  SnowballState,
-  SnowballTreeNode,
-  RequiredParamsOfSnowballMove,
-  RequiredParamsOfSnowballState,
-  RequiredParamsOfSnowballTreeNode,
-  SnowballMoveWithData,
-  SnowballStateWithData,
-  SnowballTreeNodeWithData
-> {}
+interface RequiredParamsOfSnowballTreeNode
+  extends RequiredParamsOfTreeNode<
+    SnowballGame,
+    SnowballMove,
+    SnowballPlayer,
+    SnowballScore,
+    SnowballSlot,
+    SnowballState,
+    SnowballTreeNode,
+    RequiredParamsOfSnowballMove,
+    RequiredParamsOfSnowballState,
+    RequiredParamsOfSnowballTreeNode,
+    SnowballMoveWithData,
+    SnowballStateWithData,
+    SnowballTreeNodeWithData
+  > {}
 
 type SnowballTreeNode = TreeNode<
   SnowballGame,
@@ -118,29 +115,17 @@ const createSnowballTreeNode = ({
     state,
   }) satisfies SnowballTreeNode;
 
-const createRecordOfSnowballTreeNodesWithData = <
-  GenericRecordOfRequiredParamsOfSnowballTreeNodes extends
-    RecordOfRequiredParamsOfSnowballTreeNodes,
->({
-  recordOfRequiredParamsOfTreeNodes,
-}: {
-  recordOfRequiredParamsOfTreeNodes: GenericRecordOfRequiredParamsOfSnowballTreeNodes;
+const createSnowballTreeNodeWithData = ({
+  keyOfTreeNode,
+  requiredParams,
+}: Pick<Parameters<typeof createTreeNodeWithData>[0], "keyOfTreeNode"> & {
+  requiredParams: RequiredParamsOfSnowballTreeNode;
 }) =>
-  createRecordOfTreeNodesWithData<
-    SnowballGame,
-    SnowballMove,
-    SnowballPlayer,
-    SnowballScore,
-    SnowballSlot,
-    SnowballState,
-    SnowballTreeNode,
-    DerivedParamsOfSnowballTreeNode,
-    RequiredParamsOfSnowballTreeNode,
-    RecordOfSnowballTreeNodesWithData<GenericRecordOfRequiredParamsOfSnowballTreeNodes>
-  >({
+  createTreeNodeWithData({
     create: createSnowballTreeNode,
     deriveParams: deriveParamsOfSnowballTreeNode,
-    recordOfRequiredParamsOfTreeNodes,
+    keyOfTreeNode,
+    requiredParams,
   });
 
 export type {
@@ -151,7 +136,4 @@ export type {
   SnowballTreeNode,
   SnowballTreeNodeWithData,
 };
-export {
-  createRecordOfSnowballTreeNodesWithData,
-  deriveParamsOfSnowballTreeNode,
-};
+export { createSnowballTreeNodeWithData, deriveParamsOfSnowballTreeNode };

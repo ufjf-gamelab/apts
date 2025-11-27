@@ -146,8 +146,7 @@ class TreeNode<
     );
   }
 
-  /// Pick a random action and perform it, returning the outcome state as a child node.
-  public expand(): TreeNode<
+  public clone(): TreeNode<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -155,25 +154,71 @@ class TreeNode<
     GenericSlot,
     GenericState
   > {
-    const selectedIndexOfMove = this.pickIndexOfRandomMove();
+    return new TreeNode({
+      explorationConstant: this.explorationConstant,
+      indexOfPlayedMove: this.indexOfPlayedMove,
+      parent: this.parent?.clone() ?? null,
+      state: this.state.clone(),
+    });
+  }
+
+  /// Perform a move and return the outcome state as a child node.
+  public expand({
+    indexOfMove,
+  }: {
+    indexOfMove: IndexOfMove;
+  }): TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  > {
     const nextState = this.game.play({
-      indexOfMove: selectedIndexOfMove,
+      indexOfMove,
       state: this.state,
     });
 
     const child = new TreeNode({
       explorationConstant: this.explorationConstant,
-      indexOfPlayedMove: selectedIndexOfMove,
+      indexOfPlayedMove: indexOfMove,
       parent: this,
       state: nextState,
     });
 
-    this.children.set(selectedIndexOfMove, child);
-    return child;
+    this.children.set(indexOfMove, child);
+    return child.clone();
+  }
+
+  public getChild({
+    indexOfChild,
+  }: {
+    indexOfChild: IndexOfMove;
+  }): null | TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  > {
+    return this.children.get(indexOfChild)?.clone() ?? null;
   }
 
   public getIndexOfPlayedMove(): typeof this.indexOfPlayedMove {
     return this.indexOfPlayedMove;
+  }
+
+  public getQuantityOfExpandedMoves(): Integer {
+    return this.children
+      .values()
+      .reduce(
+        (quantityOfExpandedMoves, child) =>
+          quantityOfExpandedMoves +
+          (child === null ? NOT_INCREMENT : INCREMENT_ONE),
+        LENGTH_OF_EMPTY_LIST,
+      );
   }
 
   public getState(): typeof this.state {
@@ -195,7 +240,7 @@ class TreeNode<
     );
     const indexOfMove = indexesOfNotExpandedMoves[randomIndex];
     if (typeof indexOfMove === "undefined") {
-      throw new Error("No indexes of not expanded moves to pick from");
+      throw new Error("No indexes of not expanded moves to pick from.");
     }
 
     return indexOfMove;
@@ -211,7 +256,7 @@ class TreeNode<
     GenericState
   > {
     if (this.children.size === LENGTH_OF_EMPTY_LIST) {
-      throw new Error("No children to select from");
+      throw new Error("No children to select from.");
     }
 
     const expandedChildren = Array.from(this.children.values()).filter(
@@ -306,17 +351,6 @@ class TreeNode<
       }
     }
     return notExpandedMoves;
-  }
-
-  private getQuantityOfExpandedMoves(): Integer {
-    return this.children
-      .values()
-      .reduce(
-        (quantityOfExpandedMoves, child) =>
-          quantityOfExpandedMoves +
-          (child === null ? NOT_INCREMENT : INCREMENT_ONE),
-        LENGTH_OF_EMPTY_LIST,
-      );
   }
 
   // public toGraphvizNode(id: Integer): NodeFromGraphviz {

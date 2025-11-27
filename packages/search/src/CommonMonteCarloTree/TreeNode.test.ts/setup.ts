@@ -1,5 +1,5 @@
 import type { Game } from "@repo/game/Game.js";
-import type { Move } from "@repo/game/Move.js";
+import type { IndexOfMove, Move } from "@repo/game/Move.js";
 import type {
   MoveWithData,
   MoveWithDataAndIndex,
@@ -75,10 +75,9 @@ type RecordOfTreeNodesWithData<
     GenericState
   >,
   GenericRequiredParamsOfTreeNode,
-  GenericRecordOfRequiredParamsOfTreeNodes extends
-    RecordOfRequiredParamsOfTreeNodes<GenericRequiredParamsOfTreeNode> = RecordOfRequiredParamsOfTreeNodes<GenericRequiredParamsOfTreeNode>,
-> = {
-  [GenericKeyOfTreeNode in keyof GenericRecordOfRequiredParamsOfTreeNodes]: TreeNodeWithData<
+> = Record<
+  string,
+  TreeNodeWithData<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -86,10 +85,9 @@ type RecordOfTreeNodesWithData<
     GenericSlot,
     GenericState,
     GenericTreeNode,
-    GenericRequiredParamsOfTreeNode,
-    GenericKeyOfTreeNode & string
-  >;
-};
+    GenericRequiredParamsOfTreeNode
+  >
+>;
 
 type RequiredParamsOfTreeNode<
   GenericGame extends Game<
@@ -174,7 +172,10 @@ type RequiredParamsOfTreeNode<
   >,
   "explorationConstant"
 > & {
-  isFullyExpanded: boolean;
+  expandedMovesWithData: ReadonlyMap<
+    IndexOfMove,
+    MoveWithData<GenericMove, GenericRequiredParamsOfMove>
+  >;
   parentTreeNodeWithData: GenericTreeNodeWithData | null;
   playedMoveWithDataAndIndex: MoveWithDataAndIndex<
     GenericMove,
@@ -332,7 +333,7 @@ const deriveParamsOfTreeNode = <
   state: stateWithData.state,
 });
 
-const createRecordOfTreeNodesWithData = <
+const createTreeNodeWithData = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -370,55 +371,23 @@ const createRecordOfTreeNodesWithData = <
     GenericState
   >,
   GenericRequiredParamsOfTreeNode,
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
-  GenericRecordOfTreeNodesWithData extends RecordOfTreeNodesWithData<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState,
-    GenericTreeNode,
-    GenericRequiredParamsOfTreeNode
-  >,
 >({
   create,
   deriveParams,
-  recordOfRequiredParamsOfTreeNodes,
+  keyOfTreeNode,
+  requiredParams,
 }: {
   create: (derivedParams: GenericDerivedParamsOfTreeNode) => GenericTreeNode;
   deriveParams: (
     requiredParams: GenericRequiredParamsOfTreeNode,
   ) => GenericDerivedParamsOfTreeNode;
-  recordOfRequiredParamsOfTreeNodes: RecordOfRequiredParamsOfTreeNodes<GenericRequiredParamsOfTreeNode>;
-}) =>
-  /**
-   * TypeScript cannot statically verify that Object.fromEntries produces all required keys since the operation happens at runtime.
-   * This assertion is safe because we're iterating over all entries from recordOfRequiredParamsOfTreeNodes, which RecordOfRequiredParams is derived from.
-   */
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
-  Object.fromEntries(
-    Object.entries(recordOfRequiredParamsOfTreeNodes).map(
-      ([keyOfTreeNode, requiredParams]) =>
-        [
-          keyOfTreeNode,
-          {
-            keyOfTreeNode,
-            requiredParams,
-            treeNode: create(deriveParams(requiredParams)),
-          } satisfies TreeNodeWithData<
-            GenericGame,
-            GenericMove,
-            GenericPlayer,
-            GenericScore,
-            GenericSlot,
-            GenericState,
-            GenericTreeNode,
-            GenericRequiredParamsOfTreeNode
-          >,
-        ] as const,
-    ),
-  ) as GenericRecordOfTreeNodesWithData;
+  keyOfTreeNode: string;
+  requiredParams: GenericRequiredParamsOfTreeNode;
+}) => ({
+  keyOfTreeNode,
+  requiredParams,
+  treeNode: create(deriveParams(requiredParams)),
+});
 
 export type {
   DerivedParamsOfTreeNode,
@@ -427,4 +396,4 @@ export type {
   RequiredParamsOfTreeNode,
   TreeNodeWithData,
 };
-export { createRecordOfTreeNodesWithData, deriveParamsOfTreeNode };
+export { createTreeNodeWithData, deriveParamsOfTreeNode };

@@ -89,7 +89,7 @@ export const config: Linter.Config[] = [
         {
           builtinGlobals: false,
           hoist: "types",
-          ignoreFunctionTypeParameterNameValueShadow: false,
+          ignoreFunctionTypeParameterNameValueShadow: true,
           ignoreTypeValueShadow: false,
         },
       ],

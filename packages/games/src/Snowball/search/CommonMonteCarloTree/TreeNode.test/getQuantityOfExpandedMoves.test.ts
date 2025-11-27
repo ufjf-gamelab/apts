@@ -1,8 +1,8 @@
 import { createDescriptionForTest } from "@repo/engine_core/test.js";
 import {
-  createDescriptionForTestOfIsFullyExpanded,
-  validateIsFullyExpanded,
-} from "@repo/search/CommonMonteCarloTree/TreeNode.test.ts/isFullyExpanded.test.js";
+  createDescriptionForTestOfGetQuantityOfExpandedMoves,
+  validateGetQuantityOfExpandedMoves,
+} from "@repo/search/CommonMonteCarloTree/TreeNode.test.ts/getQuantityOfExpandedMoves.test.js";
 import { test } from "vitest";
 
 import type { SnowballTreeNodeWithData } from "./setup.js";
@@ -11,20 +11,20 @@ import { recordOfSnowballTreeNodesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
-  expectedToBeFullyExpanded,
+  expectedQuantityOfExpandedMoves,
 }: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> &
   Pick<
-    Parameters<typeof createDescriptionForTestOfIsFullyExpanded>[0],
-    "expectedToBeFullyExpanded"
+    Parameters<typeof createDescriptionForTestOfGetQuantityOfExpandedMoves>[0],
+    "expectedQuantityOfExpandedMoves"
   >) =>
   createDescriptionForTest({
     affix,
-    description: createDescriptionForTestOfIsFullyExpanded({
-      expectedToBeFullyExpanded,
+    description: createDescriptionForTestOfGetQuantityOfExpandedMoves({
+      expectedQuantityOfExpandedMoves,
     }),
   });
 
-const testIsFullyExpanded = ({
+const testGetQuantityOfExpandedMoves = ({
   arrayOfTreeNodesWithData,
 }: {
   arrayOfTreeNodesWithData: SnowballTreeNodeWithData[];
@@ -32,22 +32,20 @@ const testIsFullyExpanded = ({
   arrayOfTreeNodesWithData.forEach(
     ({
       keyOfTreeNode,
-      requiredParams: { expandedMovesWithData, stateWithData },
+      requiredParams: { expandedMovesWithData },
       treeNode,
     }) => {
-      const isFullyExpanded =
-        stateWithData.requiredParams.validMovesWithData.size ===
-        expandedMovesWithData.size;
+      const quantityOfExpandedMoves = expandedMovesWithData.size;
 
       test(
         createDescription({
           affix: keyOfTreeNode,
-          expectedToBeFullyExpanded: isFullyExpanded,
+          expectedQuantityOfExpandedMoves: quantityOfExpandedMoves,
         }),
 
         () => {
-          validateIsFullyExpanded({
-            expectedToBeFullyExpanded: isFullyExpanded,
+          validateGetQuantityOfExpandedMoves({
+            expectedQuantityOfExpandedMoves: quantityOfExpandedMoves,
             treeNode,
           });
         },
@@ -56,6 +54,6 @@ const testIsFullyExpanded = ({
   );
 };
 
-testIsFullyExpanded({
+testGetQuantityOfExpandedMoves({
   arrayOfTreeNodesWithData: Object.values(recordOfSnowballTreeNodesWithData),
 });

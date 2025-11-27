@@ -244,7 +244,7 @@ const getIndexesOfLine = ({
     }
     default: {
       throw new Error(
-        `Invalid direction "${direction as string}" for line shape`,
+        `Invalid direction "${direction as string}" for line shape.`,
       );
     }
   }
@@ -328,7 +328,7 @@ const getIndexesOfSlots = ({
       });
     }
     default: {
-      throw new Error(`Invalid type "${type as string}" for shape`);
+      throw new Error(`Invalid type "${type as string}" for shape.`);
     }
   }
 };

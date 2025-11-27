@@ -1,4 +1,5 @@
 import type { PathLike } from "fs";
+
 import { promises as promisesFromFs } from "fs";
 import { toFile } from "ts-graphviz/adapter";
 
@@ -17,7 +18,7 @@ export const generateGraphvizImage = async ({
     await promisesFromFs.mkdir(directoryPath, { recursive: true });
   } catch (error: unknown) {
     if (error instanceof Error) {
-      throw new Error(`Failed to create directory: ${error.message}`);
+      throw new Error(`Failed to create directory: ${error.message}.`);
     }
     throw new Error("An unknown error occurred while creating directory.");
   }
@@ -26,7 +27,7 @@ export const generateGraphvizImage = async ({
     await toFile(graphvizDotString, fullPath, { format: "svg" });
   } catch (error: unknown) {
     if (error instanceof Error) {
-      throw new Error(`Failed to generate Graphviz image: ${error.message}`);
+      throw new Error(`Failed to generate Graphviz image: ${error.message}.`);
     }
     throw new Error(
       "An unknown error occurred while generating Graphviz image.",
