@@ -1,19 +1,79 @@
-// import type {
-//   attribute as attributeFromGraphviz,
-//   Digraph as DigraphFromGraphviz,
-//   Edge as EdgeFromGraphviz,
-//   GraphAttributesObject as GraphAttributesObjectFromGraphviz,
-//   Node as NodeFromGraphviz,
-//   toDot as toDotFromGraphviz,
-// } from "ts-graphviz";
+import type { Integer } from "@repo/engine_core/types.js";
+import type { Game } from "@repo/game/Game.js";
+import type { Move } from "@repo/game/Move.js";
+import type { Player } from "@repo/game/Player.js";
+import type { Score } from "@repo/game/Score.js";
+import type { Slot } from "@repo/game/Slot.js";
+import type { State } from "@repo/game/State.js";
 
-// import type Game from "../Game/Game.js";
-// import type Move from "../Game/Move.js";
-// import type Player from "../Game/Player.js";
-// import type Slot from "../Game/Slot.js";
-// import type State from "../Game/State.js";
-// import type { Integer } from "../types.js";
-// import type { TreeNode } from "./TreeNode.js";
+import {
+  attribute as attributeFromGraphviz,
+  Node as NodeFromGraphviz,
+  //   Digraph as DigraphFromGraphviz,
+  //   Edge as EdgeFromGraphviz,
+  //   GraphAttributesObject as GraphAttributesObjectFromGraphviz,
+  //   toDot as toDotFromGraphviz,
+} from "ts-graphviz";
+
+import type { TreeNode } from "./TreeNode.js";
+
+const constructGraphvizNode = <
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+>({
+  id,
+  treeNode,
+}: {
+  id: Integer;
+  treeNode: TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >;
+}) => {
+  const state = treeNode.getState();
+  const qualityOfMatch = treeNode.getQualityOfMatch();
+  const quantityOfVisits = treeNode.getQuantityOfVisits();
+  const game = state.getGame();
+  const indexOfPlayer = state.getIndexOfPlayer();
+  const player = game.getPlayer({ indexOfPlayer });
+  if (player === null) {
+    throw new Error(
+      `There is no player in this game with the index ${indexOfPlayer}.`,
+    );
+  }
+
+  const label = `${id}: S.${quantityOfVisits} Q.${
+    qualityOfMatch
+    // eslint-disable-next-line @typescript-eslint/no-base-to-string
+  }\nP.${indexOfPlayer} ${player.getSymbol()} ${player.getName()}\n${state.toString()}`;
+
+  return new NodeFromGraphviz(id.toString(), {
+    [attributeFromGraphviz.label]: label,
+    fontname: "Monospace",
+  });
+};
 
 // const FIRST_CHILD_ID = 1;
 // const ROOT_ID = 0;

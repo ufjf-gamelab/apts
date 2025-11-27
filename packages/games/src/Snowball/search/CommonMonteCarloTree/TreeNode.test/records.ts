@@ -86,67 +86,9 @@ const rootThenThisNorthwestOfNorthwest = {
   }),
 } satisfies SnowballTreeNodeWithData;
 
-/* ((*), (CenterOfCenter, SouthOfSouth)) */
-const thisRootThenCenterOfCenterOrSouthOfSouth = createSnowballTreeNodeWithData(
-  {
-    keyOfTreeNode: "thisRootThenCenterOfCenterOrSouthOfSouth",
-    requiredParams: {
-      ...thisRoot.requiredParams,
-      expandedMovesWithData: new Map([
-        constructTupleForMove({
-          moveWithDataAndIndex:
-            recordOfSnowballMovesWithDataAndIndex.centerOfCenter,
-        }),
-        constructTupleForMove({
-          moveWithDataAndIndex:
-            recordOfSnowballMovesWithDataAndIndex.southOfSouth,
-        }),
-      ]),
-    },
-  },
-) satisfies SnowballTreeNodeWithData;
-
-/* ((), (*CenterOfCenter, SouthOfSouth)) */
-const rootThenThisCenterOfCenterOrSouthOfSouth = {
-  keyOfTreeNode: "rootThenThisCenterOfCenterOrSouthOfSouth",
-  requiredParams: {
-    expandedMovesWithData: new Map([]),
-    explorationConstant: EXPLORATION_CONSTANT,
-    parentTreeNodeWithData: thisRootThenCenterOfCenterOrSouthOfSouth,
-    playedMoveWithDataAndIndex:
-      recordOfSnowballMovesWithDataAndIndex.centerOfCenter,
-    stateWithData:
-      recordOfSnowballStatesWithData.slotR0C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
-  },
-  treeNode: thisRootThenCenterOfCenterOrSouthOfSouth.treeNode.expand({
-    indexOfMove:
-      recordOfSnowballMovesWithDataAndIndex.centerOfCenter.indexOfMove,
-  }),
-} satisfies SnowballTreeNodeWithData;
-
-/* ((), (CenterOfCenter, *SouthOfSouth)) */
-const rootThenCenterOfCenterOrThisSouthOfSouth = {
-  keyOfTreeNode: "rootThenCenterOfCenterOrThisSouthOfSouth",
-  requiredParams: {
-    expandedMovesWithData: new Map([]),
-    explorationConstant: EXPLORATION_CONSTANT,
-    parentTreeNodeWithData: thisRootThenCenterOfCenterOrSouthOfSouth,
-    playedMoveWithDataAndIndex:
-      recordOfSnowballMovesWithDataAndIndex.southOfSouth,
-    stateWithData:
-      recordOfSnowballStatesWithData.slotR0C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
-  },
-  treeNode: thisRootThenCenterOfCenterOrSouthOfSouth.treeNode.expand({
-    indexOfMove: recordOfSnowballMovesWithDataAndIndex.southOfSouth.indexOfMove,
-  }),
-} satisfies SnowballTreeNodeWithData;
-
 const recordOfSnowballTreeNodesWithData = {
-  rootThenCenterOfCenterOrThisSouthOfSouth,
-  rootThenThisCenterOfCenterOrSouthOfSouth,
   rootThenThisNorthwestOfNorthwest,
   thisRoot,
-  thisRootThenCenterOfCenterOrSouthOfSouth,
   thisRootThenNorthwestOfNorthwest,
 } satisfies RecordOfSnowballTreeNodesWithData;
 

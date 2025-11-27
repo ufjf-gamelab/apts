@@ -7,11 +7,7 @@ import type { State } from "@repo/game/State.js";
 
 import { expect } from "vitest";
 
-import {
-  constructGraphvizNode,
-  type ParamsOfTreeNode,
-  TreeNode,
-} from "../TreeNode.js";
+import { type ParamsOfTreeNode, TreeNode } from "../TreeNode.js";
 
 const validateConstructor = <
   GenericGame extends Game<

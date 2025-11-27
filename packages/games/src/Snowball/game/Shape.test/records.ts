@@ -5122,6 +5122,7 @@ const recordOfSnowballShapesWithDataInWhichShapesAreSecondaryDiagonals =
     recordOfRequiredParamsAndResult:
       recordOfRequiredParamsAndResultOfSnowballShapesInWhichShapesAreSecondaryDiagonals,
   });
+
 const recordOfSnowballShapesWithDataInWhichShapesAreRectanglesOf2RowsAnd2Columns =
   createSnowballShapesWithData({
     recordOfRequiredParamsAndResult:

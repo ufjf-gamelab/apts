@@ -1,38 +1,41 @@
-import type { Integer } from "@repo/engine_core/types.js";
 import type { IndexOfMove } from "@repo/game/Move.js";
 import type { IndexOfPlayer } from "@repo/game/Player.js";
 import type { Points } from "@repo/game/Score.js";
 
 import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
-import {
-  constructErrorForFinalState,
-  constructErrorForInvalidMove,
-  Game,
-} from "@repo/game/Game.js";
+import { constructErrorForInvalidMove, Game } from "@repo/game/Game.js";
 
-import type { SnowballMove } from "./Move.js";
-import type { SnowballPlayer } from "./Player.js";
+import type { TicTacToeMove } from "./Move.js";
+import type { TicTacToePlayer } from "./Player.js";
 
-import { SnowballScore } from "./Score.js";
-import { SnowballSlot } from "./Slot.js";
-import { SnowballState } from "./State.js";
+import { TicTacToeScore } from "./Score.js";
+import { TicTacToeSlot } from "./Slot.js";
+import { TicTacToeState } from "./State.js";
 
 const ADVANCE_TURN = INCREMENT_ONE;
 const INDEX_OF_FIRST_PLAYER: IndexOfPlayer = 0;
 
-const AMOUNT_OF_POINTS_TO_FINISH_MATCH: Points = 15;
-const AMOUNT_OF_SLOTS_TO_FINISH_MATCH: Integer = 49;
+const AMOUNT_OF_POINTS_TO_FINISH_MATCH: Points = 1;
 
-class SnowballGame extends Game<
-  SnowballGame,
-  SnowballMove,
-  SnowballPlayer,
-  SnowballScore,
-  SnowballSlot,
-  SnowballState
+const constructErrorForFinalState = ({
+  indexOfMove,
+}: {
+  indexOfMove: IndexOfMove;
+}) =>
+  new Error(
+    `Cannot play move ${indexOfMove} because this state is already final.`,
+  );
+
+class TicTacToeGame extends Game<
+  TicTacToeGame,
+  TicTacToeMove,
+  TicTacToePlayer,
+  TicTacToeScore,
+  TicTacToeSlot,
+  TicTacToeState
 > {
   public override clone() {
-    return new SnowballGame({
+    return new TicTacToeGame({
       moves: this.getMoves(),
       name: this.getName(),
       players: this.getPlayers(),
@@ -40,18 +43,18 @@ class SnowballGame extends Game<
     });
   }
 
-  public override constructInitialState(): SnowballState {
-    return new SnowballState({
+  public override constructInitialState(): TicTacToeState {
+    return new TicTacToeState({
       game: this,
       indexOfPlayer: INDEX_OF_FIRST_PLAYER,
-      score: SnowballScore.constructInitialScore({
+      score: TicTacToeScore.constructInitialScore({
         quantityOfPlayers: this.getQuantityOfPlayers(),
       }),
       slots: this.getSlots(),
     });
   }
 
-  public override getIndexesOfValidMoves({ state }: { state: SnowballState }) {
+  public override getIndexesOfValidMoves({ state }: { state: TicTacToeState }) {
     const indexesOfValidMoves = new Set<IndexOfMove>();
     this.getMoves().forEach((move, indexOfMove) => {
       if (this.isMoveValid({ move, state })) {
@@ -64,19 +67,18 @@ class SnowballGame extends Game<
   public override getIndexOfNextPlayer({
     state,
   }: {
-    state: SnowballState;
+    state: TicTacToeState;
   }): IndexOfPlayer {
     const currentIndexOfPlayer = state.getIndexOfPlayer();
     const quantityOfPlayers = this.getPlayers().length;
     return (currentIndexOfPlayer + ADVANCE_TURN) % quantityOfPlayers;
   }
 
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
-  public override isFinal({ state }: { state: SnowballState }) {
+  public override isFinal({ state }: { state: TicTacToeState }) {
     const amountOfFilledSlots = state
       .getSlots()
       .filter((slot) => slot.getIndexOfOccupyingPlayer() !== null).length;
-    if (amountOfFilledSlots >= AMOUNT_OF_SLOTS_TO_FINISH_MATCH) {
+    if (amountOfFilledSlots >= this.getQuantityOfSlots()) {
       return true;
     }
 
@@ -95,8 +97,8 @@ class SnowballGame extends Game<
     move,
     state,
   }: {
-    move: SnowballMove;
-    state: SnowballState;
+    move: TicTacToeMove;
+    state: TicTacToeState;
   }): boolean {
     const indexOfSlotInWhichPlacePiece = move.getIndexOfSlotInWhichPlacePiece();
 
@@ -117,8 +119,8 @@ class SnowballGame extends Game<
     state,
   }: {
     indexOfMove: IndexOfMove;
-    state: SnowballState;
-  }): SnowballState {
+    state: TicTacToeState;
+  }): TicTacToeState {
     if (this.isFinal({ state })) {
       throw constructErrorForFinalState({ indexOfMove });
     }
@@ -142,7 +144,7 @@ class SnowballGame extends Game<
 
     const slotInWhichPlacePiece = updatedSlots[indexOfSlotInWhichPlacePiece];
     if (typeof slotInWhichPlacePiece !== "undefined") {
-      const updatedSlot = new SnowballSlot({
+      const updatedSlot = new TicTacToeSlot({
         indexOfOccupyingPlayer: state.getIndexOfPlayer(),
       });
       updatedSlots[indexOfSlotInWhichPlacePiece] = updatedSlot;
@@ -153,7 +155,7 @@ class SnowballGame extends Game<
       slots: updatedSlots,
     });
 
-    return new SnowballState({
+    return new TicTacToeState({
       game: this,
       indexOfPlayer: indexOfNextPlayer,
       score: updatedScore,
@@ -165,5 +167,5 @@ class SnowballGame extends Game<
 export {
   constructErrorForFinalState,
   constructErrorForInvalidMove,
-  SnowballGame,
+  TicTacToeGame,
 };

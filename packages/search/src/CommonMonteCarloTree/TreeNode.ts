@@ -11,10 +11,6 @@ import {
   LENGTH_OF_EMPTY_LIST,
   NOT_INCREMENT,
 } from "@repo/engine_core/constants.js";
-import {
-  attribute as attributeFromGraphviz,
-  Node as NodeFromGraphviz,
-} from "ts-graphviz";
 
 const MINIMUM_QUALITY_OF_MATCH = 0;
 const MINIMUM_QUANTITY_OF_VISITS = 0;
@@ -365,63 +361,5 @@ class TreeNode<
   // }
 }
 
-const constructGraphvizNode = <
-  GenericGame extends Game<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >,
-  GenericMove extends Move<GenericMove>,
-  GenericPlayer extends Player<GenericPlayer>,
-  GenericScore extends Score<GenericScore>,
-  GenericSlot extends Slot<GenericSlot>,
-  GenericState extends State<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >,
->({
-  id,
-  treeNode,
-}: {
-  id: Integer;
-  treeNode: TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >;
-}) => {
-  const state = treeNode.getState();
-  const qualityOfMatch = treeNode.getQualityOfMatch();
-  const quantityOfVisits = treeNode.getQuantityOfVisits();
-  const game = state.getGame();
-  const indexOfPlayer = state.getIndexOfPlayer();
-  const player = game.getPlayer({ indexOfPlayer });
-  if (player === null) {
-    throw new Error(
-      `There is no player in this game with the index ${indexOfPlayer}.`,
-    );
-  }
-
-  const label = `${id}: S.${quantityOfVisits} Q.${
-    qualityOfMatch
-    // eslint-disable-next-line @typescript-eslint/no-base-to-string
-  }\nP.${indexOfPlayer} ${player.getSymbol()} ${player.getName()}\n${state.toString()}`;
-
-  return new NodeFromGraphviz(id.toString(), {
-    [attributeFromGraphviz.label]: label,
-    fontname: "Monospace",
-  });
-};
-
 export type { ParamsOfTreeNode };
-export { constructGraphvizNode, TreeNode };
+export { TreeNode };

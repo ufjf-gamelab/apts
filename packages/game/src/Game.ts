@@ -148,5 +148,20 @@ abstract class Game<
   }
 }
 
+const constructErrorForFinalState = ({
+  indexOfMove,
+}: {
+  indexOfMove: IndexOfMove;
+}) =>
+  new Error(
+    `Cannot play move ${indexOfMove} because this state is already final.`,
+  );
+
+const constructErrorForInvalidMove = ({
+  indexOfMove,
+}: {
+  indexOfMove: IndexOfMove;
+}) => new Error(`Cannot play move ${indexOfMove} because it is not valid.`);
+
 export type { IndexOfGame, ParamsOfGame };
-export { Game };
+export { constructErrorForFinalState, constructErrorForInvalidMove, Game };
