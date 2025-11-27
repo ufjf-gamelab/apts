@@ -24,6 +24,9 @@ importers:
       prettier:
         specifier: ^3.7.1
         version: 3.7.1
+      prettier-plugin-dot:
+        specifier: ^0.4.1
+        version: 0.4.1(prettier@3.7.1)
       prettier-plugin-tailwindcss:
         specifier: ^0.7.1
         version: 0.7.1(prettier@3.7.1)
@@ -254,6 +257,9 @@ importers:
       '@repo/game':
         specifier: workspace:*
         version: link:../game
+      ts-graphviz:
+        specifier: ^3.0.6
+        version: 3.0.6
     devDependencies:
       '@repo/eslint_config':
         specifier: workspace:*
@@ -1981,6 +1987,11 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
+  prettier-plugin-dot@0.4.1:
+    resolution: {integrity: sha512-I0j39UdBSJ10HvXvUXE5uitvhHTltahzTy5zhEHhu6TLQH/RToNc91oT1aEyNSlUX5akJoBTOhuafLnRfUsESA==}
+    peerDependencies:
+      prettier: ^2.0.0
+
   prettier-plugin-tailwindcss@0.7.1:
     resolution: {integrity: sha512-Bzv1LZcuiR1Sk02iJTS1QzlFNp/o5l2p3xkopwOrbPmtMeh3fK9rVW5M3neBQzHq+kGKj/4LGQMTNcTH4NGPtQ==}
     engines: {node: '>=20.19'}
@@ -2274,6 +2285,10 @@ packages:
     engines: {node: '>=18.12'}
     peerDependencies:
       typescript: '>=4.8.4'
+
+  ts-graphviz@1.8.2:
+    resolution: {integrity: sha512-5YhbFoHmjxa7pgQLkB07MtGnGJ/yhvjmc9uhsnDBEICME6gkPf83SBwLDQqGDoCa3XzUMWLk1AU2Wn1u1naDtA==}
+    engines: {node: '>=14.16'}
 
   ts-graphviz@3.0.6:
     resolution: {integrity: sha512-NZAbgrRP4HPTgD/w032eQM2P1bEYv+peW+fiw4CreEKwZvqtWm2B7gi4Kon5fzRuP+VP8m7hpIBAWHT5rqEK6w==}
@@ -4312,6 +4327,11 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
+  prettier-plugin-dot@0.4.1(prettier@3.7.1):
+    dependencies:
+      prettier: 3.7.1
+      ts-graphviz: 1.8.2
+
   prettier-plugin-tailwindcss@0.7.1(prettier@3.7.1):
     dependencies:
       prettier: 3.7.1
@@ -4608,6 +4628,8 @@ snapshots:
   ts-api-utils@2.1.0(typescript@5.9.3):
     dependencies:
       typescript: 5.9.3
+
+  ts-graphviz@1.8.2: {}
 
   ts-graphviz@3.0.6:
     dependencies:

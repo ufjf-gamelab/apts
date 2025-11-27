@@ -8,7 +8,6 @@ import { recordOfSnowballStatesWithData } from "../../../game/State.test/records
 import {
   createSnowballTreeNodeWithData,
   type RecordOfSnowballTreeNodesWithData,
-  type SnowballTreeNode,
   type SnowballTreeNodeWithData,
 } from "./setup.js";
 
@@ -23,27 +22,28 @@ const constructTupleForMove = ({
   moveWithDataAndIndex.moveWithData,
 ];
 
-const getChildOfSnowballTreeNode = ({
-  indexOfChild,
-  treeNode,
-}: Pick<Parameters<SnowballTreeNode["getChild"]>[0], "indexOfChild"> & {
-  treeNode: SnowballTreeNode;
-}): SnowballTreeNode => {
-  const child = treeNode.getChild({
-    indexOfChild,
-  });
+// const getChildOfSnowballTreeNode = ({
+//   indexOfChild,
+//   treeNode,
+// }: Pick<Parameters<SnowballTreeNode["getChild"]>[0], "indexOfChild"> & {
+//   treeNode: SnowballTreeNode;
+// }): SnowballTreeNode => {
+//   const child = treeNode.getChild({
+//     indexOfChild,
+//   });
 
-  if (child === null) {
-    throw new Error(
-      `There is not an expanded child on this tree node with the index ${indexOfChild}.`,
-    );
-  }
+//   if (child === null) {
+//     throw new Error(
+//       `There is not an expanded child on this tree node with the index ${indexOfChild}.`,
+//     );
+//   }
 
-  return child;
-};
+//   return child;
+// };
 
-const level0OfNoTakenMoves = createSnowballTreeNodeWithData({
-  keyOfTreeNode: "level0OfNoTakenMoves",
+/* (*) */
+const thisRoot = createSnowballTreeNodeWithData({
+  keyOfTreeNode: "thisRoot",
   requiredParams: {
     expandedMovesWithData: new Map([]),
     explorationConstant: EXPLORATION_CONSTANT,
@@ -54,10 +54,11 @@ const level0OfNoTakenMoves = createSnowballTreeNodeWithData({
   },
 }) satisfies SnowballTreeNodeWithData;
 
-const level0OfTakenMovesNorthwestOfNorthwest = {
-  keyOfTreeNode: "level0OfTakenMovesNorthwestOfNorthwest",
+/* ((*), (NorthwestOfNorthwest)) */
+const thisRootThenNorthwestOfNorthwest = createSnowballTreeNodeWithData({
+  keyOfTreeNode: "thisRootThenNorthwestOfNorthwest",
   requiredParams: {
-    ...level0OfNoTakenMoves.requiredParams,
+    ...thisRoot.requiredParams,
     expandedMovesWithData: new Map([
       constructTupleForMove({
         moveWithDataAndIndex:
@@ -65,30 +66,88 @@ const level0OfTakenMovesNorthwestOfNorthwest = {
       }),
     ]),
   },
-  treeNode: level0OfNoTakenMoves.treeNode.clone(),
-} satisfies SnowballTreeNodeWithData;
+}) satisfies SnowballTreeNodeWithData;
 
-const level1OfTakenMovesNorthwestOfNorthwest = {
-  keyOfTreeNode: "level1OfTakenMovesNorthwestOfNorthwest",
+/* ((), (*NorthwestOfNorthwest)) */
+const rootThenThisNorthwestOfNorthwest = {
+  keyOfTreeNode: "rootThenThisNorthwestOfNorthwest",
   requiredParams: {
     expandedMovesWithData: new Map([]),
     explorationConstant: EXPLORATION_CONSTANT,
-    parentTreeNodeWithData: level0OfTakenMovesNorthwestOfNorthwest,
+    parentTreeNodeWithData: thisRootThenNorthwestOfNorthwest,
     playedMoveWithDataAndIndex:
       recordOfSnowballMovesWithDataAndIndex.northwestOfNorthwest,
     stateWithData:
       recordOfSnowballStatesWithData.slotR0C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
   },
-  treeNode: level0OfTakenMovesNorthwestOfNorthwest.treeNode.expand({
+  treeNode: thisRootThenNorthwestOfNorthwest.treeNode.expand({
     indexOfMove:
       recordOfSnowballMovesWithDataAndIndex.northwestOfNorthwest.indexOfMove,
   }),
 } satisfies SnowballTreeNodeWithData;
 
+/* ((*), (CenterOfCenter, SouthOfSouth)) */
+const thisRootThenCenterOfCenterOrSouthOfSouth = createSnowballTreeNodeWithData(
+  {
+    keyOfTreeNode: "thisRootThenCenterOfCenterOrSouthOfSouth",
+    requiredParams: {
+      ...thisRoot.requiredParams,
+      expandedMovesWithData: new Map([
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.centerOfCenter,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfSnowballMovesWithDataAndIndex.southOfSouth,
+        }),
+      ]),
+    },
+  },
+) satisfies SnowballTreeNodeWithData;
+
+/* ((), (*CenterOfCenter, SouthOfSouth)) */
+const rootThenThisCenterOfCenterOrSouthOfSouth = {
+  keyOfTreeNode: "rootThenThisCenterOfCenterOrSouthOfSouth",
+  requiredParams: {
+    expandedMovesWithData: new Map([]),
+    explorationConstant: EXPLORATION_CONSTANT,
+    parentTreeNodeWithData: thisRootThenCenterOfCenterOrSouthOfSouth,
+    playedMoveWithDataAndIndex:
+      recordOfSnowballMovesWithDataAndIndex.centerOfCenter,
+    stateWithData:
+      recordOfSnowballStatesWithData.slotR0C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
+  },
+  treeNode: thisRootThenCenterOfCenterOrSouthOfSouth.treeNode.expand({
+    indexOfMove:
+      recordOfSnowballMovesWithDataAndIndex.centerOfCenter.indexOfMove,
+  }),
+} satisfies SnowballTreeNodeWithData;
+
+/* ((), (CenterOfCenter, *SouthOfSouth)) */
+const rootThenCenterOfCenterOrThisSouthOfSouth = {
+  keyOfTreeNode: "rootThenCenterOfCenterOrThisSouthOfSouth",
+  requiredParams: {
+    expandedMovesWithData: new Map([]),
+    explorationConstant: EXPLORATION_CONSTANT,
+    parentTreeNodeWithData: thisRootThenCenterOfCenterOrSouthOfSouth,
+    playedMoveWithDataAndIndex:
+      recordOfSnowballMovesWithDataAndIndex.southOfSouth,
+    stateWithData:
+      recordOfSnowballStatesWithData.slotR0C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
+  },
+  treeNode: thisRootThenCenterOfCenterOrSouthOfSouth.treeNode.expand({
+    indexOfMove: recordOfSnowballMovesWithDataAndIndex.southOfSouth.indexOfMove,
+  }),
+} satisfies SnowballTreeNodeWithData;
+
 const recordOfSnowballTreeNodesWithData = {
-  level0OfNoTakenMoves,
-  level0OfTakenMovesNorthwestOfNorthwest,
-  level1OfTakenMovesNorthwestOfNorthwest,
+  rootThenCenterOfCenterOrThisSouthOfSouth,
+  rootThenThisCenterOfCenterOrSouthOfSouth,
+  rootThenThisNorthwestOfNorthwest,
+  thisRoot,
+  thisRootThenCenterOfCenterOrSouthOfSouth,
+  thisRootThenNorthwestOfNorthwest,
 } satisfies RecordOfSnowballTreeNodesWithData;
 
 export { recordOfSnowballTreeNodesWithData };

@@ -11,6 +11,10 @@ import {
   LENGTH_OF_EMPTY_LIST,
   NOT_INCREMENT,
 } from "@repo/engine_core/constants.js";
+import {
+  attribute as attributeFromGraphviz,
+  Node as NodeFromGraphviz,
+} from "ts-graphviz";
 
 const MINIMUM_QUALITY_OF_MATCH = 0;
 const MINIMUM_QUANTITY_OF_VISITS = 0;
@@ -146,22 +150,6 @@ class TreeNode<
     );
   }
 
-  public clone(): TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  > {
-    return new TreeNode({
-      explorationConstant: this.explorationConstant,
-      indexOfPlayedMove: this.indexOfPlayedMove,
-      parent: this.parent?.clone() ?? null,
-      state: this.state.clone(),
-    });
-  }
-
   /// Perform a move and return the outcome state as a child node.
   public expand({
     indexOfMove,
@@ -188,26 +176,11 @@ class TreeNode<
     });
 
     this.children.set(indexOfMove, child);
-    return child.clone();
+    return child;
   }
 
-  public getChild({
-    indexOfChild,
-  }: {
-    indexOfChild: IndexOfMove;
-  }): null | TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  > {
-    return this.children.get(indexOfChild)?.clone() ?? null;
-  }
-
-  public getIndexOfPlayedMove(): typeof this.indexOfPlayedMove {
-    return this.indexOfPlayedMove;
+  public getQualityOfMatch(): typeof this.qualityOfMatch {
+    return this.qualityOfMatch;
   }
 
   public getQuantityOfExpandedMoves(): Integer {
@@ -219,6 +192,9 @@ class TreeNode<
           (child === null ? NOT_INCREMENT : INCREMENT_ONE),
         LENGTH_OF_EMPTY_LIST,
       );
+  }
+  public getQuantityOfVisits(): typeof this.quantityOfVisits {
+    return this.quantityOfVisits;
   }
 
   public getState(): typeof this.state {
@@ -353,21 +329,99 @@ class TreeNode<
     return notExpandedMoves;
   }
 
-  // public toGraphvizNode(id: Integer): NodeFromGraphviz {
-  //   const state = this.getState();
-  //   const indexOfPlayer = state.getPlayerKey();
-  //   const player = state.getPlayer();
-
-  //   const label = `${id}: S.${this.quantityOfVisits} Q.${
-  //     this.qualityOfMatch
-  //   }\nP.${indexOfPlayer} ${player.getSymbol()} ${player.getName()}\n${state.toString()}`;
-
-  //   return new NodeFromGraphviz(id.toString(), {
-  //     [attributeFromGraphviz.label]: label,
-  //     fontname: "Monospace",
+  // public clone(): TreeNode<
+  //   GenericGame,
+  //   GenericMove,
+  //   GenericPlayer,
+  //   GenericScore,
+  //   GenericSlot,
+  //   GenericState
+  // > {
+  //   return new TreeNode({
+  //     explorationConstant: this.explorationConstant,
+  //     indexOfPlayedMove: this.indexOfPlayedMove,
+  //     parent: this.parent?.clone() ?? null,
+  //     state: this.state.clone(),
   //   });
+  // }
+
+  // public getChild({
+  //   indexOfChild,
+  // }: {
+  //   indexOfChild: IndexOfMove;
+  // }): null | TreeNode<
+  //   GenericGame,
+  //   GenericMove,
+  //   GenericPlayer,
+  //   GenericScore,
+  //   GenericSlot,
+  //   GenericState
+  // > {
+  //   return this.children.get(indexOfChild) ?? null;
+  // }
+
+  // public getIndexOfPlayedMove(): typeof this.indexOfPlayedMove {
+  //   return this.indexOfPlayedMove;
   // }
 }
 
+const constructGraphvizNode = <
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+>({
+  id,
+  treeNode,
+}: {
+  id: Integer;
+  treeNode: TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >;
+}) => {
+  const state = treeNode.getState();
+  const qualityOfMatch = treeNode.getQualityOfMatch();
+  const quantityOfVisits = treeNode.getQuantityOfVisits();
+  const game = state.getGame();
+  const indexOfPlayer = state.getIndexOfPlayer();
+  const player = game.getPlayer({ indexOfPlayer });
+  if (player === null) {
+    throw new Error(
+      `There is no player in this game with the index ${indexOfPlayer}.`,
+    );
+  }
+
+  const label = `${id}: S.${quantityOfVisits} Q.${
+    qualityOfMatch
+    // eslint-disable-next-line @typescript-eslint/no-base-to-string
+  }\nP.${indexOfPlayer} ${player.getSymbol()} ${player.getName()}\n${state.toString()}`;
+
+  return new NodeFromGraphviz(id.toString(), {
+    [attributeFromGraphviz.label]: label,
+    fontname: "Monospace",
+  });
+};
+
 export type { ParamsOfTreeNode };
-export { TreeNode };
+export { constructGraphvizNode, TreeNode };

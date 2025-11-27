@@ -7,7 +7,11 @@ import type { State } from "@repo/game/State.js";
 
 import { expect } from "vitest";
 
-import { type ParamsOfTreeNode, TreeNode } from "../TreeNode.js";
+import {
+  constructGraphvizNode,
+  type ParamsOfTreeNode,
+  TreeNode,
+} from "../TreeNode.js";
 
 const validateConstructor = <
   GenericGame extends Game<
@@ -52,7 +56,6 @@ const validateConstructor = <
   >;
 }) => {
   expect(treeNode).toBeInstanceOf(TreeNode);
-  expect(treeNode.getIndexOfPlayedMove()).toBe(params.indexOfPlayedMove);
   expect(treeNode.getState()).not.toBe(params.state);
   expect(treeNode.getState()).toStrictEqual(params.state);
 };

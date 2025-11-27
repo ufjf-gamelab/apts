@@ -2,7 +2,8 @@
   "author": "Gabriel Malosto",
   "dependencies": {
     "@repo/engine_core": "workspace:*",
-    "@repo/game": "workspace:*"
+    "@repo/game": "workspace:*",
+    "ts-graphviz": "^3.0.6"
   },
   "devDependencies": {
     "@repo/eslint_config": "workspace:*",

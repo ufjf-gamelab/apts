@@ -49,22 +49,21 @@ type RecordOfSnowballTreeNodesWithData = RecordOfTreeNodesWithData<
 >;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface RequiredParamsOfSnowballTreeNode
-  extends RequiredParamsOfTreeNode<
-    SnowballGame,
-    SnowballMove,
-    SnowballPlayer,
-    SnowballScore,
-    SnowballSlot,
-    SnowballState,
-    SnowballTreeNode,
-    RequiredParamsOfSnowballMove,
-    RequiredParamsOfSnowballState,
-    RequiredParamsOfSnowballTreeNode,
-    SnowballMoveWithData,
-    SnowballStateWithData,
-    SnowballTreeNodeWithData
-  > {}
+interface RequiredParamsOfSnowballTreeNode extends RequiredParamsOfTreeNode<
+  SnowballGame,
+  SnowballMove,
+  SnowballPlayer,
+  SnowballScore,
+  SnowballSlot,
+  SnowballState,
+  SnowballTreeNode,
+  RequiredParamsOfSnowballMove,
+  RequiredParamsOfSnowballState,
+  RequiredParamsOfSnowballTreeNode,
+  SnowballMoveWithData,
+  SnowballStateWithData,
+  SnowballTreeNodeWithData
+> {}
 
 type SnowballTreeNode = TreeNode<
   SnowballGame,

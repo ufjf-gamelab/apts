@@ -136,7 +136,9 @@ class SnowballGame extends Game<
 
     const move = this.getMove({ indexOfMove });
     if (move === null) {
-      return state.clone();
+      throw constructErrorForInvalidMove({
+        indexOfMove,
+      });
     }
 
     const moveIsValid = this.isMoveValid({ move, state });
