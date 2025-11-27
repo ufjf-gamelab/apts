@@ -77,7 +77,7 @@ const testPlayForAState = ({
   >[0],
   "expectedState"
 > & {
-  moveWithDataAndIndex: (typeof recordOfTicTacToeMovesWithDataAndIndex)["centerOfCenter"];
+  moveWithDataAndIndex: (typeof recordOfTicTacToeMovesWithDataAndIndex)["center"];
   stateWithData: TicTacToeStateWithData;
 }) => {
   test(
@@ -113,7 +113,7 @@ const testPlayForAStateWhenItIsInvalid = ({
   Parameters<typeof createDescriptionWhenPlayIsInvalid>[0],
   "expectedError"
 > & {
-  moveWithDataAndIndex: (typeof recordOfTicTacToeMovesWithDataAndIndex)["centerOfCenter"];
+  moveWithDataAndIndex: (typeof recordOfTicTacToeMovesWithDataAndIndex)["center"];
   stateWithData: TicTacToeStateWithData;
 }) => {
   test(
@@ -145,7 +145,7 @@ const testPlayForAStateWhenTheStateIsFinal = ({
   moveWithDataAndIndex,
   stateWithData,
 }: {
-  moveWithDataAndIndex: (typeof recordOfTicTacToeMovesWithDataAndIndex)["centerOfCenter"];
+  moveWithDataAndIndex: (typeof recordOfTicTacToeMovesWithDataAndIndex)["center"];
   stateWithData: TicTacToeStateWithData;
 }) => {
   testPlayForAStateWhenItIsInvalid({
@@ -161,7 +161,7 @@ const testPlayForAStateWhenTheMoveIsInvalid = ({
   moveWithDataAndIndex,
   stateWithData,
 }: {
-  moveWithDataAndIndex: (typeof recordOfTicTacToeMovesWithDataAndIndex)["centerOfCenter"];
+  moveWithDataAndIndex: (typeof recordOfTicTacToeMovesWithDataAndIndex)["center"];
   stateWithData: TicTacToeStateWithData;
 }) => {
   testPlayForAStateWhenItIsInvalid({
@@ -178,8 +178,7 @@ testPlayForAState({
     recordOfTicTacToeStatesWithData
       .slotR0C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer
       .state,
-  moveWithDataAndIndex:
-    recordOfTicTacToeMovesWithDataAndIndex.northwestOfNorthwest,
+  moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.northwest,
   stateWithData:
     recordOfTicTacToeStatesWithData.allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
 });
@@ -187,22 +186,21 @@ testPlayForAState({
 testPlayForAState({
   expectedState:
     recordOfTicTacToeStatesWithData
-      .slotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer
+      .slotR0C0AndR0C2AndR1C1AndR2C1AndR2C2AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBrunoAndAliceHas1PointAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer
       .state,
-  moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.eastOfWest,
+  moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.southeast,
   stateWithData:
-    recordOfTicTacToeStatesWithData.slotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
+    recordOfTicTacToeStatesWithData.slotR0C0AndR0C2AndR1C1AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
 });
 
 testPlayForAStateWhenTheMoveIsInvalid({
-  moveWithDataAndIndex:
-    recordOfTicTacToeMovesWithDataAndIndex.northwestOfNorthwest,
+  moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.northwest,
   stateWithData:
-    recordOfTicTacToeStatesWithData.slotsR0C0ToR3C3AndR4C0AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
+    recordOfTicTacToeStatesWithData.slotR0C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
 });
 
 testPlayForAStateWhenTheStateIsFinal({
-  moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.eastOfWest,
+  moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.southeast,
   stateWithData:
-    recordOfTicTacToeStatesWithData.slotsR0C0ToR3C3AndR4C0AndR4C2AreFilledByAliceAndSlotsR0C4ToR3C7AndR3C8AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
+    recordOfTicTacToeStatesWithData.slotR0C0AndR0C2AndR1C1AndR2C1AndR2C2AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBrunoAndAliceHas1PointAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
 });

@@ -77,67 +77,275 @@ const rootThenThisNorthwest = {
     playedMoveWithDataAndIndex:
       recordOfTicTacToeMovesWithDataAndIndex.northwest,
     stateWithData:
-      recordOfTicTacToeStatesWithData.slotR0C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
+      recordOfTicTacToeStatesWithData.slotR0C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
   },
   treeNode: thisRootThenNorthwest.treeNode.expand({
     indexOfMove: recordOfTicTacToeMovesWithDataAndIndex.northwest.indexOfMove,
   }),
 } satisfies TicTacToeTreeNodeWithData;
 
-/* ((*), (Center, South)) */
-const thisRootThenCenterOrSouth = createTicTacToeTreeNodeWithData({
-  keyOfTreeNode: "thisRootThenCenterOrSouth",
-  requiredParams: {
-    ...thisRoot.requiredParams,
-    expandedMovesWithData: new Map([
-      constructTupleForMove({
-        moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.center,
-      }),
-      constructTupleForMove({
-        moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.south,
-      }),
-    ]),
-  },
-}) satisfies TicTacToeTreeNodeWithData;
+/* ((*), (Center, East, North, Northeast, Northwest, South, Southeast, Southwest, West)) */
+const thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest =
+  createTicTacToeTreeNodeWithData({
+    keyOfTreeNode:
+      "thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
+    requiredParams: {
+      ...thisRoot.requiredParams,
+      expandedMovesWithData: new Map([
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.center,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.east,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.north,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.northeast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.northwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.south,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.southeast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.southwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.west,
+        }),
+      ]),
+    },
+  }) satisfies TicTacToeTreeNodeWithData;
 
-/* ((), (*Center, South)) */
-const rootThenThisCenterOrSouth = {
-  keyOfTreeNode: "rootThenThisCenterOrSouth",
-  requiredParams: {
-    expandedMovesWithData: new Map([]),
-    explorationConstant: EXPLORATION_CONSTANT,
-    parentTreeNodeWithData: thisRootThenCenterOrSouth,
-    playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.center,
-    stateWithData:
-      recordOfTicTacToeStatesWithData.slotR1C1IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
-  },
-  treeNode: thisRootThenCenterOrSouth.treeNode.expand({
-    indexOfMove: recordOfTicTacToeMovesWithDataAndIndex.center.indexOfMove,
-  }),
-} satisfies TicTacToeTreeNodeWithData;
+/* ((), (*Center, East, North, Northeast, Northwest, South, Southeast, Southwest, West)) */
+const rootThenThisCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest =
+  {
+    keyOfTreeNode:
+      "rootThenThisCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
+    requiredParams: {
+      expandedMovesWithData: new Map([]),
+      explorationConstant: EXPLORATION_CONSTANT,
+      parentTreeNodeWithData:
+        thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+      playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.center,
+      stateWithData:
+        recordOfTicTacToeStatesWithData.slotR1C1IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
+    },
+    treeNode:
+      thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest.treeNode.expand(
+        {
+          indexOfMove:
+            recordOfTicTacToeMovesWithDataAndIndex.center.indexOfMove,
+        },
+      ),
+  } satisfies TicTacToeTreeNodeWithData;
 
-/* ((), (Center, *South)) */
-const rootThenCenterOrThisSouth = {
-  keyOfTreeNode: "rootThenCenterOrThisSouth",
-  requiredParams: {
-    expandedMovesWithData: new Map([]),
-    explorationConstant: EXPLORATION_CONSTANT,
-    parentTreeNodeWithData: thisRootThenCenterOrSouth,
-    playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.south,
-    stateWithData:
-      recordOfTicTacToeStatesWithData.slotR2C1IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
-  },
-  treeNode: thisRootThenCenterOrSouth.treeNode.expand({
-    indexOfMove: recordOfTicTacToeMovesWithDataAndIndex.south.indexOfMove,
-  }),
-} satisfies TicTacToeTreeNodeWithData;
+/* ((), (Center, *East, North, Northeast, Northwest, South, Southeast, Southwest, West)) */
+const rootThenCenterOrThisEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest =
+  {
+    keyOfTreeNode:
+      "rootThenCenterOrThisEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
+    requiredParams: {
+      expandedMovesWithData: new Map([]),
+      explorationConstant: EXPLORATION_CONSTANT,
+      parentTreeNodeWithData:
+        thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+      playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.east,
+      stateWithData:
+        recordOfTicTacToeStatesWithData.slotR1C2IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
+    },
+    treeNode:
+      thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest.treeNode.expand(
+        {
+          indexOfMove: recordOfTicTacToeMovesWithDataAndIndex.east.indexOfMove,
+        },
+      ),
+  } satisfies TicTacToeTreeNodeWithData;
+
+/* ((), (Center, East, *North, Northeast, Northwest, South, Southeast, Southwest, West)) */
+const rootThenCenterOrEastOrThisNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest =
+  {
+    keyOfTreeNode:
+      "rootThenCenterOrEastOrThisNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
+    requiredParams: {
+      expandedMovesWithData: new Map([]),
+      explorationConstant: EXPLORATION_CONSTANT,
+      parentTreeNodeWithData:
+        thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+      playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.north,
+      stateWithData:
+        recordOfTicTacToeStatesWithData.slotR0C1IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
+    },
+    treeNode:
+      thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest.treeNode.expand(
+        {
+          indexOfMove: recordOfTicTacToeMovesWithDataAndIndex.north.indexOfMove,
+        },
+      ),
+  } satisfies TicTacToeTreeNodeWithData;
+
+/* ((), (Center, East, North, *Northeast, Northwest, South, Southeast, Southwest, West)) */
+const rootThenCenterOrEastOrNorthOrThisNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest =
+  {
+    keyOfTreeNode:
+      "rootThenCenterOrEastOrNorthOrThisNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
+    requiredParams: {
+      expandedMovesWithData: new Map([]),
+      explorationConstant: EXPLORATION_CONSTANT,
+      parentTreeNodeWithData:
+        thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+      playedMoveWithDataAndIndex:
+        recordOfTicTacToeMovesWithDataAndIndex.northeast,
+      stateWithData:
+        recordOfTicTacToeStatesWithData.slotR0C2IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
+    },
+    treeNode:
+      thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest.treeNode.expand(
+        {
+          indexOfMove:
+            recordOfTicTacToeMovesWithDataAndIndex.northeast.indexOfMove,
+        },
+      ),
+  } satisfies TicTacToeTreeNodeWithData;
+
+/* ((), (Center, East, North, Northeast, *Northwest, South, Southeast, Southwest, West)) */
+const rootThenCenterOrEastOrNorthOrNortheastOrThisNorthwestOrSouthOrSoutheastOrSouthwestOrWest =
+  {
+    keyOfTreeNode:
+      "rootThenCenterOrEastOrNorthOrNortheastOrThisNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
+    requiredParams: {
+      expandedMovesWithData: new Map([]),
+      explorationConstant: EXPLORATION_CONSTANT,
+      parentTreeNodeWithData:
+        thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+      playedMoveWithDataAndIndex:
+        recordOfTicTacToeMovesWithDataAndIndex.northwest,
+      stateWithData:
+        recordOfTicTacToeStatesWithData.slotR0C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
+    },
+    treeNode:
+      thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest.treeNode.expand(
+        {
+          indexOfMove:
+            recordOfTicTacToeMovesWithDataAndIndex.northwest.indexOfMove,
+        },
+      ),
+  } satisfies TicTacToeTreeNodeWithData;
+
+/* ((), (Center, East, North, Northeast, Northwest, *South, Southeast, Southwest, West)) */
+const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrThisSouthOrSoutheastOrSouthwestOrWest =
+  {
+    keyOfTreeNode:
+      "rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrThisSouthOrSoutheastOrSouthwestOrWest",
+    requiredParams: {
+      expandedMovesWithData: new Map([]),
+      explorationConstant: EXPLORATION_CONSTANT,
+      parentTreeNodeWithData:
+        thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+      playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.south,
+      stateWithData:
+        recordOfTicTacToeStatesWithData.slotR2C1IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
+    },
+    treeNode:
+      thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest.treeNode.expand(
+        {
+          indexOfMove: recordOfTicTacToeMovesWithDataAndIndex.south.indexOfMove,
+        },
+      ),
+  } satisfies TicTacToeTreeNodeWithData;
+
+/* ((), (Center, East, North, Northeast, Northwest, South, *Southeast, Southwest, West)) */
+const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrThisSoutheastOrSouthwestOrWest =
+  {
+    keyOfTreeNode:
+      "rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrThisSoutheastOrSouthwestOrWest",
+    requiredParams: {
+      expandedMovesWithData: new Map([]),
+      explorationConstant: EXPLORATION_CONSTANT,
+      parentTreeNodeWithData:
+        thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+      playedMoveWithDataAndIndex:
+        recordOfTicTacToeMovesWithDataAndIndex.southeast,
+      stateWithData:
+        recordOfTicTacToeStatesWithData.slotR2C2IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
+    },
+    treeNode:
+      thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest.treeNode.expand(
+        {
+          indexOfMove:
+            recordOfTicTacToeMovesWithDataAndIndex.southeast.indexOfMove,
+        },
+      ),
+  } satisfies TicTacToeTreeNodeWithData;
+
+/* ((), (Center, East, North, Northeast, Northwest, South, Southeast, *Southwest, West)) */
+const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrThisSouthwestOrWest =
+  {
+    keyOfTreeNode:
+      "rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrThisSouthwestOrWest",
+    requiredParams: {
+      expandedMovesWithData: new Map([]),
+      explorationConstant: EXPLORATION_CONSTANT,
+      parentTreeNodeWithData:
+        thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+      playedMoveWithDataAndIndex:
+        recordOfTicTacToeMovesWithDataAndIndex.southwest,
+      stateWithData:
+        recordOfTicTacToeStatesWithData.slotR2C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
+    },
+    treeNode:
+      thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest.treeNode.expand(
+        {
+          indexOfMove:
+            recordOfTicTacToeMovesWithDataAndIndex.southwest.indexOfMove,
+        },
+      ),
+  } satisfies TicTacToeTreeNodeWithData;
+
+/* ((), (Center, East, North, Northeast, Northwest, South, Southeast, Southwest, *West)) */
+const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrThisWest =
+  {
+    keyOfTreeNode:
+      "rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrThisWest",
+    requiredParams: {
+      expandedMovesWithData: new Map([]),
+      explorationConstant: EXPLORATION_CONSTANT,
+      parentTreeNodeWithData:
+        thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+      playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.west,
+      stateWithData:
+        recordOfTicTacToeStatesWithData.slotR1C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
+    },
+    treeNode:
+      thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest.treeNode.expand(
+        {
+          indexOfMove: recordOfTicTacToeMovesWithDataAndIndex.west.indexOfMove,
+        },
+      ),
+  } satisfies TicTacToeTreeNodeWithData;
 
 const recordOfTicTacToeTreeNodesWithData = {
-  rootThenCenterOrThisSouth,
-  rootThenThisCenterOrSouth,
+  rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrThisWest,
+  rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrThisSouthwestOrWest,
+  rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrThisSoutheastOrSouthwestOrWest,
+  rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrThisSouthOrSoutheastOrSouthwestOrWest,
+  rootThenCenterOrEastOrNorthOrNortheastOrThisNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+  rootThenCenterOrEastOrNorthOrThisNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+  rootThenCenterOrEastOrThisNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+  rootThenCenterOrThisEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+  rootThenThisCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
   rootThenThisNorthwest,
   thisRoot,
-  thisRootThenCenterOrSouth,
   thisRootThenNorthwest,
 } satisfies RecordOfTicTacToeTreeNodesWithData;
 

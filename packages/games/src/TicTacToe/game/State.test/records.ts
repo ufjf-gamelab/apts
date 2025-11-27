@@ -10,9 +10,16 @@ import {
   indexedTicTacToeSlotsWithDataInWhichAllSlotsAreEmpty,
   indexedTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR1C2AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR2C0AndR2C2AreFilledByBruno,
   indexedTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR2C1AndR2C2AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
+  indexedTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
   indexedTicTacToeSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
+  indexedTicTacToeSlotsWithDataInWhichSlotR0C1IsFilledByAlice,
+  indexedTicTacToeSlotsWithDataInWhichSlotR0C2IsFilledByAlice,
+  indexedTicTacToeSlotsWithDataInWhichSlotR1C0IsFilledByAlice,
   indexedTicTacToeSlotsWithDataInWhichSlotR1C1IsFilledByAlice,
+  indexedTicTacToeSlotsWithDataInWhichSlotR1C2IsFilledByAlice,
+  indexedTicTacToeSlotsWithDataInWhichSlotR2C0IsFilledByAlice,
   indexedTicTacToeSlotsWithDataInWhichSlotR2C1IsFilledByAlice,
+  indexedTicTacToeSlotsWithDataInWhichSlotR2C2IsFilledByAlice,
 } from "../Slot.test/indexedRecords.js";
 import {
   createRecordOfTicTacToeStatesWithData,
@@ -32,7 +39,7 @@ const recordOfRequiredParamsOfTicTacToeStates = {
   allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
     {
       gameWithData:
-        recordOfTicTacToeGamesWithData.ticTacToeWith9RowsAnd9Columns,
+        recordOfTicTacToeGamesWithData.ticTacToeWith3RowsAnd3Columns,
       isFinal: false,
       nextPlayerWithDataAndIndex:
         recordOfTicTacToePlayersWithDataAndIndex.bruno,
@@ -77,7 +84,7 @@ const recordOfRequiredParamsOfTicTacToeStates = {
   slotR0C0AndR0C2AndR1C1AndR1C2AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR2C0AndR2C2AreFilledByBrunoAndAliceHas1PointAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     {
       gameWithData:
-        recordOfTicTacToeGamesWithData.ticTacToeWith9RowsAnd9Columns,
+        recordOfTicTacToeGamesWithData.ticTacToeWith3RowsAnd3Columns,
       isFinal: true,
       nextPlayerWithDataAndIndex:
         recordOfTicTacToePlayersWithDataAndIndex.alice,
@@ -88,10 +95,10 @@ const recordOfRequiredParamsOfTicTacToeStates = {
         indexedTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR1C2AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR2C0AndR2C2AreFilledByBruno,
       validMovesWithData: new Map([]),
     },
-  slotR0C0AndR0C2AndR1C1AndR2C1AndR2C2AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
+  slotR0C0AndR0C2AndR1C1AndR2C1AndR2C2AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBrunoAndAliceHas1PointAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     {
       gameWithData:
-        recordOfTicTacToeGamesWithData.ticTacToeWith9RowsAnd9Columns,
+        recordOfTicTacToeGamesWithData.ticTacToeWith3RowsAnd3Columns,
       isFinal: true,
       nextPlayerWithDataAndIndex:
         recordOfTicTacToePlayersWithDataAndIndex.alice,
@@ -102,10 +109,10 @@ const recordOfRequiredParamsOfTicTacToeStates = {
         indexedTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR2C1AndR2C2AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
       validMovesWithData: new Map([]),
     },
-  slotR0C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
+  slotR0C0AndR0C2AndR1C1AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
     {
       gameWithData:
-        recordOfTicTacToeGamesWithData.ticTacToeWith9RowsAnd9Columns,
+        recordOfTicTacToeGamesWithData.ticTacToeWith3RowsAnd3Columns,
       isFinal: false,
       nextPlayerWithDataAndIndex:
         recordOfTicTacToePlayersWithDataAndIndex.bruno,
@@ -113,7 +120,153 @@ const recordOfRequiredParamsOfTicTacToeStates = {
       scoreWithData:
         recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points,
       slotsWithData:
+        indexedTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
+      validMovesWithData: new Map([
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.southeast,
+        }),
+      ]),
+    },
+  slotR0C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
+    {
+      gameWithData:
+        recordOfTicTacToeGamesWithData.ticTacToeWith3RowsAnd3Columns,
+      isFinal: false,
+      nextPlayerWithDataAndIndex:
+        recordOfTicTacToePlayersWithDataAndIndex.alice,
+      playerWithDataAndIndex: recordOfTicTacToePlayersWithDataAndIndex.bruno,
+      scoreWithData:
+        recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points,
+      slotsWithData:
         indexedTicTacToeSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
+      validMovesWithData: new Map([
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.center,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.east,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.north,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.northeast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.south,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.southeast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.southwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.west,
+        }),
+      ]),
+    },
+  slotR0C1IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
+    {
+      gameWithData:
+        recordOfTicTacToeGamesWithData.ticTacToeWith3RowsAnd3Columns,
+      isFinal: false,
+      nextPlayerWithDataAndIndex:
+        recordOfTicTacToePlayersWithDataAndIndex.alice,
+      playerWithDataAndIndex: recordOfTicTacToePlayersWithDataAndIndex.bruno,
+      scoreWithData:
+        recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points,
+      slotsWithData:
+        indexedTicTacToeSlotsWithDataInWhichSlotR0C1IsFilledByAlice,
+      validMovesWithData: new Map([
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.center,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.east,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.northeast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.northwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.south,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.southeast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.southwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.west,
+        }),
+      ]),
+    },
+  slotR0C2IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
+    {
+      gameWithData:
+        recordOfTicTacToeGamesWithData.ticTacToeWith3RowsAnd3Columns,
+      isFinal: false,
+      nextPlayerWithDataAndIndex:
+        recordOfTicTacToePlayersWithDataAndIndex.alice,
+      playerWithDataAndIndex: recordOfTicTacToePlayersWithDataAndIndex.bruno,
+      scoreWithData:
+        recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points,
+      slotsWithData:
+        indexedTicTacToeSlotsWithDataInWhichSlotR0C2IsFilledByAlice,
+      validMovesWithData: new Map([
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.center,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.east,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.north,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.northwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.south,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.southeast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.southwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.west,
+        }),
+      ]),
+    },
+  slotR1C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
+    {
+      gameWithData:
+        recordOfTicTacToeGamesWithData.ticTacToeWith3RowsAnd3Columns,
+      isFinal: false,
+      nextPlayerWithDataAndIndex:
+        recordOfTicTacToePlayersWithDataAndIndex.alice,
+      playerWithDataAndIndex: recordOfTicTacToePlayersWithDataAndIndex.bruno,
+      scoreWithData:
+        recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points,
+      slotsWithData:
+        indexedTicTacToeSlotsWithDataInWhichSlotR1C0IsFilledByAlice,
       validMovesWithData: new Map([
         constructTupleForMove({
           moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.center,
@@ -143,19 +296,16 @@ const recordOfRequiredParamsOfTicTacToeStates = {
           moveWithDataAndIndex:
             recordOfTicTacToeMovesWithDataAndIndex.southwest,
         }),
-        constructTupleForMove({
-          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.west,
-        }),
       ]),
     },
-  slotR1C1IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
+  slotR1C1IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     {
       gameWithData:
-        recordOfTicTacToeGamesWithData.ticTacToeWith9RowsAnd9Columns,
+        recordOfTicTacToeGamesWithData.ticTacToeWith3RowsAnd3Columns,
       isFinal: false,
       nextPlayerWithDataAndIndex:
-        recordOfTicTacToePlayersWithDataAndIndex.bruno,
-      playerWithDataAndIndex: recordOfTicTacToePlayersWithDataAndIndex.alice,
+        recordOfTicTacToePlayersWithDataAndIndex.alice,
+      playerWithDataAndIndex: recordOfTicTacToePlayersWithDataAndIndex.bruno,
       scoreWithData:
         recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points,
       slotsWithData:
@@ -191,14 +341,99 @@ const recordOfRequiredParamsOfTicTacToeStates = {
         }),
       ]),
     },
-  slotR2C1IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
+  slotR1C2IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     {
       gameWithData:
-        recordOfTicTacToeGamesWithData.ticTacToeWith9RowsAnd9Columns,
+        recordOfTicTacToeGamesWithData.ticTacToeWith3RowsAnd3Columns,
       isFinal: false,
       nextPlayerWithDataAndIndex:
-        recordOfTicTacToePlayersWithDataAndIndex.bruno,
-      playerWithDataAndIndex: recordOfTicTacToePlayersWithDataAndIndex.alice,
+        recordOfTicTacToePlayersWithDataAndIndex.alice,
+      playerWithDataAndIndex: recordOfTicTacToePlayersWithDataAndIndex.bruno,
+      scoreWithData:
+        recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points,
+      slotsWithData:
+        indexedTicTacToeSlotsWithDataInWhichSlotR1C2IsFilledByAlice,
+      validMovesWithData: new Map([
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.center,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.north,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.northeast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.northwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.south,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.southeast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.southwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.west,
+        }),
+      ]),
+    },
+  slotR2C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
+    {
+      gameWithData:
+        recordOfTicTacToeGamesWithData.ticTacToeWith3RowsAnd3Columns,
+      isFinal: false,
+      nextPlayerWithDataAndIndex:
+        recordOfTicTacToePlayersWithDataAndIndex.alice,
+      playerWithDataAndIndex: recordOfTicTacToePlayersWithDataAndIndex.bruno,
+      scoreWithData:
+        recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points,
+      slotsWithData:
+        indexedTicTacToeSlotsWithDataInWhichSlotR2C0IsFilledByAlice,
+      validMovesWithData: new Map([
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.center,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.east,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.north,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.northeast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.northwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.south,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.southeast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.west,
+        }),
+      ]),
+    },
+  slotR2C1IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
+    {
+      gameWithData:
+        recordOfTicTacToeGamesWithData.ticTacToeWith3RowsAnd3Columns,
+      isFinal: false,
+      nextPlayerWithDataAndIndex:
+        recordOfTicTacToePlayersWithDataAndIndex.alice,
+      playerWithDataAndIndex: recordOfTicTacToePlayersWithDataAndIndex.bruno,
       scoreWithData:
         recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points,
       slotsWithData:
@@ -224,6 +459,48 @@ const recordOfRequiredParamsOfTicTacToeStates = {
         constructTupleForMove({
           moveWithDataAndIndex:
             recordOfTicTacToeMovesWithDataAndIndex.southeast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.southwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.west,
+        }),
+      ]),
+    },
+  slotR2C2IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
+    {
+      gameWithData:
+        recordOfTicTacToeGamesWithData.ticTacToeWith3RowsAnd3Columns,
+      isFinal: false,
+      nextPlayerWithDataAndIndex:
+        recordOfTicTacToePlayersWithDataAndIndex.alice,
+      playerWithDataAndIndex: recordOfTicTacToePlayersWithDataAndIndex.bruno,
+      scoreWithData:
+        recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points,
+      slotsWithData:
+        indexedTicTacToeSlotsWithDataInWhichSlotR2C2IsFilledByAlice,
+      validMovesWithData: new Map([
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.center,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.east,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.north,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.northeast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.northwest,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.south,
         }),
         constructTupleForMove({
           moveWithDataAndIndex:

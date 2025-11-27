@@ -7,7 +7,7 @@ import {
 } from "./setup.js";
 
 const recordOfRequiredParamsOfTicTacToeGames = {
-  ticTacToeWith9RowsAnd9Columns: {
+  ticTacToeWith3RowsAnd3Columns: {
     movesWithData: indexedTicTacToeMovesWithData,
     name: "TicTacToe",
     playersWithData: indexedTicTacToePlayersWithData,

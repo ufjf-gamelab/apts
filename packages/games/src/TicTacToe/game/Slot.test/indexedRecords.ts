@@ -12,13 +12,19 @@ import type {
 } from "./setup.js";
 
 import {
-  type recordOfRequiredParamsOfTicTacToeSlotsInWhichAllSlotsAreEmpty,
   recordOfTicTacToeSlotsWithDataInWhichAllSlotsAreEmpty,
   recordOfTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR1C2AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR2C0AndR2C2AreFilledByBruno,
   recordOfTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR2C1AndR2C2AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
+  recordOfTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
   recordOfTicTacToeSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
+  recordOfTicTacToeSlotsWithDataInWhichSlotR0C1IsFilledByAlice,
+  recordOfTicTacToeSlotsWithDataInWhichSlotR0C2IsFilledByAlice,
+  recordOfTicTacToeSlotsWithDataInWhichSlotR1C0IsFilledByAlice,
   recordOfTicTacToeSlotsWithDataInWhichSlotR1C1IsFilledByAlice,
+  recordOfTicTacToeSlotsWithDataInWhichSlotR1C2IsFilledByAlice,
+  recordOfTicTacToeSlotsWithDataInWhichSlotR2C0IsFilledByAlice,
   recordOfTicTacToeSlotsWithDataInWhichSlotR2C1IsFilledByAlice,
+  recordOfTicTacToeSlotsWithDataInWhichSlotR2C2IsFilledByAlice,
 } from "./records.js";
 
 type KeysOfSlotsInOrder<
@@ -82,9 +88,7 @@ const keysOfTicTacToeSlotsInOrder = [
   "southwest",
   "south",
   "southeast",
-] as const satisfies KeysOfSlotsInOrder<
-  typeof recordOfRequiredParamsOfTicTacToeSlotsInWhichAllSlotsAreEmpty
->;
+] as const satisfies KeysOfSlotsInOrder<RecordOfRequiredParamsOfTicTacToeSlots>;
 
 const {
   indexedTicTacToeSlotsWithData:
@@ -94,39 +98,6 @@ const {
 } = createIndexedTicTacToeSlotsWithData({
   keysOfTicTacToeSlotsInOrder,
   ticTacToeSlotsWithData: recordOfTicTacToeSlotsWithDataInWhichAllSlotsAreEmpty,
-});
-
-const {
-  indexedTicTacToeSlotsWithData:
-    indexedTicTacToeSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
-  recordOfTicTacToeSlotsWithDataAndIndex:
-    recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR0C0IsFilledByAlice,
-} = createIndexedTicTacToeSlotsWithData({
-  keysOfTicTacToeSlotsInOrder,
-  ticTacToeSlotsWithData:
-    recordOfTicTacToeSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
-});
-
-const {
-  indexedTicTacToeSlotsWithData:
-    indexedTicTacToeSlotsWithDataInWhichSlotR1C1IsFilledByAlice,
-  recordOfTicTacToeSlotsWithDataAndIndex:
-    recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR1C1IsFilledByAlice,
-} = createIndexedTicTacToeSlotsWithData({
-  keysOfTicTacToeSlotsInOrder,
-  ticTacToeSlotsWithData:
-    recordOfTicTacToeSlotsWithDataInWhichSlotR1C1IsFilledByAlice,
-});
-
-const {
-  indexedTicTacToeSlotsWithData:
-    indexedTicTacToeSlotsWithDataInWhichSlotR2C1IsFilledByAlice,
-  recordOfTicTacToeSlotsWithDataAndIndex:
-    recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR2C1IsFilledByAlice,
-} = createIndexedTicTacToeSlotsWithData({
-  keysOfTicTacToeSlotsInOrder,
-  ticTacToeSlotsWithData:
-    recordOfTicTacToeSlotsWithDataInWhichSlotR2C1IsFilledByAlice,
 });
 
 const {
@@ -151,19 +122,142 @@ const {
     recordOfTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR2C1AndR2C2AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
 });
 
+const {
+  indexedTicTacToeSlotsWithData:
+    indexedTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
+  recordOfTicTacToeSlotsWithDataAndIndex:
+    recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR0C0AndR0C2AndR1C1AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
+} = createIndexedTicTacToeSlotsWithData({
+  keysOfTicTacToeSlotsInOrder,
+  ticTacToeSlotsWithData:
+    recordOfTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
+});
+
+const {
+  indexedTicTacToeSlotsWithData:
+    indexedTicTacToeSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
+  recordOfTicTacToeSlotsWithDataAndIndex:
+    recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR0C0IsFilledByAlice,
+} = createIndexedTicTacToeSlotsWithData({
+  keysOfTicTacToeSlotsInOrder,
+  ticTacToeSlotsWithData:
+    recordOfTicTacToeSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
+});
+
+const {
+  indexedTicTacToeSlotsWithData:
+    indexedTicTacToeSlotsWithDataInWhichSlotR0C1IsFilledByAlice,
+  recordOfTicTacToeSlotsWithDataAndIndex:
+    recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR0C1IsFilledByAlice,
+} = createIndexedTicTacToeSlotsWithData({
+  keysOfTicTacToeSlotsInOrder,
+  ticTacToeSlotsWithData:
+    recordOfTicTacToeSlotsWithDataInWhichSlotR0C1IsFilledByAlice,
+});
+
+const {
+  indexedTicTacToeSlotsWithData:
+    indexedTicTacToeSlotsWithDataInWhichSlotR0C2IsFilledByAlice,
+  recordOfTicTacToeSlotsWithDataAndIndex:
+    recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR0C2IsFilledByAlice,
+} = createIndexedTicTacToeSlotsWithData({
+  keysOfTicTacToeSlotsInOrder,
+  ticTacToeSlotsWithData:
+    recordOfTicTacToeSlotsWithDataInWhichSlotR0C2IsFilledByAlice,
+});
+
+const {
+  indexedTicTacToeSlotsWithData:
+    indexedTicTacToeSlotsWithDataInWhichSlotR1C0IsFilledByAlice,
+  recordOfTicTacToeSlotsWithDataAndIndex:
+    recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR1C0IsFilledByAlice,
+} = createIndexedTicTacToeSlotsWithData({
+  keysOfTicTacToeSlotsInOrder,
+  ticTacToeSlotsWithData:
+    recordOfTicTacToeSlotsWithDataInWhichSlotR1C0IsFilledByAlice,
+});
+
+const {
+  indexedTicTacToeSlotsWithData:
+    indexedTicTacToeSlotsWithDataInWhichSlotR1C1IsFilledByAlice,
+  recordOfTicTacToeSlotsWithDataAndIndex:
+    recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR1C1IsFilledByAlice,
+} = createIndexedTicTacToeSlotsWithData({
+  keysOfTicTacToeSlotsInOrder,
+  ticTacToeSlotsWithData:
+    recordOfTicTacToeSlotsWithDataInWhichSlotR1C1IsFilledByAlice,
+});
+
+const {
+  indexedTicTacToeSlotsWithData:
+    indexedTicTacToeSlotsWithDataInWhichSlotR1C2IsFilledByAlice,
+  recordOfTicTacToeSlotsWithDataAndIndex:
+    recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR1C2IsFilledByAlice,
+} = createIndexedTicTacToeSlotsWithData({
+  keysOfTicTacToeSlotsInOrder,
+  ticTacToeSlotsWithData:
+    recordOfTicTacToeSlotsWithDataInWhichSlotR1C2IsFilledByAlice,
+});
+
+const {
+  indexedTicTacToeSlotsWithData:
+    indexedTicTacToeSlotsWithDataInWhichSlotR2C0IsFilledByAlice,
+  recordOfTicTacToeSlotsWithDataAndIndex:
+    recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR2C0IsFilledByAlice,
+} = createIndexedTicTacToeSlotsWithData({
+  keysOfTicTacToeSlotsInOrder,
+  ticTacToeSlotsWithData:
+    recordOfTicTacToeSlotsWithDataInWhichSlotR2C0IsFilledByAlice,
+});
+
+const {
+  indexedTicTacToeSlotsWithData:
+    indexedTicTacToeSlotsWithDataInWhichSlotR2C1IsFilledByAlice,
+  recordOfTicTacToeSlotsWithDataAndIndex:
+    recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR2C1IsFilledByAlice,
+} = createIndexedTicTacToeSlotsWithData({
+  keysOfTicTacToeSlotsInOrder,
+  ticTacToeSlotsWithData:
+    recordOfTicTacToeSlotsWithDataInWhichSlotR2C1IsFilledByAlice,
+});
+
+const {
+  indexedTicTacToeSlotsWithData:
+    indexedTicTacToeSlotsWithDataInWhichSlotR2C2IsFilledByAlice,
+  recordOfTicTacToeSlotsWithDataAndIndex:
+    recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR2C2IsFilledByAlice,
+} = createIndexedTicTacToeSlotsWithData({
+  keysOfTicTacToeSlotsInOrder,
+  ticTacToeSlotsWithData:
+    recordOfTicTacToeSlotsWithDataInWhichSlotR2C2IsFilledByAlice,
+});
+
 export type { TicTacToeSlotWithDataAndIndex };
 export {
   indexedTicTacToeSlotsWithDataInWhichAllSlotsAreEmpty,
   indexedTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR1C2AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR2C0AndR2C2AreFilledByBruno,
   indexedTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR2C1AndR2C2AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
+  indexedTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
   indexedTicTacToeSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
+  indexedTicTacToeSlotsWithDataInWhichSlotR0C1IsFilledByAlice,
+  indexedTicTacToeSlotsWithDataInWhichSlotR0C2IsFilledByAlice,
+  indexedTicTacToeSlotsWithDataInWhichSlotR1C0IsFilledByAlice,
   indexedTicTacToeSlotsWithDataInWhichSlotR1C1IsFilledByAlice,
+  indexedTicTacToeSlotsWithDataInWhichSlotR1C2IsFilledByAlice,
+  indexedTicTacToeSlotsWithDataInWhichSlotR2C0IsFilledByAlice,
   indexedTicTacToeSlotsWithDataInWhichSlotR2C1IsFilledByAlice,
-  recordOfRequiredParamsOfTicTacToeSlotsInWhichAllSlotsAreEmpty,
+  indexedTicTacToeSlotsWithDataInWhichSlotR2C2IsFilledByAlice,
   recordOfTicTacToeSlotsWithDataAndIndexInWhichAllSlotsAreEmpty,
   recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR0C0AndR0C2AndR1C1AndR1C2AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR2C0AndR2C2AreFilledByBruno,
   recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR0C0AndR0C2AndR1C1AndR2C1AndR2C2AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
+  recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR0C0AndR0C2AndR1C1AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
   recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR0C0IsFilledByAlice,
+  recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR0C1IsFilledByAlice,
+  recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR0C2IsFilledByAlice,
+  recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR1C0IsFilledByAlice,
   recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR1C1IsFilledByAlice,
+  recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR1C2IsFilledByAlice,
+  recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR2C0IsFilledByAlice,
   recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR2C1IsFilledByAlice,
+  recordOfTicTacToeSlotsWithDataAndIndexInWhichSlotR2C2IsFilledByAlice,
 };
