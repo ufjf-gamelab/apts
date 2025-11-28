@@ -35,18 +35,16 @@ const testConstructor = ({
       }),
 
       () => {
-        const { explorationConstant, indexOfPlayedMove, parent, state } =
+        const { indexOfPlayedMove, state } =
           deriveParamsOfTicTacToeTreeNode(requiredParams);
 
-        const newTreeNode = new TreeNode({
-          explorationConstant,
+        const newTreeNode = TreeNode.create({
           indexOfPlayedMove,
-          parent,
           state,
         }) satisfies TicTacToeTreeNode;
 
         validateConstructor({
-          params: { explorationConstant, indexOfPlayedMove, parent, state },
+          params: { indexOfPlayedMove, state },
           treeNode: newTreeNode,
         });
 

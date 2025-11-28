@@ -56,13 +56,10 @@ interface RequiredParamsOfTicTacToeTreeNode extends RequiredParamsOfTreeNode<
   TicTacToeScore,
   TicTacToeSlot,
   TicTacToeState,
-  TicTacToeTreeNode,
   RequiredParamsOfTicTacToeMove,
   RequiredParamsOfTicTacToeState,
-  RequiredParamsOfTicTacToeTreeNode,
   TicTacToeMoveWithData,
-  TicTacToeStateWithData,
-  TicTacToeTreeNodeWithData
+  TicTacToeStateWithData
 > {}
 
 type TicTacToeTreeNode = TreeNode<
@@ -89,28 +86,20 @@ type TicTacToeTreeNodeWithData<
 >;
 
 const deriveParamsOfTicTacToeTreeNode = ({
-  explorationConstant,
-  parentTreeNodeWithData,
   playedMoveWithDataAndIndex,
   stateWithData,
 }: RequiredParamsOfTicTacToeTreeNode): DerivedParamsOfTicTacToeTreeNode =>
   deriveParamsOfTreeNode({
-    explorationConstant,
-    parentTreeNodeWithData,
     playedMoveWithDataAndIndex,
     stateWithData,
   });
 
 const createTicTacToeTreeNode = ({
-  explorationConstant,
   indexOfPlayedMove,
-  parent,
   state,
 }: DerivedParamsOfTicTacToeTreeNode): TicTacToeTreeNode =>
-  new TreeNode({
-    explorationConstant,
+  TreeNode.create({
     indexOfPlayedMove,
-    parent,
     state,
   }) satisfies TicTacToeTreeNode;
 

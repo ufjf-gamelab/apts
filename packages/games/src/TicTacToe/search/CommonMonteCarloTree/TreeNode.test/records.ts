@@ -8,11 +8,8 @@ import { recordOfTicTacToeStatesWithData } from "../../../game/State.test/record
 import {
   createTicTacToeTreeNodeWithData,
   type RecordOfTicTacToeTreeNodesWithData,
-  type RequiredParamsOfTicTacToeTreeNode,
   type TicTacToeTreeNodeWithData,
 } from "./setup.js";
-
-const EXPLORATION_CONSTANT = 2;
 
 const constructTupleForMove = ({
   moveWithDataAndIndex,
@@ -47,9 +44,7 @@ const thisRoot = createTicTacToeTreeNodeWithData({
   keyOfTreeNode: "thisRoot",
   requiredParams: {
     expandedMovesWithData: new Map([]),
-    explorationConstant: EXPLORATION_CONSTANT,
     indexAndKeyOfBestChild: null,
-    parentTreeNodeWithData: null,
     playedMoveWithDataAndIndex: null,
     stateWithData:
       recordOfTicTacToeStatesWithData.allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
@@ -65,13 +60,11 @@ const thisRootThenNorthwest = createTicTacToeTreeNodeWithData({
         moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.northwest,
       }),
     ]),
-    explorationConstant: EXPLORATION_CONSTANT,
     indexAndKeyOfBestChild: {
       indexOfChild:
         recordOfTicTacToeMovesWithDataAndIndex.northwest.indexOfMove,
       keyOfChild: "rootThenThisNorthwest",
     },
-    parentTreeNodeWithData: null,
     playedMoveWithDataAndIndex: null,
     stateWithData:
       recordOfTicTacToeStatesWithData.allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
@@ -83,9 +76,7 @@ const rootThenThisNorthwest = {
   keyOfTreeNode: "rootThenThisNorthwest",
   requiredParams: {
     expandedMovesWithData: new Map([]),
-    explorationConstant: EXPLORATION_CONSTANT,
     indexAndKeyOfBestChild: null,
-    parentTreeNodeWithData: thisRootThenNorthwest,
     playedMoveWithDataAndIndex:
       recordOfTicTacToeMovesWithDataAndIndex.northwest,
     stateWithData:
@@ -135,13 +126,12 @@ const thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrS
           moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.west,
         }),
       ]),
-      explorationConstant: EXPLORATION_CONSTANT,
       indexAndKeyOfBestChild: {
         indexOfChild: recordOfTicTacToeMovesWithDataAndIndex.center.indexOfMove,
         keyOfChild:
           "rootThenThisCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
       },
-      parentTreeNodeWithData: null,
+
       playedMoveWithDataAndIndex: null,
       stateWithData:
         recordOfTicTacToeStatesWithData.allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
@@ -155,10 +145,8 @@ const rootThenThisCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrS
       "rootThenThisCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
     requiredParams: {
       expandedMovesWithData: new Map([]),
-      explorationConstant: EXPLORATION_CONSTANT,
       indexAndKeyOfBestChild: null,
-      parentTreeNodeWithData:
-        thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+
       playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.center,
       stateWithData:
         recordOfTicTacToeStatesWithData.slotR1C1IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
@@ -179,10 +167,8 @@ const rootThenCenterOrThisEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrS
       "rootThenCenterOrThisEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
     requiredParams: {
       expandedMovesWithData: new Map([]),
-      explorationConstant: EXPLORATION_CONSTANT,
       indexAndKeyOfBestChild: null,
-      parentTreeNodeWithData:
-        thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+
       playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.east,
       stateWithData:
         recordOfTicTacToeStatesWithData.slotR1C2IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
@@ -202,10 +188,8 @@ const rootThenCenterOrEastOrThisNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrS
       "rootThenCenterOrEastOrThisNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
     requiredParams: {
       expandedMovesWithData: new Map([]),
-      explorationConstant: EXPLORATION_CONSTANT,
       indexAndKeyOfBestChild: null,
-      parentTreeNodeWithData:
-        thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+
       playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.north,
       stateWithData:
         recordOfTicTacToeStatesWithData.slotR0C1IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
@@ -225,10 +209,8 @@ const rootThenCenterOrEastOrNorthOrThisNortheastOrNorthwestOrSouthOrSoutheastOrS
       "rootThenCenterOrEastOrNorthOrThisNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
     requiredParams: {
       expandedMovesWithData: new Map([]),
-      explorationConstant: EXPLORATION_CONSTANT,
       indexAndKeyOfBestChild: null,
-      parentTreeNodeWithData:
-        thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+
       playedMoveWithDataAndIndex:
         recordOfTicTacToeMovesWithDataAndIndex.northeast,
       stateWithData:
@@ -250,10 +232,8 @@ const rootThenCenterOrEastOrNorthOrNortheastOrThisNorthwestOrSouthOrSoutheastOrS
       "rootThenCenterOrEastOrNorthOrNortheastOrThisNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
     requiredParams: {
       expandedMovesWithData: new Map([]),
-      explorationConstant: EXPLORATION_CONSTANT,
       indexAndKeyOfBestChild: null,
-      parentTreeNodeWithData:
-        thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+
       playedMoveWithDataAndIndex:
         recordOfTicTacToeMovesWithDataAndIndex.northwest,
       stateWithData:
@@ -275,10 +255,8 @@ const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrThisSouthOrSoutheastOrS
       "rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrThisSouthOrSoutheastOrSouthwestOrWest",
     requiredParams: {
       expandedMovesWithData: new Map([]),
-      explorationConstant: EXPLORATION_CONSTANT,
       indexAndKeyOfBestChild: null,
-      parentTreeNodeWithData:
-        thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+
       playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.south,
       stateWithData:
         recordOfTicTacToeStatesWithData.slotR2C1IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,
@@ -298,10 +276,8 @@ const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrThisSoutheastOrS
       "rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrThisSoutheastOrSouthwestOrWest",
     requiredParams: {
       expandedMovesWithData: new Map([]),
-      explorationConstant: EXPLORATION_CONSTANT,
       indexAndKeyOfBestChild: null,
-      parentTreeNodeWithData:
-        thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+
       playedMoveWithDataAndIndex:
         recordOfTicTacToeMovesWithDataAndIndex.southeast,
       stateWithData:
@@ -323,10 +299,8 @@ const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrThisS
       "rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrThisSouthwestOrWest",
     requiredParams: {
       expandedMovesWithData: new Map([]),
-      explorationConstant: EXPLORATION_CONSTANT,
       indexAndKeyOfBestChild: null,
-      parentTreeNodeWithData:
-        thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+
       playedMoveWithDataAndIndex:
         recordOfTicTacToeMovesWithDataAndIndex.southwest,
       stateWithData:
@@ -348,10 +322,8 @@ const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouth
       "rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrThisWest",
     requiredParams: {
       expandedMovesWithData: new Map([]),
-      explorationConstant: EXPLORATION_CONSTANT,
       indexAndKeyOfBestChild: null,
-      parentTreeNodeWithData:
-        thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
+
       playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.west,
       stateWithData:
         recordOfTicTacToeStatesWithData.slotR1C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer,

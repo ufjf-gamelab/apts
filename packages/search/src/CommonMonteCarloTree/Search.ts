@@ -1,141 +1,189 @@
-// import type Game from "../Game/Game.js";
-// import type Move from "../Game/Move.js";
-// import type Player from "../Game/Player.js";
-// import type State from "../Game/State.js";
-// import type { Integer } from "../types.js";
+import type { Integer } from "@repo/engine_core/types.js";
+import type { Game } from "@repo/game/Game.js";
+import type { Move } from "@repo/game/Move.js";
+import type { Player } from "@repo/game/Player.js";
+import type { Score } from "@repo/game/Score.js";
+import type { Slot } from "@repo/game/Slot.js";
+import type { State } from "@repo/game/State.js";
 
-// const MINIMUM_PROBABILITY = 0;
+import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 
-// interface GetProbabilitiesReturn {
-//   graphvizDotString: null | string;
-//   probabilities: number[];
-// }
+import type { TreeNode } from "./TreeNode.js";
 
-// interface SearchParams<
-//   P extends Player<G, S, M, Sl, P>,
-//   M extends Move<G, S, M, Sl, P>,
-//   S extends State<G, S, M, Sl, P>,
-//   G extends Game<G, S, M, Sl, P>,
-// > {
-//   explorationConstant: number;
-//   game: G;
-//   quantityOfSearches: Integer;
-// }
+const MINIMUM_QUALITY_OF_MOVE = 0;
 
-// export default class Search<
-//   P extends Player<G, S, M, Sl, P>,
-//   M extends Move<G, S, M, Sl, P>,
-//   S extends State<G, S, M, Sl, P>,
-//   G extends Game<G, S, M, Sl, P>,
-// > {
-//   private explorationConstant: SearchParams<
-//     G,
-//     S,
-//     M,
-//     Sl,
-//     P
-//   >["explorationConstant"];
-//   private game: SearchParams<G, S, M, Sl, P>["game"];
-//   private quantityOfSearches: SearchParams<
-//     G,
-//     S,
-//     M,
-//     Sl,
-//     P
-//   >["quantityOfSearches"];
+interface ParamsOfSearch<
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+> {
+  explorationConstant: number;
+  game: GenericGame;
+  quantityOfSearches: Integer;
+}
 
-//   constructor({
-//     explorationConstant,
-//     game,
-//     quantityOfSearches,
-//   }: SearchParams<G, S, M, Sl, P>) {
-//     this.game = game;
-//     this.explorationConstant = explorationConstant;
-//     this.quantityOfSearches = quantityOfSearches;
-//   }
+type QualityOfMove = number;
 
-//   /* Methods */
+export default class Search<
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+> {
+  private readonly explorationConstant: ParamsOfSearch<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >["explorationConstant"];
+  private readonly game: ParamsOfSearch<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >["game"];
+  private readonly quantityOfSearches: ParamsOfSearch<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >["quantityOfSearches"];
 
-//   public getProbabilities(
-//     state: S,
-//     generateGraphvizDotString = false,
-//   ): GetProbabilitiesReturn {
-//     const returnObject: GetProbabilitiesReturn = {
-//       graphvizDotString: null,
-//       probabilities: [],
-//     };
+  public constructor({
+    explorationConstant,
+    game,
+    quantityOfSearches,
+  }: ParamsOfSearch<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >) {
+    this.game = game;
+    this.explorationConstant = explorationConstant;
+    this.quantityOfSearches = quantityOfSearches;
+  }
 
-//     const root = new Node<G, S, M, Sl, P>({
-//       explorationConstant: this.explorationConstant,
-//       keyOfTheTakenMove: null,
-//       parent: null,
-//       state,
-//     });
+  public expandTree(
+    rootNodeOfTree: TreeNode<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >,
+  ): void {
+    for (
+      let currentSearchIndex = 0;
+      currentSearchIndex < this.quantityOfSearches;
+      currentSearchIndex += INCREMENT_ONE
+    ) {
+      let currentNode = rootNodeOfTree;
 
-//     this.buildTree(root);
-//     if (generateGraphvizDotString) {
-//       returnObject.graphvizDotString = generateGraphvizDotStringFromTree(
-//         this.game,
-//         root,
-//       );
-//     }
+      // Goes all the way down to a node that is not fully expanded at the bottom of the tree.
+      while (currentNode.isFullyExpanded()) {
+        const bestChild = currentNode.selectBestChild({
+          explorationConstant: this.explorationConstant,
+        });
 
-//     let probabilityOfPlayingEachMove = new Array<number>(
-//       this.game.getQuantityOfMoves(),
-//     ).fill(MINIMUM_PROBABILITY);
+        if (bestChild === null) {
+          // All the possible moves have been explored in this branch.
+          break;
+        }
+        currentNode = bestChild;
+      }
 
-//     for (const child of root.getChildren()) {
-//       const keyOfTheTakenMove = child.getKeyOfTheTakenMove();
-//       if (keyOfTheTakenMove === null) {
-//         continue;
-//       }
+      const state = currentNode.getState();
+      let score = state.getScore();
+      const isFinal = this.game.isFinal({ state });
 
-//       probabilityOfPlayingEachMove[keyOfTheTakenMove] =
-//         child.getQuantityOfVisits();
-//     }
+      if (!isFinal) {
+        const indexOfMove = currentNode.pickIndexOfRandomMove();
+        currentNode = currentNode.expand({ indexOfMove });
+        score = currentNode.simulateMatch();
+      }
 
-//     const sum = probabilityOfPlayingEachMove.reduce(
-//       (currentSum, value) => currentSum + value,
-//       MINIMUM_PROBABILITY,
-//     );
+      currentNode.updateQualityOfMatchAndQuantityOfVisitsOnBranch({ score });
+    }
+  }
 
-//     probabilityOfPlayingEachMove = probabilityOfPlayingEachMove.map(
-//       value => value / sum,
-//     );
+  public getQualityOfMoves({
+    rootNodeOfTree,
+  }: {
+    rootNodeOfTree: TreeNode<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >;
+  }): QualityOfMove[] {
+    let qualityOfMoves = new Array<QualityOfMove>(
+      this.game.getQuantityOfMoves(),
+    ).fill(MINIMUM_QUALITY_OF_MOVE);
 
-//     returnObject.probabilities = probabilityOfPlayingEachMove;
-//     return returnObject;
-//   }
+    rootNodeOfTree
+      .getChildren()
+      .entries()
+      .forEach(([indexOfMove, child]) => {
+        if (child !== null) {
+          qualityOfMoves[indexOfMove] = child.getQuantityOfVisits();
+        }
+      });
 
-//   private buildTree(root: Node<G, S, M, Sl, P>): void {
-//     for (
-//       let currentSearchIndex = 0;
-//       currentSearchIndex < this.quantityOfSearches;
-//       currentSearchIndex += INCREMENT_ONE
-//     ) {
-//       let currentNode = root;
+    const sumOfQualityOfMoves = qualityOfMoves.reduce<QualityOfMove>(
+      (accumulator, qualityOfMove) => qualityOfMove + accumulator,
+      MINIMUM_QUALITY_OF_MOVE,
+    );
 
-//       // Goes all the way down to a node that is not fully expanded at the bottom of the tree.
-//       while (currentNode.isFullyExpanded()) {
-//         const bestChild = currentNode.selectBestChild();
+    qualityOfMoves = qualityOfMoves.map((value) => value / sumOfQualityOfMoves);
 
-//         if (bestChild === null) {
-//           // All the possible moves have been explored in this branch.
-//           break;
-//         }
-//         currentNode = bestChild;
-//       }
+    return qualityOfMoves;
+  }
+}
 
-//       const state = currentNode.getState();
-//       let score = state.getScore();
-//       const isFinal = state.isFinal();
-
-//       if (!isFinal) {
-//         currentNode = currentNode.expand();
-//         score = currentNode.simulate();
-//       }
-
-//       currentNode.backpropagate(score);
-//     }
-//   }
-// }
+export type { ParamsOfSearch };
+export { Search };

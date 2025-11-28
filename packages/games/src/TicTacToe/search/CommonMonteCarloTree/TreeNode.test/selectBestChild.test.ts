@@ -9,6 +9,8 @@ import type { TicTacToeTreeNodeWithData } from "./setup.js";
 
 import { recordOfTicTacToeTreeNodesWithData } from "./records.js";
 
+const EXPLORATION_CONSTANT = 2;
+
 const createDescription = ({
   affix,
   keyOfExpectedBestChild,
@@ -49,6 +51,7 @@ const testSelectBestChild = ({
           () => {
             validateSelectBestChild({
               expectedBestChild: bestChild,
+              explorationConstant: EXPLORATION_CONSTANT,
               treeNode,
             });
           },

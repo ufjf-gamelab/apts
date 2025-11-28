@@ -1,4 +1,3 @@
-import type { Integer } from "@repo/engine_core/types.js";
 import type { Game } from "@repo/game/Game.js";
 import type { IndexOfMove, Move } from "@repo/game/Move.js";
 import type {
@@ -90,7 +89,7 @@ type RecordOfTreeNodesWithData<
   >
 >;
 
-type RequiredParamsOfTreeNode<
+interface RequiredParamsOfTreeNode<
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -111,17 +110,8 @@ type RequiredParamsOfTreeNode<
     GenericSlot,
     GenericState
   >,
-  GenericTreeNode extends TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >,
   GenericRequiredParamsOfMove,
   GenericRequiredParamsOfState,
-  GenericRequiredParamsOfTreeNode,
   GenericMoveWithData extends MoveWithData<
     GenericMove,
     GenericRequiredParamsOfMove
@@ -143,36 +133,7 @@ type RequiredParamsOfTreeNode<
     GenericState,
     GenericRequiredParamsOfState
   >,
-  GenericTreeNodeWithData extends TreeNodeWithData<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState,
-    GenericTreeNode,
-    GenericRequiredParamsOfTreeNode
-  > = TreeNodeWithData<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState,
-    GenericTreeNode,
-    GenericRequiredParamsOfTreeNode
-  >,
-> = Pick<
-  ParamsOfTreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >,
-  "explorationConstant"
-> & {
+> {
   expandedMovesWithData: ReadonlyMap<
     IndexOfMove,
     MoveWithData<GenericMove, GenericRequiredParamsOfMove>
@@ -181,14 +142,13 @@ type RequiredParamsOfTreeNode<
     indexOfChild: IndexOfMove;
     keyOfChild: string;
   };
-  parentTreeNodeWithData: GenericTreeNodeWithData | null;
   playedMoveWithDataAndIndex: MoveWithDataAndIndex<
     GenericMove,
     GenericRequiredParamsOfMove,
     GenericMoveWithData
   > | null;
   stateWithData: GenericStateWithData;
-};
+}
 
 interface TreeNodeWithData<
   GenericGame extends Game<
@@ -248,17 +208,8 @@ const deriveParamsOfTreeNode = <
     GenericSlot,
     GenericState
   >,
-  GenericTreeNode extends TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >,
   GenericRequiredParamsOfMove,
   GenericRequiredParamsOfState,
-  GenericRequiredParamsOfTreeNode,
   GenericMoveWithData extends MoveWithData<
     GenericMove,
     GenericRequiredParamsOfMove
@@ -280,28 +231,7 @@ const deriveParamsOfTreeNode = <
     GenericState,
     GenericRequiredParamsOfState
   >,
-  GenericTreeNodeWithData extends TreeNodeWithData<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState,
-    GenericTreeNode,
-    GenericRequiredParamsOfTreeNode
-  > = TreeNodeWithData<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState,
-    GenericTreeNode,
-    GenericRequiredParamsOfTreeNode
-  >,
 >({
-  explorationConstant,
-  parentTreeNodeWithData,
   playedMoveWithDataAndIndex,
   stateWithData,
 }: Pick<
@@ -312,18 +242,12 @@ const deriveParamsOfTreeNode = <
     GenericScore,
     GenericSlot,
     GenericState,
-    GenericTreeNode,
     GenericRequiredParamsOfMove,
     GenericRequiredParamsOfState,
-    GenericRequiredParamsOfTreeNode,
     GenericMoveWithData,
-    GenericStateWithData,
-    GenericTreeNodeWithData
+    GenericStateWithData
   >,
-  | "explorationConstant"
-  | "parentTreeNodeWithData"
-  | "playedMoveWithDataAndIndex"
-  | "stateWithData"
+  "playedMoveWithDataAndIndex" | "stateWithData"
 >): DerivedParamsOfTreeNode<
   GenericGame,
   GenericMove,
@@ -332,9 +256,7 @@ const deriveParamsOfTreeNode = <
   GenericSlot,
   GenericState
 > => ({
-  explorationConstant,
   indexOfPlayedMove: playedMoveWithDataAndIndex?.indexOfMove ?? null,
-  parent: parentTreeNodeWithData?.treeNode ?? null,
   state: stateWithData.state,
 });
 

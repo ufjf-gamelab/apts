@@ -12,6 +12,8 @@ import {
   NOT_INCREMENT,
 } from "@repo/engine_core/constants.js";
 
+import type { ParamsOfSearch } from "./Search.js";
+
 const MINIMUM_QUALITY_OF_MATCH = 0;
 const MINIMUM_QUANTITY_OF_VISITS = 0;
 
@@ -37,9 +39,40 @@ interface ParamsOfTreeNode<
     GenericState
   >,
 > {
-  readonly explorationConstant: number;
   readonly indexOfPlayedMove: IndexOfMove | null;
-  readonly parent: null | TreeNode<
+  readonly state: GenericState;
+}
+
+interface ParamsOfTreeNodeForPrivateConstructor<
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+> extends ParamsOfTreeNode<
+  GenericGame,
+  GenericMove,
+  GenericPlayer,
+  GenericScore,
+  GenericSlot,
+  GenericState
+> {
+  parent: null | TreeNode<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -47,7 +80,6 @@ interface ParamsOfTreeNode<
     GenericSlot,
     GenericState
   >;
-  readonly state: GenericState;
 }
 
 class TreeNode<
@@ -83,16 +115,8 @@ class TreeNode<
       GenericState
     >
   >;
-  private readonly explorationConstant: ParamsOfTreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >["explorationConstant"];
   private readonly game: GenericGame;
-  private readonly indexOfPlayedMove: ParamsOfTreeNode<
+  private readonly indexOfPlayedMove: ParamsOfTreeNodeForPrivateConstructor<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -100,7 +124,7 @@ class TreeNode<
     GenericSlot,
     GenericState
   >["indexOfPlayedMove"];
-  private readonly parent: ParamsOfTreeNode<
+  private readonly parent: ParamsOfTreeNodeForPrivateConstructor<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -110,7 +134,7 @@ class TreeNode<
   >["parent"];
   private qualityOfMatch: number = MINIMUM_QUALITY_OF_MATCH;
   private quantityOfVisits: Integer = MINIMUM_QUANTITY_OF_VISITS;
-  private readonly state: ParamsOfTreeNode<
+  private readonly state: ParamsOfTreeNodeForPrivateConstructor<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -119,12 +143,11 @@ class TreeNode<
     GenericState
   >["state"];
 
-  public constructor({
-    explorationConstant,
+  private constructor({
     indexOfPlayedMove,
     parent,
     state,
-  }: ParamsOfTreeNode<
+  }: ParamsOfTreeNodeForPrivateConstructor<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -135,7 +158,6 @@ class TreeNode<
     this.state = state.clone();
     this.game = state.getGame();
     this.indexOfPlayedMove = indexOfPlayedMove;
-    this.explorationConstant = explorationConstant;
     this.parent = parent;
     this.children = new Map(
       state
@@ -144,6 +166,52 @@ class TreeNode<
         .values()
         .map((indexOfMove) => [indexOfMove, null]),
     );
+  }
+
+  public static create<
+    GenericGame extends Game<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >,
+    GenericMove extends Move<GenericMove>,
+    GenericPlayer extends Player<GenericPlayer>,
+    GenericScore extends Score<GenericScore>,
+    GenericSlot extends Slot<GenericSlot>,
+    GenericState extends State<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >,
+  >({
+    indexOfPlayedMove,
+    state,
+  }: ParamsOfTreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >) {
+    return new TreeNode<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >({
+      indexOfPlayedMove,
+      parent: null,
+      state,
+    });
   }
 
   /// Perform a move and return the outcome state as a child node.
@@ -165,7 +233,6 @@ class TreeNode<
     });
 
     const child = new TreeNode({
-      explorationConstant: this.explorationConstant,
       indexOfPlayedMove: indexOfMove,
       parent: this,
       state: nextState,
@@ -190,6 +257,46 @@ class TreeNode<
     return this.children.get(indexOfChild) ?? null;
   }
 
+  public getChildren(): typeof this.children {
+    return this.children;
+  }
+
+  public getFitnessOfChild({
+    child,
+    explorationConstant,
+  }: Pick<
+    ParamsOfSearch<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >,
+    "explorationConstant"
+  > & {
+    child: TreeNode<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >;
+  }): number {
+    // Privileges the child with the lowest exploitation, as it means the opponent will have the lowest chance of winning
+
+    const exploitation =
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      1 - (child.qualityOfMatch / child.quantityOfVisits + 1) / 2;
+
+    const exploration =
+      explorationConstant *
+      Math.sqrt(Math.log(this.quantityOfVisits) / child.quantityOfVisits);
+
+    return exploitation + exploration;
+  }
+
   public getIndexesOfNotExpandedMoves(): Set<IndexOfMove> {
     const notExpandedMoves = new Set<IndexOfMove>();
     for (const [indexOfMove, child] of this.children.entries()) {
@@ -198,6 +305,10 @@ class TreeNode<
       }
     }
     return notExpandedMoves;
+  }
+
+  public getIndexOfPlayedMove(): typeof this.indexOfPlayedMove {
+    return this.indexOfPlayedMove;
   }
 
   public getQualityOfMatch(): typeof this.qualityOfMatch {
@@ -245,7 +356,12 @@ class TreeNode<
   }
 
   /// Select the best node among children, i.e. the one with the highest UCB.
-  public selectBestChild(): null | TreeNode<
+  public selectBestChild({
+    explorationConstant,
+  }: Pick<
+    Parameters<typeof this.getFitnessOfChild>[0],
+    "explorationConstant"
+  >): null | TreeNode<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -272,7 +388,7 @@ class TreeNode<
     let bestUcb = Number.NEGATIVE_INFINITY;
 
     for (const child of expandedChildren) {
-      const ucb = this.getFitnessOfChild(child);
+      const ucb = this.getFitnessOfChild({ child, explorationConstant });
       if (ucb > bestUcb) {
         bestChild = child;
         bestUcb = ucb;
@@ -282,8 +398,24 @@ class TreeNode<
     return bestChild;
   }
 
+  // public clone(): TreeNode<
+  //   GenericGame,
+  //   GenericMove,
+  //   GenericPlayer,
+  //   GenericScore,
+  //   GenericSlot,
+  //   GenericState
+  // > {
+  //   return new TreeNode({
+  //     explorationConstant: this.explorationConstant,
+  //     indexOfPlayedMove: this.indexOfPlayedMove,
+  //     parent: this.parent?.clone() ?? null,
+  //     state: this.state.clone(),
+  //   });
+  // }
+
   /// Simulate a game from the current state, returning the outcome value.
-  public simulateMatch(): Score<GenericScore> {
+  public simulateMatch(): GenericScore {
     // Copy the state and play random actions, with alternate players, until the game is over.
     let stateThatIsCurrentlyBeingSimulated = this.state.clone();
     for (;;) {
@@ -303,47 +435,8 @@ class TreeNode<
     }
   }
 
-  private getFitnessOfChild(
-    child: TreeNode<
-      GenericGame,
-      GenericMove,
-      GenericPlayer,
-      GenericScore,
-      GenericSlot,
-      GenericState
-    >,
-  ): number {
-    // Privileges the child with the lowest exploitation, as it means the opponent will have the lowest chance of winning
-
-    const exploitation =
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      1 - (child.qualityOfMatch / child.quantityOfVisits + 1) / 2;
-
-    const exploration =
-      this.explorationConstant *
-      Math.sqrt(Math.log(this.quantityOfVisits) / child.quantityOfVisits);
-
-    return exploitation + exploration;
-  }
-
-  // public clone(): TreeNode<
-  //   GenericGame,
-  //   GenericMove,
-  //   GenericPlayer,
-  //   GenericScore,
-  //   GenericSlot,
-  //   GenericState
-  // > {
-  //   return new TreeNode({
-  //     explorationConstant: this.explorationConstant,
-  //     indexOfPlayedMove: this.indexOfPlayedMove,
-  //     parent: this.parent?.clone() ?? null,
-  //     state: this.state.clone(),
-  //   });
-  // }
-
   /// Backpropagate the outcome value to the root node.
-  private updateQualityOfMatchAndQuantityOfVisitsOnBranch({
+  public updateQualityOfMatchAndQuantityOfVisitsOnBranch({
     score,
   }: {
     score: Score<GenericScore>;
@@ -360,10 +453,6 @@ class TreeNode<
       this.parent.updateQualityOfMatchAndQuantityOfVisitsOnBranch({ score });
     }
   }
-
-  // public getIndexOfPlayedMove(): typeof this.indexOfPlayedMove {
-  //   return this.indexOfPlayedMove;
-  // }
 }
 
 export type { ParamsOfTreeNode };

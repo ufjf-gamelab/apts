@@ -41,19 +41,23 @@ const validateSelectBestChild = <
   >,
 >({
   expectedBestChild,
+  explorationConstant,
   treeNode,
-}: {
+}: Pick<
+  Parameters<GenericTreeNode["selectBestChild"]>[0],
+  "explorationConstant"
+> & {
   expectedBestChild: ReturnType<GenericTreeNode["selectBestChild"]>;
   treeNode: GenericTreeNode;
 }) => {
-  const bestChild = treeNode.selectBestChild();
+  const bestChild = treeNode.selectBestChild({ explorationConstant });
 
   if (bestChild !== null) {
     expect(bestChild).not.toBe(expectedBestChild);
     expect(bestChild).toStrictEqual(expectedBestChild);
 
     // Ensure that the returned object does not keep reference to the internal property
-    const otherBestChild = treeNode.selectBestChild();
+    const otherBestChild = treeNode.selectBestChild({ explorationConstant });
     expect(otherBestChild).not.toBe(bestChild);
   }
 };

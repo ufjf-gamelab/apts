@@ -125,6 +125,10 @@ abstract class Game<
     return this.players.map((player) => player.clone());
   }
 
+  public getQuantityOfMoves() {
+    return this.moves.length;
+  }
+
   public getQuantityOfPlayers() {
     return this.players.length;
   }
