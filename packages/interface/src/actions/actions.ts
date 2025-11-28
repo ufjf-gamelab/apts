@@ -1,7 +1,7 @@
 import predictProbabilities from "./predictProbabilities/action.js";
 import sayHello from "./sayHello/action.js";
 
-export type ProcessGraphvizDotString = (dotString: string) => void;
+type ProcessGraphvizDotString = (dotString: string) => void;
 
 const actions = {
   // generateGameDescription,
@@ -10,4 +10,5 @@ const actions = {
   // startGameplay,
 };
 
-export default actions;
+export type { ProcessGraphvizDotString };
+export { actions };

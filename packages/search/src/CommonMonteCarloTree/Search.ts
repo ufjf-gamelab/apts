@@ -41,7 +41,7 @@ interface ParamsOfSearch<
 
 type QualityOfMove = number;
 
-export default class Search<
+class Search<
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -105,7 +105,9 @@ export default class Search<
     this.quantityOfSearches = quantityOfSearches;
   }
 
-  public expandTree(
+  public expandTree({
+    rootNodeOfTree,
+  }: {
     rootNodeOfTree: TreeNode<
       GenericGame,
       GenericMove,
@@ -113,8 +115,8 @@ export default class Search<
       GenericScore,
       GenericSlot,
       GenericState
-    >,
-  ): void {
+    >;
+  }): void {
     for (
       let currentSearchIndex = 0;
       currentSearchIndex < this.quantityOfSearches;

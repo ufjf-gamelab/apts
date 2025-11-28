@@ -232,6 +232,9 @@ importers:
       '@repo/games':
         specifier: workspace:*
         version: link:../games
+      '@repo/search':
+        specifier: workspace:*
+        version: link:../search
     devDependencies:
       '@repo/eslint_config':
         specifier: workspace:*
