@@ -8,6 +8,7 @@ import { recordOfTicTacToeStatesWithData } from "../../../game/State.test/record
 import {
   createTicTacToeTreeNodeWithData,
   type RecordOfTicTacToeTreeNodesWithData,
+  type RequiredParamsOfTicTacToeTreeNode,
   type TicTacToeTreeNodeWithData,
 } from "./setup.js";
 
@@ -47,6 +48,7 @@ const thisRoot = createTicTacToeTreeNodeWithData({
   requiredParams: {
     expandedMovesWithData: new Map([]),
     explorationConstant: EXPLORATION_CONSTANT,
+    indexAndKeyOfBestChild: null,
     parentTreeNodeWithData: null,
     playedMoveWithDataAndIndex: null,
     stateWithData:
@@ -58,12 +60,21 @@ const thisRoot = createTicTacToeTreeNodeWithData({
 const thisRootThenNorthwest = createTicTacToeTreeNodeWithData({
   keyOfTreeNode: "thisRootThenNorthwest",
   requiredParams: {
-    ...thisRoot.requiredParams,
     expandedMovesWithData: new Map([
       constructTupleForMove({
         moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.northwest,
       }),
     ]),
+    explorationConstant: EXPLORATION_CONSTANT,
+    indexAndKeyOfBestChild: {
+      indexOfChild:
+        recordOfTicTacToeMovesWithDataAndIndex.northwest.indexOfMove,
+      keyOfChild: "rootThenThisNorthwest",
+    },
+    parentTreeNodeWithData: null,
+    playedMoveWithDataAndIndex: null,
+    stateWithData:
+      recordOfTicTacToeStatesWithData.allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
   },
 }) satisfies TicTacToeTreeNodeWithData;
 
@@ -73,6 +84,7 @@ const rootThenThisNorthwest = {
   requiredParams: {
     expandedMovesWithData: new Map([]),
     explorationConstant: EXPLORATION_CONSTANT,
+    indexAndKeyOfBestChild: null,
     parentTreeNodeWithData: thisRootThenNorthwest,
     playedMoveWithDataAndIndex:
       recordOfTicTacToeMovesWithDataAndIndex.northwest,
@@ -90,7 +102,6 @@ const thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrS
     keyOfTreeNode:
       "thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
     requiredParams: {
-      ...thisRoot.requiredParams,
       expandedMovesWithData: new Map([
         constructTupleForMove({
           moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.center,
@@ -124,6 +135,16 @@ const thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrS
           moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.west,
         }),
       ]),
+      explorationConstant: EXPLORATION_CONSTANT,
+      indexAndKeyOfBestChild: {
+        indexOfChild: recordOfTicTacToeMovesWithDataAndIndex.center.indexOfMove,
+        keyOfChild:
+          "rootThenThisCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
+      },
+      parentTreeNodeWithData: null,
+      playedMoveWithDataAndIndex: null,
+      stateWithData:
+        recordOfTicTacToeStatesWithData.allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
     },
   }) satisfies TicTacToeTreeNodeWithData;
 
@@ -135,6 +156,7 @@ const rootThenThisCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrS
     requiredParams: {
       expandedMovesWithData: new Map([]),
       explorationConstant: EXPLORATION_CONSTANT,
+      indexAndKeyOfBestChild: null,
       parentTreeNodeWithData:
         thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
       playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.center,
@@ -158,6 +180,7 @@ const rootThenCenterOrThisEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrS
     requiredParams: {
       expandedMovesWithData: new Map([]),
       explorationConstant: EXPLORATION_CONSTANT,
+      indexAndKeyOfBestChild: null,
       parentTreeNodeWithData:
         thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
       playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.east,
@@ -180,6 +203,7 @@ const rootThenCenterOrEastOrThisNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrS
     requiredParams: {
       expandedMovesWithData: new Map([]),
       explorationConstant: EXPLORATION_CONSTANT,
+      indexAndKeyOfBestChild: null,
       parentTreeNodeWithData:
         thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
       playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.north,
@@ -202,6 +226,7 @@ const rootThenCenterOrEastOrNorthOrThisNortheastOrNorthwestOrSouthOrSoutheastOrS
     requiredParams: {
       expandedMovesWithData: new Map([]),
       explorationConstant: EXPLORATION_CONSTANT,
+      indexAndKeyOfBestChild: null,
       parentTreeNodeWithData:
         thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
       playedMoveWithDataAndIndex:
@@ -226,6 +251,7 @@ const rootThenCenterOrEastOrNorthOrNortheastOrThisNorthwestOrSouthOrSoutheastOrS
     requiredParams: {
       expandedMovesWithData: new Map([]),
       explorationConstant: EXPLORATION_CONSTANT,
+      indexAndKeyOfBestChild: null,
       parentTreeNodeWithData:
         thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
       playedMoveWithDataAndIndex:
@@ -250,6 +276,7 @@ const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrThisSouthOrSoutheastOrS
     requiredParams: {
       expandedMovesWithData: new Map([]),
       explorationConstant: EXPLORATION_CONSTANT,
+      indexAndKeyOfBestChild: null,
       parentTreeNodeWithData:
         thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
       playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.south,
@@ -272,6 +299,7 @@ const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrThisSoutheastOrS
     requiredParams: {
       expandedMovesWithData: new Map([]),
       explorationConstant: EXPLORATION_CONSTANT,
+      indexAndKeyOfBestChild: null,
       parentTreeNodeWithData:
         thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
       playedMoveWithDataAndIndex:
@@ -296,6 +324,7 @@ const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrThisS
     requiredParams: {
       expandedMovesWithData: new Map([]),
       explorationConstant: EXPLORATION_CONSTANT,
+      indexAndKeyOfBestChild: null,
       parentTreeNodeWithData:
         thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
       playedMoveWithDataAndIndex:
@@ -320,6 +349,7 @@ const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouth
     requiredParams: {
       expandedMovesWithData: new Map([]),
       explorationConstant: EXPLORATION_CONSTANT,
+      indexAndKeyOfBestChild: null,
       parentTreeNodeWithData:
         thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
       playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.west,
@@ -346,6 +376,7 @@ const recordOfTicTacToeTreeNodesWithData = {
   rootThenThisCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
   rootThenThisNorthwest,
   thisRoot,
+  thisRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
   thisRootThenNorthwest,
 } satisfies RecordOfTicTacToeTreeNodesWithData;
 

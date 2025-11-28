@@ -5,13 +5,12 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
-import { formatArray } from "@repo/engine_core/format.js";
 import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
 import type { TreeNode } from "../TreeNode.js";
 
-const validatePickIndexOfRandomMove = <
+const validateSelectBestChild = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -41,19 +40,25 @@ const validatePickIndexOfRandomMove = <
     GenericState
   >,
 >({
-  indexesOfValidRandomMoves,
+  expectedBestChild,
   treeNode,
 }: {
-  indexesOfValidRandomMoves: Set<
-    ReturnType<GenericTreeNode["pickIndexOfRandomMove"]>
-  >;
+  expectedBestChild: ReturnType<GenericTreeNode["selectBestChild"]>;
   treeNode: GenericTreeNode;
 }) => {
-  const indexOfRandomMove = treeNode.pickIndexOfRandomMove();
-  expect(indexesOfValidRandomMoves).toContain(indexOfRandomMove);
+  const bestChild = treeNode.selectBestChild();
+
+  if (bestChild !== null) {
+    expect(bestChild).not.toBe(expectedBestChild);
+    expect(bestChild).toStrictEqual(expectedBestChild);
+
+    // Ensure that the returned object does not keep reference to the internal property
+    const otherBestChild = treeNode.selectBestChild();
+    expect(otherBestChild).not.toBe(bestChild);
+  }
 };
 
-const createDescriptionForTestOfPickIndexOfRandomMove = <
+const createDescriptionForTestOfSelectBestChild = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -74,27 +79,14 @@ const createDescriptionForTestOfPickIndexOfRandomMove = <
     GenericSlot,
     GenericState
   >,
-  GenericTreeNode extends TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >,
 >({
-  indexesOfValidRandomMoves,
+  keyOfExpectedBestChild,
 }: {
-  indexesOfValidRandomMoves: Set<
-    ReturnType<GenericTreeNode["pickIndexOfRandomMove"]>
-  >;
+  keyOfExpectedBestChild: null | string;
 }): string =>
   createDescriptionForTestsOfMethod({
-    methodDescription: `pickIndexOfRandomMove()`,
-    returnedValue: `is included in ${formatArray({ array: indexesOfValidRandomMoves.values().toArray() })}`,
+    methodDescription: `selectBestChild()`,
+    returnedValue: keyOfExpectedBestChild,
   });
 
-export {
-  createDescriptionForTestOfPickIndexOfRandomMove,
-  validatePickIndexOfRandomMove,
-};
+export { createDescriptionForTestOfSelectBestChild, validateSelectBestChild };

@@ -49,22 +49,21 @@ type RecordOfTicTacToeTreeNodesWithData = RecordOfTreeNodesWithData<
 >;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface RequiredParamsOfTicTacToeTreeNode
-  extends RequiredParamsOfTreeNode<
-    TicTacToeGame,
-    TicTacToeMove,
-    TicTacToePlayer,
-    TicTacToeScore,
-    TicTacToeSlot,
-    TicTacToeState,
-    TicTacToeTreeNode,
-    RequiredParamsOfTicTacToeMove,
-    RequiredParamsOfTicTacToeState,
-    RequiredParamsOfTicTacToeTreeNode,
-    TicTacToeMoveWithData,
-    TicTacToeStateWithData,
-    TicTacToeTreeNodeWithData
-  > {}
+interface RequiredParamsOfTicTacToeTreeNode extends RequiredParamsOfTreeNode<
+  TicTacToeGame,
+  TicTacToeMove,
+  TicTacToePlayer,
+  TicTacToeScore,
+  TicTacToeSlot,
+  TicTacToeState,
+  TicTacToeTreeNode,
+  RequiredParamsOfTicTacToeMove,
+  RequiredParamsOfTicTacToeState,
+  RequiredParamsOfTicTacToeTreeNode,
+  TicTacToeMoveWithData,
+  TicTacToeStateWithData,
+  TicTacToeTreeNodeWithData
+> {}
 
 type TicTacToeTreeNode = TreeNode<
   TicTacToeGame,

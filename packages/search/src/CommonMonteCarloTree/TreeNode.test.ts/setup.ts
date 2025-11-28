@@ -1,3 +1,4 @@
+import type { Integer } from "@repo/engine_core/types.js";
 import type { Game } from "@repo/game/Game.js";
 import type { IndexOfMove, Move } from "@repo/game/Move.js";
 import type {
@@ -176,6 +177,10 @@ type RequiredParamsOfTreeNode<
     IndexOfMove,
     MoveWithData<GenericMove, GenericRequiredParamsOfMove>
   >;
+  indexAndKeyOfBestChild: null | {
+    indexOfChild: IndexOfMove;
+    keyOfChild: string;
+  };
   parentTreeNodeWithData: GenericTreeNodeWithData | null;
   playedMoveWithDataAndIndex: MoveWithDataAndIndex<
     GenericMove,

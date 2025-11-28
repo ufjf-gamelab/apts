@@ -7,11 +7,11 @@ import type { State } from "@repo/game/State.js";
 
 import { formatArray } from "@repo/engine_core/format.js";
 import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
-import { expect } from "vitest";
+import { assert } from "vitest";
 
 import type { TreeNode } from "../TreeNode.js";
 
-const validatePickIndexOfRandomMove = <
+const validateGetIndexesOfNotExpandedMoves = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -41,19 +41,21 @@ const validatePickIndexOfRandomMove = <
     GenericState
   >,
 >({
-  indexesOfValidRandomMoves,
+  expectedIndexesOfNotExpandedMoves,
   treeNode,
 }: {
-  indexesOfValidRandomMoves: Set<
-    ReturnType<GenericTreeNode["pickIndexOfRandomMove"]>
+  expectedIndexesOfNotExpandedMoves: ReturnType<
+    GenericTreeNode["getIndexesOfNotExpandedMoves"]
   >;
   treeNode: GenericTreeNode;
 }) => {
-  const indexOfRandomMove = treeNode.pickIndexOfRandomMove();
-  expect(indexesOfValidRandomMoves).toContain(indexOfRandomMove);
+  const indexesOfNotExpandedMoves = treeNode.getIndexesOfNotExpandedMoves();
+  assert.isEmpty(
+    indexesOfNotExpandedMoves.difference(expectedIndexesOfNotExpandedMoves),
+  );
 };
 
-const createDescriptionForTestOfPickIndexOfRandomMove = <
+const createDescriptionForTestOfGetIndexesOfNotExpandedMoves = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -83,18 +85,20 @@ const createDescriptionForTestOfPickIndexOfRandomMove = <
     GenericState
   >,
 >({
-  indexesOfValidRandomMoves,
+  expectedIndexesOfNotExpandedMoves,
 }: {
-  indexesOfValidRandomMoves: Set<
-    ReturnType<GenericTreeNode["pickIndexOfRandomMove"]>
+  expectedIndexesOfNotExpandedMoves: ReturnType<
+    GenericTreeNode["getIndexesOfNotExpandedMoves"]
   >;
 }): string =>
   createDescriptionForTestsOfMethod({
-    methodDescription: `pickIndexOfRandomMove()`,
-    returnedValue: `is included in ${formatArray({ array: indexesOfValidRandomMoves.values().toArray() })}`,
+    methodDescription: `getIndexesOfNotExpandedMoves()`,
+    returnedValue: formatArray({
+      array: expectedIndexesOfNotExpandedMoves.values().toArray(),
+    }),
   });
 
 export {
-  createDescriptionForTestOfPickIndexOfRandomMove,
-  validatePickIndexOfRandomMove,
+  createDescriptionForTestOfGetIndexesOfNotExpandedMoves,
+  validateGetIndexesOfNotExpandedMoves,
 };

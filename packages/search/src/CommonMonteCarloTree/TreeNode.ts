@@ -175,6 +175,31 @@ class TreeNode<
     return child;
   }
 
+  public getChild({
+    indexOfChild,
+  }: {
+    indexOfChild: IndexOfMove;
+  }): null | TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  > {
+    return this.children.get(indexOfChild) ?? null;
+  }
+
+  public getIndexesOfNotExpandedMoves(): Set<IndexOfMove> {
+    const notExpandedMoves = new Set<IndexOfMove>();
+    for (const [indexOfMove, child] of this.children.entries()) {
+      if (child === null) {
+        notExpandedMoves.add(indexOfMove);
+      }
+    }
+    return notExpandedMoves;
+  }
+
   public getQualityOfMatch(): typeof this.qualityOfMatch {
     return this.qualityOfMatch;
   }
@@ -189,6 +214,7 @@ class TreeNode<
         LENGTH_OF_EMPTY_LIST,
       );
   }
+
   public getQuantityOfVisits(): typeof this.quantityOfVisits {
     return this.quantityOfVisits;
   }
@@ -277,21 +303,6 @@ class TreeNode<
     }
   }
 
-  /// Backpropagate the outcome value to the root node.
-  public updateQualityOfMatchAndQuantityOfVisitsOnBranch(
-    score: Score<GenericScore>,
-  ): void {
-    const indexOfPlayer = this.state.getIndexOfPlayer();
-    const pointsOfPlayer = score.getPointsOfPlayer({ indexOfPlayer });
-
-    this.qualityOfMatch = pointsOfPlayer;
-    this.quantityOfVisits += INCREMENT_ONE;
-
-    if (this.parent) {
-      this.parent.updateQualityOfMatchAndQuantityOfVisitsOnBranch(score);
-    }
-  }
-
   private getFitnessOfChild(
     child: TreeNode<
       GenericGame,
@@ -315,16 +326,6 @@ class TreeNode<
     return exploitation + exploration;
   }
 
-  private getIndexesOfNotExpandedMoves(): Set<IndexOfMove> {
-    const notExpandedMoves = new Set<IndexOfMove>();
-    for (const [indexOfMove, child] of this.children.entries()) {
-      if (child === null) {
-        notExpandedMoves.add(indexOfMove);
-      }
-    }
-    return notExpandedMoves;
-  }
-
   // public clone(): TreeNode<
   //   GenericGame,
   //   GenericMove,
@@ -341,20 +342,24 @@ class TreeNode<
   //   });
   // }
 
-  // public getChild({
-  //   indexOfChild,
-  // }: {
-  //   indexOfChild: IndexOfMove;
-  // }): null | TreeNode<
-  //   GenericGame,
-  //   GenericMove,
-  //   GenericPlayer,
-  //   GenericScore,
-  //   GenericSlot,
-  //   GenericState
-  // > {
-  //   return this.children.get(indexOfChild) ?? null;
-  // }
+  /// Backpropagate the outcome value to the root node.
+  private updateQualityOfMatchAndQuantityOfVisitsOnBranch({
+    score,
+  }: {
+    score: Score<GenericScore>;
+  }): void {
+    const indexOfPlayer = this.state.getIndexOfPlayer();
+    const pointsOfPlayer = score.getPointsOfPlayer({ indexOfPlayer });
+
+    // TODO: Accumulating the quality of match is only appropriate if this method is acalled only at the end of some match
+    // TODO: A common method is to decrement the points of the opponent
+    this.qualityOfMatch += pointsOfPlayer;
+    this.quantityOfVisits += INCREMENT_ONE;
+
+    if (this.parent) {
+      this.parent.updateQualityOfMatchAndQuantityOfVisitsOnBranch({ score });
+    }
+  }
 
   // public getIndexOfPlayedMove(): typeof this.indexOfPlayedMove {
   //   return this.indexOfPlayedMove;

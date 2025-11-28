@@ -1,3 +1,4 @@
+import { SIZE_OF_EMPTY_SET } from "@repo/engine_core/constants.js";
 import { createDescriptionForTest } from "@repo/engine_core/test.js";
 import {
   createDescriptionForTestOfPickIndexOfRandomMove,
@@ -29,26 +30,25 @@ const testPickIndexOfRandomMove = ({
 }: {
   arrayOfTreeNodesWithData: TicTacToeTreeNodeWithData[];
 }) => {
-  arrayOfTreeNodesWithData.forEach(
-    ({ keyOfTreeNode, requiredParams: { stateWithData }, treeNode }) => {
-      const indexesOfValidMoves =
-        stateWithData.requiredParams.validMovesWithData.keys().toArray();
+  arrayOfTreeNodesWithData.forEach(({ keyOfTreeNode, treeNode }) => {
+    const indexesOfNotExpandedMoves = treeNode.getIndexesOfNotExpandedMoves();
 
+    if (indexesOfNotExpandedMoves.size !== SIZE_OF_EMPTY_SET) {
       test(
         createDescription({
           affix: keyOfTreeNode,
-          indexesOfValidRandomMoves: indexesOfValidMoves,
+          indexesOfValidRandomMoves: indexesOfNotExpandedMoves,
         }),
 
         () => {
           validatePickIndexOfRandomMove({
-            indexesOfValidRandomMoves: indexesOfValidMoves,
+            indexesOfValidRandomMoves: indexesOfNotExpandedMoves,
             treeNode,
           });
         },
       );
-    },
-  );
+    }
+  });
 };
 
 testPickIndexOfRandomMove({
