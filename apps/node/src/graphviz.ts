@@ -30,7 +30,9 @@ export const generateGraphvizImage = async ({
   const fullPath = path.join(directoryPath, fileNameWithExtension);
 
   try {
-    await toFile(graphvizDotString, fullPath, { format: "svg" });
+    await toFile(graphvizDotString, fullPath, {
+      format: "svg",
+    });
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw new Error("Failed to generate Graphviz image.", {

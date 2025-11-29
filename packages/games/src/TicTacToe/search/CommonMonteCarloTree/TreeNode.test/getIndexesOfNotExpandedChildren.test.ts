@@ -1,8 +1,8 @@
 import { createDescriptionForTest } from "@repo/engine_core/test.js";
 import {
-  createDescriptionForTestOfGetIndexesOfNotExpandedMoves,
-  validateGetIndexesOfNotExpandedMoves,
-} from "@repo/search/CommonMonteCarloTree/TreeNode.test.ts/getIndexesOfNotExpandedMoves.test.js";
+  createDescriptionForTestOfGetIndexesOfNotExpandedChildren,
+  validateGetIndexesOfNotExpandedChildren,
+} from "@repo/search/CommonMonteCarloTree/TreeNode.test.ts/getIndexesOfNotExpandedChildren.test.js";
 import { test } from "vitest";
 
 import type { TicTacToeTreeNodeWithData } from "./setup.js";
@@ -11,22 +11,22 @@ import { recordOfTicTacToeTreeNodesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
-  expectedIndexesOfNotExpandedMoves,
+  expectedIndexesOfNotExpandedChildren,
 }: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> &
   Pick<
     Parameters<
-      typeof createDescriptionForTestOfGetIndexesOfNotExpandedMoves
+      typeof createDescriptionForTestOfGetIndexesOfNotExpandedChildren
     >[0],
-    "expectedIndexesOfNotExpandedMoves"
+    "expectedIndexesOfNotExpandedChildren"
   >) =>
   createDescriptionForTest({
     affix,
-    description: createDescriptionForTestOfGetIndexesOfNotExpandedMoves({
-      expectedIndexesOfNotExpandedMoves,
+    description: createDescriptionForTestOfGetIndexesOfNotExpandedChildren({
+      expectedIndexesOfNotExpandedChildren,
     }),
   });
 
-const testGetIndexesOfNotExpandedMoves = ({
+const testGetIndexesOfNotExpandedChildren = ({
   arrayOfTreeNodesWithData,
 }: {
   arrayOfTreeNodesWithData: TicTacToeTreeNodeWithData[];
@@ -41,19 +41,19 @@ const testGetIndexesOfNotExpandedMoves = ({
         stateWithData.requiredParams.validMovesWithData.keys(),
       );
       const indexesOfExpandedMoves = new Set(expandedMovesWithData.keys());
-      const indexesOfNotExpandedMoves = indexesOfValidMoves.difference(
+      const indexesOfNotExpandedChildren = indexesOfValidMoves.difference(
         indexesOfExpandedMoves,
       );
 
       test(
         createDescription({
           affix: keyOfTreeNode,
-          expectedIndexesOfNotExpandedMoves: indexesOfNotExpandedMoves,
+          expectedIndexesOfNotExpandedChildren: indexesOfNotExpandedChildren,
         }),
 
         () => {
-          validateGetIndexesOfNotExpandedMoves({
-            expectedIndexesOfNotExpandedMoves: indexesOfNotExpandedMoves,
+          validateGetIndexesOfNotExpandedChildren({
+            expectedIndexesOfNotExpandedChildren: indexesOfNotExpandedChildren,
             treeNode,
           });
         },
@@ -62,6 +62,6 @@ const testGetIndexesOfNotExpandedMoves = ({
   );
 };
 
-testGetIndexesOfNotExpandedMoves({
+testGetIndexesOfNotExpandedChildren({
   arrayOfTreeNodesWithData: Object.values(recordOfTicTacToeTreeNodesWithData),
 });

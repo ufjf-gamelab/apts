@@ -12,7 +12,7 @@ import {
   NOT_INCREMENT,
 } from "@repo/engine_core/constants.js";
 
-import type { ParamsOfSearch } from "./Search.js";
+import type { expandTree } from "./Search.js";
 
 const MINIMUM_QUALITY_OF_MATCH = 0;
 const MINIMUM_QUANTITY_OF_VISITS = 0;
@@ -265,14 +265,16 @@ class TreeNode<
     child,
     explorationConstant,
   }: Pick<
-    ParamsOfSearch<
-      GenericGame,
-      GenericMove,
-      GenericPlayer,
-      GenericScore,
-      GenericSlot,
-      GenericState
-    >,
+    Parameters<
+      typeof expandTree<
+        GenericGame,
+        GenericMove,
+        GenericPlayer,
+        GenericScore,
+        GenericSlot,
+        GenericState
+      >
+    >[0],
     "explorationConstant"
   > & {
     child: TreeNode<
@@ -297,14 +299,12 @@ class TreeNode<
     return exploitation + exploration;
   }
 
-  public getIndexesOfNotExpandedMoves(): Set<IndexOfMove> {
-    const notExpandedMoves = new Set<IndexOfMove>();
-    for (const [indexOfMove, child] of this.children.entries()) {
-      if (child === null) {
-        notExpandedMoves.add(indexOfMove);
-      }
-    }
-    return notExpandedMoves;
+  public getIndexesOfNotExpandedChildren(): Set<IndexOfMove> {
+    return new Set(
+      Array.from(this.children.keys()).filter(
+        (indexOfChild) => this.children.get(indexOfChild) === null,
+      ),
+    );
   }
 
   public getIndexOfPlayedMove(): typeof this.indexOfPlayedMove {
@@ -339,9 +339,9 @@ class TreeNode<
     return this.getQuantityOfExpandedMoves() === this.children.size;
   }
 
-  public pickIndexOfRandomMove(): IndexOfMove {
+  public pickIndexOfRandomNotExpandedChild(): IndexOfMove {
     const indexesOfNotExpandedMoves = Array.from(
-      this.getIndexesOfNotExpandedMoves(),
+      this.getIndexesOfNotExpandedChildren(),
     );
 
     const randomIndex = Math.floor(
@@ -369,13 +369,7 @@ class TreeNode<
     GenericSlot,
     GenericState
   > {
-    if (this.children.size === LENGTH_OF_EMPTY_LIST) {
-      throw new Error("No children to select from.");
-    }
-
-    const expandedChildren = Array.from(this.children.values()).filter(
-      (child) => child !== null,
-    );
+    const expandedChildren = this.getExpandedChildren();
 
     let bestChild: null | TreeNode<
       GenericGame,
@@ -398,22 +392,6 @@ class TreeNode<
     return bestChild;
   }
 
-  // public clone(): TreeNode<
-  //   GenericGame,
-  //   GenericMove,
-  //   GenericPlayer,
-  //   GenericScore,
-  //   GenericSlot,
-  //   GenericState
-  // > {
-  //   return new TreeNode({
-  //     explorationConstant: this.explorationConstant,
-  //     indexOfPlayedMove: this.indexOfPlayedMove,
-  //     parent: this.parent?.clone() ?? null,
-  //     state: this.state.clone(),
-  //   });
-  // }
-
   /// Simulate a game from the current state, returning the outcome value.
   public simulateMatch(): GenericScore {
     // Copy the state and play random actions, with alternate players, until the game is over.
@@ -427,7 +405,9 @@ class TreeNode<
         return score;
       }
 
-      const selectedIndexOfMove = this.pickIndexOfRandomMove();
+      const selectedIndexOfMove = this.game.pickIndexOfRandomValidMove({
+        state: stateThatIsCurrentlyBeingSimulated,
+      });
       stateThatIsCurrentlyBeingSimulated = this.game.play({
         indexOfMove: selectedIndexOfMove,
         state: stateThatIsCurrentlyBeingSimulated,
@@ -444,14 +424,21 @@ class TreeNode<
     const indexOfPlayer = this.state.getIndexOfPlayer();
     const pointsOfPlayer = score.getPointsOfPlayer({ indexOfPlayer });
 
-    // TODO: Accumulating the quality of match is only appropriate if this method is called only at the end of some match
-    // TODO: A common method is to decrement the points of the opponent
+    /* TODO: Accumulating the quality of match is only appropriate if this method is called only at the end of some match
+     * A common method is to decrement the points of the opponent
+     * Other idea is to normalize the final score, like subtracting from both players the points made by the defeated, so the winner has an advantage and the loser has zero points
+     * Other idea is to divide the points of the winner for the points of the loser, making a ratio, that can be backpropagated as the winner points
+     */
     this.qualityOfMatch += pointsOfPlayer;
     this.quantityOfVisits += INCREMENT_ONE;
 
     if (this.parent) {
       this.parent.updateQualityOfMatchAndQuantityOfVisitsOnBranch({ score });
     }
+  }
+
+  private getExpandedChildren() {
+    return Array.from(this.children.values()).filter((child) => child !== null);
   }
 }
 

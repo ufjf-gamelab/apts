@@ -121,10 +121,10 @@ abstract class Game<
     }
     return player.clone();
   }
+
   public getPlayers() {
     return this.players.map((player) => player.clone());
   }
-
   public getQuantityOfMoves() {
     return this.moves.length;
   }
@@ -138,6 +138,26 @@ abstract class Game<
   }
 
   public abstract isFinal({ state }: { state: GenericState }): boolean;
+
+  public pickIndexOfRandomValidMove({
+    state,
+  }: {
+    state: GenericState;
+  }): IndexOfMove {
+    const indexesOfValidMoves = this.getIndexesOfValidMoves({
+      state,
+    })
+      .values()
+      .toArray();
+
+    const randomIndex = Math.floor(Math.random() * indexesOfValidMoves.length);
+    const indexOfMove = indexesOfValidMoves[randomIndex];
+    if (typeof indexOfMove === "undefined") {
+      throw new Error("No indexes of not expanded moves to pick from.");
+    }
+
+    return indexOfMove;
+  }
 
   public abstract play({
     indexOfMove,

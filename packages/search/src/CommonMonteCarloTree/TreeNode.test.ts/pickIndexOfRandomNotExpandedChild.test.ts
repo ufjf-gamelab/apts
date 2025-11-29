@@ -11,7 +11,7 @@ import { expect } from "vitest";
 
 import type { TreeNode } from "../TreeNode.js";
 
-const validatePickIndexOfRandomMove = <
+const validatePickIndexOfRandomNotExpandedChild = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -41,19 +41,22 @@ const validatePickIndexOfRandomMove = <
     GenericState
   >,
 >({
-  indexesOfValidRandomMoves,
+  indexesOfRandomNotExpandedChildren,
   treeNode,
 }: {
-  indexesOfValidRandomMoves: Set<
-    ReturnType<GenericTreeNode["pickIndexOfRandomMove"]>
+  indexesOfRandomNotExpandedChildren: Set<
+    ReturnType<GenericTreeNode["pickIndexOfRandomNotExpandedChild"]>
   >;
   treeNode: GenericTreeNode;
 }) => {
-  const indexOfRandomMove = treeNode.pickIndexOfRandomMove();
-  expect(indexesOfValidRandomMoves).toContain(indexOfRandomMove);
+  const indexOfRandomNotExpandedChild =
+    treeNode.pickIndexOfRandomNotExpandedChild();
+  expect(indexesOfRandomNotExpandedChildren).toContain(
+    indexOfRandomNotExpandedChild,
+  );
 };
 
-const createDescriptionForTestOfPickIndexOfRandomMove = <
+const createDescriptionForTestOfPickIndexOfRandomNotExpandedChild = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -83,18 +86,18 @@ const createDescriptionForTestOfPickIndexOfRandomMove = <
     GenericState
   >,
 >({
-  indexesOfValidRandomMoves,
+  indexesOfRandomNotExpandedChildren,
 }: {
-  indexesOfValidRandomMoves: Set<
-    ReturnType<GenericTreeNode["pickIndexOfRandomMove"]>
+  indexesOfRandomNotExpandedChildren: Set<
+    ReturnType<GenericTreeNode["pickIndexOfRandomNotExpandedChild"]>
   >;
 }): string =>
   createDescriptionForTestsOfMethod({
-    methodDescription: `pickIndexOfRandomMove()`,
-    returnedValue: `is included in ${formatArray({ array: indexesOfValidRandomMoves.values().toArray() })}`,
+    methodDescription: `pickIndexOfRandomNotExpandedChild()`,
+    returnedValue: `is included in ${formatArray({ array: indexesOfRandomNotExpandedChildren.values().toArray() })}`,
   });
 
 export {
-  createDescriptionForTestOfPickIndexOfRandomMove,
-  validatePickIndexOfRandomMove,
+  createDescriptionForTestOfPickIndexOfRandomNotExpandedChild,
+  validatePickIndexOfRandomNotExpandedChild,
 };

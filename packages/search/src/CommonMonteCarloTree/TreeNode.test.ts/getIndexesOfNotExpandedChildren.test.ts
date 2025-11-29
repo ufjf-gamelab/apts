@@ -11,7 +11,7 @@ import { assert } from "vitest";
 
 import type { TreeNode } from "../TreeNode.js";
 
-const validateGetIndexesOfNotExpandedMoves = <
+const validateGetIndexesOfNotExpandedChildren = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -41,21 +41,24 @@ const validateGetIndexesOfNotExpandedMoves = <
     GenericState
   >,
 >({
-  expectedIndexesOfNotExpandedMoves,
+  expectedIndexesOfNotExpandedChildren,
   treeNode,
 }: {
-  expectedIndexesOfNotExpandedMoves: ReturnType<
-    GenericTreeNode["getIndexesOfNotExpandedMoves"]
+  expectedIndexesOfNotExpandedChildren: ReturnType<
+    GenericTreeNode["getIndexesOfNotExpandedChildren"]
   >;
   treeNode: GenericTreeNode;
 }) => {
-  const indexesOfNotExpandedMoves = treeNode.getIndexesOfNotExpandedMoves();
+  const indexesOfNotExpandedChildren =
+    treeNode.getIndexesOfNotExpandedChildren();
   assert.isEmpty(
-    indexesOfNotExpandedMoves.difference(expectedIndexesOfNotExpandedMoves),
+    indexesOfNotExpandedChildren.difference(
+      expectedIndexesOfNotExpandedChildren,
+    ),
   );
 };
 
-const createDescriptionForTestOfGetIndexesOfNotExpandedMoves = <
+const createDescriptionForTestOfGetIndexesOfNotExpandedChildren = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -85,20 +88,20 @@ const createDescriptionForTestOfGetIndexesOfNotExpandedMoves = <
     GenericState
   >,
 >({
-  expectedIndexesOfNotExpandedMoves,
+  expectedIndexesOfNotExpandedChildren,
 }: {
-  expectedIndexesOfNotExpandedMoves: ReturnType<
-    GenericTreeNode["getIndexesOfNotExpandedMoves"]
+  expectedIndexesOfNotExpandedChildren: ReturnType<
+    GenericTreeNode["getIndexesOfNotExpandedChildren"]
   >;
 }): string =>
   createDescriptionForTestsOfMethod({
-    methodDescription: `getIndexesOfNotExpandedMoves()`,
+    methodDescription: `getIndexesOfNotExpandedChildren()`,
     returnedValue: formatArray({
-      array: expectedIndexesOfNotExpandedMoves.values().toArray(),
+      array: expectedIndexesOfNotExpandedChildren.values().toArray(),
     }),
   });
 
 export {
-  createDescriptionForTestOfGetIndexesOfNotExpandedMoves,
-  validateGetIndexesOfNotExpandedMoves,
+  createDescriptionForTestOfGetIndexesOfNotExpandedChildren,
+  validateGetIndexesOfNotExpandedChildren,
 };

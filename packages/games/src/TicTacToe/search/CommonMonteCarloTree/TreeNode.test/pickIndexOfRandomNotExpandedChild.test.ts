@@ -1,9 +1,9 @@
 import { SIZE_OF_EMPTY_SET } from "@repo/engine_core/constants.js";
 import { createDescriptionForTest } from "@repo/engine_core/test.js";
 import {
-  createDescriptionForTestOfPickIndexOfRandomMove,
-  validatePickIndexOfRandomMove,
-} from "@repo/search/CommonMonteCarloTree/TreeNode.test.ts/pickIndexOfRandomMove.test.js";
+  createDescriptionForTestOfPickIndexOfRandomNotExpandedChild,
+  validatePickIndexOfRandomNotExpandedChild,
+} from "@repo/search/CommonMonteCarloTree/TreeNode.test.ts/pickIndexOfRandomNotExpandedChild.test.js";
 import { test } from "vitest";
 
 import type { TicTacToeTreeNodeWithData } from "./setup.js";
@@ -12,37 +12,40 @@ import { recordOfTicTacToeTreeNodesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
-  indexesOfValidRandomMoves,
+  indexesOfRandomNotExpandedChildren,
 }: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> &
   Pick<
-    Parameters<typeof createDescriptionForTestOfPickIndexOfRandomMove>[0],
-    "indexesOfValidRandomMoves"
+    Parameters<
+      typeof createDescriptionForTestOfPickIndexOfRandomNotExpandedChild
+    >[0],
+    "indexesOfRandomNotExpandedChildren"
   >) =>
   createDescriptionForTest({
     affix,
-    description: createDescriptionForTestOfPickIndexOfRandomMove({
-      indexesOfValidRandomMoves,
+    description: createDescriptionForTestOfPickIndexOfRandomNotExpandedChild({
+      indexesOfRandomNotExpandedChildren,
     }),
   });
 
-const testPickIndexOfRandomMove = ({
+const testPickIndexOfRandomNotExpandedChild = ({
   arrayOfTreeNodesWithData,
 }: {
   arrayOfTreeNodesWithData: TicTacToeTreeNodeWithData[];
 }) => {
   arrayOfTreeNodesWithData.forEach(({ keyOfTreeNode, treeNode }) => {
-    const indexesOfNotExpandedMoves = treeNode.getIndexesOfNotExpandedMoves();
+    const indexesOfNotExpandedMoves =
+      treeNode.getIndexesOfNotExpandedChildren();
 
     if (indexesOfNotExpandedMoves.size !== SIZE_OF_EMPTY_SET) {
       test(
         createDescription({
           affix: keyOfTreeNode,
-          indexesOfValidRandomMoves: indexesOfNotExpandedMoves,
+          indexesOfRandomNotExpandedChildren: indexesOfNotExpandedMoves,
         }),
 
         () => {
-          validatePickIndexOfRandomMove({
-            indexesOfValidRandomMoves: indexesOfNotExpandedMoves,
+          validatePickIndexOfRandomNotExpandedChild({
+            indexesOfRandomNotExpandedChildren: indexesOfNotExpandedMoves,
             treeNode,
           });
         },
@@ -51,6 +54,6 @@ const testPickIndexOfRandomMove = ({
   });
 };
 
-testPickIndexOfRandomMove({
+testPickIndexOfRandomNotExpandedChild({
   arrayOfTreeNodesWithData: Object.values(recordOfTicTacToeTreeNodesWithData),
 });

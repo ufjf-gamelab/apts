@@ -9,7 +9,7 @@ import type { TicTacToeTreeNodeWithData } from "./setup.js";
 
 import { recordOfTicTacToeTreeNodesWithData } from "./records.js";
 
-const EXPLORATION_CONSTANT = 2;
+const EXPLORATION_CONSTANT = 1.4;
 
 const createDescription = ({
   affix,
