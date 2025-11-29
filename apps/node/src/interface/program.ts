@@ -1,7 +1,7 @@
 import { program } from "commander";
 import prompts from "prompts";
 
-import commandsDefinitions from "./commands/commands.js";
+import { definitionsOfCommands } from "./commands/commands.js";
 
 export type GetInput = (
   questions: prompts.PromptObject | prompts.PromptObject[],
@@ -15,18 +15,18 @@ program
     "Engine to simulate and create AI models for tabletop games, inspired by the AlphaZero algorithm.",
   );
 
-commandsDefinitions.forEach(commandDefinition => {
-  if (commandDefinition.arguments) {
-    commandDefinition.arguments.forEach(argument => {
-      commandDefinition.command.addArgument(argument);
+definitionsOfCommands.forEach(definitionOfCommand => {
+  if (definitionOfCommand.arguments) {
+    definitionOfCommand.arguments.forEach(argument => {
+      definitionOfCommand.command.addArgument(argument);
     });
   }
-  if (commandDefinition.options) {
-    commandDefinition.options.forEach(option => {
-      commandDefinition.command.addOption(option);
+  if (definitionOfCommand.options) {
+    definitionOfCommand.options.forEach(option => {
+      definitionOfCommand.command.addOption(option);
     });
   }
-  program.addCommand(commandDefinition.command);
+  program.addCommand(definitionOfCommand.command);
 });
 
-export default program;
+export { program };

@@ -200,6 +200,9 @@ importers:
 
   packages/interface:
     dependencies:
+      '@repo/engine_core':
+        specifier: workspace:*
+        version: link:../engine_core
       '@repo/game':
         specifier: workspace:*
         version: link:../game
@@ -209,6 +212,9 @@ importers:
       '@repo/search':
         specifier: workspace:*
         version: link:../search
+      ts-graphviz:
+        specifier: ^3.0.6
+        version: 3.0.6
     devDependencies:
       '@repo/eslint_config':
         specifier: workspace:*
@@ -234,9 +240,6 @@ importers:
       '@repo/game':
         specifier: workspace:*
         version: link:../game
-      ts-graphviz:
-        specifier: ^3.0.6
-        version: 3.0.6
     devDependencies:
       '@repo/eslint_config':
         specifier: workspace:*

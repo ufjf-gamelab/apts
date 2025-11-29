@@ -38,7 +38,7 @@
     "format": "prettier . -w",
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
-    "preview": "pnpm run build && node ./dist/index.js"
+    "preview": "turbo build --filter=node && node ./dist/index.js"
   },
   "type": "module",
   "version": "4.2.0"

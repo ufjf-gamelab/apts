@@ -5,20 +5,20 @@ import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
+import type { TreeNode } from "@repo/search/CommonMonteCarloTree/TreeNode.js";
 
 import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import {
-  attribute as attributeFromGraphviz,
-  Digraph as DigraphFromGraphviz,
-  Edge as EdgeFromGraphviz,
-  type GraphAttributesObject as GraphAttributesObjectFromGraphviz,
-  Node as NodeFromGraphviz,
-  toDot as toDotFromGraphviz,
+  attribute as graphvizAttribute,
+  Digraph as GraphvizDigraph,
+  Edge as GraphvizEdge,
+  type EdgeAttributesObject as GraphvizEdgeAttributesObject,
+  type GraphAttributesObject as GraphvizGraphAttributesObject,
+  Node as GraphvizNode,
+  type NodeAttributesObject as GraphvizNodeAttributesObject,
 } from "ts-graphviz";
 
-import type { TreeNode } from "./TreeNode.js";
-
-interface TupleWithTreeNodeAndItsParentNodeFromGraphviz<
+interface TupleWithTreeNodeAndItsParentGraphvizNode<
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -48,13 +48,13 @@ interface TupleWithTreeNodeAndItsParentNodeFromGraphviz<
     GenericSlot,
     GenericState
   >;
-  parentNodeFromGraphviz: NodeFromGraphviz;
+  parentGraphvizNode: GraphvizNode;
 }
 
 const ID_OF_FIRST_CHILD = 1;
 const ID_OF_ROOT = 0;
 
-const GRAPH_ATTRIBUTES: GraphAttributesObjectFromGraphviz = {
+const GRAPH_ATTRIBUTES = {
   fontname: "Monospace",
   fontsize: 30,
   labelloc: "t",
@@ -62,7 +62,17 @@ const GRAPH_ATTRIBUTES: GraphAttributesObjectFromGraphviz = {
   rankdir: "TB",
   ranksep: 3,
   splines: "true",
-};
+} as const satisfies GraphvizGraphAttributesObject;
+
+const NODE_ATTRIBUTES = {
+  fontname: GRAPH_ATTRIBUTES.fontname,
+  labelloc: "t",
+  shape: "box",
+} as const satisfies GraphvizNodeAttributesObject;
+
+const EDGE_ATTRIBUTES = {
+  fontname: GRAPH_ATTRIBUTES.fontname,
+} as const satisfies GraphvizEdgeAttributesObject;
 
 const constructGraphvizNode = <
   GenericGame extends Game<
@@ -111,14 +121,16 @@ const constructGraphvizNode = <
     );
   }
 
-  const label = `${id}: S.${quantityOfVisits} Q.${
+  const label = `id: ${id}, visits: ${quantityOfVisits}, quality: ${
     qualityOfMatch
+  },\nplayer: { id: ${indexOfPlayer}, symbol: ${player.getSymbol()} }\n${
     // eslint-disable-next-line @typescript-eslint/no-base-to-string
-  }\nP.${indexOfPlayer} ${player.getSymbol()} ${player.getName()}\n${state.toString()}`;
+    state.toString()
+  }`;
 
-  return new NodeFromGraphviz(id.toString(), {
-    [attributeFromGraphviz.label]: label,
-    fontname: "Monospace",
+  return new GraphvizNode(id.toString(), {
+    ...NODE_ATTRIBUTES,
+    [graphvizAttribute.label]: label,
   });
 };
 
@@ -157,9 +169,9 @@ const insertNodeIntoGraph = <
     GenericSlot,
     GenericState
   >;
-  graph: DigraphFromGraphviz;
+  graph: GraphvizDigraph;
   idOfCurrentNode: Integer;
-  tuplesOfTreeNodesAndTheirParentNodesFromGraphviz: TupleWithTreeNodeAndItsParentNodeFromGraphviz<
+  tuplesOfTreeNodesAndTheirParentNodesFromGraphviz: TupleWithTreeNodeAndItsParentGraphvizNode<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -167,23 +179,23 @@ const insertNodeIntoGraph = <
     GenericSlot,
     GenericState
   >[];
-}): NodeFromGraphviz => {
-  const currentNodeFromGraphviz = constructGraphvizNode({
+}): GraphvizNode => {
+  const currentGraphvizNode = constructGraphvizNode({
     id: idOfCurrentNode,
     treeNode: currentNode,
   });
-  graph.addNode(currentNodeFromGraphviz);
+  graph.addNode(currentGraphvizNode);
 
   currentNode.getChildren().forEach((childNode) => {
     if (childNode !== null) {
       tuplesOfTreeNodesAndTheirParentNodesFromGraphviz.push({
         node: childNode,
-        parentNodeFromGraphviz: currentNodeFromGraphviz,
+        parentGraphvizNode: currentGraphvizNode,
       });
     }
   });
 
-  return currentNodeFromGraphviz;
+  return currentGraphvizNode;
 };
 
 const insertEdgeIntoGraph = <
@@ -214,23 +226,23 @@ const insertEdgeIntoGraph = <
   indexOfPlayedMove,
   parentNode,
 }: {
-  childNode: NodeFromGraphviz;
+  childNode: GraphvizNode;
   game: GenericGame;
-  graph: DigraphFromGraphviz;
+  graph: GraphvizDigraph;
   indexOfPlayedMove: IndexOfMove;
-  parentNode: NodeFromGraphviz;
+  parentNode: GraphvizNode;
 }): void => {
   const playedMove = game.getMove({ indexOfMove: indexOfPlayedMove });
   if (playedMove !== null) {
-    const edgeFromGraphviz = new EdgeFromGraphviz([parentNode, childNode], {
-      [attributeFromGraphviz.label]: `${indexOfPlayedMove}: ${playedMove.getTitle()}\n${playedMove.getDescription()}`,
-      fontname: "Monospace",
+    const graphvizEdge = new GraphvizEdge([parentNode, childNode], {
+      ...EDGE_ATTRIBUTES,
+      [graphvizAttribute.label]: `${indexOfPlayedMove}: ${playedMove.getTitle()}\n${playedMove.getDescription()}`,
     });
-    graph.addEdge(edgeFromGraphviz);
+    graph.addEdge(graphvizEdge);
   }
 };
 
-export const generateGraphvizDotStringFromTree = <
+export const constructGraphvizGraph = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -251,8 +263,9 @@ export const generateGraphvizDotStringFromTree = <
     GenericSlot,
     GenericState
   >,
->(
-  game: GenericGame,
+>({
+  rootNode,
+}: {
   rootNode: TreeNode<
     GenericGame,
     GenericMove,
@@ -260,10 +273,11 @@ export const generateGraphvizDotStringFromTree = <
     GenericScore,
     GenericSlot,
     GenericState
-  >,
-): string => {
-  const graph = new DigraphFromGraphviz("G", GRAPH_ATTRIBUTES);
-  const tuplesOfTreeNodesAndTheirParentNodesFromGraphviz: TupleWithTreeNodeAndItsParentNodeFromGraphviz<
+  >;
+}): GraphvizDigraph => {
+  const game = rootNode.getState().getGame();
+  const graph = new GraphvizDigraph("G", GRAPH_ATTRIBUTES);
+  const tuplesOfTreeNodesAndTheirParentNodesFromGraphviz: TupleWithTreeNodeAndItsParentGraphvizNode<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -290,9 +304,9 @@ export const generateGraphvizDotStringFromTree = <
     if (typeof nodeTuple === "undefined") {
       break;
     }
-    const { node: currentNode, parentNodeFromGraphviz } = nodeTuple;
+    const { node: currentNode, parentGraphvizNode } = nodeTuple;
 
-    const currentNodeFromGraphviz = insertNodeIntoGraph({
+    const currentGraphvizNode = insertNodeIntoGraph({
       currentNode,
       graph,
       idOfCurrentNode,
@@ -305,13 +319,13 @@ export const generateGraphvizDotStringFromTree = <
     }
 
     insertEdgeIntoGraph({
-      childNode: currentNodeFromGraphviz,
+      childNode: currentGraphvizNode,
       game,
       graph,
       indexOfPlayedMove,
-      parentNode: parentNodeFromGraphviz,
+      parentNode: parentGraphvizNode,
     });
   }
 
-  return toDotFromGraphviz(graph);
+  return graph;
 };

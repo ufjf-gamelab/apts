@@ -22,6 +22,17 @@ export const config = (tsconfigRootDir: string): Linter.Config[] => [
     },
   },
 
+  {
+    rules: {
+      "no-console": [
+        "warn",
+        {
+          allow: ["error"],
+        },
+      ],
+    },
+  },
+
   /* Ignore files */
   {
     ignores: ["dist", "node_modules"],

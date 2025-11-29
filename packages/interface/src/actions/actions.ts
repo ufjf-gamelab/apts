@@ -1,14 +1,11 @@
 // import predictProbabilities from "./predictProbabilities/action.js";
-import sayHello from "./sayHello/action.js";
-
-type ProcessGraphvizDotString = (dotString: string) => void;
+import { constructGraph } from "./constructGraph/action.js";
 
 const actions = {
+  // startGameplay,
+  constructGraph,
   // generateGameDescription,
   // predictProbabilities,
-  sayHello,
-  // startGameplay,
 };
 
-export type { ProcessGraphvizDotString };
 export { actions };

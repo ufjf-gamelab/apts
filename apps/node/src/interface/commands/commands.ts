@@ -1,21 +1,14 @@
 import type { Argument, Command, Option } from "commander";
 
-// import commandToGenerateGameDescription from "./generateGameDescription/command.js";
-// import commandToPredictProbabilities from "./predictProbabilities/command.js";
-import commandToSayHello from "./sayHello/command.js";
-// import commandToStartGameplay from "./startGameplay/command.js";
+import { commandToGenerateGraph } from "./generateGraph/command.js";
 
-interface CommandDefinition {
+interface DefinitionOfCommand {
   arguments?: Argument[];
   command: Command;
   options?: Option[];
 }
 
-const commandsDefinitions: CommandDefinition[] = [
-  // commandToGenerateGameDescription,
-  // commandToPredictProbabilities,
-  // commandToStartGameplay,
-  commandToSayHello,
-];
+const definitionsOfCommands: DefinitionOfCommand[] = [commandToGenerateGraph];
 
-export default commandsDefinitions;
+export type { DefinitionOfCommand };
+export { definitionsOfCommands };
