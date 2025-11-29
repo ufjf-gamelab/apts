@@ -435,15 +435,28 @@ class TreeNode<
   }: {
     score: Score<GenericScore>;
   }): void {
-    const indexOfPlayer = this.state.getIndexOfPlayer();
-    const pointsOfPlayer = score.getPointsOfPlayer({ indexOfPlayer });
+    const indexOfThisPlayer = this.state.getIndexOfPlayer();
+    let pointsOfThisPlayer = 0;
+    let pointsOfOpponents = 0;
+    score
+      .getPointsOfEachPlayer()
+      .entries()
+      .forEach(([indexOfPlayer, pointsOfPlayer]) => {
+        if (indexOfPlayer === indexOfThisPlayer) {
+          pointsOfThisPlayer += pointsOfPlayer;
+        } else {
+          pointsOfOpponents += pointsOfPlayer;
+        }
+      });
 
     /* TODO: Accumulating the quality of match is only appropriate if this method is called only at the end of some match
      * A common method is to decrement the points of the opponent
      * Other idea is to normalize the final score, like subtracting from both players the points made by the defeated, so the winner has an advantage and the loser has zero points
      * Other idea is to divide the points of the winner for the points of the loser, making a ratio, that can be backpropagated as the winner points
      */
-    this.qualityOfMatch += pointsOfPlayer;
+
+    // The quality must be inverted, as it indicates the resulting score of the last player, which performed their winner action
+    this.qualityOfMatch += pointsOfOpponents - pointsOfThisPlayer;
     this.quantityOfVisits += INCREMENT_ONE;
 
     if (this.parentNode) {

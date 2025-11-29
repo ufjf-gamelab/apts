@@ -3,7 +3,6 @@ import type { Integer } from "@repo/engine_core/types.js";
 import type {
   getIndexesOfSlots,
   getIndexOfPlayerWhoIsOccupyingShape,
-  getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots,
   Shape,
 } from "../Shape.js";
 
@@ -37,9 +36,6 @@ interface RequiredParamsOfTicTacToeShape {
 
 interface ResultOfTicTacToeShape {
   indexesOfSlots: ReturnType<typeof getIndexesOfSlots>;
-  score: ReturnType<
-    typeof getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots
-  >;
 }
 
 interface TicTacToeShapeWithData<

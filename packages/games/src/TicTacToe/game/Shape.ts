@@ -2,9 +2,8 @@ import type { Integer } from "@repo/engine_core/types.js";
 import type { IndexOfPlayer } from "@repo/game/Player.js";
 import type { IndexOfSlot } from "@repo/game/Slot.js";
 
-import { FIRST_INDEX, INCREMENT_ONE } from "@repo/engine_core/constants.js";
+import { FIRST_INDEX } from "@repo/engine_core/constants.js";
 
-import { TicTacToeScore } from "./Score.js";
 import { TicTacToeSlot } from "./Slot.js";
 
 const ADJUST_INDEX = 1;
@@ -258,17 +257,17 @@ const getIndexesOfSlots = ({
 };
 
 const getIndexOfPlayerWhoIsOccupyingShape = ({
-  columnLength,
+  columnLength = COLUMN_LENGTH,
   initialIndexOfColumn,
   initialIndexOfRow,
-  rowLength,
+  rowLength = ROW_LENGTH,
   shape,
   slots,
 }: {
-  columnLength: Integer;
+  columnLength?: Integer;
   initialIndexOfColumn: Integer;
   initialIndexOfRow: Integer;
-  rowLength: Integer;
+  rowLength?: Integer;
   shape: Shape;
   slots: TicTacToeSlot[];
 }): IndexOfPlayer | null => {
@@ -306,57 +305,6 @@ const getIndexOfPlayerWhoIsOccupyingShape = ({
   return indexOfLastOccupyingPlayer;
 };
 
-const getIncrementedScoreForPlayer = ({
-  indexOfPlayerWhoIsOccupyingShape,
-  score,
-}: {
-  indexOfPlayerWhoIsOccupyingShape: IndexOfPlayer | null;
-  score: TicTacToeScore;
-}): TicTacToeScore => {
-  if (indexOfPlayerWhoIsOccupyingShape !== null) {
-    const currentPointsForPlayer = score.getPointsOfPlayer({
-      indexOfPlayer: indexOfPlayerWhoIsOccupyingShape,
-    });
-
-    const pointsOfEachPlayer = new Map(score.getPointsOfEachPlayer());
-    pointsOfEachPlayer.set(
-      indexOfPlayerWhoIsOccupyingShape,
-      currentPointsForPlayer + INCREMENT_ONE,
-    );
-
-    return new TicTacToeScore({ pointsOfEachPlayer });
-  }
-
-  return score;
-};
-
-const getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots = ({
-  initialIndexOfColumn,
-  initialIndexOfRow,
-  score,
-  shape,
-  slots,
-}: {
-  initialIndexOfColumn: Integer;
-  initialIndexOfRow: Integer;
-  score: TicTacToeScore;
-  shape: Shape;
-  slots: TicTacToeSlot[];
-}): TicTacToeScore => {
-  const indexOfPlayerWhoIsOccupyingShape = getIndexOfPlayerWhoIsOccupyingShape({
-    columnLength: COLUMN_LENGTH,
-    initialIndexOfColumn,
-    initialIndexOfRow,
-    rowLength: ROW_LENGTH,
-    shape,
-    slots,
-  });
-  return getIncrementedScoreForPlayer({
-    indexOfPlayerWhoIsOccupyingShape,
-    score,
-  });
-};
-
 export type { Shape };
 export {
   COLUMN_LENGTH,
@@ -364,7 +312,6 @@ export {
   getIndexOfPlayerWhoIsOccupyingShape,
   getNameAndFormattedSizeOfShape,
   getNameOfDirection,
-  getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots,
   ROW_LENGTH,
   sizeOfPatternsUsedForCalculatingPoints,
 };

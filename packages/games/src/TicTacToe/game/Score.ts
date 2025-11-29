@@ -1,18 +1,20 @@
 import type { Integer } from "@repo/engine_core/types.js";
 import type { IndexOfPlayer } from "@repo/game/Player.js";
 
+import { FIRST_INDEX, INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import { type Points, Score } from "@repo/game/Score.js";
 
 import type { TicTacToeSlot } from "./Slot.js";
 
 import {
   COLUMN_LENGTH,
-  getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots,
+  getIndexOfPlayerWhoIsOccupyingShape,
   type Shape,
   sizeOfPatternsUsedForCalculatingPoints,
 } from "./Shape.js";
 
 const ZERO_POINTS = 0;
+const ONE_POINT = 1;
 
 const constructInitialPointsForEachPlayer = ({
   quantityOfPlayers,
@@ -52,60 +54,74 @@ class TicTacToeScore extends Score<TicTacToeScore> {
   }: {
     slots: TicTacToeSlot[];
   }): TicTacToeScore {
-    let score = TicTacToeScore.constructInitialScore({
-      quantityOfPlayers: this.getQuantityOfPlayers(),
-    });
+    const quantityOfPlayers = this.getQuantityOfPlayers();
 
-    slots.forEach((_, indexOfSlot) => {
+    for (
+      let indexOfSlot = FIRST_INDEX;
+      indexOfSlot < slots.length;
+      indexOfSlot += INCREMENT_ONE
+    ) {
       const indexOfRow = Math.floor(indexOfSlot / COLUMN_LENGTH);
       const indexOfColumn = indexOfSlot % COLUMN_LENGTH;
 
-      const updateScoreConsideringShape = ({
-        shape,
-      }: {
-        score: TicTacToeScore;
-        shape: Shape;
-      }) => {
-        score = getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots({
+      const updateScoreConsideringShape = ({ shape }: { shape: Shape }) => {
+        const indexOfPlayer = getIndexOfPlayerWhoIsOccupyingShape({
           initialIndexOfColumn: indexOfColumn,
           initialIndexOfRow: indexOfRow,
-          score,
           shape,
           slots,
         });
+        if (indexOfPlayer !== null) {
+          const pointsOfEachPlayer = constructInitialPointsForEachPlayer({
+            quantityOfPlayers,
+          });
+          pointsOfEachPlayer.set(indexOfPlayer, ONE_POINT);
+          return new TicTacToeScore({ pointsOfEachPlayer });
+        }
+        return null;
       };
 
-      updateScoreConsideringShape({
-        score,
+      let score = updateScoreConsideringShape({
         shape: {
           direction: "horizontal",
           size: sizeOfPatternsUsedForCalculatingPoints.line,
         },
       });
-      updateScoreConsideringShape({
-        score,
+      if (score) {
+        return score;
+      }
+      score = updateScoreConsideringShape({
         shape: {
           direction: "vertical",
           size: sizeOfPatternsUsedForCalculatingPoints.line,
         },
       });
-      updateScoreConsideringShape({
-        score,
+      if (score) {
+        return score;
+      }
+      score = updateScoreConsideringShape({
         shape: {
           direction: "principalDiagonal",
           size: sizeOfPatternsUsedForCalculatingPoints.line,
         },
       });
-      updateScoreConsideringShape({
-        score,
+      if (score) {
+        return score;
+      }
+      score = updateScoreConsideringShape({
         shape: {
           direction: "secondaryDiagonal",
           size: sizeOfPatternsUsedForCalculatingPoints.line,
         },
       });
-    });
+      if (score) {
+        return score;
+      }
+    }
 
-    return score;
+    return TicTacToeScore.constructInitialScore({
+      quantityOfPlayers,
+    });
   }
 }
 

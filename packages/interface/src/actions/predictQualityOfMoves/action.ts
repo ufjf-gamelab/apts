@@ -87,6 +87,7 @@ const predictQualityOfMoves = <
   if (processGraphvizGraph !== null) {
     const graph = constructGraphvizGraph({
       explorationCoefficient,
+      qualityOfMoves,
       rootNode,
     });
     processGraphvizGraph(graph);

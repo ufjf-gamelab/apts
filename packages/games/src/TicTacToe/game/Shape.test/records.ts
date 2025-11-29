@@ -1,7 +1,6 @@
 import type { Shape } from "../Shape.js";
 
 import { recordOfTicTacToePlayersWithDataAndIndex } from "../Player.test/indexedRecords.js";
-import { recordOfTicTacToeScoresWithData } from "../Score.test/records.js";
 import { recordOfTicTacToeSlotsWithDataAndIndexInWhichAllSlotsAreEmpty as recordOfTicTacToeSlotsWithDataAndIndex } from "../Slot.test/indexedRecords.js";
 import {
   createTicTacToeShapesWithData,
@@ -44,9 +43,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreHorizontal
           recordOfTicTacToeSlotsWithDataAndIndex.north.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.northeast.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     horizontalLineOfLength3OnRow0AndColumn1: {
@@ -61,9 +57,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreHorizontal
           recordOfTicTacToeSlotsWithDataAndIndex.north.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.northeast.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     horizontalLineOfLength3OnRow0AndColumn2: {
@@ -77,9 +70,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreHorizontal
         indexesOfSlots: [
           recordOfTicTacToeSlotsWithDataAndIndex.northeast.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     horizontalLineOfLength3OnRow0AndColumnNegative1: {
@@ -94,9 +84,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreHorizontal
           recordOfTicTacToeSlotsWithDataAndIndex.northwest.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.north.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     horizontalLineOfLength3OnRow0AndColumnNegative2: {
@@ -110,9 +97,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreHorizontal
         indexesOfSlots: [
           recordOfTicTacToeSlotsWithDataAndIndex.northwest.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
 
@@ -130,9 +114,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreHorizontal
           recordOfTicTacToeSlotsWithDataAndIndex.center.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.east.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     horizontalLineOfLength3OnRow1AndColumn1: {
@@ -147,9 +128,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreHorizontal
           recordOfTicTacToeSlotsWithDataAndIndex.center.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.east.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     horizontalLineOfLength3OnRow1AndColumn2: {
@@ -163,9 +141,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreHorizontal
         indexesOfSlots: [
           recordOfTicTacToeSlotsWithDataAndIndex.east.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     horizontalLineOfLength3OnRow1AndColumnNegative1: {
@@ -180,9 +155,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreHorizontal
           recordOfTicTacToeSlotsWithDataAndIndex.west.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.center.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     horizontalLineOfLength3OnRow1AndColumnNegative2: {
@@ -196,9 +168,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreHorizontal
         indexesOfSlots: [
           recordOfTicTacToeSlotsWithDataAndIndex.west.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
 
@@ -216,9 +185,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreHorizontal
           recordOfTicTacToeSlotsWithDataAndIndex.south.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.southeast.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     horizontalLineOfLength3OnRow2AndColumn1: {
@@ -233,9 +199,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreHorizontal
           recordOfTicTacToeSlotsWithDataAndIndex.south.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.southeast.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     horizontalLineOfLength3OnRow2AndColumn2: {
@@ -249,9 +212,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreHorizontal
         indexesOfSlots: [
           recordOfTicTacToeSlotsWithDataAndIndex.southeast.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     horizontalLineOfLength3OnRow2AndColumnNegative1: {
@@ -266,9 +226,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreHorizontal
           recordOfTicTacToeSlotsWithDataAndIndex.southwest.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.south.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     horizontalLineOfLength3OnRow2AndColumnNegative2: {
@@ -282,9 +239,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreHorizontal
         indexesOfSlots: [
           recordOfTicTacToeSlotsWithDataAndIndex.southwest.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
   } as const satisfies RecordOfRequiredParamsAndResultOfTicTacToeShapes;
@@ -305,9 +259,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreVerticalLi
           recordOfTicTacToeSlotsWithDataAndIndex.west.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.southwest.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     verticalLineOfLength3OnRow0AndColumn1: {
@@ -323,9 +274,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreVerticalLi
           recordOfTicTacToeSlotsWithDataAndIndex.center.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.south.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     verticalLineOfLength3OnRow0AndColumn2: {
@@ -341,9 +289,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreVerticalLi
           recordOfTicTacToeSlotsWithDataAndIndex.east.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.southeast.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
 
@@ -360,9 +305,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreVerticalLi
           recordOfTicTacToeSlotsWithDataAndIndex.west.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.southwest.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     verticalLineOfLength3OnRow1AndColumn1: {
@@ -377,9 +319,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreVerticalLi
           recordOfTicTacToeSlotsWithDataAndIndex.center.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.south.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     verticalLineOfLength3OnRow1AndColumn2: {
@@ -394,9 +333,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreVerticalLi
           recordOfTicTacToeSlotsWithDataAndIndex.east.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.southeast.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
 
@@ -412,9 +348,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreVerticalLi
         indexesOfSlots: [
           recordOfTicTacToeSlotsWithDataAndIndex.southwest.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     verticalLineOfLength3OnRow2AndColumn1: {
@@ -428,9 +361,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreVerticalLi
         indexesOfSlots: [
           recordOfTicTacToeSlotsWithDataAndIndex.south.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     verticalLineOfLength3OnRow2AndColumn2: {
@@ -444,9 +374,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreVerticalLi
         indexesOfSlots: [
           recordOfTicTacToeSlotsWithDataAndIndex.southeast.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
 
@@ -463,9 +390,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreVerticalLi
           recordOfTicTacToeSlotsWithDataAndIndex.northwest.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.west.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
 
@@ -481,9 +405,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreVerticalLi
         indexesOfSlots: [
           recordOfTicTacToeSlotsWithDataAndIndex.northwest.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
   } as const satisfies RecordOfRequiredParamsAndResultOfTicTacToeShapes;
@@ -505,9 +426,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesArePrincipalD
           recordOfTicTacToeSlotsWithDataAndIndex.center.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.southeast.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith1PointAndBrunoWith0Points
-            .score,
       },
     },
     principalDiagonalOfLength3OnRow0AndColumn1: {
@@ -522,9 +440,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesArePrincipalD
           recordOfTicTacToeSlotsWithDataAndIndex.north.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.east.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     principalDiagonalOfLength3OnRow0AndColumn2: {
@@ -538,9 +453,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesArePrincipalD
         indexesOfSlots: [
           recordOfTicTacToeSlotsWithDataAndIndex.northeast.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     principalDiagonalOfLength3OnRow0AndColumnNegative1: {
@@ -555,9 +467,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesArePrincipalD
           recordOfTicTacToeSlotsWithDataAndIndex.west.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.south.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     principalDiagonalOfLength3OnRow0AndColumnNegative2: {
@@ -571,9 +480,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesArePrincipalD
         indexesOfSlots: [
           recordOfTicTacToeSlotsWithDataAndIndex.southwest.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
 
@@ -590,9 +496,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesArePrincipalD
           recordOfTicTacToeSlotsWithDataAndIndex.west.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.south.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     principalDiagonalOfLength3OnRow1AndColumn1: {
@@ -607,9 +510,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesArePrincipalD
           recordOfTicTacToeSlotsWithDataAndIndex.center.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.southeast.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     principalDiagonalOfLength3OnRow1AndColumn2: {
@@ -623,9 +523,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesArePrincipalD
         indexesOfSlots: [
           recordOfTicTacToeSlotsWithDataAndIndex.east.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
 
@@ -641,9 +538,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesArePrincipalD
         indexesOfSlots: [
           recordOfTicTacToeSlotsWithDataAndIndex.southwest.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     principalDiagonalOfLength3OnRow2AndColumn1: {
@@ -657,9 +551,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesArePrincipalD
         indexesOfSlots: [
           recordOfTicTacToeSlotsWithDataAndIndex.south.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     principalDiagonalOfLength3OnRow2AndColumn2: {
@@ -673,9 +564,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesArePrincipalD
         indexesOfSlots: [
           recordOfTicTacToeSlotsWithDataAndIndex.southeast.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
   } as const satisfies RecordOfRequiredParamsAndResultOfTicTacToeShapes;
@@ -694,9 +582,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreSecondaryD
         indexesOfSlots: [
           recordOfTicTacToeSlotsWithDataAndIndex.northwest.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     secondaryDiagonalOfLength3OnRow0AndColumn1: {
@@ -711,9 +596,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreSecondaryD
           recordOfTicTacToeSlotsWithDataAndIndex.north.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.west.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     secondaryDiagonalOfLength3OnRow0AndColumn2: {
@@ -729,9 +611,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreSecondaryD
           recordOfTicTacToeSlotsWithDataAndIndex.center.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.southwest.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
 
@@ -747,9 +626,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreSecondaryD
         indexesOfSlots: [
           recordOfTicTacToeSlotsWithDataAndIndex.west.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     secondaryDiagonalOfLength3OnRow1AndColumn1: {
@@ -764,9 +640,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreSecondaryD
           recordOfTicTacToeSlotsWithDataAndIndex.center.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.southwest.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     secondaryDiagonalOfLength3OnRow1AndColumn2: {
@@ -781,9 +654,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreSecondaryD
           recordOfTicTacToeSlotsWithDataAndIndex.east.indexOfSlot,
           recordOfTicTacToeSlotsWithDataAndIndex.south.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
 
@@ -799,9 +669,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreSecondaryD
         indexesOfSlots: [
           recordOfTicTacToeSlotsWithDataAndIndex.southwest.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     secondaryDiagonalOfLength3OnRow2AndColumn1: {
@@ -815,9 +682,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreSecondaryD
         indexesOfSlots: [
           recordOfTicTacToeSlotsWithDataAndIndex.south.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
     secondaryDiagonalOfLength3OnRow2AndColumn2: {
@@ -831,9 +695,6 @@ const recordOfRequiredParamsAndResultOfTicTacToeShapesInWhichShapesAreSecondaryD
         indexesOfSlots: [
           recordOfTicTacToeSlotsWithDataAndIndex.southeast.indexOfSlot,
         ],
-        score:
-          recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points
-            .score,
       },
     },
   } as const satisfies RecordOfRequiredParamsAndResultOfTicTacToeShapes;

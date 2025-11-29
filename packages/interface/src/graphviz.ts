@@ -5,10 +5,14 @@ import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
-import type { ExplorationCoefficient } from "@repo/search/CommonMonteCarloTree/Search.js";
+import type {
+  ExplorationCoefficient,
+  QualityOfMove,
+} from "@repo/search/CommonMonteCarloTree/Search.js";
 import type { TreeNode } from "@repo/search/CommonMonteCarloTree/TreeNode.js";
 
 import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
+import { formatMap } from "@repo/engine_core/format.js";
 import {
   attribute as graphvizAttribute,
   Digraph as GraphvizDigraph,
@@ -53,8 +57,8 @@ interface TupleOfInformationOfGraphvizEdge<
   parentGraphvizNode: GraphvizNode;
 }
 
-const ID_OF_FIRST_CHILD = 1;
-const ID_OF_ROOT = 0;
+const ID_OF_FIRST_CHILD = 0;
+const ID_OF_ROOT = -1;
 
 const GRAPH_ATTRIBUTES = {
   fontname: "Monospace",
@@ -69,6 +73,7 @@ const GRAPH_ATTRIBUTES = {
 const NODE_ATTRIBUTES = {
   fontname: GRAPH_ATTRIBUTES.fontname,
   labelloc: "t",
+  margin: "0.5,0.125",
   shape: "box",
 } as const satisfies GraphvizNodeAttributesObject;
 
@@ -275,9 +280,11 @@ export const constructGraphvizGraph = <
   >,
 >({
   explorationCoefficient,
+  qualityOfMoves,
   rootNode,
 }: {
   explorationCoefficient: ExplorationCoefficient;
+  qualityOfMoves: ReadonlyMap<IndexOfMove, QualityOfMove>;
   rootNode: TreeNode<
     GenericGame,
     GenericMove,
@@ -297,6 +304,17 @@ export const constructGraphvizGraph = <
     GenericSlot,
     GenericState
   >[] = [];
+
+  graph.addNode(
+    new GraphvizNode("information", {
+      ...NODE_ATTRIBUTES,
+      label: `explorationCoefficient: ${explorationCoefficient}\nqualityOfMoves: ${formatMap(
+        {
+          map: qualityOfMoves,
+        },
+      )}`,
+    }),
+  );
 
   insertNodeIntoGraph({
     currentNode: rootNode,
