@@ -43,13 +43,11 @@ const validateGetMoves = <
   expect(moves).not.toBe(expectedMoves);
   expect(moves).toStrictEqual(expectedMoves);
 
-  // Ensure that the returned object does not keep reference to the internal property
   const [firstMove] = moves;
   if (typeof firstMove === "undefined") {
     assert.fail("There should be at least one move to perform this test.");
   }
   expect(firstMove).toBeInstanceOf(Move);
-  moves.push(firstMove);
 
   expect(game.getMoves()).toStrictEqual(expectedMoves);
   expect(game.getMoves()).not.toEqual(moves);

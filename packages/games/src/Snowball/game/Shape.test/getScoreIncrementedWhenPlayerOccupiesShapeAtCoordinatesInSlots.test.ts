@@ -48,7 +48,6 @@ const validateGetScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots =
         slots,
       });
 
-    expect(updatedScore).not.toBe(expectedScore);
     expect(updatedScore).toStrictEqual(expectedScore);
   };
 

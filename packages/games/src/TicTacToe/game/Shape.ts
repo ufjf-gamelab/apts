@@ -326,7 +326,8 @@ const getIncrementedScoreForPlayer = ({
 
     return new TicTacToeScore({ pointsOfEachPlayer });
   }
-  return score.clone();
+
+  return score;
 };
 
 const getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots = ({

@@ -65,7 +65,7 @@
 
 //     for (;;) {
 //       // Get the state from the perspective of the current player and save it in the game memory
-//       const neutralState = state.clone();
+//       const neutralState = state;
 //       neutralState.changePerspective(player, this.game.getOpponent(player));
 //       const actionProbabilities = this.mcts.search(neutralState);
 //       gameMemory.push({

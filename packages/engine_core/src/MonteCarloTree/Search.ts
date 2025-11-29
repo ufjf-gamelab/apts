@@ -82,7 +82,7 @@
 //     }
 
 //     // Perform the Monte Carlo Tree Search
-//     const neutralState = state.clone();
+//     const neutralState = state;
 //     const root = new Node({
 //       explorationConstant: this.explorationConstant,
 //       game: this.game,

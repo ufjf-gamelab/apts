@@ -43,13 +43,11 @@ const validateGetSlots = <
   expect(slots).not.toBe(expectedSlots);
   expect(slots).toStrictEqual(expectedSlots);
 
-  // Ensure that the returned object does not keep reference to the internal property
   const [firstSlot] = slots;
   if (typeof firstSlot === "undefined") {
     assert.fail("There should be at least one slot to perform this test.");
   }
   expect(firstSlot).toBeInstanceOf(Slot);
-  slots.push(firstSlot);
 
   expect(state.getSlots()).toStrictEqual(expectedSlots);
   expect(state.getSlots()).not.toEqual(slots);

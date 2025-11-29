@@ -110,7 +110,7 @@
 //     const chosenKeyedMove = input["move"] as M;
 
 //     state = playMove(state, chosenKeyedMove);
-//     state = state.clone();
+//     state = state;
 //     player = state.getPlayer();
 //     gameHasEnded = hasGameEnded(state);
 //   }

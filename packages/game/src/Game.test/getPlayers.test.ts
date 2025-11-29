@@ -43,13 +43,11 @@ const validateGetPlayers = <
   expect(players).not.toBe(expectedPlayers);
   expect(players).toStrictEqual(expectedPlayers);
 
-  // Ensure that the returned object does not keep reference to the internal property
   const [firstPlayer] = players;
   if (typeof firstPlayer === "undefined") {
     assert.fail("There should be at least one player to perform this test.");
   }
   expect(firstPlayer).toBeInstanceOf(Player);
-  players.push(firstPlayer);
 
   expect(game.getPlayers()).toStrictEqual(expectedPlayers);
   expect(game.getPlayers()).not.toEqual(players);

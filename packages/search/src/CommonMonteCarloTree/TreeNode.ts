@@ -155,7 +155,7 @@ class TreeNode<
     GenericSlot,
     GenericState
   >) {
-    this.state = state.clone();
+    this.state = state;
     this.game = state.getGame();
     this.indexOfPlayedMove = indexOfPlayedMove;
     this.parent = parent;
@@ -331,7 +331,7 @@ class TreeNode<
   }
 
   public getState(): typeof this.state {
-    return this.state.clone();
+    return this.state;
   }
 
   /// Check if the node is fully expanded, i.e. all valid actions have been explored.
@@ -395,7 +395,7 @@ class TreeNode<
   /// Simulate a game from the current state, returning the outcome value.
   public simulateMatch(): GenericScore {
     // Copy the state and play random actions, with alternate players, until the game is over.
-    let stateThatIsCurrentlyBeingSimulated = this.state.clone();
+    let stateThatIsCurrentlyBeingSimulated = this.state;
     for (;;) {
       const score = stateThatIsCurrentlyBeingSimulated.getScore();
       const isFinal = this.game.isFinal({

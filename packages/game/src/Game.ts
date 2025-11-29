@@ -68,10 +68,10 @@ abstract class Game<
     players,
     slots,
   }: ParamsOfGame<GenericMove, GenericPlayer, GenericSlot>) {
-    this.moves = moves.map((move) => move.clone());
+    this.moves = moves;
     this.name = name;
-    this.players = players.map((player) => player.clone());
-    this.slots = slots.map((slot) => slot.clone());
+    this.players = players;
+    this.slots = slots;
   }
 
   public abstract clone(): GenericGame;
@@ -99,11 +99,11 @@ abstract class Game<
     if (typeof move === "undefined") {
       return null;
     }
-    return move.clone();
+    return move;
   }
 
   public getMoves() {
-    return this.moves.map((move) => move.clone());
+    return this.moves;
   }
 
   public getName() {
@@ -119,11 +119,11 @@ abstract class Game<
     if (typeof player === "undefined") {
       return null;
     }
-    return player.clone();
+    return player;
   }
 
   public getPlayers() {
-    return this.players.map((player) => player.clone());
+    return this.players;
   }
   public getQuantityOfMoves() {
     return this.moves.length;
@@ -168,7 +168,7 @@ abstract class Game<
   }): GenericState;
 
   protected getSlots() {
-    return this.slots.map((slot) => slot.clone());
+    return this.slots;
   }
 }
 

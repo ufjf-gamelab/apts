@@ -113,16 +113,16 @@ abstract class State<
       );
     }
 
-    this.game = game.clone();
+    this.game = game;
     this.indexOfPlayer = indexOfPlayer;
-    this.score = score.clone();
-    this.slots = slots.map((slot) => slot.clone());
+    this.score = score;
+    this.slots = slots;
   }
 
   public abstract clone(): GenericState;
 
   public getGame() {
-    return this.game.clone();
+    return this.game;
   }
 
   public getIndexOfPlayer() {
@@ -142,7 +142,7 @@ abstract class State<
   }
 
   public getScore() {
-    return this.score.clone();
+    return this.score;
   }
 
   public getSlot({ indexOfSlot }: { indexOfSlot: IndexOfSlot }) {
@@ -150,12 +150,12 @@ abstract class State<
       Slot.getSlot({
         indexOfSlot,
         slots: this.slots,
-      })?.clone() ?? null
+      }) ?? null
     );
   }
 
   public getSlots() {
-    return this.slots.map((slot) => slot.clone());
+    return this.slots;
   }
 }
 

@@ -105,7 +105,7 @@ class TicTacToeScore extends Score<TicTacToeScore> {
       });
     });
 
-    return score.clone();
+    return score;
   }
 }
 

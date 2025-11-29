@@ -134,7 +134,7 @@
 //     policy.forEach((probability, action) => {
 //       if (probability > MINIMUM_PROBABILITY) {
 //         // Copy the state and play the action on the copy
-//         const childState = this.state.clone();
+//         const childState = this.state;
 //         childState.performAction(action, initialPlayer);
 //         childState.changePerspective(initialPlayer, player);
 

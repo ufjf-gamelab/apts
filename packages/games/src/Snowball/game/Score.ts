@@ -121,7 +121,7 @@ class SnowballScore extends Score<SnowballScore> {
       });
     });
 
-    return score.clone();
+    return score;
   }
 }
 
