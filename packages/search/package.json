@@ -8,19 +8,24 @@
   "devDependencies": {
     "@repo/eslint_config": "workspace:*",
     "@repo/typescript_config": "workspace:*",
+    "@types/node": "^24.10.1",
+    "eslint": "^9.39.1",
     "typescript": "^5.9.3",
     "vitest": "^4.0.14"
   },
   "exports": {
-    "./*": "./src/*"
+    "./*": {
+      "types": "./src/*",
+      "default": "./dist/*"
+    }
   },
   "license": "AGPL-3.0-only",
   "name": "@repo/search",
   "private": true,
   "scripts": {
-    "build": "tsc",
-    "check-types": "tsc",
-    "dev": "tsc --watch",
+    "build": "tsc --project tsconfig.build.json",
+    "check-types": "tsc --noEmit --project tsconfig.build.json",
+    "dev": "tsc --watch --project tsconfig.build.json",
     "format": "prettier . -w",
     "lint": "eslint",
     "lint:fix": "eslint --fix",

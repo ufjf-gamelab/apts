@@ -1,4 +1,4 @@
-import actions from "@repo/interface/actions/actions.js";
+import { actions } from "@repo/interface/actions/actions.js";
 import { Command } from "commander";
 
 const action = (): void => {

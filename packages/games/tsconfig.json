@@ -1,12 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "outDir": "dist",
-    "rootDir": "."
-  },
-  "exclude": ["node_modules", "dist"],
-  "extends": "@repo/typescript_config/library.json",
-  "files": ["eslint.config.ts", "vitest.config.ts"],
-  "include": ["src"]
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.build.json" },
+    { "path": "./tsconfig.eslint.json" }
+  ]
 }

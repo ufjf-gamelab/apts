@@ -1,14 +1,9 @@
 {
-  "dependencies": {
-    "jiti": "^2.6.1"
-  },
   "devDependencies": {
-    "@repo/eslint_config": "workspace:*",
-    "@vitest/coverage-v8": "^4.0.14",
+    "@types/node": "^24.10.1",
     "eslint": "^9.39.1",
-    "prettier": "^3.7.1",
+    "prettier": "^3.7.2",
     "turbo": "^2.6.1",
-    "typescript": "^5.9.3",
     "vitest": "^4.0.14"
   },
   "engines": {

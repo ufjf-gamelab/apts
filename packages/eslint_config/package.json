@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/eslintrc": "^3.3.3",
     "@eslint/js": "^9.39.1",
     "@next/eslint-plugin-next": "^16.0.5",
     "@repo/typescript_config": "workspace:*",
@@ -16,16 +16,23 @@
     "typescript-eslint": "^8.48.0"
   },
   "exports": {
-    "./*": "./src/*"
+    "./base": "./base.ts",
+    "./node": "./node.ts",
+    "./react": "./react.ts"
   },
+  "files": [
+    "base.ts",
+    "node.ts",
+    "react.ts"
+  ],
   "license": "AGPL-3.0-only",
   "name": "@repo/eslint_config",
   "private": true,
   "scripts": {
+    "check-types": "tsc --noEmit",
     "format": "prettier . -w",
     "lint": "eslint",
-    "lint:fix": "eslint --fix",
-    "check-types": "pnpm exec tsc"
+    "lint:fix": "eslint --fix"
   },
   "type": "module",
   "version": "0.0.0"

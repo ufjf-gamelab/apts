@@ -1,9 +1,9 @@
 {
-  "name": "@repo/typescript_config",
-  "version": "0.0.0",
-  "private": true,
   "license": "AGPL-3.0-only",
+  "name": "@repo/typescript_config",
+  "private": true,
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "version": "0.0.0"
 }

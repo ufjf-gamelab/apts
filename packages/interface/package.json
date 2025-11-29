@@ -9,23 +9,28 @@
   "devDependencies": {
     "@repo/eslint_config": "workspace:*",
     "@repo/typescript_config": "workspace:*",
+    "@types/node": "^24.10.1",
+    "eslint": "^9.39.1",
     "typescript": "^5.9.3"
   },
   "exports": {
-    "./*": "./src/*"
+    "./*": {
+      "types": "./src/*",
+      "default": "./dist/*"
+    }
   },
   "license": "AGPL-3.0-only",
   "name": "@repo/interface",
   "private": true,
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
+    "build": "tsc --project tsconfig.build.json",
+    "check-types": "tsc --noEmit --project tsconfig.build.json",
+    "dev": "tsc --watch --project tsconfig.build.json",
     "format": "prettier . -w",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "test": "vitest run",
-    "test:watch": "vitest --watch",
-    "check-types": "tsc"
+    "test:watch": "vitest --watch"
   },
   "type": "module",
   "version": "0.0.1"

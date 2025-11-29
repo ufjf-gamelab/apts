@@ -27,6 +27,7 @@ class TicTacToeState extends State<
   }
 
   public override toString(): string {
+    const game = this.getGame();
     let board = "";
     for (let row = FIRST_INDEX; row < ROW_LENGTH; row += INCREMENT_ONE) {
       board += "|";
@@ -44,9 +45,10 @@ class TicTacToeState extends State<
           if (indexOfOccupyingPlayer === null) {
             board += "-";
           } else {
-            const player = this.getGame().getPlayer({
+            const player = game.getPlayer({
               indexOfPlayer: indexOfOccupyingPlayer,
             });
+
             board += player?.getSymbol() ?? "-";
           }
         }

@@ -1,13 +1,13 @@
-import type { ProcessGraphvizDotString } from "../actions.js";
+// import type { ProcessGraphvizDotString } from "../actions.js";
 
-import { main } from "./predict.js";
+// import { main } from "./predict.js";
 
-const predictProbabilities = ({
-  processGraphvizDotString,
-}: {
-  processGraphvizDotString: ProcessGraphvizDotString;
-}): void => {
-  main({ processGraphvizDotString });
-};
+// const predictProbabilities = ({
+//   processGraphvizDotString,
+// }: {
+//   processGraphvizDotString: ProcessGraphvizDotString;
+// }): void => {
+//   main({ processGraphvizDotString });
+// };
 
-export default predictProbabilities;
+// export default predictProbabilities;

@@ -106,7 +106,7 @@ abstract class Game<
     return this.moves.map((move) => move.clone());
   }
 
-  public getName(): typeof this.name {
+  public getName() {
     return this.name;
   }
 

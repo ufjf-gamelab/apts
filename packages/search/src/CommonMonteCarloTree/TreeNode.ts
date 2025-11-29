@@ -444,7 +444,7 @@ class TreeNode<
     const indexOfPlayer = this.state.getIndexOfPlayer();
     const pointsOfPlayer = score.getPointsOfPlayer({ indexOfPlayer });
 
-    // TODO: Accumulating the quality of match is only appropriate if this method is acalled only at the end of some match
+    // TODO: Accumulating the quality of match is only appropriate if this method is called only at the end of some match
     // TODO: A common method is to decrement the points of the opponent
     this.qualityOfMatch += pointsOfPlayer;
     this.quantityOfVisits += INCREMENT_ONE;

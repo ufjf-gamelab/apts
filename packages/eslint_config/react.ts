@@ -10,8 +10,8 @@ import { config as baseConfig } from "./base.js";
 /**
  * A custom ESLint configuration for libraries that use Vite.
  * */
-export const reactConfig: Linter.Config[] = [
-  ...baseConfig,
+export const config = (tsconfigRootDir: string): Linter.Config[] => [
+  ...baseConfig(tsconfigRootDir),
 
   /* React plugin rules */
   {

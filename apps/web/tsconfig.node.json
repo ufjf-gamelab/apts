@@ -1,8 +1,0 @@
-{
-  "compilerOptions": {
-    "lib": ["ES2023"],
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo"
-  },
-  "extends": "@repo/typescript_config/vite/node.json",
-  "include": ["vite.config.ts"]
-}

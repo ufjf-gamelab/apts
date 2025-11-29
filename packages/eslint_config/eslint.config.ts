@@ -1,18 +1,9 @@
 import type { Linter } from "eslint";
 
-import { config as baseConfig } from "./src/base.js";
+import { config as baseConfig } from "./base.js";
 
 export default [
-  ...baseConfig,
-
-  {
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: import.meta.dirname,
-      },
-    },
-  },
+  ...baseConfig(import.meta.dirname),
 
   {
     rules: {

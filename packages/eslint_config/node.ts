@@ -7,8 +7,8 @@ import { config as baseConfig } from "./base.js";
 /**
  * A shared ESLint configuration for Node projects in the repository.
  * */
-export const nodeConfig: Linter.Config[] = [
-  ...baseConfig,
+export const config = (tsconfigRootDir: string): Linter.Config[] => [
+  ...baseConfig(tsconfigRootDir),
 
   {
     languageOptions: {

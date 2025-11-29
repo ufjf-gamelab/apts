@@ -8,12 +8,12 @@ import tseslint from "typescript-eslint";
 /**
  * A shared ESLint configuration for the repository.
  * */
-export const config: Linter.Config[] = [
+export const config = (tsconfigRootDir: string): Linter.Config[] => [
   {
     languageOptions: {
       parserOptions: {
         projectService: true,
-        tsconfigRootDir: import.meta.dirname,
+        tsconfigRootDir,
       },
     },
   },

@@ -1,3 +1,5 @@
-import { config as baseConfig } from "@repo/eslint_config/base.js";
+import type { Linter } from "eslint";
 
-export default baseConfig;
+import { config as baseConfig } from "@repo/eslint_config/base";
+
+export default [...baseConfig(import.meta.dirname)] as Linter.Config[];
