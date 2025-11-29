@@ -8,25 +8,25 @@
 // import { MINIMUM_PROBABILITY, Node } from "./Node.js";
 
 // interface SearchParams<G extends Game> {
-//   explorationConstant: number;
+//   explorationCoefficient: number;
 //   game: G;
 //   quantityOfSearches: number;
 //   resNet: ResNet;
 // }
 
 // export default class Search<G extends Game> {
-//   private explorationConstant: SearchParams<G>["explorationConstant"];
+//   private explorationCoefficient: SearchParams<G>["explorationCoefficient"];
 //   private game: SearchParams<G>["game"];
 //   private quantityOfSearches: SearchParams<G>["quantityOfSearches"];
 //   private resNet: SearchParams<G>["resNet"];
 
 //   constructor({
-//     explorationConstant,
+//     explorationCoefficient,
 //     game,
 //     quantityOfSearches,
 //     resNet,
 //   }: SearchParams<G>) {
-//     this.explorationConstant = explorationConstant;
+//     this.explorationCoefficient = explorationCoefficient;
 //     this.game = game;
 //     this.quantityOfSearches = quantityOfSearches;
 //     this.resNet = resNet;
@@ -84,7 +84,7 @@
 //     // Perform the Monte Carlo Tree Search
 //     const neutralState = state;
 //     const root = new Node({
-//       explorationConstant: this.explorationConstant,
+//       explorationCoefficient: this.explorationCoefficient,
 //       game: this.game,
 //       quantityOfSearches: this.quantityOfSearches,
 //       state: neutralState,

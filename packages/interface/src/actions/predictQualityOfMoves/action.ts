@@ -1,17 +1,20 @@
 import type { Game } from "@repo/game/Game.js";
-import type { Move } from "@repo/game/Move.js";
+import type { IndexOfMove, Move } from "@repo/game/Move.js";
 import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
-import type { TreeNode } from "@repo/search/CommonMonteCarloTree/TreeNode.js";
 import type { Digraph as GraphvizDigraph } from "ts-graphviz";
 
-import { expandTree } from "@repo/search/CommonMonteCarloTree/Search.js";
+import {
+  calculateQualityOfMoves,
+  expandTree,
+  type QualityOfMove,
+} from "@repo/search/CommonMonteCarloTree/Search.js";
 
 import { constructGraphvizGraph } from "../../graphviz.js";
 
-const constructGraph = <
+const predictQualityOfMoves = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -32,20 +35,12 @@ const constructGraph = <
     GenericSlot,
     GenericState
   >,
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
-  GenericTreeNode extends TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >,
 >({
-  explorationConstant,
+  explorationCoefficient,
   processGraphvizGraph,
+  processQualityOfMoves,
   quantityOfExpansions,
-  treeNode,
+  state,
 }: Pick<
   Parameters<
     typeof expandTree<
@@ -57,12 +52,15 @@ const constructGraph = <
       GenericState
     >
   >[0],
-  "explorationConstant" | "quantityOfExpansions"
+  "explorationCoefficient" | "quantityOfExpansions"
 > & {
-  processGraphvizGraph: (graphvizGraph: GraphvizDigraph) => void;
-  treeNode: GenericTreeNode;
+  processGraphvizGraph: ((graphvizGraph: GraphvizDigraph) => void) | null;
+  processQualityOfMoves: (
+    qualityOfMoves: Map<IndexOfMove, QualityOfMove>,
+  ) => void;
+  state: GenericState;
 }): void => {
-  expandTree<
+  const rootNode = expandTree<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -70,15 +68,29 @@ const constructGraph = <
     GenericSlot,
     GenericState
   >({
-    explorationConstant,
+    explorationCoefficient,
     quantityOfExpansions,
-    rootNodeOfTree: treeNode,
+    state,
   });
 
-  const graph = constructGraphvizGraph({
-    rootNode: treeNode,
+  const qualityOfIndexedMoves = calculateQualityOfMoves({
+    rootNode,
   });
-  processGraphvizGraph(graph);
+  const qualityOfMoves = new Map(
+    qualityOfIndexedMoves.map((qualityOfMove, indexOfMove) => [
+      indexOfMove,
+      qualityOfMove,
+    ]),
+  );
+  processQualityOfMoves(qualityOfMoves);
+
+  if (processGraphvizGraph !== null) {
+    const graph = constructGraphvizGraph({
+      explorationCoefficient,
+      rootNode,
+    });
+    processGraphvizGraph(graph);
+  }
 };
 
-export { constructGraph };
+export { predictQualityOfMoves };

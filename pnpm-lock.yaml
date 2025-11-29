@@ -38,6 +38,9 @@ importers:
       '@repo/interface':
         specifier: workspace:*
         version: link:../../packages/interface
+      '@repo/search':
+        specifier: workspace:*
+        version: link:../../packages/search
       '@tensorflow/tfjs':
         specifier: ^4.22.0
         version: 4.22.0(seedrandom@3.0.5)

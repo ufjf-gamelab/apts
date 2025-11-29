@@ -138,9 +138,9 @@ interface RequiredParamsOfTreeNode<
     IndexOfMove,
     MoveWithData<GenericMove, GenericRequiredParamsOfMove>
   >;
-  indexAndKeyOfBestChild: null | {
-    indexOfChild: IndexOfMove;
-    keyOfChild: string;
+  indexAndKeyOfBestChildNode: null | {
+    indexOfChildNode: IndexOfMove;
+    keyOfChildNode: string;
   };
   playedMoveWithDataAndIndex: MoveWithDataAndIndex<
     GenericMove,

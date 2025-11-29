@@ -8,6 +8,24 @@ import type { State } from "./State.js";
 
 type IndexOfGame = Integer;
 
+const constructErrorForFinalState = ({
+  indexOfMove,
+}: {
+  indexOfMove: IndexOfMove;
+}) =>
+  new Error(
+    `Cannot play move ${indexOfMove} because this state is already final.`,
+  );
+
+const constructErrorForInvalidMove = ({
+  indexOfMove,
+}: {
+  indexOfMove: IndexOfMove;
+}) => new Error(`Cannot play move ${indexOfMove} because it is not valid.`);
+
+const constructErrorForNotAnyIndexToPick = () =>
+  new Error("There is not any index of not expanded moves to pick from.");
+
 interface ParamsOfGame<
   GenericMove extends Move<GenericMove>,
   GenericPlayer extends Player<GenericPlayer>,
@@ -153,7 +171,7 @@ abstract class Game<
     const randomIndex = Math.floor(Math.random() * indexesOfValidMoves.length);
     const indexOfMove = indexesOfValidMoves[randomIndex];
     if (typeof indexOfMove === "undefined") {
-      throw new Error("No indexes of not expanded moves to pick from.");
+      throw constructErrorForNotAnyIndexToPick();
     }
 
     return indexOfMove;
@@ -172,20 +190,10 @@ abstract class Game<
   }
 }
 
-const constructErrorForFinalState = ({
-  indexOfMove,
-}: {
-  indexOfMove: IndexOfMove;
-}) =>
-  new Error(
-    `Cannot play move ${indexOfMove} because this state is already final.`,
-  );
-
-const constructErrorForInvalidMove = ({
-  indexOfMove,
-}: {
-  indexOfMove: IndexOfMove;
-}) => new Error(`Cannot play move ${indexOfMove} because it is not valid.`);
-
 export type { IndexOfGame, ParamsOfGame };
-export { constructErrorForFinalState, constructErrorForInvalidMove, Game };
+export {
+  constructErrorForFinalState,
+  constructErrorForInvalidMove,
+  constructErrorForNotAnyIndexToPick,
+  Game,
+};

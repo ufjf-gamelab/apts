@@ -5,6 +5,7 @@
     "@repo/game": "workspace:*",
     "@repo/games": "workspace:*",
     "@repo/interface": "workspace:*",
+    "@repo/search": "workspace:*",
     "@tensorflow/tfjs": "^4.22.0",
     "@ts-graphviz/adapter": "=3.0.4",
     "@ts-graphviz/ast": "=3.0.4",

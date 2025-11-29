@@ -1,6 +1,6 @@
 import type { Argument, Command, Option } from "commander";
 
-import { commandToGenerateGraph } from "./generateGraph/command.js";
+import { commandToPredictQualityOfMoves } from "./predictQualityOfMoves/command.js";
 
 interface DefinitionOfCommand {
   arguments?: Argument[];
@@ -8,7 +8,9 @@ interface DefinitionOfCommand {
   options?: Option[];
 }
 
-const definitionsOfCommands: DefinitionOfCommand[] = [commandToGenerateGraph];
+const definitionsOfCommands: DefinitionOfCommand[] = [
+  commandToPredictQualityOfMoves,
+];
 
 export type { DefinitionOfCommand };
 export { definitionsOfCommands };

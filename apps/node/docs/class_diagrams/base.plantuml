@@ -208,7 +208,7 @@ package monte_carlo_tree_common_package as "Monte Carlo Tree Common" {
   interface NodeParams $G {
     state: State<G, M>
     keyOfTheTakenMove: MoveKey | null
-    explorationConstant: number
+    explorationCoefficient: number
     parent: Node<G, M> | null
   }
   NodeParams::state --> State
@@ -218,7 +218,7 @@ package monte_carlo_tree_common_package as "Monte Carlo Tree Common" {
   class Node $G {
     - state: NodeParams::state
     - keyOfTheTakenMove: NodeParams::keyOfTheTakenMove
-    - explorationConstant: NodeParams::explorationConstant
+    - explorationCoefficient: NodeParams::explorationCoefficient
     - parent: NodeParams::parent
     - children: Node<G, M>[]
     - moveIsExpandable: Map<MoveKey, boolean>
@@ -240,28 +240,28 @@ package monte_carlo_tree_common_package as "Monte Carlo Tree Common" {
   }
   Node::state --> NodeParams::state
   Node::keyOfTheTakenMove --> NodeParams::keyOfTheTakenMove
-  Node::explorationConstant --> NodeParams::explorationConstant
+  Node::explorationCoefficient --> NodeParams::explorationCoefficient
   Node::parent --> NodeParams::parent
   Node::children --> Node
   Node::moveIsExpandable --> MoveKey
 
   interface SearchParams $G {
     game: G
-    explorationConstant: number
+    explorationCoefficient: number
     quantityOfSearches: Integer
   }
   SearchParams::game --> Game
 
   class Search $G {
     - game: SearchParams::game
-    - explorationConstant: SearchParams::explorationConstant
+    - explorationCoefficient: SearchParams::explorationCoefficient
     - quantityOfSearches: SearchParams::quantityOfSearches
     --
     - buildTree(root: Node<G, M>): void
     - getProbabilities(state: State<G, M>): number[]
   }
   Search::game --> SearchParams::game
-  Search::explorationConstant --> SearchParams::explorationConstant
+  Search::explorationCoefficient --> SearchParams::explorationCoefficient
   Search::quantityOfSearches --> SearchParams::quantityOfSearches
 
 }

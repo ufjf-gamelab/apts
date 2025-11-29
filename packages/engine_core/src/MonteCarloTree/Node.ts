@@ -9,7 +9,7 @@
 // export const MINIMUM_PROBABILITY = 0;
 
 // interface NodeParams<G extends Game<M>, M extends Move> {
-//   explorationConstant: number;
+//   explorationCoefficient: number;
 //   quantityOfSearches: Integer;
 //   state: State<G>;
 //   parent?: Node<G>;
@@ -22,7 +22,7 @@
 //   private state: State<G>;
 
 //   private quantityOfSearches: number;
-//   private explorationConstant: number;
+//   private explorationCoefficient: number;
 
 //   private parent: Node<G> | null;
 //   // Move that led to this node
@@ -37,14 +37,14 @@
 //   constructor({
 //     state,
 //     quantityOfSearches,
-//     explorationConstant,
+//     explorationCoefficient,
 //     parent,
 //     takenMove,
 //     priorProbability,
 //   }: NodeParams<G>) {
 //     this.state = state;
 //     this.quantityOfSearches = quantityOfSearches;
-//     this.explorationConstant = explorationConstant;
+//     this.explorationCoefficient = explorationCoefficient;
 //     this.parent = parent ? parent : null;
 //     this.takenMove = typeof takenMove === "number" ? takenMove : null;
 //     this.priorProbability = priorProbability
@@ -88,7 +88,7 @@
 //     }
 
 //     const exploration =
-//       this.explorationConstant *
+//       this.explorationCoefficient *
 //       child.priorProbability *
 //       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 //       (Math.sqrt(this.visitCount) / (child.visitCount + 1));
@@ -140,7 +140,7 @@
 
 //         const child = new Node({
 //           takenMove: action,
-//           explorationConstant: this.explorationConstant,
+//           explorationCoefficient: this.explorationCoefficient,
 //           game: this.game,
 //           quantityOfSearches: this.quantityOfSearches,
 //           parent: this,

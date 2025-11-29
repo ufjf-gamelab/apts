@@ -1,5 +1,4 @@
 import type { Integer } from "@repo/engine_core/types.js";
-import type { Game } from "@repo/game/Game.js";
 import type { IndexOfMove, Move } from "@repo/game/Move.js";
 import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
@@ -11,11 +10,18 @@ import {
   LENGTH_OF_EMPTY_LIST,
   NOT_INCREMENT,
 } from "@repo/engine_core/constants.js";
+import {
+  constructErrorForNotAnyIndexToPick,
+  type Game,
+} from "@repo/game/Game.js";
 
 import type { expandTree } from "./Search.js";
 
 const MINIMUM_QUALITY_OF_MATCH = 0;
 const MINIMUM_QUANTITY_OF_VISITS = 0;
+
+const BASE_EXPLOITATION = 0;
+const BASE_EXPLORATION = 0;
 
 interface ParamsOfTreeNode<
   GenericGame extends Game<
@@ -72,7 +78,7 @@ interface ParamsOfTreeNodeForPrivateConstructor<
   GenericSlot,
   GenericState
 > {
-  parent: null | TreeNode<
+  parentNode: null | TreeNode<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -104,7 +110,7 @@ class TreeNode<
     GenericState
   >,
 > {
-  private readonly children: Map<
+  private readonly childrenNodes: Map<
     IndexOfMove,
     null | TreeNode<
       GenericGame,
@@ -124,14 +130,14 @@ class TreeNode<
     GenericSlot,
     GenericState
   >["indexOfPlayedMove"];
-  private readonly parent: ParamsOfTreeNodeForPrivateConstructor<
+  private readonly parentNode: ParamsOfTreeNodeForPrivateConstructor<
     GenericGame,
     GenericMove,
     GenericPlayer,
     GenericScore,
     GenericSlot,
     GenericState
-  >["parent"];
+  >["parentNode"];
   private qualityOfMatch: number = MINIMUM_QUALITY_OF_MATCH;
   private quantityOfVisits: Integer = MINIMUM_QUANTITY_OF_VISITS;
   private readonly state: ParamsOfTreeNodeForPrivateConstructor<
@@ -145,7 +151,7 @@ class TreeNode<
 
   private constructor({
     indexOfPlayedMove,
-    parent,
+    parentNode,
     state,
   }: ParamsOfTreeNodeForPrivateConstructor<
     GenericGame,
@@ -158,8 +164,8 @@ class TreeNode<
     this.state = state;
     this.game = state.getGame();
     this.indexOfPlayedMove = indexOfPlayedMove;
-    this.parent = parent;
-    this.children = new Map(
+    this.parentNode = parentNode;
+    this.childrenNodes = new Map(
       state
         .getGame()
         .getIndexesOfValidMoves({ state })
@@ -209,7 +215,7 @@ class TreeNode<
       GenericState
     >({
       indexOfPlayedMove,
-      parent: null,
+      parentNode: null,
       state,
     });
   }
@@ -234,18 +240,18 @@ class TreeNode<
 
     const child = new TreeNode({
       indexOfPlayedMove: indexOfMove,
-      parent: this,
+      parentNode: this,
       state: nextState,
     });
 
-    this.children.set(indexOfMove, child);
+    this.childrenNodes.set(indexOfMove, child);
     return child;
   }
 
-  public getChild({
-    indexOfChild,
+  public getChildNode({
+    indexOfChildNode,
   }: {
-    indexOfChild: IndexOfMove;
+    indexOfChildNode: IndexOfMove;
   }): null | TreeNode<
     GenericGame,
     GenericMove,
@@ -254,16 +260,16 @@ class TreeNode<
     GenericSlot,
     GenericState
   > {
-    return this.children.get(indexOfChild) ?? null;
+    return this.childrenNodes.get(indexOfChildNode) ?? null;
   }
 
-  public getChildren(): typeof this.children {
-    return this.children;
+  public getChildrenNodes(): typeof this.childrenNodes {
+    return this.childrenNodes;
   }
 
-  public getFitnessOfChild({
-    child,
-    explorationConstant,
+  public getFitnessOfChildNode({
+    childNode,
+    explorationCoefficient,
   }: Pick<
     Parameters<
       typeof expandTree<
@@ -275,9 +281,9 @@ class TreeNode<
         GenericState
       >
     >[0],
-    "explorationConstant"
+    "explorationCoefficient"
   > & {
-    child: TreeNode<
+    childNode: TreeNode<
       GenericGame,
       GenericMove,
       GenericPlayer,
@@ -287,22 +293,27 @@ class TreeNode<
     >;
   }): number {
     // Privileges the child with the lowest exploitation, as it means the opponent will have the lowest chance of winning
+    // TODO: this formula has problems, as the quantity of visits can be zero, what leads to a division by zero
 
-    const exploitation =
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      1 - (child.qualityOfMatch / child.quantityOfVisits + 1) / 2;
+    let exploitation = childNode.qualityOfMatch / childNode.quantityOfVisits;
+    if (!Number.isFinite(exploitation)) {
+      exploitation = BASE_EXPLOITATION;
+    }
 
-    const exploration =
-      explorationConstant *
-      Math.sqrt(Math.log(this.quantityOfVisits) / child.quantityOfVisits);
+    let exploration =
+      explorationCoefficient *
+      Math.sqrt(Math.log(this.quantityOfVisits) / childNode.quantityOfVisits);
+    if (!Number.isFinite(exploration)) {
+      exploration = BASE_EXPLORATION;
+    }
 
     return exploitation + exploration;
   }
 
-  public getIndexesOfNotExpandedChildren(): Set<IndexOfMove> {
+  public getIndexesOfNotExpandedChildrenNodes(): Set<IndexOfMove> {
     return new Set(
-      Array.from(this.children.keys()).filter(
-        (indexOfChild) => this.children.get(indexOfChild) === null,
+      Array.from(this.childrenNodes.keys()).filter(
+        (indexOfChild) => this.childrenNodes.get(indexOfChild) === null,
       ),
     );
   }
@@ -316,7 +327,7 @@ class TreeNode<
   }
 
   public getQuantityOfExpandedMoves(): Integer {
-    return this.children
+    return this.childrenNodes
       .values()
       .reduce(
         (quantityOfExpandedMoves, child) =>
@@ -336,12 +347,12 @@ class TreeNode<
 
   /// Check if the node is fully expanded, i.e. all valid actions have been explored.
   public isFullyExpanded(): boolean {
-    return this.getQuantityOfExpandedMoves() === this.children.size;
+    return this.getQuantityOfExpandedMoves() === this.childrenNodes.size;
   }
 
-  public pickIndexOfRandomNotExpandedChild(): IndexOfMove {
+  public pickIndexOfRandomNotExpandedChildNode(): IndexOfMove {
     const indexesOfNotExpandedMoves = Array.from(
-      this.getIndexesOfNotExpandedChildren(),
+      this.getIndexesOfNotExpandedChildrenNodes(),
     );
 
     const randomIndex = Math.floor(
@@ -349,18 +360,18 @@ class TreeNode<
     );
     const indexOfMove = indexesOfNotExpandedMoves[randomIndex];
     if (typeof indexOfMove === "undefined") {
-      throw new Error("No indexes of not expanded moves to pick from.");
+      throw constructErrorForNotAnyIndexToPick();
     }
 
     return indexOfMove;
   }
 
   /// Select the best node among children, i.e. the one with the highest UCB.
-  public selectBestChild({
-    explorationConstant,
+  public selectBestChildNode({
+    explorationCoefficient,
   }: Pick<
-    Parameters<typeof this.getFitnessOfChild>[0],
-    "explorationConstant"
+    Parameters<typeof this.getFitnessOfChildNode>[0],
+    "explorationCoefficient"
   >): null | TreeNode<
     GenericGame,
     GenericMove,
@@ -371,7 +382,7 @@ class TreeNode<
   > {
     const expandedChildren = this.getExpandedChildren();
 
-    let bestChild: null | TreeNode<
+    let bestChildNode: null | TreeNode<
       GenericGame,
       GenericMove,
       GenericPlayer,
@@ -381,15 +392,18 @@ class TreeNode<
     > = null;
     let bestUcb = Number.NEGATIVE_INFINITY;
 
-    for (const child of expandedChildren) {
-      const ucb = this.getFitnessOfChild({ child, explorationConstant });
+    for (const childNode of expandedChildren) {
+      const ucb = this.getFitnessOfChildNode({
+        childNode,
+        explorationCoefficient,
+      });
       if (ucb > bestUcb) {
-        bestChild = child;
+        bestChildNode = childNode;
         bestUcb = ucb;
       }
     }
 
-    return bestChild;
+    return bestChildNode;
   }
 
   /// Simulate a game from the current state, returning the outcome value.
@@ -432,13 +446,17 @@ class TreeNode<
     this.qualityOfMatch += pointsOfPlayer;
     this.quantityOfVisits += INCREMENT_ONE;
 
-    if (this.parent) {
-      this.parent.updateQualityOfMatchAndQuantityOfVisitsOnBranch({ score });
+    if (this.parentNode) {
+      this.parentNode.updateQualityOfMatchAndQuantityOfVisitsOnBranch({
+        score,
+      });
     }
   }
 
   private getExpandedChildren() {
-    return Array.from(this.children.values()).filter((child) => child !== null);
+    return Array.from(this.childrenNodes.values()).filter(
+      (child) => child !== null,
+    );
   }
 }
 

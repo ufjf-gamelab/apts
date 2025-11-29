@@ -91,7 +91,7 @@
 //     throw new Error("The gameplay has already finished!");
 //   }
 
-//   const rootNodeOfTree = TreeNode.create<
+//   const rootNode = TreeNode.create<
 //     GenericGame,
 //     GenericMove,
 //     GenericPlayer,
@@ -102,9 +102,9 @@
 //     indexOfPlayedMove: indexOfMove,
 //     state,
 //   });
-//   mcts.expandTree({ rootNodeOfTree });
+//   mcts.expandTree({ rootNode });
 
-//   const qualityOfMoves = mcts.getQualityOfMoves({ rootNodeOfTree });
+//   const qualityOfMoves = mcts.getQualityOfMoves({ rootNode });
 //   console.log(qualityOfMoves, "\n");
 
 //   const nextState = game.play({ indexOfMove, state });
@@ -206,7 +206,7 @@
 // }): void => {
 //   const { game } = recordOfTicTacToeGamesWithData.ticTacToeWith3RowsAnd3Columns;
 //   const mcts = new Search({
-//     explorationConstant: 1.41,
+//     explorationCoefficient: 1.41,
 //     game,
 //     quantityOfSearches: 10000,
 //   });

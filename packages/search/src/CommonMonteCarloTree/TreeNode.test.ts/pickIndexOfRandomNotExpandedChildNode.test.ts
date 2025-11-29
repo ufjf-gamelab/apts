@@ -5,12 +5,13 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
+import { formatArray } from "@repo/engine_core/format.js";
 import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
 import type { TreeNode } from "../TreeNode.js";
 
-const validateSelectBestChild = <
+const validatePickIndexOfRandomNotExpandedChildNode = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -40,29 +41,22 @@ const validateSelectBestChild = <
     GenericState
   >,
 >({
-  expectedBestChild,
-  explorationConstant,
+  indexesOfRandomNotExpandedChildrenNodes,
   treeNode,
-}: Pick<
-  Parameters<GenericTreeNode["selectBestChild"]>[0],
-  "explorationConstant"
-> & {
-  expectedBestChild: ReturnType<GenericTreeNode["selectBestChild"]>;
+}: {
+  indexesOfRandomNotExpandedChildrenNodes: Set<
+    ReturnType<GenericTreeNode["pickIndexOfRandomNotExpandedChildNode"]>
+  >;
   treeNode: GenericTreeNode;
 }) => {
-  const bestChild = treeNode.selectBestChild({ explorationConstant });
-
-  if (bestChild !== null) {
-    expect(bestChild).not.toBe(expectedBestChild);
-    expect(bestChild).toStrictEqual(expectedBestChild);
-
-    // Ensure that the returned object does not keep reference to the internal property
-    const otherBestChild = treeNode.selectBestChild({ explorationConstant });
-    expect(otherBestChild).not.toBe(bestChild);
-  }
+  const indexOfRandomNotExpandedChildNode =
+    treeNode.pickIndexOfRandomNotExpandedChildNode();
+  expect(indexesOfRandomNotExpandedChildrenNodes).toContain(
+    indexOfRandomNotExpandedChildNode,
+  );
 };
 
-const createDescriptionForTestOfSelectBestChild = <
+const createDescriptionForTestOfPickIndexOfRandomNotExpandedChildNode = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -83,14 +77,28 @@ const createDescriptionForTestOfSelectBestChild = <
     GenericSlot,
     GenericState
   >,
+  GenericTreeNode extends TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
 >({
-  keyOfExpectedBestChild,
+  indexesOfRandomNotExpandedChildrenNodes:
+    indexesOfRandomNotExpandedChildrenNodes,
 }: {
-  keyOfExpectedBestChild: null | string;
+  indexesOfRandomNotExpandedChildrenNodes: Set<
+    ReturnType<GenericTreeNode["pickIndexOfRandomNotExpandedChildNode"]>
+  >;
 }): string =>
   createDescriptionForTestsOfMethod({
-    methodDescription: `selectBestChild()`,
-    returnedValue: keyOfExpectedBestChild,
+    methodDescription: `pickIndexOfRandomNotExpandedChildNode()`,
+    returnedValue: `is included in ${formatArray({ array: indexesOfRandomNotExpandedChildrenNodes.values().toArray() })}`,
   });
 
-export { createDescriptionForTestOfSelectBestChild, validateSelectBestChild };
+export {
+  createDescriptionForTestOfPickIndexOfRandomNotExpandedChildNode,
+  validatePickIndexOfRandomNotExpandedChildNode,
+};

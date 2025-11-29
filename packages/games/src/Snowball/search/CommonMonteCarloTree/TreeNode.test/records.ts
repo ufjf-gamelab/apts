@@ -10,7 +10,7 @@ const currentRoot = createSnowballTreeNodeWithData({
   keyOfTreeNode: "currentRoot",
   requiredParams: {
     expandedMovesWithData: new Map([]),
-    indexAndKeyOfBestChild: null,
+    indexAndKeyOfBestChildNode: null,
     playedMoveWithDataAndIndex: null,
     stateWithData:
       recordOfSnowballStatesWithData.allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,

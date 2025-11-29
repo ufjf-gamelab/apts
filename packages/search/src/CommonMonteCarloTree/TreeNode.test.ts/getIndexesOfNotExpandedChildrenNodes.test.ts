@@ -7,11 +7,11 @@ import type { State } from "@repo/game/State.js";
 
 import { formatArray } from "@repo/engine_core/format.js";
 import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
-import { expect } from "vitest";
+import { assert } from "vitest";
 
 import type { TreeNode } from "../TreeNode.js";
 
-const validatePickIndexOfRandomNotExpandedChild = <
+const validateGetIndexesOfNotExpandedChildrenNodes = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -41,22 +41,24 @@ const validatePickIndexOfRandomNotExpandedChild = <
     GenericState
   >,
 >({
-  indexesOfRandomNotExpandedChildren,
+  expectedIndexesOfNotExpandedChildrenNodes,
   treeNode,
 }: {
-  indexesOfRandomNotExpandedChildren: Set<
-    ReturnType<GenericTreeNode["pickIndexOfRandomNotExpandedChild"]>
+  expectedIndexesOfNotExpandedChildrenNodes: ReturnType<
+    GenericTreeNode["getIndexesOfNotExpandedChildrenNodes"]
   >;
   treeNode: GenericTreeNode;
 }) => {
-  const indexOfRandomNotExpandedChild =
-    treeNode.pickIndexOfRandomNotExpandedChild();
-  expect(indexesOfRandomNotExpandedChildren).toContain(
-    indexOfRandomNotExpandedChild,
+  const indexesOfNotExpandedChildrenNodes =
+    treeNode.getIndexesOfNotExpandedChildrenNodes();
+  assert.isEmpty(
+    indexesOfNotExpandedChildrenNodes.difference(
+      expectedIndexesOfNotExpandedChildrenNodes,
+    ),
   );
 };
 
-const createDescriptionForTestOfPickIndexOfRandomNotExpandedChild = <
+const createDescriptionForTestOfGetIndexesOfNotExpandedChildrenNodes = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -86,18 +88,20 @@ const createDescriptionForTestOfPickIndexOfRandomNotExpandedChild = <
     GenericState
   >,
 >({
-  indexesOfRandomNotExpandedChildren,
+  expectedIndexesOfNotExpandedChildrenNodes,
 }: {
-  indexesOfRandomNotExpandedChildren: Set<
-    ReturnType<GenericTreeNode["pickIndexOfRandomNotExpandedChild"]>
+  expectedIndexesOfNotExpandedChildrenNodes: ReturnType<
+    GenericTreeNode["getIndexesOfNotExpandedChildrenNodes"]
   >;
 }): string =>
   createDescriptionForTestsOfMethod({
-    methodDescription: `pickIndexOfRandomNotExpandedChild()`,
-    returnedValue: `is included in ${formatArray({ array: indexesOfRandomNotExpandedChildren.values().toArray() })}`,
+    methodDescription: `getIndexesOfNotExpandedChildrenNodes()`,
+    returnedValue: formatArray({
+      array: expectedIndexesOfNotExpandedChildrenNodes.values().toArray(),
+    }),
   });
 
 export {
-  createDescriptionForTestOfPickIndexOfRandomNotExpandedChild,
-  validatePickIndexOfRandomNotExpandedChild,
+  createDescriptionForTestOfGetIndexesOfNotExpandedChildrenNodes,
+  validateGetIndexesOfNotExpandedChildrenNodes,
 };

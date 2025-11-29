@@ -1,9 +1,9 @@
 import { SIZE_OF_EMPTY_SET } from "@repo/engine_core/constants.js";
 import { createDescriptionForTest } from "@repo/engine_core/test.js";
 import {
-  createDescriptionForTestOfPickIndexOfRandomNotExpandedChild,
-  validatePickIndexOfRandomNotExpandedChild,
-} from "@repo/search/CommonMonteCarloTree/TreeNode.test.ts/pickIndexOfRandomNotExpandedChild.test.js";
+  createDescriptionForTestOfPickIndexOfRandomNotExpandedChildNode,
+  validatePickIndexOfRandomNotExpandedChildNode,
+} from "@repo/search/CommonMonteCarloTree/TreeNode.test.ts/pickIndexOfRandomNotExpandedChildNode.test.js";
 import { test } from "vitest";
 
 import type { TicTacToeTreeNodeWithData } from "./setup.js";
@@ -12,19 +12,20 @@ import { recordOfTicTacToeTreeNodesWithData } from "./records.js";
 
 const createDescription = ({
   affix,
-  indexesOfRandomNotExpandedChildren,
+  indexesOfRandomNotExpandedChildrenNodes,
 }: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> &
   Pick<
     Parameters<
-      typeof createDescriptionForTestOfPickIndexOfRandomNotExpandedChild
+      typeof createDescriptionForTestOfPickIndexOfRandomNotExpandedChildNode
     >[0],
-    "indexesOfRandomNotExpandedChildren"
+    "indexesOfRandomNotExpandedChildrenNodes"
   >) =>
   createDescriptionForTest({
     affix,
-    description: createDescriptionForTestOfPickIndexOfRandomNotExpandedChild({
-      indexesOfRandomNotExpandedChildren,
-    }),
+    description:
+      createDescriptionForTestOfPickIndexOfRandomNotExpandedChildNode({
+        indexesOfRandomNotExpandedChildrenNodes,
+      }),
   });
 
 const testPickIndexOfRandomNotExpandedChild = ({
@@ -34,18 +35,18 @@ const testPickIndexOfRandomNotExpandedChild = ({
 }) => {
   arrayOfTreeNodesWithData.forEach(({ keyOfTreeNode, treeNode }) => {
     const indexesOfNotExpandedMoves =
-      treeNode.getIndexesOfNotExpandedChildren();
+      treeNode.getIndexesOfNotExpandedChildrenNodes();
 
     if (indexesOfNotExpandedMoves.size !== SIZE_OF_EMPTY_SET) {
       test(
         createDescription({
           affix: keyOfTreeNode,
-          indexesOfRandomNotExpandedChildren: indexesOfNotExpandedMoves,
+          indexesOfRandomNotExpandedChildrenNodes: indexesOfNotExpandedMoves,
         }),
 
         () => {
-          validatePickIndexOfRandomNotExpandedChild({
-            indexesOfRandomNotExpandedChildren: indexesOfNotExpandedMoves,
+          validatePickIndexOfRandomNotExpandedChildNode({
+            indexesOfRandomNotExpandedChildrenNodes: indexesOfNotExpandedMoves,
             treeNode,
           });
         },

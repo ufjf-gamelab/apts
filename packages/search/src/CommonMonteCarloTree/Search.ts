@@ -8,11 +8,65 @@ import type { State } from "@repo/game/State.js";
 
 import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 
-import type { TreeNode } from "./TreeNode.js";
+import { TreeNode } from "./TreeNode.js";
 
 const MINIMUM_QUALITY_OF_MOVE = 0;
 
+type ExplorationCoefficient = number;
 type QualityOfMove = number;
+
+const pickNotFullyExpandedNode = <
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+>({
+  explorationCoefficient,
+  rootNode,
+}: {
+  explorationCoefficient: ExplorationCoefficient;
+  rootNode: TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >;
+}) => {
+  let currentNode = rootNode;
+
+  // Goes all the way down to a node that is not fully expanded at the bottom of the tree.
+  while (currentNode.isFullyExpanded()) {
+    const bestChild = currentNode.selectBestChildNode({
+      explorationCoefficient,
+    });
+    if (bestChild === null) {
+      // This condition happens when a selected child has not any valid move.
+      return null;
+    }
+
+    currentNode = bestChild;
+  }
+
+  return currentNode;
+};
 
 const expandTree = <
   GenericGame extends Game<
@@ -36,57 +90,64 @@ const expandTree = <
     GenericState
   >,
 >({
-  explorationConstant,
+  explorationCoefficient,
   quantityOfExpansions,
-  rootNodeOfTree,
+  state,
 }: {
-  explorationConstant: number;
+  explorationCoefficient: ExplorationCoefficient;
   quantityOfExpansions: Integer;
-  rootNodeOfTree: TreeNode<
+  state: GenericState;
+}): TreeNode<
+  GenericGame,
+  GenericMove,
+  GenericPlayer,
+  GenericScore,
+  GenericSlot,
+  GenericState
+> => {
+  const game = state.getGame();
+
+  const rootNode = TreeNode.create<
     GenericGame,
     GenericMove,
     GenericPlayer,
     GenericScore,
     GenericSlot,
     GenericState
-  >;
-}): void => {
-  const game = rootNodeOfTree.getState().getGame();
+  >({ indexOfPlayedMove: null, state });
 
   for (
     let currentSearchIndex = 0;
     currentSearchIndex < quantityOfExpansions;
     currentSearchIndex += INCREMENT_ONE
   ) {
-    let currentNode = rootNodeOfTree;
-
-    // Goes all the way down to a node that is not fully expanded at the bottom of the tree.
-    while (currentNode.isFullyExpanded()) {
-      const bestChild = currentNode.selectBestChild({
-        explorationConstant,
-      });
-      if (bestChild === null) {
-        break;
-      }
-
-      currentNode = bestChild;
+    const currentNode = pickNotFullyExpandedNode({
+      explorationCoefficient,
+      rootNode,
+    });
+    if (currentNode === null) {
+      // This condition happens when there is not any node to expand, so the search has to end.
+      break;
     }
 
-    const state = currentNode.getState();
-    let score = state.getScore();
-    const isFinal = game.isFinal({ state });
+    const currentState = currentNode.getState();
+    const isFinal = game.isFinal({ state: currentState });
 
-    if (!isFinal) {
-      const indexOfChild = currentNode.pickIndexOfRandomNotExpandedChild();
-      currentNode = currentNode.expand({ indexOfMove: indexOfChild });
-      score = currentNode.simulateMatch();
+    if (isFinal) {
+      const score = currentState.getScore();
+      currentNode.updateQualityOfMatchAndQuantityOfVisitsOnBranch({ score });
+    } else {
+      const indexOfChild = currentNode.pickIndexOfRandomNotExpandedChildNode();
+      const childNode = currentNode.expand({ indexOfMove: indexOfChild });
+      const score = childNode.simulateMatch();
+      childNode.updateQualityOfMatchAndQuantityOfVisitsOnBranch({ score });
     }
-
-    currentNode.updateQualityOfMatchAndQuantityOfVisitsOnBranch({ score });
   }
+
+  return rootNode;
 };
 
-const getQualityOfMoves = <
+const calculateQualityOfMoves = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -108,9 +169,9 @@ const getQualityOfMoves = <
     GenericState
   >,
 >({
-  rootNodeOfTree,
+  rootNode,
 }: {
-  rootNodeOfTree: TreeNode<
+  rootNode: TreeNode<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -119,13 +180,13 @@ const getQualityOfMoves = <
     GenericState
   >;
 }): QualityOfMove[] => {
-  const game = rootNodeOfTree.getState().getGame();
+  const game = rootNode.getState().getGame();
   let qualityOfMoves = new Array<QualityOfMove>(game.getQuantityOfMoves()).fill(
     MINIMUM_QUALITY_OF_MOVE,
   );
 
-  rootNodeOfTree
-    .getChildren()
+  rootNode
+    .getChildrenNodes()
     .entries()
     .forEach(([indexOfMove, child]) => {
       if (child !== null) {
@@ -143,4 +204,5 @@ const getQualityOfMoves = <
   return qualityOfMoves;
 };
 
-export { expandTree, getQualityOfMoves };
+export type { ExplorationCoefficient, QualityOfMove };
+export { calculateQualityOfMoves, expandTree };

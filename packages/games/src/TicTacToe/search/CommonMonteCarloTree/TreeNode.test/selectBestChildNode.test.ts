@@ -1,8 +1,8 @@
 import { createDescriptionForTest } from "@repo/engine_core/test.js";
 import {
-  createDescriptionForTestOfSelectBestChild,
-  validateSelectBestChild,
-} from "@repo/search/CommonMonteCarloTree/TreeNode.test.ts/selectBestChild.test.js";
+  createDescriptionForTestOfSelectBestChildNode,
+  validateSelectBestChildNode,
+} from "@repo/search/CommonMonteCarloTree/TreeNode.test.ts/selectBestChildNode.test.js";
 import { test } from "vitest";
 
 import type { TicTacToeTreeNodeWithData } from "./setup.js";
@@ -13,20 +13,20 @@ const EXPLORATION_CONSTANT = 1.4;
 
 const createDescription = ({
   affix,
-  keyOfExpectedBestChild,
+  keyOfExpectedBestChildNode,
 }: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> &
   Pick<
-    Parameters<typeof createDescriptionForTestOfSelectBestChild>[0],
-    "keyOfExpectedBestChild"
+    Parameters<typeof createDescriptionForTestOfSelectBestChildNode>[0],
+    "keyOfExpectedBestChildNode"
   >) =>
   createDescriptionForTest({
     affix,
-    description: createDescriptionForTestOfSelectBestChild({
-      keyOfExpectedBestChild,
+    description: createDescriptionForTestOfSelectBestChildNode({
+      keyOfExpectedBestChildNode,
     }),
   });
 
-const testSelectBestChild = ({
+const testSelectBestChildNode = ({
   arrayOfTreeNodesWithData,
 }: {
   arrayOfTreeNodesWithData: TicTacToeTreeNodeWithData[];
@@ -34,24 +34,24 @@ const testSelectBestChild = ({
   arrayOfTreeNodesWithData.forEach(
     ({
       keyOfTreeNode,
-      requiredParams: { indexAndKeyOfBestChild },
+      requiredParams: { indexAndKeyOfBestChildNode: indexAndKeyOfBestChild },
       treeNode,
     }) => {
       if (indexAndKeyOfBestChild !== null) {
-        const bestChild = treeNode.getChild({
-          indexOfChild: indexAndKeyOfBestChild.indexOfChild,
+        const bestChildNode = treeNode.getChildNode({
+          indexOfChildNode: indexAndKeyOfBestChild.indexOfChildNode,
         });
 
         test(
           createDescription({
             affix: keyOfTreeNode,
-            keyOfExpectedBestChild: indexAndKeyOfBestChild.keyOfChild,
+            keyOfExpectedBestChildNode: indexAndKeyOfBestChild.keyOfChildNode,
           }),
 
           () => {
-            validateSelectBestChild({
-              expectedBestChild: bestChild,
-              explorationConstant: EXPLORATION_CONSTANT,
+            validateSelectBestChildNode({
+              expectedBestChildNode: bestChildNode,
+              explorationCoefficient: EXPLORATION_CONSTANT,
               treeNode,
             });
           },
@@ -61,6 +61,6 @@ const testSelectBestChild = ({
   );
 };
 
-testSelectBestChild({
+testSelectBestChildNode({
   arrayOfTreeNodesWithData: Object.values(recordOfTicTacToeTreeNodesWithData),
 });

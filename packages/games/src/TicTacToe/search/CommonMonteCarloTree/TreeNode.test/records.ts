@@ -25,7 +25,7 @@ const currentRoot = createTicTacToeTreeNodeWithData({
   keyOfTreeNode: "currentRoot",
   requiredParams: {
     expandedMovesWithData: new Map([]),
-    indexAndKeyOfBestChild: null,
+    indexAndKeyOfBestChildNode: null,
     playedMoveWithDataAndIndex: null,
     stateWithData:
       recordOfTicTacToeStatesWithData.allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
@@ -41,10 +41,10 @@ const currentRootThenNorthwest = createTicTacToeTreeNodeWithData({
         moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.northwest,
       }),
     ]),
-    indexAndKeyOfBestChild: {
-      indexOfChild:
+    indexAndKeyOfBestChildNode: {
+      indexOfChildNode:
         recordOfTicTacToeMovesWithDataAndIndex.northwest.indexOfMove,
-      keyOfChild: "rootThenCurrentNorthwest",
+      keyOfChildNode: "rootThenCurrentNorthwest",
     },
     playedMoveWithDataAndIndex: null,
     stateWithData:
@@ -57,7 +57,7 @@ const rootThenCurrentNorthwest = {
   keyOfTreeNode: "rootThenCurrentNorthwest",
   requiredParams: {
     expandedMovesWithData: new Map([]),
-    indexAndKeyOfBestChild: null,
+    indexAndKeyOfBestChildNode: null,
     playedMoveWithDataAndIndex:
       recordOfTicTacToeMovesWithDataAndIndex.northwest,
     stateWithData:
@@ -107,9 +107,10 @@ const currentRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheast
           moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.west,
         }),
       ]),
-      indexAndKeyOfBestChild: {
-        indexOfChild: recordOfTicTacToeMovesWithDataAndIndex.center.indexOfMove,
-        keyOfChild:
+      indexAndKeyOfBestChildNode: {
+        indexOfChildNode:
+          recordOfTicTacToeMovesWithDataAndIndex.center.indexOfMove,
+        keyOfChildNode:
           "rootThenCurrentCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
       },
 
@@ -126,7 +127,7 @@ const rootThenCurrentCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheast
       "rootThenCurrentCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
     requiredParams: {
       expandedMovesWithData: new Map([]),
-      indexAndKeyOfBestChild: null,
+      indexAndKeyOfBestChildNode: null,
 
       playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.center,
       stateWithData:
@@ -148,7 +149,7 @@ const rootThenCenterOrCurrentEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheast
       "rootThenCenterOrCurrentEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
     requiredParams: {
       expandedMovesWithData: new Map([]),
-      indexAndKeyOfBestChild: null,
+      indexAndKeyOfBestChildNode: null,
 
       playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.east,
       stateWithData:
@@ -169,7 +170,7 @@ const rootThenCenterOrEastOrCurrentNorthOrNortheastOrNorthwestOrSouthOrSoutheast
       "rootThenCenterOrEastOrCurrentNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
     requiredParams: {
       expandedMovesWithData: new Map([]),
-      indexAndKeyOfBestChild: null,
+      indexAndKeyOfBestChildNode: null,
 
       playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.north,
       stateWithData:
@@ -190,7 +191,7 @@ const rootThenCenterOrEastOrNorthOrCurrentNortheastOrNorthwestOrSouthOrSoutheast
       "rootThenCenterOrEastOrNorthOrCurrentNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
     requiredParams: {
       expandedMovesWithData: new Map([]),
-      indexAndKeyOfBestChild: null,
+      indexAndKeyOfBestChildNode: null,
 
       playedMoveWithDataAndIndex:
         recordOfTicTacToeMovesWithDataAndIndex.northeast,
@@ -213,7 +214,7 @@ const rootThenCenterOrEastOrNorthOrNortheastOrCurrentNorthwestOrSouthOrSoutheast
       "rootThenCenterOrEastOrNorthOrNortheastOrCurrentNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
     requiredParams: {
       expandedMovesWithData: new Map([]),
-      indexAndKeyOfBestChild: null,
+      indexAndKeyOfBestChildNode: null,
 
       playedMoveWithDataAndIndex:
         recordOfTicTacToeMovesWithDataAndIndex.northwest,
@@ -236,7 +237,7 @@ const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrCurrentSouthOrSoutheast
       "rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrCurrentSouthOrSoutheastOrSouthwestOrWest",
     requiredParams: {
       expandedMovesWithData: new Map([]),
-      indexAndKeyOfBestChild: null,
+      indexAndKeyOfBestChildNode: null,
 
       playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.south,
       stateWithData:
@@ -257,7 +258,7 @@ const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrCurrentSoutheast
       "rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrCurrentSoutheastOrSouthwestOrWest",
     requiredParams: {
       expandedMovesWithData: new Map([]),
-      indexAndKeyOfBestChild: null,
+      indexAndKeyOfBestChildNode: null,
 
       playedMoveWithDataAndIndex:
         recordOfTicTacToeMovesWithDataAndIndex.southeast,
@@ -280,7 +281,7 @@ const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrCurre
       "rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrCurrentSouthwestOrWest",
     requiredParams: {
       expandedMovesWithData: new Map([]),
-      indexAndKeyOfBestChild: null,
+      indexAndKeyOfBestChildNode: null,
 
       playedMoveWithDataAndIndex:
         recordOfTicTacToeMovesWithDataAndIndex.southwest,
@@ -303,7 +304,7 @@ const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouth
       "rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrCurrentWest",
     requiredParams: {
       expandedMovesWithData: new Map([]),
-      indexAndKeyOfBestChild: null,
+      indexAndKeyOfBestChildNode: null,
 
       playedMoveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.west,
       stateWithData:

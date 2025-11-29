@@ -35,17 +35,17 @@
 //     game,
 //     resNet,
 //     numSearches,
-//     explorationConstant,
+//     explorationCoefficient,
 //   }: {
 //     game: G;
 //     resNet: ResNet;
 //     numSearches: number;
-//     explorationConstant: number;
+//     explorationCoefficient: number;
 //   }) {
 //     this.game = game;
 //     this.resNet = resNet;
 //     this.mcts = new MonteCarloTreeSearch<G>({
-//       explorationConstant,
+//       explorationCoefficient,
 //       game: this.game,
 //       numSearches,
 //       resNet: this.resNet,

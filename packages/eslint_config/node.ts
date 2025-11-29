@@ -27,7 +27,7 @@ export const config = (tsconfigRootDir: string): Linter.Config[] => [
       "no-console": [
         "warn",
         {
-          allow: ["error"],
+          allow: ["error", "info"],
         },
       ],
     },
