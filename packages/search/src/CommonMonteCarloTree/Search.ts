@@ -1,6 +1,6 @@
 import type { Integer } from "@repo/engine_core/types.js";
 import type { Game } from "@repo/game/Game.js";
-import type { Move } from "@repo/game/Move.js";
+import type { IndexOfMove, Move } from "@repo/game/Move.js";
 import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
@@ -204,5 +204,123 @@ const calculateQualityOfMoves = <
   return qualityOfMoves;
 };
 
+const predictQualityOfMoves = <
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+>({
+  explorationCoefficient,
+  quantityOfExpansions,
+  state,
+}: {
+  explorationCoefficient: ExplorationCoefficient;
+  quantityOfExpansions: Integer;
+  state: GenericState;
+}) => {
+  const rootNode = expandTree<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >({
+    explorationCoefficient,
+    quantityOfExpansions,
+    state,
+  });
+
+  return calculateQualityOfMoves({
+    rootNode,
+  });
+};
+
+const BASE_FOR_SUM_OF_EXPONENTIATED_QUALITIES_OF_MOVES = 0;
+const TEMPERATURE = 0.25;
+
+const pickIndexOfValidMoveConsideringTheirQuality = ({
+  indexesOfValidMoves,
+  qualityOfMoves,
+}: {
+  indexesOfValidMoves: ReadonlySet<IndexOfMove>;
+  qualityOfMoves: QualityOfMove[];
+}): IndexOfMove => {
+  const mapOfQualityOfValidMoves = new Map(
+    indexesOfValidMoves.values().map((indexOfValidMove) => {
+      const qualityOfMove = qualityOfMoves[indexOfValidMove];
+      if (typeof qualityOfMove === "undefined") {
+        throw new Error("Could not retrieve any quality from this index.");
+      }
+      return [indexOfValidMove, qualityOfMove];
+    }),
+  );
+
+  // Softmax to convert qualities to probabilities
+  let sumOfExponentiatedQualities =
+    BASE_FOR_SUM_OF_EXPONENTIATED_QUALITIES_OF_MOVES;
+  const exponentiatedQualities = new Map(
+    mapOfQualityOfValidMoves
+      .entries()
+      .map(([indexOfValidMove, qualityOfMove]) => {
+        const exponentiatedQualityOfMove = Math.exp(
+          qualityOfMove / TEMPERATURE,
+        );
+        sumOfExponentiatedQualities += exponentiatedQualityOfMove;
+        return [indexOfValidMove, exponentiatedQualityOfMove];
+      }),
+  );
+
+  const probabilities = exponentiatedQualities
+    .entries()
+    .map(
+      ([indexesOfValidMove, exponentiatedQuality]) =>
+        [
+          indexesOfValidMove,
+          exponentiatedQuality / sumOfExponentiatedQualities,
+        ] as const,
+    )
+    .toArray()
+    .sort(
+      ([, firstProbability], [, secondProbability]) =>
+        secondProbability - firstProbability,
+    );
+
+  // Select index based on probability distribution
+  const randomNumber = Math.random();
+  let accumulator = 0;
+  for (const [indexOfValidMove, probability] of probabilities) {
+    accumulator += probability;
+    if (randomNumber <= accumulator) {
+      return indexOfValidMove;
+    }
+  }
+
+  throw new Error(
+    "Could not retrieve any index of a move considering the informed qualities.",
+  );
+};
+
 export type { ExplorationCoefficient, QualityOfMove };
-export { calculateQualityOfMoves, expandTree };
+export {
+  calculateQualityOfMoves,
+  expandTree,
+  pickIndexOfValidMoveConsideringTheirQuality,
+  predictQualityOfMoves,
+};

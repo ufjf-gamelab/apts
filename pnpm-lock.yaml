@@ -29,6 +29,9 @@ importers:
       '@paralleldrive/cuid2':
         specifier: ^3.0.4
         version: 3.0.4
+      '@repo/engine_core':
+        specifier: workspace:*
+        version: link:../../packages/engine_core
       '@repo/game':
         specifier: workspace:*
         version: link:../../packages/game

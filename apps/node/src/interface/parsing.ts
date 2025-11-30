@@ -18,4 +18,12 @@ const parseArgumentIntoInt = (value: string) => {
   return parsedValue;
 };
 
-export { parseArgumentIntoInt };
+const parseArgumentIntoFloat = (value: string) => {
+  const parsedValue = parseFloat(value);
+  if (isNaN(parsedValue)) {
+    throw new InvalidArgumentError("The informed value is not a number.");
+  }
+  return parsedValue;
+};
+
+export { parseArgumentIntoFloat, parseArgumentIntoInt };

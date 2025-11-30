@@ -1,10 +1,7 @@
-import prompts, { type Answers, type PromptObject } from "prompts";
+import type { GetInput } from "@repo/interface/input.js";
 
-type GetInput = (
-  questions: PromptObject | PromptObject[],
-) => Promise<Answers<string>>;
+import prompts from "prompts";
 
 const getInput: GetInput = async questions => await prompts(questions);
 
-export type { GetInput };
 export { getInput };

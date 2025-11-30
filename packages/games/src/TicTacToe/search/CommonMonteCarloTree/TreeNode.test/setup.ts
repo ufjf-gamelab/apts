@@ -6,7 +6,7 @@ import {
   type RecordOfTreeNodesWithData,
   type RequiredParamsOfTreeNode,
   type TreeNodeWithData,
-} from "@repo/search/CommonMonteCarloTree/TreeNode.test.ts/setup.js";
+} from "@repo/search/CommonMonteCarloTree/TreeNode.test/setup.js";
 
 import type { TicTacToeGame } from "../../../game/Game.js";
 import type { TicTacToeMove } from "../../../game/Move.js";

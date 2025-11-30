@@ -4,5 +4,5 @@
     "noEmit": true
   },
   "extends": "@repo/typescript_config/library.json",
-  "include": ["eslint.config.ts"]
+  "include": ["eslint.config.ts", "vitest.config.ts"]
 }

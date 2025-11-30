@@ -205,7 +205,7 @@ const recordOfRequiredParamsOfSnowballMoves = {
   },
   northwestOfNorth: {
     indexOfSlotInWhichPlacePiece:
-      recordOfSnowballSlotsWithDataAndIndex.northwestOfNorthwest.indexOfSlot,
+      recordOfSnowballSlotsWithDataAndIndex.northwestOfNorth.indexOfSlot,
     title: "Northwest of North",
   },
   northwestOfNortheast: {

@@ -2,7 +2,7 @@ import { createDescriptionForTest } from "@repo/engine_core/test.js";
 import {
   createDescriptionForTestOfIsFullyExpanded,
   validateIsFullyExpanded,
-} from "@repo/search/CommonMonteCarloTree/TreeNode.test.ts/isFullyExpanded.test.js";
+} from "@repo/search/CommonMonteCarloTree/TreeNode.test/isFullyExpanded.test.js";
 import { test } from "vitest";
 
 import type { TicTacToeTreeNodeWithData } from "./setup.js";

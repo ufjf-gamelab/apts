@@ -12,7 +12,7 @@ import {
   getNameAndFormattedSizeOfShape,
   ROW_LENGTH,
 } from "../Shape.js";
-import { indexedTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR2C1AndR2C2AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno } from "../Slot.test/indexedRecords.js";
+import { indexedTicTacToeSlotsWithDataInWhichSlotsR0C0AndR0C2AndR1C1AndR2C1AndR2C2AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno } from "../Slot.test/indexedRecords.js";
 import {
   recordOfTicTacToeShapesWithDataInWhichShapesAreHorizontalLines,
   recordOfTicTacToeShapesWithDataInWhichShapesArePrincipalDiagonals,
@@ -197,7 +197,7 @@ const testGetIndexOfPlayerWhoIsOccupyingShapeForAllShapes = ({
 
 testGetIndexOfPlayerWhoIsOccupyingShapeForAllShapes({
   slots:
-    indexedTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR2C1AndR2C2AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno.map(
+    indexedTicTacToeSlotsWithDataInWhichSlotsR0C0AndR0C2AndR1C1AndR2C1AndR2C2AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno.map(
       (slot) => slot.slot,
     ),
 });

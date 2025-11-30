@@ -8,9 +8,6 @@ import { recordOfTicTacToePlayersWithDataAndIndex } from "../Player.test/indexed
 import { recordOfTicTacToeScoresWithData } from "../Score.test/records.js";
 import {
   indexedTicTacToeSlotsWithDataInWhichAllSlotsAreEmpty,
-  indexedTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR1C2AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR2C0AndR2C2AreFilledByBruno,
-  indexedTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR2C1AndR2C2AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
-  indexedTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
   indexedTicTacToeSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
   indexedTicTacToeSlotsWithDataInWhichSlotR0C1IsFilledByAlice,
   indexedTicTacToeSlotsWithDataInWhichSlotR0C2IsFilledByAlice,
@@ -20,6 +17,10 @@ import {
   indexedTicTacToeSlotsWithDataInWhichSlotR2C0IsFilledByAlice,
   indexedTicTacToeSlotsWithDataInWhichSlotR2C1IsFilledByAlice,
   indexedTicTacToeSlotsWithDataInWhichSlotR2C2IsFilledByAlice,
+  indexedTicTacToeSlotsWithDataInWhichSlotsR0C0AndR0C1AreFilledByAliceAndR2C0IsFilledByBruno,
+  indexedTicTacToeSlotsWithDataInWhichSlotsR0C0AndR0C2AndR1C1AndR1C2AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR2C0AndR2C2AreFilledByBruno,
+  indexedTicTacToeSlotsWithDataInWhichSlotsR0C0AndR0C2AndR1C1AndR2C1AndR2C2AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
+  indexedTicTacToeSlotsWithDataInWhichSlotsR0C0AndR0C2AndR1C1AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
 } from "../Slot.test/indexedRecords.js";
 import {
   createRecordOfTicTacToeStatesWithData,
@@ -78,53 +79,6 @@ const recordOfRequiredParamsOfTicTacToeStates = {
         }),
         constructTupleForMove({
           moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.west,
-        }),
-      ]),
-    },
-  slotR0C0AndR0C2AndR1C1AndR1C2AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR2C0AndR2C2AreFilledByBrunoAndAliceHas1PointAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
-    {
-      gameWithData:
-        recordOfTicTacToeGamesWithData.ticTacToeWith3RowsAnd3Columns,
-      isFinal: true,
-      nextPlayerWithDataAndIndex:
-        recordOfTicTacToePlayersWithDataAndIndex.alice,
-      playerWithDataAndIndex: recordOfTicTacToePlayersWithDataAndIndex.bruno,
-      scoreWithData:
-        recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points,
-      slotsWithData:
-        indexedTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR1C2AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR2C0AndR2C2AreFilledByBruno,
-      validMovesWithData: new Map([]),
-    },
-  slotR0C0AndR0C2AndR1C1AndR2C1AndR2C2AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBrunoAndAliceHas1PointAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
-    {
-      gameWithData:
-        recordOfTicTacToeGamesWithData.ticTacToeWith3RowsAnd3Columns,
-      isFinal: true,
-      nextPlayerWithDataAndIndex:
-        recordOfTicTacToePlayersWithDataAndIndex.alice,
-      playerWithDataAndIndex: recordOfTicTacToePlayersWithDataAndIndex.bruno,
-      scoreWithData:
-        recordOfTicTacToeScoresWithData.aliceWith1PointAndBrunoWith0Points,
-      slotsWithData:
-        indexedTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR2C1AndR2C2AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
-      validMovesWithData: new Map([]),
-    },
-  slotR0C0AndR0C2AndR1C1AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
-    {
-      gameWithData:
-        recordOfTicTacToeGamesWithData.ticTacToeWith3RowsAnd3Columns,
-      isFinal: false,
-      nextPlayerWithDataAndIndex:
-        recordOfTicTacToePlayersWithDataAndIndex.bruno,
-      playerWithDataAndIndex: recordOfTicTacToePlayersWithDataAndIndex.alice,
-      scoreWithData:
-        recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points,
-      slotsWithData:
-        indexedTicTacToeSlotsWithDataInWhichSlotR0C0AndR0C2AndR1C1AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
-      validMovesWithData: new Map([
-        constructTupleForMove({
-          moveWithDataAndIndex:
-            recordOfTicTacToeMovesWithDataAndIndex.southeast,
         }),
       ]),
     },
@@ -508,6 +462,88 @@ const recordOfRequiredParamsOfTicTacToeStates = {
         }),
         constructTupleForMove({
           moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.west,
+        }),
+      ]),
+    },
+  slotsR0C0AndR0C1AreFilledByAliceAndR2C0IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
+    {
+      gameWithData:
+        recordOfTicTacToeGamesWithData.ticTacToeWith3RowsAnd3Columns,
+      isFinal: false,
+      nextPlayerWithDataAndIndex:
+        recordOfTicTacToePlayersWithDataAndIndex.alice,
+      playerWithDataAndIndex: recordOfTicTacToePlayersWithDataAndIndex.bruno,
+      scoreWithData:
+        recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points,
+      slotsWithData:
+        indexedTicTacToeSlotsWithDataInWhichSlotsR0C0AndR0C1AreFilledByAliceAndR2C0IsFilledByBruno,
+      validMovesWithData: new Map([
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.center,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.east,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.northeast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.south,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.southeast,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfTicTacToeMovesWithDataAndIndex.west,
+        }),
+      ]),
+    },
+  slotsR0C0AndR0C2AndR1C1AndR1C2AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR2C0AndR2C2AreFilledByBrunoAndAliceHas1PointAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
+    {
+      gameWithData:
+        recordOfTicTacToeGamesWithData.ticTacToeWith3RowsAnd3Columns,
+      isFinal: true,
+      nextPlayerWithDataAndIndex:
+        recordOfTicTacToePlayersWithDataAndIndex.alice,
+      playerWithDataAndIndex: recordOfTicTacToePlayersWithDataAndIndex.bruno,
+      scoreWithData:
+        recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points,
+      slotsWithData:
+        indexedTicTacToeSlotsWithDataInWhichSlotsR0C0AndR0C2AndR1C1AndR1C2AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR2C0AndR2C2AreFilledByBruno,
+      validMovesWithData: new Map([]),
+    },
+  slotsR0C0AndR0C2AndR1C1AndR2C1AndR2C2AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBrunoAndAliceHas1PointAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
+    {
+      gameWithData:
+        recordOfTicTacToeGamesWithData.ticTacToeWith3RowsAnd3Columns,
+      isFinal: true,
+      nextPlayerWithDataAndIndex:
+        recordOfTicTacToePlayersWithDataAndIndex.alice,
+      playerWithDataAndIndex: recordOfTicTacToePlayersWithDataAndIndex.bruno,
+      scoreWithData:
+        recordOfTicTacToeScoresWithData.aliceWith1PointAndBrunoWith0Points,
+      slotsWithData:
+        indexedTicTacToeSlotsWithDataInWhichSlotsR0C0AndR0C2AndR1C1AndR2C1AndR2C2AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
+      validMovesWithData: new Map([]),
+    },
+  slotsR0C0AndR0C2AndR1C1AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
+    {
+      gameWithData:
+        recordOfTicTacToeGamesWithData.ticTacToeWith3RowsAnd3Columns,
+      isFinal: false,
+      nextPlayerWithDataAndIndex:
+        recordOfTicTacToePlayersWithDataAndIndex.bruno,
+      playerWithDataAndIndex: recordOfTicTacToePlayersWithDataAndIndex.alice,
+      scoreWithData:
+        recordOfTicTacToeScoresWithData.aliceWith0PointsAndBrunoWith0Points,
+      slotsWithData:
+        indexedTicTacToeSlotsWithDataInWhichSlotsR0C0AndR0C2AndR1C1AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
+      validMovesWithData: new Map([
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.southeast,
         }),
       ]),
     },

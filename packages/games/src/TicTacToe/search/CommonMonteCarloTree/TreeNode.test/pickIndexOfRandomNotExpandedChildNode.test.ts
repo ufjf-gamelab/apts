@@ -3,7 +3,7 @@ import { createDescriptionForTest } from "@repo/engine_core/test.js";
 import {
   createDescriptionForTestOfPickIndexOfRandomNotExpandedChildNode,
   validatePickIndexOfRandomNotExpandedChildNode,
-} from "@repo/search/CommonMonteCarloTree/TreeNode.test.ts/pickIndexOfRandomNotExpandedChildNode.test.js";
+} from "@repo/search/CommonMonteCarloTree/TreeNode.test/pickIndexOfRandomNotExpandedChildNode.test.js";
 import { test } from "vitest";
 
 import type { TicTacToeTreeNodeWithData } from "./setup.js";

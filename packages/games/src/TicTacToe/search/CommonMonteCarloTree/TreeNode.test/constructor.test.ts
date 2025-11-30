@@ -3,7 +3,7 @@ import {
   createDescriptionForTestsOfConstructor,
 } from "@repo/engine_core/test.js";
 import { TreeNode } from "@repo/search/CommonMonteCarloTree/TreeNode.js";
-import { validateConstructor } from "@repo/search/CommonMonteCarloTree/TreeNode.test.ts/constructor.test.js";
+import { validateConstructor } from "@repo/search/CommonMonteCarloTree/TreeNode.test/constructor.test.js";
 import { expect, test } from "vitest";
 
 import { recordOfTicTacToeTreeNodesWithData } from "./records.js";

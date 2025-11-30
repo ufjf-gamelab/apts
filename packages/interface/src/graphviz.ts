@@ -198,7 +198,7 @@ const insertNodeIntoGraph = <
   currentNode.getChildrenNodes().forEach((childNode) => {
     if (childNode !== null) {
       tuplesOfInformationOfGraphvizEdge.push({
-        fitness: currentNode.getFitnessOfChildNode({
+        fitness: currentNode.calculateFitnessOfChildNode({
           childNode,
           explorationCoefficient,
         }),

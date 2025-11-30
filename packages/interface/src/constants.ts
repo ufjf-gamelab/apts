@@ -1,12 +1,10 @@
-const MODES_OF_GAMEPLAY = {
-  computerVersusComputer: "CvC",
-  playerVersusComputer: "PvC",
-  playerVersusPlayer: "PvP",
+const modesOfPlay = {
+  computerVersusComputer: "cvc",
+  playerVersusComputer: "pvc",
+  playerVersusPlayer: "pvp",
 } as const;
 
-const NAMES_OF_GAMES = {
-  // Connect4 = "connect4",
-  ticTacToe: "Tic-Tac-Toe",
-} as const;
+type ModeOfPlay = (typeof modesOfPlay)[keyof typeof modesOfPlay];
 
-export { MODES_OF_GAMEPLAY, NAMES_OF_GAMES };
+export type { ModeOfPlay };
+export { modesOfPlay };

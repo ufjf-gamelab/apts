@@ -2,7 +2,7 @@ import { createDescriptionForTest } from "@repo/engine_core/test.js";
 import {
   createDescriptionForTestOfGetIndexesOfNotExpandedChildrenNodes,
   validateGetIndexesOfNotExpandedChildrenNodes,
-} from "@repo/search/CommonMonteCarloTree/TreeNode.test.ts/getIndexesOfNotExpandedChildrenNodes.test.js";
+} from "@repo/search/CommonMonteCarloTree/TreeNode.test/getIndexesOfNotExpandedChildrenNodes.test.js";
 import { test } from "vitest";
 
 import type { TicTacToeTreeNodeWithData } from "./setup.js";

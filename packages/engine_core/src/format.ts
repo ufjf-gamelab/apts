@@ -1,16 +1,20 @@
 const formatArray = ({ array }: { array: unknown[] }) =>
   `[${array.join(", ")}]`;
 
-const formatMap = <Value>({
-  map,
-}: {
-  map: ReadonlyMap<PropertyKey, Value>;
-}) => {
-  const entries = map
-    .entries()
-    .map(([key, value]) => `${JSON.stringify(key)}: ${JSON.stringify(value)}`)
-    .toArray();
-  return formatArray({ array: entries });
+const formatEntry = ([key, value]: [PropertyKey, unknown]) =>
+  `${JSON.stringify(key)}: ${JSON.stringify(value)}`;
+
+const joinEntries = ({ entries }: { entries: string[] }) =>
+  `{ ${entries.join(", ")} }`;
+
+const formatMap = ({ map }: { map: ReadonlyMap<PropertyKey, unknown> }) => {
+  const entries = map.entries().map(formatEntry).toArray();
+  return joinEntries({ entries });
 };
 
-export { formatArray, formatMap };
+const formatRecord = ({ record }: { record: Record<PropertyKey, unknown> }) => {
+  const entries = Object.entries(record).map(formatEntry);
+  return joinEntries({ entries });
+};
+
+export { formatArray, formatMap, formatRecord };

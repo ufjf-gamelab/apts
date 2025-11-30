@@ -15,13 +15,68 @@ import {
   type Game,
 } from "@repo/game/Game.js";
 
-import type { expandTree } from "./Search.js";
+import type { ExplorationCoefficient } from "./Search.js";
 
 const MINIMUM_QUALITY_OF_MATCH = 0;
 const MINIMUM_QUANTITY_OF_VISITS = 0;
 
 const BASE_EXPLOITATION = 0;
 const BASE_EXPLORATION = 0;
+
+const calculateExploitationComponentOfFitness = ({
+  qualityOfMatchOfChildNode,
+  quantityOfVisitsToChildNode,
+}: {
+  qualityOfMatchOfChildNode: number;
+  quantityOfVisitsToChildNode: Integer;
+}): number => {
+  let exploitation = qualityOfMatchOfChildNode / quantityOfVisitsToChildNode;
+  if (!Number.isFinite(exploitation)) {
+    exploitation = BASE_EXPLOITATION;
+  }
+  return exploitation;
+};
+
+const calculateExplorationComponentOfFitness = ({
+  explorationCoefficient,
+  quantityOfVisitsToChildNode,
+  quantityOfVisitsToParentNode,
+}: {
+  explorationCoefficient: ExplorationCoefficient;
+  quantityOfVisitsToChildNode: Integer;
+  quantityOfVisitsToParentNode: Integer;
+}): number => {
+  let exploration =
+    explorationCoefficient *
+    Math.sqrt(
+      Math.log(quantityOfVisitsToParentNode) / quantityOfVisitsToChildNode,
+    );
+  if (!Number.isFinite(exploration)) {
+    exploration = BASE_EXPLORATION;
+  }
+  return exploration;
+};
+
+const calculateFitness = ({
+  explorationCoefficient,
+  qualityOfMatchOfChildNode,
+  quantityOfVisitsToChildNode,
+  quantityOfVisitsToParentNode,
+}: {
+  explorationCoefficient: ExplorationCoefficient;
+  qualityOfMatchOfChildNode: number;
+  quantityOfVisitsToChildNode: Integer;
+  quantityOfVisitsToParentNode: Integer;
+}): number =>
+  calculateExploitationComponentOfFitness({
+    qualityOfMatchOfChildNode,
+    quantityOfVisitsToChildNode,
+  }) +
+  calculateExplorationComponentOfFitness({
+    explorationCoefficient,
+    quantityOfVisitsToChildNode,
+    quantityOfVisitsToParentNode,
+  });
 
 interface ParamsOfTreeNode<
   GenericGame extends Game<
@@ -220,6 +275,31 @@ class TreeNode<
     });
   }
 
+  public calculateFitnessOfChildNode({
+    childNode,
+    explorationCoefficient,
+  }: {
+    childNode: TreeNode<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >;
+    explorationCoefficient: ExplorationCoefficient;
+  }): number {
+    // Privileges the child with the lowest exploitation, as it means the opponent will have the lowest chance of winning
+    // TODO: this formula has problems, as the quantity of visits can be zero, what leads to a division by zero
+
+    return calculateFitness({
+      explorationCoefficient,
+      qualityOfMatchOfChildNode: childNode.qualityOfMatch,
+      quantityOfVisitsToChildNode: childNode.quantityOfVisits,
+      quantityOfVisitsToParentNode: this.quantityOfVisits,
+    });
+  }
+
   /// Perform a move and return the outcome state as a child node.
   public expand({
     indexOfMove,
@@ -265,49 +345,6 @@ class TreeNode<
 
   public getChildrenNodes(): typeof this.childrenNodes {
     return this.childrenNodes;
-  }
-
-  public getFitnessOfChildNode({
-    childNode,
-    explorationCoefficient,
-  }: Pick<
-    Parameters<
-      typeof expandTree<
-        GenericGame,
-        GenericMove,
-        GenericPlayer,
-        GenericScore,
-        GenericSlot,
-        GenericState
-      >
-    >[0],
-    "explorationCoefficient"
-  > & {
-    childNode: TreeNode<
-      GenericGame,
-      GenericMove,
-      GenericPlayer,
-      GenericScore,
-      GenericSlot,
-      GenericState
-    >;
-  }): number {
-    // Privileges the child with the lowest exploitation, as it means the opponent will have the lowest chance of winning
-    // TODO: this formula has problems, as the quantity of visits can be zero, what leads to a division by zero
-
-    let exploitation = childNode.qualityOfMatch / childNode.quantityOfVisits;
-    if (!Number.isFinite(exploitation)) {
-      exploitation = BASE_EXPLOITATION;
-    }
-
-    let exploration =
-      explorationCoefficient *
-      Math.sqrt(Math.log(this.quantityOfVisits) / childNode.quantityOfVisits);
-    if (!Number.isFinite(exploration)) {
-      exploration = BASE_EXPLORATION;
-    }
-
-    return exploitation + exploration;
   }
 
   public getIndexesOfNotExpandedChildrenNodes(): Set<IndexOfMove> {
@@ -370,7 +407,7 @@ class TreeNode<
   public selectBestChildNode({
     explorationCoefficient,
   }: Pick<
-    Parameters<typeof this.getFitnessOfChildNode>[0],
+    Parameters<typeof this.calculateFitnessOfChildNode>[0],
     "explorationCoefficient"
   >): null | TreeNode<
     GenericGame,
@@ -393,7 +430,7 @@ class TreeNode<
     let bestUcb = Number.NEGATIVE_INFINITY;
 
     for (const childNode of expandedChildren) {
-      const ucb = this.getFitnessOfChildNode({
+      const ucb = this.calculateFitnessOfChildNode({
         childNode,
         explorationCoefficient,
       });
@@ -474,4 +511,9 @@ class TreeNode<
 }
 
 export type { ParamsOfTreeNode };
-export { TreeNode };
+export {
+  calculateExploitationComponentOfFitness,
+  calculateExplorationComponentOfFitness,
+  calculateFitness,
+  TreeNode,
+};

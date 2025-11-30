@@ -1,42 +1,39 @@
-import { recordOfSnowballStatesWithData } from "@repo/games/Snowball/game/State.test/records.js";
-import { recordOfTicTacToeStatesWithData } from "@repo/games/TicTacToe/game/State.test/records.js";
 import { playMatch } from "@repo/interface/actions/playMatch/action.js";
+import { type ModeOfPlay, modesOfPlay } from "@repo/interface/constants.js";
 import { Command, Option } from "commander";
 
 import type { DefinitionOfCommand } from "../commands.js";
 
 import { getInput } from "../../../input.js";
-import { parseArgumentIntoInt } from "../../parsing.js";
+import { parseArgumentIntoFloat, parseArgumentIntoInt } from "../../parsing.js";
+import {
+  type KeyOfState,
+  keysOfStates,
+  selectStateUsingKeyOfState,
+} from "../../states.js";
 
-const EXPLORATION_CONSTANT = 1.4;
+const EXPLORATION_COEFFICIENT = 1.4;
 const QUANTITY_OF_EXPANSIONS = 1000;
-
-const keysOfStates = {
-  snowball: "snowball",
-  ticTacToe: "tic-tac-toe",
-} as const;
 
 const executeAction = async ({
   expansions: quantityOfExpansions,
   exploration: explorationCoefficient,
+  mode: modeOfPlay,
   state: keyOfState,
 }: {
   expansions: number;
   exploration: number;
-  state: string;
+  mode: ModeOfPlay;
+  state: KeyOfState;
 }): Promise<void> => {
-  const state =
-    keyOfState === keysOfStates.ticTacToe
-      ? recordOfTicTacToeStatesWithData
-          .allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer
-          .state
-      : recordOfSnowballStatesWithData
-          .allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer
-          .state;
+  const state = selectStateUsingKeyOfState(keyOfState);
 
   await playMatch({
+    explorationCoefficient,
     getInput,
+    modeOfPlay,
     processMessage: console.info,
+    quantityOfExpansions,
     state,
   });
 };
@@ -52,12 +49,15 @@ const commandToPlayMatch = {
     )
       .choices(Object.values(keysOfStates))
       .makeOptionMandatory(),
+    new Option("-m, --mode <game-mode>", "The game mode to play.")
+      .choices(Object.values(modesOfPlay))
+      .makeOptionMandatory(),
     new Option(
       "-x, --exploration <exploration-constant>",
       "The exploration constant for the search.",
     )
-      .default(EXPLORATION_CONSTANT)
-      .argParser(parseArgumentIntoInt),
+      .default(EXPLORATION_COEFFICIENT)
+      .argParser(parseArgumentIntoFloat),
     new Option(
       "-e, --expansions <quantity-of-expansions>",
       "The quantity of expansions to perform on the search.",

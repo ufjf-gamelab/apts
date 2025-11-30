@@ -2,6 +2,7 @@
   "author": "Gabriel Malosto",
   "dependencies": {
     "@paralleldrive/cuid2": "^3.0.4",
+    "@repo/engine_core": "workspace:*",
     "@repo/game": "workspace:*",
     "@repo/games": "workspace:*",
     "@repo/interface": "workspace:*",

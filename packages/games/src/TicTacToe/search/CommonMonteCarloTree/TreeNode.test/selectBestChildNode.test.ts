@@ -2,14 +2,14 @@ import { createDescriptionForTest } from "@repo/engine_core/test.js";
 import {
   createDescriptionForTestOfSelectBestChildNode,
   validateSelectBestChildNode,
-} from "@repo/search/CommonMonteCarloTree/TreeNode.test.ts/selectBestChildNode.test.js";
+} from "@repo/search/CommonMonteCarloTree/TreeNode.test/selectBestChildNode.test.js";
 import { test } from "vitest";
 
 import type { TicTacToeTreeNodeWithData } from "./setup.js";
 
 import { recordOfTicTacToeTreeNodesWithData } from "./records.js";
 
-const EXPLORATION_CONSTANT = 1.4;
+const EXPLORATION_COEFFICIENT = 1.4;
 
 const createDescription = ({
   affix,
@@ -51,7 +51,7 @@ const testSelectBestChildNode = ({
           () => {
             validateSelectBestChildNode({
               expectedBestChildNode: bestChildNode,
-              explorationCoefficient: EXPLORATION_CONSTANT,
+              explorationCoefficient: EXPLORATION_COEFFICIENT,
               treeNode,
             });
           },
