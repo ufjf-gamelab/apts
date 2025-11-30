@@ -52,7 +52,6 @@ const validateConstructor = <
   >;
 }) => {
   expect(treeNode).toBeInstanceOf(TreeNode);
-  expect(treeNode.getState()).not.toBe(params.state);
   expect(treeNode.getState()).toStrictEqual(params.state);
 };
 

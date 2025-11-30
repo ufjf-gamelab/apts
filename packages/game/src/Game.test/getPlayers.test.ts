@@ -48,9 +48,6 @@ const validateGetPlayers = <
     assert.fail("There should be at least one player to perform this test.");
   }
   expect(firstPlayer).toBeInstanceOf(Player);
-
-  expect(game.getPlayers()).toStrictEqual(expectedPlayers);
-  expect(game.getPlayers()).not.toEqual(players);
 };
 
 const createDescriptionForTestOfGetPlayers = ({

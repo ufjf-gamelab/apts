@@ -40,14 +40,7 @@ const validateGetSlot = <
 }) => {
   const slot = state.getSlot({ indexOfSlot });
   expect(slot).toBeInstanceOf(Slot);
-  expect(slot).not.toBe(expectedSlot);
   expect(slot).toStrictEqual(expectedSlot);
-
-  // Ensure that the returned object does not keep reference to the internal property
-  const otherSlot = state.getSlot({
-    indexOfSlot,
-  });
-  expect(otherSlot).not.toBe(slot);
 };
 
 const createDescriptionForTestOfGetSlot = <

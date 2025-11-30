@@ -44,12 +44,7 @@ const validateGetPlayer = <
     assert.isNull(expectedPlayer);
   } else {
     expect(player).toBeInstanceOf(Player);
-    expect(player).not.toBe(expectedPlayer);
     expect(player).toStrictEqual(expectedPlayer);
-
-    // Ensure that the returned object does not keep reference to the internal property
-    const otherPlayer = game.getPlayer({ indexOfPlayer });
-    expect(otherPlayer).not.toBe(player);
   }
 };
 

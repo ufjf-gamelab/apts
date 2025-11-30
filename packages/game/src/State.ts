@@ -157,6 +157,8 @@ abstract class State<
   public getSlots() {
     return this.slots;
   }
+
+  public abstract toString(): string;
 }
 
 export type { IndexOfState, ParamsOfState };

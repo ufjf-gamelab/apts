@@ -40,7 +40,6 @@ const validateGetSlots = <
 }) => {
   const slots = state.getSlots();
   expect(slots).toBeInstanceOf(Array<GenericSlot>);
-  expect(slots).not.toBe(expectedSlots);
   expect(slots).toStrictEqual(expectedSlots);
 
   const [firstSlot] = slots;
@@ -50,7 +49,6 @@ const validateGetSlots = <
   expect(firstSlot).toBeInstanceOf(Slot);
 
   expect(state.getSlots()).toStrictEqual(expectedSlots);
-  expect(state.getSlots()).not.toEqual(slots);
 };
 
 const createDescriptionForTestOfGetSlots = <

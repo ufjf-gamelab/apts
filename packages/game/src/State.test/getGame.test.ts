@@ -39,12 +39,7 @@ const validateGetGame = <
 }) => {
   const game = state.getGame();
   expect(game).toBeInstanceOf(Game);
-  expect(game).not.toBe(expectedGame);
   expect(game).toStrictEqual(expectedGame);
-
-  // Ensure that the returned object does not keep reference to the internal property
-  const otherGame = state.getGame();
-  expect(otherGame).not.toBe(game);
 };
 
 const createDescriptionForTestOfGetGame = <

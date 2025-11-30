@@ -1,12 +1,6 @@
 import { program } from "commander";
-import prompts from "prompts";
 
 import { definitionsOfCommands } from "./commands/commands.js";
-
-export type GetInput = (
-  questions: prompts.PromptObject | prompts.PromptObject[],
-) => Promise<prompts.Answers<string>>;
-export const getInput: GetInput = async questions => await prompts(questions);
 
 program
   .name("apts-engine")

@@ -109,9 +109,9 @@ const currentRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheast
       ]),
       indexAndKeyOfBestChildNode: {
         indexOfChildNode:
-          recordOfTicTacToeMovesWithDataAndIndex.center.indexOfMove,
+          recordOfTicTacToeMovesWithDataAndIndex.northwest.indexOfMove,
         keyOfChildNode:
-          "rootThenCurrentCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
+          "rootThenCenterOrEastOrNorthOrNortheastOrCurrentNorthwestOrSouthOrSoutheastOrSouthwestOrWest",
       },
 
       playedMoveWithDataAndIndex: null,

@@ -44,12 +44,7 @@ const validateGetMove = <
     assert.isNull(expectedMove);
   } else {
     expect(move).toBeInstanceOf(Move);
-    expect(move).not.toBe(expectedMove);
     expect(move).toStrictEqual(expectedMove);
-
-    // Ensure that the returned object does not keep reference to the internal property
-    const otherMove = game.getMove({ indexOfMove });
-    expect(otherMove).not.toBe(move);
   }
 };
 

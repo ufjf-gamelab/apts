@@ -94,7 +94,7 @@ const commandToPredictQualityOfMoves = {
       .argParser(parseArgumentIntoInt),
     new Option(
       "-e, --expansions <quantity-of-expansions>",
-      "The quantity of expansions to perform.",
+      "The quantity of expansions to perform on the search.",
     )
       .default(QUANTITY_OF_EXPANSIONS)
       .argParser(parseArgumentIntoInt),

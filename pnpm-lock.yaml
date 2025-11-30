@@ -239,6 +239,9 @@ importers:
       '@ts-graphviz/core':
         specifier: '=3.0.4'
         version: 3.0.4
+      '@types/prompts':
+        specifier: ^2.4.9
+        version: 2.4.9
       ts-graphviz:
         specifier: '=3.0.4'
         version: 3.0.4

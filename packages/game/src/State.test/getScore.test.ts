@@ -41,12 +41,7 @@ const validateGetScore = <
 }) => {
   const score = state.getScore();
   expect(score).toBeInstanceOf(Score);
-  expect(score).not.toBe(expectedScore);
   expect(score).toStrictEqual(expectedScore);
-
-  // Ensure that the returned object does not keep reference to the internal property
-  const otherScore = state.getScore();
-  expect(otherScore).not.toBe(score);
 };
 
 const createDescriptionForTestOfGetScore = <

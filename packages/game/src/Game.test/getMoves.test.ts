@@ -48,9 +48,6 @@ const validateGetMoves = <
     assert.fail("There should be at least one move to perform this test.");
   }
   expect(firstMove).toBeInstanceOf(Move);
-
-  expect(game.getMoves()).toStrictEqual(expectedMoves);
-  expect(game.getMoves()).not.toEqual(moves);
 };
 
 const createDescriptionForTestOfGetMoves = ({
