@@ -5,8 +5,9 @@ import { keysOfStates } from "../states.js";
 
 const DEFAULT_SEED = String(Math.random());
 
-const EXPLORATION_COEFFICIENT_FOR_TICTACTOE = 1.4;
-const QUANTITY_OF_EXPANSIONS = 100000;
+const EXPLORATION_COEFFICIENT = 0.5;
+const QUANTITY_OF_EXPANSIONS = 10000;
+const TEMPERATURE_COEFFICIENT = 0.25;
 
 const commonOptions = {
   expansions: new Option(
@@ -16,15 +17,21 @@ const commonOptions = {
     .default(QUANTITY_OF_EXPANSIONS)
     .argParser(parseArgumentIntoInt),
   exploration: new Option(
-    "-x, --exploration <exploration-constant>",
-    "The exploration constant to use on the search.",
+    "-x, --exploration <exploration-coefficient>",
+    "The exploration coefficient to use on the search.",
   )
-    .default(EXPLORATION_COEFFICIENT_FOR_TICTACTOE)
+    .default(EXPLORATION_COEFFICIENT)
     .argParser(parseArgumentIntoFloat),
   seed: new Option(
     "--seed <seed>",
     "The seed to use for random actions.",
   ).default(DEFAULT_SEED),
+  softeningCoefficient: new Option(
+    "--softening <softening-coefficient>",
+    "The softening coefficient to use on the search.",
+  )
+    .default(TEMPERATURE_COEFFICIENT)
+    .argParser(parseArgumentIntoFloat),
   state: new Option(
     "-s, --state <key-of-state>",
     "The key of a state to use as root of the search tree.",

@@ -35,9 +35,10 @@ const validatePickIndexOfValidMoveConsideringTheirQuality = <
   indexesOfValidMoves,
   qualitiesOfMoves,
   random,
+  softeningCoefficient,
 }: Pick<
   Parameters<Random["pickIndexOfValidMoveConsideringTheirQuality"]>[0],
-  "indexesOfValidMoves" | "qualitiesOfMoves"
+  "indexesOfValidMoves" | "qualitiesOfMoves" | "softeningCoefficient"
 > & {
   random: Random;
 }) => {
@@ -45,6 +46,7 @@ const validatePickIndexOfValidMoveConsideringTheirQuality = <
     random.pickIndexOfValidMoveConsideringTheirQuality({
       indexesOfValidMoves,
       qualitiesOfMoves,
+      softeningCoefficient,
     });
   console.log(pickedIndexOfValidMove);
 };
@@ -56,9 +58,10 @@ const testPickIndexOfValidMoveConsideringTheirQuality = ({
   indexesOfValidMoves,
   qualitiesOfMoves,
   random,
+  softeningCoefficient,
 }: Pick<
   Parameters<typeof validatePickIndexOfValidMoveConsideringTheirQuality>[0],
-  "indexesOfValidMoves" | "qualitiesOfMoves" | "random"
+  "indexesOfValidMoves" | "qualitiesOfMoves" | "random" | "softeningCoefficient"
 >) => {
   test(
     createDescriptionForTestOfPickIndexOfValidMoveConsideringTheirQuality(),
@@ -68,6 +71,7 @@ const testPickIndexOfValidMoveConsideringTheirQuality = ({
         indexesOfValidMoves,
         qualitiesOfMoves,
         random,
+        softeningCoefficient,
       });
     },
   );
@@ -82,4 +86,5 @@ testPickIndexOfValidMoveConsideringTheirQuality({
     0.05501618122977346, 0, 0.06796116504854369, 0.012944983818770227,
   ],
   random: new Random({ seed: DEFAULT_SEED }),
+  softeningCoefficient: 0.25,
 });

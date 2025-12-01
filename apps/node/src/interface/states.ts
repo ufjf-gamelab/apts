@@ -2,6 +2,8 @@ import { recordOfSnowballStatesWithData } from "@repo/games/Snowball/game/State.
 import { recordOfTicTacToeStatesWithData } from "@repo/games/TicTacToe/game/State.test/records.js";
 
 const keysOfStates = {
+  gameIsSnowballAndAllSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
+    "gameIsSnowballAndAllSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer",
   gameIsTicTacToeAndAllSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
     "gameIsTicTacToeAndAllSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer",
   gameIsTicTacToeAndSlotsR0C0AndR0C1AndR1C0AreFilledByAliceAndR0C2AndR1C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
@@ -16,12 +18,16 @@ const keysOfStates = {
     "gameIsTicTacToeAndSlotsR0C0AndR1C0AreFilledByAliceAndR0C1IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer",
   gameIsTicTacToeAndSlotsR1C0AndR1C2AndR2C0AreFilledByAliceAndR0C0AndR1C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     "gameIsTicTacToeAndSlotsR1C0AndR1C2AndR2C0AreFilledByAliceAndR0C0AndR1C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer",
-  snowball: "snowball",
 } as const;
 type KeyOfState = (typeof keysOfStates)[keyof typeof keysOfStates];
 
 const selectStateUsingKeyOfState = (keyOfState: KeyOfState) => {
   switch (keyOfState) {
+    case "gameIsSnowballAndAllSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer": {
+      return recordOfSnowballStatesWithData
+        .allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer
+        .state;
+    }
     case "gameIsTicTacToeAndAllSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer": {
       return recordOfTicTacToeStatesWithData
         .allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer
@@ -55,11 +61,6 @@ const selectStateUsingKeyOfState = (keyOfState: KeyOfState) => {
     case "gameIsTicTacToeAndSlotsR1C0AndR1C2AndR2C0AreFilledByAliceAndR0C0AndR1C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer": {
       return recordOfTicTacToeStatesWithData
         .slotsWithDataAndIndexInWhichSlotsR1C0AndR1C2AndR2C0AreFilledByAliceAndR0C0AndR1C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer
-        .state;
-    }
-    case "snowball": {
-      return recordOfSnowballStatesWithData
-        .allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer
         .state;
     }
     default: {

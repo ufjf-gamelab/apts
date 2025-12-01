@@ -1,5 +1,8 @@
 import type { IndexOfMove } from "@repo/game/Move.js";
-import type { QualityOfMove } from "@repo/search/CommonMonteCarloTree/search/quality.js";
+import type {
+  QualityOfMove,
+  SofteningCoefficient,
+} from "@repo/search/CommonMonteCarloTree/search/quality.js";
 
 import { predictQualityOfMoves } from "@repo/interface/actions/predictQualityOfMoves/action.js";
 import { Command, Option } from "commander";
@@ -20,6 +23,7 @@ const executeAction = ({
   exploration: explorationCoefficient,
   file: fileName,
   seed,
+  softening: softeningCoefficient,
   softmax: shouldReturnProbabilities,
   state: keyOfState,
   tree: shouldConstructGraph,
@@ -29,6 +33,7 @@ const executeAction = ({
   exploration: number;
   file: string | undefined;
   seed: string;
+  softening: SofteningCoefficient;
   softmax: boolean;
   state: KeyOfState;
   tree: boolean;
@@ -64,6 +69,7 @@ const executeAction = ({
     quantityOfExpansions,
     seed,
     shouldReturnProbabilities,
+    softeningCoefficient,
     state,
   });
 };
@@ -76,8 +82,9 @@ const commandToPredictQualityOfMoves = {
     commonOptions.state,
     commonOptions.expansions,
     commonOptions.exploration,
+    commonOptions.softeningCoefficient,
     new Option(
-      "-t, --tree",
+      "-g, --graph",
       "Whether to output an image file of the search tree.",
     ).default(false),
     new Option(

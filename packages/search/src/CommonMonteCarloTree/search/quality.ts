@@ -124,8 +124,9 @@ const predictQualityOfMoves = <
 };
 
 const DEFAULT_FOR_EXPONENTIATION = 1;
-const TEMPERATURE = 0.25;
 const MINIMUM_PROBABILITY_OF_PLAYING_MOVE = 0;
+
+type SofteningCoefficient = number;
 
 const calculateProbabilityOfPlayingEachMove = <
   GenericGame extends Game<
@@ -151,9 +152,11 @@ const calculateProbabilityOfPlayingEachMove = <
 >({
   indexesOfValidMoves,
   qualitiesOfMoves,
+  softeningCoefficient,
 }: {
   indexesOfValidMoves: ReadonlySet<IndexOfMove>;
   qualitiesOfMoves: QualityOfMove[];
+  softeningCoefficient: SofteningCoefficient;
 }): ReadonlyMap<IndexOfMove, number> => {
   let sumOfQualityOfMoves = 0;
   let minimumQualityOfMove = Infinity;
@@ -185,7 +188,7 @@ const calculateProbabilityOfPlayingEachMove = <
         qualityOfMove / sumOfQualityOfMoves,
       );
       const exponent = assertNumberIsFinite(
-        normalizedQualityOfMove / TEMPERATURE,
+        normalizedQualityOfMove / softeningCoefficient,
       );
       const exponentiatedQualityOfMove = assertNumberIsFinite(
         Math.exp(exponent),
@@ -208,7 +211,7 @@ const calculateProbabilityOfPlayingEachMove = <
   return new Map(probabilities);
 };
 
-export type { QualityOfMove };
+export type { QualityOfMove, SofteningCoefficient };
 export {
   calculateProbabilityOfPlayingEachMove,
   calculateQualityOfMoves,

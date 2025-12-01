@@ -9,10 +9,7 @@ import seedrandom from "seedrandom";
 
 import type { TreeNode } from "./TreeNode.js";
 
-import {
-  calculateProbabilityOfPlayingEachMove,
-  type QualityOfMove,
-} from "./search/quality.js";
+import { calculateProbabilityOfPlayingEachMove } from "./search/quality.js";
 
 interface ParamsOfRandom {
   seed: string;
@@ -118,13 +115,15 @@ class Random {
   public pickIndexOfValidMoveConsideringTheirQuality({
     indexesOfValidMoves,
     qualitiesOfMoves,
-  }: {
-    indexesOfValidMoves: ReadonlySet<IndexOfMove>;
-    qualitiesOfMoves: QualityOfMove[];
-  }): IndexOfMove {
+    softeningCoefficient,
+  }: Pick<
+    Parameters<typeof calculateProbabilityOfPlayingEachMove>[0],
+    "indexesOfValidMoves" | "qualitiesOfMoves" | "softeningCoefficient"
+  >): IndexOfMove {
     const probabilityOfPlayingEachMove = calculateProbabilityOfPlayingEachMove({
       indexesOfValidMoves,
       qualitiesOfMoves,
+      softeningCoefficient,
     });
 
     const sortedProbabilities = probabilityOfPlayingEachMove

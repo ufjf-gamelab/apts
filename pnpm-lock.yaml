@@ -48,17 +48,17 @@ importers:
         specifier: ^4.22.0
         version: 4.22.0(seedrandom@3.0.5)
       '@ts-graphviz/adapter':
-        specifier: ^3.0.5
-        version: 3.0.5
+        specifier: '=3.0.4'
+        version: 3.0.4
       '@ts-graphviz/ast':
-        specifier: ^3.0.5
-        version: 3.0.5
+        specifier: '=3.0.4'
+        version: 3.0.4
       '@ts-graphviz/common':
-        specifier: ^3.0.4
+        specifier: '=3.0.4'
         version: 3.0.4
       '@ts-graphviz/core':
-        specifier: ^3.0.6
-        version: 3.0.6
+        specifier: '=3.0.4'
+        version: 3.0.4
       commander:
         specifier: ^14.0.2
         version: 14.0.2
@@ -69,8 +69,8 @@ importers:
         specifier: ^2.4.2
         version: 2.4.2
       ts-graphviz:
-        specifier: ^3.0.6
-        version: 3.0.6
+        specifier: '=3.0.4'
+        version: 3.0.4
     devDependencies:
       '@repo/eslint_config':
         specifier: workspace:*
@@ -231,23 +231,23 @@ importers:
         specifier: workspace:*
         version: link:../search
       '@ts-graphviz/adapter':
-        specifier: ^3.0.5
-        version: 3.0.5
+        specifier: '=3.0.4'
+        version: 3.0.4
       '@ts-graphviz/ast':
-        specifier: ^3.0.5
-        version: 3.0.5
+        specifier: '=3.0.4'
+        version: 3.0.4
       '@ts-graphviz/common':
-        specifier: ^3.0.4
+        specifier: '=3.0.4'
         version: 3.0.4
       '@ts-graphviz/core':
-        specifier: ^3.0.6
-        version: 3.0.6
+        specifier: '=3.0.4'
+        version: 3.0.4
       '@types/prompts':
         specifier: ^2.4.9
         version: 2.4.9
       ts-graphviz:
-        specifier: ^3.0.6
-        version: 3.0.6
+        specifier: '=3.0.4'
+        version: 3.0.4
     devDependencies:
       '@repo/eslint_config':
         specifier: workspace:*
@@ -930,20 +930,20 @@ packages:
     resolution: {integrity: sha512-0TrIrXs6/b7FLhLVNmfh8Sah6JgjBPH4mZ8JGb7NU6WW+cx00qK5BcAZxw7NCzxj6N8MRAIfHq+oNbPUNG5VAg==}
     hasBin: true
 
-  '@ts-graphviz/adapter@3.0.5':
-    resolution: {integrity: sha512-l6U+jizdkgnwq8Gb4I/Azgr/TGM452ovx2SLxUU/mGZNtrdOol4qi7Gn+d5hP3weBKkUNV9C7j1Xawg4w1DkCw==}
+  '@ts-graphviz/adapter@3.0.4':
+    resolution: {integrity: sha512-K8K2gPL20BCyv3yk8YQm8bP9kPGUm3leRgDpFj7qQV7cRWTutLVW2oQlq8a33w92uVQXu6aSflpZTpypjtBUzA==}
     engines: {node: '>=20'}
 
-  '@ts-graphviz/ast@3.0.5':
-    resolution: {integrity: sha512-gwrhTWspMU0qIP8V3yLnwUcnV+pJuPRTp5RAzpqYlKcD7NIsMtZfCzN2fzg8SpkJFC5S/9Ajlv7zJy37LhGH6A==}
+  '@ts-graphviz/ast@3.0.4':
+    resolution: {integrity: sha512-c7QJvGqMZORRhi2qb599IgQH0kJMFSnoU4RluWhB3qapF87njMX+KT6YAYL5Wz29azEZL9BS+F1zcidS5OZ8Ug==}
     engines: {node: '>=20'}
 
   '@ts-graphviz/common@3.0.4':
     resolution: {integrity: sha512-lwyjx7FAXLCh4/8bHWHRr45yj1GycoGz747XxF3rbJ2SDDpCC12De0cT06v2EuHqAwpq629+A9VDft5G/wRAIw==}
     engines: {node: '>=20'}
 
-  '@ts-graphviz/core@3.0.6':
-    resolution: {integrity: sha512-5g/Tj1xoUgOnB0yhTe4uHR6WTm5zZSm6o79DihTHENOT5/dli70cAI28ousc8hB46N4PKEPqDMR5C/W/jCvtow==}
+  '@ts-graphviz/core@3.0.4':
+    resolution: {integrity: sha512-95pvr4Clps4hqw2YzxHZZTTTAwxyxpRtL02OLc1Jq36YFereCIgg2XNSTI/eLhEdpmELaE9r1h+VAQLAmbs4Kg==}
     engines: {node: '>=20'}
 
   '@types/chai@5.2.3':
@@ -2148,8 +2148,8 @@ packages:
     peerDependencies:
       typescript: '>=4.8.4'
 
-  ts-graphviz@3.0.6:
-    resolution: {integrity: sha512-NZAbgrRP4HPTgD/w032eQM2P1bEYv+peW+fiw4CreEKwZvqtWm2B7gi4Kon5fzRuP+VP8m7hpIBAWHT5rqEK6w==}
+  ts-graphviz@3.0.4:
+    resolution: {integrity: sha512-wDez/2Ij+owaOy/BaqnxUilQ307o0+Hvaz4Muz1glZAINNLx+KjrbaBudeD/x86UYJuoi38BOiOBcoIuFWdCNQ==}
     engines: {node: '>=20'}
 
   tsx@4.21.0:
@@ -2870,19 +2870,19 @@ snapshots:
       - encoding
       - seedrandom
 
-  '@ts-graphviz/adapter@3.0.5':
+  '@ts-graphviz/adapter@3.0.4':
     dependencies:
       '@ts-graphviz/common': 3.0.4
 
-  '@ts-graphviz/ast@3.0.5':
+  '@ts-graphviz/ast@3.0.4':
     dependencies:
       '@ts-graphviz/common': 3.0.4
 
   '@ts-graphviz/common@3.0.4': {}
 
-  '@ts-graphviz/core@3.0.6':
+  '@ts-graphviz/core@3.0.4':
     dependencies:
-      '@ts-graphviz/ast': 3.0.5
+      '@ts-graphviz/ast': 3.0.4
       '@ts-graphviz/common': 3.0.4
 
   '@types/chai@5.2.3':
@@ -4352,12 +4352,12 @@ snapshots:
     dependencies:
       typescript: 5.9.3
 
-  ts-graphviz@3.0.6:
+  ts-graphviz@3.0.4:
     dependencies:
-      '@ts-graphviz/adapter': 3.0.5
-      '@ts-graphviz/ast': 3.0.5
+      '@ts-graphviz/adapter': 3.0.4
+      '@ts-graphviz/ast': 3.0.4
       '@ts-graphviz/common': 3.0.4
-      '@ts-graphviz/core': 3.0.6
+      '@ts-graphviz/core': 3.0.4
 
   tsx@4.21.0:
     dependencies:

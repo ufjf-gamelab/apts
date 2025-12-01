@@ -1,3 +1,5 @@
+import type { SofteningCoefficient } from "@repo/search/CommonMonteCarloTree/search/quality.js";
+
 import { playMatch } from "@repo/interface/actions/playMatch/action.js";
 import { type ModeOfPlay, modesOfPlay } from "@repo/interface/constants.js";
 import { Command, Option } from "commander";
@@ -13,12 +15,14 @@ const executeAction = async ({
   exploration: explorationCoefficient,
   mode: modeOfPlay,
   seed,
+  softening: softeningCoefficient,
   state: keyOfState,
 }: {
   expansions: number;
   exploration: number;
   mode: ModeOfPlay;
   seed: string;
+  softening: SofteningCoefficient;
   state: KeyOfState;
 }): Promise<void> => {
   const state = selectStateUsingKeyOfState(keyOfState);
@@ -30,6 +34,7 @@ const executeAction = async ({
     processMessage: console.info,
     quantityOfExpansions,
     seed,
+    softeningCoefficient,
     state,
   });
 };
@@ -45,6 +50,7 @@ const commandToPlayMatch = {
       .makeOptionMandatory(),
     commonOptions.expansions,
     commonOptions.exploration,
+    commonOptions.softeningCoefficient,
     commonOptions.seed,
   ],
 } satisfies DefinitionOfCommand;

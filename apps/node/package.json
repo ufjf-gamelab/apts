@@ -8,14 +8,14 @@
     "@repo/interface": "workspace:*",
     "@repo/search": "workspace:*",
     "@tensorflow/tfjs": "^4.22.0",
-    "@ts-graphviz/adapter": "^3.0.5",
-    "@ts-graphviz/ast": "^3.0.5",
-    "@ts-graphviz/common": "^3.0.4",
-    "@ts-graphviz/core": "^3.0.6",
+    "@ts-graphviz/adapter": "=3.0.4",
+    "@ts-graphviz/ast": "=3.0.4",
+    "@ts-graphviz/common": "=3.0.4",
+    "@ts-graphviz/core": "=3.0.4",
     "commander": "^14.0.2",
     "dotenv": "^17.2.3",
     "prompts": "^2.4.2",
-    "ts-graphviz": "^3.0.6"
+    "ts-graphviz": "=3.0.4"
   },
   "description": "Engine to simulate and create AI models for tabletop games, inspired by the AlphaZero algorithm.",
   "devDependencies": {

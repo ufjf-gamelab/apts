@@ -48,28 +48,33 @@ const predictQualityOfMoves = <
   seed,
   shouldReturnProbabilities,
   state,
+  softeningCoefficient,
 }: Pick<
-  Parameters<
-    typeof expandTree<
-      GenericGame,
-      GenericMove,
-      GenericPlayer,
-      GenericScore,
-      GenericSlot,
-      GenericState
-    >
-  >[0],
-  "explorationCoefficient" | "quantityOfExpansions"
-> & {
-  processGraphvizGraph: ((graphvizGraph: GraphvizDigraph) => void) | null;
-  processMessage: ProcessMessage;
-  processQualityOfMoves: (
-    qualitiesOfMoves: ReadonlyMap<IndexOfMove, QualityOfMove>,
-  ) => void;
-  seed: string;
-  shouldReturnProbabilities: boolean;
-  state: GenericState;
-}): void => {
+  Parameters<typeof calculateProbabilityOfPlayingEachMove>[0],
+  "softeningCoefficient"
+> &
+  Pick<
+    Parameters<
+      typeof expandTree<
+        GenericGame,
+        GenericMove,
+        GenericPlayer,
+        GenericScore,
+        GenericSlot,
+        GenericState
+      >
+    >[0],
+    "explorationCoefficient" | "quantityOfExpansions"
+  > & {
+    processGraphvizGraph: ((graphvizGraph: GraphvizDigraph) => void) | null;
+    processMessage: ProcessMessage;
+    processQualityOfMoves: (
+      qualitiesOfMoves: ReadonlyMap<IndexOfMove, QualityOfMove>,
+    ) => void;
+    seed: string;
+    shouldReturnProbabilities: boolean;
+    state: GenericState;
+  }): void => {
   const random = new Random({ seed });
   const game = state.getGame();
 
@@ -101,6 +106,7 @@ const predictQualityOfMoves = <
   const probabilityOfPlayingEachMove = calculateProbabilityOfPlayingEachMove({
     indexesOfValidMoves: game.getIndexesOfValidMoves({ state }),
     qualitiesOfMoves: qualityOfIndexedMoves,
+    softeningCoefficient,
   });
 
   processMessage("Quality of each move:");
