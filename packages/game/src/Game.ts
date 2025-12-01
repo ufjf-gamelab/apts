@@ -23,9 +23,6 @@ const constructErrorForInvalidMove = ({
   indexOfMove: IndexOfMove;
 }) => new Error(`Cannot play move ${indexOfMove} because it is not valid.`);
 
-const constructErrorForNotAnyIndexToPick = () =>
-  new Error("There is not any index of not expanded moves to pick from.");
-
 interface ParamsOfGame<
   GenericMove extends Move<GenericMove>,
   GenericPlayer extends Player<GenericPlayer>,
@@ -157,26 +154,6 @@ abstract class Game<
 
   public abstract isFinal({ state }: { state: GenericState }): boolean;
 
-  public pickIndexOfRandomValidMove({
-    state,
-  }: {
-    state: GenericState;
-  }): IndexOfMove {
-    const indexesOfValidMoves = this.getIndexesOfValidMoves({
-      state,
-    })
-      .values()
-      .toArray();
-
-    const randomIndex = Math.floor(Math.random() * indexesOfValidMoves.length);
-    const indexOfMove = indexesOfValidMoves[randomIndex];
-    if (typeof indexOfMove === "undefined") {
-      throw constructErrorForNotAnyIndexToPick();
-    }
-
-    return indexOfMove;
-  }
-
   public abstract play({
     indexOfMove,
     state,
@@ -191,9 +168,4 @@ abstract class Game<
 }
 
 export type { IndexOfGame, ParamsOfGame };
-export {
-  constructErrorForFinalState,
-  constructErrorForInvalidMove,
-  constructErrorForNotAnyIndexToPick,
-  Game,
-};
+export { constructErrorForFinalState, constructErrorForInvalidMove, Game };

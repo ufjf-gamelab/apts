@@ -1,5 +1,5 @@
 import type { IndexOfMove } from "@repo/game/Move.js";
-import type { QualityOfMove } from "@repo/search/CommonMonteCarloTree/Search.js";
+import type { QualityOfMove } from "@repo/search/CommonMonteCarloTree/search/search.js";
 
 import { predictQualityOfMoves } from "@repo/interface/actions/predictQualityOfMoves/action.js";
 import { Command, Option } from "commander";
@@ -11,21 +11,15 @@ import {
 import type { DefinitionOfCommand } from "../commands.js";
 
 import { generateGraphvizImage } from "../../../graphviz.js";
-import { parseArgumentIntoFloat, parseArgumentIntoInt } from "../../parsing.js";
-import {
-  type KeyOfState,
-  keysOfStates,
-  selectStateUsingKeyOfState,
-} from "../../states.js";
-
-const EXPLORATION_COEFFICIENT = 1.4;
-const QUANTITY_OF_EXPANSIONS = 1000;
+import { type KeyOfState, selectStateUsingKeyOfState } from "../../states.js";
+import { commonOptions } from "../options.js";
 
 const executeAction = ({
   directory: directoryPath,
   expansions: quantityOfExpansions,
   exploration: explorationCoefficient,
   file: fileName,
+  seed,
   state: keyOfState,
   tree: shouldConstructGraph,
 }: {
@@ -33,6 +27,7 @@ const executeAction = ({
   expansions: number;
   exploration: number;
   file: string | undefined;
+  seed: string;
   state: KeyOfState;
   tree: boolean;
 }): void => {
@@ -47,7 +42,9 @@ const executeAction = ({
         const graphvizDotString = graphvizToDot(graphvizGraph);
         generateGraphvizImage({
           directoryPath,
-          fileName,
+          fileName:
+            fileName ??
+            `state(${keyOfState})_expansions(${quantityOfExpansions})_exploration(${explorationCoefficient})_seed(${seed})`,
           graphvizDotString,
         }).catch((error: unknown) => {
           console.error("Error generating Graphviz image:", error);
@@ -62,6 +59,7 @@ const executeAction = ({
     processGraphvizGraph,
     processQualityOfMoves,
     quantityOfExpansions,
+    seed,
     state,
   });
 };
@@ -71,24 +69,9 @@ const commandToPredictQualityOfMoves = {
     .description("Predict quality of a Monte-Carlo Tree node.")
     .action(executeAction),
   options: [
-    new Option(
-      "-s, --state <key-of-state>",
-      "The key of a state to use as root of the tree.",
-    )
-      .choices(Object.values(keysOfStates))
-      .makeOptionMandatory(),
-    new Option(
-      "-x, --exploration <exploration-constant>",
-      "The exploration constant for the search.",
-    )
-      .default(EXPLORATION_COEFFICIENT)
-      .argParser(parseArgumentIntoFloat),
-    new Option(
-      "-e, --expansions <quantity-of-expansions>",
-      "The quantity of expansions to perform on the search.",
-    )
-      .default(QUANTITY_OF_EXPANSIONS)
-      .argParser(parseArgumentIntoInt),
+    commonOptions.state,
+    commonOptions.expansions,
+    commonOptions.exploration,
     new Option(
       "-t, --tree",
       "Whether to output an image file of the search tree.",
@@ -101,6 +84,7 @@ const commandToPredictQualityOfMoves = {
       "-f, --file <output-file-name>",
       "The name of the outputted image file (without extension).",
     ),
+    commonOptions.seed,
   ],
 } satisfies DefinitionOfCommand;
 

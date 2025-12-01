@@ -6,11 +6,12 @@ import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 import type { Digraph as GraphvizDigraph } from "ts-graphviz";
 
+import { Random } from "@repo/search/CommonMonteCarloTree/Random.js";
 import {
   calculateQualityOfMoves,
   expandTree,
   type QualityOfMove,
-} from "@repo/search/CommonMonteCarloTree/Search.js";
+} from "@repo/search/CommonMonteCarloTree/search/search.js";
 
 import { constructGraphvizGraph } from "../../graphviz.js";
 
@@ -40,6 +41,7 @@ const predictQualityOfMoves = <
   processGraphvizGraph,
   processQualityOfMoves,
   quantityOfExpansions,
+  seed,
   state,
 }: Pick<
   Parameters<
@@ -58,8 +60,11 @@ const predictQualityOfMoves = <
   processQualityOfMoves: (
     qualityOfMoves: Map<IndexOfMove, QualityOfMove>,
   ) => void;
+  seed: string;
   state: GenericState;
 }): void => {
+  const random = new Random({ seed });
+
   const rootNode = expandTree<
     GenericGame,
     GenericMove,
@@ -70,6 +75,7 @@ const predictQualityOfMoves = <
   >({
     explorationCoefficient,
     quantityOfExpansions,
+    random,
     state,
   });
 
@@ -89,6 +95,7 @@ const predictQualityOfMoves = <
       explorationCoefficient,
       qualityOfMoves,
       rootNode,
+      seed,
     });
     processGraphvizGraph(graph);
   }

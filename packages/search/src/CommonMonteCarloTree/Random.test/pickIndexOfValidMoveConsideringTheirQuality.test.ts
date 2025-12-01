@@ -8,7 +8,7 @@ import type { State } from "@repo/game/State.js";
 
 import { test } from "vitest";
 
-import { pickIndexOfValidMoveConsideringTheirQuality } from "../Search.js";
+import { Random } from "../Random.js";
 
 const validatePickIndexOfValidMoveConsideringTheirQuality = <
   GenericGame extends Game<
@@ -34,14 +34,18 @@ const validatePickIndexOfValidMoveConsideringTheirQuality = <
 >({
   indexesOfValidMoves,
   qualityOfMoves,
+  random,
 }: Pick<
-  Parameters<typeof pickIndexOfValidMoveConsideringTheirQuality>[0],
+  Parameters<Random["pickIndexOfValidMoveConsideringTheirQuality"]>[0],
   "indexesOfValidMoves" | "qualityOfMoves"
->) => {
-  const pickedIndexOfValidMove = pickIndexOfValidMoveConsideringTheirQuality({
-    indexesOfValidMoves,
-    qualityOfMoves,
-  });
+> & {
+  random: Random;
+}) => {
+  const pickedIndexOfValidMove =
+    random.pickIndexOfValidMoveConsideringTheirQuality({
+      indexesOfValidMoves,
+      qualityOfMoves,
+    });
   console.log(pickedIndexOfValidMove);
 };
 
@@ -51,9 +55,10 @@ const createDescriptionForTestOfPickIndexOfValidMoveConsideringTheirQuality =
 const testPickIndexOfValidMoveConsideringTheirQuality = ({
   indexesOfValidMoves,
   qualityOfMoves,
+  random,
 }: Pick<
   Parameters<typeof validatePickIndexOfValidMoveConsideringTheirQuality>[0],
-  "indexesOfValidMoves" | "qualityOfMoves"
+  "indexesOfValidMoves" | "qualityOfMoves" | "random"
 >) => {
   test(
     createDescriptionForTestOfPickIndexOfValidMoveConsideringTheirQuality(),
@@ -62,10 +67,13 @@ const testPickIndexOfValidMoveConsideringTheirQuality = ({
       validatePickIndexOfValidMoveConsideringTheirQuality({
         indexesOfValidMoves,
         qualityOfMoves,
+        random,
       });
     },
   );
 };
+
+const DEFAULT_SEED = "0";
 
 testPickIndexOfValidMoveConsideringTheirQuality({
   indexesOfValidMoves: new Set([2, 3, 4, 5, 7, 8]),
@@ -73,4 +81,5 @@ testPickIndexOfValidMoveConsideringTheirQuality({
     0, 0, 0.7281553398058253, 0.06796116504854369, 0.06796116504854369,
     0.05501618122977346, 0, 0.06796116504854369, 0.012944983818770227,
   ],
+  random: new Random({ seed: DEFAULT_SEED }),
 });

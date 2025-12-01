@@ -6,8 +6,7 @@ import { Command, Option } from "commander";
 import type { DefinitionOfCommand } from "../commands.js";
 
 import { parseArgumentIntoFloat, parseArgumentIntoInt } from "../../parsing.js";
-
-const EXPLORATION_COEFFICIENT = 1.4;
+import { commonOptions } from "../options.js";
 
 const executeAction = ({
   childQuality: qualityOfMatchOfChildNode,
@@ -20,7 +19,6 @@ const executeAction = ({
   exploration: number;
   parentVisits: Integer;
 }): void => {
-  console.log(explorationCoefficient);
   calculateFitness({
     explorationCoefficient,
     processMessage: console.info,
@@ -35,12 +33,7 @@ const commandToCalculateFitness = {
     .description("Predict fitness of a Monte-Carlo Tree node.")
     .action(executeAction),
   options: [
-    new Option(
-      "-x, --exploration <exploration-constant>",
-      "The exploration constant for the search.",
-    )
-      .default(EXPLORATION_COEFFICIENT)
-      .argParser(parseArgumentIntoFloat),
+    commonOptions.exploration,
     new Option(
       "--parent-visits <quantity-of-visits-to-parent-node>",
       "The quantity of visits to the parent node.",

@@ -9,11 +9,11 @@ import type { Answers, Choice, PromptObject } from "prompts";
 
 import { FIRST_INDEX } from "@repo/engine_core/constants.js";
 import { formatMap } from "@repo/engine_core/format.js";
+import { Random } from "@repo/search/CommonMonteCarloTree/Random.js";
 import {
   type ExplorationCoefficient,
-  pickIndexOfValidMoveConsideringTheirQuality,
   predictQualityOfMoves,
-} from "@repo/search/CommonMonteCarloTree/Search.js";
+} from "@repo/search/CommonMonteCarloTree/search/search.js";
 
 import type { ModeOfPlay } from "../../constants.js";
 import type { ProcessMessage } from "../../types.js";
@@ -141,6 +141,7 @@ const getIndexOfMoveUsingSearch = <
   indexesOfValidMoves,
   processMessage,
   quantityOfExpansions,
+  random,
   state,
 }: Pick<
   Parameters<
@@ -153,22 +154,26 @@ const getIndexOfMoveUsingSearch = <
       GenericState
     >
   >[0],
-  "explorationCoefficient" | "quantityOfExpansions" | "state"
+  "explorationCoefficient" | "quantityOfExpansions" | "random" | "state"
 > & {
   indexesOfValidMoves: ReadonlySet<IndexOfMove>;
   processMessage: ProcessMessage;
 }) => {
   const game = state.getGame();
+
   const qualityOfMoves = predictQualityOfMoves({
     explorationCoefficient,
     quantityOfExpansions,
+    random,
     state,
   });
-  const indexOfPickedMove = pickIndexOfValidMoveConsideringTheirQuality({
+
+  const indexOfPickedMove = random.pickIndexOfValidMoveConsideringTheirQuality({
     indexesOfValidMoves,
     qualityOfMoves,
   });
   const pickedMove = game.getMove({ indexOfMove: indexOfPickedMove });
+
   processMessage(
     `Played move: ${pickedMove?.getTitle()}. ${pickedMove?.getDescription()}`,
   );
@@ -203,6 +208,7 @@ const getIndexOfMove = async <
   indexesOfValidMoves,
   processMessage,
   quantityOfExpansions,
+  random,
   state,
 }: Pick<
   Parameters<
@@ -219,6 +225,7 @@ const getIndexOfMove = async <
   | "indexesOfValidMoves"
   | "processMessage"
   | "quantityOfExpansions"
+  | "random"
   | "state"
 > &
   Pick<
@@ -248,6 +255,7 @@ const getIndexOfMove = async <
     indexesOfValidMoves,
     processMessage,
     quantityOfExpansions,
+    random,
     state,
   });
 };
@@ -278,6 +286,7 @@ const playMatchInTheModePlayerVersusComputer = async <
   getInput,
   processMessage,
   quantityOfExpansions,
+  random,
   state,
 }: Pick<
   Parameters<
@@ -290,7 +299,11 @@ const playMatchInTheModePlayerVersusComputer = async <
       GenericState
     >
   >[0],
-  "explorationCoefficient" | "getInput" | "quantityOfExpansions" | "state"
+  | "explorationCoefficient"
+  | "getInput"
+  | "quantityOfExpansions"
+  | "random"
+  | "state"
 > & {
   processMessage: ProcessMessage;
 }) => {
@@ -317,6 +330,7 @@ const playMatchInTheModePlayerVersusComputer = async <
       indexesOfValidMoves,
       processMessage,
       quantityOfExpansions,
+      random,
       state,
     });
 
@@ -421,6 +435,7 @@ const playMatch = async <
   modeOfPlay,
   processMessage,
   quantityOfExpansions,
+  seed,
   state,
 }: {
   explorationCoefficient: ExplorationCoefficient;
@@ -428,9 +443,12 @@ const playMatch = async <
   modeOfPlay: ModeOfPlay;
   processMessage: ProcessMessage;
   quantityOfExpansions: Integer;
+  seed: string;
   state: GenericState;
 }): Promise<void> => {
   const game = state.getGame();
+  const random = new Random({ seed });
+
   processMessage(`Game: ${game.getName()}`);
 
   const finalState = await (async () => {
@@ -442,6 +460,7 @@ const playMatch = async <
           getInput,
           processMessage,
           quantityOfExpansions,
+          random,
           state,
         });
       case "pvp":

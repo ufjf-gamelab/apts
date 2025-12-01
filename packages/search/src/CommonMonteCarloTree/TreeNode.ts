@@ -1,4 +1,5 @@
 import type { Integer } from "@repo/engine_core/types.js";
+import type { Game } from "@repo/game/Game.js";
 import type { IndexOfMove, Move } from "@repo/game/Move.js";
 import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
@@ -10,73 +11,13 @@ import {
   LENGTH_OF_EMPTY_LIST,
   NOT_INCREMENT,
 } from "@repo/engine_core/constants.js";
-import {
-  constructErrorForNotAnyIndexToPick,
-  type Game,
-} from "@repo/game/Game.js";
 
-import type { ExplorationCoefficient } from "./Search.js";
+import type { ExplorationCoefficient } from "./search/search.js";
+
+import { calculateFitness } from "./search/fitness.js";
 
 const MINIMUM_QUALITY_OF_MATCH = 0;
 const MINIMUM_QUANTITY_OF_VISITS = 0;
-
-const BASE_EXPLOITATION = 0;
-const BASE_EXPLORATION = 0;
-
-const calculateExploitationComponentOfFitness = ({
-  qualityOfMatchOfChildNode,
-  quantityOfVisitsToChildNode,
-}: {
-  qualityOfMatchOfChildNode: number;
-  quantityOfVisitsToChildNode: Integer;
-}): number => {
-  let exploitation = qualityOfMatchOfChildNode / quantityOfVisitsToChildNode;
-  if (!Number.isFinite(exploitation)) {
-    exploitation = BASE_EXPLOITATION;
-  }
-  return exploitation;
-};
-
-const calculateExplorationComponentOfFitness = ({
-  explorationCoefficient,
-  quantityOfVisitsToChildNode,
-  quantityOfVisitsToParentNode,
-}: {
-  explorationCoefficient: ExplorationCoefficient;
-  quantityOfVisitsToChildNode: Integer;
-  quantityOfVisitsToParentNode: Integer;
-}): number => {
-  let exploration =
-    explorationCoefficient *
-    Math.sqrt(
-      Math.log(quantityOfVisitsToParentNode) / quantityOfVisitsToChildNode,
-    );
-  if (!Number.isFinite(exploration)) {
-    exploration = BASE_EXPLORATION;
-  }
-  return exploration;
-};
-
-const calculateFitness = ({
-  explorationCoefficient,
-  qualityOfMatchOfChildNode,
-  quantityOfVisitsToChildNode,
-  quantityOfVisitsToParentNode,
-}: {
-  explorationCoefficient: ExplorationCoefficient;
-  qualityOfMatchOfChildNode: number;
-  quantityOfVisitsToChildNode: Integer;
-  quantityOfVisitsToParentNode: Integer;
-}): number =>
-  calculateExploitationComponentOfFitness({
-    qualityOfMatchOfChildNode,
-    quantityOfVisitsToChildNode,
-  }) +
-  calculateExplorationComponentOfFitness({
-    explorationCoefficient,
-    quantityOfVisitsToChildNode,
-    quantityOfVisitsToParentNode,
-  });
 
 interface ParamsOfTreeNode<
   GenericGame extends Game<
@@ -387,22 +328,6 @@ class TreeNode<
     return this.getQuantityOfExpandedMoves() === this.childrenNodes.size;
   }
 
-  public pickIndexOfRandomNotExpandedChildNode(): IndexOfMove {
-    const indexesOfNotExpandedMoves = Array.from(
-      this.getIndexesOfNotExpandedChildrenNodes(),
-    );
-
-    const randomIndex = Math.floor(
-      Math.random() * indexesOfNotExpandedMoves.length,
-    );
-    const indexOfMove = indexesOfNotExpandedMoves[randomIndex];
-    if (typeof indexOfMove === "undefined") {
-      throw constructErrorForNotAnyIndexToPick();
-    }
-
-    return indexOfMove;
-  }
-
   /// Select the best node among children, i.e. the one with the highest UCB.
   public selectBestChildNode({
     explorationCoefficient,
@@ -441,29 +366,6 @@ class TreeNode<
     }
 
     return bestChildNode;
-  }
-
-  /// Simulate a game from the current state, returning the outcome value.
-  public simulateMatch(): GenericScore {
-    // Copy the state and play random actions, with alternate players, until the game is over.
-    let stateThatIsCurrentlyBeingSimulated = this.state;
-    for (;;) {
-      const score = stateThatIsCurrentlyBeingSimulated.getScore();
-      const isFinal = this.game.isFinal({
-        state: stateThatIsCurrentlyBeingSimulated,
-      });
-      if (isFinal) {
-        return score;
-      }
-
-      const selectedIndexOfMove = this.game.pickIndexOfRandomValidMove({
-        state: stateThatIsCurrentlyBeingSimulated,
-      });
-      stateThatIsCurrentlyBeingSimulated = this.game.play({
-        indexOfMove: selectedIndexOfMove,
-        state: stateThatIsCurrentlyBeingSimulated,
-      });
-    }
   }
 
   /// Backpropagate the outcome value to the root node.
@@ -511,9 +413,4 @@ class TreeNode<
 }
 
 export type { ParamsOfTreeNode };
-export {
-  calculateExploitationComponentOfFitness,
-  calculateExplorationComponentOfFitness,
-  calculateFitness,
-  TreeNode,
-};
+export { TreeNode };

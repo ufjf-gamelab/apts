@@ -4,12 +4,12 @@
     "@repo/engine_core": "workspace:*",
     "@repo/game": "workspace:*",
     "@repo/search": "workspace:*",
-    "@ts-graphviz/adapter": "=3.0.4",
-    "@ts-graphviz/ast": "=3.0.4",
-    "@ts-graphviz/common": "=3.0.4",
-    "@ts-graphviz/core": "=3.0.4",
+    "@ts-graphviz/adapter": "^3.0.5",
+    "@ts-graphviz/ast": "^3.0.5",
+    "@ts-graphviz/common": "^3.0.4",
+    "@ts-graphviz/core": "^3.0.6",
     "@types/prompts": "^2.4.9",
-    "ts-graphviz": "=3.0.4"
+    "ts-graphviz": "^3.0.6"
   },
   "description": "Definition of actions for the engine.",
   "devDependencies": {

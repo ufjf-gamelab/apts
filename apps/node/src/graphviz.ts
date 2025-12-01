@@ -4,11 +4,11 @@ import { toFile } from "ts-graphviz/adapter";
 
 export const generateGraphvizImage = async ({
   directoryPath: directoryPathOrNull,
-  fileName: fileNameOrNull,
+  fileName,
   graphvizDotString,
 }: {
   directoryPath: string | undefined;
-  fileName: string | undefined;
+  fileName: string;
   graphvizDotString: string;
 }): Promise<void> => {
   const directoryPath = directoryPathOrNull ?? "./";
@@ -26,7 +26,7 @@ export const generateGraphvizImage = async ({
     });
   }
 
-  const fileNameWithExtension = `${fileNameOrNull ?? new Date().toISOString()}.svg`;
+  const fileNameWithExtension = `${fileName}.svg`;
   const fullPath = path.join(directoryPath, fileNameWithExtension);
 
   try {

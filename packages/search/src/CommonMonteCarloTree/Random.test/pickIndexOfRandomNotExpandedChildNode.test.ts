@@ -9,6 +9,7 @@ import { formatArray } from "@repo/engine_core/format.js";
 import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
+import type { Random } from "../Random.js";
 import type { TreeNode } from "../TreeNode.js";
 
 const validatePickIndexOfRandomNotExpandedChildNode = <
@@ -32,25 +33,28 @@ const validatePickIndexOfRandomNotExpandedChildNode = <
     GenericSlot,
     GenericState
   >,
-  GenericTreeNode extends TreeNode<
+>({
+  indexesOfRandomNotExpandedChildrenNodes,
+  random,
+  treeNode,
+}: {
+  indexesOfRandomNotExpandedChildrenNodes: Set<
+    ReturnType<Random["pickIndexOfRandomNotExpandedChildNode"]>
+  >;
+  random: Random;
+  treeNode: TreeNode<
     GenericGame,
     GenericMove,
     GenericPlayer,
     GenericScore,
     GenericSlot,
     GenericState
-  >,
->({
-  indexesOfRandomNotExpandedChildrenNodes,
-  treeNode,
-}: {
-  indexesOfRandomNotExpandedChildrenNodes: Set<
-    ReturnType<GenericTreeNode["pickIndexOfRandomNotExpandedChildNode"]>
   >;
-  treeNode: GenericTreeNode;
 }) => {
   const indexOfRandomNotExpandedChildNode =
-    treeNode.pickIndexOfRandomNotExpandedChildNode();
+    random.pickIndexOfRandomNotExpandedChildNode({
+      treeNode,
+    });
   expect(indexesOfRandomNotExpandedChildrenNodes).toContain(
     indexOfRandomNotExpandedChildNode,
   );
@@ -77,20 +81,11 @@ const createDescriptionForTestOfPickIndexOfRandomNotExpandedChildNode = <
     GenericSlot,
     GenericState
   >,
-  GenericTreeNode extends TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >,
 >({
-  indexesOfRandomNotExpandedChildrenNodes:
-    indexesOfRandomNotExpandedChildrenNodes,
+  indexesOfRandomNotExpandedChildrenNodes,
 }: {
   indexesOfRandomNotExpandedChildrenNodes: Set<
-    ReturnType<GenericTreeNode["pickIndexOfRandomNotExpandedChildNode"]>
+    ReturnType<Random["pickIndexOfRandomNotExpandedChildNode"]>
   >;
 }): string =>
   createDescriptionForTestsOfMethod({

@@ -1,14 +1,15 @@
 import { SIZE_OF_EMPTY_SET } from "@repo/engine_core/constants.js";
 import { createDescriptionForTest } from "@repo/engine_core/test.js";
+import { Random } from "@repo/search/CommonMonteCarloTree/Random.js";
 import {
   createDescriptionForTestOfPickIndexOfRandomNotExpandedChildNode,
   validatePickIndexOfRandomNotExpandedChildNode,
-} from "@repo/search/CommonMonteCarloTree/TreeNode.test/pickIndexOfRandomNotExpandedChildNode.test.js";
+} from "@repo/search/CommonMonteCarloTree/Random.test/pickIndexOfRandomNotExpandedChildNode.test.js";
 import { test } from "vitest";
 
-import type { TicTacToeTreeNodeWithData } from "./setup.js";
+import type { TicTacToeTreeNodeWithData } from "../TreeNode.test/setup.js";
 
-import { recordOfTicTacToeTreeNodesWithData } from "./records.js";
+import { recordOfTicTacToeTreeNodesWithData } from "../TreeNode.test/records.js";
 
 const createDescription = ({
   affix,
@@ -30,8 +31,10 @@ const createDescription = ({
 
 const testPickIndexOfRandomNotExpandedChild = ({
   arrayOfTreeNodesWithData,
+  random,
 }: {
   arrayOfTreeNodesWithData: TicTacToeTreeNodeWithData[];
+  random: Random;
 }) => {
   arrayOfTreeNodesWithData.forEach(({ keyOfTreeNode, treeNode }) => {
     const indexesOfNotExpandedMoves =
@@ -47,6 +50,7 @@ const testPickIndexOfRandomNotExpandedChild = ({
         () => {
           validatePickIndexOfRandomNotExpandedChildNode({
             indexesOfRandomNotExpandedChildrenNodes: indexesOfNotExpandedMoves,
+            random,
             treeNode,
           });
         },
@@ -55,6 +59,9 @@ const testPickIndexOfRandomNotExpandedChild = ({
   });
 };
 
+const DEFAULT_SEED = "0";
+
 testPickIndexOfRandomNotExpandedChild({
   arrayOfTreeNodesWithData: Object.values(recordOfTicTacToeTreeNodesWithData),
+  random: new Random({ seed: DEFAULT_SEED }),
 });

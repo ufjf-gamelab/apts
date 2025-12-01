@@ -3,7 +3,7 @@ import {
   calculateExploitationComponentOfFitness,
   calculateExplorationComponentOfFitness,
   calculateFitness as calculateFitnessFromSearch,
-} from "@repo/search/CommonMonteCarloTree/TreeNode.js";
+} from "@repo/search/CommonMonteCarloTree/search/fitness.js";
 
 import type { ProcessMessage } from "../../types.js";
 

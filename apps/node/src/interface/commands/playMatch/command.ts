@@ -5,25 +5,20 @@ import { Command, Option } from "commander";
 import type { DefinitionOfCommand } from "../commands.js";
 
 import { getInput } from "../../../input.js";
-import { parseArgumentIntoFloat, parseArgumentIntoInt } from "../../parsing.js";
-import {
-  type KeyOfState,
-  keysOfStates,
-  selectStateUsingKeyOfState,
-} from "../../states.js";
-
-const EXPLORATION_COEFFICIENT = 1.4;
-const QUANTITY_OF_EXPANSIONS = 1000;
+import { type KeyOfState, selectStateUsingKeyOfState } from "../../states.js";
+import { commonOptions } from "../options.js";
 
 const executeAction = async ({
   expansions: quantityOfExpansions,
   exploration: explorationCoefficient,
   mode: modeOfPlay,
+  seed,
   state: keyOfState,
 }: {
   expansions: number;
   exploration: number;
   mode: ModeOfPlay;
+  seed: string;
   state: KeyOfState;
 }): Promise<void> => {
   const state = selectStateUsingKeyOfState(keyOfState);
@@ -34,6 +29,7 @@ const executeAction = async ({
     modeOfPlay,
     processMessage: console.info,
     quantityOfExpansions,
+    seed,
     state,
   });
 };
@@ -43,27 +39,13 @@ const commandToPlayMatch = {
     .description("Play against agent using Monte-Carlo Tree Search.")
     .action(executeAction),
   options: [
-    new Option(
-      "-s, --state <key-of-state>",
-      "The key of a state to use as root of the tree.",
-    )
-      .choices(Object.values(keysOfStates))
-      .makeOptionMandatory(),
+    commonOptions.state,
     new Option("-m, --mode <game-mode>", "The game mode to play.")
       .choices(Object.values(modesOfPlay))
       .makeOptionMandatory(),
-    new Option(
-      "-x, --exploration <exploration-constant>",
-      "The exploration constant for the search.",
-    )
-      .default(EXPLORATION_COEFFICIENT)
-      .argParser(parseArgumentIntoFloat),
-    new Option(
-      "-e, --expansions <quantity-of-expansions>",
-      "The quantity of expansions to perform on the search.",
-    )
-      .default(QUANTITY_OF_EXPANSIONS)
-      .argParser(parseArgumentIntoInt),
+    commonOptions.expansions,
+    commonOptions.exploration,
+    commonOptions.seed,
   ],
 } satisfies DefinitionOfCommand;
 

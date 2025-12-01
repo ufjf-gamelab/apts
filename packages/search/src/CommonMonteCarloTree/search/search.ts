@@ -1,6 +1,6 @@
 import type { Integer } from "@repo/engine_core/types.js";
 import type { Game } from "@repo/game/Game.js";
-import type { IndexOfMove, Move } from "@repo/game/Move.js";
+import type { Move } from "@repo/game/Move.js";
 import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
@@ -8,7 +8,9 @@ import type { State } from "@repo/game/State.js";
 
 import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 
-import { TreeNode } from "./TreeNode.js";
+import type { Random } from "../Random.js";
+
+import { TreeNode } from "../TreeNode.js";
 
 const MINIMUM_QUALITY_OF_MOVE = 0;
 
@@ -58,7 +60,7 @@ const pickNotFullyExpandedNode = <
       explorationCoefficient,
     });
     if (bestChild === null) {
-      // This condition happens when a selected child has not any valid move.
+      // This condition happens when a selected child has no valid move.
       return null;
     }
 
@@ -66,6 +68,57 @@ const pickNotFullyExpandedNode = <
   }
 
   return currentNode;
+};
+
+const simulateMatch = <
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+>({
+  random,
+  state,
+}: {
+  random: Random;
+  state: GenericState;
+}): GenericScore => {
+  const game = state.getGame();
+
+  // Copy the state and play random actions, with alternate players, until the game is over.
+  let stateThatIsCurrentlyBeingSimulated = state;
+  for (;;) {
+    const score = stateThatIsCurrentlyBeingSimulated.getScore();
+    const isFinal = game.isFinal({
+      state: stateThatIsCurrentlyBeingSimulated,
+    });
+    if (isFinal) {
+      return score;
+    }
+
+    const selectedIndexOfMove = random.pickIndexOfRandomValidMove({
+      state: stateThatIsCurrentlyBeingSimulated,
+    });
+    stateThatIsCurrentlyBeingSimulated = game.play({
+      indexOfMove: selectedIndexOfMove,
+      state: stateThatIsCurrentlyBeingSimulated,
+    });
+  }
 };
 
 const expandTree = <
@@ -92,10 +145,12 @@ const expandTree = <
 >({
   explorationCoefficient,
   quantityOfExpansions,
+  random,
   state,
 }: {
   explorationCoefficient: ExplorationCoefficient;
   quantityOfExpansions: Integer;
+  random: Random;
   state: GenericState;
 }): TreeNode<
   GenericGame,
@@ -106,7 +161,6 @@ const expandTree = <
   GenericState
 > => {
   const game = state.getGame();
-
   const rootNode = TreeNode.create<
     GenericGame,
     GenericMove,
@@ -126,7 +180,7 @@ const expandTree = <
       rootNode,
     });
     if (currentNode === null) {
-      // This condition happens when there is not any node to expand, so the search has to end.
+      // This condition happens when there is no node to expand, so the search has to end.
       break;
     }
 
@@ -137,9 +191,22 @@ const expandTree = <
       const score = currentState.getScore();
       currentNode.updateQualityOfMatchAndQuantityOfVisitsOnBranch({ score });
     } else {
-      const indexOfChild = currentNode.pickIndexOfRandomNotExpandedChildNode();
+      const indexOfChild = random.pickIndexOfRandomNotExpandedChildNode({
+        treeNode: currentNode,
+      });
       const childNode = currentNode.expand({ indexOfMove: indexOfChild });
-      const score = childNode.simulateMatch();
+
+      const score = simulateMatch<
+        GenericGame,
+        GenericMove,
+        GenericPlayer,
+        GenericScore,
+        GenericSlot,
+        GenericState
+      >({
+        random,
+        state: childNode.getState(),
+      });
       childNode.updateQualityOfMatchAndQuantityOfVisitsOnBranch({ score });
     }
   }
@@ -228,12 +295,21 @@ const predictQualityOfMoves = <
 >({
   explorationCoefficient,
   quantityOfExpansions,
+  random,
   state,
-}: {
-  explorationCoefficient: ExplorationCoefficient;
-  quantityOfExpansions: Integer;
-  state: GenericState;
-}) => {
+}: Pick<
+  Parameters<
+    typeof expandTree<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >
+  >[0],
+  "explorationCoefficient" | "quantityOfExpansions" | "random" | "state"
+>) => {
   const rootNode = expandTree<
     GenericGame,
     GenericMove,
@@ -244,6 +320,7 @@ const predictQualityOfMoves = <
   >({
     explorationCoefficient,
     quantityOfExpansions,
+    random,
     state,
   });
 
@@ -252,75 +329,5 @@ const predictQualityOfMoves = <
   });
 };
 
-const BASE_FOR_SUM_OF_EXPONENTIATED_QUALITIES_OF_MOVES = 0;
-const TEMPERATURE = 0.25;
-
-const pickIndexOfValidMoveConsideringTheirQuality = ({
-  indexesOfValidMoves,
-  qualityOfMoves,
-}: {
-  indexesOfValidMoves: ReadonlySet<IndexOfMove>;
-  qualityOfMoves: QualityOfMove[];
-}): IndexOfMove => {
-  const mapOfQualityOfValidMoves = new Map(
-    indexesOfValidMoves.values().map((indexOfValidMove) => {
-      const qualityOfMove = qualityOfMoves[indexOfValidMove];
-      if (typeof qualityOfMove === "undefined") {
-        throw new Error("Could not retrieve any quality from this index.");
-      }
-      return [indexOfValidMove, qualityOfMove];
-    }),
-  );
-
-  // Softmax to convert qualities to probabilities
-  let sumOfExponentiatedQualities =
-    BASE_FOR_SUM_OF_EXPONENTIATED_QUALITIES_OF_MOVES;
-  const exponentiatedQualities = new Map(
-    mapOfQualityOfValidMoves
-      .entries()
-      .map(([indexOfValidMove, qualityOfMove]) => {
-        const exponentiatedQualityOfMove = Math.exp(
-          qualityOfMove / TEMPERATURE,
-        );
-        sumOfExponentiatedQualities += exponentiatedQualityOfMove;
-        return [indexOfValidMove, exponentiatedQualityOfMove];
-      }),
-  );
-
-  const probabilities = exponentiatedQualities
-    .entries()
-    .map(
-      ([indexesOfValidMove, exponentiatedQuality]) =>
-        [
-          indexesOfValidMove,
-          exponentiatedQuality / sumOfExponentiatedQualities,
-        ] as const,
-    )
-    .toArray()
-    .sort(
-      ([, firstProbability], [, secondProbability]) =>
-        secondProbability - firstProbability,
-    );
-
-  // Select index based on probability distribution
-  const randomNumber = Math.random();
-  let accumulator = 0;
-  for (const [indexOfValidMove, probability] of probabilities) {
-    accumulator += probability;
-    if (randomNumber <= accumulator) {
-      return indexOfValidMove;
-    }
-  }
-
-  throw new Error(
-    "Could not retrieve any index of a move considering the informed qualities.",
-  );
-};
-
 export type { ExplorationCoefficient, QualityOfMove };
-export {
-  calculateQualityOfMoves,
-  expandTree,
-  pickIndexOfValidMoveConsideringTheirQuality,
-  predictQualityOfMoves,
-};
+export { calculateQualityOfMoves, expandTree, predictQualityOfMoves };

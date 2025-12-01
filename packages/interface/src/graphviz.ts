@@ -5,10 +5,11 @@ import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
+import type { ParamsOfRandom } from "@repo/search/CommonMonteCarloTree/Random.js";
 import type {
   ExplorationCoefficient,
   QualityOfMove,
-} from "@repo/search/CommonMonteCarloTree/Search.js";
+} from "@repo/search/CommonMonteCarloTree/search/search.js";
 import type { TreeNode } from "@repo/search/CommonMonteCarloTree/TreeNode.js";
 
 import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
@@ -124,16 +125,13 @@ const constructGraphvizNode = <
   const player = game.getPlayer({ indexOfPlayer });
   if (player === null) {
     throw new Error(
-      `There is not any player in this game with the index ${indexOfPlayer}.`,
+      `There is no player in this game with the index ${indexOfPlayer}.`,
     );
   }
 
   const label = `id: ${id}, visits: ${quantityOfVisits},\nquality: ${
     qualityOfMatch
-  }, player: ${player.getSymbol()}\n${
-    // eslint-disable-next-line @typescript-eslint/no-base-to-string
-    state.toString()
-  }`;
+  }, player: ${player.getSymbol()}\n${state.toString()}`;
 
   return new GraphvizNode(id.toString(), {
     ...NODE_ATTRIBUTES,
@@ -257,7 +255,7 @@ const insertEdgeIntoGraph = <
   }
 };
 
-export const constructGraphvizGraph = <
+const constructGraphvizGraph = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -282,6 +280,7 @@ export const constructGraphvizGraph = <
   explorationCoefficient,
   qualityOfMoves,
   rootNode,
+  seed,
 }: {
   explorationCoefficient: ExplorationCoefficient;
   qualityOfMoves: ReadonlyMap<IndexOfMove, QualityOfMove>;
@@ -293,6 +292,7 @@ export const constructGraphvizGraph = <
     GenericSlot,
     GenericState
   >;
+  seed: ParamsOfRandom["seed"];
 }): GraphvizDigraph => {
   const game = rootNode.getState().getGame();
   const graph = new GraphvizDigraph("G", GRAPH_ATTRIBUTES);
@@ -308,7 +308,7 @@ export const constructGraphvizGraph = <
   graph.addNode(
     new GraphvizNode("information", {
       ...NODE_ATTRIBUTES,
-      label: `explorationCoefficient: ${explorationCoefficient}\nqualityOfMoves: ${formatMap(
+      label: `seed: "${seed}", explorationCoefficient: ${explorationCoefficient}\nqualityOfMoves: ${formatMap(
         {
           map: qualityOfMoves,
         },
@@ -361,3 +361,5 @@ export const constructGraphvizGraph = <
 
   return graph;
 };
+
+export { constructGraphvizGraph };
