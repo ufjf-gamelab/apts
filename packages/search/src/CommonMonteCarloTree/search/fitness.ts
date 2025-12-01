@@ -1,5 +1,7 @@
 import type { Integer } from "@repo/engine_core/types.js";
 
+import { assertNumberIsFinite } from "@repo/engine_core/assert.js";
+
 import type { ExplorationCoefficient } from "./search.js";
 
 const BASE_EXPLOITATION = 0;
@@ -12,10 +14,10 @@ const calculateExploitationComponentOfFitness = ({
   qualityOfMatchOfChildNode: number;
   quantityOfVisitsToChildNode: Integer;
 }): number => {
-  let exploitation = qualityOfMatchOfChildNode / quantityOfVisitsToChildNode;
-  if (!Number.isFinite(exploitation)) {
-    exploitation = BASE_EXPLOITATION;
-  }
+  const exploitation = assertNumberIsFinite(
+    qualityOfMatchOfChildNode / quantityOfVisitsToChildNode,
+    BASE_EXPLOITATION,
+  );
   return exploitation;
 };
 
@@ -28,14 +30,14 @@ const calculateExplorationComponentOfFitness = ({
   quantityOfVisitsToChildNode: Integer;
   quantityOfVisitsToParentNode: Integer;
 }): number => {
-  let exploration =
+  const exploration =
     explorationCoefficient *
     Math.sqrt(
-      Math.log(quantityOfVisitsToParentNode) / quantityOfVisitsToChildNode,
+      assertNumberIsFinite(
+        Math.log(quantityOfVisitsToParentNode) / quantityOfVisitsToChildNode,
+        BASE_EXPLORATION,
+      ),
     );
-  if (!Number.isFinite(exploration)) {
-    exploration = BASE_EXPLORATION;
-  }
   return exploration;
 };
 

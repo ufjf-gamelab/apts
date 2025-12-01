@@ -1,6 +1,7 @@
 import type { Integer } from "@repo/engine_core/types.js";
 import type { IndexOfPlayer } from "@repo/game/Player.js";
 
+import { assertNumberIsFinite } from "@repo/engine_core/assert.js";
 import { FIRST_INDEX, INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import { type Points, Score } from "@repo/game/Score.js";
 
@@ -61,7 +62,9 @@ class TicTacToeScore extends Score<TicTacToeScore> {
       indexOfSlot < slots.length;
       indexOfSlot += INCREMENT_ONE
     ) {
-      const indexOfRow = Math.floor(indexOfSlot / COLUMN_LENGTH);
+      const indexOfRow = Math.floor(
+        assertNumberIsFinite(indexOfSlot / COLUMN_LENGTH),
+      );
       const indexOfColumn = indexOfSlot % COLUMN_LENGTH;
 
       const updateScoreConsideringShape = ({ shape }: { shape: Shape }) => {

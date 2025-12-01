@@ -8,10 +8,13 @@ import type { Digraph as GraphvizDigraph } from "ts-graphviz";
 
 import { Random } from "@repo/search/CommonMonteCarloTree/Random.js";
 import {
+  calculateProbabilityOfPlayingEachMove,
   calculateQualityOfMoves,
-  expandTree,
   type QualityOfMove,
-} from "@repo/search/CommonMonteCarloTree/search/search.js";
+} from "@repo/search/CommonMonteCarloTree/search/quality.js";
+import { expandTree } from "@repo/search/CommonMonteCarloTree/search/search.js";
+
+import type { ProcessMessage } from "../../types.js";
 
 import { constructGraphvizGraph } from "../../graphviz.js";
 
@@ -39,9 +42,11 @@ const predictQualityOfMoves = <
 >({
   explorationCoefficient,
   processGraphvizGraph,
+  processMessage,
   processQualityOfMoves,
   quantityOfExpansions,
   seed,
+  shouldReturnProbabilities,
   state,
 }: Pick<
   Parameters<
@@ -57,13 +62,16 @@ const predictQualityOfMoves = <
   "explorationCoefficient" | "quantityOfExpansions"
 > & {
   processGraphvizGraph: ((graphvizGraph: GraphvizDigraph) => void) | null;
+  processMessage: ProcessMessage;
   processQualityOfMoves: (
-    qualityOfMoves: Map<IndexOfMove, QualityOfMove>,
+    qualitiesOfMoves: ReadonlyMap<IndexOfMove, QualityOfMove>,
   ) => void;
   seed: string;
+  shouldReturnProbabilities: boolean;
   state: GenericState;
 }): void => {
   const random = new Random({ seed });
+  const game = state.getGame();
 
   const rootNode = expandTree<
     GenericGame,
@@ -80,20 +88,35 @@ const predictQualityOfMoves = <
   });
 
   const qualityOfIndexedMoves = calculateQualityOfMoves({
-    rootNode,
+    treeNode: rootNode,
   });
-  const qualityOfMoves = new Map(
+
+  const qualityOfEachMove = new Map(
     qualityOfIndexedMoves.map((qualityOfMove, indexOfMove) => [
       indexOfMove,
       qualityOfMove,
     ]),
   );
-  processQualityOfMoves(qualityOfMoves);
+
+  const probabilityOfPlayingEachMove = calculateProbabilityOfPlayingEachMove({
+    indexesOfValidMoves: game.getIndexesOfValidMoves({ state }),
+    qualitiesOfMoves: qualityOfIndexedMoves,
+  });
+
+  processMessage("Quality of each move:");
+  processQualityOfMoves(qualityOfEachMove);
+
+  if (shouldReturnProbabilities) {
+    processMessage("\nProbability of playing each move:");
+    processQualityOfMoves(probabilityOfPlayingEachMove);
+  }
 
   if (processGraphvizGraph !== null) {
     const graph = constructGraphvizGraph({
       explorationCoefficient,
-      qualityOfMoves,
+      probabilityOfPlayingEachMove,
+      qualityOfEachMove,
+      quantityOfExpansions,
       rootNode,
       seed,
     });

@@ -33,18 +33,18 @@ const validatePickIndexOfValidMoveConsideringTheirQuality = <
   >,
 >({
   indexesOfValidMoves,
-  qualityOfMoves,
+  qualitiesOfMoves,
   random,
 }: Pick<
   Parameters<Random["pickIndexOfValidMoveConsideringTheirQuality"]>[0],
-  "indexesOfValidMoves" | "qualityOfMoves"
+  "indexesOfValidMoves" | "qualitiesOfMoves"
 > & {
   random: Random;
 }) => {
   const pickedIndexOfValidMove =
     random.pickIndexOfValidMoveConsideringTheirQuality({
       indexesOfValidMoves,
-      qualityOfMoves,
+      qualitiesOfMoves,
     });
   console.log(pickedIndexOfValidMove);
 };
@@ -54,11 +54,11 @@ const createDescriptionForTestOfPickIndexOfValidMoveConsideringTheirQuality =
 
 const testPickIndexOfValidMoveConsideringTheirQuality = ({
   indexesOfValidMoves,
-  qualityOfMoves,
+  qualitiesOfMoves,
   random,
 }: Pick<
   Parameters<typeof validatePickIndexOfValidMoveConsideringTheirQuality>[0],
-  "indexesOfValidMoves" | "qualityOfMoves" | "random"
+  "indexesOfValidMoves" | "qualitiesOfMoves" | "random"
 >) => {
   test(
     createDescriptionForTestOfPickIndexOfValidMoveConsideringTheirQuality(),
@@ -66,7 +66,7 @@ const testPickIndexOfValidMoveConsideringTheirQuality = ({
     () => {
       validatePickIndexOfValidMoveConsideringTheirQuality({
         indexesOfValidMoves,
-        qualityOfMoves,
+        qualitiesOfMoves,
         random,
       });
     },
@@ -77,7 +77,7 @@ const DEFAULT_SEED = "0";
 
 testPickIndexOfValidMoveConsideringTheirQuality({
   indexesOfValidMoves: new Set([2, 3, 4, 5, 7, 8]),
-  qualityOfMoves: [
+  qualitiesOfMoves: [
     0, 0, 0.7281553398058253, 0.06796116504854369, 0.06796116504854369,
     0.05501618122977346, 0, 0.06796116504854369, 0.012944983818770227,
   ],

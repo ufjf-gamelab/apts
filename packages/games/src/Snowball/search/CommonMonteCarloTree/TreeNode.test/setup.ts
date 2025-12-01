@@ -95,11 +95,11 @@ const deriveParamsOfSnowballTreeNode = ({
   });
 
 const createSnowballTreeNode = ({
-  indexOfPlayedMove,
+  informationAboutPlayedMove,
   state,
 }: DerivedParamsOfSnowballTreeNode): SnowballTreeNode =>
   TreeNode.create({
-    indexOfPlayedMove,
+    informationAboutPlayedMove,
     state,
   }) satisfies SnowballTreeNode;
 

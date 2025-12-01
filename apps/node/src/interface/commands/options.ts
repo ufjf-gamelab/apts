@@ -5,7 +5,7 @@ import { keysOfStates } from "../states.js";
 
 const DEFAULT_SEED = String(Math.random());
 
-const EXPLORATION_COEFFICIENT = 1.4;
+const EXPLORATION_COEFFICIENT_FOR_TICTACTOE = 1.4;
 const QUANTITY_OF_EXPANSIONS = 100000;
 
 const commonOptions = {
@@ -19,7 +19,7 @@ const commonOptions = {
     "-x, --exploration <exploration-constant>",
     "The exploration constant to use on the search.",
   )
-    .default(EXPLORATION_COEFFICIENT)
+    .default(EXPLORATION_COEFFICIENT_FOR_TICTACTOE)
     .argParser(parseArgumentIntoFloat),
   seed: new Option(
     "--seed <seed>",

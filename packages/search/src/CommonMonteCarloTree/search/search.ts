@@ -12,10 +12,7 @@ import type { Random } from "../Random.js";
 
 import { TreeNode } from "../TreeNode.js";
 
-const MINIMUM_QUALITY_OF_MOVE = 0;
-
 type ExplorationCoefficient = number;
-type QualityOfMove = number;
 
 const pickNotFullyExpandedNode = <
   GenericGame extends Game<
@@ -51,19 +48,24 @@ const pickNotFullyExpandedNode = <
     GenericSlot,
     GenericState
   >;
-}) => {
+}): null | TreeNode<
+  GenericGame,
+  GenericMove,
+  GenericPlayer,
+  GenericScore,
+  GenericSlot,
+  GenericState
+> => {
+  // Traverse down the tree using UCB selection until we find a node that is not fully expanded
   let currentNode = rootNode;
-
-  // Goes all the way down to a node that is not fully expanded at the bottom of the tree.
   while (currentNode.isFullyExpanded()) {
     const bestChild = currentNode.selectBestChildNode({
       explorationCoefficient,
     });
     if (bestChild === null) {
-      // This condition happens when a selected child has no valid move.
+      // This happens when a node is terminal (no valid moves)
       return null;
     }
-
     currentNode = bestChild;
   }
 
@@ -168,34 +170,38 @@ const expandTree = <
     GenericScore,
     GenericSlot,
     GenericState
-  >({ indexOfPlayedMove: null, state });
+  >({ informationAboutPlayedMove: null, state });
 
   for (
-    let currentSearchIndex = 0;
-    currentSearchIndex < quantityOfExpansions;
-    currentSearchIndex += INCREMENT_ONE
+    let indexOfCurrentExpansion = 0;
+    indexOfCurrentExpansion < quantityOfExpansions;
+    indexOfCurrentExpansion += INCREMENT_ONE
   ) {
-    const currentNode = pickNotFullyExpandedNode({
+    // 1. Selection: Start from root and traverse down to a non-fully-expanded node using UCB
+    const selectedNode = pickNotFullyExpandedNode({
       explorationCoefficient,
       rootNode,
     });
-    if (currentNode === null) {
-      // This condition happens when there is no node to expand, so the search has to end.
+    if (selectedNode === null) {
+      // If there is no node to select, the search has ended
       break;
     }
 
-    const currentState = currentNode.getState();
+    const currentState = selectedNode.getState();
     const isFinal = game.isFinal({ state: currentState });
 
     if (isFinal) {
+      // Terminal node: just backpropagate its score
       const score = currentState.getScore();
-      currentNode.updateQualityOfMatchAndQuantityOfVisitsOnBranch({ score });
+      selectedNode.updateQualityOfMatchAndQuantityOfVisitsOnBranch({ score });
     } else {
+      // 2. Expansion: Add one new child node
       const indexOfChild = random.pickIndexOfRandomNotExpandedChildNode({
-        treeNode: currentNode,
+        treeNode: selectedNode,
       });
-      const childNode = currentNode.expand({ indexOfMove: indexOfChild });
+      const childNode = selectedNode.expand({ indexOfMove: indexOfChild });
 
+      // 3. Simulation: Rollout from the new child to a terminal state
       const score = simulateMatch<
         GenericGame,
         GenericMove,
@@ -207,6 +213,8 @@ const expandTree = <
         random,
         state: childNode.getState(),
       });
+
+      // 4. Backpropagation: Update all nodes on the path from child to root
       childNode.updateQualityOfMatchAndQuantityOfVisitsOnBranch({ score });
     }
   }
@@ -214,120 +222,5 @@ const expandTree = <
   return rootNode;
 };
 
-const calculateQualityOfMoves = <
-  GenericGame extends Game<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >,
-  GenericMove extends Move<GenericMove>,
-  GenericPlayer extends Player<GenericPlayer>,
-  GenericScore extends Score<GenericScore>,
-  GenericSlot extends Slot<GenericSlot>,
-  GenericState extends State<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >,
->({
-  rootNode,
-}: {
-  rootNode: TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >;
-}): QualityOfMove[] => {
-  const game = rootNode.getState().getGame();
-  let qualityOfMoves = new Array<QualityOfMove>(game.getQuantityOfMoves()).fill(
-    MINIMUM_QUALITY_OF_MOVE,
-  );
-
-  rootNode
-    .getChildrenNodes()
-    .entries()
-    .forEach(([indexOfMove, child]) => {
-      if (child !== null) {
-        qualityOfMoves[indexOfMove] = child.getQuantityOfVisits();
-      }
-    });
-
-  const sumOfQualityOfMoves = qualityOfMoves.reduce<QualityOfMove>(
-    (accumulator, qualityOfMove) => qualityOfMove + accumulator,
-    MINIMUM_QUALITY_OF_MOVE,
-  );
-
-  qualityOfMoves = qualityOfMoves.map((value) => value / sumOfQualityOfMoves);
-
-  return qualityOfMoves;
-};
-
-const predictQualityOfMoves = <
-  GenericGame extends Game<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >,
-  GenericMove extends Move<GenericMove>,
-  GenericPlayer extends Player<GenericPlayer>,
-  GenericScore extends Score<GenericScore>,
-  GenericSlot extends Slot<GenericSlot>,
-  GenericState extends State<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >,
->({
-  explorationCoefficient,
-  quantityOfExpansions,
-  random,
-  state,
-}: Pick<
-  Parameters<
-    typeof expandTree<
-      GenericGame,
-      GenericMove,
-      GenericPlayer,
-      GenericScore,
-      GenericSlot,
-      GenericState
-    >
-  >[0],
-  "explorationCoefficient" | "quantityOfExpansions" | "random" | "state"
->) => {
-  const rootNode = expandTree<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >({
-    explorationCoefficient,
-    quantityOfExpansions,
-    random,
-    state,
-  });
-
-  return calculateQualityOfMoves({
-    rootNode,
-  });
-};
-
-export type { ExplorationCoefficient, QualityOfMove };
-export { calculateQualityOfMoves, expandTree, predictQualityOfMoves };
+export type { ExplorationCoefficient };
+export { expandTree };

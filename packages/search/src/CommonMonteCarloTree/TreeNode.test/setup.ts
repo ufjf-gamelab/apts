@@ -255,10 +255,30 @@ const deriveParamsOfTreeNode = <
   GenericScore,
   GenericSlot,
   GenericState
-> => ({
-  indexOfPlayedMove: playedMoveWithDataAndIndex?.indexOfMove ?? null,
-  state: stateWithData.state,
-});
+> => {
+  let informationAboutPlayedMove: DerivedParamsOfTreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >["informationAboutPlayedMove"] = null;
+
+  if (playedMoveWithDataAndIndex !== null) {
+    const indexOfPlayedMove = playedMoveWithDataAndIndex.indexOfMove;
+    const indexOfPlayerWhoPlayedMove = stateWithData.state.getIndexOfPlayer();
+    informationAboutPlayedMove = {
+      indexOfPlayedMove,
+      indexOfPlayerWhoPlayedMove,
+    };
+  }
+
+  return {
+    informationAboutPlayedMove,
+    state: stateWithData.state,
+  };
+};
 
 const createTreeNodeWithData = <
   GenericGame extends Game<

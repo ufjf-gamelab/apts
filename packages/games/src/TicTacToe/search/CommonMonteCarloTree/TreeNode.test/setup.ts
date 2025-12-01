@@ -95,11 +95,11 @@ const deriveParamsOfTicTacToeTreeNode = ({
   });
 
 const createTicTacToeTreeNode = ({
-  indexOfPlayedMove,
+  informationAboutPlayedMove,
   state,
 }: DerivedParamsOfTicTacToeTreeNode): TicTacToeTreeNode =>
   TreeNode.create({
-    indexOfPlayedMove,
+    informationAboutPlayedMove,
     state,
   }) satisfies TicTacToeTreeNode;
 

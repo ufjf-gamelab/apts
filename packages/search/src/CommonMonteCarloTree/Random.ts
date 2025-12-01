@@ -7,11 +7,12 @@ import type { State } from "@repo/game/State.js";
 import { type Game } from "@repo/game/Game.js";
 import seedrandom from "seedrandom";
 
-import type { QualityOfMove } from "./search/search.js";
 import type { TreeNode } from "./TreeNode.js";
 
-const BASE_FOR_SUM_OF_EXPONENTIATED_QUALITIES_OF_MOVES = 0;
-const TEMPERATURE = 0.25;
+import {
+  calculateProbabilityOfPlayingEachMove,
+  type QualityOfMove,
+} from "./search/quality.js";
 
 interface ParamsOfRandom {
   seed: string;
@@ -116,45 +117,18 @@ class Random {
 
   public pickIndexOfValidMoveConsideringTheirQuality({
     indexesOfValidMoves,
-    qualityOfMoves,
+    qualitiesOfMoves,
   }: {
     indexesOfValidMoves: ReadonlySet<IndexOfMove>;
-    qualityOfMoves: QualityOfMove[];
+    qualitiesOfMoves: QualityOfMove[];
   }): IndexOfMove {
-    const mapOfQualityOfValidMoves = new Map(
-      indexesOfValidMoves.values().map((indexOfValidMove) => {
-        const qualityOfMove = qualityOfMoves[indexOfValidMove];
-        if (typeof qualityOfMove === "undefined") {
-          throw new Error("Could not retrieve any quality from this index.");
-        }
-        return [indexOfValidMove, qualityOfMove];
-      }),
-    );
+    const probabilityOfPlayingEachMove = calculateProbabilityOfPlayingEachMove({
+      indexesOfValidMoves,
+      qualitiesOfMoves,
+    });
 
-    // Softmax to convert qualities to probabilities
-    let sumOfExponentiatedQualities =
-      BASE_FOR_SUM_OF_EXPONENTIATED_QUALITIES_OF_MOVES;
-    const exponentiatedQualities = new Map(
-      mapOfQualityOfValidMoves
-        .entries()
-        .map(([indexOfValidMove, qualityOfMove]) => {
-          const exponentiatedQualityOfMove = Math.exp(
-            qualityOfMove / TEMPERATURE,
-          );
-          sumOfExponentiatedQualities += exponentiatedQualityOfMove;
-          return [indexOfValidMove, exponentiatedQualityOfMove];
-        }),
-    );
-
-    const probabilities = exponentiatedQualities
+    const sortedProbabilities = probabilityOfPlayingEachMove
       .entries()
-      .map(
-        ([indexesOfValidMove, exponentiatedQuality]) =>
-          [
-            indexesOfValidMove,
-            exponentiatedQuality / sumOfExponentiatedQualities,
-          ] as const,
-      )
       .toArray()
       .sort(
         ([, firstProbability], [, secondProbability]) =>
@@ -164,7 +138,7 @@ class Random {
     // Select index based on probability distribution
     const randomNumber = this.generateRandomNumber();
     let accumulator = 0;
-    for (const [indexOfValidMove, probability] of probabilities) {
+    for (const [indexOfValidMove, probability] of sortedProbabilities) {
       accumulator += probability;
       if (randomNumber <= accumulator) {
         return indexOfValidMove;

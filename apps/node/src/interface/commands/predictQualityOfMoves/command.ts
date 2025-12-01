@@ -1,5 +1,5 @@
 import type { IndexOfMove } from "@repo/game/Move.js";
-import type { QualityOfMove } from "@repo/search/CommonMonteCarloTree/search/search.js";
+import type { QualityOfMove } from "@repo/search/CommonMonteCarloTree/search/quality.js";
 
 import { predictQualityOfMoves } from "@repo/interface/actions/predictQualityOfMoves/action.js";
 import { Command, Option } from "commander";
@@ -20,6 +20,7 @@ const executeAction = ({
   exploration: explorationCoefficient,
   file: fileName,
   seed,
+  softmax: shouldReturnProbabilities,
   state: keyOfState,
   tree: shouldConstructGraph,
 }: {
@@ -28,13 +29,14 @@ const executeAction = ({
   exploration: number;
   file: string | undefined;
   seed: string;
+  softmax: boolean;
   state: KeyOfState;
   tree: boolean;
 }): void => {
   const processQualityOfMoves = (
-    qualityOfMoves: Map<IndexOfMove, QualityOfMove>,
+    qualitiesOfMoves: ReadonlyMap<IndexOfMove, QualityOfMove>,
   ): void => {
-    console.info(qualityOfMoves);
+    console.info(qualitiesOfMoves);
   };
 
   const processGraphvizGraph = shouldConstructGraph
@@ -57,9 +59,11 @@ const executeAction = ({
   predictQualityOfMoves({
     explorationCoefficient,
     processGraphvizGraph,
+    processMessage: console.info,
     processQualityOfMoves,
     quantityOfExpansions,
     seed,
+    shouldReturnProbabilities,
     state,
   });
 };
@@ -85,6 +89,10 @@ const commandToPredictQualityOfMoves = {
       "The name of the outputted image file (without extension).",
     ),
     commonOptions.seed,
+    new Option(
+      "--softmax",
+      "Whether to apply softmax to normalize quality of moves.",
+    ).default(false),
   ],
 } satisfies DefinitionOfCommand;
 

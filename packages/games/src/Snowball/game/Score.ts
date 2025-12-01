@@ -1,6 +1,7 @@
 import type { Integer } from "@repo/engine_core/types.js";
 import type { IndexOfPlayer } from "@repo/game/Player.js";
 
+import { assertNumberIsFinite } from "@repo/engine_core/assert.js";
 import { type Points, Score } from "@repo/game/Score.js";
 
 import type { SnowballSlot } from "./Slot.js";
@@ -53,7 +54,9 @@ class SnowballScore extends Score<SnowballScore> {
     });
 
     slots.forEach((_, indexOfSlot) => {
-      const indexOfRow = Math.floor(indexOfSlot / COLUMN_LENGTH);
+      const indexOfRow = Math.floor(
+        assertNumberIsFinite(indexOfSlot / COLUMN_LENGTH),
+      );
       const indexOfColumn = indexOfSlot % COLUMN_LENGTH;
 
       const updateScoreConsideringShape = ({

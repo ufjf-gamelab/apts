@@ -1,7 +1,7 @@
 import type { Integer } from "@repo/engine_core/types.js";
 import type { Game } from "@repo/game/Game.js";
 import type { IndexOfMove, Move } from "@repo/game/Move.js";
-import type { Player } from "@repo/game/Player.js";
+import type { IndexOfPlayer, Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
@@ -41,7 +41,10 @@ interface ParamsOfTreeNode<
     GenericState
   >,
 > {
-  readonly indexOfPlayedMove: IndexOfMove | null;
+  readonly informationAboutPlayedMove: null | {
+    readonly indexOfPlayedMove: IndexOfMove;
+    readonly indexOfPlayerWhoPlayedMove: IndexOfPlayer;
+  };
   readonly state: GenericState;
 }
 
@@ -118,14 +121,14 @@ class TreeNode<
     >
   >;
   private readonly game: GenericGame;
-  private readonly indexOfPlayedMove: ParamsOfTreeNodeForPrivateConstructor<
+  private readonly informationAboutPlayedMove: ParamsOfTreeNodeForPrivateConstructor<
     GenericGame,
     GenericMove,
     GenericPlayer,
     GenericScore,
     GenericSlot,
     GenericState
-  >["indexOfPlayedMove"];
+  >["informationAboutPlayedMove"];
   private readonly parentNode: ParamsOfTreeNodeForPrivateConstructor<
     GenericGame,
     GenericMove,
@@ -146,7 +149,7 @@ class TreeNode<
   >["state"];
 
   private constructor({
-    indexOfPlayedMove,
+    informationAboutPlayedMove,
     parentNode,
     state,
   }: ParamsOfTreeNodeForPrivateConstructor<
@@ -159,7 +162,7 @@ class TreeNode<
   >) {
     this.state = state;
     this.game = state.getGame();
-    this.indexOfPlayedMove = indexOfPlayedMove;
+    this.informationAboutPlayedMove = informationAboutPlayedMove;
     this.parentNode = parentNode;
     this.childrenNodes = new Map(
       state
@@ -192,7 +195,7 @@ class TreeNode<
       GenericState
     >,
   >({
-    indexOfPlayedMove,
+    informationAboutPlayedMove,
     state,
   }: ParamsOfTreeNode<
     GenericGame,
@@ -210,7 +213,7 @@ class TreeNode<
       GenericSlot,
       GenericState
     >({
-      indexOfPlayedMove,
+      informationAboutPlayedMove,
       parentNode: null,
       state,
     });
@@ -260,7 +263,10 @@ class TreeNode<
     });
 
     const child = new TreeNode({
-      indexOfPlayedMove: indexOfMove,
+      informationAboutPlayedMove: {
+        indexOfPlayedMove: indexOfMove,
+        indexOfPlayerWhoPlayedMove: this.state.getIndexOfPlayer(),
+      },
       parentNode: this,
       state: nextState,
     });
@@ -296,8 +302,8 @@ class TreeNode<
     );
   }
 
-  public getIndexOfPlayedMove(): typeof this.indexOfPlayedMove {
-    return this.indexOfPlayedMove;
+  public getIndexOfPlayedMove() {
+    return this.informationAboutPlayedMove?.indexOfPlayedMove ?? null;
   }
 
   public getQualityOfMatch(): typeof this.qualityOfMatch {
@@ -374,28 +380,26 @@ class TreeNode<
   }: {
     score: Score<GenericScore>;
   }): void {
-    const indexOfThisPlayer = this.state.getIndexOfPlayer();
-    let pointsOfThisPlayer = 0;
+    let pointsOfPlayerWhoPlayedMoveThatCreatedThisTreeNode = 0;
     let pointsOfOpponents = 0;
+
     score
       .getPointsOfEachPlayer()
       .entries()
       .forEach(([indexOfPlayer, pointsOfPlayer]) => {
-        if (indexOfPlayer === indexOfThisPlayer) {
-          pointsOfThisPlayer += pointsOfPlayer;
+        if (
+          indexOfPlayer ===
+          this.informationAboutPlayedMove?.indexOfPlayerWhoPlayedMove
+        ) {
+          pointsOfPlayerWhoPlayedMoveThatCreatedThisTreeNode += pointsOfPlayer;
         } else {
           pointsOfOpponents += pointsOfPlayer;
         }
       });
 
-    /* TODO: Accumulating the quality of match is only appropriate if this method is called only at the end of some match
-     * A common method is to decrement the points of the opponent
-     * Other idea is to normalize the final score, like subtracting from both players the points made by the defeated, so the winner has an advantage and the loser has zero points
-     * Other idea is to divide the points of the winner for the points of the loser, making a ratio, that can be backpropagated as the winner points
-     */
-
-    // The quality must be inverted, as it indicates the resulting score of the last player, which performed their winner action
-    this.qualityOfMatch += pointsOfOpponents - pointsOfThisPlayer;
+    // TODO: Check this heuristic
+    this.qualityOfMatch +=
+      pointsOfPlayerWhoPlayedMoveThatCreatedThisTreeNode - pointsOfOpponents;
     this.quantityOfVisits += INCREMENT_ONE;
 
     if (this.parentNode) {

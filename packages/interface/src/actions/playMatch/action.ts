@@ -10,10 +10,8 @@ import type { Answers, Choice, PromptObject } from "prompts";
 import { FIRST_INDEX } from "@repo/engine_core/constants.js";
 import { formatMap } from "@repo/engine_core/format.js";
 import { Random } from "@repo/search/CommonMonteCarloTree/Random.js";
-import {
-  type ExplorationCoefficient,
-  predictQualityOfMoves,
-} from "@repo/search/CommonMonteCarloTree/search/search.js";
+import { predictQualityOfMoves } from "@repo/search/CommonMonteCarloTree/search/quality.js";
+import { type ExplorationCoefficient } from "@repo/search/CommonMonteCarloTree/search/search.js";
 
 import type { ModeOfPlay } from "../../constants.js";
 import type { ProcessMessage } from "../../types.js";
@@ -161,7 +159,7 @@ const getIndexOfMoveUsingSearch = <
 }) => {
   const game = state.getGame();
 
-  const qualityOfMoves = predictQualityOfMoves({
+  const qualitiesOfMoves = predictQualityOfMoves({
     explorationCoefficient,
     quantityOfExpansions,
     random,
@@ -170,7 +168,7 @@ const getIndexOfMoveUsingSearch = <
 
   const indexOfPickedMove = random.pickIndexOfValidMoveConsideringTheirQuality({
     indexesOfValidMoves,
-    qualityOfMoves,
+    qualitiesOfMoves,
   });
   const pickedMove = game.getMove({ indexOfMove: indexOfPickedMove });
 
@@ -331,7 +329,7 @@ const playMatchInTheModePlayerVersusComputer = async <
       processMessage,
       quantityOfExpansions,
       random,
-      state,
+      state: currentState,
     });
 
     currentState = game.play({ indexOfMove, state: currentState });

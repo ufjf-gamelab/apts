@@ -6,10 +6,8 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 import type { ParamsOfRandom } from "@repo/search/CommonMonteCarloTree/Random.js";
-import type {
-  ExplorationCoefficient,
-  QualityOfMove,
-} from "@repo/search/CommonMonteCarloTree/search/search.js";
+import type { QualityOfMove } from "@repo/search/CommonMonteCarloTree/search/quality.js";
+import type { ExplorationCoefficient } from "@repo/search/CommonMonteCarloTree/search/search.js";
 import type { TreeNode } from "@repo/search/CommonMonteCarloTree/TreeNode.js";
 
 import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
@@ -120,6 +118,7 @@ const constructGraphvizNode = <
   const state = treeNode.getState();
   const qualityOfMatch = treeNode.getQualityOfMatch();
   const quantityOfVisits = treeNode.getQuantityOfVisits();
+
   const game = state.getGame();
   const indexOfPlayer = state.getIndexOfPlayer();
   const player = game.getPlayer({ indexOfPlayer });
@@ -128,10 +127,11 @@ const constructGraphvizNode = <
       `There is no player in this game with the index ${indexOfPlayer}.`,
     );
   }
+  const isFinal = game.isFinal({ state });
 
   const label = `id: ${id}, visits: ${quantityOfVisits},\nquality: ${
     qualityOfMatch
-  }, player: ${player.getSymbol()}\n${state.toString()}`;
+  }, player: ${player.getSymbol()}\nisFinal: ${isFinal ? "true" : "false"}\n${state.toString()}`;
 
   return new GraphvizNode(id.toString(), {
     ...NODE_ATTRIBUTES,
@@ -278,12 +278,16 @@ const constructGraphvizGraph = <
   >,
 >({
   explorationCoefficient,
-  qualityOfMoves,
+  probabilityOfPlayingEachMove,
+  qualityOfEachMove,
+  quantityOfExpansions,
   rootNode,
   seed,
 }: {
   explorationCoefficient: ExplorationCoefficient;
-  qualityOfMoves: ReadonlyMap<IndexOfMove, QualityOfMove>;
+  probabilityOfPlayingEachMove: ReadonlyMap<IndexOfMove, number>;
+  qualityOfEachMove: ReadonlyMap<IndexOfMove, QualityOfMove>;
+  quantityOfExpansions: Integer;
   rootNode: TreeNode<
     GenericGame,
     GenericMove,
@@ -308,11 +312,13 @@ const constructGraphvizGraph = <
   graph.addNode(
     new GraphvizNode("information", {
       ...NODE_ATTRIBUTES,
-      label: `seed: "${seed}", explorationCoefficient: ${explorationCoefficient}\nqualityOfMoves: ${formatMap(
+      label: `seed: "${seed}", explorationCoefficient: ${explorationCoefficient}, quantityOfExpansions: ${quantityOfExpansions}\nqualityOfEachMove: ${formatMap(
         {
-          map: qualityOfMoves,
+          map: qualityOfEachMove,
         },
-      )}`,
+      )}\nprobabilityOfPlayingEachMove: ${formatMap({
+        map: probabilityOfPlayingEachMove,
+      })}`,
     }),
   );
 
