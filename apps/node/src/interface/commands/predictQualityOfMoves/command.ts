@@ -22,21 +22,21 @@ const executeAction = ({
   expansions: quantityOfExpansions,
   exploration: explorationCoefficient,
   file: fileName,
+  graph: shouldConstructGraph,
   seed,
   softening: softeningCoefficient,
   softmax: shouldReturnProbabilities,
   state: keyOfState,
-  tree: shouldConstructGraph,
 }: {
   directory: string | undefined;
   expansions: number;
   exploration: number;
   file: string | undefined;
+  graph: boolean;
   seed: string;
   softening: SofteningCoefficient;
   softmax: boolean;
   state: KeyOfState;
-  tree: boolean;
 }): void => {
   const processQualityOfMoves = (
     qualitiesOfMoves: ReadonlyMap<IndexOfMove, QualityOfMove>,
@@ -51,7 +51,7 @@ const executeAction = ({
           directoryPath,
           fileName:
             fileName ??
-            `state(${keyOfState})_expansions(${quantityOfExpansions})_exploration(${explorationCoefficient})_seed(${seed})`,
+            `state(${keyOfState})_expansions(${quantityOfExpansions})_exploration(${explorationCoefficient})_softening(${softeningCoefficient})_seed(${seed})`,
           graphvizDotString,
         }).catch((error: unknown) => {
           console.error("Error generating Graphviz image:", error);

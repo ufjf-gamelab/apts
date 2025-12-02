@@ -47,8 +47,8 @@ const predictQualityOfMoves = <
   quantityOfExpansions,
   seed,
   shouldReturnProbabilities,
-  state,
   softeningCoefficient,
+  state,
 }: Pick<
   Parameters<typeof calculateProbabilityOfPlayingEachMove>[0],
   "softeningCoefficient"
@@ -125,6 +125,7 @@ const predictQualityOfMoves = <
       quantityOfExpansions,
       rootNode,
       seed,
+      softeningCoefficient,
     });
     processGraphvizGraph(graph);
   }

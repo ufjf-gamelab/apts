@@ -58,7 +58,7 @@ const calculateQualityOfMoves = <
     .entries()
     .forEach(([indexOfMove, child]) => {
       if (child !== null) {
-        qualityOfMoves[indexOfMove] = child.getQualityOfMatch();
+        qualityOfMoves[indexOfMove] = child.getQuality();
       }
     });
 
@@ -158,37 +158,26 @@ const calculateProbabilityOfPlayingEachMove = <
   qualitiesOfMoves: QualityOfMove[];
   softeningCoefficient: SofteningCoefficient;
 }): ReadonlyMap<IndexOfMove, number> => {
-  let sumOfQualityOfMoves = 0;
-  let minimumQualityOfMove = Infinity;
+  let maximumQualityOfMove = -Infinity;
+
   const qualityOfEachValidMove = qualitiesOfMoves.reduce<
     [IndexOfMove, QualityOfMove][]
   >((accumulator, qualityOfMove, indexOfMove) => {
     if (indexesOfValidMoves.has(indexOfMove)) {
-      minimumQualityOfMove = Math.min(minimumQualityOfMove, qualityOfMove);
+      maximumQualityOfMove = Math.max(maximumQualityOfMove, qualityOfMove);
       accumulator.push([indexOfMove, qualityOfMove]);
     }
     return accumulator;
   }, []);
 
-  const positiveQualityOfMoves = qualityOfEachValidMove.map(
-    ([indexOfValidMove, qualityOfMove]) => {
-      const positiveQualityOfMove =
-        qualityOfMove +
-        Math.abs(minimumQualityOfMove) +
-        DEFAULT_FOR_EXPONENTIATION;
-      sumOfQualityOfMoves += positiveQualityOfMove;
-      return [indexOfValidMove, positiveQualityOfMove] as const;
-    },
-  );
-
   let sumOfExponentiatedQualities = 0;
-  const exponentiatedQualities = positiveQualityOfMoves.map(
+  const exponentiatedQualities = qualityOfEachValidMove.map(
     ([indexOfValidMove, qualityOfMove]) => {
-      const normalizedQualityOfMove = assertNumberIsFinite(
-        qualityOfMove / sumOfQualityOfMoves,
+      const notPositiveQualityOfMove = assertNumberIsFinite(
+        qualityOfMove - maximumQualityOfMove,
       );
       const exponent = assertNumberIsFinite(
-        normalizedQualityOfMove / softeningCoefficient,
+        notPositiveQualityOfMove / softeningCoefficient,
       );
       const exponentiatedQualityOfMove = assertNumberIsFinite(
         Math.exp(exponent),

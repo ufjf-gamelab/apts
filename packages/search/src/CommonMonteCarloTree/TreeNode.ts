@@ -6,6 +6,7 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
+import { assertNumberIsFinite } from "@repo/engine_core/assert.js";
 import {
   INCREMENT_ONE,
   LENGTH_OF_EMPTY_LIST,
@@ -304,6 +305,11 @@ class TreeNode<
 
   public getIndexOfPlayedMove() {
     return this.informationAboutPlayedMove?.indexOfPlayedMove ?? null;
+  }
+
+  public getQuality(): number {
+    // TODO: check this heuristic
+    return assertNumberIsFinite(this.qualityOfMatch / this.quantityOfVisits);
   }
 
   public getQualityOfMatch(): typeof this.qualityOfMatch {

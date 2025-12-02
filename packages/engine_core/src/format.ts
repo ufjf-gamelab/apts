@@ -5,7 +5,7 @@ const formatEntry = ([key, value]: [PropertyKey, unknown]) =>
   `${JSON.stringify(key)}: ${JSON.stringify(value)}`;
 
 const joinEntries = ({ entries }: { entries: string[] }) =>
-  `{ ${entries.join(", ")} }`;
+  `{\n  ${entries.join(",\n  ")}\n}`;
 
 const formatMap = ({ map }: { map: ReadonlyMap<PropertyKey, unknown> }) => {
   const entries = map.entries().map(formatEntry).toArray();

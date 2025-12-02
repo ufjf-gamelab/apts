@@ -6,7 +6,10 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 import type { ParamsOfRandom } from "@repo/search/CommonMonteCarloTree/Random.js";
-import type { QualityOfMove } from "@repo/search/CommonMonteCarloTree/search/quality.js";
+import type {
+  QualityOfMove,
+  SofteningCoefficient,
+} from "@repo/search/CommonMonteCarloTree/search/quality.js";
 import type { ExplorationCoefficient } from "@repo/search/CommonMonteCarloTree/search/search.js";
 import type { TreeNode } from "@repo/search/CommonMonteCarloTree/TreeNode.js";
 
@@ -63,15 +66,15 @@ const GRAPH_ATTRIBUTES = {
   fontname: "Monospace",
   fontsize: 30,
   labelloc: "t",
-  nodesep: 0.5,
+  nodesep: 2,
   rankdir: "TB",
-  ranksep: 3,
+  ranksep: 4,
   splines: "true",
 } as const satisfies GraphvizGraphAttributesObject;
 
 const NODE_ATTRIBUTES = {
   fontname: GRAPH_ATTRIBUTES.fontname,
-  labelloc: "t",
+  labelloc: "c",
   margin: "0.5,0.125",
   shape: "box",
 } as const satisfies GraphvizNodeAttributesObject;
@@ -283,6 +286,7 @@ const constructGraphvizGraph = <
   quantityOfExpansions,
   rootNode,
   seed,
+  softeningCoefficient,
 }: {
   explorationCoefficient: ExplorationCoefficient;
   probabilityOfPlayingEachMove: ReadonlyMap<IndexOfMove, number>;
@@ -297,6 +301,7 @@ const constructGraphvizGraph = <
     GenericState
   >;
   seed: ParamsOfRandom["seed"];
+  softeningCoefficient: SofteningCoefficient;
 }): GraphvizDigraph => {
   const game = rootNode.getState().getGame();
   const graph = new GraphvizDigraph("G", GRAPH_ATTRIBUTES);
@@ -309,26 +314,31 @@ const constructGraphvizGraph = <
     GenericState
   >[] = [];
 
-  graph.addNode(
-    new GraphvizNode("information", {
-      ...NODE_ATTRIBUTES,
-      label: `seed: "${seed}", explorationCoefficient: ${explorationCoefficient}, quantityOfExpansions: ${quantityOfExpansions}\nqualityOfEachMove: ${formatMap(
-        {
-          map: qualityOfEachMove,
-        },
-      )}\nprobabilityOfPlayingEachMove: ${formatMap({
-        map: probabilityOfPlayingEachMove,
-      })}`,
-    }),
-  );
+  const informationGraphvizNode = new GraphvizNode("information", {
+    ...NODE_ATTRIBUTES,
+    label: `seed: "${seed}",\nexplorationCoefficient: ${explorationCoefficient},\nquantityOfExpansions: ${quantityOfExpansions},\nsofteningCoefficient: ${softeningCoefficient},\nqualityOfEachMove: ${formatMap(
+      {
+        map: qualityOfEachMove,
+      },
+    )},\nprobabilityOfPlayingEachMove: ${formatMap({
+      map: probabilityOfPlayingEachMove,
+    })}`,
+  });
+  graph.addNode(informationGraphvizNode);
 
-  insertNodeIntoGraph({
+  const rootGraphvizNode = insertNodeIntoGraph({
     currentNode: rootNode,
     explorationCoefficient,
     graph,
     idOfCurrentNode: ID_OF_ROOT,
     tuplesOfInformationOfGraphvizEdge,
   });
+  graph.addEdge(
+    new GraphvizEdge([informationGraphvizNode, rootGraphvizNode], {
+      ...EDGE_ATTRIBUTES,
+      style: "invis",
+    }),
+  );
 
   // Include every node in the tree in the graph.
   for (

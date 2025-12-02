@@ -10,12 +10,16 @@ const keysOfStates = {
     "gameIsTicTacToeAndSlotsR0C0AndR0C1AndR1C0AreFilledByAliceAndR0C2AndR1C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer",
   gameIsTicTacToeAndSlotsR0C0AndR0C1AndR1C2AndR2C0AreFilledByAliceAndR0C2AndR1C0AndR1C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     "gameIsTicTacToeAndSlotsR0C0AndR0C1AndR1C2AndR2C0AreFilledByAliceAndR0C2AndR1C0AndR1C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer",
+  gameIsTicTacToeAndSlotsR0C0AndR0C1AreFilledByAliceAndR1C0IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
+    "gameIsTicTacToeAndSlotsR0C0AndR0C1AreFilledByAliceAndR1C0IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer",
   gameIsTicTacToeAndSlotsR0C0AndR0C1AreFilledByAliceAndR1C1IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     "gameIsTicTacToeAndSlotsR0C0AndR0C1AreFilledByAliceAndR1C1IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer",
   gameIsTicTacToeAndSlotsR0C0AndR0C1AreFilledByAliceAndR2C0IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
     "gameIsTicTacToeAndSlotsR0C0AndR0C1AreFilledByAliceAndR2C0IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer",
   gameIsTicTacToeAndSlotsR0C0AndR1C0AreFilledByAliceAndR0C1IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     "gameIsTicTacToeAndSlotsR0C0AndR1C0AreFilledByAliceAndR0C1IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer",
+  gameIsTicTacToeAndSlotsR0C0AndR1C0AreFilledByAliceAndR2C2IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
+    "gameIsTicTacToeAndSlotsR0C0AndR1C0AreFilledByAliceAndR2C2IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer",
   gameIsTicTacToeAndSlotsR1C0AndR1C2AndR2C0AreFilledByAliceAndR0C0AndR1C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     "gameIsTicTacToeAndSlotsR1C0AndR1C2AndR2C0AreFilledByAliceAndR0C0AndR1C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer",
 } as const;
@@ -43,6 +47,11 @@ const selectStateUsingKeyOfState = (keyOfState: KeyOfState) => {
         .slotsR0C0AndR0C1AndR1C2AndR2C0AreFilledByAliceAndR0C2AndR1C0AndR1C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer
         .state;
     }
+    case "gameIsTicTacToeAndSlotsR0C0AndR0C1AreFilledByAliceAndR1C0IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer": {
+      return recordOfTicTacToeStatesWithData
+        .slotsR0C0AndR0C1AreFilledByAliceAndR1C0IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer
+        .state;
+    }
     case "gameIsTicTacToeAndSlotsR0C0AndR0C1AreFilledByAliceAndR1C1IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer": {
       return recordOfTicTacToeStatesWithData
         .slotsR0C0AndR0C1AreFilledByAliceAndR1C1IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer
@@ -55,12 +64,17 @@ const selectStateUsingKeyOfState = (keyOfState: KeyOfState) => {
     }
     case "gameIsTicTacToeAndSlotsR0C0AndR1C0AreFilledByAliceAndR0C1IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer": {
       return recordOfTicTacToeStatesWithData
-        .slotsWithDataAndIndexInWhichSlotsR0C0AndR1C0AreFilledByAliceAndR0C1IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer
+        .slotsR0C0AndR1C0AreFilledByAliceAndR0C1IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer
+        .state;
+    }
+    case "gameIsTicTacToeAndSlotsR0C0AndR1C0AreFilledByAliceAndR2C2IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer": {
+      return recordOfTicTacToeStatesWithData
+        .slotsR0C0AndR1C0AreFilledByAliceAndR2C2IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer
         .state;
     }
     case "gameIsTicTacToeAndSlotsR1C0AndR1C2AndR2C0AreFilledByAliceAndR0C0AndR1C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer": {
       return recordOfTicTacToeStatesWithData
-        .slotsWithDataAndIndexInWhichSlotsR1C0AndR1C2AndR2C0AreFilledByAliceAndR0C0AndR1C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer
+        .slotsR1C0AndR1C2AndR2C0AreFilledByAliceAndR0C0AndR1C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer
         .state;
     }
     default: {
