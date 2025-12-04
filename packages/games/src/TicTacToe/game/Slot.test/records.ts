@@ -658,6 +658,41 @@ const recordsOfRequiredParamsOfSlots = {
           recordOfTicTacToePlayersWithDataAndIndex.alice.indexOfPlayer,
       },
     },
+  recordOfRequiredParamsOfTicTacToeSlotsInWhichSlotsR0C1AndR1C0AndR1C1AreFilledByAliceAndR0C0AndR2C1AreFilledByBruno:
+    {
+      center: {
+        indexOfOccupyingPlayer:
+          recordOfTicTacToePlayersWithDataAndIndex.alice.indexOfPlayer,
+      },
+      east: {
+        indexOfOccupyingPlayer: null,
+      },
+      north: {
+        indexOfOccupyingPlayer:
+          recordOfTicTacToePlayersWithDataAndIndex.alice.indexOfPlayer,
+      },
+      northeast: {
+        indexOfOccupyingPlayer: null,
+      },
+      northwest: {
+        indexOfOccupyingPlayer:
+          recordOfTicTacToePlayersWithDataAndIndex.bruno.indexOfPlayer,
+      },
+      south: {
+        indexOfOccupyingPlayer:
+          recordOfTicTacToePlayersWithDataAndIndex.bruno.indexOfPlayer,
+      },
+      southeast: {
+        indexOfOccupyingPlayer: null,
+      },
+      southwest: {
+        indexOfOccupyingPlayer: null,
+      },
+      west: {
+        indexOfOccupyingPlayer:
+          recordOfTicTacToePlayersWithDataAndIndex.alice.indexOfPlayer,
+      },
+    },
   recordOfRequiredParamsOfTicTacToeSlotsInWhichSlotsR1C0AndR1C2AndR2C0AreFilledByAliceAndR0C0AndR1C1AreFilledByBruno:
     {
       center: {
@@ -797,6 +832,11 @@ const recordsOfTicTacTocSlotsWithData = {
       recordOfRequiredParamsOfSlots:
         recordsOfRequiredParamsOfSlots.recordOfRequiredParamsOfTicTacToeSlotsInWhichSlotsR0C0AndR1C0AreFilledByAliceAndR2C2IsFilledByBruno,
     }),
+  recordOfTicTacToeSlotsWithDataInWhichSlotsR0C1AndR1C0AndR1C1AreFilledByAliceAndR0C0AndR2C1AreFilledByBruno:
+    createRecordOfTicTacToeSlotsWithData({
+      recordOfRequiredParamsOfSlots:
+        recordsOfRequiredParamsOfSlots.recordOfRequiredParamsOfTicTacToeSlotsInWhichSlotsR0C1AndR1C0AndR1C1AreFilledByAliceAndR0C0AndR2C1AreFilledByBruno,
+    }),
   recordOfTicTacToeSlotsWithDataInWhichSlotsR1C0AndR1C2AndR2C0AreFilledByAliceAndR0C0AndR1C1AreFilledByBruno:
     createRecordOfTicTacToeSlotsWithData({
       recordOfRequiredParamsOfSlots:
@@ -828,6 +868,7 @@ const {
   recordOfTicTacToeSlotsWithDataInWhichSlotsR0C0AndR0C2AndR1C1AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
   recordOfTicTacToeSlotsWithDataInWhichSlotsR0C0AndR1C0AreFilledByAliceAndR0C1IsFilledByBruno,
   recordOfTicTacToeSlotsWithDataInWhichSlotsR0C0AndR1C0AreFilledByAliceAndR2C2IsFilledByBruno,
+  recordOfTicTacToeSlotsWithDataInWhichSlotsR0C1AndR1C0AndR1C1AreFilledByAliceAndR0C0AndR2C1AreFilledByBruno,
   recordOfTicTacToeSlotsWithDataInWhichSlotsR1C0AndR1C2AndR2C0AreFilledByAliceAndR0C0AndR1C1AreFilledByBruno,
 } = recordsOfTicTacTocSlotsWithData;
 
@@ -852,5 +893,6 @@ export {
   recordOfTicTacToeSlotsWithDataInWhichSlotsR0C0AndR0C2AndR1C1AndR2C1AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno,
   recordOfTicTacToeSlotsWithDataInWhichSlotsR0C0AndR1C0AreFilledByAliceAndR0C1IsFilledByBruno,
   recordOfTicTacToeSlotsWithDataInWhichSlotsR0C0AndR1C0AreFilledByAliceAndR2C2IsFilledByBruno,
+  recordOfTicTacToeSlotsWithDataInWhichSlotsR0C1AndR1C0AndR1C1AreFilledByAliceAndR0C0AndR2C1AreFilledByBruno,
   recordOfTicTacToeSlotsWithDataInWhichSlotsR1C0AndR1C2AndR2C0AreFilledByAliceAndR0C0AndR1C1AreFilledByBruno,
 };

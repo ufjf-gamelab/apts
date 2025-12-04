@@ -48,7 +48,7 @@ const validatePickIndexOfValidMoveConsideringTheirQuality = <
       qualitiesOfMoves,
       softeningCoefficient,
     });
-  console.log(pickedIndexOfValidMove);
+  console.info(pickedIndexOfValidMove);
 };
 
 const createDescriptionForTestOfPickIndexOfValidMoveConsideringTheirQuality =

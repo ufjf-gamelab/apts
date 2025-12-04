@@ -6,7 +6,7 @@
   },
   "ticTacToe": {
     "expansions": 1000,
-    "exploration": 0.5,
-    "softening": 0.25,
+    "exploration": 1.4,
+    "softening": 0.5,
   },
 }

@@ -6,7 +6,6 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
-import { assertNumberIsFinite } from "@repo/engine_core/assert.js";
 import {
   INCREMENT_ONE,
   LENGTH_OF_EMPTY_LIST,
@@ -235,8 +234,6 @@ class TreeNode<
     explorationCoefficient: ExplorationCoefficient;
   }): number {
     // Privileges the child with the lowest exploitation, as it means the opponent will have the lowest chance of winning
-    // TODO: this formula has problems, as the quantity of visits can be zero, what leads to a division by zero
-
     return calculateFitness({
       explorationCoefficient,
       qualityOfMatchOfChildNode: childNode.qualityOfMatch,
@@ -308,8 +305,7 @@ class TreeNode<
   }
 
   public getQuality(): number {
-    // TODO: check this heuristic
-    return assertNumberIsFinite(this.qualityOfMatch / this.quantityOfVisits);
+    return this.quantityOfVisits;
   }
 
   public getQualityOfMatch(): typeof this.qualityOfMatch {
@@ -403,7 +399,7 @@ class TreeNode<
         }
       });
 
-    // TODO: Check this heuristic
+    // TODO: When the game is multiplayer, maybe we could compare only to the best other player
     this.qualityOfMatch +=
       pointsOfPlayerWhoPlayedMoveThatCreatedThisTreeNode - pointsOfOpponents;
     this.quantityOfVisits += INCREMENT_ONE;

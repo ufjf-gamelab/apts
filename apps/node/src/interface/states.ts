@@ -20,6 +20,8 @@ const keysOfStates = {
     "gameIsTicTacToeAndSlotsR0C0AndR1C0AreFilledByAliceAndR0C1IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer",
   gameIsTicTacToeAndSlotsR0C0AndR1C0AreFilledByAliceAndR2C2IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     "gameIsTicTacToeAndSlotsR0C0AndR1C0AreFilledByAliceAndR2C2IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer",
+  gameIsTicTacToeAndSlotsR0C1AndR1C0AndR1C1AreFilledByAliceAndR0C0AndR2C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
+    "gameIsTicTacToeAndSlotsR0C1AndR1C0AndR1C1AreFilledByAliceAndR0C0AndR2C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer",
   gameIsTicTacToeAndSlotsR1C0AndR1C2AndR2C0AreFilledByAliceAndR0C0AndR1C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     "gameIsTicTacToeAndSlotsR1C0AndR1C2AndR2C0AreFilledByAliceAndR0C0AndR1C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer",
 } as const;
@@ -70,6 +72,11 @@ const selectStateUsingKeyOfState = (keyOfState: KeyOfState) => {
     case "gameIsTicTacToeAndSlotsR0C0AndR1C0AreFilledByAliceAndR2C2IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer": {
       return recordOfTicTacToeStatesWithData
         .slotsR0C0AndR1C0AreFilledByAliceAndR2C2IsFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer
+        .state;
+    }
+    case "gameIsTicTacToeAndSlotsR0C1AndR1C0AndR1C1AreFilledByAliceAndR0C0AndR2C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer": {
+      return recordOfTicTacToeStatesWithData
+        .slotsR0C1AndR1C0AndR1C1AreFilledByAliceAndR0C0AndR2C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer
         .state;
     }
     case "gameIsTicTacToeAndSlotsR1C0AndR1C2AndR2C0AreFilledByAliceAndR0C0AndR1C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer": {

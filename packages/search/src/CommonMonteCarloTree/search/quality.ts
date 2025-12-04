@@ -188,16 +188,16 @@ const calculateProbabilityOfPlayingEachMove = <
     },
   );
 
-  const probabilities = exponentiatedQualities.map(
-    ([indexOfValidMove, exponentiatedQuality]) => {
+  const probabilities = new Map(
+    exponentiatedQualities.map(([indexOfValidMove, exponentiatedQuality]) => {
       const probability = assertNumberIsFinite(
         exponentiatedQuality / sumOfExponentiatedQualities,
       );
       return [indexOfValidMove, probability] as const;
-    },
+    }),
   );
 
-  return new Map(probabilities);
+  return probabilities;
 };
 
 export type { QualityOfMove, SofteningCoefficient };
