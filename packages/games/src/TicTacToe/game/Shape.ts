@@ -56,171 +56,150 @@ const getNameAndFormattedSizeOfShape = ({
   size: shape.size.toString(),
 });
 
+const pushIndexOfSlotIntoList = ({
+  indexOfColumn,
+  indexOfRow,
+  validIndexes,
+}: {
+  indexOfColumn: Integer;
+  indexOfRow: Integer;
+  validIndexes: IndexOfSlot[];
+}) => {
+  if (
+    indexOfRow >= FIRST_INDEX &&
+    indexOfRow < COLUMN_LENGTH &&
+    indexOfColumn >= FIRST_INDEX &&
+    indexOfColumn < ROW_LENGTH
+  ) {
+    validIndexes.push(indexOfRow * ROW_LENGTH + indexOfColumn);
+  }
+};
+
 const getIndexesOfShapeForHorizontalLine = ({
-  columnLength,
   initialIndexOfColumn,
   initialIndexOfRow,
-  rowLength,
   size,
 }: {
-  columnLength: Integer;
   initialIndexOfColumn: Integer;
   initialIndexOfRow: Integer;
-  rowLength: Integer;
   size: Line["size"];
 }): Integer[] => {
-  const validIndexes = [];
+  const validIndexes: IndexOfSlot[] = [];
   for (let index = 0; index < size; index += ADJUST_INDEX) {
     const indexOfRow = initialIndexOfRow;
     const indexOfColumn = initialIndexOfColumn + index;
-    if (
-      indexOfRow >= FIRST_INDEX &&
-      indexOfRow < rowLength &&
-      indexOfColumn >= FIRST_INDEX &&
-      indexOfColumn < columnLength
-    ) {
-      validIndexes.push(indexOfRow * columnLength + indexOfColumn);
-    }
+    pushIndexOfSlotIntoList({
+      indexOfColumn,
+      indexOfRow,
+      validIndexes,
+    });
   }
   return validIndexes;
 };
 
 const getIndexesOfShapeForPrincipalDiagonal = ({
-  columnLength,
   initialIndexOfColumn,
   initialIndexOfRow,
-  rowLength,
   size,
 }: {
-  columnLength: Integer;
   initialIndexOfColumn: Integer;
   initialIndexOfRow: Integer;
-  rowLength: Integer;
   size: Line["size"];
 }): Integer[] => {
-  const validIndexes = [];
+  const validIndexes: IndexOfSlot[] = [];
   for (let index = 0; index < size; index += ADJUST_INDEX) {
     const indexOfRow = initialIndexOfRow + index;
     const indexOfColumn = initialIndexOfColumn + index;
-    if (
-      indexOfRow >= FIRST_INDEX &&
-      indexOfRow < rowLength &&
-      indexOfColumn >= FIRST_INDEX &&
-      indexOfColumn < columnLength
-    ) {
-      validIndexes.push(indexOfRow * columnLength + indexOfColumn);
-    }
+    pushIndexOfSlotIntoList({
+      indexOfColumn,
+      indexOfRow,
+      validIndexes,
+    });
   }
   return validIndexes;
 };
 
 const getIndexesOfShapeForSecondaryDiagonal = ({
-  columnLength,
   initialIndexOfColumn,
   initialIndexOfRow,
-  rowLength,
   size,
 }: {
-  columnLength: Integer;
   initialIndexOfColumn: Integer;
   initialIndexOfRow: Integer;
-  rowLength: Integer;
   size: Line["size"];
 }): Integer[] => {
-  const validIndexes = [];
+  const validIndexes: IndexOfSlot[] = [];
   for (let index = 0; index < size; index += ADJUST_INDEX) {
     const indexOfRow = initialIndexOfRow + index;
     const indexOfColumn = initialIndexOfColumn - index;
-    if (
-      indexOfRow >= FIRST_INDEX &&
-      indexOfRow < rowLength &&
-      indexOfColumn >= FIRST_INDEX &&
-      indexOfColumn < columnLength
-    ) {
-      validIndexes.push(indexOfRow * columnLength + indexOfColumn);
-    }
+    pushIndexOfSlotIntoList({
+      indexOfColumn,
+      indexOfRow,
+      validIndexes,
+    });
   }
   return validIndexes;
 };
 
 const getIndexesOfShapeForVerticalLine = ({
-  columnLength,
   initialIndexOfColumn,
   initialIndexOfRow,
-  rowLength,
   size,
 }: {
-  columnLength: Integer;
   initialIndexOfColumn: Integer;
   initialIndexOfRow: Integer;
-  rowLength: Integer;
   size: Integer;
 }): Integer[] => {
-  const validIndexes = [];
+  const validIndexes: IndexOfSlot[] = [];
   for (let index = 0; index < size; index += ADJUST_INDEX) {
     const indexOfRow = initialIndexOfRow + index;
     const indexOfColumn = initialIndexOfColumn;
-    if (
-      indexOfRow >= FIRST_INDEX &&
-      indexOfRow < rowLength &&
-      indexOfColumn >= FIRST_INDEX &&
-      indexOfColumn < columnLength
-    ) {
-      validIndexes.push(indexOfRow * columnLength + indexOfColumn);
-    }
+    pushIndexOfSlotIntoList({
+      indexOfColumn,
+      indexOfRow,
+      validIndexes,
+    });
   }
   return validIndexes;
 };
 
 const getIndexesOfLine = ({
-  columnLength,
   direction,
   initialIndexOfColumn,
   initialIndexOfRow,
-  rowLength,
   size,
 }: {
-  columnLength: Integer;
   direction: Line["direction"];
   initialIndexOfColumn: Integer;
   initialIndexOfRow: Integer;
-  rowLength: Integer;
   size: Line["size"];
 }): Integer[] => {
   switch (direction) {
     case "horizontal": {
       return getIndexesOfShapeForHorizontalLine({
-        columnLength,
         initialIndexOfColumn,
         initialIndexOfRow,
-        rowLength,
         size,
       });
     }
     case "principalDiagonal": {
       return getIndexesOfShapeForPrincipalDiagonal({
-        columnLength,
         initialIndexOfColumn,
         initialIndexOfRow,
-        rowLength,
         size,
       });
     }
     case "secondaryDiagonal": {
       return getIndexesOfShapeForSecondaryDiagonal({
-        columnLength,
         initialIndexOfColumn,
         initialIndexOfRow,
-        rowLength,
         size,
       });
     }
     case "vertical": {
       return getIndexesOfShapeForVerticalLine({
-        columnLength,
         initialIndexOfColumn,
         initialIndexOfRow,
-        rowLength,
         size,
       });
     }
@@ -233,49 +212,37 @@ const getIndexesOfLine = ({
 };
 
 const getIndexesOfSlots = ({
-  columnLength,
   initialIndexOfColumn,
   initialIndexOfRow,
-  rowLength,
   shape,
 }: {
-  columnLength: Integer;
   initialIndexOfColumn: Integer;
   initialIndexOfRow: Integer;
-  rowLength: Integer;
   shape: Shape;
 }): IndexOfSlot[] => {
   const { direction, size } = shape;
   return getIndexesOfLine({
-    columnLength,
     direction,
     initialIndexOfColumn,
     initialIndexOfRow,
-    rowLength,
     size,
   });
 };
 
 const getIndexOfPlayerWhoIsOccupyingShape = ({
-  columnLength = COLUMN_LENGTH,
   initialIndexOfColumn,
   initialIndexOfRow,
-  rowLength = ROW_LENGTH,
   shape,
   slots,
 }: {
-  columnLength?: Integer;
   initialIndexOfColumn: Integer;
   initialIndexOfRow: Integer;
-  rowLength?: Integer;
   shape: Shape;
   slots: TicTacToeSlot[];
 }): IndexOfPlayer | null => {
   const indexesOfSlots = getIndexesOfSlots({
-    columnLength,
     initialIndexOfColumn,
     initialIndexOfRow,
-    rowLength,
     shape,
   });
 

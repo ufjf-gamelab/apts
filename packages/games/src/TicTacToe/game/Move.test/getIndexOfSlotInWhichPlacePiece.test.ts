@@ -1,4 +1,3 @@
-import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import {
   createDescriptionForTest,
   createDescriptionForTestsOfMethod,
@@ -19,18 +18,9 @@ const validateGetIndexOfSlotInWhichPlacePiece = ({
   >;
   move: TicTacToeMove;
 }) => {
-  let indexOfSlotInWhichPlacePiece = move.getIndexOfSlotInWhichPlacePiece();
+  const indexOfSlotInWhichPlacePiece = move.getIndexOfSlotInWhichPlacePiece();
   expect(indexOfSlotInWhichPlacePiece).toBe(
     expectedIndexOfSlotInWhichPlacePiece,
-  );
-
-  // Ensure that the returned object does not keep reference to the internal property
-  indexOfSlotInWhichPlacePiece += INCREMENT_ONE;
-  expect(move.getIndexOfSlotInWhichPlacePiece()).toBe(
-    expectedIndexOfSlotInWhichPlacePiece,
-  );
-  expect(move.getIndexOfSlotInWhichPlacePiece()).not.toEqual(
-    indexOfSlotInWhichPlacePiece,
   );
 };
 

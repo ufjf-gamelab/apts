@@ -773,6 +773,10 @@ const recordOfRequiredParamsOfTicTacToeStates = {
           moveWithDataAndIndex:
             recordOfTicTacToeMovesWithDataAndIndex.southeast,
         }),
+        constructTupleForMove({
+          moveWithDataAndIndex:
+            recordOfTicTacToeMovesWithDataAndIndex.southwest,
+        }),
       ]),
     },
   slotsR1C0AndR1C2AndR2C0AreFilledByAliceAndR0C0AndR1C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:

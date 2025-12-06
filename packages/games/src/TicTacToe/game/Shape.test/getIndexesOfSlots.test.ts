@@ -5,12 +5,7 @@ import {
 } from "@repo/engine_core/test.js";
 import { expect, test } from "vitest";
 
-import {
-  COLUMN_LENGTH,
-  getIndexesOfSlots,
-  getNameAndFormattedSizeOfShape,
-  ROW_LENGTH,
-} from "../Shape.js";
+import { getIndexesOfSlots, getNameAndFormattedSizeOfShape } from "../Shape.js";
 import {
   recordOfTicTacToeShapesWithDataInWhichShapesAreHorizontalLines,
   recordOfTicTacToeShapesWithDataInWhichShapesArePrincipalDiagonals,
@@ -31,10 +26,8 @@ const validateGetIndexesOfSlots = ({
   expectedIndexesOfSlots: ReturnType<typeof getIndexesOfSlots>;
 }) => {
   const indexesOfSlots = getIndexesOfSlots({
-    columnLength: COLUMN_LENGTH,
     initialIndexOfColumn,
     initialIndexOfRow,
-    rowLength: ROW_LENGTH,
     shape,
   });
 

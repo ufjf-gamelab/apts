@@ -74,171 +74,150 @@ const getNameAndFormattedSizeOfShape = ({
   };
 };
 
+const pushIndexOfSlotIntoList = ({
+  indexOfColumn,
+  indexOfRow,
+  validIndexes,
+}: {
+  indexOfColumn: Integer;
+  indexOfRow: Integer;
+  validIndexes: IndexOfSlot[];
+}) => {
+  if (
+    indexOfRow >= FIRST_INDEX &&
+    indexOfRow < COLUMN_LENGTH &&
+    indexOfColumn >= FIRST_INDEX &&
+    indexOfColumn < ROW_LENGTH
+  ) {
+    validIndexes.push(indexOfRow * ROW_LENGTH + indexOfColumn);
+  }
+};
+
 const getIndexesOfShapeForHorizontalLine = ({
-  columnLength,
   initialIndexOfColumn,
   initialIndexOfRow,
-  rowLength,
   size,
 }: {
-  columnLength: Integer;
   initialIndexOfColumn: Integer;
   initialIndexOfRow: Integer;
-  rowLength: Integer;
   size: Line["size"];
 }): Integer[] => {
-  const validIndexes = [];
+  const validIndexes: IndexOfSlot[] = [];
   for (let index = 0; index < size; index += ADJUST_INDEX) {
     const indexOfRow = initialIndexOfRow;
     const indexOfColumn = initialIndexOfColumn + index;
-    if (
-      indexOfRow >= FIRST_INDEX &&
-      indexOfRow < rowLength &&
-      indexOfColumn >= FIRST_INDEX &&
-      indexOfColumn < columnLength
-    ) {
-      validIndexes.push(indexOfRow * columnLength + indexOfColumn);
-    }
+    pushIndexOfSlotIntoList({
+      indexOfColumn,
+      indexOfRow,
+      validIndexes,
+    });
   }
   return validIndexes;
 };
 
 const getIndexesOfShapeForPrincipalDiagonal = ({
-  columnLength,
   initialIndexOfColumn,
   initialIndexOfRow,
-  rowLength,
   size,
 }: {
-  columnLength: Integer;
   initialIndexOfColumn: Integer;
   initialIndexOfRow: Integer;
-  rowLength: Integer;
   size: Line["size"];
 }): Integer[] => {
-  const validIndexes = [];
+  const validIndexes: IndexOfSlot[] = [];
   for (let index = 0; index < size; index += ADJUST_INDEX) {
     const indexOfRow = initialIndexOfRow + index;
     const indexOfColumn = initialIndexOfColumn + index;
-    if (
-      indexOfRow >= FIRST_INDEX &&
-      indexOfRow < rowLength &&
-      indexOfColumn >= FIRST_INDEX &&
-      indexOfColumn < columnLength
-    ) {
-      validIndexes.push(indexOfRow * columnLength + indexOfColumn);
-    }
+    pushIndexOfSlotIntoList({
+      indexOfColumn,
+      indexOfRow,
+      validIndexes,
+    });
   }
   return validIndexes;
 };
 
 const getIndexesOfShapeForSecondaryDiagonal = ({
-  columnLength,
   initialIndexOfColumn,
   initialIndexOfRow,
-  rowLength,
   size,
 }: {
-  columnLength: Integer;
   initialIndexOfColumn: Integer;
   initialIndexOfRow: Integer;
-  rowLength: Integer;
   size: Line["size"];
 }): Integer[] => {
-  const validIndexes = [];
+  const validIndexes: IndexOfSlot[] = [];
   for (let index = 0; index < size; index += ADJUST_INDEX) {
     const indexOfRow = initialIndexOfRow + index;
     const indexOfColumn = initialIndexOfColumn - index;
-    if (
-      indexOfRow >= FIRST_INDEX &&
-      indexOfRow < rowLength &&
-      indexOfColumn >= FIRST_INDEX &&
-      indexOfColumn < columnLength
-    ) {
-      validIndexes.push(indexOfRow * columnLength + indexOfColumn);
-    }
+    pushIndexOfSlotIntoList({
+      indexOfColumn,
+      indexOfRow,
+      validIndexes,
+    });
   }
   return validIndexes;
 };
 
 const getIndexesOfShapeForVerticalLine = ({
-  columnLength,
   initialIndexOfColumn,
   initialIndexOfRow,
-  rowLength,
   size,
 }: {
-  columnLength: Integer;
   initialIndexOfColumn: Integer;
   initialIndexOfRow: Integer;
-  rowLength: Integer;
   size: Integer;
 }): Integer[] => {
-  const validIndexes = [];
+  const validIndexes: IndexOfSlot[] = [];
   for (let index = 0; index < size; index += ADJUST_INDEX) {
     const indexOfRow = initialIndexOfRow + index;
     const indexOfColumn = initialIndexOfColumn;
-    if (
-      indexOfRow >= FIRST_INDEX &&
-      indexOfRow < rowLength &&
-      indexOfColumn >= FIRST_INDEX &&
-      indexOfColumn < columnLength
-    ) {
-      validIndexes.push(indexOfRow * columnLength + indexOfColumn);
-    }
+    pushIndexOfSlotIntoList({
+      indexOfColumn,
+      indexOfRow,
+      validIndexes,
+    });
   }
   return validIndexes;
 };
 
 const getIndexesOfLine = ({
-  columnLength,
   direction,
   initialIndexOfColumn,
   initialIndexOfRow,
-  rowLength,
   size,
 }: {
-  columnLength: Integer;
   direction: Line["direction"];
   initialIndexOfColumn: Integer;
   initialIndexOfRow: Integer;
-  rowLength: Integer;
   size: Line["size"];
 }): Integer[] => {
   switch (direction) {
     case "horizontal": {
       return getIndexesOfShapeForHorizontalLine({
-        columnLength,
         initialIndexOfColumn,
         initialIndexOfRow,
-        rowLength,
         size,
       });
     }
     case "principalDiagonal": {
       return getIndexesOfShapeForPrincipalDiagonal({
-        columnLength,
         initialIndexOfColumn,
         initialIndexOfRow,
-        rowLength,
         size,
       });
     }
     case "secondaryDiagonal": {
       return getIndexesOfShapeForSecondaryDiagonal({
-        columnLength,
         initialIndexOfColumn,
         initialIndexOfRow,
-        rowLength,
         size,
       });
     }
     case "vertical": {
       return getIndexesOfShapeForVerticalLine({
-        columnLength,
         initialIndexOfColumn,
         initialIndexOfRow,
-        rowLength,
         size,
       });
     }
@@ -251,18 +230,14 @@ const getIndexesOfLine = ({
 };
 
 const getIndexesOfRectangle = ({
-  columnLength,
   horizontalSize,
   initialIndexOfColumn,
   initialIndexOfRow,
-  rowLength,
   verticalSize,
 }: {
-  columnLength: Integer;
   horizontalSize: Rectangle["horizontalSize"];
   initialIndexOfColumn: Integer;
   initialIndexOfRow: Integer;
-  rowLength: Integer;
   verticalSize: Rectangle["verticalSize"];
 }): Integer[] => {
   const validIndexes = [];
@@ -272,7 +247,7 @@ const getIndexesOfRectangle = ({
     iterationOnRow += INCREMENT_ONE
   ) {
     const indexOfRow = initialIndexOfRow + iterationOnRow;
-    if (indexOfRow < FIRST_INDEX || indexOfRow >= rowLength) {
+    if (indexOfRow < FIRST_INDEX || indexOfRow >= COLUMN_LENGTH) {
       continue;
     }
     for (
@@ -281,26 +256,22 @@ const getIndexesOfRectangle = ({
       iterationOnColumn += INCREMENT_ONE
     ) {
       const indexOfColumn = initialIndexOfColumn + iterationOnColumn;
-      if (indexOfColumn < FIRST_INDEX || indexOfColumn >= columnLength) {
+      if (indexOfColumn < FIRST_INDEX || indexOfColumn >= ROW_LENGTH) {
         continue;
       }
-      validIndexes.push(indexOfRow * columnLength + indexOfColumn);
+      validIndexes.push(indexOfRow * ROW_LENGTH + indexOfColumn);
     }
   }
   return validIndexes;
 };
 
 const getIndexesOfSlots = ({
-  columnLength,
   initialIndexOfColumn,
   initialIndexOfRow,
-  rowLength,
   shape,
 }: {
-  columnLength: Integer;
   initialIndexOfColumn: Integer;
   initialIndexOfRow: Integer;
-  rowLength: Integer;
   shape: Shape;
 }): IndexOfSlot[] => {
   const { type } = shape;
@@ -308,22 +279,18 @@ const getIndexesOfSlots = ({
     case "line": {
       const { direction, size } = shape;
       return getIndexesOfLine({
-        columnLength,
         direction,
         initialIndexOfColumn,
         initialIndexOfRow,
-        rowLength,
         size,
       });
     }
     case "rectangle": {
       const { horizontalSize, verticalSize } = shape;
       return getIndexesOfRectangle({
-        columnLength,
         horizontalSize,
         initialIndexOfColumn,
         initialIndexOfRow,
-        rowLength,
         verticalSize,
       });
     }
@@ -334,25 +301,19 @@ const getIndexesOfSlots = ({
 };
 
 const getIndexOfPlayerWhoIsOccupyingShape = ({
-  columnLength,
   initialIndexOfColumn,
   initialIndexOfRow,
-  rowLength,
   shape,
   slots,
 }: {
-  columnLength: Integer;
   initialIndexOfColumn: Integer;
   initialIndexOfRow: Integer;
-  rowLength: Integer;
   shape: Shape;
   slots: SnowballSlot[];
 }): IndexOfPlayer | null => {
   const indexesOfSlots = getIndexesOfSlots({
-    columnLength,
     initialIndexOfColumn,
     initialIndexOfRow,
-    rowLength,
     shape,
   });
 
@@ -424,10 +385,8 @@ const getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots = ({
   slots: SnowballSlot[];
 }): SnowballScore => {
   const indexOfPlayerWhoIsOccupyingShape = getIndexOfPlayerWhoIsOccupyingShape({
-    columnLength: COLUMN_LENGTH,
     initialIndexOfColumn,
     initialIndexOfRow,
-    rowLength: ROW_LENGTH,
     shape,
     slots,
   });

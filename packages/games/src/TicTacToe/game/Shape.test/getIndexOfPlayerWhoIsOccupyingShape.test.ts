@@ -7,10 +7,8 @@ import { expect, test } from "vitest";
 import type { TicTacToeShapeWithData } from "./setup.js";
 
 import {
-  COLUMN_LENGTH,
   getIndexOfPlayerWhoIsOccupyingShape,
   getNameAndFormattedSizeOfShape,
-  ROW_LENGTH,
 } from "../Shape.js";
 import { indexedTicTacToeSlotsWithDataInWhichSlotsR0C0AndR0C2AndR1C1AndR2C1AndR2C2AreFilledByAliceAndR0C1AndR1C0AndR1C2AndR2C0AreFilledByBruno } from "../Slot.test/indexedRecords.js";
 import {
@@ -35,10 +33,8 @@ const validateGetIndexOfPlayerWhoIsOccupyingShape = ({
   >;
 }) => {
   const indexOfPlayerWhoIsOccupyingShape = getIndexOfPlayerWhoIsOccupyingShape({
-    columnLength: COLUMN_LENGTH,
     initialIndexOfColumn,
     initialIndexOfRow,
-    rowLength: ROW_LENGTH,
     shape,
     slots,
   });

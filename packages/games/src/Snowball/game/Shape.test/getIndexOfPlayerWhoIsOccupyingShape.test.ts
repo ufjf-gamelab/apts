@@ -7,10 +7,8 @@ import { expect, test } from "vitest";
 import type { SnowballShapeWithData } from "./setup.js";
 
 import {
-  COLUMN_LENGTH,
   getIndexOfPlayerWhoIsOccupyingShape,
   getNameAndFormattedSizeOfShape,
-  ROW_LENGTH,
 } from "../Shape.js";
 import { indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno } from "../Slot.test/indexedRecords.js";
 import {
@@ -37,10 +35,8 @@ const validateGetIndexOfPlayerWhoIsOccupyingShape = ({
   >;
 }) => {
   const indexOfPlayerWhoIsOccupyingShape = getIndexOfPlayerWhoIsOccupyingShape({
-    columnLength: COLUMN_LENGTH,
     initialIndexOfColumn,
     initialIndexOfRow,
-    rowLength: ROW_LENGTH,
     shape,
     slots,
   });

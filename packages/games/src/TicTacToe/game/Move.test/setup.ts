@@ -44,7 +44,7 @@ const deriveParamsOfTicTacToeMove = ({
   title,
 }: RequiredParamsOfTicTacToeMove): DerivedParamsOfTicTacToeMove => {
   const moveParams = deriveParamsOfMove({
-    description: `Control the move on ${title}.`,
+    description: `Control the slot on ${title}.`,
     title,
   });
   return {
