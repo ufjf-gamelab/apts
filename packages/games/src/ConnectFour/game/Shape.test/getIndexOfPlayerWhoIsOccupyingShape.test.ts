@@ -38,7 +38,6 @@ const validateGetIndexOfPlayerWhoIsOccupyingShape = ({
     shape,
     slots,
   });
-
   expect(indexOfPlayerWhoIsOccupyingShape).toBe(
     expectedIndexOfPlayerWhoIsOccupyingShape,
   );

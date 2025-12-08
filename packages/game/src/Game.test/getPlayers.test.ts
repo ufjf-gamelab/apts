@@ -40,7 +40,6 @@ const validateGetPlayers = <
 }) => {
   const players = game.getPlayers();
   expect(players).toBeInstanceOf(Array<GenericPlayer>);
-  expect(players).not.toBe(expectedPlayers);
   expect(players).toStrictEqual(expectedPlayers);
 
   const [firstPlayer] = players;

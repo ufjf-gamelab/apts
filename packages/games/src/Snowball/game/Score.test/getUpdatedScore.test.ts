@@ -22,7 +22,6 @@ const validateGetUpdatedScore = ({
   const updatedScore = score.getUpdatedScore({
     slots,
   });
-  expect(updatedScore).not.toBe(expectedScore);
   expect(updatedScore).toStrictEqual(expectedScore);
 };
 

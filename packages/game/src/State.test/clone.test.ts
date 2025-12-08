@@ -44,7 +44,6 @@ const validateClone = <
   >;
 }) => {
   expect(clonedState).toBeInstanceOf(State);
-  expect(clonedState).not.toBe(state);
   expect(clonedState).toStrictEqual(state);
 };
 

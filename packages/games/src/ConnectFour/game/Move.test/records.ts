@@ -9,27 +9,27 @@ const recordOfRequiredParamsOfConnectFourMoves = {
     title: "First column",
   },
   c1: {
-    indexOfColumnInWhichPlacePiece: 0,
+    indexOfColumnInWhichPlacePiece: 1,
     title: "Second column",
   },
   c2: {
-    indexOfColumnInWhichPlacePiece: 0,
+    indexOfColumnInWhichPlacePiece: 2,
     title: "Third column",
   },
   c3: {
-    indexOfColumnInWhichPlacePiece: 0,
+    indexOfColumnInWhichPlacePiece: 3,
     title: "Fourth column",
   },
   c4: {
-    indexOfColumnInWhichPlacePiece: 0,
+    indexOfColumnInWhichPlacePiece: 4,
     title: "Fifth column",
   },
   c5: {
-    indexOfColumnInWhichPlacePiece: 0,
+    indexOfColumnInWhichPlacePiece: 5,
     title: "Sixth column",
   },
   c6: {
-    indexOfColumnInWhichPlacePiece: 0,
+    indexOfColumnInWhichPlacePiece: 6,
     title: "Seventh column",
   },
 } as const satisfies RecordOfRequiredParamsOfConnectFourMoves;

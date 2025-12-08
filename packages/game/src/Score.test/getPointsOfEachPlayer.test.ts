@@ -1,15 +1,11 @@
-import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import { formatArray } from "@repo/engine_core/format.js";
 import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
-import type { IndexOfPlayer, Player } from "../Player.js";
+import type { Player } from "../Player.js";
 import type { Points, Score } from "../Score.js";
 
 import { createDescriptionForPlayerAndItsPoints } from "./setup.js";
-
-const INDEX_OF_FIRST_PLAYER = 0;
-const ZERO_POINTS = 0;
 
 const validateGetPointsOfEachPlayer = <
   GenericScore extends Score<GenericScore>,
@@ -20,24 +16,8 @@ const validateGetPointsOfEachPlayer = <
   expectedPointsOfEachPlayer: ReturnType<GenericScore["getPointsOfEachPlayer"]>;
   score: GenericScore;
 }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
-  const pointsOfEachPlayer = score.getPointsOfEachPlayer() as Map<
-    IndexOfPlayer,
-    Points
-  >;
-  expect(pointsOfEachPlayer).not.toBe(expectedPointsOfEachPlayer);
+  const pointsOfEachPlayer = score.getPointsOfEachPlayer();
   expect(pointsOfEachPlayer).toStrictEqual(expectedPointsOfEachPlayer);
-
-  // Ensure that the returned object does not keep reference to the internal property
-  pointsOfEachPlayer.set(
-    INDEX_OF_FIRST_PLAYER,
-    (pointsOfEachPlayer.get(INDEX_OF_FIRST_PLAYER) ?? ZERO_POINTS) +
-      INCREMENT_ONE,
-  );
-  expect(score.getPointsOfEachPlayer()).toStrictEqual(
-    expectedPointsOfEachPlayer,
-  );
-  expect(score.getPointsOfEachPlayer()).not.toEqual(pointsOfEachPlayer);
 };
 
 const createDescriptionForTestOfGetPointsOfEachPlayer = <

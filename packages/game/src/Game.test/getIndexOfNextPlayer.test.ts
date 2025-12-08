@@ -1,4 +1,3 @@
-import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
@@ -37,13 +36,8 @@ const validateGetIndexOfNextPlayer = <
   expectedIndexOfNextPlayer: ReturnType<GenericGame["getIndexOfNextPlayer"]>;
 }) => {
   const game = state.getGame();
-  let indexOfNextPlayer = game.getIndexOfNextPlayer({ state });
+  const indexOfNextPlayer = game.getIndexOfNextPlayer({ state });
   expect(indexOfNextPlayer).toBe(expectedIndexOfNextPlayer);
-
-  // Ensure that the returned object does not keep reference to the internal property
-  indexOfNextPlayer += INCREMENT_ONE;
-  expect(game.getIndexOfNextPlayer({ state })).toBe(expectedIndexOfNextPlayer);
-  expect(game.getIndexOfNextPlayer({ state })).not.toEqual(indexOfNextPlayer);
 };
 
 const createDescriptionForTestOfGetIndexOfNextPlayer = <

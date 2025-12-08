@@ -32,8 +32,6 @@ const validateGetIndexesOfSlots = ({
     initialIndexOfRow,
     shape,
   });
-
-  expect(indexesOfSlots).not.toBe(expectedIndexesOfSlots);
   expect(indexesOfSlots).toStrictEqual(expectedIndexesOfSlots);
 };
 

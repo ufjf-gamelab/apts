@@ -10,13 +10,8 @@ const validateGetTitle = <GenericMove extends Move<GenericMove>>({
   expectedTitle: ReturnType<GenericMove["getTitle"]>;
   move: GenericMove;
 }) => {
-  let title = move.getTitle();
+  const title = move.getTitle();
   expect(title).toBe(expectedTitle);
-
-  // Ensure that the returned object does not keep reference to the internal property
-  title = `${title} (modified)`;
-  expect(move.getTitle()).toBe(expectedTitle);
-  expect(move.getTitle()).not.toEqual(title);
 };
 
 const createDescriptionForTestOfGetTitle = <

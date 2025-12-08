@@ -10,13 +10,8 @@ const validateGetDescription = <GenericMove extends Move<GenericMove>>({
   expectedDescription: ReturnType<GenericMove["getDescription"]>;
   move: GenericMove;
 }) => {
-  let description = move.getDescription();
+  const description = move.getDescription();
   expect(description).toBe(expectedDescription);
-
-  // Ensure that the returned object does not keep reference to the internal property
-  description = `${description} (modified)`;
-  expect(move.getDescription()).toBe(expectedDescription);
-  expect(move.getDescription()).not.toEqual(description);
 };
 
 const createDescriptionForTestOfGetDescription = <

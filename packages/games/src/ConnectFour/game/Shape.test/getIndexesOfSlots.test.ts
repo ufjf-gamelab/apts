@@ -30,7 +30,6 @@ const validateGetIndexesOfSlots = ({
     initialIndexOfRow,
     shape,
   });
-
   expect(indexesOfSlots).toStrictEqual(expectedIndexesOfSlots);
 };
 

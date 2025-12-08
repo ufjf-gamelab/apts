@@ -41,7 +41,6 @@ const validateGetIndexesOfValidMoves = <
 }) => {
   const game = state.getGame();
   const indexesOfValidMoves = game.getIndexesOfValidMoves({ state });
-
   expect(indexesOfValidMoves).toBeInstanceOf(Set<IndexOfMove>);
   assert.isEmpty(indexesOfValidMoves.difference(expectedIndexesOfValidMoves));
 };

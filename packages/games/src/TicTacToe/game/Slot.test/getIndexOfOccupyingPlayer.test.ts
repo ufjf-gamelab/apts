@@ -1,4 +1,3 @@
-import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import {
   createDescriptionForTest,
   createDescriptionForTestsOfMethod,
@@ -13,8 +12,6 @@ import {
   indexedTicTacToeSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
 } from "./indexedRecords.js";
 
-const INDEX_OF_FIRST_PLAYER = 0;
-
 const validateGetIndexOfOccupyingPlayer = ({
   expectedIndexOfOccupyingPlayer,
   slot,
@@ -24,17 +21,8 @@ const validateGetIndexOfOccupyingPlayer = ({
   >;
   slot: TicTacToeSlot;
 }) => {
-  let indexOfOccupyingPlayer = slot.getIndexOfOccupyingPlayer();
+  const indexOfOccupyingPlayer = slot.getIndexOfOccupyingPlayer();
   expect(indexOfOccupyingPlayer).toBe(expectedIndexOfOccupyingPlayer);
-
-  // Ensure that the returned object does not keep reference to the internal property
-  if (indexOfOccupyingPlayer === null) {
-    indexOfOccupyingPlayer = INDEX_OF_FIRST_PLAYER;
-  } else {
-    indexOfOccupyingPlayer += INCREMENT_ONE;
-  }
-  expect(slot.getIndexOfOccupyingPlayer()).toBe(expectedIndexOfOccupyingPlayer);
-  expect(slot.getIndexOfOccupyingPlayer()).not.toEqual(indexOfOccupyingPlayer);
 };
 
 const createDescriptionForTestOfGetIndexOfOccupyingPlayer = ({

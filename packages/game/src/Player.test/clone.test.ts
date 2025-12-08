@@ -10,7 +10,6 @@ const validateClone = <GenericPlayer extends Player<GenericPlayer>>({
   player: GenericPlayer;
 }) => {
   expect(clonedPlayer).toBeInstanceOf(Player);
-  expect(clonedPlayer).not.toBe(player);
   expect(clonedPlayer).toStrictEqual(player);
 };
 

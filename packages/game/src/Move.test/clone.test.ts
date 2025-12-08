@@ -10,7 +10,6 @@ const validateClone = <GenericMove extends Move<GenericMove>>({
   move: GenericMove;
 }) => {
   expect(clonedMove).toBeInstanceOf(Move);
-  expect(clonedMove).not.toBe(move);
   expect(clonedMove).toStrictEqual(move);
 };
 

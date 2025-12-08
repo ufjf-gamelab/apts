@@ -1,4 +1,3 @@
-import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
@@ -38,17 +37,8 @@ const validateGetPointsOfPlayer = <
   expectedPointsOfPlayer: ReturnType<GenericState["getPointsOfPlayer"]>;
   state: GenericState;
 }) => {
-  let pointsOfPlayer = state.getPointsOfPlayer({ indexOfPlayer });
+  const pointsOfPlayer = state.getPointsOfPlayer({ indexOfPlayer });
   expect(pointsOfPlayer).toBe(expectedPointsOfPlayer);
-
-  // Ensure that the returned object does not keep reference to the internal property
-  pointsOfPlayer += INCREMENT_ONE;
-  expect(state.getPointsOfPlayer({ indexOfPlayer })).toBe(
-    expectedPointsOfPlayer,
-  );
-  expect(state.getPointsOfPlayer({ indexOfPlayer })).not.toEqual(
-    pointsOfPlayer,
-  );
 };
 
 const createDescriptionForTestOfGetPointsOfPlayer = <

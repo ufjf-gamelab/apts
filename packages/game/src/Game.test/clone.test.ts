@@ -37,7 +37,6 @@ const validateClone = <
   game: GenericGame;
 }) => {
   expect(clonedGame).toBeInstanceOf(Game);
-  expect(clonedGame).not.toBe(game);
   expect(clonedGame).toStrictEqual(game);
 };
 

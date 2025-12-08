@@ -12,7 +12,6 @@ import type { ConnectFourStateWithData } from "../State.test/setup.js";
 
 import { recordOfConnectFourSlotsWithDataAndIndexInWhichAllSlotsAreEmpty } from "../Slot.test/indexedRecords.js";
 import { recordOfConnectFourStatesWithData } from "../State.test/records.js";
-import { indexedConnectFourMovesWithData } from "./indexedRecords.js";
 import { recordOfConnectFourMovesWithData } from "./records.js";
 import { type ConnectFourMoveWithData } from "./setup.js";
 

@@ -29,15 +29,21 @@ class TicTacToeState extends State<
   public override toString(): string {
     const game = this.getGame();
     let board = "";
-    for (let row = FIRST_INDEX; row < ROW_LENGTH; row += INCREMENT_ONE) {
+    for (
+      let indexOfRow = FIRST_INDEX;
+      indexOfRow < COLUMN_LENGTH;
+      indexOfRow += INCREMENT_ONE
+    ) {
       board += "|";
       for (
-        let column = FIRST_INDEX;
-        column < COLUMN_LENGTH;
-        column += INCREMENT_ONE
+        let indexOfColumn = FIRST_INDEX;
+        indexOfColumn < ROW_LENGTH;
+        indexOfColumn += INCREMENT_ONE
       ) {
         board += " ";
-        const slot = this.getSlot({ indexOfSlot: row * ROW_LENGTH + column });
+        const slot = this.getSlot({
+          indexOfSlot: indexOfRow * ROW_LENGTH + indexOfColumn,
+        });
         if (slot === null) {
           board += "-";
         } else {

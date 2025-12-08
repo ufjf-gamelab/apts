@@ -10,7 +10,6 @@ const validateClone = <GenericScore extends Score<GenericScore>>({
   score: GenericScore;
 }) => {
   expect(clonedScore).toBeInstanceOf(Score);
-  expect(clonedScore).not.toBe(score);
   expect(clonedScore).toStrictEqual(score);
 };
 

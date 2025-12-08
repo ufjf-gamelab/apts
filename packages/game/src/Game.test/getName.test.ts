@@ -36,13 +36,8 @@ const validateGetName = <
   expectedName: ReturnType<GenericGame["getName"]>;
   game: GenericGame;
 }) => {
-  let name = game.getName();
+  const name = game.getName();
   expect(name).toBe(expectedName);
-
-  // Ensure that the returned object does not keep reference to the internal property
-  name = `${name} (modified)`;
-  expect(game.getName()).toBe(expectedName);
-  expect(game.getName()).not.toEqual(name);
 };
 
 const createDescriptionForTestOfGetName = <

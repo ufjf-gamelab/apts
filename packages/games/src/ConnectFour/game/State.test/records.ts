@@ -10,9 +10,9 @@ import {
   indexedConnectFourSlotsWithDataInWhichAllSlotsAreEmpty,
   indexedConnectFourSlotsWithDataInWhichSlotR5C0IsFilledByAlice,
   indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AreFilledByBruno,
-  indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AreFilledByBruno,
   indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C1AndR1C1AndR0C1AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C0AndR1C0AreFilledByBruno,
   indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C1AndR1C1AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C0AndR1C0AreFilledByBruno,
+  indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AreFilledByBruno,
 } from "../Slot.test/indexedRecords.js";
 import {
   createRecordOfConnectFourStatesWithData,
@@ -136,42 +136,6 @@ const recordOfRequiredParamsOfConnectFourStates = {
         }),
       ]),
     },
-  slotsR5C0AndR4C0AndR3C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
-    {
-      gameWithData:
-        recordOfConnectFourGamesWithData.snowballWith9RowsAnd9Columns,
-      isFinal: false,
-      nextPlayerWithDataAndIndex:
-        recordOfConnectFourPlayersWithDataAndIndex.bruno,
-      playerWithDataAndIndex: recordOfConnectFourPlayersWithDataAndIndex.alice,
-      scoreWithData:
-        recordOfConnectFourScoresWithData.aliceWith0PointsAndBrunoWith0Points,
-      slotsWithData:
-        indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AreFilledByBruno,
-      validMovesWithData: new Map([
-        constructTupleForMove({
-          moveWithDataAndIndex: recordOfConnectFourMovesWithDataAndIndex.c0,
-        }),
-        constructTupleForMove({
-          moveWithDataAndIndex: recordOfConnectFourMovesWithDataAndIndex.c1,
-        }),
-        constructTupleForMove({
-          moveWithDataAndIndex: recordOfConnectFourMovesWithDataAndIndex.c2,
-        }),
-        constructTupleForMove({
-          moveWithDataAndIndex: recordOfConnectFourMovesWithDataAndIndex.c3,
-        }),
-        constructTupleForMove({
-          moveWithDataAndIndex: recordOfConnectFourMovesWithDataAndIndex.c4,
-        }),
-        constructTupleForMove({
-          moveWithDataAndIndex: recordOfConnectFourMovesWithDataAndIndex.c5,
-        }),
-        constructTupleForMove({
-          moveWithDataAndIndex: recordOfConnectFourMovesWithDataAndIndex.c6,
-        }),
-      ]),
-    },
   slotsR5C0AndR4C0AndR3C0AndR2C1AndR1C1AndR0C1AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C0AndR1C0AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     {
       gameWithData:
@@ -217,6 +181,42 @@ const recordOfRequiredParamsOfConnectFourStates = {
         recordOfConnectFourScoresWithData.aliceWith0PointsAndBrunoWith0Points,
       slotsWithData:
         indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C1AndR1C1AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C0AndR1C0AreFilledByBruno,
+      validMovesWithData: new Map([
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfConnectFourMovesWithDataAndIndex.c0,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfConnectFourMovesWithDataAndIndex.c1,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfConnectFourMovesWithDataAndIndex.c2,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfConnectFourMovesWithDataAndIndex.c3,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfConnectFourMovesWithDataAndIndex.c4,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfConnectFourMovesWithDataAndIndex.c5,
+        }),
+        constructTupleForMove({
+          moveWithDataAndIndex: recordOfConnectFourMovesWithDataAndIndex.c6,
+        }),
+      ]),
+    },
+  slotsR5C0AndR4C0AndR3C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
+    {
+      gameWithData:
+        recordOfConnectFourGamesWithData.snowballWith9RowsAnd9Columns,
+      isFinal: false,
+      nextPlayerWithDataAndIndex:
+        recordOfConnectFourPlayersWithDataAndIndex.bruno,
+      playerWithDataAndIndex: recordOfConnectFourPlayersWithDataAndIndex.alice,
+      scoreWithData:
+        recordOfConnectFourScoresWithData.aliceWith0PointsAndBrunoWith0Points,
+      slotsWithData:
+        indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AreFilledByBruno,
       validMovesWithData: new Map([
         constructTupleForMove({
           moveWithDataAndIndex: recordOfConnectFourMovesWithDataAndIndex.c0,

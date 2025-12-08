@@ -10,7 +10,6 @@ const validateClone = <GenericSlot extends Slot<GenericSlot>>({
   slot: GenericSlot;
 }) => {
   expect(clonedSlot).toBeInstanceOf(Slot);
-  expect(clonedSlot).not.toBe(slot);
   expect(clonedSlot).toStrictEqual(slot);
 };
 

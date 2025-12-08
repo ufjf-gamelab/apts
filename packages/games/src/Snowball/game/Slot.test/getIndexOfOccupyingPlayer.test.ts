@@ -1,4 +1,3 @@
-import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import {
   createDescriptionForTest,
   createDescriptionForTestsOfMethod,
@@ -16,8 +15,6 @@ import {
   indexedSnowballSlotsWithDataInWhichSlotsR0C0ToR4C4AndR5C5AreFilledByAliceAndSlotsR8C4AndR6C5ToR8C6AndR0C7ToR8C8AreFilledByBruno,
 } from "./indexedRecords.js";
 
-const INDEX_OF_FIRST_PLAYER = 0;
-
 const validateGetIndexOfOccupyingPlayer = ({
   expectedIndexOfOccupyingPlayer,
   slot,
@@ -27,17 +24,8 @@ const validateGetIndexOfOccupyingPlayer = ({
   >;
   slot: SnowballSlot;
 }) => {
-  let indexOfOccupyingPlayer = slot.getIndexOfOccupyingPlayer();
+  const indexOfOccupyingPlayer = slot.getIndexOfOccupyingPlayer();
   expect(indexOfOccupyingPlayer).toBe(expectedIndexOfOccupyingPlayer);
-
-  // Ensure that the returned object does not keep reference to the internal property
-  if (indexOfOccupyingPlayer === null) {
-    indexOfOccupyingPlayer = INDEX_OF_FIRST_PLAYER;
-  } else {
-    indexOfOccupyingPlayer += INCREMENT_ONE;
-  }
-  expect(slot.getIndexOfOccupyingPlayer()).toBe(expectedIndexOfOccupyingPlayer);
-  expect(slot.getIndexOfOccupyingPlayer()).not.toEqual(indexOfOccupyingPlayer);
 };
 
 const createDescriptionForTestOfGetIndexOfOccupyingPlayer = ({

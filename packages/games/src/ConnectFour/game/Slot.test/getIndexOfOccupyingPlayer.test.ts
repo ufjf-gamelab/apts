@@ -1,4 +1,3 @@
-import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import {
   createDescriptionForTest,
   createDescriptionForTestsOfMethod,
@@ -12,12 +11,10 @@ import {
   indexedConnectFourSlotsWithDataInWhichAllSlotsAreEmpty,
   indexedConnectFourSlotsWithDataInWhichSlotR5C0IsFilledByAlice,
   indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AreFilledByBruno,
-  indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AreFilledByBruno,
   indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C1AndR1C1AndR0C1AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C0AndR1C0AreFilledByBruno,
   indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C1AndR1C1AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C0AndR1C0AreFilledByBruno,
+  indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AreFilledByBruno,
 } from "./indexedRecords.js";
-
-const INDEX_OF_FIRST_PLAYER = 0;
 
 const validateGetIndexOfOccupyingPlayer = ({
   expectedIndexOfOccupyingPlayer,
@@ -28,17 +25,8 @@ const validateGetIndexOfOccupyingPlayer = ({
   >;
   slot: ConnectFourSlot;
 }) => {
-  let indexOfOccupyingPlayer = slot.getIndexOfOccupyingPlayer();
+  const indexOfOccupyingPlayer = slot.getIndexOfOccupyingPlayer();
   expect(indexOfOccupyingPlayer).toBe(expectedIndexOfOccupyingPlayer);
-
-  // Ensure that the returned object does not keep reference to the internal property
-  if (indexOfOccupyingPlayer === null) {
-    indexOfOccupyingPlayer = INDEX_OF_FIRST_PLAYER;
-  } else {
-    indexOfOccupyingPlayer += INCREMENT_ONE;
-  }
-  expect(slot.getIndexOfOccupyingPlayer()).toBe(expectedIndexOfOccupyingPlayer);
-  expect(slot.getIndexOfOccupyingPlayer()).not.toEqual(indexOfOccupyingPlayer);
 };
 
 const createDescriptionForTestOfGetIndexOfOccupyingPlayer = ({

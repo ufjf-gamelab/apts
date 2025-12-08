@@ -1,4 +1,3 @@
-import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
@@ -37,13 +36,8 @@ const validateGetQuantityOfSlots = <
   expectedQuantityOfSlots: ReturnType<GenericGame["getQuantityOfSlots"]>;
   game: GenericGame;
 }) => {
-  let quantityOfSlots = game.getQuantityOfSlots();
+  const quantityOfSlots = game.getQuantityOfSlots();
   expect(quantityOfSlots).toBe(expectedQuantityOfSlots);
-
-  // Ensure that the returned object does not keep reference to the internal property
-  quantityOfSlots += INCREMENT_ONE;
-  expect(game.getQuantityOfSlots()).toBe(expectedQuantityOfSlots);
-  expect(game.getQuantityOfSlots()).not.toEqual(quantityOfSlots);
 };
 
 const createDescriptionForTestOfGetQuantityOfSlots = <

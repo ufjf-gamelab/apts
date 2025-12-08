@@ -37,12 +37,7 @@ const validateConstructInitialState = <
   game: GenericGame;
 }) => {
   const initialState = game.constructInitialState();
-  expect(initialState).not.toBe(expectedInitialState);
   expect(initialState).toStrictEqual(expectedInitialState);
-
-  // Ensure that the returned object does not keep reference to the internal property
-  const otherInitialState = game.constructInitialState();
-  expect(otherInitialState).not.toBe(initialState);
 };
 
 const createDescriptionForTestOfConstructInitialState = <

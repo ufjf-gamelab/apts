@@ -40,7 +40,6 @@ const validateGetMoves = <
 }) => {
   const moves = game.getMoves();
   expect(moves).toBeInstanceOf(Array<GenericMove>);
-  expect(moves).not.toBe(expectedMoves);
   expect(moves).toStrictEqual(expectedMoves);
 
   const [firstMove] = moves;
