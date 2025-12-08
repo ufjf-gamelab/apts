@@ -6,7 +6,7 @@ import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 import type { ParamsOfSearch } from "@repo/search/MonteCarloTree/Search.js";
 
-import { CommonSearch } from "@repo/search/CommonMonteCarloTree/search.js";
+import { CommonSearch } from "@repo/search/CommonMonteCarloTree/CommonSearch.js";
 
 import type { StrategyToSearch } from "./constants.js";
 

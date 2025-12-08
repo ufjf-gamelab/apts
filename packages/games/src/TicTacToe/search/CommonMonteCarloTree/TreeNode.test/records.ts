@@ -1,4 +1,12 @@
+import type { CommonTreeNode } from "@repo/search/CommonMonteCarloTree/CommonTreeNode.js";
+
+import type { TicTacToeGame } from "../../../game/Game.js";
+import type { TicTacToeMove } from "../../../game/Move.js";
 import type { TicTacToeMoveWithData } from "../../../game/Move.test/setup.js";
+import type { TicTacToePlayer } from "../../../game/Player.js";
+import type { TicTacToeScore } from "../../../game/Score.js";
+import type { TicTacToeSlot } from "../../../game/Slot.js";
+import type { TicTacToeState } from "../../../game/State.js";
 
 import {
   recordOfTicTacToeMovesWithDataAndIndex,
@@ -30,7 +38,16 @@ const currentRoot = createTicTacToeTreeNodeWithData({
     stateWithData:
       recordOfTicTacToeStatesWithData.allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
   },
-}) satisfies TicTacToeTreeNodeWithData;
+}) satisfies TicTacToeTreeNodeWithData<
+  CommonTreeNode<
+    TicTacToeGame,
+    TicTacToeMove,
+    TicTacToePlayer,
+    TicTacToeScore,
+    TicTacToeSlot,
+    TicTacToeState
+  >
+>;
 
 /* ((*), (Northwest)) */
 const currentRootThenNorthwest = createTicTacToeTreeNodeWithData({
@@ -50,7 +67,16 @@ const currentRootThenNorthwest = createTicTacToeTreeNodeWithData({
     stateWithData:
       recordOfTicTacToeStatesWithData.allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
   },
-}) satisfies TicTacToeTreeNodeWithData;
+}) satisfies TicTacToeTreeNodeWithData<
+  CommonTreeNode<
+    TicTacToeGame,
+    TicTacToeMove,
+    TicTacToePlayer,
+    TicTacToeScore,
+    TicTacToeSlot,
+    TicTacToeState
+  >
+>;
 
 /* ((), (*Northwest)) */
 const rootThenCurrentNorthwest = {
@@ -66,7 +92,16 @@ const rootThenCurrentNorthwest = {
   treeNode: currentRootThenNorthwest.treeNode.expand({
     indexOfMove: recordOfTicTacToeMovesWithDataAndIndex.northwest.indexOfMove,
   }),
-} satisfies TicTacToeTreeNodeWithData;
+} satisfies TicTacToeTreeNodeWithData<
+  CommonTreeNode<
+    TicTacToeGame,
+    TicTacToeMove,
+    TicTacToePlayer,
+    TicTacToeScore,
+    TicTacToeSlot,
+    TicTacToeState
+  >
+>;
 
 /* ((*), (Center, East, North, Northeast, Northwest, South, Southeast, Southwest, West)) */
 const currentRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest =
@@ -118,7 +153,16 @@ const currentRootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheast
       stateWithData:
         recordOfTicTacToeStatesWithData.allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer,
     },
-  }) satisfies TicTacToeTreeNodeWithData;
+  }) satisfies TicTacToeTreeNodeWithData<
+    CommonTreeNode<
+      TicTacToeGame,
+      TicTacToeMove,
+      TicTacToePlayer,
+      TicTacToeScore,
+      TicTacToeSlot,
+      TicTacToeState
+    >
+  >;
 
 /* ((), (*Center, East, North, Northeast, Northwest, South, Southeast, Southwest, West)) */
 const rootThenCurrentCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest =
@@ -140,7 +184,16 @@ const rootThenCurrentCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheast
             recordOfTicTacToeMovesWithDataAndIndex.center.indexOfMove,
         },
       ),
-  } satisfies TicTacToeTreeNodeWithData;
+  } satisfies TicTacToeTreeNodeWithData<
+    CommonTreeNode<
+      TicTacToeGame,
+      TicTacToeMove,
+      TicTacToePlayer,
+      TicTacToeScore,
+      TicTacToeSlot,
+      TicTacToeState
+    >
+  >;
 
 /* ((), (Center, *East, North, Northeast, Northwest, South, Southeast, Southwest, West)) */
 const rootThenCenterOrCurrentEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest =
@@ -161,7 +214,16 @@ const rootThenCenterOrCurrentEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheast
           indexOfMove: recordOfTicTacToeMovesWithDataAndIndex.east.indexOfMove,
         },
       ),
-  } satisfies TicTacToeTreeNodeWithData;
+  } satisfies TicTacToeTreeNodeWithData<
+    CommonTreeNode<
+      TicTacToeGame,
+      TicTacToeMove,
+      TicTacToePlayer,
+      TicTacToeScore,
+      TicTacToeSlot,
+      TicTacToeState
+    >
+  >;
 
 /* ((), (Center, East, *North, Northeast, Northwest, South, Southeast, Southwest, West)) */
 const rootThenCenterOrEastOrCurrentNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest =
@@ -182,7 +244,16 @@ const rootThenCenterOrEastOrCurrentNorthOrNortheastOrNorthwestOrSouthOrSoutheast
           indexOfMove: recordOfTicTacToeMovesWithDataAndIndex.north.indexOfMove,
         },
       ),
-  } satisfies TicTacToeTreeNodeWithData;
+  } satisfies TicTacToeTreeNodeWithData<
+    CommonTreeNode<
+      TicTacToeGame,
+      TicTacToeMove,
+      TicTacToePlayer,
+      TicTacToeScore,
+      TicTacToeSlot,
+      TicTacToeState
+    >
+  >;
 
 /* ((), (Center, East, North, *Northeast, Northwest, South, Southeast, Southwest, West)) */
 const rootThenCenterOrEastOrNorthOrCurrentNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest =
@@ -205,7 +276,16 @@ const rootThenCenterOrEastOrNorthOrCurrentNortheastOrNorthwestOrSouthOrSoutheast
             recordOfTicTacToeMovesWithDataAndIndex.northeast.indexOfMove,
         },
       ),
-  } satisfies TicTacToeTreeNodeWithData;
+  } satisfies TicTacToeTreeNodeWithData<
+    CommonTreeNode<
+      TicTacToeGame,
+      TicTacToeMove,
+      TicTacToePlayer,
+      TicTacToeScore,
+      TicTacToeSlot,
+      TicTacToeState
+    >
+  >;
 
 /* ((), (Center, East, North, Northeast, *Northwest, South, Southeast, Southwest, West)) */
 const rootThenCenterOrEastOrNorthOrNortheastOrCurrentNorthwestOrSouthOrSoutheastOrSouthwestOrWest =
@@ -228,7 +308,16 @@ const rootThenCenterOrEastOrNorthOrNortheastOrCurrentNorthwestOrSouthOrSoutheast
             recordOfTicTacToeMovesWithDataAndIndex.northwest.indexOfMove,
         },
       ),
-  } satisfies TicTacToeTreeNodeWithData;
+  } satisfies TicTacToeTreeNodeWithData<
+    CommonTreeNode<
+      TicTacToeGame,
+      TicTacToeMove,
+      TicTacToePlayer,
+      TicTacToeScore,
+      TicTacToeSlot,
+      TicTacToeState
+    >
+  >;
 
 /* ((), (Center, East, North, Northeast, Northwest, *South, Southeast, Southwest, West)) */
 const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrCurrentSouthOrSoutheastOrSouthwestOrWest =
@@ -249,7 +338,16 @@ const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrCurrentSouthOrSoutheast
           indexOfMove: recordOfTicTacToeMovesWithDataAndIndex.south.indexOfMove,
         },
       ),
-  } satisfies TicTacToeTreeNodeWithData;
+  } satisfies TicTacToeTreeNodeWithData<
+    CommonTreeNode<
+      TicTacToeGame,
+      TicTacToeMove,
+      TicTacToePlayer,
+      TicTacToeScore,
+      TicTacToeSlot,
+      TicTacToeState
+    >
+  >;
 
 /* ((), (Center, East, North, Northeast, Northwest, South, *Southeast, Southwest, West)) */
 const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrCurrentSoutheastOrSouthwestOrWest =
@@ -272,7 +370,16 @@ const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrCurrentSoutheast
             recordOfTicTacToeMovesWithDataAndIndex.southeast.indexOfMove,
         },
       ),
-  } satisfies TicTacToeTreeNodeWithData;
+  } satisfies TicTacToeTreeNodeWithData<
+    CommonTreeNode<
+      TicTacToeGame,
+      TicTacToeMove,
+      TicTacToePlayer,
+      TicTacToeScore,
+      TicTacToeSlot,
+      TicTacToeState
+    >
+  >;
 
 /* ((), (Center, East, North, Northeast, Northwest, South, Southeast, *Southwest, West)) */
 const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrCurrentSouthwestOrWest =
@@ -295,7 +402,16 @@ const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrCurre
             recordOfTicTacToeMovesWithDataAndIndex.southwest.indexOfMove,
         },
       ),
-  } satisfies TicTacToeTreeNodeWithData;
+  } satisfies TicTacToeTreeNodeWithData<
+    CommonTreeNode<
+      TicTacToeGame,
+      TicTacToeMove,
+      TicTacToePlayer,
+      TicTacToeScore,
+      TicTacToeSlot,
+      TicTacToeState
+    >
+  >;
 
 /* ((), (Center, East, North, Northeast, Northwest, South, Southeast, Southwest, *West)) */
 const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrCurrentWest =
@@ -316,7 +432,16 @@ const rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouth
           indexOfMove: recordOfTicTacToeMovesWithDataAndIndex.west.indexOfMove,
         },
       ),
-  } satisfies TicTacToeTreeNodeWithData;
+  } satisfies TicTacToeTreeNodeWithData<
+    CommonTreeNode<
+      TicTacToeGame,
+      TicTacToeMove,
+      TicTacToePlayer,
+      TicTacToeScore,
+      TicTacToeSlot,
+      TicTacToeState
+    >
+  >;
 
 const recordOfTicTacToeTreeNodesWithData = {
   currentRoot,
@@ -332,6 +457,15 @@ const recordOfTicTacToeTreeNodesWithData = {
   rootThenCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrCurrentWest,
   rootThenCurrentCenterOrEastOrNorthOrNortheastOrNorthwestOrSouthOrSoutheastOrSouthwestOrWest,
   rootThenCurrentNorthwest,
-} satisfies RecordOfTicTacToeTreeNodesWithData;
+} satisfies RecordOfTicTacToeTreeNodesWithData<
+  CommonTreeNode<
+    TicTacToeGame,
+    TicTacToeMove,
+    TicTacToePlayer,
+    TicTacToeScore,
+    TicTacToeSlot,
+    TicTacToeState
+  >
+>;
 
 export { recordOfTicTacToeTreeNodesWithData };

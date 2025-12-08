@@ -1,4 +1,4 @@
-import type { SofteningCoefficient } from "@repo/search/CommonMonteCarloTree/search/quality.js";
+import type { SofteningCoefficient } from "@repo/search/quality.js";
 
 import { playMatch } from "@repo/interface/actions/playMatch/action.js";
 import {

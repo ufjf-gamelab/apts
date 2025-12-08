@@ -1,12 +1,20 @@
+import type { CommonTreeNode } from "@repo/search/CommonMonteCarloTree/CommonTreeNode.js";
+
 import { SIZE_OF_EMPTY_SET } from "@repo/engine_core/constants.js";
 import { createDescriptionForTest } from "@repo/engine_core/test.js";
-import { Random } from "@repo/search/CommonMonteCarloTree/Random.js";
+import { Random } from "@repo/search/Random.js";
 import {
   createDescriptionForTestOfPickIndexOfRandomNotExpandedChildNode,
   validatePickIndexOfRandomNotExpandedChildNode,
-} from "@repo/search/CommonMonteCarloTree/Random.test/pickIndexOfRandomNotExpandedChildNode.test.js";
+} from "@repo/search/Random.test/pickIndexOfRandomNotExpandedChildNode.test.js";
 import { test } from "vitest";
 
+import type { TicTacToeGame } from "../../../game/Game.js";
+import type { TicTacToeMove } from "../../../game/Move.js";
+import type { TicTacToePlayer } from "../../../game/Player.js";
+import type { TicTacToeScore } from "../../../game/Score.js";
+import type { TicTacToeSlot } from "../../../game/Slot.js";
+import type { TicTacToeState } from "../../../game/State.js";
 import type { TicTacToeTreeNodeWithData } from "../TreeNode.test/setup.js";
 
 import { recordOfTicTacToeTreeNodesWithData } from "../TreeNode.test/records.js";
@@ -33,7 +41,16 @@ const testPickIndexOfRandomNotExpandedChild = ({
   arrayOfTreeNodesWithData,
   random,
 }: {
-  arrayOfTreeNodesWithData: TicTacToeTreeNodeWithData[];
+  arrayOfTreeNodesWithData: TicTacToeTreeNodeWithData<
+    CommonTreeNode<
+      TicTacToeGame,
+      TicTacToeMove,
+      TicTacToePlayer,
+      TicTacToeScore,
+      TicTacToeSlot,
+      TicTacToeState
+    >
+  >[];
   random: Random;
 }) => {
   arrayOfTreeNodesWithData.forEach(({ keyOfTreeNode, treeNode }) => {

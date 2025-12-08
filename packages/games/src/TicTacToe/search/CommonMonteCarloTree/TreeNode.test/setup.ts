@@ -1,4 +1,6 @@
-import { TreeNode } from "@repo/search/CommonMonteCarloTree/TreeNode.js";
+import type { TreeNode } from "@repo/search/MonteCarloTree/TreeNode.js";
+
+import { CommonTreeNode } from "@repo/search/CommonMonteCarloTree/CommonTreeNode.js";
 import {
   createTreeNodeWithData,
   type DerivedParamsOfTreeNode,
@@ -6,7 +8,7 @@ import {
   type RecordOfTreeNodesWithData,
   type RequiredParamsOfTreeNode,
   type TreeNodeWithData,
-} from "@repo/search/CommonMonteCarloTree/TreeNode.test/setup.js";
+} from "@repo/search/MonteCarloTree/TreeNode.test/setup.js";
 
 import type { TicTacToeGame } from "../../../game/Game.js";
 import type { TicTacToeMove } from "../../../game/Move.js";
@@ -37,14 +39,24 @@ type RecordOfRequiredParamsOfTicTacToeTreeNodes = Record<
   RequiredParamsOfTicTacToeTreeNode
 >;
 
-type RecordOfTicTacToeTreeNodesWithData = RecordOfTreeNodesWithData<
+type RecordOfTicTacToeTreeNodesWithData<
+  GenericTreeNode extends TreeNode<
+    TicTacToeGame,
+    TicTacToeMove,
+    TicTacToePlayer,
+    TicTacToeScore,
+    TicTacToeSlot,
+    TicTacToeState,
+    GenericTreeNode
+  >,
+> = RecordOfTreeNodesWithData<
   TicTacToeGame,
   TicTacToeMove,
   TicTacToePlayer,
   TicTacToeScore,
   TicTacToeSlot,
   TicTacToeState,
-  TicTacToeTreeNode,
+  TicTacToeTreeNode<GenericTreeNode>,
   RequiredParamsOfTicTacToeTreeNode
 >;
 
@@ -62,16 +74,28 @@ interface RequiredParamsOfTicTacToeTreeNode extends RequiredParamsOfTreeNode<
   TicTacToeStateWithData
 > {}
 
-type TicTacToeTreeNode = TreeNode<
-  TicTacToeGame,
-  TicTacToeMove,
-  TicTacToePlayer,
-  TicTacToeScore,
-  TicTacToeSlot,
-  TicTacToeState
->;
+type TicTacToeTreeNode<
+  GenericTreeNode extends TreeNode<
+    TicTacToeGame,
+    TicTacToeMove,
+    TicTacToePlayer,
+    TicTacToeScore,
+    TicTacToeSlot,
+    TicTacToeState,
+    GenericTreeNode
+  >,
+> = GenericTreeNode;
 
 type TicTacToeTreeNodeWithData<
+  GenericTreeNode extends TreeNode<
+    TicTacToeGame,
+    TicTacToeMove,
+    TicTacToePlayer,
+    TicTacToeScore,
+    TicTacToeSlot,
+    TicTacToeState,
+    GenericTreeNode
+  >,
   GenericKeyOfTicTacToeTreeNode extends string = string,
 > = TreeNodeWithData<
   TicTacToeGame,
@@ -80,7 +104,7 @@ type TicTacToeTreeNodeWithData<
   TicTacToeScore,
   TicTacToeSlot,
   TicTacToeState,
-  TicTacToeTreeNode,
+  TicTacToeTreeNode<GenericTreeNode>,
   RequiredParamsOfTicTacToeTreeNode,
   GenericKeyOfTicTacToeTreeNode
 >;
@@ -94,14 +118,42 @@ const deriveParamsOfTicTacToeTreeNode = ({
     stateWithData,
   });
 
-const createTicTacToeTreeNode = ({
+const createTicTacToeTreeNode = <
+  GenericTreeNode extends TreeNode<
+    TicTacToeGame,
+    TicTacToeMove,
+    TicTacToePlayer,
+    TicTacToeScore,
+    TicTacToeSlot,
+    TicTacToeState,
+    GenericTreeNode
+  >,
+>({
   informationAboutPlayedMove,
   state,
-}: DerivedParamsOfTicTacToeTreeNode): TicTacToeTreeNode =>
-  TreeNode.create({
+}: DerivedParamsOfTicTacToeTreeNode): TicTacToeTreeNode<
+  CommonTreeNode<
+    TicTacToeGame,
+    TicTacToeMove,
+    TicTacToePlayer,
+    TicTacToeScore,
+    TicTacToeSlot,
+    TicTacToeState
+  >
+> =>
+  CommonTreeNode.create({
     informationAboutPlayedMove,
     state,
-  }) satisfies TicTacToeTreeNode;
+  }) satisfies TicTacToeTreeNode<
+    CommonTreeNode<
+      TicTacToeGame,
+      TicTacToeMove,
+      TicTacToePlayer,
+      TicTacToeScore,
+      TicTacToeSlot,
+      TicTacToeState
+    >
+  >;
 
 const createTicTacToeTreeNodeWithData = ({
   keyOfTreeNode,

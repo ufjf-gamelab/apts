@@ -3,7 +3,7 @@ import type { StrategyToSearch } from "@repo/interface/constants.js";
 import type {
   QualityOfMove,
   SofteningCoefficient,
-} from "@repo/search/CommonMonteCarloTree/search/quality.js";
+} from "@repo/search/quality.js";
 
 import { predictQualityOfMoves } from "@repo/interface/actions/predictQualityOfMoves/action.js";
 import { Command, Option } from "commander";
