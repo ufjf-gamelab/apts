@@ -4,15 +4,17 @@ import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
+import type { ParamsOfSearch } from "@repo/search/MonteCarloTree/Search.js";
+import type { TreeNode } from "@repo/search/MonteCarloTree/TreeNode.js";
 import type { Digraph as GraphvizDigraph } from "ts-graphviz";
 
-import { Random } from "@repo/search/CommonMonteCarloTree/Random.js";
+import { CommonSearch } from "@repo/search/CommonMonteCarloTree/search.js";
 import {
   calculateProbabilityOfPlayingEachMove,
   calculateQualityOfMoves,
   type QualityOfMove,
-} from "@repo/search/CommonMonteCarloTree/search/quality.js";
-import { expandTree } from "@repo/search/CommonMonteCarloTree/search/search.js";
+} from "@repo/search/quality.js";
+import { Random } from "@repo/search/Random.js";
 
 import type { ProcessMessage } from "../../types.js";
 
@@ -39,6 +41,15 @@ const predictQualityOfMoves = <
     GenericSlot,
     GenericState
   >,
+  GenericTreeNode extends TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState,
+    GenericTreeNode
+  >,
 >({
   explorationCoefficient,
   processGraphvizGraph,
@@ -53,19 +64,7 @@ const predictQualityOfMoves = <
   Parameters<typeof calculateProbabilityOfPlayingEachMove>[0],
   "softeningCoefficient"
 > &
-  Pick<
-    Parameters<
-      typeof expandTree<
-        GenericGame,
-        GenericMove,
-        GenericPlayer,
-        GenericScore,
-        GenericSlot,
-        GenericState
-      >
-    >[0],
-    "explorationCoefficient" | "quantityOfExpansions"
-  > & {
+  Pick<ParamsOfSearch, "explorationCoefficient" | "quantityOfExpansions"> & {
     processGraphvizGraph: ((graphvizGraph: GraphvizDigraph) => void) | null;
     processMessage: ProcessMessage;
     processQualityOfMoves: (
@@ -76,19 +75,14 @@ const predictQualityOfMoves = <
     state: GenericState;
   }): void => {
   const random = new Random({ seed });
-  const game = state.getGame();
-
-  const rootNode = expandTree<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >({
+  const search = new CommonSearch({
     explorationCoefficient,
     quantityOfExpansions,
     random,
+  });
+  const game = state.getGame();
+
+  const rootNode = search.expandTree({
     state,
   });
 

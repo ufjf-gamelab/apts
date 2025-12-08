@@ -30,6 +30,15 @@ const validateConstructor = <
     GenericSlot,
     GenericState
   >,
+  GenericTreeNode extends TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState,
+    GenericTreeNode
+  >,
 >({
   params,
   treeNode,
@@ -42,14 +51,7 @@ const validateConstructor = <
     GenericSlot,
     GenericState
   >;
-  treeNode: TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >;
+  treeNode: GenericTreeNode;
 }) => {
   expect(treeNode).toBeInstanceOf(TreeNode);
   expect(treeNode.getState()).toStrictEqual(params.state);

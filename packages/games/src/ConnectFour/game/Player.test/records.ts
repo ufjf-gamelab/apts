@@ -15,6 +15,6 @@ const recordOfConnectFourPlayersWithData =
 
 export type { RecordOfRequiredParamsOfConnectFourPlayers };
 export {
-  recordOfRequiredParamsOfConnectFourPlayers,
   recordOfConnectFourPlayersWithData,
+  recordOfRequiredParamsOfConnectFourPlayers,
 };

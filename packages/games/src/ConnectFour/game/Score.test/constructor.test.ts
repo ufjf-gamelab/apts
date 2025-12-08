@@ -8,8 +8,8 @@ import { expect, test } from "vitest";
 import { ConnectFourScore } from "../Score.js";
 import { recordOfConnectFourScoresWithData } from "./records.js";
 import {
-  deriveParamsOfConnectFourScore,
   type ConnectFourScoreWithData,
+  deriveParamsOfConnectFourScore,
 } from "./setup.js";
 
 const createDescription = ({

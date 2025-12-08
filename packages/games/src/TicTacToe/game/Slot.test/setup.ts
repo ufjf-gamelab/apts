@@ -8,7 +8,7 @@ import {
 
 import { type ParamsOfTicTacToeSlot, TicTacToeSlot } from "../Slot.js";
 
-// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+ 
 type DerivedParamsOfTicTacToeSlot = DerivedParamsOfSlot &
   Pick<ParamsOfTicTacToeSlot, "indexOfOccupyingPlayer">;
 
@@ -30,7 +30,7 @@ type RequiredParamsOfTicTacToeSlot = Pick<
   ParamsOfTicTacToeSlot,
   "indexOfOccupyingPlayer"
 > &
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+   
   RequiredParamsOfSlot;
 
 type TicTacToeSlotWithData<GenericKeyOfTicTacToeSlot extends string = string> =

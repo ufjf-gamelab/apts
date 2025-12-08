@@ -8,7 +8,7 @@ import {
 
 import { type ParamsOfSnowballSlot, SnowballSlot } from "../Slot.js";
 
-// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+ 
 type DerivedParamsOfSnowballSlot = DerivedParamsOfSlot &
   Pick<ParamsOfSnowballSlot, "indexOfOccupyingPlayer">;
 
@@ -30,7 +30,7 @@ type RequiredParamsOfSnowballSlot = Pick<
   ParamsOfSnowballSlot,
   "indexOfOccupyingPlayer"
 > &
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+   
   RequiredParamsOfSlot;
 
 type SnowballSlotWithData<GenericKeyOfSnowballSlot extends string = string> =

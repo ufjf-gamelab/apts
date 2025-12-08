@@ -9,12 +9,15 @@ import {
 
 import { ConnectFourPlayer } from "../Player.js";
 
-type DerivedParamsOfConnectFourPlayer = DerivedParamsOfPlayer;
-
-type RecordOfRequiredParamsOfConnectFourPlayers = Record<
-  string,
-  RequiredParamsOfConnectFourPlayer
+type ConnectFourPlayerWithData<
+  GenericKeyOfConnectFourPlayer extends string = string,
+> = PlayerWithData<
+  ConnectFourPlayer,
+  RequiredParamsOfConnectFourPlayer,
+  GenericKeyOfConnectFourPlayer
 >;
+
+type DerivedParamsOfConnectFourPlayer = DerivedParamsOfPlayer;
 
 type RecordOfConnectFourPlayersWithData<
   GenericRecordOfRequiredParamsOfConnectFourPlayers extends
@@ -25,15 +28,12 @@ type RecordOfConnectFourPlayersWithData<
   GenericRecordOfRequiredParamsOfConnectFourPlayers
 >;
 
-type RequiredParamsOfConnectFourPlayer = RequiredParamsOfPlayer;
-
-type ConnectFourPlayerWithData<
-  GenericKeyOfConnectFourPlayer extends string = string,
-> = PlayerWithData<
-  ConnectFourPlayer,
-  RequiredParamsOfConnectFourPlayer,
-  GenericKeyOfConnectFourPlayer
+type RecordOfRequiredParamsOfConnectFourPlayers = Record<
+  string,
+  RequiredParamsOfConnectFourPlayer
 >;
+
+type RequiredParamsOfConnectFourPlayer = RequiredParamsOfPlayer;
 
 const deriveParamsOfConnectFourPlayer = ({
   name,
@@ -73,14 +73,14 @@ const createRecordOfConnectFourPlayersWithData = <
   });
 
 export type {
-  DerivedParamsOfConnectFourPlayer,
-  RecordOfRequiredParamsOfConnectFourPlayers,
-  RecordOfConnectFourPlayersWithData,
-  RequiredParamsOfConnectFourPlayer,
   ConnectFourPlayerWithData,
+  DerivedParamsOfConnectFourPlayer,
+  RecordOfConnectFourPlayersWithData,
+  RecordOfRequiredParamsOfConnectFourPlayers,
+  RequiredParamsOfConnectFourPlayer,
 };
 export {
-  createRecordOfConnectFourPlayersWithData,
   createConnectFourPlayer,
+  createRecordOfConnectFourPlayersWithData,
   deriveParamsOfConnectFourPlayer,
 };

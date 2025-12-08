@@ -5,16 +5,22 @@ import type {
 
 import type { ConnectFourPlayer } from "../Player.js";
 import type {
+  ConnectFourPlayerWithData,
   RecordOfConnectFourPlayersWithData,
   RequiredParamsOfConnectFourPlayer,
-  ConnectFourPlayerWithData,
 } from "./setup.js";
 
 import {
+  recordOfConnectFourPlayersWithData,
   type recordOfRequiredParamsOfConnectFourPlayers,
   type RecordOfRequiredParamsOfConnectFourPlayers,
-  recordOfConnectFourPlayersWithData,
 } from "./records.js";
+
+type ConnectFourPlayerWithDataAndIndex = PlayerWithDataAndIndex<
+  ConnectFourPlayer,
+  RequiredParamsOfConnectFourPlayer,
+  ConnectFourPlayerWithData
+>;
 
 type KeysOfPlayersInOrder<
   GenericRecordOfRequiredParamsOfConnectFourPlayers extends
@@ -28,12 +34,6 @@ type RecordOfConnectFourPlayersWithDataAndIndex<
   ConnectFourPlayer,
   RequiredParamsOfConnectFourPlayer,
   GenericRecordOfRequiredParamsOfConnectFourPlayers,
-  ConnectFourPlayerWithData
->;
-
-type ConnectFourPlayerWithDataAndIndex = PlayerWithDataAndIndex<
-  ConnectFourPlayer,
-  RequiredParamsOfConnectFourPlayer,
   ConnectFourPlayerWithData
 >;
 

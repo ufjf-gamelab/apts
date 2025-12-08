@@ -12,9 +12,7 @@ import {
   NOT_INCREMENT,
 } from "@repo/engine_core/constants.js";
 
-import type { ExplorationCoefficient } from "./search/search.js";
-
-import { calculateFitness } from "./search/fitness.js";
+import type { ExplorationCoefficient } from "./Search.js";
 
 const MINIMUM_QUALITY_OF_MATCH = 0;
 const MINIMUM_QUANTITY_OF_VISITS = 0;
@@ -69,6 +67,15 @@ interface ParamsOfTreeNodeForPrivateConstructor<
     GenericSlot,
     GenericState
   >,
+  GenericTreeNode extends TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState,
+    GenericTreeNode
+  >,
 > extends ParamsOfTreeNode<
   GenericGame,
   GenericMove,
@@ -77,17 +84,10 @@ interface ParamsOfTreeNodeForPrivateConstructor<
   GenericSlot,
   GenericState
 > {
-  parentNode: null | TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >;
+  parentNode: GenericTreeNode | null;
 }
 
-class TreeNode<
+abstract class TreeNode<
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -108,26 +108,34 @@ class TreeNode<
     GenericSlot,
     GenericState
   >,
+  GenericTreeNode extends TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState,
+    GenericTreeNode
+  >,
 > {
-  private readonly childrenNodes: Map<
-    IndexOfMove,
-    null | TreeNode<
-      GenericGame,
-      GenericMove,
-      GenericPlayer,
-      GenericScore,
-      GenericSlot,
-      GenericState
-    >
-  >;
-  private readonly game: GenericGame;
+  protected readonly childrenNodes: Map<IndexOfMove, GenericTreeNode | null>;
+  protected readonly state: ParamsOfTreeNodeForPrivateConstructor<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState,
+    GenericTreeNode
+  >["state"];
   private readonly informationAboutPlayedMove: ParamsOfTreeNodeForPrivateConstructor<
     GenericGame,
     GenericMove,
     GenericPlayer,
     GenericScore,
     GenericSlot,
-    GenericState
+    GenericState,
+    GenericTreeNode
   >["informationAboutPlayedMove"];
   private readonly parentNode: ParamsOfTreeNodeForPrivateConstructor<
     GenericGame,
@@ -135,20 +143,13 @@ class TreeNode<
     GenericPlayer,
     GenericScore,
     GenericSlot,
-    GenericState
+    GenericState,
+    GenericTreeNode
   >["parentNode"];
   private qualityOfMatch: number = MINIMUM_QUALITY_OF_MATCH;
   private quantityOfVisits: Integer = MINIMUM_QUANTITY_OF_VISITS;
-  private readonly state: ParamsOfTreeNodeForPrivateConstructor<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >["state"];
 
-  private constructor({
+  public constructor({
     informationAboutPlayedMove,
     parentNode,
     state,
@@ -158,10 +159,10 @@ class TreeNode<
     GenericPlayer,
     GenericScore,
     GenericSlot,
-    GenericState
+    GenericState,
+    GenericTreeNode
   >) {
     this.state = state;
-    this.game = state.getGame();
     this.informationAboutPlayedMove = informationAboutPlayedMove;
     this.parentNode = parentNode;
     this.childrenNodes = new Map(
@@ -173,118 +174,44 @@ class TreeNode<
     );
   }
 
-  public static create<
-    GenericGame extends Game<
-      GenericGame,
-      GenericMove,
-      GenericPlayer,
-      GenericScore,
-      GenericSlot,
-      GenericState
-    >,
-    GenericMove extends Move<GenericMove>,
-    GenericPlayer extends Player<GenericPlayer>,
-    GenericScore extends Score<GenericScore>,
-    GenericSlot extends Slot<GenericSlot>,
-    GenericState extends State<
-      GenericGame,
-      GenericMove,
-      GenericPlayer,
-      GenericScore,
-      GenericSlot,
-      GenericState
-    >,
-  >({
-    informationAboutPlayedMove,
-    state,
-  }: ParamsOfTreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >) {
-    return new TreeNode<
-      GenericGame,
-      GenericMove,
-      GenericPlayer,
-      GenericScore,
-      GenericSlot,
-      GenericState
-    >({
-      informationAboutPlayedMove,
-      parentNode: null,
-      state,
-    });
-  }
+  public abstract calculateExploitationComponentOfFitness({
+    childNode,
+  }: {
+    childNode: GenericTreeNode;
+  }): number;
+
+  public abstract calculateExplorationComponentOfFitness({
+    childNode,
+    explorationCoefficient,
+  }: {
+    childNode: GenericTreeNode;
+    explorationCoefficient: number;
+  }): number;
 
   public calculateFitnessOfChildNode({
     childNode,
     explorationCoefficient,
   }: {
-    childNode: TreeNode<
-      GenericGame,
-      GenericMove,
-      GenericPlayer,
-      GenericScore,
-      GenericSlot,
-      GenericState
-    >;
+    childNode: GenericTreeNode;
     explorationCoefficient: ExplorationCoefficient;
   }): number {
     // Privileges the child with the lowest exploitation, as it means the opponent will have the lowest chance of winning
-    return calculateFitness({
-      explorationCoefficient,
-      qualityOfMatchOfChildNode: childNode.qualityOfMatch,
-      quantityOfVisitsToChildNode: childNode.quantityOfVisits,
-      quantityOfVisitsToParentNode: this.quantityOfVisits,
-    });
-  }
-
-  /// Perform a move and return the outcome state as a child node.
-  public expand({
-    indexOfMove,
-  }: {
-    indexOfMove: IndexOfMove;
-  }): TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  > {
-    const nextState = this.game.play({
-      indexOfMove,
-      state: this.state,
-    });
-
-    const child = new TreeNode({
-      informationAboutPlayedMove: {
-        indexOfPlayedMove: indexOfMove,
-        indexOfPlayerWhoPlayedMove: this.state.getIndexOfPlayer(),
-      },
-      parentNode: this,
-      state: nextState,
-    });
-
-    this.childrenNodes.set(indexOfMove, child);
-    return child;
+    return (
+      this.calculateExploitationComponentOfFitness({
+        childNode,
+      }) +
+      this.calculateExplorationComponentOfFitness({
+        childNode,
+        explorationCoefficient,
+      })
+    );
   }
 
   public getChildNode({
     indexOfChildNode,
   }: {
     indexOfChildNode: IndexOfMove;
-  }): null | TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  > {
+  }): GenericTreeNode | null {
     return this.childrenNodes.get(indexOfChildNode) ?? null;
   }
 
@@ -342,24 +269,10 @@ class TreeNode<
   }: Pick<
     Parameters<typeof this.calculateFitnessOfChildNode>[0],
     "explorationCoefficient"
-  >): null | TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  > {
+  >): GenericTreeNode | null {
     const expandedChildren = this.getExpandedChildren();
 
-    let bestChildNode: null | TreeNode<
-      GenericGame,
-      GenericMove,
-      GenericPlayer,
-      GenericScore,
-      GenericSlot,
-      GenericState
-    > = null;
+    let bestChildNode: GenericTreeNode | null = null;
     let bestUcb = Number.NEGATIVE_INFINITY;
 
     for (const childNode of expandedChildren) {
@@ -418,5 +331,5 @@ class TreeNode<
   }
 }
 
-export type { ParamsOfTreeNode };
+export type { ParamsOfTreeNode, ParamsOfTreeNodeForPrivateConstructor };
 export { TreeNode };

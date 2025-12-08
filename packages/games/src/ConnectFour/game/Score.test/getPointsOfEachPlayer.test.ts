@@ -7,8 +7,8 @@ import { test } from "vitest";
 
 import { recordOfConnectFourScoresWithData } from "./records.js";
 import {
-  deriveParamsOfConnectFourScore,
   type ConnectFourScoreWithData,
+  deriveParamsOfConnectFourScore,
 } from "./setup.js";
 
 const createDescription = ({

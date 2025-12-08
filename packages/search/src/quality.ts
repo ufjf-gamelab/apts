@@ -7,9 +7,8 @@ import type { State } from "@repo/game/State.js";
 
 import { assertNumberIsFinite } from "@repo/engine_core/assert.js";
 
-import type { TreeNode } from "../TreeNode.js";
-
-import { expandTree } from "./search.js";
+import type { Search } from "./MonteCarloTree/Search.js";
+import type { TreeNode } from "./MonteCarloTree/TreeNode.js";
 
 const MINIMUM_QUALITY_OF_MOVE = 0;
 
@@ -36,17 +35,19 @@ const calculateQualityOfMoves = <
     GenericSlot,
     GenericState
   >,
->({
-  treeNode,
-}: {
-  treeNode: TreeNode<
+  GenericTreeNode extends TreeNode<
     GenericGame,
     GenericMove,
     GenericPlayer,
     GenericScore,
     GenericSlot,
-    GenericState
-  >;
+    GenericState,
+    GenericTreeNode
+  >,
+>({
+  treeNode,
+}: {
+  treeNode: GenericTreeNode;
 }): QualityOfMove[] => {
   const game = treeNode.getState().getGame();
   const qualityOfMoves = new Array<QualityOfMove>(
@@ -86,35 +87,43 @@ const predictQualityOfMoves = <
     GenericSlot,
     GenericState
   >,
->({
-  explorationCoefficient,
-  quantityOfExpansions,
-  random,
-  state,
-}: Pick<
-  Parameters<
-    typeof expandTree<
-      GenericGame,
-      GenericMove,
-      GenericPlayer,
-      GenericScore,
-      GenericSlot,
-      GenericState
-    >
-  >[0],
-  "explorationCoefficient" | "quantityOfExpansions" | "random" | "state"
->) => {
-  const rootNode = expandTree<
+  GenericTreeNode extends TreeNode<
     GenericGame,
     GenericMove,
     GenericPlayer,
     GenericScore,
     GenericSlot,
-    GenericState
-  >({
-    explorationCoefficient,
-    quantityOfExpansions,
-    random,
+    GenericState,
+    GenericTreeNode
+  >,
+>({
+  search,
+  state,
+}: Pick<
+  Parameters<
+    Search<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState,
+      GenericTreeNode
+    >["expandTree"]
+  >[0],
+  "state"
+> & {
+  search: Search<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState,
+    GenericTreeNode
+  >;
+}) => {
+  const rootNode = search.expandTree({
     state,
   });
 

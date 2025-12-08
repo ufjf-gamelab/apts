@@ -5,13 +5,12 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
-import { formatArray } from "@repo/engine_core/format.js";
 import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
-import { assert } from "vitest";
+import { expect } from "vitest";
 
 import type { TreeNode } from "../TreeNode.js";
 
-const validateGetIndexesOfNotExpandedChildrenNodes = <
+const validateSelectBestChildNode = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -38,27 +37,30 @@ const validateGetIndexesOfNotExpandedChildrenNodes = <
     GenericPlayer,
     GenericScore,
     GenericSlot,
-    GenericState
+    GenericState,
+    GenericTreeNode
   >,
 >({
-  expectedIndexesOfNotExpandedChildrenNodes,
+  expectedBestChildNode,
+  explorationCoefficient,
   treeNode,
-}: {
-  expectedIndexesOfNotExpandedChildrenNodes: ReturnType<
-    GenericTreeNode["getIndexesOfNotExpandedChildrenNodes"]
-  >;
+}: Pick<
+  Parameters<GenericTreeNode["selectBestChildNode"]>[0],
+  "explorationCoefficient"
+> & {
+  expectedBestChildNode: ReturnType<GenericTreeNode["selectBestChildNode"]>;
   treeNode: GenericTreeNode;
 }) => {
-  const indexesOfNotExpandedChildrenNodes =
-    treeNode.getIndexesOfNotExpandedChildrenNodes();
-  assert.isEmpty(
-    indexesOfNotExpandedChildrenNodes.difference(
-      expectedIndexesOfNotExpandedChildrenNodes,
-    ),
-  );
+  const bestChildNode = treeNode.selectBestChildNode({
+    explorationCoefficient,
+  });
+
+  if (bestChildNode !== null) {
+    expect(bestChildNode).toStrictEqual(expectedBestChildNode);
+  }
 };
 
-const createDescriptionForTestOfGetIndexesOfNotExpandedChildrenNodes = <
+const createDescriptionForTestOfSelectBestChildNode = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -79,29 +81,17 @@ const createDescriptionForTestOfGetIndexesOfNotExpandedChildrenNodes = <
     GenericSlot,
     GenericState
   >,
-  GenericTreeNode extends TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >,
 >({
-  expectedIndexesOfNotExpandedChildrenNodes,
+  keyOfExpectedBestChildNode,
 }: {
-  expectedIndexesOfNotExpandedChildrenNodes: ReturnType<
-    GenericTreeNode["getIndexesOfNotExpandedChildrenNodes"]
-  >;
+  keyOfExpectedBestChildNode: null | string;
 }): string =>
   createDescriptionForTestsOfMethod({
-    methodDescription: `getIndexesOfNotExpandedChildrenNodes()`,
-    returnedValue: formatArray({
-      array: expectedIndexesOfNotExpandedChildrenNodes.values().toArray(),
-    }),
+    methodDescription: `selectBestChildNode()`,
+    returnedValue: keyOfExpectedBestChildNode,
   });
 
 export {
-  createDescriptionForTestOfGetIndexesOfNotExpandedChildrenNodes,
-  validateGetIndexesOfNotExpandedChildrenNodes,
+  createDescriptionForTestOfSelectBestChildNode,
+  validateSelectBestChildNode,
 };

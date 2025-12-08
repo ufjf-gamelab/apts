@@ -5,14 +5,12 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
-import { formatArray } from "@repo/engine_core/format.js";
 import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
-import type { Random } from "../Random.js";
 import type { TreeNode } from "../TreeNode.js";
 
-const validatePickIndexOfRandomNotExpandedChildNode = <
+const validateGetQuantityOfExpandedMoves = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -33,34 +31,29 @@ const validatePickIndexOfRandomNotExpandedChildNode = <
     GenericSlot,
     GenericState
   >,
+  GenericTreeNode extends TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState,
+    GenericTreeNode
+  >,
 >({
-  indexesOfRandomNotExpandedChildrenNodes,
-  random,
+  expectedQuantityOfExpandedMoves,
   treeNode,
 }: {
-  indexesOfRandomNotExpandedChildrenNodes: Set<
-    ReturnType<Random["pickIndexOfRandomNotExpandedChildNode"]>
+  expectedQuantityOfExpandedMoves: ReturnType<
+    GenericTreeNode["getQuantityOfExpandedMoves"]
   >;
-  random: Random;
-  treeNode: TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >;
+  treeNode: GenericTreeNode;
 }) => {
-  const indexOfRandomNotExpandedChildNode =
-    random.pickIndexOfRandomNotExpandedChildNode({
-      treeNode,
-    });
-  expect(indexesOfRandomNotExpandedChildrenNodes).toContain(
-    indexOfRandomNotExpandedChildNode,
-  );
+  const quantityOfExpandedMoves = treeNode.getQuantityOfExpandedMoves();
+  expect(quantityOfExpandedMoves).toBe(expectedQuantityOfExpandedMoves);
 };
 
-const createDescriptionForTestOfPickIndexOfRandomNotExpandedChildNode = <
+const createDescriptionForTestOfGetQuantityOfExpandedMoves = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -81,19 +74,28 @@ const createDescriptionForTestOfPickIndexOfRandomNotExpandedChildNode = <
     GenericSlot,
     GenericState
   >,
+  GenericTreeNode extends TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState,
+    GenericTreeNode
+  >,
 >({
-  indexesOfRandomNotExpandedChildrenNodes,
+  expectedQuantityOfExpandedMoves,
 }: {
-  indexesOfRandomNotExpandedChildrenNodes: Set<
-    ReturnType<Random["pickIndexOfRandomNotExpandedChildNode"]>
+  expectedQuantityOfExpandedMoves: ReturnType<
+    GenericTreeNode["getQuantityOfExpandedMoves"]
   >;
 }): string =>
   createDescriptionForTestsOfMethod({
-    methodDescription: `pickIndexOfRandomNotExpandedChildNode()`,
-    returnedValue: `is included in ${formatArray({ array: indexesOfRandomNotExpandedChildrenNodes.values().toArray() })}`,
+    methodDescription: `getQuantityOfExpandedMoves()`,
+    returnedValue: expectedQuantityOfExpandedMoves,
   });
 
 export {
-  createDescriptionForTestOfPickIndexOfRandomNotExpandedChildNode,
-  validatePickIndexOfRandomNotExpandedChildNode,
+  createDescriptionForTestOfGetQuantityOfExpandedMoves,
+  validateGetQuantityOfExpandedMoves,
 };

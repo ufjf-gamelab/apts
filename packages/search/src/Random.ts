@@ -7,9 +7,9 @@ import type { State } from "@repo/game/State.js";
 import { type Game } from "@repo/game/Game.js";
 import seedrandom from "seedrandom";
 
-import type { TreeNode } from "./TreeNode.js";
+import type { TreeNode } from "./MonteCarloTree/TreeNode.js";
 
-import { calculateProbabilityOfPlayingEachMove } from "./search/quality.js";
+import { calculateProbabilityOfPlayingEachMove } from "./quality.js";
 
 interface ParamsOfRandom {
   seed: string;
@@ -45,18 +45,16 @@ class Random {
       GenericSlot,
       GenericState
     >,
-  >({
-    treeNode,
-  }: {
-    treeNode: TreeNode<
+    GenericTreeNode extends TreeNode<
       GenericGame,
       GenericMove,
       GenericPlayer,
       GenericScore,
       GenericSlot,
-      GenericState
-    >;
-  }): IndexOfMove {
+      GenericState,
+      GenericTreeNode
+    >,
+  >({ treeNode }: { treeNode: GenericTreeNode }): IndexOfMove {
     const indexesOfNotExpandedMoves = Array.from(
       treeNode.getIndexesOfNotExpandedChildrenNodes(),
     );

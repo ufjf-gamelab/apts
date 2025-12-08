@@ -1,6 +1,5 @@
 import type { Argument, Command, Option } from "commander";
 
-import { commandToCalculateFitness } from "./calculateFitness/command.js";
 import { commandToPlayMatch } from "./playMatch/command.js";
 import { commandToPredictQualityOfMoves } from "./predictQualityOfMoves/command.js";
 
@@ -13,7 +12,6 @@ interface DefinitionOfCommand {
 const definitionsOfCommands: DefinitionOfCommand[] = [
   commandToPredictQualityOfMoves,
   commandToPlayMatch,
-  commandToCalculateFitness,
 ];
 
 export type { DefinitionOfCommand };

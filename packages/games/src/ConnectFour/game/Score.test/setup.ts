@@ -12,12 +12,16 @@ import type { RequiredParamsOfConnectFourPlayer } from "../Player.test/setup.js"
 
 import { ConnectFourScore } from "../Score.js";
 
-type DerivedParamsOfConnectFourScore = DerivedParamsOfScore;
-
-type RecordOfRequiredParamsOfConnectFourScores = Record<
-  string,
-  RequiredParamsOfConnectFourScore
+type ConnectFourScoreWithData<
+  GenericKeyOfConnectFourScore extends string = string,
+> = ScoreWithData<
+  ConnectFourPlayer,
+  ConnectFourScore,
+  RequiredParamsOfConnectFourScore,
+  GenericKeyOfConnectFourScore
 >;
+
+type DerivedParamsOfConnectFourScore = DerivedParamsOfScore;
 
 type RecordOfConnectFourScoresWithData<
   GenericRecordOfRequiredParamsOfConnectFourScores extends
@@ -29,18 +33,14 @@ type RecordOfConnectFourScoresWithData<
   GenericRecordOfRequiredParamsOfConnectFourScores
 >;
 
+type RecordOfRequiredParamsOfConnectFourScores = Record<
+  string,
+  RequiredParamsOfConnectFourScore
+>;
+
 type RequiredParamsOfConnectFourScore = RequiredParamsOfScore<
   ConnectFourPlayer,
   RequiredParamsOfConnectFourPlayer
->;
-
-type ConnectFourScoreWithData<
-  GenericKeyOfConnectFourScore extends string = string,
-> = ScoreWithData<
-  ConnectFourPlayer,
-  ConnectFourScore,
-  RequiredParamsOfConnectFourScore,
-  GenericKeyOfConnectFourScore
 >;
 
 const deriveParamsOfConnectFourScore = ({
@@ -78,14 +78,14 @@ const createRecordOfConnectFourScoresWithData = <
   });
 
 export type {
-  DerivedParamsOfConnectFourScore,
-  RecordOfRequiredParamsOfConnectFourScores,
-  RecordOfConnectFourScoresWithData,
-  RequiredParamsOfConnectFourScore,
   ConnectFourScoreWithData,
+  DerivedParamsOfConnectFourScore,
+  RecordOfConnectFourScoresWithData,
+  RecordOfRequiredParamsOfConnectFourScores,
+  RequiredParamsOfConnectFourScore,
 };
 export {
-  createRecordOfConnectFourScoresWithData,
   createConnectFourScore,
+  createRecordOfConnectFourScoresWithData,
   deriveParamsOfConnectFourScore,
 };

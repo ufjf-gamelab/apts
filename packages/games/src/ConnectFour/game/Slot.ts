@@ -2,7 +2,7 @@ import type { IndexOfPlayer } from "@repo/game/Player.js";
 
 import { type ParamsOfSlot, Slot } from "@repo/game/Slot.js";
 
-// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+ 
 type ParamsOfConnectFourSlot = ParamsOfSlot & {
   indexOfOccupyingPlayer: IndexOfPlayer | null;
 };

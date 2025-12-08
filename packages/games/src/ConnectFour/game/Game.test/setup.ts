@@ -9,33 +9,41 @@ import {
 
 import type { ConnectFourMove } from "../Move.js";
 import type {
-  RequiredParamsOfConnectFourMove,
   ConnectFourMoveWithData,
+  RequiredParamsOfConnectFourMove,
 } from "../Move.test/setup.js";
 import type { ConnectFourPlayer } from "../Player.js";
 import type {
-  RequiredParamsOfConnectFourPlayer,
   ConnectFourPlayerWithData,
+  RequiredParamsOfConnectFourPlayer,
 } from "../Player.test/setup.js";
 import type { ConnectFourScore } from "../Score.js";
 import type { ConnectFourSlot } from "../Slot.js";
 import type {
-  RequiredParamsOfConnectFourSlot,
   ConnectFourSlotWithData,
+  RequiredParamsOfConnectFourSlot,
 } from "../Slot.test/setup.js";
 import type { ConnectFourState } from "../State.js";
 
 import { ConnectFourGame } from "../Game.js";
 
+type ConnectFourGameWithData<
+  GenericKeyOfConnectFourGame extends string = string,
+> = GameWithData<
+  ConnectFourGame,
+  ConnectFourMove,
+  ConnectFourPlayer,
+  ConnectFourScore,
+  ConnectFourSlot,
+  ConnectFourState,
+  RequiredParamsOfConnectFourGame,
+  GenericKeyOfConnectFourGame
+>;
+
 type DerivedParamsOfConnectFourGame = DerivedParamsOfGame<
   ConnectFourMove,
   ConnectFourPlayer,
   ConnectFourSlot
->;
-
-type RecordOfRequiredParamsOfConnectFourGames = Record<
-  string,
-  RequiredParamsOfConnectFourGame
 >;
 
 type RecordOfConnectFourGamesWithData<
@@ -52,6 +60,11 @@ type RecordOfConnectFourGamesWithData<
   GenericRecordOfRequiredParamsOfConnectFourGames
 >;
 
+type RecordOfRequiredParamsOfConnectFourGames = Record<
+  string,
+  RequiredParamsOfConnectFourGame
+>;
+
 type RequiredParamsOfConnectFourGame = RequiredParamsOfGame<
   ConnectFourMove,
   ConnectFourPlayer,
@@ -62,19 +75,6 @@ type RequiredParamsOfConnectFourGame = RequiredParamsOfGame<
   ConnectFourMoveWithData,
   ConnectFourPlayerWithData,
   ConnectFourSlotWithData
->;
-
-type ConnectFourGameWithData<
-  GenericKeyOfConnectFourGame extends string = string,
-> = GameWithData<
-  ConnectFourGame,
-  ConnectFourMove,
-  ConnectFourPlayer,
-  ConnectFourScore,
-  ConnectFourSlot,
-  ConnectFourState,
-  RequiredParamsOfConnectFourGame,
-  GenericKeyOfConnectFourGame
 >;
 
 const deriveParamsOfConnectFourGame = ({
@@ -123,11 +123,11 @@ const createRecordOfConnectFourGamesWithData = <
   });
 
 export type {
+  ConnectFourGameWithData,
   DerivedParamsOfConnectFourGame,
   RecordOfGamesWithData,
   RecordOfRequiredParamsOfConnectFourGames,
   RequiredParamsOfConnectFourGame,
-  ConnectFourGameWithData,
 };
 export {
   createRecordOfConnectFourGamesWithData,

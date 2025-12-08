@@ -5,13 +5,13 @@ import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
-import type { ParamsOfRandom } from "@repo/search/CommonMonteCarloTree/Random.js";
+import type { ExplorationCoefficient } from "@repo/search/MonteCarloTree/Search.js";
+import type { TreeNode } from "@repo/search/MonteCarloTree/TreeNode.js";
 import type {
   QualityOfMove,
   SofteningCoefficient,
-} from "@repo/search/CommonMonteCarloTree/search/quality.js";
-import type { ExplorationCoefficient } from "@repo/search/CommonMonteCarloTree/search/search.js";
-import type { TreeNode } from "@repo/search/CommonMonteCarloTree/TreeNode.js";
+} from "@repo/search/quality.js";
+import type { ParamsOfRandom } from "@repo/search/Random.js";
 
 import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import { formatMap } from "@repo/engine_core/format.js";
@@ -46,16 +46,18 @@ interface TupleOfInformationOfGraphvizEdge<
     GenericSlot,
     GenericState
   >,
-> {
-  fitness: number;
-  node: TreeNode<
+  GenericTreeNode extends TreeNode<
     GenericGame,
     GenericMove,
     GenericPlayer,
     GenericScore,
     GenericSlot,
-    GenericState
-  >;
+    GenericState,
+    GenericTreeNode
+  >,
+> {
+  fitness: number;
+  node: GenericTreeNode;
   parentGraphvizNode: GraphvizNode;
 }
 
@@ -104,19 +106,21 @@ const constructGraphvizNode = <
     GenericSlot,
     GenericState
   >,
->({
-  id,
-  treeNode,
-}: {
-  id: Integer;
-  treeNode: TreeNode<
+  GenericTreeNode extends TreeNode<
     GenericGame,
     GenericMove,
     GenericPlayer,
     GenericScore,
     GenericSlot,
-    GenericState
-  >;
+    GenericState,
+    GenericTreeNode
+  >,
+>({
+  id,
+  treeNode,
+}: {
+  id: Integer;
+  treeNode: GenericTreeNode;
 }) => {
   const state = treeNode.getState();
   const qualityOfMatch = treeNode.getQualityOfMatch();
@@ -163,6 +167,15 @@ const insertNodeIntoGraph = <
     GenericSlot,
     GenericState
   >,
+  GenericTreeNode extends TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState,
+    GenericTreeNode
+  >,
 >({
   currentNode,
   explorationCoefficient,
@@ -170,14 +183,7 @@ const insertNodeIntoGraph = <
   idOfCurrentNode,
   tuplesOfInformationOfGraphvizEdge,
 }: {
-  currentNode: TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >;
+  currentNode: GenericTreeNode;
   explorationCoefficient: ExplorationCoefficient;
   graph: GraphvizDigraph;
   idOfCurrentNode: Integer;
@@ -187,7 +193,8 @@ const insertNodeIntoGraph = <
     GenericPlayer,
     GenericScore,
     GenericSlot,
-    GenericState
+    GenericState,
+    GenericTreeNode
   >[];
 }): GraphvizNode => {
   const currentGraphvizNode = constructGraphvizNode({
@@ -279,6 +286,15 @@ const constructGraphvizGraph = <
     GenericSlot,
     GenericState
   >,
+  GenericTreeNode extends TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState,
+    GenericTreeNode
+  >,
 >({
   explorationCoefficient,
   probabilityOfPlayingEachMove,
@@ -292,14 +308,7 @@ const constructGraphvizGraph = <
   probabilityOfPlayingEachMove: ReadonlyMap<IndexOfMove, number>;
   qualityOfEachMove: ReadonlyMap<IndexOfMove, QualityOfMove>;
   quantityOfExpansions: Integer;
-  rootNode: TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >;
+  rootNode: GenericTreeNode;
   seed: ParamsOfRandom["seed"];
   softeningCoefficient: SofteningCoefficient;
 }): GraphvizDigraph => {
@@ -311,7 +320,8 @@ const constructGraphvizGraph = <
     GenericPlayer,
     GenericScore,
     GenericSlot,
-    GenericState
+    GenericState,
+    GenericTreeNode
   >[] = [];
 
   const informationGraphvizNode = new GraphvizNode("information", {

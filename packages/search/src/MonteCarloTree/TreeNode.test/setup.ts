@@ -72,7 +72,8 @@ type RecordOfTreeNodesWithData<
     GenericPlayer,
     GenericScore,
     GenericSlot,
-    GenericState
+    GenericState,
+    GenericTreeNode
   >,
   GenericRequiredParamsOfTreeNode,
 > = Record<
@@ -177,7 +178,8 @@ interface TreeNodeWithData<
     GenericPlayer,
     GenericScore,
     GenericSlot,
-    GenericState
+    GenericState,
+    GenericTreeNode
   >,
   GenericRequiredParamsOfTreeNode,
   GenericKeyOfTreeNode extends string = string,
@@ -307,7 +309,8 @@ const createTreeNodeWithData = <
     GenericPlayer,
     GenericScore,
     GenericSlot,
-    GenericState
+    GenericState,
+    GenericTreeNode
   >,
   GenericDerivedParamsOfTreeNode extends DerivedParamsOfTreeNode<
     GenericGame,

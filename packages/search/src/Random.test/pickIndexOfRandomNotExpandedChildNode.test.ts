@@ -5,12 +5,14 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
+import { formatArray } from "@repo/engine_core/format.js";
 import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
-import type { TreeNode } from "../TreeNode.js";
+import type { TreeNode } from "../MonteCarloTree/TreeNode.js";
+import type { Random } from "../Random.js";
 
-const validateIsFullyExpanded = <
+const validatePickIndexOfRandomNotExpandedChildNode = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -37,20 +39,30 @@ const validateIsFullyExpanded = <
     GenericPlayer,
     GenericScore,
     GenericSlot,
-    GenericState
+    GenericState,
+    GenericTreeNode
   >,
 >({
-  expectedToBeFullyExpanded,
+  indexesOfRandomNotExpandedChildrenNodes,
+  random,
   treeNode,
 }: {
-  expectedToBeFullyExpanded: ReturnType<GenericTreeNode["isFullyExpanded"]>;
+  indexesOfRandomNotExpandedChildrenNodes: Set<
+    ReturnType<Random["pickIndexOfRandomNotExpandedChildNode"]>
+  >;
+  random: Random;
   treeNode: GenericTreeNode;
 }) => {
-  const isFullyExpanded = treeNode.isFullyExpanded();
-  expect(isFullyExpanded).toBe(expectedToBeFullyExpanded);
+  const indexOfRandomNotExpandedChildNode =
+    random.pickIndexOfRandomNotExpandedChildNode({
+      treeNode,
+    });
+  expect(indexesOfRandomNotExpandedChildrenNodes).toContain(
+    indexOfRandomNotExpandedChildNode,
+  );
 };
 
-const createDescriptionForTestOfIsFullyExpanded = <
+const createDescriptionForTestOfPickIndexOfRandomNotExpandedChildNode = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -71,22 +83,19 @@ const createDescriptionForTestOfIsFullyExpanded = <
     GenericSlot,
     GenericState
   >,
-  GenericTreeNode extends TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >,
 >({
-  expectedToBeFullyExpanded,
+  indexesOfRandomNotExpandedChildrenNodes,
 }: {
-  expectedToBeFullyExpanded: ReturnType<GenericTreeNode["isFullyExpanded"]>;
+  indexesOfRandomNotExpandedChildrenNodes: Set<
+    ReturnType<Random["pickIndexOfRandomNotExpandedChildNode"]>
+  >;
 }): string =>
   createDescriptionForTestsOfMethod({
-    methodDescription: `isFullyExpanded()`,
-    returnedValue: expectedToBeFullyExpanded,
+    methodDescription: `pickIndexOfRandomNotExpandedChildNode()`,
+    returnedValue: `is included in ${formatArray({ array: indexesOfRandomNotExpandedChildrenNodes.values().toArray() })}`,
   });
 
-export { createDescriptionForTestOfIsFullyExpanded, validateIsFullyExpanded };
+export {
+  createDescriptionForTestOfPickIndexOfRandomNotExpandedChildNode,
+  validatePickIndexOfRandomNotExpandedChildNode,
+};

@@ -10,7 +10,7 @@ import { expect } from "vitest";
 
 import type { TreeNode } from "../TreeNode.js";
 
-const validateGetQuantityOfExpandedMoves = <
+const validateIsFullyExpanded = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -37,22 +37,21 @@ const validateGetQuantityOfExpandedMoves = <
     GenericPlayer,
     GenericScore,
     GenericSlot,
-    GenericState
+    GenericState,
+    GenericTreeNode
   >,
 >({
-  expectedQuantityOfExpandedMoves,
+  expectedToBeFullyExpanded,
   treeNode,
 }: {
-  expectedQuantityOfExpandedMoves: ReturnType<
-    GenericTreeNode["getQuantityOfExpandedMoves"]
-  >;
+  expectedToBeFullyExpanded: ReturnType<GenericTreeNode["isFullyExpanded"]>;
   treeNode: GenericTreeNode;
 }) => {
-  const quantityOfExpandedMoves = treeNode.getQuantityOfExpandedMoves();
-  expect(quantityOfExpandedMoves).toBe(expectedQuantityOfExpandedMoves);
+  const isFullyExpanded = treeNode.isFullyExpanded();
+  expect(isFullyExpanded).toBe(expectedToBeFullyExpanded);
 };
 
-const createDescriptionForTestOfGetQuantityOfExpandedMoves = <
+const createDescriptionForTestOfIsFullyExpanded = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -79,21 +78,17 @@ const createDescriptionForTestOfGetQuantityOfExpandedMoves = <
     GenericPlayer,
     GenericScore,
     GenericSlot,
-    GenericState
+    GenericState,
+    GenericTreeNode
   >,
 >({
-  expectedQuantityOfExpandedMoves,
+  expectedToBeFullyExpanded,
 }: {
-  expectedQuantityOfExpandedMoves: ReturnType<
-    GenericTreeNode["getQuantityOfExpandedMoves"]
-  >;
+  expectedToBeFullyExpanded: ReturnType<GenericTreeNode["isFullyExpanded"]>;
 }): string =>
   createDescriptionForTestsOfMethod({
-    methodDescription: `getQuantityOfExpandedMoves()`,
-    returnedValue: expectedQuantityOfExpandedMoves,
+    methodDescription: `isFullyExpanded()`,
+    returnedValue: expectedToBeFullyExpanded,
   });
 
-export {
-  createDescriptionForTestOfGetQuantityOfExpandedMoves,
-  validateGetQuantityOfExpandedMoves,
-};
+export { createDescriptionForTestOfIsFullyExpanded, validateIsFullyExpanded };
