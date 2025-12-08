@@ -1,7 +1,10 @@
+import { recordOfConnectFourStatesWithData } from "@repo/games/ConnectFour/game/State.test/records.js";
 import { recordOfSnowballStatesWithData } from "@repo/games/Snowball/game/State.test/records.js";
 import { recordOfTicTacToeStatesWithData } from "@repo/games/TicTacToe/game/State.test/records.js";
 
 const keysOfStates = {
+  gameIsConnectFourAndAllSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
+    "gameIsConnectFourAndAllSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer",
   gameIsSnowballAndAllSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
     "gameIsSnowballAndAllSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer",
   gameIsTicTacToeAndAllSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
@@ -29,6 +32,11 @@ type KeyOfState = (typeof keysOfStates)[keyof typeof keysOfStates];
 
 const selectStateUsingKeyOfState = (keyOfState: KeyOfState) => {
   switch (keyOfState) {
+    case "gameIsConnectFourAndAllSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer": {
+      return recordOfConnectFourStatesWithData
+        .allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer
+        .state;
+    }
     case "gameIsSnowballAndAllSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer": {
       return recordOfSnowballStatesWithData
         .allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer

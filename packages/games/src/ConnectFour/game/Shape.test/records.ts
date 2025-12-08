@@ -1,5 +1,6 @@
 import type { Shape } from "../Shape.js";
 
+import { recordOfConnectFourPlayersWithDataAndIndex } from "../Player.test/indexedRecords.js";
 import { recordOfConnectFourSlotsWithDataAndIndexInWhichAllSlotsAreEmpty as recordOfConnectFourSlotsWithDataAndIndex } from "../Slot.test/indexedRecords.js";
 import {
   createConnectFourShapesWithData,
@@ -118,6 +119,26 @@ const recordOfRequiredParamsAndResultOfConnectFourShapesInWhichShapesAreVertical
           recordOfConnectFourSlotsWithDataAndIndex.r2c0.indexOfSlot,
           recordOfConnectFourSlotsWithDataAndIndex.r3c0.indexOfSlot,
           recordOfConnectFourSlotsWithDataAndIndex.r4c0.indexOfSlot,
+        ],
+      },
+    },
+
+    /* Row 1 */
+    verticalLineOfLength5OnRow1AndColumn0: {
+      requiredParams: {
+        indexOfPlayerWhoIsOccupyingShape:
+          recordOfConnectFourPlayersWithDataAndIndex.alice.indexOfPlayer,
+        initialIndexOfColumn: 0,
+        initialIndexOfRow: 1,
+        shape: verticalLine,
+      },
+      result: {
+        indexesOfSlots: [
+          recordOfConnectFourSlotsWithDataAndIndex.r1c0.indexOfSlot,
+          recordOfConnectFourSlotsWithDataAndIndex.r2c0.indexOfSlot,
+          recordOfConnectFourSlotsWithDataAndIndex.r3c0.indexOfSlot,
+          recordOfConnectFourSlotsWithDataAndIndex.r4c0.indexOfSlot,
+          recordOfConnectFourSlotsWithDataAndIndex.r5c0.indexOfSlot,
         ],
       },
     },

@@ -146,16 +146,23 @@ class ConnectFourGame extends Game<
       });
     }
 
-    const indexOfColumnInWhichPlacePiece =
-      move.getIndexOfColumnInWhichPlacePiece();
+    const indexOfSlotInWhichPlacePiece = move.getIndexOfSlotInWhichPlacePiece({
+      state,
+    });
+    if (indexOfSlotInWhichPlacePiece === null) {
+      throw constructErrorForInvalidMove({
+        indexOfMove,
+      });
+    }
+
     const updatedSlots = Array.from(state.getSlots());
 
-    const slotInWhichPlacePiece = updatedSlots[indexOfColumnInWhichPlacePiece];
+    const slotInWhichPlacePiece = updatedSlots[indexOfSlotInWhichPlacePiece];
     if (typeof slotInWhichPlacePiece !== "undefined") {
       const updatedSlot = new ConnectFourSlot({
         indexOfOccupyingPlayer: state.getIndexOfPlayer(),
       });
-      updatedSlots[indexOfColumnInWhichPlacePiece] = updatedSlot;
+      updatedSlots[indexOfSlotInWhichPlacePiece] = updatedSlot;
     }
 
     const indexOfNextPlayer = this.getIndexOfNextPlayer({ state });

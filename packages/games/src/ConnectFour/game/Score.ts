@@ -8,8 +8,8 @@ import { type Points, Score } from "@repo/game/Score.js";
 import type { ConnectFourSlot } from "./Slot.js";
 
 import {
-  COLUMN_LENGTH,
   getIndexOfPlayerWhoIsOccupyingShape,
+  ROW_LENGTH,
   type Shape,
   sizeOfPatternsUsedForCalculatingPoints,
 } from "./Shape.js";
@@ -56,16 +56,17 @@ class ConnectFourScore extends Score<ConnectFourScore> {
     slots: ConnectFourSlot[];
   }): ConnectFourScore {
     const quantityOfPlayers = this.getQuantityOfPlayers();
+    const quantityOfSlots = slots.length;
 
     for (
       let indexOfSlot = FIRST_INDEX;
-      indexOfSlot < slots.length;
+      indexOfSlot < quantityOfSlots;
       indexOfSlot += INCREMENT_ONE
     ) {
       const indexOfRow = Math.floor(
-        assertNumberIsFinite(indexOfSlot / COLUMN_LENGTH),
+        assertNumberIsFinite(indexOfSlot / ROW_LENGTH),
       );
-      const indexOfColumn = indexOfSlot % COLUMN_LENGTH;
+      const indexOfColumn = indexOfSlot % ROW_LENGTH;
 
       const updateScoreConsideringShape = ({ shape }: { shape: Shape }) => {
         const indexOfPlayer = getIndexOfPlayerWhoIsOccupyingShape({

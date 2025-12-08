@@ -16,7 +16,6 @@ type ConnectFourSlotWithData<
   GenericKeyOfConnectFourSlot
 >;
 
-// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 type DerivedParamsOfConnectFourSlot = DerivedParamsOfSlot &
   Pick<ParamsOfConnectFourSlot, "indexOfOccupyingPlayer">;
 
@@ -38,7 +37,6 @@ type RequiredParamsOfConnectFourSlot = Pick<
   ParamsOfConnectFourSlot,
   "indexOfOccupyingPlayer"
 > &
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   RequiredParamsOfSlot;
 
 const deriveParamsOfConnectFourSlot = ({

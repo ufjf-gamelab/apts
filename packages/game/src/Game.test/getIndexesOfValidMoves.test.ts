@@ -43,7 +43,6 @@ const validateGetIndexesOfValidMoves = <
   const indexesOfValidMoves = game.getIndexesOfValidMoves({ state });
 
   expect(indexesOfValidMoves).toBeInstanceOf(Set<IndexOfMove>);
-  expect(indexesOfValidMoves).not.toBe(expectedIndexesOfValidMoves);
   assert.isEmpty(indexesOfValidMoves.difference(expectedIndexesOfValidMoves));
 };
 

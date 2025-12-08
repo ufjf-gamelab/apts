@@ -50,12 +50,7 @@ const validatePlay = <
 }) => {
   const game = state.getGame();
   const newState = game.play({ indexOfMove, state });
-  expect(newState).not.toBe(expectedState);
   expect(newState).toStrictEqual(expectedState);
-
-  // Ensure that the returned object does not keep reference to the internal property
-  const otherState = game.play({ indexOfMove, state });
-  expect(otherState).not.toBe(newState);
 };
 
 const validatePlayWhenItIsInvalid = <

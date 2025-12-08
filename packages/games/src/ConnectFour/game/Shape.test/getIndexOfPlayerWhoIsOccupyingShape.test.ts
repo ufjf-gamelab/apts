@@ -10,7 +10,7 @@ import {
   getIndexOfPlayerWhoIsOccupyingShape,
   getNameAndFormattedSizeOfShape,
 } from "../Shape.js";
-import { indexedConnectFourSlotsWithDataInWhichSlotR0C0IsFilledByAlice } from "../Slot.test/indexedRecords.js";
+import { indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C0AndR1C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C1AreFilledByBruno } from "../Slot.test/indexedRecords.js";
 import {
   recordOfConnectFourShapesWithDataInWhichShapesAreHorizontalLines,
   recordOfConnectFourShapesWithDataInWhichShapesArePrincipalDiagonals,
@@ -192,7 +192,8 @@ const testGetIndexOfPlayerWhoIsOccupyingShapeForAllShapes = ({
 };
 
 testGetIndexOfPlayerWhoIsOccupyingShapeForAllShapes({
-  slots: indexedConnectFourSlotsWithDataInWhichSlotR0C0IsFilledByAlice.map(
-    (slot) => slot.slot,
-  ),
+  slots:
+    indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C0AndR1C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C1AreFilledByBruno.map(
+      (slot) => slot.slot,
+    ),
 });

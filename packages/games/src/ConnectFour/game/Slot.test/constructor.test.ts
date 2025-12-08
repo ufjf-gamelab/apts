@@ -10,7 +10,11 @@ import type { ConnectFourSlotWithData } from "./setup.js";
 import { ConnectFourSlot } from "../Slot.js";
 import {
   indexedConnectFourSlotsWithDataInWhichAllSlotsAreEmpty,
-  indexedConnectFourSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
+  indexedConnectFourSlotsWithDataInWhichSlotR5C0IsFilledByAlice,
+  indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C0AndR1C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C1AreFilledByBruno,
+  indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C1AreFilledByBruno,
+  indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C1AndR1C1AndR0C1AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C0AndR1C0AreFilledByBruno,
+  indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C1AndR1C1AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C0AndR1C0AreFilledByBruno,
 } from "./indexedRecords.js";
 
 const createDescription = ({
@@ -55,8 +59,37 @@ testConstructor({
   arrayOfSlotsWithData: indexedConnectFourSlotsWithDataInWhichAllSlotsAreEmpty,
   descriptionOfArrayOfSlotsWithData: "allSlotsAreEmpty",
 });
+
 testConstructor({
   arrayOfSlotsWithData:
-    indexedConnectFourSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
-  descriptionOfArrayOfSlotsWithData: "slotR0C0IsFilledByAlice",
+    indexedConnectFourSlotsWithDataInWhichSlotR5C0IsFilledByAlice,
+  descriptionOfArrayOfSlotsWithData: "slotR5C0IsFilledByAlice",
+});
+
+testConstructor({
+  arrayOfSlotsWithData:
+    indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C0AndR1C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C1AreFilledByBruno,
+  descriptionOfArrayOfSlotsWithData:
+    "slotsR5C0AndR4C0AndR3C0AndR2C0AndR1C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C1AreFilledByBruno",
+});
+
+testConstructor({
+  arrayOfSlotsWithData:
+    indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C1AreFilledByBruno,
+  descriptionOfArrayOfSlotsWithData:
+    "slotsR5C0AndR4C0AndR3C0AndR2C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C1AreFilledByBruno",
+});
+
+testConstructor({
+  arrayOfSlotsWithData:
+    indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C1AndR1C1AndR0C1AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C0AndR1C0AreFilledByBruno,
+  descriptionOfArrayOfSlotsWithData:
+    "slotsR5C0AndR4C0AndR3C0AndR2C1AndR1C1AndR0C1AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C0AndR1C0AreFilledByBruno",
+});
+
+testConstructor({
+  arrayOfSlotsWithData:
+    indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C1AndR1C1AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C0AndR1C0AreFilledByBruno,
+  descriptionOfArrayOfSlotsWithData:
+    "slotsR5C0AndR4C0AndR3C0AndR2C1AndR1C1AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C0AndR1C0AreFilledByBruno",
 });
