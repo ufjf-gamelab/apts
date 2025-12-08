@@ -10,20 +10,20 @@ import {
   type TreeNodeWithData,
 } from "@repo/search/MonteCarloTree/TreeNode.test/setup.js";
 
-import type { TicTacToeGame } from "../../../game/Game.js";
-import type { TicTacToeMove } from "../../../game/Move.js";
+import type { TicTacToeGame } from "../../../game/TicTacToeGame.js";
+import type { TicTacToeMove } from "../../../game/TicTacToeMove.js";
 import type {
   RequiredParamsOfTicTacToeMove,
   TicTacToeMoveWithData,
-} from "../../../game/Move.test/setup.js";
-import type { TicTacToePlayer } from "../../../game/Player.js";
-import type { TicTacToeScore } from "../../../game/Score.js";
-import type { TicTacToeSlot } from "../../../game/Slot.js";
-import type { TicTacToeState } from "../../../game/State.js";
+} from "../../../game/TicTacToeMove.test/setup.js";
+import type { TicTacToePlayer } from "../../../game/TicTacToePlayer.js";
+import type { TicTacToeScore } from "../../../game/TicTacToeScore.js";
+import type { TicTacToeSlot } from "../../../game/TicTacToeSlot.js";
+import type { TicTacToeState } from "../../../game/TicTacToeState.js";
 import type {
   RequiredParamsOfTicTacToeState,
   TicTacToeStateWithData,
-} from "../../../game/State.test/setup.js";
+} from "../../../game/TicTacToeState.test/setup.js";
 
 type DerivedParamsOfTicTacToeTreeNode = DerivedParamsOfTreeNode<
   TicTacToeGame,

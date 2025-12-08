@@ -7,12 +7,12 @@ import {
 } from "@repo/search/MonteCarloTree/TreeNode.test/getQuantityOfExpandedMoves.test.js";
 import { test } from "vitest";
 
-import type { TicTacToeGame } from "../../../game/Game.js";
-import type { TicTacToeMove } from "../../../game/Move.js";
-import type { TicTacToePlayer } from "../../../game/Player.js";
-import type { TicTacToeScore } from "../../../game/Score.js";
-import type { TicTacToeSlot } from "../../../game/Slot.js";
-import type { TicTacToeState } from "../../../game/State.js";
+import type { TicTacToeGame } from "../../../game/TicTacToeGame.js";
+import type { TicTacToeMove } from "../../../game/TicTacToeMove.js";
+import type { TicTacToePlayer } from "../../../game/TicTacToePlayer.js";
+import type { TicTacToeScore } from "../../../game/TicTacToeScore.js";
+import type { TicTacToeSlot } from "../../../game/TicTacToeSlot.js";
+import type { TicTacToeState } from "../../../game/TicTacToeState.js";
 import type { TicTacToeTreeNodeWithData } from "./setup.js";
 
 import { recordOfTicTacToeTreeNodesWithData } from "./records.js";

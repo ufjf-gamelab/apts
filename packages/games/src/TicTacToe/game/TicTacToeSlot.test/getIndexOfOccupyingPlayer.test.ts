@@ -1,0 +1,89 @@
+import {
+  createDescriptionForTest,
+  createDescriptionForTestsOfMethod,
+} from "@repo/engine_core/test.js";
+import { expect, test } from "vitest";
+
+import type { TicTacToeSlot } from "../TicTacToeSlot.js";
+import type { TicTacToeSlotWithData } from "./setup.js";
+
+import {
+  indexedTicTacToeSlotsWithDataInWhichAllSlotsAreEmpty,
+  indexedTicTacToeSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
+} from "./indexedRecords.js";
+
+const validateGetIndexOfOccupyingPlayer = ({
+  expectedIndexOfOccupyingPlayer,
+  slot,
+}: {
+  expectedIndexOfOccupyingPlayer: ReturnType<
+    TicTacToeSlot["getIndexOfOccupyingPlayer"]
+  >;
+  slot: TicTacToeSlot;
+}) => {
+  const indexOfOccupyingPlayer = slot.getIndexOfOccupyingPlayer();
+  expect(indexOfOccupyingPlayer).toBe(expectedIndexOfOccupyingPlayer);
+};
+
+const createDescriptionForTestOfGetIndexOfOccupyingPlayer = ({
+  expectedIndexOfOccupyingPlayer,
+}: {
+  expectedIndexOfOccupyingPlayer: ReturnType<
+    TicTacToeSlot["getIndexOfOccupyingPlayer"]
+  >;
+}): string =>
+  createDescriptionForTestsOfMethod({
+    methodDescription: "getIndexOfOccupyingPlayer()",
+    returnedValue: expectedIndexOfOccupyingPlayer,
+  });
+
+const createDescription = ({
+  affix,
+  expectedIndexOfOccupyingPlayer,
+}: Pick<Parameters<typeof createDescriptionForTest>[0], "affix"> &
+  Pick<
+    Parameters<typeof createDescriptionForTestOfGetIndexOfOccupyingPlayer>[0],
+    "expectedIndexOfOccupyingPlayer"
+  >) =>
+  createDescriptionForTest({
+    affix,
+    description: createDescriptionForTestOfGetIndexOfOccupyingPlayer({
+      expectedIndexOfOccupyingPlayer,
+    }),
+  });
+
+const testGetIndexOfOccupyingPlayer = ({
+  arrayOfSlotsWithData,
+  descriptionOfArrayOfSlotsWithData,
+}: {
+  arrayOfSlotsWithData: TicTacToeSlotWithData[];
+  descriptionOfArrayOfSlotsWithData: string;
+}) => {
+  arrayOfSlotsWithData.forEach(
+    ({ keyOfSlot, requiredParams: { indexOfOccupyingPlayer }, slot }) => {
+      test(
+        createDescription({
+          affix: `${descriptionOfArrayOfSlotsWithData} — ${keyOfSlot}`,
+          expectedIndexOfOccupyingPlayer: indexOfOccupyingPlayer,
+        }),
+
+        () => {
+          validateGetIndexOfOccupyingPlayer({
+            expectedIndexOfOccupyingPlayer: indexOfOccupyingPlayer,
+            slot,
+          });
+        },
+      );
+    },
+  );
+};
+
+testGetIndexOfOccupyingPlayer({
+  arrayOfSlotsWithData: indexedTicTacToeSlotsWithDataInWhichAllSlotsAreEmpty,
+  descriptionOfArrayOfSlotsWithData: "allSlotsAreEmpty",
+});
+testGetIndexOfOccupyingPlayer({
+  arrayOfSlotsWithData:
+    indexedTicTacToeSlotsWithDataInWhichSlotR0C0IsFilledByAlice,
+  descriptionOfArrayOfSlotsWithData: "slotR0C0IsFilledByAlice",
+});
