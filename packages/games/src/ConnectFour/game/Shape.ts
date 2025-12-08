@@ -12,7 +12,7 @@ const COLUMN_LENGTH = 6;
 const ROW_LENGTH = 7;
 
 const sizeOfPatternsUsedForCalculatingPoints = {
-  line: 5,
+  line: 4,
 } as const;
 
 interface Line {

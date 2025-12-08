@@ -1,8 +1,8 @@
 import type { Points } from "@repo/game/Score.js";
 
 import {
-  recordOfConnectFourPlayersWithDataAndIndex,
   type ConnectFourPlayerWithDataAndIndex,
+  recordOfConnectFourPlayersWithDataAndIndex,
 } from "../Player.test/indexedRecords.js";
 import {
   createRecordOfConnectFourScoresWithData,
@@ -70,62 +70,6 @@ const recordOfRequiredParamsOfConnectFourScores = {
       }),
     ]),
   },
-  aliceWith5PointsAndBrunoWith10Points: {
-    pointsOfEachPlayerWithData: new Map([
-      constructTupleForPlayer({
-        playerWithDataAndIndex:
-          recordOfConnectFourPlayersWithDataAndIndex.alice,
-        points: 5,
-      }),
-      constructTupleForPlayer({
-        playerWithDataAndIndex:
-          recordOfConnectFourPlayersWithDataAndIndex.bruno,
-        points: 10,
-      }),
-    ]),
-  },
-  aliceWith14PointsAndBrunoWith14Points: {
-    pointsOfEachPlayerWithData: new Map([
-      constructTupleForPlayer({
-        playerWithDataAndIndex:
-          recordOfConnectFourPlayersWithDataAndIndex.alice,
-        points: 14,
-      }),
-      constructTupleForPlayer({
-        playerWithDataAndIndex:
-          recordOfConnectFourPlayersWithDataAndIndex.bruno,
-        points: 14,
-      }),
-    ]),
-  },
-  aliceWith15PointsAndBrunoWith14Points: {
-    pointsOfEachPlayerWithData: new Map([
-      constructTupleForPlayer({
-        playerWithDataAndIndex:
-          recordOfConnectFourPlayersWithDataAndIndex.alice,
-        points: 15,
-      }),
-      constructTupleForPlayer({
-        playerWithDataAndIndex:
-          recordOfConnectFourPlayersWithDataAndIndex.bruno,
-        points: 14,
-      }),
-    ]),
-  },
-  aliceWith38PointsAndBrunoWith26Points: {
-    pointsOfEachPlayerWithData: new Map([
-      constructTupleForPlayer({
-        playerWithDataAndIndex:
-          recordOfConnectFourPlayersWithDataAndIndex.alice,
-        points: 38,
-      }),
-      constructTupleForPlayer({
-        playerWithDataAndIndex:
-          recordOfConnectFourPlayersWithDataAndIndex.bruno,
-        points: 26,
-      }),
-    ]),
-  },
 } as const satisfies RecordOfRequiredParamsOfConnectFourScores;
 
 const recordOfConnectFourScoresWithData =
@@ -135,6 +79,6 @@ const recordOfConnectFourScoresWithData =
 
 export type { RecordOfRequiredParamsOfConnectFourScores };
 export {
-  recordOfRequiredParamsOfConnectFourScores,
   recordOfConnectFourScoresWithData,
+  recordOfRequiredParamsOfConnectFourScores,
 };

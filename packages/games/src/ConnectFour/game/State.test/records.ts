@@ -9,8 +9,8 @@ import { recordOfConnectFourScoresWithData } from "../Score.test/records.js";
 import {
   indexedConnectFourSlotsWithDataInWhichAllSlotsAreEmpty,
   indexedConnectFourSlotsWithDataInWhichSlotR5C0IsFilledByAlice,
-  indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C0AndR1C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C1AreFilledByBruno,
-  indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C1AreFilledByBruno,
+  indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AreFilledByBruno,
+  indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AreFilledByBruno,
   indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C1AndR1C1AndR0C1AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C0AndR1C0AreFilledByBruno,
   indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C1AndR1C1AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C0AndR1C0AreFilledByBruno,
 } from "../Slot.test/indexedRecords.js";
@@ -100,7 +100,7 @@ const recordOfRequiredParamsOfConnectFourStates = {
         }),
       ]),
     },
-  slotsR5C0AndR4C0AndR3C0AndR2C0AndR1C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C1AreFilledByBrunoAndAliceHas1PointAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
+  slotsR5C0AndR4C0AndR3C0AndR2C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AreFilledByBrunoAndAliceHas1PointAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     {
       gameWithData:
         recordOfConnectFourGamesWithData.snowballWith9RowsAnd9Columns,
@@ -111,7 +111,7 @@ const recordOfRequiredParamsOfConnectFourStates = {
       scoreWithData:
         recordOfConnectFourScoresWithData.aliceWith1PointAndBrunoWith0Points,
       slotsWithData:
-        indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C0AndR1C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C1AreFilledByBruno,
+        indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AreFilledByBruno,
       validMovesWithData: new Map([
         constructTupleForMove({
           moveWithDataAndIndex: recordOfConnectFourMovesWithDataAndIndex.c0,
@@ -136,7 +136,7 @@ const recordOfRequiredParamsOfConnectFourStates = {
         }),
       ]),
     },
-  slotsR5C0AndR4C0AndR3C0AndR2C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
+  slotsR5C0AndR4C0AndR3C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
     {
       gameWithData:
         recordOfConnectFourGamesWithData.snowballWith9RowsAnd9Columns,
@@ -147,7 +147,7 @@ const recordOfRequiredParamsOfConnectFourStates = {
       scoreWithData:
         recordOfConnectFourScoresWithData.aliceWith0PointsAndBrunoWith0Points,
       slotsWithData:
-        indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AndR2C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C1AreFilledByBruno,
+        indexedConnectFourSlotsWithDataInWhichSlotsR5C0AndR4C0AndR3C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AreFilledByBruno,
       validMovesWithData: new Map([
         constructTupleForMove({
           moveWithDataAndIndex: recordOfConnectFourMovesWithDataAndIndex.c0,

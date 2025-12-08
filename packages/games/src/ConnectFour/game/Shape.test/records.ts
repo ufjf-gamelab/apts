@@ -9,28 +9,28 @@ import {
 
 const horizontalLine = {
   direction: "horizontal",
-  size: 5,
+  size: 4,
 } satisfies Shape;
 
 const verticalLine = {
   direction: "vertical",
-  size: 5,
+  size: 4,
 } satisfies Shape;
 
 const principalDiagonal = {
   direction: "principalDiagonal",
-  size: 5,
+  size: 4,
 } satisfies Shape;
 
 const secondaryDiagonal = {
   direction: "secondaryDiagonal",
-  size: 5,
+  size: 4,
 } satisfies Shape;
 
 const recordOfRequiredParamsAndResultOfConnectFourShapesInWhichShapesAreHorizontalLines =
   {
     /* Row 0 */
-    horizontalLineOfLength5OnRow0AndColumn0: {
+    horizontalLineOfLength4OnRow0AndColumn0: {
       requiredParams: {
         indexOfPlayerWhoIsOccupyingShape: null,
         initialIndexOfColumn: 0,
@@ -43,11 +43,10 @@ const recordOfRequiredParamsAndResultOfConnectFourShapesInWhichShapesAreHorizont
           recordOfConnectFourSlotsWithDataAndIndex.r0c1.indexOfSlot,
           recordOfConnectFourSlotsWithDataAndIndex.r0c2.indexOfSlot,
           recordOfConnectFourSlotsWithDataAndIndex.r0c3.indexOfSlot,
-          recordOfConnectFourSlotsWithDataAndIndex.r0c4.indexOfSlot,
         ],
       },
     },
-    horizontalLineOfLength5OnRow0AndColumn1: {
+    horizontalLineOfLength4OnRow0AndColumn1: {
       requiredParams: {
         indexOfPlayerWhoIsOccupyingShape: null,
         initialIndexOfColumn: 1,
@@ -60,11 +59,10 @@ const recordOfRequiredParamsAndResultOfConnectFourShapesInWhichShapesAreHorizont
           recordOfConnectFourSlotsWithDataAndIndex.r0c2.indexOfSlot,
           recordOfConnectFourSlotsWithDataAndIndex.r0c3.indexOfSlot,
           recordOfConnectFourSlotsWithDataAndIndex.r0c4.indexOfSlot,
-          recordOfConnectFourSlotsWithDataAndIndex.r0c5.indexOfSlot,
         ],
       },
     },
-    horizontalLineOfLength5OnRow0AndColumn2: {
+    horizontalLineOfLength4OnRow0AndColumn2: {
       requiredParams: {
         indexOfPlayerWhoIsOccupyingShape: null,
         initialIndexOfColumn: 2,
@@ -77,13 +75,12 @@ const recordOfRequiredParamsAndResultOfConnectFourShapesInWhichShapesAreHorizont
           recordOfConnectFourSlotsWithDataAndIndex.r0c3.indexOfSlot,
           recordOfConnectFourSlotsWithDataAndIndex.r0c4.indexOfSlot,
           recordOfConnectFourSlotsWithDataAndIndex.r0c5.indexOfSlot,
-          recordOfConnectFourSlotsWithDataAndIndex.r0c6.indexOfSlot,
         ],
       },
     },
 
     /* Row 1 */
-    horizontalLineOfLength5OnRow1AndColumn0: {
+    horizontalLineOfLength4OnRow1AndColumn0: {
       requiredParams: {
         indexOfPlayerWhoIsOccupyingShape: null,
         initialIndexOfColumn: 0,
@@ -96,7 +93,6 @@ const recordOfRequiredParamsAndResultOfConnectFourShapesInWhichShapesAreHorizont
           recordOfConnectFourSlotsWithDataAndIndex.r1c1.indexOfSlot,
           recordOfConnectFourSlotsWithDataAndIndex.r1c2.indexOfSlot,
           recordOfConnectFourSlotsWithDataAndIndex.r1c3.indexOfSlot,
-          recordOfConnectFourSlotsWithDataAndIndex.r1c4.indexOfSlot,
         ],
       },
     },
@@ -105,7 +101,7 @@ const recordOfRequiredParamsAndResultOfConnectFourShapesInWhichShapesAreHorizont
 const recordOfRequiredParamsAndResultOfConnectFourShapesInWhichShapesAreVerticalLines =
   {
     /* Row 0 */
-    verticalLineOfLength5OnRow0AndColumn0: {
+    verticalLineOfLength4OnRow0AndColumn0: {
       requiredParams: {
         indexOfPlayerWhoIsOccupyingShape: null,
         initialIndexOfColumn: 0,
@@ -118,16 +114,14 @@ const recordOfRequiredParamsAndResultOfConnectFourShapesInWhichShapesAreVertical
           recordOfConnectFourSlotsWithDataAndIndex.r1c0.indexOfSlot,
           recordOfConnectFourSlotsWithDataAndIndex.r2c0.indexOfSlot,
           recordOfConnectFourSlotsWithDataAndIndex.r3c0.indexOfSlot,
-          recordOfConnectFourSlotsWithDataAndIndex.r4c0.indexOfSlot,
         ],
       },
     },
 
     /* Row 1 */
-    verticalLineOfLength5OnRow1AndColumn0: {
+    verticalLineOfLength4OnRow1AndColumn0: {
       requiredParams: {
-        indexOfPlayerWhoIsOccupyingShape:
-          recordOfConnectFourPlayersWithDataAndIndex.alice.indexOfPlayer,
+        indexOfPlayerWhoIsOccupyingShape: null,
         initialIndexOfColumn: 0,
         initialIndexOfRow: 1,
         shape: verticalLine,
@@ -135,6 +129,24 @@ const recordOfRequiredParamsAndResultOfConnectFourShapesInWhichShapesAreVertical
       result: {
         indexesOfSlots: [
           recordOfConnectFourSlotsWithDataAndIndex.r1c0.indexOfSlot,
+          recordOfConnectFourSlotsWithDataAndIndex.r2c0.indexOfSlot,
+          recordOfConnectFourSlotsWithDataAndIndex.r3c0.indexOfSlot,
+          recordOfConnectFourSlotsWithDataAndIndex.r4c0.indexOfSlot,
+        ],
+      },
+    },
+
+    /* Row 2 */
+    verticalLineOfLength4OnRow2AndColumn0: {
+      requiredParams: {
+        indexOfPlayerWhoIsOccupyingShape:
+          recordOfConnectFourPlayersWithDataAndIndex.alice.indexOfPlayer,
+        initialIndexOfColumn: 0,
+        initialIndexOfRow: 2,
+        shape: verticalLine,
+      },
+      result: {
+        indexesOfSlots: [
           recordOfConnectFourSlotsWithDataAndIndex.r2c0.indexOfSlot,
           recordOfConnectFourSlotsWithDataAndIndex.r3c0.indexOfSlot,
           recordOfConnectFourSlotsWithDataAndIndex.r4c0.indexOfSlot,
@@ -147,7 +159,7 @@ const recordOfRequiredParamsAndResultOfConnectFourShapesInWhichShapesAreVertical
 const recordOfRequiredParamsAndResultOfConnectFourShapesInWhichShapesArePrincipalDiagonals =
   {
     /* Row 0 */
-    principalDiagonalOfLength5OnRow0AndColumn0: {
+    principalDiagonalOfLength4OnRow0AndColumn0: {
       requiredParams: {
         indexOfPlayerWhoIsOccupyingShape: null,
         initialIndexOfColumn: 0,
@@ -160,7 +172,6 @@ const recordOfRequiredParamsAndResultOfConnectFourShapesInWhichShapesArePrincipa
           recordOfConnectFourSlotsWithDataAndIndex.r1c1.indexOfSlot,
           recordOfConnectFourSlotsWithDataAndIndex.r2c2.indexOfSlot,
           recordOfConnectFourSlotsWithDataAndIndex.r3c3.indexOfSlot,
-          recordOfConnectFourSlotsWithDataAndIndex.r4c4.indexOfSlot,
         ],
       },
     },
@@ -169,7 +180,7 @@ const recordOfRequiredParamsAndResultOfConnectFourShapesInWhichShapesArePrincipa
 const recordOfRequiredParamsAndResultOfConnectFourShapesInWhichShapesAreSecondaryDiagonals =
   {
     /* Row 0 */
-    secondaryDiagonalOfLength5OnRow0AndColumn0: {
+    secondaryDiagonalOfLength4OnRow0AndColumn0: {
       requiredParams: {
         indexOfPlayerWhoIsOccupyingShape: null,
         initialIndexOfColumn: 6,
@@ -182,7 +193,6 @@ const recordOfRequiredParamsAndResultOfConnectFourShapesInWhichShapesAreSecondar
           recordOfConnectFourSlotsWithDataAndIndex.r1c5.indexOfSlot,
           recordOfConnectFourSlotsWithDataAndIndex.r2c4.indexOfSlot,
           recordOfConnectFourSlotsWithDataAndIndex.r3c3.indexOfSlot,
-          recordOfConnectFourSlotsWithDataAndIndex.r4c2.indexOfSlot,
         ],
       },
     },
