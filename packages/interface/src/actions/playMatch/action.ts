@@ -5,19 +5,25 @@ import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
+import type {
+  ExplorationCoefficient,
+  Search,
+} from "@repo/search/MonteCarloTree/Search.js";
+import type { TreeNode } from "@repo/search/MonteCarloTree/TreeNode.js";
 import type { Answers, Choice, PromptObject } from "prompts";
 
 import { FIRST_INDEX } from "@repo/engine_core/constants.js";
 import { formatMap } from "@repo/engine_core/format.js";
-import { Random } from "@repo/search/CommonMonteCarloTree/Random.js";
 import {
   predictQualityOfMoves,
   type SofteningCoefficient,
-} from "@repo/search/CommonMonteCarloTree/search/quality.js";
-import { type ExplorationCoefficient } from "@repo/search/CommonMonteCarloTree/search/search.js";
+} from "@repo/search/quality.js";
+import { Random } from "@repo/search/Random.js";
 
-import type { ModeOfPlay } from "../../constants.js";
-import type { ProcessMessage } from "../../types.js";
+import type { ModeOfPlay, StrategyToSearch } from "../../constants.js";
+import type { ProcessMessage } from "../../input.js";
+
+import { constructSearchBasedOnStrategy } from "../../constructSearchBasedOnStrategy.js";
 
 type GetInput = (
   questions: PromptObject | PromptObject[],
@@ -137,12 +143,20 @@ const getIndexOfMoveUsingSearch = <
     GenericSlot,
     GenericState
   >,
+  GenericTreeNode extends TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState,
+    GenericTreeNode
+  >,
 >({
-  explorationCoefficient,
   indexesOfValidMoves,
   processMessage,
-  quantityOfExpansions,
   random,
+  search,
   softeningCoefficient,
   state,
 }: Pick<
@@ -157,20 +171,29 @@ const getIndexOfMoveUsingSearch = <
         GenericPlayer,
         GenericScore,
         GenericSlot,
-        GenericState
+        GenericState,
+        GenericTreeNode
       >
     >[0],
-    "explorationCoefficient" | "quantityOfExpansions" | "random" | "state"
+    "state"
   > & {
     indexesOfValidMoves: ReadonlySet<IndexOfMove>;
     processMessage: ProcessMessage;
+    random: Random;
+    search: Search<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState,
+      GenericTreeNode
+    >;
   }) => {
   const game = state.getGame();
 
   const qualitiesOfMoves = predictQualityOfMoves({
-    explorationCoefficient,
-    quantityOfExpansions,
-    random,
+    search,
     state,
   });
 
@@ -208,14 +231,22 @@ const getIndexOfMove = async <
     GenericSlot,
     GenericState
   >,
+  GenericTreeNode extends TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState,
+    GenericTreeNode
+  >,
 >({
   currentPlayerIsUser,
-  explorationCoefficient,
   getInput,
   indexesOfValidMoves,
   processMessage,
-  quantityOfExpansions,
   random,
+  search,
   softeningCoefficient,
   state,
 }: Pick<
@@ -226,14 +257,14 @@ const getIndexOfMove = async <
       GenericPlayer,
       GenericScore,
       GenericSlot,
-      GenericState
+      GenericState,
+      GenericTreeNode
     >
   >[0],
-  | "explorationCoefficient"
   | "indexesOfValidMoves"
   | "processMessage"
-  | "quantityOfExpansions"
   | "random"
+  | "search"
   | "softeningCoefficient"
   | "state"
 > &
@@ -260,11 +291,10 @@ const getIndexOfMove = async <
     });
   }
   return getIndexOfMoveUsingSearch({
-    explorationCoefficient,
     indexesOfValidMoves,
     processMessage,
-    quantityOfExpansions,
     random,
+    search,
     softeningCoefficient,
     state,
   });
@@ -291,12 +321,20 @@ const playMatchInTheModePlayerVersusComputer = async <
     GenericSlot,
     GenericState
   >,
+  GenericTreeNode extends TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState,
+    GenericTreeNode
+  >,
 >({
-  explorationCoefficient,
   getInput,
   processMessage,
-  quantityOfExpansions,
   random,
+  search,
   softeningCoefficient,
   state,
 }: Pick<
@@ -307,15 +345,11 @@ const playMatchInTheModePlayerVersusComputer = async <
       GenericPlayer,
       GenericScore,
       GenericSlot,
-      GenericState
+      GenericState,
+      GenericTreeNode
     >
   >[0],
-  | "explorationCoefficient"
-  | "getInput"
-  | "quantityOfExpansions"
-  | "random"
-  | "softeningCoefficient"
-  | "state"
+  "getInput" | "random" | "search" | "softeningCoefficient" | "state"
 > & {
   processMessage: ProcessMessage;
 }) => {
@@ -337,12 +371,11 @@ const playMatchInTheModePlayerVersusComputer = async <
     // eslint-disable-next-line no-await-in-loop
     const indexOfMove = await getIndexOfMove({
       currentPlayerIsUser,
-      explorationCoefficient,
       getInput,
       indexesOfValidMoves,
       processMessage,
-      quantityOfExpansions,
       random,
+      search,
       softeningCoefficient,
       state: currentState,
     });
@@ -451,6 +484,7 @@ const playMatch = async <
   seed,
   softeningCoefficient,
   state,
+  strategyToSearch,
 }: {
   explorationCoefficient: ExplorationCoefficient;
   getInput: GetInput;
@@ -460,6 +494,7 @@ const playMatch = async <
   seed: string;
   softeningCoefficient: SofteningCoefficient;
   state: GenericState;
+  strategyToSearch: StrategyToSearch;
 }): Promise<void> => {
   const game = state.getGame();
   const random = new Random({ seed });
@@ -469,24 +504,39 @@ const playMatch = async <
   const finalState = await (async () => {
     switch (modeOfPlay) {
       case "cvc":
-      case "pvc":
-        return await playMatchInTheModePlayerVersusComputer({
+      case "pvc": {
+        const search = constructSearchBasedOnStrategy<
+          GenericGame,
+          GenericMove,
+          GenericPlayer,
+          GenericScore,
+          GenericSlot,
+          GenericState
+        >({
           explorationCoefficient,
-          getInput,
-          processMessage,
           quantityOfExpansions,
           random,
+          strategyToSearch,
+        });
+        return await playMatchInTheModePlayerVersusComputer({
+          getInput,
+          processMessage,
+          random,
+          search,
           softeningCoefficient,
           state,
         });
-      case "pvp":
+      }
+      case "pvp": {
         return await playMatchInTheModePlayerVersusPlayer({
           getInput,
           processMessage,
           state,
         });
-      default:
+      }
+      default: {
         throw new Error("Invalid game mode.");
+      }
     }
   })();
 

@@ -4,4 +4,6 @@ type GetInput = (
   questions: PromptObject | PromptObject[],
 ) => Promise<Answers<string>>;
 
-export type { GetInput };
+type ProcessMessage = (message: string) => void;
+
+export type { GetInput, ProcessMessage };

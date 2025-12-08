@@ -9,4 +9,9 @@
     "exploration": 1.4,
     "softening": 0.5,
   },
+  "connectFour": {
+    "expansions": 10000,
+    "exploration": 1.4,
+    "softening": 1,
+  },
 }

@@ -8,7 +8,6 @@ import type { ParamsOfSearch } from "@repo/search/MonteCarloTree/Search.js";
 import type { TreeNode } from "@repo/search/MonteCarloTree/TreeNode.js";
 import type { Digraph as GraphvizDigraph } from "ts-graphviz";
 
-import { CommonSearch } from "@repo/search/CommonMonteCarloTree/search.js";
 import {
   calculateProbabilityOfPlayingEachMove,
   calculateQualityOfMoves,
@@ -16,8 +15,10 @@ import {
 } from "@repo/search/quality.js";
 import { Random } from "@repo/search/Random.js";
 
-import type { ProcessMessage } from "../../types.js";
+import type { StrategyToSearch } from "../../constants.js";
+import type { ProcessMessage } from "../../input.js";
 
+import { constructSearchBasedOnStrategy } from "../../constructSearchBasedOnStrategy.js";
 import { constructGraphvizGraph } from "../../graphviz.js";
 
 const predictQualityOfMoves = <
@@ -60,6 +61,7 @@ const predictQualityOfMoves = <
   shouldReturnProbabilities,
   softeningCoefficient,
   state,
+  strategyToSearch,
 }: Pick<
   Parameters<typeof calculateProbabilityOfPlayingEachMove>[0],
   "softeningCoefficient"
@@ -73,14 +75,17 @@ const predictQualityOfMoves = <
     seed: string;
     shouldReturnProbabilities: boolean;
     state: GenericState;
+    strategyToSearch: StrategyToSearch;
   }): void => {
+  const game = state.getGame();
+
   const random = new Random({ seed });
-  const search = new CommonSearch({
+  const search = constructSearchBasedOnStrategy({
     explorationCoefficient,
     quantityOfExpansions,
     random,
+    strategyToSearch,
   });
-  const game = state.getGame();
 
   const rootNode = search.expandTree({
     state,

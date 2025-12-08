@@ -1,4 +1,5 @@
 import type { IndexOfMove } from "@repo/game/Move.js";
+import type { StrategyToSearch } from "@repo/interface/constants.js";
 import type {
   QualityOfMove,
   SofteningCoefficient,
@@ -27,6 +28,7 @@ const executeAction = ({
   softening: softeningCoefficient,
   softmax: shouldReturnProbabilities,
   state: keyOfState,
+  strategy: strategyToSearch,
 }: {
   directory: string | undefined;
   expansions: number;
@@ -37,6 +39,7 @@ const executeAction = ({
   softening: SofteningCoefficient;
   softmax: boolean;
   state: KeyOfState;
+  strategy: StrategyToSearch;
 }): void => {
   const processQualityOfMoves = (
     qualitiesOfMoves: ReadonlyMap<IndexOfMove, QualityOfMove>,
@@ -71,6 +74,7 @@ const executeAction = ({
     shouldReturnProbabilities,
     softeningCoefficient,
     state,
+    strategyToSearch,
   });
 };
 
@@ -80,6 +84,7 @@ const commandToPredictQualityOfMoves = {
     .action(executeAction),
   options: [
     commonOptions.state,
+    commonOptions.strategyToSearch,
     commonOptions.expansions,
     commonOptions.exploration,
     commonOptions.softeningCoefficient,

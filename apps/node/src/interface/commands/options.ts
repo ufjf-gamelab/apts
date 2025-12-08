@@ -1,3 +1,4 @@
+import { strategiesToSearch } from "@repo/interface/constants.js";
 import { Option } from "commander";
 
 import { parseArgumentIntoFloat, parseArgumentIntoInt } from "../parsing.js";
@@ -37,6 +38,12 @@ const commonOptions = {
     "The key of a state to use as root of the search tree.",
   )
     .choices(Object.values(keysOfStates))
+    .makeOptionMandatory(),
+  strategyToSearch: new Option(
+    "--strategy <strategy-to-search>",
+    "The strategy that will be used by the search algorithm.",
+  )
+    .choices(Object.values(strategiesToSearch))
     .makeOptionMandatory(),
 } as const;
 
