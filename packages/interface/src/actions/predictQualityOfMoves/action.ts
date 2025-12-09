@@ -13,7 +13,7 @@ import {
   calculateQualityOfMoves,
   type QualityOfMove,
 } from "@repo/search/quality.js";
-import { Random } from "@repo/search/Random.js";
+import { Random } from "@repo/search/Random/Random.js";
 
 import type { StrategyToSearch } from "../../constants.js";
 import type { ProcessMessage } from "../../input.js";

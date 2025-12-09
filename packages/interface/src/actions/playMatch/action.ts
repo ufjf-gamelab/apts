@@ -16,7 +16,7 @@ import {
   predictQualityOfMoves,
   type SofteningCoefficient,
 } from "@repo/search/quality.js";
-import { Random } from "@repo/search/Random.js";
+import { Random } from "@repo/search/Random/Random.js";
 
 import type { ModeOfPlay, StrategyToSearch } from "../../constants.js";
 import type { ProcessMessage } from "../../input.js";

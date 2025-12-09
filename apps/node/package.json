@@ -7,7 +7,6 @@
     "@repo/games": "workspace:*",
     "@repo/interface": "workspace:*",
     "@repo/search": "workspace:*",
-    "@tensorflow/tfjs": "^4.22.0",
     "@ts-graphviz/adapter": "=3.0.4",
     "@ts-graphviz/ast": "=3.0.4",
     "@ts-graphviz/common": "=3.0.4",
@@ -21,7 +20,7 @@
   "devDependencies": {
     "@repo/eslint_config": "workspace:*",
     "@repo/typescript_config": "workspace:*",
-    "@types/node": "^24.10.1",
+    "@types/node": "^24.10.2",
     "@types/prompts": "^2.4.9",
     "esbuild": "^0.27.1",
     "eslint": "^9.39.1",

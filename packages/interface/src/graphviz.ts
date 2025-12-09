@@ -11,7 +11,7 @@ import type {
   QualityOfMove,
   SofteningCoefficient,
 } from "@repo/search/quality.js";
-import type { ParamsOfRandom } from "@repo/search/Random.js";
+import type { ParamsOfRandom } from "@repo/search/Random/Random.js";
 
 import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import { formatMap } from "@repo/engine_core/format.js";

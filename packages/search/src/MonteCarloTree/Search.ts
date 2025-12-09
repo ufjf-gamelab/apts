@@ -6,7 +6,7 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
-import type { Random } from "../Random.js";
+import type { Random } from "../Random/Random.js";
 import type { TreeNode } from "./TreeNode.js";
 
 type ExplorationCoefficient = number;

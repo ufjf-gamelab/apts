@@ -2,11 +2,11 @@ import type { CommonTreeNode } from "@repo/search/CommonMonteCarloTree/CommonTre
 
 import { SIZE_OF_EMPTY_SET } from "@repo/engine_core/constants.js";
 import { createDescriptionForTest } from "@repo/engine_core/test.js";
-import { Random } from "@repo/search/Random.js";
+import { Random } from "@repo/search/Random/Random.js";
 import {
   createDescriptionForTestOfPickIndexOfRandomNotExpandedChildNode,
   validatePickIndexOfRandomNotExpandedChildNode,
-} from "@repo/search/Random.test/pickIndexOfRandomNotExpandedChildNode.test.js";
+} from "@repo/search/Random/Random.test/pickIndexOfRandomNotExpandedChildNode.test.js";
 import { test } from "vitest";
 
 import type { TicTacToeGame } from "../../../game/TicTacToeGame.js";

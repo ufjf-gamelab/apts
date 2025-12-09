@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@types/node": "^24.10.1",
+    "@types/node": "^24.10.2",
     "eslint": "^9.39.1",
     "prettier": "^3.7.4",
     "turbo": "^2.6.3",
@@ -11,6 +11,21 @@
   },
   "name": "quati",
   "packageManager": "pnpm@10.14.0",
+  "pnpm": {
+    "overrides": {
+      "@ts-graphviz/adapter": "3.0.4",
+      "@ts-graphviz/ast": "3.0.4",
+      "@ts-graphviz/common": "3.0.4",
+      "@ts-graphviz/core": "3.0.4",
+      "ts-graphviz": "3.0.4"
+    },
+    "updateConfig": {
+      "ignoreDependencies": [
+        "@ts-graphviz/*",
+        "ts-graphviz"
+      ]
+    }
+  },
   "private": true,
   "scripts": {
     "build": "turbo run build --continue",

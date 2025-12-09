@@ -7,9 +7,9 @@ import type { State } from "@repo/game/State.js";
 import { type Game } from "@repo/game/Game.js";
 import seedrandom from "seedrandom";
 
-import type { TreeNode } from "./MonteCarloTree/TreeNode.js";
+import type { TreeNode } from "../MonteCarloTree/TreeNode.js";
 
-import { calculateProbabilityOfPlayingEachMove } from "./quality.js";
+import { calculateProbabilityOfPlayingEachMove } from "../quality.js";
 
 interface ParamsOfRandom {
   seed: string;

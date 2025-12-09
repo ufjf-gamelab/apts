@@ -9,7 +9,7 @@ import { formatArray } from "@repo/engine_core/format.js";
 import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
 import { expect } from "vitest";
 
-import type { TreeNode } from "../MonteCarloTree/TreeNode.js";
+import type { TreeNode } from "../../MonteCarloTree/TreeNode.js";
 import type { Random } from "../Random.js";
 
 const validatePickIndexOfRandomNotExpandedChildNode = <
