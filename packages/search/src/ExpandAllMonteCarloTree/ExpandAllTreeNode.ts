@@ -238,35 +238,47 @@ class ExpandAllTreeNode<
     return exploration;
   }
 
-  /// Perform a move and return the outcome state as a child node.
-  public expand({
-    indexOfMove,
-  }: {
-    indexOfMove: IndexOfMove;
-  }): ExpandAllTreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
+  public expand(): ReadonlyMap<
+    IndexOfMove,
+    ExpandAllTreeNode<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >
   > {
-    const nextState = this.game.play({
-      indexOfMove,
-      state: this.state,
+    this.childrenNodes.forEach((_, indexOfMove) => {
+      const nextState = this.game.play({
+        indexOfMove,
+        state: this.state,
+      });
+
+      const child = new ExpandAllTreeNode({
+        informationAboutPlayedMove: {
+          indexOfPlayedMove: indexOfMove,
+          indexOfPlayerWhoPlayedMove: this.state.getIndexOfPlayer(),
+        },
+        parentNode: this,
+        state: nextState,
+      });
+
+      this.childrenNodes.set(indexOfMove, child);
     });
 
-    const child = new ExpandAllTreeNode({
-      informationAboutPlayedMove: {
-        indexOfPlayedMove: indexOfMove,
-        indexOfPlayerWhoPlayedMove: this.state.getIndexOfPlayer(),
-      },
-      parentNode: this,
-      state: nextState,
-    });
-
-    this.childrenNodes.set(indexOfMove, child);
-    return child;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+    return this.childrenNodes as ReadonlyMap<
+      IndexOfMove,
+      ExpandAllTreeNode<
+        GenericGame,
+        GenericMove,
+        GenericPlayer,
+        GenericScore,
+        GenericSlot,
+        GenericState
+      >
+    >;
   }
 }
 

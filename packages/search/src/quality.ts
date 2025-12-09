@@ -78,6 +78,15 @@ const predictQualityOfMoves = <
   GenericMove extends Move<GenericMove>,
   GenericPlayer extends Player<GenericPlayer>,
   GenericScore extends Score<GenericScore>,
+  GenericSearch extends Search<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState,
+    GenericTreeNode
+  >,
   GenericSlot extends Slot<GenericSlot>,
   GenericState extends State<
     GenericGame,
@@ -99,29 +108,8 @@ const predictQualityOfMoves = <
 >({
   search,
   state,
-}: Pick<
-  Parameters<
-    Search<
-      GenericGame,
-      GenericMove,
-      GenericPlayer,
-      GenericScore,
-      GenericSlot,
-      GenericState,
-      GenericTreeNode
-    >["expandTree"]
-  >[0],
-  "state"
-> & {
-  search: Search<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState,
-    GenericTreeNode
-  >;
+}: Pick<Parameters<GenericSearch["expandTree"]>[0], "state"> & {
+  search: GenericSearch;
 }) => {
   const rootNode = search.expandTree({
     state,

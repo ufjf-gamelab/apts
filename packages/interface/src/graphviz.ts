@@ -25,6 +25,8 @@ import {
   type NodeAttributesObject as GraphvizNodeAttributesObject,
 } from "ts-graphviz";
 
+import type { StrategyToSearch } from "./constants.js";
+
 interface TupleOfInformationOfGraphvizEdge<
   GenericGame extends Game<
     GenericGame,
@@ -303,6 +305,7 @@ const constructGraphvizGraph = <
   rootNode,
   seed,
   softeningCoefficient,
+  strategyToSearch,
 }: {
   explorationCoefficient: ExplorationCoefficient;
   probabilityOfPlayingEachMove: ReadonlyMap<IndexOfMove, number>;
@@ -311,6 +314,7 @@ const constructGraphvizGraph = <
   rootNode: GenericTreeNode;
   seed: ParamsOfRandom["seed"];
   softeningCoefficient: SofteningCoefficient;
+  strategyToSearch: StrategyToSearch;
 }): GraphvizDigraph => {
   const game = rootNode.getState().getGame();
   const graph = new GraphvizDigraph("G", GRAPH_ATTRIBUTES);
@@ -326,7 +330,7 @@ const constructGraphvizGraph = <
 
   const informationGraphvizNode = new GraphvizNode("information", {
     ...NODE_ATTRIBUTES,
-    label: `seed: "${seed}",\nexplorationCoefficient: ${explorationCoefficient},\nquantityOfExpansions: ${quantityOfExpansions},\nsofteningCoefficient: ${softeningCoefficient},\nqualityOfEachMove: ${formatMap(
+    label: `strategyToSearch: "${strategyToSearch}",\nseed: "${seed}",\nexplorationCoefficient: ${explorationCoefficient},\nquantityOfExpansions: ${quantityOfExpansions},\nsofteningCoefficient: ${softeningCoefficient},\nqualityOfEachMove: ${formatMap(
       {
         map: qualityOfEachMove,
       },

@@ -74,35 +74,31 @@ class CommonSearch<
       indexOfCurrentExpansion < this.quantityOfExpansions;
       indexOfCurrentExpansion += INCREMENT_ONE
     ) {
-      // 1. Selection: Start from root and traverse down to a non-fully-expanded node using UCB
-      const selectedNode = this.pickNotFullyExpandedNode({
+      // 1. Selection: Start from root and traverse down to a non-fully-expanded node using UCB.
+      const selectedNode = this.selectNextNode({
         rootNode,
       });
       if (selectedNode === null) {
-        // If there is no node to select, the search has ended
+        // If there is no node to select, the search has ended.
         break;
       }
 
       const currentState = selectedNode.getState();
       const isFinal = game.isFinal({ state: currentState });
 
-      if (isFinal) {
-        // Terminal node: just backpropagate its score
-        const score = currentState.getScore();
-        selectedNode.updateQualityOfMatchAndQuantityOfVisitsOnBranch({ score });
-      } else {
-        // 2. Expansion: Add one new child node
+      if (!isFinal) {
+        // 2. Expansion: Add one new child node.
         const indexOfChild = this.random.pickIndexOfRandomNotExpandedChildNode({
           treeNode: selectedNode,
         });
         const childNode = selectedNode.expand({ indexOfMove: indexOfChild });
 
-        // 3. Simulation: Rollout from the new child to a terminal state
+        // 3. Simulation: Rollout from the new child to a terminal state.
         const score = this.simulateMatch({
           state: childNode.getState(),
         });
 
-        // 4. Backpropagation: Update all nodes on the path from child to root
+        // 4. Backpropagation: Update all nodes on the path from child to root.
         childNode.updateQualityOfMatchAndQuantityOfVisitsOnBranch({ score });
       }
     }
@@ -110,7 +106,7 @@ class CommonSearch<
     return rootNode;
   }
 
-  public override pickNotFullyExpandedNode({
+  public override selectNextNode({
     rootNode,
   }: {
     rootNode: CommonTreeNode<

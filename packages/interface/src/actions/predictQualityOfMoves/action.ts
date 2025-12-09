@@ -125,6 +125,7 @@ const predictQualityOfMoves = <
       rootNode,
       seed,
       softeningCoefficient,
+      strategyToSearch,
     });
     processGraphvizGraph(graph);
   }

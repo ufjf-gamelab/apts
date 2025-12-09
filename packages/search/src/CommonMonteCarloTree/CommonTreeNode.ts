@@ -238,7 +238,6 @@ class CommonTreeNode<
     return exploration;
   }
 
-  /// Perform a move and return the outcome state as a child node.
   public expand({
     indexOfMove,
   }: {

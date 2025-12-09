@@ -68,7 +68,7 @@ abstract class Search<
     state: GenericState;
   }): GenericTreeNode;
 
-  public abstract pickNotFullyExpandedNode({
+  public abstract selectNextNode({
     rootNode,
   }: {
     rootNode: GenericTreeNode;

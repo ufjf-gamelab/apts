@@ -1,6 +1,6 @@
-import { recordOfConnectFourStatesWithData } from "@repo/games/ConnectFour/game/State.test/records.js";
+import { recordOfConnectFourStatesWithData } from "@repo/games/ConnectFour/game/ConnectFourState.test/records.js";
 import { recordOfSnowballStatesWithData } from "@repo/games/Snowball/game/State.test/records.js";
-import { recordOfTicTacToeStatesWithData } from "@repo/games/TicTacToe/game/State.test/records.js";
+import { recordOfTicTacToeStatesWithData } from "@repo/games/TicTacToe/game/TicTacToeState.test/records.js";
 
 const keysOfStates = {
   gameIsConnectFourAndAllSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:

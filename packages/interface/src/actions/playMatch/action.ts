@@ -5,11 +5,9 @@ import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
-import type {
-  ExplorationCoefficient,
-  Search,
-} from "@repo/search/MonteCarloTree/Search.js";
-import type { TreeNode } from "@repo/search/MonteCarloTree/TreeNode.js";
+import type { CommonSearch } from "@repo/search/CommonMonteCarloTree/CommonSearch.js";
+import type { ExpandAllSearch } from "@repo/search/ExpandAllMonteCarloTree/ExpandAllSearch.js";
+import type { ExplorationCoefficient } from "@repo/search/MonteCarloTree/Search.js";
 import type { Answers, Choice, PromptObject } from "prompts";
 
 import { FIRST_INDEX } from "@repo/engine_core/constants.js";
@@ -143,15 +141,6 @@ const getIndexOfMoveUsingSearch = <
     GenericSlot,
     GenericState
   >,
-  GenericTreeNode extends TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState,
-    GenericTreeNode
-  >,
 >({
   indexesOfValidMoves,
   processMessage,
@@ -162,34 +151,29 @@ const getIndexOfMoveUsingSearch = <
 }: Pick<
   Parameters<Random["pickIndexOfValidMoveConsideringTheirQuality"]>[0],
   "softeningCoefficient"
-> &
-  Pick<
-    Parameters<
-      typeof predictQualityOfMoves<
+> & {
+  indexesOfValidMoves: ReadonlySet<IndexOfMove>;
+  processMessage: ProcessMessage;
+  random: Random;
+  search:
+    | CommonSearch<
         GenericGame,
         GenericMove,
         GenericPlayer,
         GenericScore,
         GenericSlot,
-        GenericState,
-        GenericTreeNode
+        GenericState
       >
-    >[0],
-    "state"
-  > & {
-    indexesOfValidMoves: ReadonlySet<IndexOfMove>;
-    processMessage: ProcessMessage;
-    random: Random;
-    search: Search<
-      GenericGame,
-      GenericMove,
-      GenericPlayer,
-      GenericScore,
-      GenericSlot,
-      GenericState,
-      GenericTreeNode
-    >;
-  }) => {
+    | ExpandAllSearch<
+        GenericGame,
+        GenericMove,
+        GenericPlayer,
+        GenericScore,
+        GenericSlot,
+        GenericState
+      >;
+  state: GenericState;
+}) => {
   const game = state.getGame();
 
   const qualitiesOfMoves = predictQualityOfMoves({
@@ -231,15 +215,6 @@ const getIndexOfMove = async <
     GenericSlot,
     GenericState
   >,
-  GenericTreeNode extends TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState,
-    GenericTreeNode
-  >,
 >({
   currentPlayerIsUser,
   getInput,
@@ -257,8 +232,7 @@ const getIndexOfMove = async <
       GenericPlayer,
       GenericScore,
       GenericSlot,
-      GenericState,
-      GenericTreeNode
+      GenericState
     >
   >[0],
   | "indexesOfValidMoves"
@@ -321,15 +295,6 @@ const playMatchInTheModePlayerVersusComputer = async <
     GenericSlot,
     GenericState
   >,
-  GenericTreeNode extends TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState,
-    GenericTreeNode
-  >,
 >({
   getInput,
   processMessage,
@@ -345,8 +310,7 @@ const playMatchInTheModePlayerVersusComputer = async <
       GenericPlayer,
       GenericScore,
       GenericSlot,
-      GenericState,
-      GenericTreeNode
+      GenericState
     >
   >[0],
   "getInput" | "random" | "search" | "softeningCoefficient" | "state"

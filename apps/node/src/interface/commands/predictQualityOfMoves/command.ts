@@ -54,7 +54,7 @@ const executeAction = ({
           directoryPath,
           fileName:
             fileName ??
-            `state(${keyOfState})_expansions(${quantityOfExpansions})_exploration(${explorationCoefficient})_softening(${softeningCoefficient})_seed(${seed})`,
+            `state(${keyOfState})_strategy(${strategyToSearch})_expansions(${quantityOfExpansions})_exploration(${explorationCoefficient})_softening(${softeningCoefficient})_seed(${seed})`,
           graphvizDotString,
         }).catch((error: unknown) => {
           console.error("Error generating Graphviz image:", error);
