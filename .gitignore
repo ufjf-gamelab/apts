@@ -13,4 +13,6 @@ public/dist
 ## Development environment
 .direnv/
 
+## Generated files
 .images/
+.models/

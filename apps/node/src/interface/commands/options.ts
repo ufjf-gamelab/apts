@@ -4,7 +4,7 @@ import { Option } from "commander";
 import { parseArgumentIntoFloat, parseArgumentIntoInt } from "../parsing.js";
 import { keysOfStates } from "../states.js";
 
-const DEFAULT_SEED = String(Math.random());
+const DEFAULT_SEED = Math.random().toString();
 
 const EXPLORATION_COEFFICIENT = 0.5;
 const QUANTITY_OF_EXPANSIONS = 10000;

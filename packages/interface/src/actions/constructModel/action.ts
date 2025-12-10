@@ -40,6 +40,7 @@ const constructModel = async <
   quantityOfHiddenChannels,
   quantityOfResidualBlocks,
   scheme,
+  seed,
 }: Pick<
   Parameters<
     ResidualNeuralNetwork<
@@ -62,7 +63,7 @@ const constructModel = async <
       GenericSlot,
       GenericState
     >,
-    "game" | "quantityOfHiddenChannels" | "quantityOfResidualBlocks"
+    "game" | "quantityOfHiddenChannels" | "quantityOfResidualBlocks" | "seed"
   > & {
     processMessage: ProcessMessage;
   }): Promise<void> => {
@@ -77,6 +78,7 @@ const constructModel = async <
     game,
     quantityOfHiddenChannels,
     quantityOfResidualBlocks,
+    seed,
   });
 
   residualNeuralNetwork.summary({ logMessage: processMessage });

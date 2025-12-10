@@ -13,26 +13,29 @@ import {
   selectGameUsingKeyOfGame,
 } from "../../games.js";
 import { parseArgumentIntoInt } from "../../parsing.js";
+import { commonOptions } from "../options.js";
 
 const executeAction = async ({
   directory: directoryPathOrUndefined,
-  file: fileNameOrUndefined,
   game: keyOfGame,
   hidden: quantityOfHiddenChannels,
+  name: modelNameOrUndefined,
   residual: quantityOfResidualBlocks,
+  seed,
 }: {
   directory: string | undefined;
-  file: string | undefined;
   game: KeyOfGame;
   hidden: Integer;
+  name: string | undefined;
   residual: Integer;
+  seed: string;
 }): Promise<void> => {
-  const fileName =
-    fileNameOrUndefined ??
+  const modelName =
+    modelNameOrUndefined ??
     `game(${keyOfGame})_hidden(${quantityOfHiddenChannels})_residual(${quantityOfResidualBlocks})`;
   const directoryPath = directoryPathOrUndefined ?? "./";
   await createDirectory({ directoryPath });
-  const fullPath = path.resolve(path.join(directoryPath, fileName));
+  const fullPath = path.join(directoryPath, modelName);
 
   const game = selectGameUsingKeyOfGame(keyOfGame);
 
@@ -43,6 +46,7 @@ const executeAction = async ({
     quantityOfHiddenChannels,
     quantityOfResidualBlocks,
     scheme: "file",
+    seed,
   });
 };
 
@@ -62,8 +66,8 @@ const commandToConstructModel = {
       "The path to the directory where create the model.",
     ),
     new Option(
-      "-f, --file <output-file-name>",
-      "The name of the outputted model (without extension).",
+      "-n, --name <name-of-outputted-folder-containing-model>",
+      "The name of the folder where output model.",
     ),
     new Option(
       "--hidden <quantity-of-hidden-channels>",
@@ -77,6 +81,7 @@ const commandToConstructModel = {
     )
       .argParser(parseArgumentIntoInt)
       .makeOptionMandatory(),
+    commonOptions.seed,
   ],
 } satisfies DefinitionOfCommand;
 
