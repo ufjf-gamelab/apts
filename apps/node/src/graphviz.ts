@@ -15,8 +15,7 @@ export const generateGraphvizImage = async ({
   const directoryPath = directoryPathOrUndefined ?? "./";
   await createDirectory({ directoryPath });
 
-  const fileNameWithExtension = `${fileName}.svg`;
-  const fullPath = path.join(directoryPath, fileNameWithExtension);
+  const fullPath = path.join(directoryPath, fileName);
 
   try {
     await toFile(graphvizDotString, fullPath, {

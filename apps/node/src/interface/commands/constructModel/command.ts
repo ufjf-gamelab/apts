@@ -6,7 +6,7 @@ import path from "path";
 
 import type { DefinitionOfCommand } from "../commands.js";
 
-import { createDirectory } from "../../../file.js";
+import { createDirectory, truncateFileName } from "../../../file.js";
 import {
   type KeyOfGame,
   keysOfGames,
@@ -30,9 +30,11 @@ const executeAction = async ({
   residual: Integer;
   seed: string;
 }): Promise<void> => {
-  const modelName =
-    modelNameOrUndefined ??
-    `game(${keyOfGame})_hidden(${quantityOfHiddenChannels})_residual(${quantityOfResidualBlocks})`;
+  const modelName = truncateFileName({
+    truncatableSlice:
+      modelNameOrUndefined ??
+      `game(${keyOfGame})_hidden(${quantityOfHiddenChannels})_residual(${quantityOfResidualBlocks})_seed(${seed})`,
+  });
   const directoryPath = directoryPathOrUndefined ?? "./";
   await createDirectory({ directoryPath });
   const fullPath = path.join(directoryPath, modelName);

@@ -110,7 +110,7 @@ class Random {
     return indexOfMove;
   }
 
-  public pickIndexOfValidMoveConsideringTheirQuality({
+  public pickIndexOfValidMoveConsideringItsQuality({
     indexesOfValidMoves,
     qualitiesOfMoves,
     softeningCoefficient,

@@ -7,6 +7,8 @@ import type { State } from "@repo/game/State.js";
 
 import { assertNumberIsFinite } from "@repo/engine_core/assert.js";
 
+import type { QualityOfMove } from "../quality.js";
+
 import {
   type ParamsOfTreeNode,
   type ParamsOfTreeNodeForPrivateConstructor,
@@ -16,7 +18,7 @@ import {
 const BASE_EXPLOITATION = 0;
 const BASE_EXPLORATION = 0;
 
-type ParamsOfExpandAllTreeNode<
+type ParamsOfAgentGuidedTreeNode<
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -46,7 +48,7 @@ type ParamsOfExpandAllTreeNode<
   GenericState
 >;
 
-type ParamsOfExpandAllTreeNodeForPrivateConstructor<
+type ParamsOfAgentGuidedTreeNodeForPrivateConstructor<
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -74,7 +76,7 @@ type ParamsOfExpandAllTreeNodeForPrivateConstructor<
   GenericScore,
   GenericSlot,
   GenericState,
-  ExpandAllTreeNode<
+  AgentGuidedTreeNode<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -82,9 +84,11 @@ type ParamsOfExpandAllTreeNodeForPrivateConstructor<
     GenericSlot,
     GenericState
   >
->;
+> & {
+  readonly qualityOfMoveAttributedByModel: null | QualityOfMove;
+};
 
-class ExpandAllTreeNode<
+class AgentGuidedTreeNode<
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -112,7 +116,7 @@ class ExpandAllTreeNode<
   GenericScore,
   GenericSlot,
   GenericState,
-  ExpandAllTreeNode<
+  AgentGuidedTreeNode<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -122,12 +126,14 @@ class ExpandAllTreeNode<
   >
 > {
   private readonly game: GenericGame;
+  private readonly qualityOfMoveAttributedByModel: null | QualityOfMove;
 
   private constructor({
     indexOfPlayedMove,
     parentNode,
+    qualityOfMoveAttributedByModel,
     state,
-  }: ParamsOfExpandAllTreeNodeForPrivateConstructor<
+  }: ParamsOfAgentGuidedTreeNodeForPrivateConstructor<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -141,6 +147,7 @@ class ExpandAllTreeNode<
       state,
     });
     this.game = state.getGame();
+    this.qualityOfMoveAttributedByModel = qualityOfMoveAttributedByModel;
   }
 
   public static create<
@@ -166,7 +173,7 @@ class ExpandAllTreeNode<
     >,
   >({
     state,
-  }: ParamsOfExpandAllTreeNode<
+  }: ParamsOfAgentGuidedTreeNode<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -174,7 +181,7 @@ class ExpandAllTreeNode<
     GenericSlot,
     GenericState
   >) {
-    return new ExpandAllTreeNode<
+    return new AgentGuidedTreeNode<
       GenericGame,
       GenericMove,
       GenericPlayer,
@@ -184,6 +191,7 @@ class ExpandAllTreeNode<
     >({
       indexOfPlayedMove: null,
       parentNode: null,
+      qualityOfMoveAttributedByModel: null,
       state,
     });
   }
@@ -192,7 +200,7 @@ class ExpandAllTreeNode<
   public override calculateExploitationComponentOfFitness({
     childNode,
   }: {
-    childNode: ExpandAllTreeNode<
+    childNode: AgentGuidedTreeNode<
       GenericGame,
       GenericMove,
       GenericPlayer,
@@ -215,7 +223,7 @@ class ExpandAllTreeNode<
     childNode,
     explorationCoefficient,
   }: {
-    childNode: ExpandAllTreeNode<
+    childNode: AgentGuidedTreeNode<
       GenericGame,
       GenericMove,
       GenericPlayer,
@@ -239,9 +247,13 @@ class ExpandAllTreeNode<
     return exploration;
   }
 
-  public expand(): ReadonlyMap<
+  public expand({
+    qualitiesOfMoveAttributedByModel,
+  }: {
+    qualitiesOfMoveAttributedByModel: QualityOfMove[];
+  }): ReadonlyMap<
     IndexOfMove,
-    ExpandAllTreeNode<
+    AgentGuidedTreeNode<
       GenericGame,
       GenericMove,
       GenericPlayer,
@@ -251,14 +263,23 @@ class ExpandAllTreeNode<
     >
   > {
     this.childrenNodes.forEach((_, indexOfMove) => {
+      const qualityOfMoveAttributedByModel =
+        qualitiesOfMoveAttributedByModel[indexOfMove];
+      if (typeof qualityOfMoveAttributedByModel === "undefined") {
+        throw new Error(
+          `Could not retrieve quality of move with the index ${indexOfMove}.`,
+        );
+      }
+
       const nextState = this.game.play({
         indexOfMove,
         state: this.state,
       });
 
-      const child = new ExpandAllTreeNode({
+      const child = new AgentGuidedTreeNode({
         indexOfPlayedMove: indexOfMove,
         parentNode: this,
+        qualityOfMoveAttributedByModel,
         state: nextState,
       });
 
@@ -268,7 +289,7 @@ class ExpandAllTreeNode<
     // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
     return this.childrenNodes as ReadonlyMap<
       IndexOfMove,
-      ExpandAllTreeNode<
+      AgentGuidedTreeNode<
         GenericGame,
         GenericMove,
         GenericPlayer,
@@ -278,7 +299,11 @@ class ExpandAllTreeNode<
       >
     >;
   }
+
+  public getQualityOfMoveAttributedByModel() {
+    return this.qualityOfMoveAttributedByModel;
+  }
 }
 
-export type { ParamsOfExpandAllTreeNode };
-export { ExpandAllTreeNode };
+export type { ParamsOfAgentGuidedTreeNode };
+export { AgentGuidedTreeNode };

@@ -59,7 +59,6 @@ class ExpandAllSearch<
     GenericSlot,
     GenericState
   > {
-    const game = state.getGame();
     const rootNode = ExpandAllTreeNode.create<
       GenericGame,
       GenericMove,
@@ -67,7 +66,7 @@ class ExpandAllSearch<
       GenericScore,
       GenericSlot,
       GenericState
-    >({ informationAboutPlayedMove: null, state });
+    >({ state });
 
     for (
       let indexOfCurrentExpansion = 0;
@@ -84,7 +83,7 @@ class ExpandAllSearch<
       }
 
       const currentState = selectedNode.getState();
-      const isFinal = game.isFinal({ state: currentState });
+      const isFinal = currentState.isFinal();
 
       if (!isFinal) {
         // 2. Expansion: Add a new child node for every valid move.
@@ -95,9 +94,14 @@ class ExpandAllSearch<
           const score = this.simulateMatch({
             state: childNode.getState(),
           });
+          const qualityOfMatch = childNode.getQualityOfMatchFromScore({
+            score,
+          });
 
           // 4. Backpropagation: Update all nodes on the path from child to root.
-          childNode.updateQualityOfMatchAndQuantityOfVisitsOnBranch({ score });
+          childNode.updateQualityOfMatchAndQuantityOfVisitsOnBranch({
+            qualityOfMatch,
+          });
         });
       }
     }
@@ -151,9 +155,7 @@ class ExpandAllSearch<
     let stateThatIsCurrentlyBeingSimulated = state;
     for (;;) {
       const score = stateThatIsCurrentlyBeingSimulated.getScore();
-      const isFinal = game.isFinal({
-        state: stateThatIsCurrentlyBeingSimulated,
-      });
+      const isFinal = stateThatIsCurrentlyBeingSimulated.isFinal();
       if (isFinal) {
         return score;
       }

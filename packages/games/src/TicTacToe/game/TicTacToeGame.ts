@@ -131,7 +131,7 @@ class TicTacToeGame extends Game<
     indexOfMove: IndexOfMove;
     state: TicTacToeState;
   }): TicTacToeState {
-    if (this.isFinal({ state })) {
+    if (state.isFinal()) {
       throw constructErrorForFinalState({ indexOfMove });
     }
 

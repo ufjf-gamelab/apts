@@ -10,7 +10,7 @@ import { test } from "vitest";
 
 import { Random } from "../Random.js";
 
-const validatePickIndexOfValidMoveConsideringTheirQuality = <
+const validatePickIndexOfValidMoveConsideringItsQuality = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -37,13 +37,13 @@ const validatePickIndexOfValidMoveConsideringTheirQuality = <
   random,
   softeningCoefficient,
 }: Pick<
-  Parameters<Random["pickIndexOfValidMoveConsideringTheirQuality"]>[0],
+  Parameters<Random["pickIndexOfValidMoveConsideringItsQuality"]>[0],
   "indexesOfValidMoves" | "qualitiesOfMoves" | "softeningCoefficient"
 > & {
   random: Random;
 }) => {
   const pickedIndexOfValidMove =
-    random.pickIndexOfValidMoveConsideringTheirQuality({
+    random.pickIndexOfValidMoveConsideringItsQuality({
       indexesOfValidMoves,
       qualitiesOfMoves,
       softeningCoefficient,
@@ -51,23 +51,23 @@ const validatePickIndexOfValidMoveConsideringTheirQuality = <
   console.info(pickedIndexOfValidMove);
 };
 
-const createDescriptionForTestOfPickIndexOfValidMoveConsideringTheirQuality =
-  (): string => `pickIndexOfValidMoveConsideringTheirQuality({ ... })`;
+const createDescriptionForTestOfPickIndexOfValidMoveConsideringItsQuality =
+  (): string => `pickIndexOfValidMoveConsideringItsQuality({ ... })`;
 
-const testPickIndexOfValidMoveConsideringTheirQuality = ({
+const testPickIndexOfValidMoveConsideringItsQuality = ({
   indexesOfValidMoves,
   qualitiesOfMoves,
   random,
   softeningCoefficient,
 }: Pick<
-  Parameters<typeof validatePickIndexOfValidMoveConsideringTheirQuality>[0],
+  Parameters<typeof validatePickIndexOfValidMoveConsideringItsQuality>[0],
   "indexesOfValidMoves" | "qualitiesOfMoves" | "random" | "softeningCoefficient"
 >) => {
   test(
-    createDescriptionForTestOfPickIndexOfValidMoveConsideringTheirQuality(),
+    createDescriptionForTestOfPickIndexOfValidMoveConsideringItsQuality(),
 
     () => {
-      validatePickIndexOfValidMoveConsideringTheirQuality({
+      validatePickIndexOfValidMoveConsideringItsQuality({
         indexesOfValidMoves,
         qualitiesOfMoves,
         random,
@@ -79,7 +79,7 @@ const testPickIndexOfValidMoveConsideringTheirQuality = ({
 
 const DEFAULT_SEED = "0";
 
-testPickIndexOfValidMoveConsideringTheirQuality({
+testPickIndexOfValidMoveConsideringItsQuality({
   indexesOfValidMoves: new Set([2, 3, 4, 5, 7, 8]),
   qualitiesOfMoves: [
     0, 0, 0.7281553398058253, 0.06796116504854369, 0.06796116504854369,

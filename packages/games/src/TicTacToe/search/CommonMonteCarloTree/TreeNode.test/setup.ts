@@ -110,11 +110,9 @@ type TicTacToeTreeNodeWithData<
 >;
 
 const deriveParamsOfTicTacToeTreeNode = ({
-  playedMoveWithDataAndIndex,
   stateWithData,
 }: RequiredParamsOfTicTacToeTreeNode): DerivedParamsOfTicTacToeTreeNode =>
   deriveParamsOfTreeNode({
-    playedMoveWithDataAndIndex,
     stateWithData,
   });
 
@@ -129,7 +127,6 @@ const createTicTacToeTreeNode = <
     GenericTreeNode
   >,
 >({
-  informationAboutPlayedMove,
   state,
 }: DerivedParamsOfTicTacToeTreeNode): TicTacToeTreeNode<
   CommonTreeNode<
@@ -142,7 +139,6 @@ const createTicTacToeTreeNode = <
   >
 > =>
   CommonTreeNode.create({
-    informationAboutPlayedMove,
     state,
   }) satisfies TicTacToeTreeNode<
     CommonTreeNode<

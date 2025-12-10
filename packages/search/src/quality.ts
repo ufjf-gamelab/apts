@@ -10,7 +10,7 @@ import { assertNumberIsFinite } from "@repo/engine_core/assert.js";
 import type { Search } from "./MonteCarloTree/Search.js";
 import type { TreeNode } from "./MonteCarloTree/TreeNode.js";
 
-const MINIMUM_QUALITY_OF_MOVE = 0;
+const MINIMUM_QUALITY_OF_MOVE = Number.NEGATIVE_INFINITY;
 
 type QualityOfMove = number;
 

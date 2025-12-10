@@ -9,7 +9,7 @@ import { Move, type ParamsOfMove } from "@repo/game/Move.js";
 
 import type { ConnectFourState } from "./ConnectFourState.js";
 
-import { QUANTITY_OF_ROWS, getIndexesOfSlots } from "./ConnectFourShape.js";
+import { getIndexesOfSlots, QUANTITY_OF_ROWS } from "./ConnectFourShape.js";
 
 type ParamsOfConnectFourMove = ParamsOfMove & {
   indexOfColumnInWhichPlacePiece: Integer;

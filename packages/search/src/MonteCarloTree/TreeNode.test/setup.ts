@@ -234,7 +234,6 @@ const deriveParamsOfTreeNode = <
     GenericRequiredParamsOfState
   >,
 >({
-  playedMoveWithDataAndIndex,
   stateWithData,
 }: Pick<
   RequiredParamsOfTreeNode<
@@ -249,7 +248,7 @@ const deriveParamsOfTreeNode = <
     GenericMoveWithData,
     GenericStateWithData
   >,
-  "playedMoveWithDataAndIndex" | "stateWithData"
+  "stateWithData"
 >): DerivedParamsOfTreeNode<
   GenericGame,
   GenericMove,
@@ -257,30 +256,9 @@ const deriveParamsOfTreeNode = <
   GenericScore,
   GenericSlot,
   GenericState
-> => {
-  let informationAboutPlayedMove: DerivedParamsOfTreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >["informationAboutPlayedMove"] = null;
-
-  if (playedMoveWithDataAndIndex !== null) {
-    const indexOfPlayedMove = playedMoveWithDataAndIndex.indexOfMove;
-    const indexOfPlayerWhoPlayedMove = stateWithData.state.getIndexOfPlayer();
-    informationAboutPlayedMove = {
-      indexOfPlayedMove,
-      indexOfPlayerWhoPlayedMove,
-    };
-  }
-
-  return {
-    informationAboutPlayedMove,
-    state: stateWithData.state,
-  };
-};
+> => ({
+  state: stateWithData.state,
+});
 
 const createTreeNodeWithData = <
   GenericGame extends Game<

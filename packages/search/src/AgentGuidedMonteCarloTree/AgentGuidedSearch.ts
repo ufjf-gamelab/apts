@@ -7,10 +7,12 @@ import type { State } from "@repo/game/State.js";
 
 import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 
-import { Search } from "../MonteCarloTree/Search.js";
-import { CommonTreeNode } from "./CommonTreeNode.js";
+import type { Model } from "../ResidualNeuralNetwork/Model.js";
 
-class CommonSearch<
+import { Search } from "../MonteCarloTree/Search.js";
+import { AgentGuidedTreeNode } from "./AgentGuidedTreeNode.js";
+
+class AgentGuidedSearch<
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -38,7 +40,7 @@ class CommonSearch<
   GenericScore,
   GenericSlot,
   GenericState,
-  CommonTreeNode<
+  AgentGuidedTreeNode<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -48,10 +50,19 @@ class CommonSearch<
   >
 > {
   public override expandTree({
+    model,
     state,
   }: {
+    model: Model<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >;
     state: GenericState;
-  }): CommonTreeNode<
+  }): AgentGuidedTreeNode<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -59,7 +70,7 @@ class CommonSearch<
     GenericSlot,
     GenericState
   > {
-    const rootNode = CommonTreeNode.create<
+    const rootNode = AgentGuidedTreeNode.create<
       GenericGame,
       GenericMove,
       GenericPlayer,
@@ -73,7 +84,7 @@ class CommonSearch<
       indexOfCurrentExpansion < this.quantityOfExpansions;
       indexOfCurrentExpansion += INCREMENT_ONE
     ) {
-      // 1. Selection: Start from root and traverse down to a non-fully-expanded node using UCB.
+      // 1. Selection: Start from root and traverse down to a non-expanded node using UCB.
       const selectedNode = this.selectNextNode({
         rootNode,
       });
@@ -86,21 +97,20 @@ class CommonSearch<
       const isFinal = currentState.isFinal();
 
       if (!isFinal) {
-        // 2. Expansion: Add one new child node.
-        const indexOfChild = this.random.pickIndexOfRandomNotExpandedChildNode({
-          treeNode: selectedNode,
+        const { policy, value } = model.predict({
+          state,
         });
-        const childNode = selectedNode.expand({ indexOfMove: indexOfChild });
 
-        // 3. Simulation: Rollout from the new child to a terminal state.
-        const score = this.simulateMatch({
-          state: childNode.getState(),
+        // 2. Expansion: Add a new child node for every valid move.
+        const childrenNodes = selectedNode.expand({
+          qualitiesOfMoveAttributedByModel: policy.arraySync(),
         });
-        const qualityOfMatch = childNode.getQualityOfMatchFromScore({ score });
 
-        // 4. Backpropagation: Update all nodes on the path from child to root.
-        childNode.updateQualityOfMatchAndQuantityOfVisitsOnBranch({
-          qualityOfMatch,
+        childrenNodes.forEach((childNode) => {
+          // 4. Backpropagation: Update all nodes on the path from child to root.
+          childNode.updateQualityOfMatchAndQuantityOfVisitsOnBranch({
+            qualityOfMatch: value.arraySync(),
+          });
         });
       }
     }
@@ -111,7 +121,7 @@ class CommonSearch<
   public override selectNextNode({
     rootNode,
   }: {
-    rootNode: CommonTreeNode<
+    rootNode: AgentGuidedTreeNode<
       GenericGame,
       GenericMove,
       GenericPlayer,
@@ -119,7 +129,7 @@ class CommonSearch<
       GenericSlot,
       GenericState
     >;
-  }): CommonTreeNode<
+  }): AgentGuidedTreeNode<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -127,14 +137,14 @@ class CommonSearch<
     GenericSlot,
     GenericState
   > | null {
-    // Traverse down the tree using UCB selection until we find a node that is not fully expanded.
+    // Traverse down the tree using UCB selection until we find a node that is not fully expanded
     let currentNode = rootNode;
     while (currentNode.isFullyExpanded()) {
       const bestChild = currentNode.selectBestChildNode({
         explorationCoefficient: this.explorationCoefficient,
       });
       if (bestChild === null) {
-        // This happens when a node is terminal (no valid moves).
+        // This happens when a node is terminal (no valid moves)
         return null;
       }
       currentNode = bestChild;
@@ -170,4 +180,4 @@ class CommonSearch<
   }
 }
 
-export { CommonSearch };
+export { AgentGuidedSearch };

@@ -139,7 +139,7 @@ class ConnectFourGame extends Game<
     indexOfMove: IndexOfMove;
     state: ConnectFourState;
   }): ConnectFourState {
-    if (this.isFinal({ state })) {
+    if (state.isFinal()) {
       throw constructErrorForFinalState({ indexOfMove });
     }
 

@@ -136,7 +136,7 @@ const constructGraphvizNode = <
       `There is no player in this game with the index ${indexOfPlayer}.`,
     );
   }
-  const isFinal = game.isFinal({ state });
+  const isFinal = state.isFinal();
 
   const label = `id: ${id}, visits: ${quantityOfVisits},\nquality: ${
     qualityOfMatch

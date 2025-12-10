@@ -51,11 +51,9 @@ const testConstructor = ({
       }),
 
       () => {
-        const { informationAboutPlayedMove, state } =
-          deriveParamsOfTicTacToeTreeNode(requiredParams);
+        const { state } = deriveParamsOfTicTacToeTreeNode(requiredParams);
 
         const newTreeNode = CommonTreeNode.create({
-          informationAboutPlayedMove,
           state,
         }) satisfies TicTacToeTreeNode<
           CommonTreeNode<
@@ -69,7 +67,7 @@ const testConstructor = ({
         >;
 
         validateConstructor({
-          params: { informationAboutPlayedMove, state },
+          params: { state },
           treeNode: newTreeNode,
         });
 

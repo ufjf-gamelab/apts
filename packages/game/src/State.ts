@@ -160,6 +160,11 @@ abstract class State<
     return this.slots;
   }
 
+  public isFinal(): boolean {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+    return this.game.isFinal({ state: this as unknown as GenericState });
+  }
+
   public abstract toString(): string;
 }
 

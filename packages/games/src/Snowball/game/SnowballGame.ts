@@ -130,7 +130,7 @@ class SnowballGame extends Game<
     indexOfMove: IndexOfMove;
     state: SnowballState;
   }): SnowballState {
-    if (this.isFinal({ state })) {
+    if (state.isFinal()) {
       throw constructErrorForFinalState({ indexOfMove });
     }
 

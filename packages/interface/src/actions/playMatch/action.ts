@@ -149,7 +149,7 @@ const getIndexOfMoveUsingSearch = <
   softeningCoefficient,
   state,
 }: Pick<
-  Parameters<Random["pickIndexOfValidMoveConsideringTheirQuality"]>[0],
+  Parameters<Random["pickIndexOfValidMoveConsideringItsQuality"]>[0],
   "softeningCoefficient"
 > & {
   indexesOfValidMoves: ReadonlySet<IndexOfMove>;
@@ -181,7 +181,7 @@ const getIndexOfMoveUsingSearch = <
     state,
   });
 
-  const indexOfPickedMove = random.pickIndexOfValidMoveConsideringTheirQuality({
+  const indexOfPickedMove = random.pickIndexOfValidMoveConsideringItsQuality({
     indexesOfValidMoves,
     qualitiesOfMoves,
     softeningCoefficient,
@@ -345,7 +345,7 @@ const playMatchInTheModePlayerVersusComputer = async <
     });
 
     currentState = game.play({ indexOfMove, state: currentState });
-    gameHasEnded = game.isFinal({ state: currentState });
+    gameHasEnded = currentState.isFinal();
   }
 
   return currentState;
@@ -412,7 +412,7 @@ const playMatchInTheModePlayerVersusPlayer = async <
     });
 
     currentState = game.play({ indexOfMove, state: currentState });
-    gameHasEnded = game.isFinal({ state: currentState });
+    gameHasEnded = currentState.isFinal();
   }
 
   return currentState;

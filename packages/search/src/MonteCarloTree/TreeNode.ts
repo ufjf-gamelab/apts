@@ -6,6 +6,7 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
+import { assertNumberIsFinite } from "@repo/engine_core/assert.js";
 import {
   INCREMENT_ONE,
   LENGTH_OF_EMPTY_LIST,
@@ -14,8 +15,12 @@ import {
 
 import type { ExplorationCoefficient } from "./Search.js";
 
-const MINIMUM_QUALITY_OF_MATCH = 0;
-const MINIMUM_QUANTITY_OF_VISITS = 0;
+type QualityOfMatch = number;
+
+const MINIMUM_POINTS_OF_PLAYER = Number.NEGATIVE_INFINITY;
+const MINIMUM_QUALITY_OF_MATCH = Number.NEGATIVE_INFINITY;
+const DEFAULT_QUALITY_OF_MATCH = 0;
+const DEFAULT_QUANTITY_OF_VISITS = 0;
 
 interface ParamsOfTreeNode<
   GenericGame extends Game<
@@ -39,10 +44,6 @@ interface ParamsOfTreeNode<
     GenericState
   >,
 > {
-  readonly informationAboutPlayedMove: null | {
-    readonly indexOfPlayedMove: IndexOfMove;
-    readonly indexOfPlayerWhoPlayedMove: IndexOfPlayer;
-  };
   readonly state: GenericState;
 }
 
@@ -84,6 +85,7 @@ interface ParamsOfTreeNodeForPrivateConstructor<
   GenericSlot,
   GenericState
 > {
+  indexOfPlayedMove: IndexOfMove | null;
   parentNode: GenericTreeNode | null;
 }
 
@@ -128,7 +130,7 @@ abstract class TreeNode<
     GenericState,
     GenericTreeNode
   >["state"];
-  private readonly informationAboutPlayedMove: ParamsOfTreeNodeForPrivateConstructor<
+  private readonly indexOfPlayedMove: ParamsOfTreeNodeForPrivateConstructor<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -136,7 +138,8 @@ abstract class TreeNode<
     GenericSlot,
     GenericState,
     GenericTreeNode
-  >["informationAboutPlayedMove"];
+  >["indexOfPlayedMove"];
+  private readonly indexOfPlayerWhoPlayedMove: IndexOfPlayer | null;
   private readonly parentNode: ParamsOfTreeNodeForPrivateConstructor<
     GenericGame,
     GenericMove,
@@ -146,11 +149,11 @@ abstract class TreeNode<
     GenericState,
     GenericTreeNode
   >["parentNode"];
-  private qualityOfMatch: number = MINIMUM_QUALITY_OF_MATCH;
-  private quantityOfVisits: Integer = MINIMUM_QUANTITY_OF_VISITS;
+  private qualityOfMatch: QualityOfMatch = DEFAULT_QUALITY_OF_MATCH;
+  private quantityOfVisits: Integer = DEFAULT_QUANTITY_OF_VISITS;
 
-  public constructor({
-    informationAboutPlayedMove,
+  protected constructor({
+    indexOfPlayedMove,
     parentNode,
     state,
   }: ParamsOfTreeNodeForPrivateConstructor<
@@ -163,8 +166,15 @@ abstract class TreeNode<
     GenericTreeNode
   >) {
     this.state = state;
-    this.informationAboutPlayedMove = informationAboutPlayedMove;
     this.parentNode = parentNode;
+    if (parentNode === null) {
+      this.indexOfPlayedMove = null;
+      this.indexOfPlayerWhoPlayedMove = null;
+    } else {
+      this.indexOfPlayedMove = indexOfPlayedMove;
+      this.indexOfPlayerWhoPlayedMove =
+        this.parentNode?.getState().getIndexOfPlayer() ?? null;
+    }
     this.childrenNodes = new Map(
       state
         .getGame()
@@ -195,7 +205,7 @@ abstract class TreeNode<
     childNode: GenericTreeNode;
     explorationCoefficient: ExplorationCoefficient;
   }): number {
-    // Privileges the child with the lowest exploitation, as it means the opponent will have the lowest chance of winning
+    // Privileges the child with the lowest exploitation, as it means the opponent will have the lowest chance of winning.
     return (
       this.calculateExploitationComponentOfFitness({
         childNode,
@@ -228,15 +238,47 @@ abstract class TreeNode<
   }
 
   public getIndexOfPlayedMove() {
-    return this.informationAboutPlayedMove?.indexOfPlayedMove ?? null;
+    return this.indexOfPlayedMove;
   }
 
   public getQuality(): number {
-    return this.quantityOfVisits;
+    return assertNumberIsFinite(this.qualityOfMatch / this.quantityOfVisits);
   }
 
-  public getQualityOfMatch(): typeof this.qualityOfMatch {
+  public getQualityOfMatch() {
     return this.qualityOfMatch;
+  }
+
+  public getQualityOfMatchFromScore({
+    score,
+  }: {
+    score: Score<GenericScore>;
+  }): QualityOfMatch {
+    if (this.parentNode === null) {
+      // The root should not have its quality calculated
+      return MINIMUM_QUALITY_OF_MATCH;
+    }
+
+    let pointsOfOpponentPlayerWithMostPoints = MINIMUM_POINTS_OF_PLAYER;
+    let pointsOfPlayerWhoPlayedMove = MINIMUM_POINTS_OF_PLAYER;
+
+    score
+      .getPointsOfEachPlayer()
+      .entries()
+      .forEach(([indexOfPlayer, pointsOfPlayer]) => {
+        if (indexOfPlayer === this.indexOfPlayerWhoPlayedMove) {
+          pointsOfPlayerWhoPlayedMove = pointsOfPlayer;
+        } else if (pointsOfPlayer > pointsOfOpponentPlayerWithMostPoints) {
+          pointsOfOpponentPlayerWithMostPoints = pointsOfPlayer;
+        }
+      });
+    if (!(pointsOfOpponentPlayerWithMostPoints > MINIMUM_POINTS_OF_PLAYER)) {
+      throw Error(
+        "Could not retrieve the points of opponent player with most points.",
+      );
+    }
+
+    return pointsOfPlayerWhoPlayedMove - pointsOfOpponentPlayerWithMostPoints;
   }
 
   public getQuantityOfExpandedMoves(): Integer {
@@ -250,11 +292,11 @@ abstract class TreeNode<
       );
   }
 
-  public getQuantityOfVisits(): typeof this.quantityOfVisits {
+  public getQuantityOfVisits() {
     return this.quantityOfVisits;
   }
 
-  public getState(): typeof this.state {
+  public getState() {
     return this.state;
   }
 
@@ -263,7 +305,6 @@ abstract class TreeNode<
     return this.getQuantityOfExpandedMoves() === this.childrenNodes.size;
   }
 
-  /// Select the best node among children, i.e. the one with the highest UCB.
   public selectBestChildNode({
     explorationCoefficient,
   }: Pick<
@@ -273,16 +314,16 @@ abstract class TreeNode<
     const expandedChildren = this.getExpandedChildren();
 
     let bestChildNode: GenericTreeNode | null = null;
-    let bestUcb = Number.NEGATIVE_INFINITY;
+    let bestFitness = Number.NEGATIVE_INFINITY;
 
     for (const childNode of expandedChildren) {
-      const ucb = this.calculateFitnessOfChildNode({
+      const fitness = this.calculateFitnessOfChildNode({
         childNode,
         explorationCoefficient,
       });
-      if (ucb > bestUcb) {
+      if (fitness > bestFitness) {
         bestChildNode = childNode;
-        bestUcb = ucb;
+        bestFitness = fitness;
       }
     }
 
@@ -291,37 +332,15 @@ abstract class TreeNode<
 
   /// Backpropagate the outcome value to the root node.
   public updateQualityOfMatchAndQuantityOfVisitsOnBranch({
-    score,
+    qualityOfMatch,
   }: {
-    score: Score<GenericScore>;
+    qualityOfMatch: QualityOfMatch;
   }): void {
-    let pointsOfPlayerWhoPlayedMoveThatCreatedThisTreeNode = 0;
-    let pointsOfOpponents = 0;
-
-    score
-      .getPointsOfEachPlayer()
-      .entries()
-      .forEach(([indexOfPlayer, pointsOfPlayer]) => {
-        if (
-          indexOfPlayer ===
-          this.informationAboutPlayedMove?.indexOfPlayerWhoPlayedMove
-        ) {
-          pointsOfPlayerWhoPlayedMoveThatCreatedThisTreeNode += pointsOfPlayer;
-        } else {
-          pointsOfOpponents += pointsOfPlayer;
-        }
-      });
-
-    // TODO: When the game is multiplayer, maybe we could compare only to the best other player
-    this.qualityOfMatch +=
-      pointsOfPlayerWhoPlayedMoveThatCreatedThisTreeNode - pointsOfOpponents;
-    this.quantityOfVisits += INCREMENT_ONE;
-
-    if (this.parentNode) {
-      this.parentNode.updateQualityOfMatchAndQuantityOfVisitsOnBranch({
-        score,
-      });
-    }
+    this.internalUpdateQualityOfMatchAndQuantityOfVisitsOnBranch({
+      indexOfPlayerWhoPlayedMoveThatCreatedTheOriginalTreeNode:
+        this.indexOfPlayerWhoPlayedMove,
+      qualityOfMatch,
+    });
   }
 
   private getExpandedChildren() {
@@ -329,7 +348,39 @@ abstract class TreeNode<
       (child) => child !== null,
     );
   }
+
+  private internalUpdateQualityOfMatchAndQuantityOfVisitsOnBranch({
+    indexOfPlayerWhoPlayedMoveThatCreatedTheOriginalTreeNode,
+    qualityOfMatch,
+  }: {
+    indexOfPlayerWhoPlayedMoveThatCreatedTheOriginalTreeNode: IndexOfPlayer | null;
+    qualityOfMatch: QualityOfMatch;
+  }): void {
+    this.quantityOfVisits += INCREMENT_ONE;
+    if (this.parentNode === null) {
+      // The root should not have its quality calculated
+      return;
+    }
+
+    if (
+      indexOfPlayerWhoPlayedMoveThatCreatedTheOriginalTreeNode ===
+      this.indexOfPlayerWhoPlayedMove
+    ) {
+      this.qualityOfMatch += qualityOfMatch;
+    } else {
+      this.qualityOfMatch += -qualityOfMatch;
+    }
+
+    this.parentNode.internalUpdateQualityOfMatchAndQuantityOfVisitsOnBranch({
+      indexOfPlayerWhoPlayedMoveThatCreatedTheOriginalTreeNode,
+      qualityOfMatch,
+    });
+  }
 }
 
-export type { ParamsOfTreeNode, ParamsOfTreeNodeForPrivateConstructor };
+export type {
+  ParamsOfTreeNode,
+  ParamsOfTreeNodeForPrivateConstructor,
+  QualityOfMatch,
+};
 export { TreeNode };

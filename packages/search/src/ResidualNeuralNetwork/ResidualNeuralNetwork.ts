@@ -590,11 +590,11 @@ class ResidualNeuralNetwork<
   //   this.layersModel.dispose();
   // }
 
-  public getWeights(): TensorLikeArray[] {
-    return this.layersModel
-      .getWeights()
-      .map((weight: tfjs.Tensor) => weight.arraySync());
-  }
+  // public getWeights(): TensorLikeArray[] {
+  //   return this.layersModel
+  //     .getWeights()
+  //     .map((weight: tfjs.Tensor) => weight.arraySync());
+  // }
 
   public predict({
     batchOfStatesAsTensor,
@@ -624,10 +624,10 @@ class ResidualNeuralNetwork<
     await this.layersModel.save(`${scheme}://${path}`, {});
   }
 
-  // public setWeights({ weights }: { weights: TensorLikeArray[] }) {
-  //   const tensors = weights.map((weight) => tf.tensor(weight));
-  //   this.layersModel.setWeights(tensors);
-  // }
+  public setWeights({ weights }: { weights: TensorLikeArray[] }) {
+    const tensors = weights.map((weight) => tf.tensor(weight));
+    this.layersModel.setWeights(tensors);
+  }
 
   public summary({ logMessage }: { logMessage: LogMessage }) {
     const LINE_LENGTH = 0;
@@ -635,44 +635,31 @@ class ResidualNeuralNetwork<
     this.layersModel.summary(LINE_LENGTH, [FIRST_POSITION], logMessage);
   }
 
-  /**
-   * Trains the model using the provided batch of data.
-   * @param inputsBatch - The batch of input tensors.
-   * @param policyOutputsBatch - The batch of policy output tensors.
-   * @param valueOutputsBatch - The batch of value output tensors.
-   * @param batchSize - The size of each training batch.
-   * @param numEpochs - The number of training epochs.
-   * @param learningRate - The learning rate for the optimizer.
-   * @param validationSplit - The percentage of data to use for validation.
-   * @param logMessage - The function to use for logging progress (optional, default is console.log).
-   * @returns A promise that resolves to an array of training logs.
-   */
   public async train({
-    batchSize,
-    inputsBatch,
+    batchOfInputs,
+    batchOfPolicyOutputs,
+    batchOfValueOutputs,
     logMessage,
-    numEpochs,
-    policyOutputsBatch,
+    quantityOfEpochs,
+    sizeOfBatch,
     validationSplit,
-    valueOutputsBatch,
   }: {
-    batchSize: number;
-    inputsBatch: tfjs.Tensor4D;
+    batchOfInputs: tfjs.Tensor4D;
+    batchOfPolicyOutputs: tfjs.Tensor2D;
+    batchOfValueOutputs: tfjs.Tensor1D;
     logMessage: LogMessage;
-    numEpochs: number;
-    policyOutputsBatch: tfjs.Tensor2D;
+    quantityOfEpochs: number;
+    sizeOfBatch: number;
     validationSplit: number;
-    valueOutputsBatch: tfjs.Tensor1D;
   }): Promise<tfjs.Logs[]> {
     const trainingLog: tfjs.Logs[] = [];
 
-    // Fit the model using the prepared training data.
     await this.layersModel.fit(
-      inputsBatch,
-      [policyOutputsBatch, valueOutputsBatch],
+      batchOfInputs,
+      [batchOfPolicyOutputs, batchOfValueOutputs],
       {
         // Update weights after every N examples.
-        batchSize,
+        batchSize: sizeOfBatch,
         callbacks: {
           onEpochEnd: (epoch: number, logs?: tfjs.Logs) => {
             if (logs) {
@@ -686,9 +673,8 @@ class ResidualNeuralNetwork<
           },
         },
         // Go over the data N times.
-        epochs: numEpochs,
+        epochs: quantityOfEpochs,
         // Ensure data is shuffled again before using each time.
-        // TODO: This needs to be separated and to set the seed on the called shuffle
         shuffle: true,
         // Use N% of the data for validation.
         validationSplit,
@@ -710,11 +696,11 @@ class ResidualNeuralNetwork<
   }
 
   // /// Evaluates the model on the given batch of data
-  // private evaluate({ inputsBatch }: { inputsBatch: tfjs.Tensor4D }) {
+  // private evaluate({ batchOfInputs }: { batchOfInputs: tfjs.Tensor4D }) {
   //   const DIMENSION = 1;
   //   const FIRST_POSITION = 0;
   //   tf.tidy(() => {
-  //     const [policy] = this.predict({ inputsBatch });
+  //     const [policy] = this.predict({ batchOfInputs });
   //     const softMaxPolicy = tf
   //       .softmax(policy, DIMENSION)
   //       .squeeze([FIRST_POSITION]);

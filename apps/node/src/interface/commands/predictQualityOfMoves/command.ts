@@ -14,6 +14,7 @@ import {
 
 import type { DefinitionOfCommand } from "../commands.js";
 
+import { truncateFileName } from "../../../file.js";
 import { generateGraphvizImage } from "../../../graphviz.js";
 import { type KeyOfState, selectStateUsingKeyOfState } from "../../states.js";
 import { commonOptions } from "../options.js";
@@ -47,14 +48,23 @@ const executeAction = ({
     console.info(qualitiesOfMoves);
   };
 
+  const fileName = (() => {
+    if (typeof fileNameOrUndefined === "undefined") {
+      return truncateFileName({
+        prefix: "state(",
+        suffix: `)_strategy(${strategyToSearch})_expansions(${quantityOfExpansions})_exploration(${explorationCoefficient})_softening(${softeningCoefficient})_seed(${seed}).svg`,
+        truncatableSlice: keyOfState,
+      });
+    }
+    return truncateFileName({ truncatableSlice: fileNameOrUndefined });
+  })();
+
   const processGraphvizGraph = shouldConstructGraph
     ? (graphvizGraph: GraphvizDigraph): void => {
         const graphvizDotString = graphvizToDot(graphvizGraph);
         generateGraphvizImage({
           directoryPath: directoryPathOrUndefined,
-          fileName:
-            fileNameOrUndefined ??
-            `state(${keyOfState})_strategy(${strategyToSearch})_expansions(${quantityOfExpansions})_exploration(${explorationCoefficient})_softening(${softeningCoefficient})_seed(${seed})`,
+          fileName,
           graphvizDotString,
         }).catch((error: unknown) => {
           console.error("Error generating Graphviz image:", error);

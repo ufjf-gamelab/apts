@@ -123,7 +123,7 @@ class CommonTreeNode<
 > {
   private readonly game: GenericGame;
   private constructor({
-    informationAboutPlayedMove,
+    indexOfPlayedMove,
     parentNode,
     state,
   }: ParamsOfCommonTreeNodeForPrivateConstructor<
@@ -135,12 +135,13 @@ class CommonTreeNode<
     GenericState
   >) {
     super({
-      informationAboutPlayedMove,
+      indexOfPlayedMove,
       parentNode,
       state,
     });
     this.game = state.getGame();
   }
+
   public static create<
     GenericGame extends Game<
       GenericGame,
@@ -163,7 +164,6 @@ class CommonTreeNode<
       GenericState
     >,
   >({
-    informationAboutPlayedMove,
     state,
   }: ParamsOfCommonTreeNode<
     GenericGame,
@@ -181,7 +181,7 @@ class CommonTreeNode<
       GenericSlot,
       GenericState
     >({
-      informationAboutPlayedMove,
+      indexOfPlayedMove: null,
       parentNode: null,
       state,
     });
@@ -256,10 +256,7 @@ class CommonTreeNode<
     });
 
     const child = new CommonTreeNode({
-      informationAboutPlayedMove: {
-        indexOfPlayedMove: indexOfMove,
-        indexOfPlayerWhoPlayedMove: this.state.getIndexOfPlayer(),
-      },
+      indexOfPlayedMove: indexOfMove,
       parentNode: this,
       state: nextState,
     });

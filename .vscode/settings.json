@@ -33,6 +33,7 @@
     "softmax",
     "tensorflow",
     "tfjs",
+    "truncatable",
     "tseslint"
   ],
   "editor.codeActionsOnSave": {

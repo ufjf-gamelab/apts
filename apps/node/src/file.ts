@@ -7,6 +7,7 @@
 // } from "fs";
 // import * as path from "path";
 
+import { FIRST_INDEX } from "@repo/engine_core/constants.js";
 import { promises as promisesFromFs } from "fs";
 
 const createDirectory = async ({
@@ -26,6 +27,36 @@ const createDirectory = async ({
       cause: error,
     });
   }
+};
+
+const MAXIMUM_CHARACTERS_OF_FILE_NAME = 255;
+
+const truncateFileName = ({
+  prefix = "",
+  suffix = "",
+  truncatableSlice,
+}: {
+  prefix?: string;
+  suffix?: string;
+  truncatableSlice: string;
+}) => {
+  const fullFileName = `${prefix}${truncatableSlice}${suffix}`;
+
+  const lengthOfFullFileName = fullFileName.length;
+  const lengthOfFileNameWithoutTruncatableSlice =
+    lengthOfFullFileName - truncatableSlice.length;
+  const maximumCharactersForState =
+    MAXIMUM_CHARACTERS_OF_FILE_NAME - lengthOfFileNameWithoutTruncatableSlice;
+
+  if (lengthOfFullFileName > MAXIMUM_CHARACTERS_OF_FILE_NAME) {
+    const truncatedSlice = truncatableSlice.slice(
+      FIRST_INDEX,
+      Math.max(FIRST_INDEX, maximumCharactersForState),
+    );
+    return `${prefix}${truncatedSlice}${suffix}`;
+  }
+
+  return fullFileName;
 };
 
 // enum FileOperation {
@@ -99,5 +130,6 @@ const createDirectory = async ({
 
 export {
   createDirectory,
+  truncateFileName,
   // FileOperation, validateFilePath
 };
