@@ -1,9 +1,10 @@
-import { promises as promisesFromFs } from "fs";
 import path from "path";
 import { toFile } from "ts-graphviz/adapter";
 
+import { createDirectory } from "./file.js";
+
 export const generateGraphvizImage = async ({
-  directoryPath: directoryPathOrNull,
+  directoryPath: directoryPathOrUndefined,
   fileName,
   graphvizDotString,
 }: {
@@ -11,20 +12,8 @@ export const generateGraphvizImage = async ({
   fileName: string;
   graphvizDotString: string;
 }): Promise<void> => {
-  const directoryPath = directoryPathOrNull ?? "./";
-
-  try {
-    await promisesFromFs.mkdir(directoryPath, { recursive: true });
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      throw new Error("Failed to create directory.", {
-        cause: error,
-      });
-    }
-    throw new Error("An unknown error occurred while creating directory.", {
-      cause: error,
-    });
-  }
+  const directoryPath = directoryPathOrUndefined ?? "./";
+  await createDirectory({ directoryPath });
 
   const fileNameWithExtension = `${fileName}.svg`;
   const fullPath = path.join(directoryPath, fileNameWithExtension);

@@ -7,7 +7,6 @@ import type { State } from "@repo/game/State.js";
 
 import * as tf from "@tensorflow/tfjs";
 
-import type { TreeNode } from "../MonteCarloTree/TreeNode.js";
 import type { ResidualNeuralNetwork } from "./ResidualNeuralNetwork.js";
 
 interface ParamsOfModel<
@@ -31,15 +30,6 @@ interface ParamsOfModel<
     GenericSlot,
     GenericState
   >,
-  GenericTreeNode extends TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState,
-    GenericTreeNode
-  >,
 > {
   residualNeuralNetwork: ResidualNeuralNetwork<
     GenericGame,
@@ -47,8 +37,7 @@ interface ParamsOfModel<
     GenericPlayer,
     GenericScore,
     GenericSlot,
-    GenericState,
-    GenericTreeNode
+    GenericState
   >;
 }
 
@@ -73,15 +62,6 @@ class Model<
     GenericSlot,
     GenericState
   >,
-  GenericTreeNode extends TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState,
-    GenericTreeNode
-  >,
 > {
   private readonly residualNeuralNetwork: ParamsOfModel<
     GenericGame,
@@ -89,8 +69,7 @@ class Model<
     GenericPlayer,
     GenericScore,
     GenericSlot,
-    GenericState,
-    GenericTreeNode
+    GenericState
   >["residualNeuralNetwork"];
 
   public constructor({
@@ -101,8 +80,7 @@ class Model<
     GenericPlayer,
     GenericScore,
     GenericSlot,
-    GenericState,
-    GenericTreeNode
+    GenericState
   >) {
     this.residualNeuralNetwork = residualNeuralNetwork;
   }

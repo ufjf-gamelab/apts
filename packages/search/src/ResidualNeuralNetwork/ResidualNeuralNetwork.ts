@@ -8,9 +8,7 @@ import type { State } from "@repo/game/State.js";
 
 import { FIRST_INDEX, INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import * as tf from "@tensorflow/tfjs";
-import path from "path";
 
-import type { TreeNode } from "../MonteCarloTree/TreeNode.js";
 import type { LogMessage } from "../types.js";
 
 const QUANTITY_OF_INPUT_CHANNELS = 3;
@@ -422,24 +420,7 @@ class ResidualNeuralNetwork<
     GenericSlot,
     GenericState
   >,
-  GenericTreeNode extends TreeNode<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState,
-    GenericTreeNode
-  >,
 > {
-  private readonly game: ParamsOfResidualNeuralNetwork<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >["game"];
   private readonly layersModel: tf.LayersModel;
 
   public constructor({
@@ -454,7 +435,6 @@ class ResidualNeuralNetwork<
     GenericSlot,
     GenericState
   >) {
-    this.game = game;
     this.layersModel = constructResidualNeuralNetworkModel<
       GenericGame,
       GenericMove,
@@ -510,10 +490,20 @@ class ResidualNeuralNetwork<
     });
   }
 
-  public async save({ innerPath }: { innerPath: string }) {
-    const protocol = "file";
-    const fullPath = path.join(this.game.getName(), innerPath);
-    await this.layersModel.save(`${protocol}://${fullPath}`, {});
+  public async save({
+    path,
+    scheme,
+  }: {
+    path: string;
+    scheme:
+      | "downloads"
+      | "file"
+      | "http"
+      | "https"
+      | "indexeddb"
+      | "localstorage";
+  }) {
+    await this.layersModel.save(`${scheme}://${path}`, {});
   }
 
   public setWeights({ weights }: { weights: TensorLikeArray[] }) {

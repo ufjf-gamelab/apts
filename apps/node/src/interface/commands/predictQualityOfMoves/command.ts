@@ -19,10 +19,10 @@ import { type KeyOfState, selectStateUsingKeyOfState } from "../../states.js";
 import { commonOptions } from "../options.js";
 
 const executeAction = ({
-  directory: directoryPath,
+  directory: directoryPathOrUndefined,
   expansions: quantityOfExpansions,
   exploration: explorationCoefficient,
-  file: fileName,
+  file: fileNameOrUndefined,
   graph: shouldConstructGraph,
   seed,
   softening: softeningCoefficient,
@@ -51,9 +51,9 @@ const executeAction = ({
     ? (graphvizGraph: GraphvizDigraph): void => {
         const graphvizDotString = graphvizToDot(graphvizGraph);
         generateGraphvizImage({
-          directoryPath,
+          directoryPath: directoryPathOrUndefined,
           fileName:
-            fileName ??
+            fileNameOrUndefined ??
             `state(${keyOfState})_strategy(${strategyToSearch})_expansions(${quantityOfExpansions})_exploration(${explorationCoefficient})_softening(${softeningCoefficient})_seed(${seed})`,
           graphvizDotString,
         }).catch((error: unknown) => {

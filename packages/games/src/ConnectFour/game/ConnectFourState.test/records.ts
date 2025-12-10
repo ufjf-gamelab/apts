@@ -32,7 +32,7 @@ const recordOfRequiredParamsOfConnectFourStates = {
   allSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
     {
       gameWithData:
-        recordOfConnectFourGamesWithData.snowballWith9RowsAnd9Columns,
+        recordOfConnectFourGamesWithData.connectFourWith6RowsAnd7Columns,
       isFinal: false,
       nextPlayerWithDataAndIndex:
         recordOfConnectFourPlayersWithDataAndIndex.bruno,
@@ -67,7 +67,7 @@ const recordOfRequiredParamsOfConnectFourStates = {
   slotR5C0IsFilledByAliceAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     {
       gameWithData:
-        recordOfConnectFourGamesWithData.snowballWith9RowsAnd9Columns,
+        recordOfConnectFourGamesWithData.connectFourWith6RowsAnd7Columns,
       isFinal: false,
       nextPlayerWithDataAndIndex:
         recordOfConnectFourPlayersWithDataAndIndex.alice,
@@ -103,7 +103,7 @@ const recordOfRequiredParamsOfConnectFourStates = {
   slotsR5C0AndR4C0AndR3C0AndR2C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AreFilledByBrunoAndAliceHas1PointAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     {
       gameWithData:
-        recordOfConnectFourGamesWithData.snowballWith9RowsAnd9Columns,
+        recordOfConnectFourGamesWithData.connectFourWith6RowsAnd7Columns,
       isFinal: true,
       nextPlayerWithDataAndIndex:
         recordOfConnectFourPlayersWithDataAndIndex.alice,
@@ -139,7 +139,7 @@ const recordOfRequiredParamsOfConnectFourStates = {
   slotsR5C0AndR4C0AndR3C0AndR2C1AndR1C1AndR0C1AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C0AndR1C0AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndBrunoIsTheCurrentPlayer:
     {
       gameWithData:
-        recordOfConnectFourGamesWithData.snowballWith9RowsAnd9Columns,
+        recordOfConnectFourGamesWithData.connectFourWith6RowsAnd7Columns,
       isFinal: false,
       nextPlayerWithDataAndIndex:
         recordOfConnectFourPlayersWithDataAndIndex.alice,
@@ -172,7 +172,7 @@ const recordOfRequiredParamsOfConnectFourStates = {
   slotsR5C0AndR4C0AndR3C0AndR2C1AndR1C1AreFilledByAliceAndR5C1AndR4C1AndR3C1AndR2C0AndR1C0AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
     {
       gameWithData:
-        recordOfConnectFourGamesWithData.snowballWith9RowsAnd9Columns,
+        recordOfConnectFourGamesWithData.connectFourWith6RowsAnd7Columns,
       isFinal: false,
       nextPlayerWithDataAndIndex:
         recordOfConnectFourPlayersWithDataAndIndex.bruno,
@@ -208,7 +208,7 @@ const recordOfRequiredParamsOfConnectFourStates = {
   slotsR5C0AndR4C0AndR3C0AreFilledByAliceAndR5C1AndR4C1AndR3C1AreFilledByBrunoAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer:
     {
       gameWithData:
-        recordOfConnectFourGamesWithData.snowballWith9RowsAnd9Columns,
+        recordOfConnectFourGamesWithData.connectFourWith6RowsAnd7Columns,
       isFinal: false,
       nextPlayerWithDataAndIndex:
         recordOfConnectFourPlayersWithDataAndIndex.bruno,

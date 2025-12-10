@@ -7,6 +7,27 @@
 // } from "fs";
 // import * as path from "path";
 
+import { promises as promisesFromFs } from "fs";
+
+const createDirectory = async ({
+  directoryPath,
+}: {
+  directoryPath: string;
+}) => {
+  try {
+    await promisesFromFs.mkdir(directoryPath, { recursive: true });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error("Failed to create directory.", {
+        cause: error,
+      });
+    }
+    throw new Error("An unknown error occurred while creating directory.", {
+      cause: error,
+    });
+  }
+};
+
 // enum FileOperation {
 //   Overwrite = "w+",
 //   Read = "r",
@@ -76,4 +97,7 @@
 //   }
 // };
 
-// export { FileOperation, validateFilePath };
+export {
+  createDirectory,
+  // FileOperation, validateFilePath
+};

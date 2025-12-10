@@ -7,7 +7,7 @@ import {
 } from "./setup.js";
 
 const recordOfRequiredParamsOfConnectFourGames = {
-  snowballWith9RowsAnd9Columns: {
+  connectFourWith6RowsAnd7Columns: {
     movesWithData: indexedConnectFourMovesWithData,
     name: "ConnectFour",
     playersWithData: indexedConnectFourPlayersWithData,

@@ -176,5 +176,6 @@ class SnowballGame extends Game<
 export {
   constructErrorForFinalState,
   constructErrorForInvalidMove,
+  INDEX_OF_FIRST_PLAYER,
   SnowballGame,
 };
