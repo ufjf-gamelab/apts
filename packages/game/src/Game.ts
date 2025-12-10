@@ -88,7 +88,6 @@ abstract class Game<
     this.players = players;
     this.slots = slots;
   }
-
   public abstract clone(): GenericGame;
 
   public abstract constructInitialState(): GenericState;
@@ -140,6 +139,9 @@ abstract class Game<
   public getPlayers() {
     return this.players;
   }
+
+  public abstract getQuantityOfColumns(): Integer;
+
   public getQuantityOfMoves() {
     return this.moves.length;
   }
@@ -147,6 +149,7 @@ abstract class Game<
   public getQuantityOfPlayers() {
     return this.players.length;
   }
+  public abstract getQuantityOfRows(): Integer;
 
   public getQuantityOfSlots() {
     return this.slots.length;

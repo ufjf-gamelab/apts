@@ -9,7 +9,7 @@ import { Move, type ParamsOfMove } from "@repo/game/Move.js";
 
 import type { ConnectFourState } from "./ConnectFourState.js";
 
-import { COLUMN_LENGTH, getIndexesOfSlots } from "./ConnectFourShape.js";
+import { QUANTITY_OF_ROWS, getIndexesOfSlots } from "./ConnectFourShape.js";
 
 type ParamsOfConnectFourMove = ParamsOfMove & {
   indexOfColumnInWhichPlacePiece: Integer;
@@ -48,7 +48,7 @@ class ConnectFourMove extends Move<ConnectFourMove> {
       initialIndexOfRow: 0,
       shape: {
         direction: "vertical",
-        size: COLUMN_LENGTH,
+        size: QUANTITY_OF_ROWS,
       },
     });
     const lengthOfIndexesOfSlotsOnColumn = indexesOfSlotsOnColumn.length;

@@ -9,8 +9,8 @@ import { SnowballSlot } from "./SnowballSlot.js";
 
 const ADJUST_INDEX = 1;
 
-const COLUMN_LENGTH = 9;
-const ROW_LENGTH = 9;
+const QUANTITY_OF_ROWS = 9;
+const QUANTITY_OF_COLUMNS = 9;
 
 const sizeOfPatternsUsedForCalculatingPoints = {
   largeSquare: 3,
@@ -85,11 +85,11 @@ const pushIndexOfSlotIntoList = ({
 }) => {
   if (
     indexOfRow >= FIRST_INDEX &&
-    indexOfRow < COLUMN_LENGTH &&
+    indexOfRow < QUANTITY_OF_ROWS &&
     indexOfColumn >= FIRST_INDEX &&
-    indexOfColumn < ROW_LENGTH
+    indexOfColumn < QUANTITY_OF_COLUMNS
   ) {
-    validIndexes.push(indexOfRow * ROW_LENGTH + indexOfColumn);
+    validIndexes.push(indexOfRow * QUANTITY_OF_COLUMNS + indexOfColumn);
   }
 };
 
@@ -247,7 +247,7 @@ const getIndexesOfRectangle = ({
     iterationOnRow += INCREMENT_ONE
   ) {
     const indexOfRow = initialIndexOfRow + iterationOnRow;
-    if (indexOfRow < FIRST_INDEX || indexOfRow >= COLUMN_LENGTH) {
+    if (indexOfRow < FIRST_INDEX || indexOfRow >= QUANTITY_OF_ROWS) {
       continue;
     }
     for (
@@ -256,10 +256,10 @@ const getIndexesOfRectangle = ({
       iterationOnColumn += INCREMENT_ONE
     ) {
       const indexOfColumn = initialIndexOfColumn + iterationOnColumn;
-      if (indexOfColumn < FIRST_INDEX || indexOfColumn >= ROW_LENGTH) {
+      if (indexOfColumn < FIRST_INDEX || indexOfColumn >= QUANTITY_OF_COLUMNS) {
         continue;
       }
-      validIndexes.push(indexOfRow * ROW_LENGTH + indexOfColumn);
+      validIndexes.push(indexOfRow * QUANTITY_OF_COLUMNS + indexOfColumn);
     }
   }
   return validIndexes;
@@ -398,12 +398,12 @@ const getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots = ({
 
 export type { Line, Rectangle, Shape };
 export {
-  COLUMN_LENGTH,
   getIndexesOfSlots,
   getIndexOfPlayerWhoIsOccupyingShape,
   getNameAndFormattedSizeOfShape,
   getNameOfDirection,
   getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots,
-  ROW_LENGTH,
+  QUANTITY_OF_COLUMNS,
+  QUANTITY_OF_ROWS,
   sizeOfPatternsUsedForCalculatingPoints,
 };

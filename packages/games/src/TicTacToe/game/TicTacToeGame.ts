@@ -1,3 +1,4 @@
+import type { Integer } from "@repo/engine_core/types.js";
 import type { IndexOfMove } from "@repo/game/Move.js";
 import type { IndexOfPlayer } from "@repo/game/Player.js";
 import type { Points } from "@repo/game/Score.js";
@@ -9,6 +10,7 @@ import type { TicTacToeMove } from "./TicTacToeMove.js";
 import type { TicTacToePlayer } from "./TicTacToePlayer.js";
 
 import { TicTacToeScore } from "./TicTacToeScore.js";
+import { QUANTITY_OF_COLUMNS, QUANTITY_OF_ROWS } from "./TicTacToeShape.js";
 import { TicTacToeSlot } from "./TicTacToeSlot.js";
 import { TicTacToeState } from "./TicTacToeState.js";
 
@@ -42,7 +44,6 @@ class TicTacToeGame extends Game<
       slots: this.getSlots(),
     });
   }
-
   public override constructInitialState(): TicTacToeState {
     return new TicTacToeState({
       game: this,
@@ -53,7 +54,6 @@ class TicTacToeGame extends Game<
       slots: this.getSlots(),
     });
   }
-
   public override getIndexesOfValidMoves({ state }: { state: TicTacToeState }) {
     const indexesOfValidMoves = new Set<IndexOfMove>();
     this.getMoves().forEach((move, indexOfMove) => {
@@ -72,6 +72,16 @@ class TicTacToeGame extends Game<
     const currentIndexOfPlayer = state.getIndexOfPlayer();
     const quantityOfPlayers = this.getPlayers().length;
     return (currentIndexOfPlayer + ADVANCE_TURN) % quantityOfPlayers;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  public override getQuantityOfColumns(): Integer {
+    return QUANTITY_OF_COLUMNS;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  public override getQuantityOfRows(): Integer {
+    return QUANTITY_OF_ROWS;
   }
 
   public override isFinal({ state }: { state: TicTacToeState }) {

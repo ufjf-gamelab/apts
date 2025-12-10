@@ -14,6 +14,7 @@ import type { SnowballMove } from "./SnowballMove.js";
 import type { SnowballPlayer } from "./SnowballPlayer.js";
 
 import { SnowballScore } from "./SnowballScore.js";
+import { QUANTITY_OF_COLUMNS, QUANTITY_OF_ROWS } from "./SnowballShape.js";
 import { SnowballSlot } from "./SnowballSlot.js";
 import { SnowballState } from "./SnowballState.js";
 
@@ -69,6 +70,16 @@ class SnowballGame extends Game<
     const currentIndexOfPlayer = state.getIndexOfPlayer();
     const quantityOfPlayers = this.getPlayers().length;
     return (currentIndexOfPlayer + ADVANCE_TURN) % quantityOfPlayers;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  public override getQuantityOfColumns(): Integer {
+    return QUANTITY_OF_COLUMNS;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  public override getQuantityOfRows(): Integer {
+    return QUANTITY_OF_ROWS;
   }
 
   // eslint-disable-next-line @typescript-eslint/class-methods-use-this

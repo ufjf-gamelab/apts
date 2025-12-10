@@ -8,7 +8,7 @@ import type { SnowballSlot } from "./SnowballSlot.js";
 
 import {
   getScoreIncrementedWhenPlayerOccupiesShapeAtCoordinatesInSlots,
-  ROW_LENGTH,
+  QUANTITY_OF_COLUMNS,
   type Shape,
   sizeOfPatternsUsedForCalculatingPoints,
 } from "./SnowballShape.js";
@@ -55,9 +55,9 @@ class SnowballScore extends Score<SnowballScore> {
 
     slots.forEach((_, indexOfSlot) => {
       const indexOfRow = Math.floor(
-        assertNumberIsFinite(indexOfSlot / ROW_LENGTH),
+        assertNumberIsFinite(indexOfSlot / QUANTITY_OF_COLUMNS),
       );
-      const indexOfColumn = indexOfSlot % ROW_LENGTH;
+      const indexOfColumn = indexOfSlot % QUANTITY_OF_COLUMNS;
 
       const updateScoreConsideringShape = ({
         shape,

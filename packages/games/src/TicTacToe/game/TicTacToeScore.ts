@@ -9,7 +9,7 @@ import type { TicTacToeSlot } from "./TicTacToeSlot.js";
 
 import {
   getIndexOfPlayerWhoIsOccupyingShape,
-  ROW_LENGTH,
+  QUANTITY_OF_COLUMNS,
   type Shape,
   sizeOfPatternsUsedForCalculatingPoints,
 } from "./TicTacToeShape.js";
@@ -63,9 +63,9 @@ class TicTacToeScore extends Score<TicTacToeScore> {
       indexOfSlot += INCREMENT_ONE
     ) {
       const indexOfRow = Math.floor(
-        assertNumberIsFinite(indexOfSlot / ROW_LENGTH),
+        assertNumberIsFinite(indexOfSlot / QUANTITY_OF_COLUMNS),
       );
-      const indexOfColumn = indexOfSlot % ROW_LENGTH;
+      const indexOfColumn = indexOfSlot % QUANTITY_OF_COLUMNS;
 
       const updateScoreConsideringShape = ({ shape }: { shape: Shape }) => {
         const indexOfPlayer = getIndexOfPlayerWhoIsOccupyingShape({

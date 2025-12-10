@@ -7,7 +7,7 @@ import type { TicTacToePlayer } from "./TicTacToePlayer.js";
 import type { TicTacToeScore } from "./TicTacToeScore.js";
 import type { TicTacToeSlot } from "./TicTacToeSlot.js";
 
-import { COLUMN_LENGTH, ROW_LENGTH } from "./TicTacToeShape.js";
+import { QUANTITY_OF_COLUMNS, QUANTITY_OF_ROWS } from "./TicTacToeShape.js";
 
 class TicTacToeState extends State<
   TicTacToeGame,
@@ -31,18 +31,18 @@ class TicTacToeState extends State<
     let board = "";
     for (
       let indexOfRow = FIRST_INDEX;
-      indexOfRow < COLUMN_LENGTH;
+      indexOfRow < QUANTITY_OF_ROWS;
       indexOfRow += INCREMENT_ONE
     ) {
       board += "|";
       for (
         let indexOfColumn = FIRST_INDEX;
-        indexOfColumn < ROW_LENGTH;
+        indexOfColumn < QUANTITY_OF_COLUMNS;
         indexOfColumn += INCREMENT_ONE
       ) {
         board += " ";
         const slot = this.getSlot({
-          indexOfSlot: indexOfRow * ROW_LENGTH + indexOfColumn,
+          indexOfSlot: indexOfRow * QUANTITY_OF_COLUMNS + indexOfColumn,
         });
         if (slot === null) {
           board += "-";

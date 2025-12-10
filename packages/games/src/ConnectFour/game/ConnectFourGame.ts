@@ -14,6 +14,7 @@ import type { ConnectFourMove } from "./ConnectFourMove.js";
 import type { ConnectFourPlayer } from "./ConnectFourPlayer.js";
 
 import { ConnectFourScore } from "./ConnectFourScore.js";
+import { QUANTITY_OF_COLUMNS, QUANTITY_OF_ROWS } from "./ConnectFourShape.js";
 import { ConnectFourSlot } from "./ConnectFourSlot.js";
 import { ConnectFourState } from "./ConnectFourState.js";
 
@@ -73,6 +74,16 @@ class ConnectFourGame extends Game<
     const currentIndexOfPlayer = state.getIndexOfPlayer();
     const quantityOfPlayers = this.getPlayers().length;
     return (currentIndexOfPlayer + ADVANCE_TURN) % quantityOfPlayers;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  public override getQuantityOfColumns(): Integer {
+    return QUANTITY_OF_COLUMNS;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  public override getQuantityOfRows(): Integer {
+    return QUANTITY_OF_ROWS;
   }
 
   // eslint-disable-next-line @typescript-eslint/class-methods-use-this

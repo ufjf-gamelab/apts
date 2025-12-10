@@ -8,8 +8,8 @@ import { ConnectFourSlot } from "./ConnectFourSlot.js";
 
 const ADJUST_INDEX = 1;
 
-const COLUMN_LENGTH = 6;
-const ROW_LENGTH = 7;
+const QUANTITY_OF_ROWS = 6;
+const QUANTITY_OF_COLUMNS = 7;
 
 const sizeOfPatternsUsedForCalculatingPoints = {
   line: 4,
@@ -67,11 +67,11 @@ const pushIndexOfSlotIntoList = ({
 }) => {
   if (
     indexOfRow >= FIRST_INDEX &&
-    indexOfRow < COLUMN_LENGTH &&
+    indexOfRow < QUANTITY_OF_ROWS &&
     indexOfColumn >= FIRST_INDEX &&
-    indexOfColumn < ROW_LENGTH
+    indexOfColumn < QUANTITY_OF_COLUMNS
   ) {
-    validIndexes.push(indexOfRow * ROW_LENGTH + indexOfColumn);
+    validIndexes.push(indexOfRow * QUANTITY_OF_COLUMNS + indexOfColumn);
   }
 };
 
@@ -258,11 +258,11 @@ const getIndexOfPlayerWhoIsOccupyingShape = ({
 
 export type { Shape };
 export {
-  COLUMN_LENGTH,
   getIndexesOfSlots,
   getIndexOfPlayerWhoIsOccupyingShape,
   getNameAndFormattedSizeOfShape,
   getNameOfDirection,
-  ROW_LENGTH,
+  QUANTITY_OF_COLUMNS,
+  QUANTITY_OF_ROWS,
   sizeOfPatternsUsedForCalculatingPoints,
 };

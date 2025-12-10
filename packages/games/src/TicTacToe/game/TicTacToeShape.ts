@@ -8,8 +8,8 @@ import { TicTacToeSlot } from "./TicTacToeSlot.js";
 
 const ADJUST_INDEX = 1;
 
-const COLUMN_LENGTH = 3;
-const ROW_LENGTH = 3;
+const QUANTITY_OF_ROWS = 3;
+const QUANTITY_OF_COLUMNS = 3;
 
 const sizeOfPatternsUsedForCalculatingPoints = {
   line: 3,
@@ -67,11 +67,11 @@ const pushIndexOfSlotIntoList = ({
 }) => {
   if (
     indexOfRow >= FIRST_INDEX &&
-    indexOfRow < COLUMN_LENGTH &&
+    indexOfRow < QUANTITY_OF_ROWS &&
     indexOfColumn >= FIRST_INDEX &&
-    indexOfColumn < ROW_LENGTH
+    indexOfColumn < QUANTITY_OF_COLUMNS
   ) {
-    validIndexes.push(indexOfRow * ROW_LENGTH + indexOfColumn);
+    validIndexes.push(indexOfRow * QUANTITY_OF_COLUMNS + indexOfColumn);
   }
 };
 
@@ -274,11 +274,11 @@ const getIndexOfPlayerWhoIsOccupyingShape = ({
 
 export type { Shape };
 export {
-  COLUMN_LENGTH,
   getIndexesOfSlots,
   getIndexOfPlayerWhoIsOccupyingShape,
   getNameAndFormattedSizeOfShape,
   getNameOfDirection,
-  ROW_LENGTH,
+  QUANTITY_OF_COLUMNS,
+  QUANTITY_OF_ROWS,
   sizeOfPatternsUsedForCalculatingPoints,
 };

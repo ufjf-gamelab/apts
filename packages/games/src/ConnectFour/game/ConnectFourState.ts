@@ -7,7 +7,7 @@ import type { ConnectFourPlayer } from "./ConnectFourPlayer.js";
 import type { ConnectFourScore } from "./ConnectFourScore.js";
 import type { ConnectFourSlot } from "./ConnectFourSlot.js";
 
-import { COLUMN_LENGTH, ROW_LENGTH } from "./ConnectFourShape.js";
+import { QUANTITY_OF_ROWS, QUANTITY_OF_COLUMNS } from "./ConnectFourShape.js";
 
 class ConnectFourState extends State<
   ConnectFourGame,
@@ -30,18 +30,18 @@ class ConnectFourState extends State<
     let board = "";
     for (
       let indexOfRow = FIRST_INDEX;
-      indexOfRow < COLUMN_LENGTH;
+      indexOfRow < QUANTITY_OF_ROWS;
       indexOfRow += INCREMENT_ONE
     ) {
       board += "|";
       for (
         let indexOfColumn = FIRST_INDEX;
-        indexOfColumn < ROW_LENGTH;
+        indexOfColumn < QUANTITY_OF_COLUMNS;
         indexOfColumn += INCREMENT_ONE
       ) {
         board += " ";
         const slot = this.getSlot({
-          indexOfSlot: indexOfRow * ROW_LENGTH + indexOfColumn,
+          indexOfSlot: indexOfRow * QUANTITY_OF_COLUMNS + indexOfColumn,
         });
         if (slot === null) {
           board += "-";
