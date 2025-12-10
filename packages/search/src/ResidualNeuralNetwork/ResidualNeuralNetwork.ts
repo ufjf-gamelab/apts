@@ -1,4 +1,4 @@
-import type { Integer } from "@repo/engine_core/types.js";
+import type { Integer, TensorLikeArray } from "@repo/engine_core/types.js";
 import type { Game } from "@repo/game/Game.js";
 import type { Move } from "@repo/game/Move.js";
 import type { Player } from "@repo/game/Player.js";
@@ -8,13 +8,27 @@ import type { State } from "@repo/game/State.js";
 
 import { FIRST_INDEX, INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import * as tf from "@tensorflow/tfjs";
+import path from "path";
 
 import type { TreeNode } from "../MonteCarloTree/TreeNode.js";
+import type { LogMessage } from "../types.js";
 
 const QUANTITY_OF_INPUT_CHANNELS = 3;
 const QUANTITY_OF_INPUT_CHANNELS_ON_POLICY_HEAD = 32;
 const SIZE_OF_CONVOLUTIONAL_WINDOW = 3;
 const WEIGHT_DECAY = 1e-4;
+
+const assertTensorIsSymbolic = (
+  value: tf.SymbolicTensor | tf.SymbolicTensor[] | tf.Tensor | tf.Tensor[],
+): tf.SymbolicTensor => {
+  if (Array.isArray(value)) {
+    throw new Error("Expected symbolic tensor but received array of tensors.");
+  }
+  if (value instanceof tf.Tensor) {
+    throw new Error("Expected symbolic tensor but received eager tensor.");
+  }
+  return value;
+};
 
 const kernelParams = {
   kernelInitializer: "heNormal",
@@ -123,8 +137,7 @@ const constructInitialBackboneTensor = <
     ],
     name: "startBlock",
   });
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
-  return startBlock.apply(inputTensor) as tf.SymbolicTensor;
+  return assertTensorIsSymbolic(startBlock.apply(inputTensor));
 };
 
 /// Construct block that predicts the probability of each action
@@ -278,17 +291,21 @@ const applyResidualBlock = ({
     name: `ResidualBlock_${idNumber}_residualSum`,
   });
 
-  let outputTensor = firstConvolution.apply(currentBackboneTensor);
-  outputTensor = firstNormalization.apply(outputTensor);
-  outputTensor = firstActivation.apply(outputTensor);
-  outputTensor = secondConvolution.apply(outputTensor);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
-  outputTensor = secondNormalization.apply(outputTensor) as tf.SymbolicTensor;
-  outputTensor = residualSum.apply([outputTensor, currentBackboneTensor]);
-  outputTensor = secondActivation.apply(outputTensor);
+  let outputTensor = assertTensorIsSymbolic(
+    firstConvolution.apply(currentBackboneTensor),
+  );
+  outputTensor = assertTensorIsSymbolic(firstNormalization.apply(outputTensor));
+  outputTensor = assertTensorIsSymbolic(firstActivation.apply(outputTensor));
+  outputTensor = assertTensorIsSymbolic(secondConvolution.apply(outputTensor));
+  outputTensor = assertTensorIsSymbolic(
+    secondNormalization.apply(outputTensor),
+  );
+  outputTensor = assertTensorIsSymbolic(
+    residualSum.apply([outputTensor, currentBackboneTensor]),
+  );
+  outputTensor = assertTensorIsSymbolic(secondActivation.apply(outputTensor));
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
-  return outputTensor as tf.SymbolicTensor;
+  return outputTensor;
 };
 
 const constructResidualNeuralNetworkModel = <
@@ -368,14 +385,12 @@ const constructResidualNeuralNetworkModel = <
     inputShape: inputShapeForHeads,
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
-  const valueOutput = valueHead.apply(
-    currentBackboneTensor,
-  ) as tf.SymbolicTensor;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
-  const policyOutput = policyHead.apply(
-    currentBackboneTensor,
-  ) as tf.SymbolicTensor;
+  const valueOutput = assertTensorIsSymbolic(
+    valueHead.apply(currentBackboneTensor),
+  );
+  const policyOutput = assertTensorIsSymbolic(
+    policyHead.apply(currentBackboneTensor),
+  );
 
   const layersModel = tf.model({
     inputs: inputTensor,
@@ -454,13 +469,153 @@ class ResidualNeuralNetwork<
     });
   }
 
-  public getGame() {
-    return this.game;
+  private static logProgress({
+    epoch,
+    logMessage,
+    logs,
+    trainingLog,
+  }: {
+    epoch: number;
+    logMessage: LogMessage;
+    logs: tf.Logs;
+    trainingLog: tf.Logs[];
+  }) {
+    let logsString = `Epoch ${epoch}\n`;
+    logsString += `Total Loss: ${logs["loss"]}\n`;
+    logsString += `Policy Head Loss: ${logs["policyHead_loss"]}\n`;
+    logsString += `Policy Head Accuracy: ${logs["policyHead_acc"]}\n`;
+    logsString += `Value Head Loss: ${logs["valueHead_loss"]}\n`;
+    logsString += `Value Head Accuracy: ${logs["valueHead_acc"]}\n`;
+    logMessage(logsString);
+    trainingLog.push(logs);
   }
 
-  public getLayersModel() {
-    return this.layersModel;
+  // public dispose() {
+  //   this.layersModel.dispose();
+  // }
+
+  public getWeights(): TensorLikeArray[] {
+    return this.layersModel.getWeights().map((weight) => weight.arraySync());
   }
+
+  public predict({
+    batchOfStatesAsTensor,
+  }: {
+    batchOfStatesAsTensor: tf.Tensor;
+  }) {
+    return tf.tidy(() => {
+      const outputs = this.layersModel.predict(batchOfStatesAsTensor);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+      return outputs as [tf.Tensor2D, tf.Tensor1D];
+    });
+  }
+
+  public async save({ innerPath }: { innerPath: string }) {
+    const protocol = "file";
+    const fullPath = path.join(this.game.getName(), innerPath);
+    await this.layersModel.save(`${protocol}://${fullPath}`, {});
+  }
+
+  public setWeights({ weights }: { weights: TensorLikeArray[] }) {
+    const tensors = weights.map((weight) => tf.tensor(weight));
+    this.layersModel.setWeights(tensors);
+  }
+
+  public summary({ logMessage }: { logMessage: LogMessage }) {
+    const LINE_LENGTH = 0;
+    const FIRST_POSITION = 0;
+    this.layersModel.summary(LINE_LENGTH, [FIRST_POSITION], logMessage);
+  }
+
+  /**
+   * Trains the model using the provided batch of data.
+   * @param inputsBatch - The batch of input tensors.
+   * @param policyOutputsBatch - The batch of policy output tensors.
+   * @param valueOutputsBatch - The batch of value output tensors.
+   * @param batchSize - The size of each training batch.
+   * @param numEpochs - The number of training epochs.
+   * @param learningRate - The learning rate for the optimizer.
+   * @param validationSplit - The percentage of data to use for validation.
+   * @param logMessage - The function to use for logging progress (optional, default is console.log).
+   * @returns A promise that resolves to an array of training logs.
+   */
+  public async train({
+    batchSize,
+    inputsBatch,
+    learningRate,
+    logMessage,
+    numEpochs,
+    policyOutputsBatch,
+    validationSplit,
+    valueOutputsBatch,
+  }: {
+    batchSize: number;
+    inputsBatch: tf.Tensor4D;
+    learningRate: number;
+    logMessage: LogMessage;
+    numEpochs: number;
+    policyOutputsBatch: tf.Tensor2D;
+    validationSplit: number;
+    valueOutputsBatch: tf.Tensor1D;
+  }): Promise<tf.Logs[]> {
+    const trainingLog: tf.Logs[] = [];
+    this.compile({ learningRate });
+
+    // Fit the model using the prepared training data.
+    await this.layersModel.fit(
+      inputsBatch,
+      [policyOutputsBatch, valueOutputsBatch],
+      {
+        // Update weights after every N examples.
+        batchSize,
+        callbacks: {
+          onEpochEnd: (epoch, logs) => {
+            if (logs) {
+              ResidualNeuralNetwork.logProgress({
+                epoch,
+                logMessage,
+                logs,
+                trainingLog,
+              });
+            }
+          },
+        },
+        // Go over the data N times.
+        epochs: numEpochs,
+        // Ensure data is shuffled again before using each time.
+        shuffle: true,
+        // Use N% of the data for validation.
+        validationSplit,
+      },
+    );
+
+    return trainingLog;
+  }
+
+  private compile({ learningRate }: { learningRate: number }) {
+    this.layersModel.compile({
+      loss: {
+        policyHead: "categoricalCrossentropy",
+        valueHead: "meanSquaredError",
+      },
+      metrics: ["accuracy"],
+      optimizer: tf.train.adam(learningRate),
+    });
+  }
+
+  // /// Evaluates the model on the given batch of data
+  // private evaluate({ inputsBatch }: { inputsBatch: tf.Tensor4D }) {
+  //   const DIMENSION = 1;
+  //   const FIRST_POSITION = 0;
+  //   tf.tidy(() => {
+  //     const [policy] = this.predict({ inputsBatch });
+  //     const softMaxPolicy = tf
+  //       .softmax(policy, DIMENSION)
+  //       .squeeze([FIRST_POSITION]);
+  //     // TODO: const argMaxPolicy = policy.squeeze([0]).argMax();
+  //     return softMaxPolicy;
+  //   });
+  // }
 }
 
 export type { ParamsOfResidualNeuralNetwork };

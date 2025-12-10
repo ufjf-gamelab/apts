@@ -96,15 +96,13 @@ type Char =
 
 type Integer = number;
 
-// type LogMessage = (message: string) => void;
+type TensorLikeArray =
+  | number
+  | number[]
+  | number[][]
+  | number[][][]
+  | number[][][][]
+  | number[][][][][]
+  | number[][][][][][];
 
-// type TensorLikeArray =
-//   | number
-//   | number[]
-//   | number[][]
-//   | number[][][]
-//   | number[][][][]
-//   | number[][][][][]
-//   | number[][][][][][];
-
-export type { Char, Integer };
+export type { Char, Integer, TensorLikeArray };

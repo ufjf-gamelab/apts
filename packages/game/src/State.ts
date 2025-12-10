@@ -1,4 +1,4 @@
-import type { Integer } from "@repo/engine_core/types.js";
+import type { Integer, TensorLikeArray } from "@repo/engine_core/types.js";
 
 import type { Game } from "./Game.js";
 import type { Move } from "./Move.js";
@@ -120,6 +120,8 @@ abstract class State<
   }
 
   public abstract clone(): GenericState;
+
+  public abstract getEncodedState(): TensorLikeArray;
 
   public getGame() {
     return this.game;
