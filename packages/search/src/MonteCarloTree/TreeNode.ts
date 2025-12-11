@@ -384,4 +384,4 @@ export type {
   ParamsOfTreeNodeForPrivateConstructor,
   QualityOfMatch,
 };
-export { TreeNode };
+export { DEFAULT_QUANTITY_OF_VISITS, TreeNode };

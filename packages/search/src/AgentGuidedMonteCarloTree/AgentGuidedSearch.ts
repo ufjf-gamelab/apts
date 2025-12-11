@@ -79,12 +79,14 @@ class AgentGuidedSearch<
       GenericState
     >({ state });
 
+    // TODO: Check if we should use the MCTS search for when asking the probabilities of each move when using, and not training
+
     for (
       let indexOfCurrentExpansion = 0;
       indexOfCurrentExpansion < this.quantityOfExpansions;
       indexOfCurrentExpansion += INCREMENT_ONE
     ) {
-      // 1. Selection: Start from root and traverse down to a non-expanded node using UCB.
+      // 1. Selection: Start from root and traverse down to a non-expanded node using UCT.
       const selectedNode = this.selectNextNode({
         rootNode,
       });
@@ -96,21 +98,26 @@ class AgentGuidedSearch<
       const currentState = selectedNode.getState();
       const isFinal = currentState.isFinal();
 
-      if (!isFinal) {
-        const { policy, value } = model.predict({
-          state,
+      if (isFinal) {
+        const score = currentState.getScore();
+        const qualityOfMatch = selectedNode.getQualityOfMatchFromScore({
+          score,
         });
 
-        // 2. Expansion: Add a new child node for every valid move.
-        const childrenNodes = selectedNode.expand({
+        selectedNode.updateQualityOfMatchAndQuantityOfVisitsOnBranch({
+          qualityOfMatch,
+        });
+      } else {
+        const { policy, value } = model.predict({
+          state: currentState,
+        });
+
+        selectedNode.expand({
           qualitiesOfMoveAttributedByModel: policy.arraySync(),
         });
 
-        childrenNodes.forEach((childNode) => {
-          // 4. Backpropagation: Update all nodes on the path from child to root.
-          childNode.updateQualityOfMatchAndQuantityOfVisitsOnBranch({
-            qualityOfMatch: value.arraySync(),
-          });
+        selectedNode.updateQualityOfMatchAndQuantityOfVisitsOnBranch({
+          qualityOfMatch: value.arraySync(),
         });
       }
     }
@@ -137,7 +144,7 @@ class AgentGuidedSearch<
     GenericSlot,
     GenericState
   > | null {
-    // Traverse down the tree using UCB selection until we find a node that is not fully expanded
+    // Traverse down the tree using UCT selection until we find a node that is not fully expanded
     let currentNode = rootNode;
     while (currentNode.isFullyExpanded()) {
       const bestChild = currentNode.selectBestChildNode({

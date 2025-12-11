@@ -73,7 +73,7 @@ class CommonSearch<
       indexOfCurrentExpansion < this.quantityOfExpansions;
       indexOfCurrentExpansion += INCREMENT_ONE
     ) {
-      // 1. Selection: Start from root and traverse down to a non-fully-expanded node using UCB.
+      // 1. Selection: Start from root and traverse down to a non-fully-expanded node using UCT.
       const selectedNode = this.selectNextNode({
         rootNode,
       });
@@ -127,7 +127,7 @@ class CommonSearch<
     GenericSlot,
     GenericState
   > | null {
-    // Traverse down the tree using UCB selection until we find a node that is not fully expanded.
+    // Traverse down the tree using UCT selection until we find a node that is not fully expanded.
     let currentNode = rootNode;
     while (currentNode.isFullyExpanded()) {
       const bestChild = currentNode.selectBestChildNode({

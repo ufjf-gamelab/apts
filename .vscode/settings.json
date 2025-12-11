@@ -18,7 +18,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "cSpell.words": [
-    "alice",
     "apts",
     "backpropagate",
     "backpropagating",
@@ -29,6 +28,7 @@
     "graphviz",
     "Graphviz",
     "mcts",
+    "regularizers",
     "relu",
     "softmax",
     "tensorflow",

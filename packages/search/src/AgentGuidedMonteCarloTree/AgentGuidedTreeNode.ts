@@ -6,17 +6,19 @@ import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
 import { assertNumberIsFinite } from "@repo/engine_core/assert.js";
+import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 
 import type { QualityOfMove } from "../quality.js";
 
 import {
+  DEFAULT_QUANTITY_OF_VISITS,
   type ParamsOfTreeNode,
   type ParamsOfTreeNodeForPrivateConstructor,
   TreeNode,
 } from "../MonteCarloTree/TreeNode.js";
 
-const BASE_EXPLOITATION = 0;
-const BASE_EXPLORATION = 0;
+const DEFAULT_EXPLOITATION = 0;
+const DEFAULT_EXPLORATION = 0;
 
 type ParamsOfAgentGuidedTreeNode<
   GenericGame extends Game<
@@ -219,10 +221,18 @@ class AgentGuidedTreeNode<
     const qualityOfMatchOfChildNode = childNode.getQualityOfMatch();
     const quantityOfVisitsToChildNode = childNode.getQuantityOfVisits();
 
+    if (quantityOfVisitsToChildNode === DEFAULT_QUANTITY_OF_VISITS) {
+      return DEFAULT_EXPLOITATION;
+    }
+
+    // TODO: Check the actual formula
+
     const exploitation = assertNumberIsFinite(
-      qualityOfMatchOfChildNode / quantityOfVisitsToChildNode,
-      BASE_EXPLOITATION,
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      1 - (qualityOfMatchOfChildNode / quantityOfVisitsToChildNode + 1) / 2,
+      DEFAULT_EXPLOITATION,
     );
+
     return exploitation;
   }
 
@@ -240,17 +250,29 @@ class AgentGuidedTreeNode<
     >;
     explorationCoefficient: number;
   }): number {
-    const quantityOfVisitsToParentNode = this.getQuantityOfVisits();
+    const quantityOfVisitsToCurrentNode = this.getQuantityOfVisits();
     const quantityOfVisitsToChildNode = childNode.getQuantityOfVisits();
 
-    const exploration =
-      explorationCoefficient *
-      Math.sqrt(
-        assertNumberIsFinite(
-          Math.log(quantityOfVisitsToParentNode) / quantityOfVisitsToChildNode,
-          BASE_EXPLORATION,
-        ),
+    const qualityOfMoveAttributedByModel =
+      childNode.getQualityOfMoveAttributedByModel();
+    if (qualityOfMoveAttributedByModel === null) {
+      throw new Error(
+        "The quality of move attributed by model should be set when selecting child node.",
       );
+    }
+
+    const componentOfNodeAttributes = assertNumberIsFinite(
+      assertNumberIsFinite(Math.sqrt(quantityOfVisitsToCurrentNode)) /
+        (INCREMENT_ONE + quantityOfVisitsToChildNode),
+    );
+
+    const exploration = assertNumberIsFinite(
+      explorationCoefficient *
+        qualityOfMoveAttributedByModel *
+        componentOfNodeAttributes,
+      DEFAULT_EXPLORATION,
+    );
+
     return exploration;
   }
 

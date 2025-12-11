@@ -8,86 +8,24 @@ import type { State } from "@repo/game/State.js";
 import type * as tfjs from "@tensorflow/tfjs";
 
 import { FIRST_INDEX, INCREMENT_ONE } from "@repo/engine_core/constants.js";
-type TensorFlowModule = typeof tfjs;
-
-const TFJS_NODE_SPECIFIER = "@tensorflow/tfjs-node";
-
-const isTensorFlowModule = (value: unknown): value is TensorFlowModule => {
-  if (typeof value !== "object" || value === null) {
-    return false;
-  }
-  const candidate = value as {
-    getBackend?: unknown;
-    ready?: unknown;
-    setBackend?: unknown;
-  };
-  return (
-    typeof candidate.getBackend === "function" &&
-    typeof candidate.setBackend === "function" &&
-    typeof candidate.ready === "function"
-  );
-};
-
-const loadTensorFlowModule = async (): Promise<TensorFlowModule> => {
-  const runningInNode =
-    typeof process !== "undefined" && process.release.name === "node";
-
-  if (runningInNode) {
-    try {
-      const candidate: unknown = await import(TFJS_NODE_SPECIFIER);
-      if (isTensorFlowModule(candidate)) {
-        if (candidate.getBackend() !== "tensorflow") {
-          await candidate.setBackend("tensorflow");
-        }
-        await candidate.ready();
-        return candidate;
-      }
-    } catch {
-      // Native backend not available; fall back to pure JS
-    }
-  }
-
-  const tfjsModule = (await import("@tensorflow/tfjs")) as TensorFlowModule;
-  await tfjsModule.ready();
-  return tfjsModule;
-};
-
-const tf: TensorFlowModule = await loadTensorFlowModule();
 
 import type { LogMessage } from "../types.js";
 
+import { deriveNumericSeed } from "./deriveNumericSeed.js";
+import {
+  loadTensorFlowModule,
+  type TensorFlowModule,
+} from "./loadTensforFlowModel.js";
+
+const tf: TensorFlowModule = await loadTensorFlowModule();
+
 const QUANTITY_OF_INPUT_CHANNELS = 3;
 const QUANTITY_OF_INPUT_CHANNELS_ON_POLICY_HEAD = 32;
+
 const SIZE_OF_CONVOLUTIONAL_WINDOW = 3;
+
 const WEIGHT_DECAY = 1e-4;
-
-const FLAG_REPRESENTING_NOT_TO_SET_SEED = 0;
-const HASH_FALLBACK_VALUE = 1;
-const HASH_INITIAL_VALUE = 0;
-const HASH_MODULUS = 4_294_967_296;
-const HASH_MULTIPLIER = 31;
-const HASH_INCREMENT = 1;
-
-const deriveNumericSeed = ({ seed }: { seed: string }): number => {
-  // eslint-disable-next-line init-declarations
-  let numericSeed: number;
-
-  const parsedValue = Number(seed);
-  if (Number.isFinite(parsedValue)) {
-    numericSeed = parsedValue;
-  } else {
-    let hash = HASH_INITIAL_VALUE;
-    for (let index = 0; index < seed.length; index += HASH_INCREMENT) {
-      const charCode = seed.charCodeAt(index);
-      hash = (Math.imul(hash, HASH_MULTIPLIER) + charCode) % HASH_MODULUS;
-    }
-    numericSeed = hash === HASH_INITIAL_VALUE ? HASH_FALLBACK_VALUE : hash;
-  }
-
-  return numericSeed === FLAG_REPRESENTING_NOT_TO_SET_SEED
-    ? HASH_FALLBACK_VALUE
-    : numericSeed;
-};
+const LEARNING_WEIGHT = 0.001;
 
 const assertTensorIsSymbolic = (
   value:
@@ -173,7 +111,7 @@ interface ParamsOfResidualNeuralNetwork<
 }
 
 /// Construct adapter from the input tensor to the first tensor of the backbone
-const constructInitialBackboneTensor = <
+const constructAdapterBlockFromInputTensorToBackbone = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -207,7 +145,7 @@ const constructInitialBackboneTensor = <
   quantityOfHiddenChannels: Integer;
   quantityOfRows: Integer;
 }) => {
-  const startBlock = tf.sequential({
+  const initialBlock = tf.sequential({
     layers: [
       tf.layers.conv2d({
         ...getParamsOfConvolution({
@@ -224,9 +162,9 @@ const constructInitialBackboneTensor = <
       tf.layers.batchNormalization(paramsOfBatchNormalization),
       tf.layers.activation(paramsOfReluActivation),
     ],
-    name: "startBlock",
+    name: "initialBlock",
   });
-  return assertTensorIsSymbolic(startBlock.apply(inputTensor));
+  return assertTensorIsSymbolic(initialBlock.apply(inputTensor));
 };
 
 /// Construct block that predicts the probability of each action
@@ -342,7 +280,9 @@ const applyResidualBlock = ({
   quantityOfHiddenChannels,
   quantityOfRows,
 }: {
-  currentBackboneTensor: ReturnType<typeof constructInitialBackboneTensor>;
+  currentBackboneTensor: ReturnType<
+    typeof constructAdapterBlockFromInputTensorToBackbone
+  >;
   idNumber: number;
   kernelInitializer: KernelInitializer;
   quantityOfColumns: Integer;
@@ -360,33 +300,33 @@ const applyResidualBlock = ({
 
   const firstConvolution = tf.layers.conv2d({
     ...paramsOfConvolution,
-    name: `ResidualBlock_${idNumber}_convolution1`,
+    name: `residualBlock_${idNumber}_convolution1`,
   });
   const secondConvolution = tf.layers.conv2d({
     ...paramsOfConvolution,
-    name: `ResidualBlock_${idNumber}_convolution2`,
+    name: `residualBlock_${idNumber}_convolution2`,
   });
 
   const firstNormalization = tf.layers.batchNormalization({
     ...paramsOfBatchNormalization,
-    name: `ResidualBlock_${idNumber}_normalization1`,
+    name: `residualBlock_${idNumber}_normalization1`,
   });
   const secondNormalization = tf.layers.batchNormalization({
     ...paramsOfBatchNormalization,
-    name: `ResidualBlock_${idNumber}_normalization2`,
+    name: `residualBlock_${idNumber}_normalization2`,
   });
 
   const firstActivation = tf.layers.activation({
     ...paramsOfReluActivation,
-    name: `ResidualBlock_${idNumber}_activation1`,
+    name: `residualBlock_${idNumber}_activation1`,
   });
   const secondActivation = tf.layers.activation({
     ...paramsOfReluActivation,
-    name: `ResidualBlock_${idNumber}_activation2`,
+    name: `residualBlock_${idNumber}_activation2`,
   });
 
   const residualSum = tf.layers.add({
-    name: `ResidualBlock_${idNumber}_residualSum`,
+    name: `residualBlock_${idNumber}_residualSum`,
   });
 
   let outputTensor = assertTensorIsSymbolic(
@@ -457,7 +397,7 @@ const constructResidualNeuralNetworkModel = <
     shape: [quantityOfRows, quantityOfColumns, QUANTITY_OF_INPUT_CHANNELS],
   });
 
-  let currentBackboneTensor = constructInitialBackboneTensor({
+  let currentBackboneTensor = constructAdapterBlockFromInputTensorToBackbone({
     inputTensor,
     kernelInitializer: heNormalInitializer,
     quantityOfColumns,
@@ -505,7 +445,7 @@ const constructResidualNeuralNetworkModel = <
 
   const layersModel = tf.model({
     inputs: inputTensor,
-    name: "ResidualNeuralNetwork",
+    name: "residualNeuralNetwork",
     outputs: [policyOutput, valueOutput],
   });
 
@@ -562,7 +502,7 @@ class ResidualNeuralNetwork<
       quantityOfResidualBlocks,
       seed,
     });
-    this.compile({ learningRate: 0.001 });
+    this.compile({ learningRate: LEARNING_WEIGHT });
   }
 
   private static logProgress({
