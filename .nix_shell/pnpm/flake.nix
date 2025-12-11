@@ -31,14 +31,8 @@
           default = pkgs.mkShell {
 
             packages = with pkgs; [
-              ## Dependencies
-              libuuid
-              openssl
-              python3
-
               ## Packages
-              graphviz
-              nodejs
+              nodePackages_latest.nodejs
               pnpm
             ];
 

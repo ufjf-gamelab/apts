@@ -10,7 +10,7 @@
     "node": ">=18"
   },
   "name": "quati",
-  "packageManager": "pnpm@10.14.0",
+  "packageManager": "pnpm@10.25.0",
   "pnpm": {
     "overrides": {
       "@ts-graphviz/adapter": "3.0.4",
