@@ -1,4 +1,9 @@
-import type { Integer, TensorLikeArray } from "@repo/engine_core/types.js";
+import type {
+  Integer,
+  Nullable,
+  Seed,
+  TensorLikeArray,
+} from "@repo/engine_core/types.js";
 import type { Game } from "@repo/game/Game.js";
 import type { Move } from "@repo/game/Move.js";
 import type { Player } from "@repo/game/Player.js";
@@ -15,7 +20,7 @@ import { deriveNumericSeed } from "./deriveNumericSeed.js";
 import {
   loadTensorFlowModule,
   type TensorFlowModule,
-} from "./loadTensforFlowModel.js";
+} from "./loadTensforFlowModule.js";
 
 const tf: TensorFlowModule = await loadTensorFlowModule();
 
@@ -105,9 +110,10 @@ interface ParamsOfResidualNeuralNetwork<
   >,
 > {
   game: GenericGame;
+  nameOfModel: string;
   quantityOfHiddenChannels: Integer;
   quantityOfResidualBlocks: Integer;
-  seed: string;
+  seed: Seed;
 }
 
 /// Construct adapter from the input tensor to the first tensor of the backbone
@@ -369,6 +375,7 @@ const constructResidualNeuralNetworkModel = <
   >,
 >({
   game,
+  nameOfModel,
   quantityOfHiddenChannels,
   quantityOfResidualBlocks,
   seed,
@@ -381,7 +388,11 @@ const constructResidualNeuralNetworkModel = <
     GenericSlot,
     GenericState
   >,
-  "game" | "quantityOfHiddenChannels" | "quantityOfResidualBlocks" | "seed"
+  | "game"
+  | "nameOfModel"
+  | "quantityOfHiddenChannels"
+  | "quantityOfResidualBlocks"
+  | "seed"
 >): tfjs.LayersModel => {
   const numericSeed = deriveNumericSeed({ seed });
   const heNormalInitializer = tf.initializers.heNormal({
@@ -445,7 +456,7 @@ const constructResidualNeuralNetworkModel = <
 
   const layersModel = tf.model({
     inputs: inputTensor,
-    name: "residualNeuralNetwork",
+    name: nameOfModel,
     outputs: [policyOutput, valueOutput],
   });
 
@@ -476,8 +487,93 @@ class ResidualNeuralNetwork<
 > {
   private readonly layersModel: tfjs.LayersModel;
 
-  public constructor({
+  private constructor({
     game,
+    layersModel,
+    nameOfModel,
+    quantityOfHiddenChannels,
+    quantityOfResidualBlocks,
+    seed,
+  }: Nullable<
+    Pick<
+      ParamsOfResidualNeuralNetwork<
+        GenericGame,
+        GenericMove,
+        GenericPlayer,
+        GenericScore,
+        GenericSlot,
+        GenericState
+      >,
+      "nameOfModel" | "quantityOfHiddenChannels" | "quantityOfResidualBlocks"
+    >
+  > &
+    Pick<
+      ParamsOfResidualNeuralNetwork<
+        GenericGame,
+        GenericMove,
+        GenericPlayer,
+        GenericScore,
+        GenericSlot,
+        GenericState
+      >,
+      "game" | "seed"
+    > & {
+      layersModel: null | tfjs.LayersModel;
+    }) {
+    if (
+      nameOfModel !== null &&
+      quantityOfHiddenChannels !== null &&
+      quantityOfResidualBlocks !== null
+    ) {
+      this.layersModel = constructResidualNeuralNetworkModel<
+        GenericGame,
+        GenericMove,
+        GenericPlayer,
+        GenericScore,
+        GenericSlot,
+        GenericState
+      >({
+        game,
+        nameOfModel,
+        quantityOfHiddenChannels,
+        quantityOfResidualBlocks,
+        seed,
+      });
+    } else if (layersModel === null) {
+      throw new Error(
+        "Could not create ResidualNeuralNetwork, because not sufficient parameters were set.",
+      );
+    } else {
+      this.layersModel = layersModel;
+    }
+
+    this.compile({ learningRate: LEARNING_WEIGHT });
+  }
+
+  public static create<
+    GenericGame extends Game<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >,
+    GenericMove extends Move<GenericMove>,
+    GenericPlayer extends Player<GenericPlayer>,
+    GenericScore extends Score<GenericScore>,
+    GenericSlot extends Slot<GenericSlot>,
+    GenericState extends State<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >,
+  >({
+    game,
+    nameOfModel,
     quantityOfHiddenChannels,
     quantityOfResidualBlocks,
     seed,
@@ -489,7 +585,7 @@ class ResidualNeuralNetwork<
     GenericSlot,
     GenericState
   >) {
-    this.layersModel = constructResidualNeuralNetworkModel<
+    return new ResidualNeuralNetwork<
       GenericGame,
       GenericMove,
       GenericPlayer,
@@ -498,11 +594,65 @@ class ResidualNeuralNetwork<
       GenericState
     >({
       game,
+      layersModel: null,
+      nameOfModel,
       quantityOfHiddenChannels,
       quantityOfResidualBlocks,
       seed,
     });
-    this.compile({ learningRate: LEARNING_WEIGHT });
+  }
+
+  public static load<
+    GenericGame extends Game<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >,
+    GenericMove extends Move<GenericMove>,
+    GenericPlayer extends Player<GenericPlayer>,
+    GenericScore extends Score<GenericScore>,
+    GenericSlot extends Slot<GenericSlot>,
+    GenericState extends State<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >,
+  >({
+    game,
+    layersModel,
+    seed,
+  }: Pick<
+    ParamsOfResidualNeuralNetwork<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >,
+    "game" | "seed"
+  > & { layersModel: tfjs.LayersModel }) {
+    return new ResidualNeuralNetwork<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >({
+      game,
+      layersModel,
+      nameOfModel: null,
+      quantityOfHiddenChannels: null,
+      quantityOfResidualBlocks: null,
+      seed,
+    });
   }
 
   private static logProgress({

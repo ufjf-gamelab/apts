@@ -1,3 +1,5 @@
+import type { Seed } from "@repo/engine_core/types.js";
+
 const FLAG_REPRESENTING_NOT_TO_SET_SEED = 0;
 const HASH_FALLBACK_VALUE = 1;
 const HASH_INITIAL_VALUE = 0;
@@ -5,7 +7,7 @@ const HASH_MODULUS = 4_294_967_296;
 const HASH_MULTIPLIER = 31;
 const HASH_INCREMENT = 1;
 
-const deriveNumericSeed = ({ seed }: { seed: string }): number => {
+const deriveNumericSeed = ({ seed }: { seed: Seed }): number => {
   // eslint-disable-next-line init-declarations
   let numericSeed: number;
 

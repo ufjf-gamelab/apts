@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@types/node": "^24.10.2",
+    "@types/node": "^25.0.0",
     "eslint": "^9.39.1",
     "prettier": "^3.7.4",
     "turbo": "^2.6.3",
@@ -34,7 +34,7 @@
     "format": "turbo run format --continue",
     "lint": "turbo run lint --continue",
     "lint:fix": "turbo run lint:fix --continue",
-    "preview": "pnpm --filter=node preview",
+    "preview": "turbo run preview --filter=node --continue",
     "test": "turbo run test --continue",
     "test:watch": "turbo run test:watch --continue"
   },

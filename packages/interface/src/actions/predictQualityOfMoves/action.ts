@@ -1,9 +1,11 @@
+import type { Nullable, Seed } from "@repo/engine_core/types.js";
 import type { Game } from "@repo/game/Game.js";
 import type { IndexOfMove, Move } from "@repo/game/Move.js";
 import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
+import type { ParamsOfAgentGuidedSearch } from "@repo/search/AgentGuidedMonteCarloTree/AgentGuidedSearch.js";
 import type { ParamsOfSearch } from "@repo/search/MonteCarloTree/Search.js";
 import type { TreeNode } from "@repo/search/MonteCarloTree/TreeNode.js";
 import type { Digraph as GraphvizDigraph } from "ts-graphviz";
@@ -53,6 +55,7 @@ const predictQualityOfMoves = <
   >,
 >({
   explorationCoefficient,
+  model,
   processGraphvizGraph,
   processMessage,
   processQualityOfMoves,
@@ -62,17 +65,30 @@ const predictQualityOfMoves = <
   softeningCoefficient,
   state,
   strategyToSearch,
-}: Pick<
-  Parameters<typeof calculateProbabilityOfPlayingEachMove>[0],
-  "softeningCoefficient"
+}: Nullable<
+  Pick<
+    ParamsOfAgentGuidedSearch<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >,
+    "model"
+  >
 > &
+  Pick<
+    Parameters<typeof calculateProbabilityOfPlayingEachMove>[0],
+    "softeningCoefficient"
+  > &
   Pick<ParamsOfSearch, "explorationCoefficient" | "quantityOfExpansions"> & {
     processGraphvizGraph: ((graphvizGraph: GraphvizDigraph) => void) | null;
     processMessage: ProcessMessage;
     processQualityOfMoves: (
       qualitiesOfMoves: ReadonlyMap<IndexOfMove, QualityOfMove>,
     ) => void;
-    seed: string;
+    seed: Seed;
     shouldReturnProbabilities: boolean;
     state: GenericState;
     strategyToSearch: StrategyToSearch;
@@ -80,8 +96,16 @@ const predictQualityOfMoves = <
   const game = state.getGame();
 
   const random = new Random({ seed });
-  const search = constructSearchBasedOnStrategy({
+  const search = constructSearchBasedOnStrategy<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >({
     explorationCoefficient,
+    model,
     quantityOfExpansions,
     random,
     strategyToSearch,

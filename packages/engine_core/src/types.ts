@@ -96,6 +96,10 @@ type Char =
 
 type Integer = number;
 
+type Nullable<T> = { [P in keyof T]: null | T[P] };
+
+type Seed = string;
+
 type TensorLikeArray =
   | number
   | number[]
@@ -105,4 +109,4 @@ type TensorLikeArray =
   | number[][][][][]
   | number[][][][][][];
 
-export type { Char, Integer, TensorLikeArray };
+export type { Char, Integer, Nullable, Seed, TensorLikeArray };

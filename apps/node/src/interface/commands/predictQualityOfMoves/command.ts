@@ -16,20 +16,52 @@ import type { DefinitionOfCommand } from "../commands.js";
 
 import { truncateFileName } from "../../../file.js";
 import { generateGraphvizImage } from "../../../graphviz.js";
-import { type KeyOfState, selectStateUsingKeyOfState } from "../../states.js";
+import {
+  type KeyOfState,
+  selectStateUsingKeyOfState,
+} from "../../entries/states.js";
+import { loadModel } from "../../loadLayersModel.js";
 import { commonOptions } from "../options.js";
 
 const QUANTITY_OF_CHARACTERS_ON_FILE_EXTENSION = 4;
 
-const executeAction = ({
+const processQualityOfMoves = (
+  qualitiesOfMoves: ReadonlyMap<IndexOfMove, QualityOfMove>,
+): void => {
+  console.info(qualitiesOfMoves);
+};
+
+const processGraphvizGraph = ({
+  directoryPath,
+  fileName,
+  shouldConstructGraph,
+}: Pick<
+  Parameters<typeof generateGraphvizImage>[0],
+  "directoryPath" | "fileName"
+> & { shouldConstructGraph: boolean }) =>
+  shouldConstructGraph
+    ? (graphvizGraph: GraphvizDigraph): void => {
+        const graphvizDotString = graphvizToDot(graphvizGraph);
+        generateGraphvizImage({
+          directoryPath,
+          fileName,
+          graphvizDotString,
+        }).catch((error: unknown) => {
+          console.error("Error generating Graphviz image:", error);
+        });
+      }
+    : null;
+
+const executeAction = async ({
   directory: directoryPathOrUndefined,
   expansions: quantityOfExpansions,
   exploration: explorationCoefficient,
   file: fileNameOrUndefined,
   graph: shouldConstructGraph,
+  model: pathToResidualNeuralNetworkFolderOrUndefined,
+  probabilities: shouldReturnProbabilities,
   seed,
   softening: softeningCoefficient,
-  softmax: shouldReturnProbabilities,
   state: keyOfState,
   strategy: strategyToSearch,
 }: {
@@ -38,17 +70,20 @@ const executeAction = ({
   exploration: number;
   file: string | undefined;
   graph: boolean;
+  model: string | undefined;
+  probabilities: boolean;
   seed: string;
   softening: SofteningCoefficient;
-  softmax: boolean;
   state: KeyOfState;
   strategy: StrategyToSearch;
-}): void => {
-  const processQualityOfMoves = (
-    qualitiesOfMoves: ReadonlyMap<IndexOfMove, QualityOfMove>,
-  ): void => {
-    console.info(qualitiesOfMoves);
-  };
+}): Promise<void> => {
+  const state = selectStateUsingKeyOfState(keyOfState);
+
+  const model = await loadModel({
+    pathToResidualNeuralNetworkFolderOrUndefined,
+    seed,
+    state,
+  });
 
   const fileName = (() => {
     const processedFileName = (() => {
@@ -69,24 +104,14 @@ const executeAction = ({
     });
   })();
 
-  const processGraphvizGraph = shouldConstructGraph
-    ? (graphvizGraph: GraphvizDigraph): void => {
-        const graphvizDotString = graphvizToDot(graphvizGraph);
-        generateGraphvizImage({
-          directoryPath: directoryPathOrUndefined,
-          fileName,
-          graphvizDotString,
-        }).catch((error: unknown) => {
-          console.error("Error generating Graphviz image:", error);
-        });
-      }
-    : null;
-
-  const state = selectStateUsingKeyOfState(keyOfState);
-
   predictQualityOfMoves({
     explorationCoefficient,
-    processGraphvizGraph,
+    model,
+    processGraphvizGraph: processGraphvizGraph({
+      directoryPath: directoryPathOrUndefined,
+      fileName,
+      shouldConstructGraph,
+    }),
     processMessage: console.info,
     processQualityOfMoves,
     quantityOfExpansions,
@@ -105,25 +130,26 @@ const commandToPredictQualityOfMoves = {
   options: [
     commonOptions.state,
     commonOptions.strategyToSearch,
+    commonOptions.modelPath,
     commonOptions.expansions,
     commonOptions.exploration,
     commonOptions.softeningCoefficient,
     new Option(
-      "-g, --graph",
+      "--export-tree",
       "Whether to output an image file of the search tree.",
     ).default(false),
     new Option(
-      "-d, --directory <output-directory>",
-      "The path to the directory where create the image file.",
+      "--directory <path of directory>",
+      "The path to the directory where the image file of the search tree will be created.",
     ),
     new Option(
-      "-f, --file <output-file-name>",
-      "The name of the outputted image file (without extension).",
+      "--file <file name>",
+      "The name of the image file of the search tree (without extension).",
     ),
     commonOptions.seed,
     new Option(
-      "--softmax",
-      "Whether to apply softmax to normalize quality of moves.",
+      "--probabilities",
+      "Whether to calculate the probabilities of each move after the search has completed by applying softmax.",
     ).default(false),
   ],
 } satisfies DefinitionOfCommand;

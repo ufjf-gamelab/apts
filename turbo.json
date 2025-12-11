@@ -22,6 +22,10 @@
     "lint:fix": {
       "dependsOn": ["^lint:fix"]
     },
+    "preview": {
+      "dependsOn": ["build"],
+      "cache": false
+    },
     "test": {
       "dependsOn": ["^test"]
     },

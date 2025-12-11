@@ -11,13 +11,18 @@ import { Command, Option } from "commander";
 import type { DefinitionOfCommand } from "../commands.js";
 
 import { getInput } from "../../../input.js";
-import { type KeyOfState, selectStateUsingKeyOfState } from "../../states.js";
+import {
+  type KeyOfState,
+  selectStateUsingKeyOfState,
+} from "../../entries/states.js";
+import { loadModel } from "../../loadLayersModel.js";
 import { commonOptions } from "../options.js";
 
 const executeAction = async ({
   expansions: quantityOfExpansions,
   exploration: explorationCoefficient,
   mode: modeOfPlay,
+  model: pathToResidualNeuralNetworkFolderOrUndefined,
   seed,
   softening: softeningCoefficient,
   state: keyOfState,
@@ -26,6 +31,7 @@ const executeAction = async ({
   expansions: number;
   exploration: number;
   mode: ModeOfPlay;
+  model: string;
   seed: string;
   softening: SofteningCoefficient;
   state: KeyOfState;
@@ -33,9 +39,16 @@ const executeAction = async ({
 }): Promise<void> => {
   const state = selectStateUsingKeyOfState(keyOfState);
 
+  const model = await loadModel({
+    pathToResidualNeuralNetworkFolderOrUndefined,
+    seed,
+    state,
+  });
+
   await playMatch({
     explorationCoefficient,
     getInput,
+    model,
     modeOfPlay,
     processMessage: console.info,
     quantityOfExpansions,
@@ -51,11 +64,12 @@ const commandToPlayMatch = {
     .description("Play against agent using Monte-Carlo Tree Search.")
     .action(executeAction),
   options: [
-    commonOptions.state,
-    commonOptions.strategyToSearch,
-    new Option("-m, --mode <game-mode>", "The game mode to play.")
+    new Option("--mode <game mode>", "The game mode to play.")
       .choices(Object.values(modesOfPlay))
       .makeOptionMandatory(),
+    commonOptions.state,
+    commonOptions.strategyToSearch,
+    commonOptions.modelPath,
     commonOptions.expansions,
     commonOptions.exploration,
     commonOptions.softeningCoefficient,

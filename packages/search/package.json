@@ -3,14 +3,14 @@
   "dependencies": {
     "@repo/engine_core": "workspace:*",
     "@repo/game": "workspace:*",
-    "@tensorflow/tfjs-node": "^4.22.0",
     "@tensorflow/tfjs": "^4.22.0",
+    "@tensorflow/tfjs-node": "^4.22.0",
     "seedrandom": "^3.0.5"
   },
   "devDependencies": {
     "@repo/eslint_config": "workspace:*",
     "@repo/typescript_config": "workspace:*",
-    "@types/node": "^24.10.2",
+    "@types/node": "^25.0.0",
     "@types/seedrandom": "^3.0.8",
     "eslint": "^9.39.1",
     "typescript": "^5.9.3",

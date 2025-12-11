@@ -6,6 +6,7 @@ const modesOfPlay = {
 type ModeOfPlay = (typeof modesOfPlay)[keyof typeof modesOfPlay];
 
 const strategiesToSearch = {
+  agentGuided: "agentGuided",
   common: "common",
   expandAll: "expandAll",
 } as const;

@@ -35,6 +35,7 @@ const constructModel = async <
   >,
 >({
   game,
+  nameOfModel,
   path,
   processMessage,
   quantityOfHiddenChannels,
@@ -63,11 +64,15 @@ const constructModel = async <
       GenericSlot,
       GenericState
     >,
-    "game" | "quantityOfHiddenChannels" | "quantityOfResidualBlocks" | "seed"
+    | "game"
+    | "nameOfModel"
+    | "quantityOfHiddenChannels"
+    | "quantityOfResidualBlocks"
+    | "seed"
   > & {
     processMessage: ProcessMessage;
   }): Promise<void> => {
-  const residualNeuralNetwork = new ResidualNeuralNetwork<
+  const residualNeuralNetwork = ResidualNeuralNetwork.create<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -76,6 +81,7 @@ const constructModel = async <
     GenericState
   >({
     game,
+    nameOfModel,
     quantityOfHiddenChannels,
     quantityOfResidualBlocks,
     seed,

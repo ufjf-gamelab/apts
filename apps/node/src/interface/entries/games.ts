@@ -1,5 +1,5 @@
 import { recordOfConnectFourGamesWithData } from "@repo/games/ConnectFour/game/ConnectFourGame.test/records.js";
-import { recordOfSnowballGamesWithData } from "@repo/games/Snowball/game/Game.test/records.js";
+import { recordOfSnowballGamesWithData } from "@repo/games/Snowball/game/SnowballGame.test/records.js";
 import { recordOfTicTacToeGamesWithData } from "@repo/games/TicTacToe/game/TicTacToeGame.test/records.js";
 
 const keysOfGames = {

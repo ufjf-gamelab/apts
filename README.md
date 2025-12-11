@@ -39,17 +39,23 @@ If you use the `Visual Studio Code` editor, we recommend installing the followin
 
 ## What's inside?
 
-This monorepo includes the following packages and apps:
-
-### Apps and Packages
-
-- `node`: an environment for running the automatic play-testing system using [Node.js](https://nodejs.org)
-- `web`: a [React](https://reactjs.org) with [vite](https://vitejs.dev) TypesCript app
-- `@repo/focinho`: a functionality library shared by both `node` and `web` applications
-- `@repo/eslint_config`: shared `eslint` configurations
-- `@repo/typescript_config`: `tsconfig.json`s used throughout the monorepo
-
+This monorepo includes the following packages and apps.
 Each package and app is 100% [TypeScript](https://www.typescriptlang.org/).
+
+### Packages
+
+- `@repo/typescript_config`: `tsconfig.json`s used throughout the monorepo.
+- `@repo/eslint_config`: shared `eslint` configurations.
+- `@repo/engine_core`: a functionality library shared by both `node` and `web` applications.
+- `@repo/game`: a library to represent abstract games and their rules.
+- `@repo/games`: a collection of game implementations using the `@repo/game` library.
+- `@repo/search`: a library implementing search algorithms using MCTS and ResNet.
+- `@repo/interface`: a library to export functionality for apps.
+
+### Apps
+
+- `node`: an environment for running the automatic play-testing system using [Node.js](https://nodejs.org).
+<!-- - `web`: a [React](https://reactjs.org) with [vite](https://vitejs.dev) TypeScript app. -->
 
 ### Utilities
 
@@ -65,6 +71,14 @@ To install the project, run the following command:
 
 ```bash
 pnpm i
+```
+
+Then, guarantee Tensorflow is correctly installed by running, on the root of the project:
+
+```bash
+cd packages/search
+npm rebuild @tensorflow/tfjs-node --build-addon-from-source
+cd ../../
 ```
 
 ## Running

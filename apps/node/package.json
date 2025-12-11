@@ -1,5 +1,8 @@
 {
   "author": "Gabriel Malosto",
+  "bin": {
+    "quati": "./dist/index.js"
+  },
   "dependencies": {
     "@paralleldrive/cuid2": "^3.0.4",
     "@repo/engine_core": "workspace:*",
@@ -22,7 +25,7 @@
   "devDependencies": {
     "@repo/eslint_config": "workspace:*",
     "@repo/typescript_config": "workspace:*",
-    "@types/node": "^24.10.2",
+    "@types/node": "^25.0.0",
     "@types/prompts": "^2.4.9",
     "esbuild": "^0.27.1",
     "eslint": "^9.39.1",
@@ -46,7 +49,7 @@
     "format": "prettier . -w",
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
-    "preview": "turbo build --filter=node && node ./dist/index.js"
+    "preview": "NODE_ENV=production node dist/index.js"
   },
   "type": "module",
   "version": "4.2.0"

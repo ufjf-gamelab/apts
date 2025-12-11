@@ -1,10 +1,14 @@
-import type { Integer } from "@repo/engine_core/types.js";
+import type { Integer, Nullable, Seed } from "@repo/engine_core/types.js";
 import type { Game } from "@repo/game/Game.js";
 import type { IndexOfMove, Move } from "@repo/game/Move.js";
 import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
+import type {
+  AgentGuidedSearch,
+  ParamsOfAgentGuidedSearch,
+} from "@repo/search/AgentGuidedMonteCarloTree/AgentGuidedSearch.js";
 import type { CommonSearch } from "@repo/search/CommonMonteCarloTree/CommonSearch.js";
 import type { ExpandAllSearch } from "@repo/search/ExpandAllMonteCarloTree/ExpandAllSearch.js";
 import type { ExplorationCoefficient } from "@repo/search/MonteCarloTree/Search.js";
@@ -18,9 +22,13 @@ import {
 } from "@repo/search/quality.js";
 import { Random } from "@repo/search/Random/Random.js";
 
-import type { ModeOfPlay, StrategyToSearch } from "../../constants.js";
 import type { ProcessMessage } from "../../input.js";
 
+import {
+  type ModeOfPlay,
+  modesOfPlay,
+  type StrategyToSearch,
+} from "../../constants.js";
 import { constructSearchBasedOnStrategy } from "../../constructSearchBasedOnStrategy.js";
 
 type GetInput = (
@@ -156,6 +164,14 @@ const getIndexOfMoveUsingSearch = <
   processMessage: ProcessMessage;
   random: Random;
   search:
+    | AgentGuidedSearch<
+        GenericGame,
+        GenericMove,
+        GenericPlayer,
+        GenericScore,
+        GenericSlot,
+        GenericState
+      >
     | CommonSearch<
         GenericGame,
         GenericMove,
@@ -442,6 +458,7 @@ const playMatch = async <
 >({
   explorationCoefficient,
   getInput,
+  model,
   modeOfPlay,
   processMessage,
   quantityOfExpansions,
@@ -449,13 +466,25 @@ const playMatch = async <
   softeningCoefficient,
   state,
   strategyToSearch,
-}: {
+}: Nullable<
+  Pick<
+    ParamsOfAgentGuidedSearch<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >,
+    "model"
+  >
+> & {
   explorationCoefficient: ExplorationCoefficient;
   getInput: GetInput;
   modeOfPlay: ModeOfPlay;
   processMessage: ProcessMessage;
   quantityOfExpansions: Integer;
-  seed: string;
+  seed: Seed;
   softeningCoefficient: SofteningCoefficient;
   state: GenericState;
   strategyToSearch: StrategyToSearch;
@@ -466,35 +495,40 @@ const playMatch = async <
   processMessage(`Game: ${game.getName()}`);
 
   const finalState = await (async () => {
+    if (modeOfPlay === modesOfPlay.playerVersusPlayer) {
+      return await playMatchInTheModePlayerVersusPlayer({
+        getInput,
+        processMessage,
+        state,
+      });
+    }
+
+    const search = constructSearchBasedOnStrategy<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >({
+      explorationCoefficient,
+      model,
+      quantityOfExpansions,
+      random,
+      strategyToSearch,
+    });
+
     switch (modeOfPlay) {
-      case "cvc":
-      case "pvc": {
-        const search = constructSearchBasedOnStrategy<
-          GenericGame,
-          GenericMove,
-          GenericPlayer,
-          GenericScore,
-          GenericSlot,
-          GenericState
-        >({
-          explorationCoefficient,
-          quantityOfExpansions,
-          random,
-          strategyToSearch,
-        });
+      case modesOfPlay.computerVersusComputer: {
+        throw new Error("Not implemented.");
+      }
+      case modesOfPlay.playerVersusComputer: {
         return await playMatchInTheModePlayerVersusComputer({
           getInput,
           processMessage,
           random,
           search,
           softeningCoefficient,
-          state,
-        });
-      }
-      case "pvp": {
-        return await playMatchInTheModePlayerVersusPlayer({
-          getInput,
-          processMessage,
           state,
         });
       }

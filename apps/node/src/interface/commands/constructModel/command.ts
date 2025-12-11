@@ -11,7 +11,7 @@ import {
   type KeyOfGame,
   keysOfGames,
   selectGameUsingKeyOfGame,
-} from "../../games.js";
+} from "../../entries/games.js";
 import { parseArgumentIntoInt } from "../../parsing.js";
 import { commonOptions } from "../options.js";
 
@@ -19,7 +19,7 @@ const executeAction = async ({
   directory: directoryPathOrUndefined,
   game: keyOfGame,
   hidden: quantityOfHiddenChannels,
-  name: modelNameOrUndefined,
+  name: nameOfModelOrUndefined,
   residual: quantityOfResidualBlocks,
   seed,
 }: {
@@ -30,19 +30,23 @@ const executeAction = async ({
   residual: Integer;
   seed: string;
 }): Promise<void> => {
-  const modelName = truncateFileName({
-    truncatableSlice:
-      modelNameOrUndefined ??
-      `game(${keyOfGame})_hidden(${quantityOfHiddenChannels})_residual(${quantityOfResidualBlocks})_seed(${seed})`,
+  const nameOfModel =
+    nameOfModelOrUndefined ??
+    `game(${keyOfGame})_hidden(${quantityOfHiddenChannels})_residual(${quantityOfResidualBlocks})_seed(${seed})`;
+
+  const fileName = truncateFileName({
+    truncatableSlice: nameOfModel,
   });
+
   const directoryPath = directoryPathOrUndefined ?? "./";
   await createDirectory({ directoryPath });
-  const fullPath = path.join(directoryPath, modelName);
+  const fullPath = path.resolve(path.join(directoryPath, fileName));
 
   const game = selectGameUsingKeyOfGame(keyOfGame);
 
   await constructModel({
     game,
+    nameOfModel,
     path: fullPath,
     processMessage: console.info,
     quantityOfHiddenChannels,
@@ -58,27 +62,27 @@ const commandToConstructModel = {
     .action(executeAction),
   options: [
     new Option(
-      "--game <key-of-game>",
-      "The key of a game to use to architect the model.",
+      "--game <identifier of game>",
+      "The identifier name of a game that will be used to architect the model.",
     )
       .choices(Object.values(keysOfGames))
       .makeOptionMandatory(),
     new Option(
-      "-d, --directory <output-directory>",
-      "The path to the directory where create the model.",
+      "--directory <path of directory>",
+      "The path to the directory in which will be created the folder that will contain the architecture and the weights of the outputted model.",
     ),
     new Option(
-      "-n, --name <name-of-outputted-folder-containing-model>",
-      "The name of the folder where output model.",
+      "--name <name of folder>",
+      "The name of the folder that will be created to contain the architecture and the weights of the outputted model.",
     ),
     new Option(
-      "--hidden <quantity-of-hidden-channels>",
+      "--hidden <quantity of hidden channels>",
       "The quantity of hidden channels to construct the backbone.",
     )
       .argParser(parseArgumentIntoInt)
       .makeOptionMandatory(),
     new Option(
-      "--residual <quantity-of-residual-blocks>",
+      "--residual <quantity of residual blocks>",
       "The quantity of residual blocks to construct the backbone.",
     )
       .argParser(parseArgumentIntoInt)

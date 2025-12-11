@@ -9,8 +9,40 @@ import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 
 import type { Model } from "../ResidualNeuralNetwork/Model.js";
 
-import { Search } from "../MonteCarloTree/Search.js";
+import { type ParamsOfSearch, Search } from "../MonteCarloTree/Search.js";
 import { AgentGuidedTreeNode } from "./AgentGuidedTreeNode.js";
+
+interface ParamsOfAgentGuidedSearch<
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+> extends ParamsOfSearch {
+  model: Model<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >;
+}
 
 class AgentGuidedSearch<
   GenericGame extends Game<
@@ -49,18 +81,35 @@ class AgentGuidedSearch<
     GenericState
   >
 > {
-  public override expandTree({
+  private readonly model: ParamsOfAgentGuidedSearch<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >["model"];
+
+  public constructor({
+    explorationCoefficient,
     model,
+    quantityOfExpansions,
+    random,
+  }: ParamsOfAgentGuidedSearch<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >) {
+    super({ explorationCoefficient, quantityOfExpansions, random });
+    this.model = model;
+  }
+
+  public override expandTree({
     state,
   }: {
-    model: Model<
-      GenericGame,
-      GenericMove,
-      GenericPlayer,
-      GenericScore,
-      GenericSlot,
-      GenericState
-    >;
     state: GenericState;
   }): AgentGuidedTreeNode<
     GenericGame,
@@ -108,7 +157,7 @@ class AgentGuidedSearch<
           qualityOfMatch,
         });
       } else {
-        const { policy, value } = model.predict({
+        const { policy, value } = this.model.predict({
           state: currentState,
         });
 
@@ -187,4 +236,5 @@ class AgentGuidedSearch<
   }
 }
 
+export type { ParamsOfAgentGuidedSearch };
 export { AgentGuidedSearch };

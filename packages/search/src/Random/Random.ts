@@ -1,3 +1,4 @@
+import type { Seed } from "@repo/engine_core/types.js";
 import type { IndexOfMove, Move } from "@repo/game/Move.js";
 import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
@@ -12,7 +13,7 @@ import type { TreeNode } from "../MonteCarloTree/TreeNode.js";
 import { calculateProbabilityOfPlayingEachMove } from "../quality.js";
 
 interface ParamsOfRandom {
-  seed: string;
+  seed: Seed;
 }
 
 class Random {
