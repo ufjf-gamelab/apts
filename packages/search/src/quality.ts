@@ -155,7 +155,7 @@ const calculateProbabilityOfPlayingEachMove = <
   qualitiesOfMoves: QualityOfMove[];
   softeningCoefficient: SofteningCoefficient;
 }): ReadonlyMap<IndexOfMove, number> => {
-  let maximumQualityOfMove = -Infinity;
+  let maximumQualityOfMove = Number.NEGATIVE_INFINITY;
 
   const qualityOfEachValidMove = qualitiesOfMoves.reduce<
     [IndexOfMove, QualityOfMove][]

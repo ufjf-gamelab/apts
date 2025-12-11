@@ -242,7 +242,8 @@ abstract class TreeNode<
   }
 
   public getQuality(): number {
-    return assertNumberIsFinite(this.qualityOfMatch / this.quantityOfVisits);
+    // TODO: Try to align exploitation (quantity of visits) with lack of iterations when state is near a final one (when MCTS rarely visits any grandchildren).
+    return assertNumberIsFinite(this.quantityOfVisits);
   }
 
   public getQualityOfMatch() {

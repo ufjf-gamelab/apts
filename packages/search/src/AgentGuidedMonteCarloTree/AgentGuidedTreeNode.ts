@@ -126,7 +126,14 @@ class AgentGuidedTreeNode<
   >
 > {
   private readonly game: GenericGame;
-  private readonly qualityOfMoveAttributedByModel: null | QualityOfMove;
+  private readonly qualityOfMoveAttributedByModel: ParamsOfAgentGuidedTreeNodeForPrivateConstructor<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >["qualityOfMoveAttributedByModel"];
 
   private constructor({
     indexOfPlayedMove,

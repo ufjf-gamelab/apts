@@ -7,6 +7,8 @@
 // } from "fs";
 // import * as path from "path";
 
+import type { Integer } from "@repo/engine_core/types.js";
+
 import { FIRST_INDEX } from "@repo/engine_core/constants.js";
 import { promises as promisesFromFs } from "fs";
 
@@ -30,25 +32,30 @@ const createDirectory = async ({
 };
 
 const MAXIMUM_CHARACTERS_OF_FILE_NAME = 255;
+const QUANTITY_OF_CHARACTERS_TO_REDUCE = 0;
 
 const truncateFileName = ({
   prefix = "",
+  reduceQuantityOfMaximumCharacters = QUANTITY_OF_CHARACTERS_TO_REDUCE,
   suffix = "",
   truncatableSlice,
 }: {
   prefix?: string;
+  reduceQuantityOfMaximumCharacters?: Integer;
   suffix?: string;
   truncatableSlice: string;
 }) => {
+  const maximumCharacters =
+    MAXIMUM_CHARACTERS_OF_FILE_NAME - reduceQuantityOfMaximumCharacters;
   const fullFileName = `${prefix}${truncatableSlice}${suffix}`;
 
   const lengthOfFullFileName = fullFileName.length;
   const lengthOfFileNameWithoutTruncatableSlice =
     lengthOfFullFileName - truncatableSlice.length;
   const maximumCharactersForState =
-    MAXIMUM_CHARACTERS_OF_FILE_NAME - lengthOfFileNameWithoutTruncatableSlice;
+    maximumCharacters - lengthOfFileNameWithoutTruncatableSlice;
 
-  if (lengthOfFullFileName > MAXIMUM_CHARACTERS_OF_FILE_NAME) {
+  if (lengthOfFullFileName > maximumCharacters) {
     const truncatedSlice = truncatableSlice.slice(
       FIRST_INDEX,
       Math.max(FIRST_INDEX, maximumCharactersForState),

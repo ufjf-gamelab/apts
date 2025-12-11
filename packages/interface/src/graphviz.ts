@@ -249,6 +249,7 @@ const insertEdgeIntoGraph = <
   graph,
   indexOfPlayedMove,
   parentNode,
+  qualityOfNode,
 }: {
   childNode: GraphvizNode;
   fitness: number;
@@ -256,12 +257,13 @@ const insertEdgeIntoGraph = <
   graph: GraphvizDigraph;
   indexOfPlayedMove: IndexOfMove;
   parentNode: GraphvizNode;
+  qualityOfNode: number;
 }): void => {
   const playedMove = game.getMove({ indexOfMove: indexOfPlayedMove });
   if (playedMove !== null) {
     const graphvizEdge = new GraphvizEdge([parentNode, childNode], {
       ...EDGE_ATTRIBUTES,
-      [graphvizAttribute.label]: `move: (${indexOfPlayedMove}) ${playedMove.getTitle()}\nfitness: ${fitness}`,
+      [graphvizAttribute.label]: `move: (${indexOfPlayedMove}) ${playedMove.getTitle()}\nfitness: ${fitness}\nquality: ${qualityOfNode}`,
     });
     graph.addEdge(graphvizEdge);
   }
@@ -386,6 +388,7 @@ const constructGraphvizGraph = <
       graph,
       indexOfPlayedMove,
       parentNode: parentGraphvizNode,
+      qualityOfNode: currentNode.getQuality(),
     });
   }
 
