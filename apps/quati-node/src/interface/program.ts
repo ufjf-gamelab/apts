@@ -3,7 +3,7 @@ import { program } from "commander";
 import { definitionsOfCommands } from "./commands/commands.js";
 
 program
-  .name("apts-engine")
+  .name("quati")
   .version("4.2.0")
   .description(
     "Engine to simulate and create AI models for tabletop games, inspired by the AlphaZero algorithm.",

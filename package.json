@@ -24,7 +24,14 @@
         "@ts-graphviz/*",
         "ts-graphviz"
       ]
-    }
+    },
+    "onlyBuiltDependencies": [
+      "@tensorflow/tfjs-node",
+      "core-js",
+      "edgedriver",
+      "esbuild",
+      "geckodriver"
+    ]
   },
   "private": true,
   "scripts": {
@@ -34,7 +41,7 @@
     "format": "turbo run format --continue",
     "lint": "turbo run lint --continue",
     "lint:fix": "turbo run lint:fix --continue",
-    "preview": "turbo run preview --filter=node --continue",
+    "preview": "turbo run preview --filter=quati-node --continue --",
     "test": "turbo run test --continue",
     "test:watch": "turbo run test:watch --continue"
   },

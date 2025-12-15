@@ -1,4 +1,4 @@
-@startuml apts-engine
+@startuml quati
 title Command Line Interface
 !pragma useVerticalIf on
 skinparam ConditionEndStyle hline
@@ -10,7 +10,7 @@ skinparam ConditionEndStyle hline
 
 start
 
-switch (apts-engine)
+switch (quati)
 
   case ([none], -h, --help)
     :$help_message;

@@ -4,8 +4,6 @@ import { Option } from "commander";
 import { keysOfStates } from "../entries/states.js";
 import { parseArgumentIntoFloat, parseArgumentIntoInt } from "../parsing.js";
 
-const DEFAULT_SEED = Math.random().toString();
-
 const EXPLORATION_COEFFICIENT = 0.5;
 const QUANTITY_OF_EXPANSIONS = 10000;
 const SOFTENING_COEFFICIENT = 0.25;
@@ -29,8 +27,8 @@ const commonOptions = {
   ),
   seed: new Option(
     "--seed <seed>",
-    "The seed to use for random actions.",
-  ).default(DEFAULT_SEED),
+    "The seed to use for random actions. (default: <random>)",
+  ),
   softeningCoefficient: new Option(
     "--softening <softening coefficient>",
     "The softening coefficient to calculate the probabilities of each move after the search has completed.",

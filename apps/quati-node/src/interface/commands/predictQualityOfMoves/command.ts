@@ -60,7 +60,7 @@ const executeAction = async ({
   graph: shouldConstructGraph,
   model: pathToResidualNeuralNetworkFolderOrUndefined,
   probabilities: shouldReturnProbabilities,
-  seed,
+  seed: seedOrUndefined,
   softening: softeningCoefficient,
   state: keyOfState,
   strategy: strategyToSearch,
@@ -72,11 +72,12 @@ const executeAction = async ({
   graph: boolean;
   model: string | undefined;
   probabilities: boolean;
-  seed: string;
+  seed: string | undefined;
   softening: SofteningCoefficient;
   state: KeyOfState;
   strategy: StrategyToSearch;
 }): Promise<void> => {
+  const seed = seedOrUndefined ?? Math.random().toString();
   const state = selectStateUsingKeyOfState(keyOfState);
 
   const model = await loadModel({

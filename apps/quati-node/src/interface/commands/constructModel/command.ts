@@ -21,15 +21,16 @@ const executeAction = async ({
   hidden: quantityOfHiddenChannels,
   name: nameOfModelOrUndefined,
   residual: quantityOfResidualBlocks,
-  seed,
+  seed: seedOrUndefined,
 }: {
   directory: string | undefined;
   game: KeyOfGame;
   hidden: Integer;
   name: string | undefined;
   residual: Integer;
-  seed: string;
+  seed: string | undefined;
 }): Promise<void> => {
+  const seed = seedOrUndefined ?? Math.random().toString();
   const nameOfModel =
     nameOfModelOrUndefined ??
     `game(${keyOfGame})_hidden(${quantityOfHiddenChannels})_residual(${quantityOfResidualBlocks})_seed(${seed})`;
@@ -39,8 +40,9 @@ const executeAction = async ({
   });
 
   const directoryPath = directoryPathOrUndefined ?? "./";
-  await createDirectory({ directoryPath });
   const fullPath = path.resolve(path.join(directoryPath, fileName));
+  await createDirectory({ directoryPath });
+  await createDirectory({ directoryPath: fullPath });
 
   const game = selectGameUsingKeyOfGame(keyOfGame);
 

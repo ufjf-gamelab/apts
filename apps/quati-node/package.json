@@ -40,8 +40,8 @@
     "src"
   ],
   "license": "AGPL-3.0-only",
-  "main": "src/index.ts",
-  "name": "node",
+  "main": "./dist/index.js",
+  "name": "quati-node",
   "scripts": {
     "build": "esbuild src/index.ts --bundle --packages=external --platform=node --format=esm --outdir=dist --sourcemap",
     "check-types": "tsc --noEmit",
@@ -49,7 +49,7 @@
     "format": "prettier . -w",
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
-    "preview": "NODE_ENV=production node dist/index.js"
+    "preview": "node dist/index.js --"
   },
   "type": "module",
   "version": "4.2.0"

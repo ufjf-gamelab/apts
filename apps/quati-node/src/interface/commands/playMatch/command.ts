@@ -23,7 +23,7 @@ const executeAction = async ({
   exploration: explorationCoefficient,
   mode: modeOfPlay,
   model: pathToResidualNeuralNetworkFolderOrUndefined,
-  seed,
+  seed: seedOrUndefined,
   softening: softeningCoefficient,
   state: keyOfState,
   strategy: strategyToSearch,
@@ -32,11 +32,12 @@ const executeAction = async ({
   exploration: number;
   mode: ModeOfPlay;
   model: string;
-  seed: string;
+  seed: string | undefined;
   softening: SofteningCoefficient;
   state: KeyOfState;
   strategy: StrategyToSearch;
 }): Promise<void> => {
+  const seed = seedOrUndefined ?? Math.random().toString();
   const state = selectStateUsingKeyOfState(keyOfState);
 
   const model = await loadModel({
