@@ -6,7 +6,6 @@ import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
 import { assertNumberIsFinite } from "@repo/engine_core/assert.js";
-import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 
 import type { QualityOfMove } from "../quality.js";
 
@@ -19,6 +18,7 @@ import {
 
 const DEFAULT_EXPLOITATION = 0;
 const DEFAULT_EXPLORATION = 0;
+const GUARANTEE_THE_DENOMINATOR_IS_AT_LEAST_ONE = 1;
 
 type ParamsOfAgentGuidedTreeNode<
   GenericGame extends Game<
@@ -225,11 +225,8 @@ class AgentGuidedTreeNode<
       return DEFAULT_EXPLOITATION;
     }
 
-    // TODO: Check the actual formula
-
     const exploitation = assertNumberIsFinite(
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      1 - (qualityOfMatchOfChildNode / quantityOfVisitsToChildNode + 1) / 2,
+      qualityOfMatchOfChildNode / quantityOfVisitsToChildNode,
       DEFAULT_EXPLOITATION,
     );
 
@@ -261,11 +258,10 @@ class AgentGuidedTreeNode<
       );
     }
 
-    const componentOfNodeAttributes = assertNumberIsFinite(
-      assertNumberIsFinite(Math.sqrt(quantityOfVisitsToCurrentNode)) /
-        (INCREMENT_ONE + quantityOfVisitsToChildNode),
-    );
-
+    const numerator = Math.sqrt(quantityOfVisitsToCurrentNode);
+    const denominator =
+      GUARANTEE_THE_DENOMINATOR_IS_AT_LEAST_ONE + quantityOfVisitsToChildNode;
+    const componentOfNodeAttributes = numerator / denominator;
     const exploration = assertNumberIsFinite(
       explorationCoefficient *
         qualityOfMoveAttributedByModel *

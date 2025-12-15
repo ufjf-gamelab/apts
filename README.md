@@ -8,8 +8,7 @@ It is intended to offer an interface for representing various types of games and
 This project is written in Typescript, and runs on Node.js.
 To install the project, you must have the following dependencies installed:
 
-- [pnpm](https://pnpm.io/)
-- [Node.js](https://nodejs.org/)
+### [PNPM](https://pnpm.io/)
 
 `Pnpm` can be installed with the following command:
 
@@ -17,11 +16,18 @@ To install the project, you must have the following dependencies installed:
 curl -fsSL https://get.pnpm.io/install.sh | sh -
 ```
 
+### [Node.js](https://nodejs.org/)
+
 We recommend using `pnpm` to install `Node.js`, which can be done as follows:
 
 ```bash
 pnpm env use --global lts
 ```
+
+### [Graphviz](https://graphviz.org/download/)
+
+`Graphviz` is used to generate visualizations of game trees.
+To install `Graphviz`, follow the instructions on the [official website](<https://graphviz.org/download/>).
 
 ### Optional Dependencies
 

@@ -76,7 +76,7 @@ const testPickIndexOfRandomNotExpandedChild = ({
   });
 };
 
-const DEFAULT_SEED = "0";
+const DEFAULT_SEED = "1";
 
 testPickIndexOfRandomNotExpandedChild({
   arrayOfTreeNodesWithData: Object.values(recordOfTicTacToeTreeNodesWithData),

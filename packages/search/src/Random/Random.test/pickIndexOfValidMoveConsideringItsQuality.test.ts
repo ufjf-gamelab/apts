@@ -77,7 +77,7 @@ const testPickIndexOfValidMoveConsideringItsQuality = ({
   );
 };
 
-const DEFAULT_SEED = "0";
+const DEFAULT_SEED = "1";
 
 testPickIndexOfValidMoveConsideringItsQuality({
   indexesOfValidMoves: new Set([2, 3, 4, 5, 7, 8]),

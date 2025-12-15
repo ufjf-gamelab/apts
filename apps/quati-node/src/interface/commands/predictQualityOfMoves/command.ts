@@ -56,8 +56,8 @@ const executeAction = async ({
   directory: directoryPathOrUndefined,
   expansions: quantityOfExpansions,
   exploration: explorationCoefficient,
+  exportTree: shouldConstructGraph,
   file: fileNameOrUndefined,
-  graph: shouldConstructGraph,
   model: pathToResidualNeuralNetworkFolderOrUndefined,
   probabilities: shouldReturnProbabilities,
   seed: seedOrUndefined,
@@ -68,8 +68,8 @@ const executeAction = async ({
   directory: string | undefined;
   expansions: number;
   exploration: number;
+  exportTree: boolean;
   file: string | undefined;
-  graph: boolean;
   model: string | undefined;
   probabilities: boolean;
   seed: string | undefined;
