@@ -1,34 +1,22 @@
-import type { Integer, Nullable, Seed } from "@repo/engine_core/types.js";
+import type { Seed } from "@repo/engine_core/types.js";
 import type { Game } from "@repo/game/Game.js";
 import type { IndexOfMove, Move } from "@repo/game/Move.js";
 import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
-import type {
-  AgentGuidedSearch,
-  ParamsOfAgentGuidedSearch,
-} from "@repo/search/AgentGuidedMonteCarloTree/AgentGuidedSearch.js";
+import type { AgentGuidedSearch } from "@repo/search/AgentGuidedMonteCarloTree/AgentGuidedSearch.js";
 import type { CommonSearch } from "@repo/search/CommonMonteCarloTree/CommonSearch.js";
 import type { ExpandAllSearch } from "@repo/search/ExpandAllMonteCarloTree/ExpandAllSearch.js";
-import type { ExplorationCoefficient } from "@repo/search/MonteCarloTree/Search.js";
+import type { LogMessage } from "@repo/search/types.js";
 import type { Answers, Choice, PromptObject } from "prompts";
 
 import { FIRST_INDEX } from "@repo/engine_core/constants.js";
 import { formatMap } from "@repo/engine_core/format.js";
-import {
-  predictQualityOfMoves,
-  type SofteningCoefficient,
-} from "@repo/search/qualityOfMove.js";
+import { predictQualityOfMoves } from "@repo/search/qualityOfMove.js";
 import { Random } from "@repo/search/Random/Random.js";
 
-import type { ProcessMessage } from "../../input.js";
-
-import {
-  type ModeOfPlay,
-  modesOfPlay,
-  type StrategyToSearch,
-} from "../../constants.js";
+import { type ModeOfPlay, modesOfPlay } from "../../constants.js";
 import { constructSearchBasedOnStrategy } from "../../constructSearchBasedOnStrategy.js";
 
 type GetInput = (
@@ -57,10 +45,10 @@ const printInformationAboutCurrentTurn = <
     GenericState
   >,
 >({
-  processMessage,
+  logMessage,
   state,
 }: {
-  processMessage: ProcessMessage;
+  logMessage: LogMessage;
   state: GenericState;
 }) => {
   const game = state.getGame();
@@ -70,8 +58,8 @@ const printInformationAboutCurrentTurn = <
     throw new Error("Could not retrieve this player.");
   }
 
-  processMessage(`\nTurn of: (${player.getSymbol()}) ${player.getName()}`);
-  processMessage(state.toString());
+  logMessage(`\nTurn of: (${player.getSymbol()}) ${player.getName()}`);
+  logMessage(state.toString());
 };
 
 const getIndexOfMoveViaUserInput = async <
@@ -151,7 +139,7 @@ const getIndexOfMoveUsingSearch = <
   >,
 >({
   indexesOfValidMoves,
-  processMessage,
+  logMessage,
   random,
   search,
   softeningCoefficient,
@@ -161,7 +149,7 @@ const getIndexOfMoveUsingSearch = <
   "softeningCoefficient"
 > & {
   indexesOfValidMoves: ReadonlySet<IndexOfMove>;
-  processMessage: ProcessMessage;
+  logMessage: LogMessage;
   random: Random;
   search:
     | AgentGuidedSearch<
@@ -204,7 +192,7 @@ const getIndexOfMoveUsingSearch = <
   });
   const pickedMove = game.getMove({ indexOfMove: indexOfPickedMove });
 
-  processMessage(
+  logMessage(
     `Played move: ${pickedMove?.getTitle()}. ${pickedMove?.getDescription()}`,
   );
   return indexOfPickedMove;
@@ -235,7 +223,7 @@ const getIndexOfMove = async <
   currentPlayerIsUser,
   getInput,
   indexesOfValidMoves,
-  processMessage,
+  logMessage,
   random,
   search,
   softeningCoefficient,
@@ -252,7 +240,7 @@ const getIndexOfMove = async <
     >
   >[0],
   | "indexesOfValidMoves"
-  | "processMessage"
+  | "logMessage"
   | "random"
   | "search"
   | "softeningCoefficient"
@@ -282,7 +270,7 @@ const getIndexOfMove = async <
   }
   return getIndexOfMoveUsingSearch({
     indexesOfValidMoves,
-    processMessage,
+    logMessage,
     random,
     search,
     softeningCoefficient,
@@ -313,7 +301,7 @@ const playMatchInTheModePlayerVersusComputer = async <
   >,
 >({
   getInput,
-  processMessage,
+  logMessage,
   random,
   search,
   softeningCoefficient,
@@ -329,10 +317,13 @@ const playMatchInTheModePlayerVersusComputer = async <
       GenericState
     >
   >[0],
-  "getInput" | "random" | "search" | "softeningCoefficient" | "state"
-> & {
-  processMessage: ProcessMessage;
-}) => {
+  | "getInput"
+  | "logMessage"
+  | "random"
+  | "search"
+  | "softeningCoefficient"
+  | "state"
+>) => {
   const game = state.getGame();
 
   let gameHasEnded = false;
@@ -342,7 +333,7 @@ const playMatchInTheModePlayerVersusComputer = async <
 
   while (!gameHasEnded) {
     currentPlayerIsUser = currentState.getIndexOfPlayer() === FIRST_INDEX;
-    printInformationAboutCurrentTurn({ processMessage, state: currentState });
+    printInformationAboutCurrentTurn({ logMessage, state: currentState });
 
     const indexesOfValidMoves = game.getIndexesOfValidMoves({
       state: currentState,
@@ -353,7 +344,7 @@ const playMatchInTheModePlayerVersusComputer = async <
       currentPlayerIsUser,
       getInput,
       indexesOfValidMoves,
-      processMessage,
+      logMessage,
       random,
       search,
       softeningCoefficient,
@@ -390,7 +381,7 @@ const playMatchInTheModePlayerVersusPlayer = async <
   >,
 >({
   getInput,
-  processMessage,
+  logMessage,
   state,
 }: Pick<
   Parameters<
@@ -405,7 +396,7 @@ const playMatchInTheModePlayerVersusPlayer = async <
   >[0],
   "getInput"
 > & {
-  processMessage: ProcessMessage;
+  logMessage: LogMessage;
   state: GenericState;
 }) => {
   const game = state.getGame();
@@ -414,7 +405,7 @@ const playMatchInTheModePlayerVersusPlayer = async <
   let currentState = state;
 
   while (!gameHasEnded) {
-    printInformationAboutCurrentTurn({ processMessage, state: currentState });
+    printInformationAboutCurrentTurn({ logMessage, state: currentState });
 
     const indexesOfValidMoves = game.getIndexesOfValidMoves({
       state: currentState,
@@ -458,47 +449,69 @@ const playMatch = async <
 >({
   explorationCoefficient,
   getInput,
+  logMessage,
   modeOfPlay,
   predictionModel,
-  processMessage,
   quantityOfExpansions,
   seed,
   softeningCoefficient,
   state,
   strategyToSearch,
-}: Nullable<
-  Pick<
-    ParamsOfAgentGuidedSearch<
+}: Pick<
+  Parameters<
+    typeof constructSearchBasedOnStrategy<
       GenericGame,
       GenericMove,
       GenericPlayer,
       GenericScore,
       GenericSlot,
       GenericState
-    >,
-    "predictionModel"
-  >
-> & {
-  explorationCoefficient: ExplorationCoefficient;
-  getInput: GetInput;
-  modeOfPlay: ModeOfPlay;
-  processMessage: ProcessMessage;
-  quantityOfExpansions: Integer;
-  seed: Seed;
-  softeningCoefficient: SofteningCoefficient;
-  state: GenericState;
-  strategyToSearch: StrategyToSearch;
-}): Promise<void> => {
+    >
+  >[0],
+  | "explorationCoefficient"
+  | "predictionModel"
+  | "quantityOfExpansions"
+  | "strategyToSearch"
+> &
+  Pick<
+    Parameters<
+      typeof playMatchInTheModePlayerVersusComputer<
+        GenericGame,
+        GenericMove,
+        GenericPlayer,
+        GenericScore,
+        GenericSlot,
+        GenericState
+      >
+    >[0],
+    "softeningCoefficient"
+  > &
+  Pick<
+    Parameters<
+      typeof playMatchInTheModePlayerVersusPlayer<
+        GenericGame,
+        GenericMove,
+        GenericPlayer,
+        GenericScore,
+        GenericSlot,
+        GenericState
+      >
+    >[0],
+    "getInput" | "logMessage" | "state"
+  > & {
+    modeOfPlay: ModeOfPlay;
+    seed: Seed;
+  }): Promise<void> => {
   const game = state.getGame();
   const random = new Random({ seed });
 
-  processMessage(`Game: ${game.getName()}`);
+  logMessage(`Game: ${game.getName()}`);
 
   const finalState = await (async () => {
     if (modeOfPlay === modesOfPlay.playerVersusPlayer) {
       return await playMatchInTheModePlayerVersusPlayer({
         getInput,
-        processMessage,
+        logMessage,
         state,
       });
     }
@@ -525,7 +538,7 @@ const playMatch = async <
       case modesOfPlay.playerVersusComputer: {
         return await playMatchInTheModePlayerVersusComputer({
           getInput,
-          processMessage,
+          logMessage,
           random,
           search,
           softeningCoefficient,
@@ -538,9 +551,9 @@ const playMatch = async <
     }
   })();
 
-  processMessage(`\n${finalState.toString()}`);
-  processMessage("End of game.");
-  processMessage(
+  logMessage(`\n${finalState.toString()}`);
+  logMessage("End of game.");
+  logMessage(
     `\n${formatMap({
       map: new Map(
         finalState

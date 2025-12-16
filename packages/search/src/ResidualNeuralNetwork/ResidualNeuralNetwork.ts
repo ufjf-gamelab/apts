@@ -647,7 +647,9 @@ class ResidualNeuralNetwork<
       GenericState
     >,
     "game" | "seed"
-  > & { layersModel: tfjs.LayersModel }) {
+  > & {
+    layersModel: tfjs.LayersModel;
+  }) {
     return new ResidualNeuralNetwork<
       GenericGame,
       GenericMove,
@@ -688,6 +690,10 @@ class ResidualNeuralNetwork<
 
   public getGame() {
     return this.game;
+  }
+
+  public getName() {
+    return this.layersModel.name;
   }
 
   // public dispose() {

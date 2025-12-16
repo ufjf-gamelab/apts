@@ -10,8 +10,6 @@ import {
   ResidualNeuralNetwork,
 } from "@repo/search/ResidualNeuralNetwork/ResidualNeuralNetwork.js";
 
-import type { ProcessMessage } from "../../input.js";
-
 const constructModel = async <
   GenericGame extends Game<
     GenericGame,
@@ -35,9 +33,9 @@ const constructModel = async <
   >,
 >({
   game,
+  logMessage,
   nameOfModel,
   path,
-  processMessage,
   quantityOfHiddenChannels,
   quantityOfResidualBlocks,
   scheme,
@@ -56,6 +54,19 @@ const constructModel = async <
   "path" | "scheme"
 > &
   Pick<
+    Parameters<
+      ResidualNeuralNetwork<
+        GenericGame,
+        GenericMove,
+        GenericPlayer,
+        GenericScore,
+        GenericSlot,
+        GenericState
+      >["summary"]
+    >[0],
+    "logMessage"
+  > &
+  Pick<
     ParamsOfResidualNeuralNetwork<
       GenericGame,
       GenericMove,
@@ -69,9 +80,7 @@ const constructModel = async <
     | "quantityOfHiddenChannels"
     | "quantityOfResidualBlocks"
     | "seed"
-  > & {
-    processMessage: ProcessMessage;
-  }): Promise<void> => {
+  >): Promise<void> => {
   const residualNeuralNetwork = ResidualNeuralNetwork.create<
     GenericGame,
     GenericMove,
@@ -87,7 +96,7 @@ const constructModel = async <
     seed,
   });
 
-  residualNeuralNetwork.summary({ logMessage: processMessage });
+  residualNeuralNetwork.summary({ logMessage });
   await residualNeuralNetwork.save({ path, scheme });
 };
 

@@ -89,6 +89,10 @@ class PredictionModel<
     return this.residualNeuralNetwork.getGame();
   }
 
+  public getName() {
+    return this.residualNeuralNetwork.getName();
+  }
+
   public predict({ state }: { state: GenericState }): {
     policy: tf.Tensor1D;
     value: tf.Scalar;

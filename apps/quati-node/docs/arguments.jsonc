@@ -5,7 +5,7 @@
     "softening": 0.015625,
   },
   "ticTacToe": {
-    "expansions": 10000,
+    "expansions": 1000,
     "exploration": 1.4,
     "softening": 0.5,
   },

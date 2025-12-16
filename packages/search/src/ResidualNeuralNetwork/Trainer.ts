@@ -1,4 +1,4 @@
-import type { TensorLikeArray } from "@repo/engine_core/types.js";
+import type { Integer, TensorLikeArray } from "@repo/engine_core/types.js";
 import type { Game } from "@repo/game/Game.js";
 import type { Move } from "@repo/game/Move.js";
 import type { IndexOfPlayer, Player } from "@repo/game/Player.js";
@@ -6,8 +6,11 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
+import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
+
 import type { AgentGuidedSearch } from "../AgentGuidedMonteCarloTree/AgentGuidedSearch.js";
 import type { Random } from "../Random/Random.js";
+import type { LogMessage } from "../types.js";
 import type { PredictionModel } from "./PredictionModel.js";
 
 import { getQualityOfMatchFromScore } from "../qualityOfMatch.js";
@@ -16,6 +19,8 @@ import {
   type QualityOfMove,
   type SofteningCoefficient,
 } from "../qualityOfMove.js";
+
+const SHOULD_ANNOUNCE_PROGRESS = 0;
 
 export interface TrainingMemory {
   encodedStates: TensorLikeArray[];
@@ -120,7 +125,7 @@ interface ParamsOfTrainer<
   readonly softeningCoefficient: SofteningCoefficient;
 }
 
-export default class Trainer<
+class Trainer<
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -187,104 +192,6 @@ export default class Trainer<
     this.game = this.predictionModel.getGame();
   }
 
-  // /**
-  //  * Builds the training memory by self-playing the game for a specified number of iterations.
-  //  * @param numSelfPlayIterations The number of self-play iterations.
-  //  * @param progressStep The number of iterations between each progress message (default is 25).
-  //  * @param showMemorySize Whether to show the size of the training memory.
-  //  * @param logMessage The optional log message function (default is console.log).
-  //  * @returns A promise that resolves to the TrainingMemory object containing encoded states, policy targets, and value targets.
-  //  */
-  // public buildTrainingMemory({
-  //   logMessage = console.log,
-  //   numSelfPlayIterations,
-  //   progressStep = DEFAULT_PROGRESS_STEP,
-  //   showMemorySize = false,
-  // }: {
-  //   logMessage?: LogMessage;
-  //   numSelfPlayIterations: number;
-  //   progressStep?: number;
-  //   showMemorySize?: boolean;
-  // }): Promise<TrainingMemory> {
-  //   const encodedStates = [];
-  //   const policyTargets = [];
-  //   const valueTargets = [];
-
-  //   const MINIMUM_PROGRESS_STEP = 0;
-  //   const SHOULD_LOG_MESSAGE = 0;
-
-  //   // Construct the training memory from self-playing the game
-  //   for (
-  //     let currentStep = 0;
-  //     currentStep < numSelfPlayIterations;
-  //     currentStep += INCREMENT_ONE
-  //   ) {
-  //     if (
-  //       progressStep > MINIMUM_PROGRESS_STEP &&
-  //       (currentStep + ADJUST_INDEX) % progressStep === SHOULD_LOG_MESSAGE
-  //     ) {
-  //       logMessage(
-  //         `Self-play iteration ${currentStep + ADJUST_INDEX}/${numSelfPlayIterations}`,
-  //       );
-  //     }
-  //     const selfPlayMemory = this.selfPlay();
-  //     encodedStates.push(...selfPlayMemory.encodedStates);
-  //     policyTargets.push(...selfPlayMemory.policyTargets);
-  //     valueTargets.push(...selfPlayMemory.valueTargets);
-  //   }
-  //   if (showMemorySize) {
-  //     logMessage(`Memory size: ${encodedStates.length}`);
-  //   }
-  //   return Promise.resolve({ encodedStates, policyTargets, valueTargets });
-  // }
-
-  // // Train the model multiple times
-  // public async learn({
-  //   batchSize,
-  //   learningRate,
-  //   logMessage = console.log,
-  //   maxNumIterations,
-  //   numEpochs,
-  //   trainingMemories,
-  // }: {
-  //   batchSize: number;
-  //   fileSystemProtocol: string;
-  //   learningRate: number;
-  //   logMessage: LogMessage;
-  //   maxNumIterations: number;
-  //   numEpochs: number;
-  //   trainingMemories: TrainingMemory[];
-  // }): Promise<void> {
-  //   const baseId = createId();
-  //   const maxIterations = Math.min(maxNumIterations, trainingMemories.length);
-  //   const trainingPromises = [];
-  //   for (
-  //     let currentIteration = 0;
-  //     currentIteration < maxIterations;
-  //     currentIteration += INCREMENT_ONE
-  //   ) {
-  //     const trainingMemory = trainingMemories[currentIteration];
-  //     if (!trainingMemory) {
-  //       continue;
-  //     }
-  //     logMessage(
-  //       `ITERATION ${currentIteration + ADJUST_INDEX}/${maxIterations}`,
-  //     );
-  //     trainingPromises.push(
-  //       this.train({
-  //         batchSize,
-  //         learningRate,
-  //         logMessage,
-  //         numEpochs,
-  //         trainingMemory,
-  //       }).then(() =>
-  //         this.resNet.save(`/trained/${baseId}/${currentIteration}`),
-  //       ),
-  //     );
-  //   }
-  //   await Promise.all(trainingPromises);
-  // }
-
   private static convertGameMemoryToTrainingMemory<
     GenericGame extends Game<
       GenericGame,
@@ -338,6 +245,97 @@ export default class Trainer<
       },
     );
 
+    return trainingMemory;
+  }
+
+  // // Train the model multiple times
+  // public async learn({
+  //   batchSize,
+  //   learningRate,
+  //   logMessage = console.log,
+  //   maxNumIterations,
+  //   numEpochs,
+  //   trainingMemories,
+  // }: {
+  //   batchSize: number;
+  //   fileSystemProtocol: string;
+  //   learningRate: number;
+  //   logMessage: LogMessage;
+  //   maxNumIterations: number;
+  //   numEpochs: number;
+  //   trainingMemories: TrainingMemory[];
+  // }): Promise<void> {
+  //   const baseId = createId();
+  //   const maxIterations = Math.min(maxNumIterations, trainingMemories.length);
+  //   const trainingPromises = [];
+  //   for (
+  //     let currentIteration = 0;
+  //     currentIteration < maxIterations;
+  //     currentIteration += INCREMENT_ONE
+  //   ) {
+  //     const trainingMemory = trainingMemories[currentIteration];
+  //     if (!trainingMemory) {
+  //       continue;
+  //     }
+  //     logMessage(
+  //       `ITERATION ${currentIteration + ADJUST_INDEX}/${maxIterations}`,
+  //     );
+  //     trainingPromises.push(
+  //       this.train({
+  //         batchSize,
+  //         learningRate,
+  //         logMessage,
+  //         numEpochs,
+  //         trainingMemory,
+  //       }).then(() =>
+  //         this.resNet.save(`/trained/${baseId}/${currentIteration}`),
+  //       ),
+  //     );
+  //   }
+  //   await Promise.all(trainingPromises);
+  // }
+
+  public buildTrainingMemory({
+    logMessage,
+    quantityOfIterations,
+    quantityOfIterationsToAnnounceProgress,
+  }: {
+    logMessage: LogMessage;
+    quantityOfIterations: Integer;
+    quantityOfIterationsToAnnounceProgress: Integer;
+  }): TrainingMemory {
+    const trainingMemory: TrainingMemory = {
+      encodedStates: [],
+      policies: [],
+      values: [],
+    };
+
+    logMessage(`Building training memory via self-play`);
+
+    for (
+      let currentStep = 0;
+      currentStep < quantityOfIterations;
+      currentStep += INCREMENT_ONE
+    ) {
+      if (
+        currentStep % quantityOfIterationsToAnnounceProgress ===
+        SHOULD_ANNOUNCE_PROGRESS
+      ) {
+        logMessage(
+          `Finished iterations: ${currentStep}/${quantityOfIterations}`,
+        );
+      }
+
+      const selfPlayMemory = this.selfPlay();
+      trainingMemory.encodedStates.push(...selfPlayMemory.encodedStates);
+      trainingMemory.policies.push(...selfPlayMemory.policies);
+      trainingMemory.values.push(...selfPlayMemory.values);
+    }
+    logMessage(
+      `Finished iterations: ${quantityOfIterations}/${quantityOfIterations}`,
+    );
+
+    logMessage(`Size of memory: ${trainingMemory.encodedStates.length}`);
     return trainingMemory;
   }
 
@@ -439,3 +437,6 @@ export default class Trainer<
   //   return trainingLog;
   // }
 }
+
+export type { ParamsOfTrainer };
+export { Trainer };

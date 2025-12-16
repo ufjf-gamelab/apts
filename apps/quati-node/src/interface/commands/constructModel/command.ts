@@ -9,7 +9,6 @@ import type { DefinitionOfCommand } from "../commands.js";
 import { createDirectory, truncateFileName } from "../../../file.js";
 import {
   type KeyOfGame,
-  keysOfGames,
   selectGameUsingKeyOfGame,
 } from "../../entries/games.js";
 import { parseArgumentIntoInt } from "../../parsing.js";
@@ -35,22 +34,21 @@ const executeAction = async ({
     nameOfModelOrUndefined ??
     `game(${keyOfGame})_hidden(${quantityOfHiddenChannels})_residual(${quantityOfResidualBlocks})_seed(${seed})`;
 
-  const fileName = truncateFileName({
+  const folderName = truncateFileName({
     truncatableSlice: nameOfModel,
   });
 
   const directoryPath = directoryPathOrUndefined ?? "./";
-  const fullPath = path.resolve(path.join(directoryPath, fileName));
-  await createDirectory({ directoryPath });
+  const fullPath = path.resolve(path.join(directoryPath, folderName));
   await createDirectory({ directoryPath: fullPath });
 
   const game = selectGameUsingKeyOfGame(keyOfGame);
 
   await constructModel({
     game,
+    logMessage: console.info,
     nameOfModel,
     path: fullPath,
-    processMessage: console.info,
     quantityOfHiddenChannels,
     quantityOfResidualBlocks,
     scheme: "file",
@@ -63,12 +61,7 @@ const commandToConstructModel = {
     .description("Construct a Residual Neural Network model.")
     .action(executeAction),
   options: [
-    new Option(
-      "--game <identifier of game>",
-      "The identifier name of a game that will be used to architect the model.",
-    )
-      .choices(Object.values(keysOfGames))
-      .makeOptionMandatory(),
+    commonOptions.game,
     new Option(
       "--directory <path of directory>",
       "The path to the directory in which will be created the folder that will contain the architecture and the weights of the outputted model.",

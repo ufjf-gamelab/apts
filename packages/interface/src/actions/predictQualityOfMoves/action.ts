@@ -8,6 +8,7 @@ import type { State } from "@repo/game/State.js";
 import type { ParamsOfAgentGuidedSearch } from "@repo/search/AgentGuidedMonteCarloTree/AgentGuidedSearch.js";
 import type { ParamsOfSearch } from "@repo/search/MonteCarloTree/Search.js";
 import type { TreeNode } from "@repo/search/MonteCarloTree/TreeNode.js";
+import type { LogMessage } from "@repo/search/types.js";
 import type { Digraph as GraphvizDigraph } from "ts-graphviz";
 
 import {
@@ -18,7 +19,6 @@ import {
 import { Random } from "@repo/search/Random/Random.js";
 
 import type { StrategyToSearch } from "../../constants.js";
-import type { ProcessMessage } from "../../input.js";
 
 import { constructSearchBasedOnStrategy } from "../../constructSearchBasedOnStrategy.js";
 import { constructGraphvizGraph } from "../../graphviz.js";
@@ -55,9 +55,9 @@ const predictQualityOfMoves = <
   >,
 >({
   explorationCoefficient,
+  logMessage,
   predictionModel,
   processGraphvizGraph,
-  processMessage,
   processQualityOfMoves,
   quantityOfExpansions,
   seed,
@@ -79,18 +79,30 @@ const predictQualityOfMoves = <
   >
 > &
   Pick<
+    Parameters<
+      Game<
+        GenericGame,
+        GenericMove,
+        GenericPlayer,
+        GenericScore,
+        GenericSlot,
+        GenericState
+      >["getIndexesOfValidMoves"]
+    >[0],
+    "state"
+  > &
+  Pick<
     Parameters<typeof calculateProbabilityOfPlayingEachMove>[0],
     "softeningCoefficient"
   > &
   Pick<ParamsOfSearch, "explorationCoefficient" | "quantityOfExpansions"> & {
+    logMessage: LogMessage;
     processGraphvizGraph: ((graphvizGraph: GraphvizDigraph) => void) | null;
-    processMessage: ProcessMessage;
     processQualityOfMoves: (
       qualitiesOfMoves: ReadonlyMap<IndexOfMove, QualityOfMove>,
     ) => void;
     seed: Seed;
     shouldReturnProbabilities: boolean;
-    state: GenericState;
     strategyToSearch: StrategyToSearch;
   }): void => {
   const game = state.getGame();
@@ -105,7 +117,7 @@ const predictQualityOfMoves = <
     GenericState
   >({
     explorationCoefficient,
-    predictionModel: predictionModel,
+    predictionModel,
     quantityOfExpansions,
     random,
     strategyToSearch,
@@ -132,11 +144,11 @@ const predictQualityOfMoves = <
     softeningCoefficient,
   });
 
-  processMessage("Quality of each move:");
+  logMessage("Quality of each move:");
   processQualityOfMoves(qualityOfEachMove);
 
   if (shouldReturnProbabilities) {
-    processMessage("\nProbability of playing each move:");
+    logMessage("\nProbability of playing each move:");
     processQualityOfMoves(probabilityOfPlayingEachMove);
   }
 

@@ -115,7 +115,15 @@ const predictQualityOfMoves = <
     state,
   });
 
-  return calculateQualityOfMoves({
+  return calculateQualityOfMoves<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState,
+    GenericTreeNode
+  >({
     treeNode: rootNode,
   });
 };

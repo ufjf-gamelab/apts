@@ -1,6 +1,7 @@
 import { strategiesToSearch } from "@repo/interface/constants.js";
 import { Option } from "commander";
 
+import { keysOfGames } from "../entries/games.js";
 import { keysOfStates } from "../entries/states.js";
 import { parseArgumentIntoFloat, parseArgumentIntoInt } from "../parsing.js";
 
@@ -21,6 +22,12 @@ const commonOptions = {
   )
     .default(EXPLORATION_COEFFICIENT)
     .argParser(parseArgumentIntoFloat),
+  game: new Option(
+    "--game <identifier of game>",
+    "The identifier name of a game that will be used to architect the model.",
+  )
+    .choices(Object.values(keysOfGames))
+    .makeOptionMandatory(),
   modelPath: new Option(
     "--model <path of model>",
     "The path to the folder that contains the architecture and the weights of the model.",

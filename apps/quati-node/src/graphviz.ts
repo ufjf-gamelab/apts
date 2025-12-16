@@ -14,7 +14,6 @@ export const generateGraphvizImage = async ({
 }): Promise<void> => {
   const directoryPath = directoryPathOrUndefined ?? "./";
   await createDirectory({ directoryPath });
-
   const fullPath = path.join(directoryPath, fileName);
 
   try {

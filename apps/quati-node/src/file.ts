@@ -1,16 +1,16 @@
-// import { InvalidArgumentError } from "commander";
-// import type { ReadStream, WriteStream } from "fs";
-// import {
-//   createReadStream as createReadStreamFromFs,
-//   existsSync as existsSyncFromFs,
-//   writeFileSync as writeFileSyncFromFs,
-// } from "fs";
-// import * as path from "path";
-
 import type { Integer } from "@repo/engine_core/types.js";
 
 import { FIRST_INDEX } from "@repo/engine_core/constants.js";
-import { promises as promisesFromFs } from "fs";
+import { InvalidArgumentError } from "commander";
+import {
+  createReadStream as createReadStreamFromFs,
+  createWriteStream as createWriteStreamFromFs,
+  existsSync as existsSyncFromFs,
+  promises as promisesFromFs,
+  type ReadStream,
+  type WriteStream,
+} from "fs";
+import path from "path";
 
 const createDirectory = async ({
   directoryPath,
@@ -66,77 +66,72 @@ const truncateFileName = ({
   return fullFileName;
 };
 
-// enum FileOperation {
-//   Overwrite = "w+",
-//   Read = "r",
-//   Write = "wx",
-// }
+const fileOperations = {
+  overwrite: "w+",
+  read: "r",
+  write: "wx",
+} as const;
+type FileOperation = (typeof fileOperations)[keyof typeof fileOperations];
 
-// const createReadStream = (filePath: string): ReadStream => {
-//   try {
-//     return createReadStreamFromFs(filePath);
-//   } catch (error: unknown) {
-//     if (error instanceof Error) {
-//       throw new InvalidArgumentError(
-//         `\n  Failed to create read stream: ${error.message}`,
-//       );
-//     }
-//     throw new InvalidArgumentError(
-//       "\n  An unknown error occurred while creating read stream.",
-//     );
-//   }
-// };
+const createReadStream = ({ filePath }: { filePath: string }): ReadStream => {
+  try {
+    return createReadStreamFromFs(filePath, { flags: fileOperations.read });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new InvalidArgumentError(
+        `Failed to create read stream: ${error.message}.`,
+      );
+    }
+    throw new InvalidArgumentError(
+      "An unknown error occurred while creating read stream.",
+    );
+  }
+};
 
-// const createWriteStream = (filePath: string): WriteStream => {
-//   try {
-//     return createWriteStream(filePath);
-//   } catch (error: unknown) {
-//     if (error instanceof Error) {
-//       throw new InvalidArgumentError(
-//         `\n  Failed to create write stream: ${error.message}`,
-//       );
-//     }
-//     throw new InvalidArgumentError(
-//       "\n  An unknown error occurred while creating write stream.",
-//     );
-//   }
-// };
+const createWriteStream = ({
+  canOverwrite = false,
+  filePath,
+}: {
+  canOverwrite?: boolean | undefined;
+  filePath: string;
+}): WriteStream => {
+  try {
+    return createWriteStreamFromFs(filePath, {
+      flags: canOverwrite ? fileOperations.overwrite : fileOperations.write,
+    });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new InvalidArgumentError(
+        `Failed to create write stream: ${error.message}.`,
+      );
+    }
+    throw new InvalidArgumentError(
+      "An unknown error occurred while creating write stream.",
+    );
+  }
+};
 
-// const validateFilePath = (
-//   filePath: string,
-//   fileOperation: FileOperation,
-// ): ReadStream | WriteStream => {
-//   const resolvedPath = path.resolve(filePath);
+const assertFileExists = ({ filePath }: { filePath: string }) => {
+  const resolvedPath = path.resolve(filePath);
+  if (!existsSyncFromFs(resolvedPath)) {
+    throw new InvalidArgumentError("The file path does not exist.");
+  }
+};
 
-//   if (fileOperation === FileOperation.Read) {
-//     if (!existsSyncFromFs(resolvedPath)) {
-//       throw new InvalidArgumentError("\n  The file path does not exist.");
-//     }
-//     return createReadStream(resolvedPath);
-//   }
+const assertFileNotExists = ({ filePath }: { filePath: string }) => {
+  const resolvedPath = path.resolve(filePath);
+  if (existsSyncFromFs(resolvedPath)) {
+    throw new InvalidArgumentError("The file path exists.");
+  }
+};
 
-//   // Attempt to create a file to check if it's writable
-//   try {
-//     writeFileSyncFromFs(resolvedPath, "", { flag: FileOperation.Write });
-//     return createWriteStream(resolvedPath);
-//   } catch (error: unknown) {
-//     if (error instanceof Error && "code" in (error as NodeJS.ErrnoException)) {
-//       if ((error as NodeJS.ErrnoException).code === "EEXIST") {
-//         throw new InvalidArgumentError(
-//           `\n  The file already exists and cannot be overwritten.`,
-//         );
-//       }
-
-//       throw new InvalidArgumentError(
-//         `\n  Failed to create write stream:\n  ${error.message}`,
-//       );
-//     }
-//     throw new InvalidArgumentError("\n  An unknown error occurred.");
-//   }
-// };
-
+export type { FileOperation };
 export {
+  assertFileExists,
+  assertFileNotExists,
   createDirectory,
+  createReadStream,
+  createWriteStream,
+  fileOperations,
   truncateFileName,
-  // FileOperation, validateFilePath
 };

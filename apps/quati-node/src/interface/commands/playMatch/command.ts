@@ -1,4 +1,4 @@
-import type { SofteningCoefficient } from "@repo/search/quality.js";
+import type { SofteningCoefficient } from "@repo/search/qualityOfMove.js";
 
 import { playMatch } from "@repo/interface/actions/playMatch/action.js";
 import {
@@ -39,19 +39,26 @@ const executeAction = async ({
 }): Promise<void> => {
   const seed = seedOrUndefined ?? Math.random().toString();
   const state = selectStateUsingKeyOfState(keyOfState);
+  const game = state.getGame();
 
-  const predictionModel = await loadPredictionModel({
-    pathToResidualNeuralNetworkFolderOrUndefined,
-    seed,
-    state,
-  });
+  const predictionModel = await (async () => {
+    if (typeof pathToResidualNeuralNetworkFolderOrUndefined === "undefined") {
+      return null;
+    }
+    return await loadPredictionModel({
+      game,
+      pathToResidualNeuralNetworkFolder:
+        pathToResidualNeuralNetworkFolderOrUndefined,
+      seed,
+    });
+  })();
 
   await playMatch({
     explorationCoefficient,
     getInput,
+    logMessage: console.info,
     modeOfPlay,
     predictionModel,
-    processMessage: console.info,
     quantityOfExpansions,
     seed,
     softeningCoefficient,

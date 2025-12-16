@@ -3,7 +3,7 @@ import type { StrategyToSearch } from "@repo/interface/constants.js";
 import type {
   QualityOfMove,
   SofteningCoefficient,
-} from "@repo/search/quality.js";
+} from "@repo/search/qualityOfMove.js";
 
 import { predictQualityOfMoves } from "@repo/interface/actions/predictQualityOfMoves/action.js";
 import { Command, Option } from "commander";
@@ -79,12 +79,19 @@ const executeAction = async ({
 }): Promise<void> => {
   const seed = seedOrUndefined ?? Math.random().toString();
   const state = selectStateUsingKeyOfState(keyOfState);
+  const game = state.getGame();
 
-  const predictionModel = await loadPredictionModel({
-    pathToResidualNeuralNetworkFolderOrUndefined,
-    seed,
-    state,
-  });
+  const predictionModel = await (async () => {
+    if (typeof pathToResidualNeuralNetworkFolderOrUndefined === "undefined") {
+      return null;
+    }
+    return await loadPredictionModel({
+      game,
+      pathToResidualNeuralNetworkFolder:
+        pathToResidualNeuralNetworkFolderOrUndefined,
+      seed,
+    });
+  })();
 
   const fileName = (() => {
     const processedFileName = (() => {
@@ -107,13 +114,13 @@ const executeAction = async ({
 
   predictQualityOfMoves({
     explorationCoefficient,
+    logMessage: console.info,
     predictionModel,
     processGraphvizGraph: processGraphvizGraph({
       directoryPath: directoryPathOrUndefined,
       fileName,
       shouldConstructGraph,
     }),
-    processMessage: console.info,
     processQualityOfMoves,
     quantityOfExpansions,
     seed,
