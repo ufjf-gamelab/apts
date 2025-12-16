@@ -41,7 +41,7 @@ interface ParamsOfModel<
   >;
 }
 
-class Model<
+class PredictionModel<
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -85,6 +85,10 @@ class Model<
     this.residualNeuralNetwork = residualNeuralNetwork;
   }
 
+  public getGame() {
+    return this.residualNeuralNetwork.getGame();
+  }
+
   public predict({ state }: { state: GenericState }): {
     policy: tf.Tensor1D;
     value: tf.Scalar;
@@ -109,4 +113,4 @@ class Model<
   }
 }
 
-export { Model };
+export { PredictionModel };

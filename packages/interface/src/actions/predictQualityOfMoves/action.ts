@@ -14,7 +14,7 @@ import {
   calculateProbabilityOfPlayingEachMove,
   calculateQualityOfMoves,
   type QualityOfMove,
-} from "@repo/search/quality.js";
+} from "@repo/search/qualityOfMove.js";
 import { Random } from "@repo/search/Random/Random.js";
 
 import type { StrategyToSearch } from "../../constants.js";
@@ -55,7 +55,7 @@ const predictQualityOfMoves = <
   >,
 >({
   explorationCoefficient,
-  model,
+  predictionModel,
   processGraphvizGraph,
   processMessage,
   processQualityOfMoves,
@@ -75,7 +75,7 @@ const predictQualityOfMoves = <
       GenericSlot,
       GenericState
     >,
-    "model"
+    "predictionModel"
   >
 > &
   Pick<
@@ -105,7 +105,7 @@ const predictQualityOfMoves = <
     GenericState
   >({
     explorationCoefficient,
-    model,
+    predictionModel: predictionModel,
     quantityOfExpansions,
     random,
     strategyToSearch,
@@ -115,12 +115,12 @@ const predictQualityOfMoves = <
     state,
   });
 
-  const qualityOfIndexedMoves = calculateQualityOfMoves({
+  const qualitiesOfMoves = calculateQualityOfMoves({
     treeNode: rootNode,
   });
 
   const qualityOfEachMove = new Map(
-    qualityOfIndexedMoves.map((qualityOfMove, indexOfMove) => [
+    qualitiesOfMoves.map((qualityOfMove, indexOfMove) => [
       indexOfMove,
       qualityOfMove,
     ]),
@@ -128,7 +128,7 @@ const predictQualityOfMoves = <
 
   const probabilityOfPlayingEachMove = calculateProbabilityOfPlayingEachMove({
     indexesOfValidMoves: game.getIndexesOfValidMoves({ state }),
-    qualitiesOfMoves: qualityOfIndexedMoves,
+    qualitiesOfMoves,
     softeningCoefficient,
   });
 

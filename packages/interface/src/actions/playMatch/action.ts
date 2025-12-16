@@ -19,7 +19,7 @@ import { formatMap } from "@repo/engine_core/format.js";
 import {
   predictQualityOfMoves,
   type SofteningCoefficient,
-} from "@repo/search/quality.js";
+} from "@repo/search/qualityOfMove.js";
 import { Random } from "@repo/search/Random/Random.js";
 
 import type { ProcessMessage } from "../../input.js";
@@ -458,8 +458,8 @@ const playMatch = async <
 >({
   explorationCoefficient,
   getInput,
-  model,
   modeOfPlay,
+  predictionModel,
   processMessage,
   quantityOfExpansions,
   seed,
@@ -476,7 +476,7 @@ const playMatch = async <
       GenericSlot,
       GenericState
     >,
-    "model"
+    "predictionModel"
   >
 > & {
   explorationCoefficient: ExplorationCoefficient;
@@ -512,7 +512,7 @@ const playMatch = async <
       GenericState
     >({
       explorationCoefficient,
-      model,
+      predictionModel,
       quantityOfExpansions,
       random,
       strategyToSearch,

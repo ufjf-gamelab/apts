@@ -15,9 +15,10 @@ import {
 
 import type { ExplorationCoefficient } from "./Search.js";
 
+import { getQualityOfMatchFromScore } from "../qualityOfMatch.js";
+
 type QualityOfMatch = number;
 
-const MINIMUM_POINTS_OF_PLAYER = Number.NEGATIVE_INFINITY;
 const MINIMUM_QUALITY_OF_MATCH = Number.NEGATIVE_INFINITY;
 const DEFAULT_QUALITY_OF_MATCH = 0;
 const DEFAULT_QUANTITY_OF_VISITS = 0;
@@ -259,27 +260,10 @@ abstract class TreeNode<
       // The root should not have its quality calculated
       return MINIMUM_QUALITY_OF_MATCH;
     }
-
-    let pointsOfOpponentPlayerWithMostPoints = MINIMUM_POINTS_OF_PLAYER;
-    let pointsOfPlayerWhoPlayedMove = MINIMUM_POINTS_OF_PLAYER;
-
-    score
-      .getPointsOfEachPlayer()
-      .entries()
-      .forEach(([indexOfPlayer, pointsOfPlayer]) => {
-        if (indexOfPlayer === this.indexOfPlayerWhoPlayedMove) {
-          pointsOfPlayerWhoPlayedMove = pointsOfPlayer;
-        } else if (pointsOfPlayer > pointsOfOpponentPlayerWithMostPoints) {
-          pointsOfOpponentPlayerWithMostPoints = pointsOfPlayer;
-        }
-      });
-    if (!(pointsOfOpponentPlayerWithMostPoints > MINIMUM_POINTS_OF_PLAYER)) {
-      throw Error(
-        "Could not retrieve the points of opponent player with most points.",
-      );
-    }
-
-    return pointsOfPlayerWhoPlayedMove - pointsOfOpponentPlayerWithMostPoints;
+    return getQualityOfMatchFromScore({
+      indexOfPlayerWhoPlayedMove: this.indexOfPlayerWhoPlayedMove,
+      score,
+    });
   }
 
   public getQuantityOfExpandedMoves(): Integer {

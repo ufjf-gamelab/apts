@@ -10,7 +10,7 @@ import seedrandom from "seedrandom";
 
 import type { TreeNode } from "../MonteCarloTree/TreeNode.js";
 
-import { calculateProbabilityOfPlayingEachMove } from "../quality.js";
+import { calculateProbabilityOfPlayingEachMove } from "../qualityOfMove.js";
 
 interface ParamsOfRandom {
   seed: Seed;

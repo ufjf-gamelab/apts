@@ -1,276 +1,441 @@
-// import { createId } from "@paralleldrive/cuid2";
-// import { EncodedState } from "@repo/engine_game/engine/Game/Game";
-// import Player from "@repo/engine_game/engine/Game/Player";
-// import State from "@repo/engine_game/engine/Game/State";
-// import { INCREMENT_ONE } from "@repo/engine_game/types";
-// import * as tf from "@tensorflow/tfjs";
-// import Game from "../games/TicTacToe/Game";
-// import MonteCarloTreeSearch from "./MonteCarloTree/Search";
-// import { actionFromProbabilities } from "./ResNet/predict";
-// import ResNet from "./ResNet/ResNet";
-// import { LogMessage } from "./types";
+import type { TensorLikeArray } from "@repo/engine_core/types.js";
+import type { Game } from "@repo/game/Game.js";
+import type { Move } from "@repo/game/Move.js";
+import type { IndexOfPlayer, Player } from "@repo/game/Player.js";
+import type { Score } from "@repo/game/Score.js";
+import type { Slot } from "@repo/game/Slot.js";
+import type { State } from "@repo/game/State.js";
 
-// const ADJUST_INDEX = 1;
-// const DEFAULT_PROGRESS_STEP = 25;
+import type { AgentGuidedSearch } from "../AgentGuidedMonteCarloTree/AgentGuidedSearch.js";
+import type { Random } from "../Random/Random.js";
+import type { PredictionModel } from "./PredictionModel.js";
 
-// interface GameMemoryBlock<G extends Game> {
-//   state: State<G>;
-//   actionProbabilities: number[];
-//   player: Player;
-// }
-// type GameMemory<G extends Game> = GameMemoryBlock<G>[];
+import { getQualityOfMatchFromScore } from "../qualityOfMatch.js";
+import {
+  predictQualityOfMoves,
+  type QualityOfMove,
+  type SofteningCoefficient,
+} from "../qualityOfMove.js";
 
-// export interface TrainingMemory {
-//   encodedStates: EncodedState[];
-//   policyTargets: number[][];
-//   valueTargets: ActionOutcome["value"][];
-// }
+export interface TrainingMemory {
+  encodedStates: TensorLikeArray[];
+  policies: number[][];
+  values: number[];
+}
 
-// export default class Trainer<G extends Game> {
-//   private game: G;
-//   private resNet: ResNet;
-//   private mcts: MonteCarloTreeSearch<G>;
+interface BlockOfGameMemory<
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+> {
+  indexOfPlayerWhoPlayedMove: IndexOfPlayer | null;
+  qualitiesOfMoves: QualityOfMove[];
+  state: State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >;
+}
 
-//   constructor({
-//     game,
-//     resNet,
-//     numSearches,
-//     explorationCoefficient,
-//   }: {
-//     game: G;
-//     resNet: ResNet;
-//     numSearches: number;
-//     explorationCoefficient: number;
-//   }) {
-//     this.game = game;
-//     this.resNet = resNet;
-//     this.mcts = new MonteCarloTreeSearch<G>({
-//       explorationCoefficient,
-//       game: this.game,
-//       numSearches,
-//       resNet: this.resNet,
-//     });
-//   }
+type GameMemory<
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+> = BlockOfGameMemory<
+  GenericGame,
+  GenericMove,
+  GenericPlayer,
+  GenericScore,
+  GenericSlot,
+  GenericState
+>[];
 
-//   /* Methods */
+interface ParamsOfTrainer<
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+> {
+  readonly search: AgentGuidedSearch<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >;
+  readonly softeningCoefficient: SofteningCoefficient;
+}
 
-//   /**
-//    * Performs self-play to generate training data for the Trainer algorithm.
-//    * @returns A promise that resolves to a TrainingMemory object containing the generated training data, composed by encoded states, policy targets, and value targets.
-//    */
-//   private selfPlay(): TrainingMemory {
-//     let player = Player.X;
-//     const state = this.game.getInitialState();
-//     const gameMemory: GameMemory<G> = [];
+export default class Trainer<
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+> {
+  private readonly game: GenericGame;
+  private readonly predictionModel: PredictionModel<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >;
+  private readonly random: Random;
+  private readonly search: ParamsOfTrainer<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >["search"];
+  private readonly softeningCoefficient: ParamsOfTrainer<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >["softeningCoefficient"];
 
-//     for (;;) {
-//       // Get the state from the perspective of the current player and save it in the game memory
-//       const neutralState = state;
-//       neutralState.changePerspective(player, this.game.getOpponent(player));
-//       const actionProbabilities = this.mcts.search(neutralState);
-//       gameMemory.push({
-//         actionProbabilities,
-//         player,
-//         state: neutralState,
-//       });
+  public constructor({
+    search,
+    softeningCoefficient,
+  }: ParamsOfTrainer<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >) {
+    this.softeningCoefficient = softeningCoefficient;
+    this.search = search;
+    this.random = search.getRandom();
+    this.predictionModel = this.search.getPredictionModel();
+    this.game = this.predictionModel.getGame();
+  }
 
-//       // Pick an action based on the probabilities from the MCTS
-//       const probabilitiesTensor = tf.tensor(actionProbabilities) as tf.Tensor1D;
-//       const pickedAction = actionFromProbabilities(probabilitiesTensor);
-//       tf.dispose(probabilitiesTensor);
-//       const validActions = state.getValidActions();
-//       if (!validActions[pickedAction]) {
-//         throw new Error("Invalid action picked");
-//       }
+  // /**
+  //  * Builds the training memory by self-playing the game for a specified number of iterations.
+  //  * @param numSelfPlayIterations The number of self-play iterations.
+  //  * @param progressStep The number of iterations between each progress message (default is 25).
+  //  * @param showMemorySize Whether to show the size of the training memory.
+  //  * @param logMessage The optional log message function (default is console.log).
+  //  * @returns A promise that resolves to the TrainingMemory object containing encoded states, policy targets, and value targets.
+  //  */
+  // public buildTrainingMemory({
+  //   logMessage = console.log,
+  //   numSelfPlayIterations,
+  //   progressStep = DEFAULT_PROGRESS_STEP,
+  //   showMemorySize = false,
+  // }: {
+  //   logMessage?: LogMessage;
+  //   numSelfPlayIterations: number;
+  //   progressStep?: number;
+  //   showMemorySize?: boolean;
+  // }): Promise<TrainingMemory> {
+  //   const encodedStates = [];
+  //   const policyTargets = [];
+  //   const valueTargets = [];
 
-//       // Perform the action and check if the game is over
-//       state.performAction(pickedAction, player);
-//       const actionOutcome = Game.getActionOutcome(state, pickedAction);
-//       if (actionOutcome.isTerminal) {
-//         // When the game is over, construct the training memory from the perspective of the current player
-//         return this.convertGameMemoryToTrainingMemory(
-//           gameMemory,
-//           player,
-//           actionOutcome.value,
-//         );
-//       }
+  //   const MINIMUM_PROGRESS_STEP = 0;
+  //   const SHOULD_LOG_MESSAGE = 0;
 
-//       // If the game is not over, switch the player and continue
-//       player = this.game.getOpponent(player);
-//     }
-//   }
+  //   // Construct the training memory from self-playing the game
+  //   for (
+  //     let currentStep = 0;
+  //     currentStep < numSelfPlayIterations;
+  //     currentStep += INCREMENT_ONE
+  //   ) {
+  //     if (
+  //       progressStep > MINIMUM_PROGRESS_STEP &&
+  //       (currentStep + ADJUST_INDEX) % progressStep === SHOULD_LOG_MESSAGE
+  //     ) {
+  //       logMessage(
+  //         `Self-play iteration ${currentStep + ADJUST_INDEX}/${numSelfPlayIterations}`,
+  //       );
+  //     }
+  //     const selfPlayMemory = this.selfPlay();
+  //     encodedStates.push(...selfPlayMemory.encodedStates);
+  //     policyTargets.push(...selfPlayMemory.policyTargets);
+  //     valueTargets.push(...selfPlayMemory.valueTargets);
+  //   }
+  //   if (showMemorySize) {
+  //     logMessage(`Memory size: ${encodedStates.length}`);
+  //   }
+  //   return Promise.resolve({ encodedStates, policyTargets, valueTargets });
+  // }
 
-//   /// Transpose the game memory to a format that can be used to train the model.
-//   private convertGameMemoryToTrainingMemory(
-//     gameMemory: GameMemory<G>,
-//     lastPlayer: Player,
-//     lastActionValue: ActionOutcome["value"],
-//   ): TrainingMemory {
-//     const trainingMemory: TrainingMemory = {
-//       encodedStates: [],
-//       policyTargets: [],
-//       valueTargets: [],
-//     };
-//     for (const memoryBlock of gameMemory) {
-//       // Get the outcome value from the perspective of the current player
-//       const memoryOutcomeValue =
-//         memoryBlock.player === lastPlayer
-//           ? lastActionValue
-//           : this.game.getOpponentValue(lastActionValue);
-//       trainingMemory.encodedStates.push(memoryBlock.state.getEncodedState());
-//       trainingMemory.policyTargets.push(memoryBlock.actionProbabilities);
-//       trainingMemory.valueTargets.push(memoryOutcomeValue);
-//     }
-//     return trainingMemory;
-//   }
+  // // Train the model multiple times
+  // public async learn({
+  //   batchSize,
+  //   learningRate,
+  //   logMessage = console.log,
+  //   maxNumIterations,
+  //   numEpochs,
+  //   trainingMemories,
+  // }: {
+  //   batchSize: number;
+  //   fileSystemProtocol: string;
+  //   learningRate: number;
+  //   logMessage: LogMessage;
+  //   maxNumIterations: number;
+  //   numEpochs: number;
+  //   trainingMemories: TrainingMemory[];
+  // }): Promise<void> {
+  //   const baseId = createId();
+  //   const maxIterations = Math.min(maxNumIterations, trainingMemories.length);
+  //   const trainingPromises = [];
+  //   for (
+  //     let currentIteration = 0;
+  //     currentIteration < maxIterations;
+  //     currentIteration += INCREMENT_ONE
+  //   ) {
+  //     const trainingMemory = trainingMemories[currentIteration];
+  //     if (!trainingMemory) {
+  //       continue;
+  //     }
+  //     logMessage(
+  //       `ITERATION ${currentIteration + ADJUST_INDEX}/${maxIterations}`,
+  //     );
+  //     trainingPromises.push(
+  //       this.train({
+  //         batchSize,
+  //         learningRate,
+  //         logMessage,
+  //         numEpochs,
+  //         trainingMemory,
+  //       }).then(() =>
+  //         this.resNet.save(`/trained/${baseId}/${currentIteration}`),
+  //       ),
+  //     );
+  //   }
+  //   await Promise.all(trainingPromises);
+  // }
 
-//   /**
-//    * Builds the training memory by self-playing the game for a specified number of iterations.
-//    * @param numSelfPlayIterations The number of self-play iterations.
-//    * @param progressStep The number of iterations between each progress message (default is 25).
-//    * @param showMemorySize Whether to show the size of the training memory.
-//    * @param logMessage The optional log message function (default is console.log).
-//    * @returns A promise that resolves to the TrainingMemory object containing encoded states, policy targets, and value targets.
-//    */
-//   public buildTrainingMemory({
-//     numSelfPlayIterations,
-//     progressStep = DEFAULT_PROGRESS_STEP,
-//     showMemorySize = false,
-//     logMessage = console.log,
-//   }: {
-//     numSelfPlayIterations: number;
-//     progressStep?: number;
-//     showMemorySize?: boolean;
-//     logMessage?: LogMessage;
-//   }): Promise<TrainingMemory> {
-//     const encodedStates = [];
-//     const policyTargets = [];
-//     const valueTargets = [];
+  private static convertGameMemoryToTrainingMemory<
+    GenericGame extends Game<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >,
+    GenericMove extends Move<GenericMove>,
+    GenericPlayer extends Player<GenericPlayer>,
+    GenericScore extends Score<GenericScore>,
+    GenericSlot extends Slot<GenericSlot>,
+    GenericState extends State<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >,
+  >({
+    gameMemory,
+  }: {
+    gameMemory: GameMemory<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >;
+  }): TrainingMemory {
+    const trainingMemory: TrainingMemory = {
+      encodedStates: [],
+      policies: [],
+      values: [],
+    };
 
-//     const MINIMUM_PROGRESS_STEP = 0;
-//     const SHOULD_LOG_MESSAGE = 0;
+    gameMemory.forEach(
+      ({ indexOfPlayerWhoPlayedMove, qualitiesOfMoves, state }) => {
+        const score = state.getScore();
+        const qualityOfMatch = getQualityOfMatchFromScore({
+          indexOfPlayerWhoPlayedMove,
+          score,
+        });
 
-//     // Construct the training memory from self-playing the game
-//     for (
-//       let currentStep = 0;
-//       currentStep < numSelfPlayIterations;
-//       currentStep += INCREMENT_ONE
-//     ) {
-//       if (
-//         progressStep > MINIMUM_PROGRESS_STEP &&
-//         (currentStep + ADJUST_INDEX) % progressStep === SHOULD_LOG_MESSAGE
-//       ) {
-//         logMessage(
-//           `Self-play iteration ${currentStep + ADJUST_INDEX}/${numSelfPlayIterations}`,
-//         );
-//       }
-//       const selfPlayMemory = this.selfPlay();
-//       encodedStates.push(...selfPlayMemory.encodedStates);
-//       policyTargets.push(...selfPlayMemory.policyTargets);
-//       valueTargets.push(...selfPlayMemory.valueTargets);
-//     }
-//     if (showMemorySize) {
-//       logMessage(`Memory size: ${encodedStates.length}`);
-//     }
-//     return Promise.resolve({ encodedStates, policyTargets, valueTargets });
-//   }
+        trainingMemory.encodedStates.push(state.getEncodedState());
+        trainingMemory.policies.push(qualitiesOfMoves);
+        trainingMemory.values.push(qualityOfMatch);
+      },
+    );
 
-//   /**
-//    * Trains the model using the provided training memory.
-//    *
-//    * @param trainingMemory - The training memory containing encoded states, policy targets, and value targets.
-//    * @param batchSize - The size of each training batch.
-//    * @param numEpochs - The number of training epochs.
-//    * @param learningRate - The learning rate for the training.
-//    * @param logMessage - Optional callback function for logging messages during training.
-//    * @returns A promise that resolves to an array of training logs.
-//    */
-//   private async train({
-//     trainingMemory,
-//     batchSize,
-//     numEpochs,
-//     learningRate,
-//     logMessage = console.log,
-//   }: {
-//     trainingMemory: TrainingMemory;
-//     batchSize: number;
-//     numEpochs: number;
-//     learningRate: number;
-//     logMessage?: LogMessage;
-//   }): Promise<tf.Logs[]> {
-//     // Convert the memory to a format that can be used to train the model
-//     const { encodedStates, policyTargets, valueTargets } = trainingMemory;
-//     const encodedStatesTensor = tf.tensor(encodedStates) as tf.Tensor4D;
-//     const policyTargetsTensor = tf.tensor(policyTargets) as tf.Tensor2D;
+    return trainingMemory;
+  }
 
-//     //TODO: Check if this reshape is necessary
-//     const DIMENSION = 1;
-//     const valueTargetsTensor: tf.Tensor2D = tf
-//       .tensor(valueTargets)
-//       .reshape([-DIMENSION, DIMENSION]);
+  private selfPlay(): TrainingMemory {
+    const gameMemory: GameMemory<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    > = [];
+    let indexOfPlayerWhoPlayedMove: IndexOfPlayer | null = null;
 
-//     // Train the model
-//     const trainingLog = await this.resNet.train({
-//       batchSize,
-//       inputsBatch: encodedStatesTensor,
-//       learningRate,
-//       logMessage,
-//       numEpochs,
-//       policyOutputsBatch: policyTargetsTensor,
-//       validationSplit: 0.1,
-//       valueOutputsBatch: valueTargetsTensor,
-//     });
+    let currentState = this.game.constructInitialState();
+    for (;;) {
+      const qualitiesOfMoves = predictQualityOfMoves({
+        search: this.search,
+        state: currentState,
+      });
+      gameMemory.push({
+        indexOfPlayerWhoPlayedMove,
+        qualitiesOfMoves,
+        state: currentState,
+      });
 
-//     // Dispose the tensors
-//     tf.dispose([encodedStatesTensor, policyTargetsTensor, valueTargetsTensor]);
+      const indexesOfValidMoves = this.game.getIndexesOfValidMoves({
+        state: currentState,
+      });
+      const indexOfPickedMove =
+        this.random.pickIndexOfValidMoveConsideringItsQuality({
+          indexesOfValidMoves,
+          qualitiesOfMoves,
+          softeningCoefficient: this.softeningCoefficient,
+        });
 
-//     return trainingLog;
-//   }
+      const nextState = this.game.play({
+        indexOfMove: indexOfPickedMove,
+        state: currentState,
+      });
+      if (nextState.isFinal()) {
+        return Trainer.convertGameMemoryToTrainingMemory({ gameMemory });
+      }
 
-//   // Train the model multiple times
-//   public async learn({
-//     logMessage = console.log,
-//     maxNumIterations,
-//     numEpochs,
-//     batchSize,
-//     learningRate,
-//     trainingMemories,
-//   }: {
-//     fileSystemProtocol: string;
-//     logMessage: LogMessage;
-//     maxNumIterations: number;
-//     numEpochs: number;
-//     batchSize: number;
-//     learningRate: number;
-//     trainingMemories: TrainingMemory[];
-//   }): Promise<void> {
-//     const baseId = createId();
-//     const maxIterations = Math.min(maxNumIterations, trainingMemories.length);
-//     const trainingPromises = [];
-//     for (
-//       let currentIteration = 0;
-//       currentIteration < maxIterations;
-//       currentIteration += INCREMENT_ONE
-//     ) {
-//       const trainingMemory = trainingMemories[currentIteration];
-//       if (!trainingMemory) {
-//         continue;
-//       }
-//       logMessage(
-//         `ITERATION ${currentIteration + ADJUST_INDEX}/${maxIterations}`,
-//       );
-//       trainingPromises.push(
-//         this.train({
-//           batchSize,
-//           learningRate,
-//           logMessage,
-//           numEpochs,
-//           trainingMemory,
-//         }).then(() =>
-//           this.resNet.save(`/trained/${baseId}/${currentIteration}`),
-//         ),
-//       );
-//     }
-//     await Promise.all(trainingPromises);
-//   }
-// }
+      indexOfPlayerWhoPlayedMove = currentState.getIndexOfPlayer();
+      currentState = nextState;
+    }
+  }
+
+  // /**
+  //  * Trains the model using the provided training memory.
+  //  *
+  //  * @param trainingMemory - The training memory containing encoded states, policy targets, and value targets.
+  //  * @param batchSize - The size of each training batch.
+  //  * @param numEpochs - The number of training epochs.
+  //  * @param learningRate - The learning rate for the training.
+  //  * @param logMessage - Optional callback function for logging messages during training.
+  //  * @returns A promise that resolves to an array of training logs.
+  //  */
+  // private async train({
+  //   batchSize,
+  //   learningRate,
+  //   logMessage = console.log,
+  //   numEpochs,
+  //   trainingMemory,
+  // }: {
+  //   batchSize: number;
+  //   learningRate: number;
+  //   logMessage?: LogMessage;
+  //   numEpochs: number;
+  //   trainingMemory: TrainingMemory;
+  // }): Promise<tf.Logs[]> {
+  //   // Convert the memory to a format that can be used to train the model
+  //   const { encodedStates, policyTargets, valueTargets } = trainingMemory;
+  //   const encodedStatesTensor = tf.tensor(encodedStates) as tf.Tensor4D;
+  //   const policyTargetsTensor = tf.tensor(policyTargets) as tf.Tensor2D;
+
+  //   //TODO: Check if this reshape is necessary
+  //   const DIMENSION = 1;
+  //   const valueTargetsTensor: tf.Tensor2D = tf
+  //     .tensor(valueTargets)
+  //     .reshape([-DIMENSION, DIMENSION]);
+
+  //   // Train the model
+  //   const trainingLog = await this.resNet.train({
+  //     batchSize,
+  //     inputsBatch: encodedStatesTensor,
+  //     learningRate,
+  //     logMessage,
+  //     numEpochs,
+  //     policyOutputsBatch: policyTargetsTensor,
+  //     validationSplit: 0.1,
+  //     valueOutputsBatch: valueTargetsTensor,
+  //   });
+
+  //   // Dispose the tensors
+  //   tf.dispose([encodedStatesTensor, policyTargetsTensor, valueTargetsTensor]);
+
+  //   return trainingLog;
+  // }
+}

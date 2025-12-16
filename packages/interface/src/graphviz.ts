@@ -10,7 +10,7 @@ import type { TreeNode } from "@repo/search/MonteCarloTree/TreeNode.js";
 import type {
   QualityOfMove,
   SofteningCoefficient,
-} from "@repo/search/quality.js";
+} from "@repo/search/qualityOfMove.js";
 import type { ParamsOfRandom } from "@repo/search/Random/Random.js";
 
 import { INCREMENT_ONE } from "@repo/engine_core/constants.js";

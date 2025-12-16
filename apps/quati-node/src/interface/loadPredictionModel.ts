@@ -1,12 +1,12 @@
 import type { Seed } from "@repo/engine_core/types.js";
 
-import { Model } from "@repo/search/ResidualNeuralNetwork/Model.js";
+import { PredictionModel } from "@repo/search/ResidualNeuralNetwork/PredictionModel.js";
 import { ResidualNeuralNetwork } from "@repo/search/ResidualNeuralNetwork/ResidualNeuralNetwork.js";
 import { loadLayersModel } from "@tensorflow/tfjs-node";
 
 import type { selectStateUsingKeyOfState } from "./entries/states.js";
 
-const loadModel = async ({
+const loadPredictionModel = async ({
   pathToResidualNeuralNetworkFolderOrUndefined,
   seed,
   state,
@@ -30,7 +30,7 @@ const loadModel = async ({
     seed,
   });
 
-  return new Model({ residualNeuralNetwork });
+  return new PredictionModel({ residualNeuralNetwork });
 };
 
-export { loadModel };
+export { loadPredictionModel };

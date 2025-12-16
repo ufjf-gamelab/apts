@@ -485,6 +485,14 @@ class ResidualNeuralNetwork<
     GenericState
   >,
 > {
+  private readonly game: ParamsOfResidualNeuralNetwork<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >["game"];
   private readonly layersModel: tfjs.LayersModel;
 
   private constructor({
@@ -520,6 +528,8 @@ class ResidualNeuralNetwork<
     > & {
       layersModel: null | tfjs.LayersModel;
     }) {
+    this.game = game;
+
     if (
       nameOfModel !== null &&
       quantityOfHiddenChannels !== null &&
@@ -674,6 +684,10 @@ class ResidualNeuralNetwork<
     logsString += `Value Head Accuracy: ${logs["valueHead_acc"]}\n`;
     logMessage(logsString);
     trainingLog.push(logs);
+  }
+
+  public getGame() {
+    return this.game;
   }
 
   // public dispose() {

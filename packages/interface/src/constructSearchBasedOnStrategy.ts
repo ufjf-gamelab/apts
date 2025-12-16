@@ -40,7 +40,7 @@ type ParamsOfConstructSearchBasedOnStrategy<
   ParamsOfSearch,
   "explorationCoefficient" | "quantityOfExpansions" | "random"
 > & {
-  model:
+  predictionModel:
     | null
     | ParamsOfAgentGuidedSearch<
         GenericGame,
@@ -49,7 +49,7 @@ type ParamsOfConstructSearchBasedOnStrategy<
         GenericScore,
         GenericSlot,
         GenericState
-      >["model"];
+      >["predictionModel"];
   strategyToSearch: StrategyToSearch;
 };
 
@@ -76,7 +76,7 @@ const constructSearchBasedOnStrategy = <
   >,
 >({
   explorationCoefficient,
-  model,
+  predictionModel,
   quantityOfExpansions,
   random,
   strategyToSearch,
@@ -90,7 +90,7 @@ const constructSearchBasedOnStrategy = <
 >) => {
   switch (strategyToSearch) {
     case "agentGuided": {
-      if (model === null) {
+      if (predictionModel === null) {
         throw new Error("Agent-guided search requires a model.");
       }
       return new AgentGuidedSearch<
@@ -102,7 +102,7 @@ const constructSearchBasedOnStrategy = <
         GenericState
       >({
         explorationCoefficient,
-        model,
+        predictionModel,
         quantityOfExpansions,
         random,
       });

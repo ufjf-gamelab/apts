@@ -7,7 +7,7 @@ import type { State } from "@repo/game/State.js";
 
 import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 
-import type { Model } from "../ResidualNeuralNetwork/Model.js";
+import type { PredictionModel } from "../ResidualNeuralNetwork/PredictionModel.js";
 
 import { type ParamsOfSearch, Search } from "../MonteCarloTree/Search.js";
 import { AgentGuidedTreeNode } from "./AgentGuidedTreeNode.js";
@@ -34,7 +34,7 @@ interface ParamsOfAgentGuidedSearch<
     GenericState
   >,
 > extends ParamsOfSearch {
-  model: Model<
+  predictionModel: PredictionModel<
     GenericGame,
     GenericMove,
     GenericPlayer,
@@ -81,18 +81,18 @@ class AgentGuidedSearch<
     GenericState
   >
 > {
-  private readonly model: ParamsOfAgentGuidedSearch<
+  private readonly predictionModel: ParamsOfAgentGuidedSearch<
     GenericGame,
     GenericMove,
     GenericPlayer,
     GenericScore,
     GenericSlot,
     GenericState
-  >["model"];
+  >["predictionModel"];
 
   public constructor({
     explorationCoefficient,
-    model,
+    predictionModel,
     quantityOfExpansions,
     random,
   }: ParamsOfAgentGuidedSearch<
@@ -104,7 +104,7 @@ class AgentGuidedSearch<
     GenericState
   >) {
     super({ explorationCoefficient, quantityOfExpansions, random });
-    this.model = model;
+    this.predictionModel = predictionModel;
   }
 
   public override expandTree({
@@ -157,7 +157,7 @@ class AgentGuidedSearch<
           qualityOfMatch,
         });
       } else {
-        const { policy, value } = this.model.predict({
+        const { policy, value } = this.predictionModel.predict({
           state: currentState,
         });
 
@@ -172,6 +172,10 @@ class AgentGuidedSearch<
     }
 
     return rootNode;
+  }
+
+  public getPredictionModel() {
+    return this.predictionModel;
   }
 
   public override selectNextNode({

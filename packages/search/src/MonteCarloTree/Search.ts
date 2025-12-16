@@ -68,6 +68,10 @@ abstract class Search<
     state: GenericState;
   }): GenericTreeNode;
 
+  public getRandom() {
+    return this.random;
+  }
+
   public abstract selectNextNode({
     rootNode,
   }: {

@@ -7,7 +7,7 @@ import type { State } from "@repo/game/State.js";
 
 import { assertNumberIsFinite } from "@repo/engine_core/assert.js";
 
-import type { QualityOfMove } from "../quality.js";
+import type { QualityOfMove } from "../qualityOfMove.js";
 
 import {
   DEFAULT_QUANTITY_OF_VISITS,
