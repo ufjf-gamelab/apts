@@ -5,6 +5,7 @@ import type { IndexOfPlayer, Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
+import type * as tfjs from "@tensorflow/tfjs";
 
 import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 
@@ -12,6 +13,7 @@ import type { AgentGuidedSearch } from "../AgentGuidedMonteCarloTree/AgentGuided
 import type { Random } from "../Random/Random.js";
 import type { LogMessage } from "../types.js";
 import type { PredictionModel } from "./PredictionModel.js";
+import type { ResidualNeuralNetwork } from "./ResidualNeuralNetwork.js";
 
 import { getQualityOfMatchFromScore } from "../qualityOfMatch.js";
 import {
@@ -19,6 +21,12 @@ import {
   type QualityOfMove,
   type SofteningCoefficient,
 } from "../qualityOfMove.js";
+import {
+  loadTensorFlowModule,
+  type TensorFlowModule,
+} from "./loadTensorFlowModule.js";
+
+const tf: TensorFlowModule = await loadTensorFlowModule();
 
 const SHOULD_ANNOUNCE_PROGRESS = 0;
 
@@ -157,6 +165,14 @@ class Trainer<
     GenericState
   >;
   private readonly random: Random;
+  private readonly residualNeuralNetwork: ResidualNeuralNetwork<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >;
   private readonly search: ParamsOfTrainer<
     GenericGame,
     GenericMove,
@@ -190,6 +206,8 @@ class Trainer<
     this.random = search.getRandom();
     this.predictionModel = this.search.getPredictionModel();
     this.game = this.predictionModel.getGame();
+    this.residualNeuralNetwork =
+      this.predictionModel.getResidualNeuralNetwork();
   }
 
   private static convertGameMemoryToTrainingMemory<
@@ -248,53 +266,6 @@ class Trainer<
     return trainingMemory;
   }
 
-  // // Train the model multiple times
-  // public async learn({
-  //   batchSize,
-  //   learningRate,
-  //   logMessage = console.log,
-  //   maxNumIterations,
-  //   numEpochs,
-  //   trainingMemories,
-  // }: {
-  //   batchSize: number;
-  //   fileSystemProtocol: string;
-  //   learningRate: number;
-  //   logMessage: LogMessage;
-  //   maxNumIterations: number;
-  //   numEpochs: number;
-  //   trainingMemories: TrainingMemory[];
-  // }): Promise<void> {
-  //   const baseId = createId();
-  //   const maxIterations = Math.min(maxNumIterations, trainingMemories.length);
-  //   const trainingPromises = [];
-  //   for (
-  //     let currentIteration = 0;
-  //     currentIteration < maxIterations;
-  //     currentIteration += INCREMENT_ONE
-  //   ) {
-  //     const trainingMemory = trainingMemories[currentIteration];
-  //     if (!trainingMemory) {
-  //       continue;
-  //     }
-  //     logMessage(
-  //       `ITERATION ${currentIteration + ADJUST_INDEX}/${maxIterations}`,
-  //     );
-  //     trainingPromises.push(
-  //       this.train({
-  //         batchSize,
-  //         learningRate,
-  //         logMessage,
-  //         numEpochs,
-  //         trainingMemory,
-  //       }).then(() =>
-  //         this.resNet.save(`/trained/${baseId}/${currentIteration}`),
-  //       ),
-  //     );
-  //   }
-  //   await Promise.all(trainingPromises);
-  // }
-
   public buildTrainingMemory({
     logMessage,
     quantityOfIterations,
@@ -337,6 +308,44 @@ class Trainer<
 
     logMessage(`Size of memory: ${trainingMemory.encodedStates.length}`);
     return trainingMemory;
+  }
+
+  public async train({
+    logMessage,
+    quantityOfEpochs,
+    sizeOfBatch,
+    trainingMemory,
+  }: Pick<
+    Parameters<
+      ResidualNeuralNetwork<
+        GenericGame,
+        GenericMove,
+        GenericPlayer,
+        GenericScore,
+        GenericSlot,
+        GenericState
+      >["train"]
+    >[0],
+    "logMessage" | "quantityOfEpochs" | "sizeOfBatch"
+  > & {
+    trainingMemory: TrainingMemory;
+  }): Promise<tfjs.Logs[]> {
+    const { encodedStates, policies, values } = trainingMemory;
+    const batchOfInputs = tf.tensor(encodedStates) as tfjs.Tensor4D;
+    const batchOfPolicyOutputs = tf.tensor(policies) as tfjs.Tensor2D;
+    const batchOfValueOutputs = tf.tensor(values) as tfjs.Tensor1D;
+
+    const trainingLog = await this.residualNeuralNetwork.train({
+      batchOfInputs,
+      batchOfPolicyOutputs,
+      batchOfValueOutputs,
+      logMessage,
+      quantityOfEpochs,
+      sizeOfBatch,
+    });
+
+    tf.dispose([batchOfInputs, batchOfPolicyOutputs, batchOfValueOutputs]);
+    return trainingLog;
   }
 
   private selfPlay(): TrainingMemory {
@@ -384,58 +393,6 @@ class Trainer<
       currentState = nextState;
     }
   }
-
-  // /**
-  //  * Trains the model using the provided training memory.
-  //  *
-  //  * @param trainingMemory - The training memory containing encoded states, policy targets, and value targets.
-  //  * @param batchSize - The size of each training batch.
-  //  * @param numEpochs - The number of training epochs.
-  //  * @param learningRate - The learning rate for the training.
-  //  * @param logMessage - Optional callback function for logging messages during training.
-  //  * @returns A promise that resolves to an array of training logs.
-  //  */
-  // private async train({
-  //   batchSize,
-  //   learningRate,
-  //   logMessage = console.log,
-  //   numEpochs,
-  //   trainingMemory,
-  // }: {
-  //   batchSize: number;
-  //   learningRate: number;
-  //   logMessage?: LogMessage;
-  //   numEpochs: number;
-  //   trainingMemory: TrainingMemory;
-  // }): Promise<tf.Logs[]> {
-  //   // Convert the memory to a format that can be used to train the model
-  //   const { encodedStates, policyTargets, valueTargets } = trainingMemory;
-  //   const encodedStatesTensor = tf.tensor(encodedStates) as tf.Tensor4D;
-  //   const policyTargetsTensor = tf.tensor(policyTargets) as tf.Tensor2D;
-
-  //   //TODO: Check if this reshape is necessary
-  //   const DIMENSION = 1;
-  //   const valueTargetsTensor: tf.Tensor2D = tf
-  //     .tensor(valueTargets)
-  //     .reshape([-DIMENSION, DIMENSION]);
-
-  //   // Train the model
-  //   const trainingLog = await this.resNet.train({
-  //     batchSize,
-  //     inputsBatch: encodedStatesTensor,
-  //     learningRate,
-  //     logMessage,
-  //     numEpochs,
-  //     policyOutputsBatch: policyTargetsTensor,
-  //     validationSplit: 0.1,
-  //     valueOutputsBatch: valueTargetsTensor,
-  //   });
-
-  //   // Dispose the tensors
-  //   tf.dispose([encodedStatesTensor, policyTargetsTensor, valueTargetsTensor]);
-
-  //   return trainingLog;
-  // }
 }
 
 export type { ParamsOfTrainer };

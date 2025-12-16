@@ -20,7 +20,7 @@ import { deriveNumericSeed } from "./deriveNumericSeed.js";
 import {
   loadTensorFlowModule,
   type TensorFlowModule,
-} from "./loadTensforFlowModule.js";
+} from "./loadTensorFlowModule.js";
 
 const tf: TensorFlowModule = await loadTensorFlowModule();
 
@@ -752,7 +752,6 @@ class ResidualNeuralNetwork<
     logMessage,
     quantityOfEpochs,
     sizeOfBatch,
-    validationSplit,
   }: {
     batchOfInputs: tfjs.Tensor4D;
     batchOfPolicyOutputs: tfjs.Tensor2D;
@@ -760,7 +759,6 @@ class ResidualNeuralNetwork<
     logMessage: LogMessage;
     quantityOfEpochs: number;
     sizeOfBatch: number;
-    validationSplit: number;
   }): Promise<tfjs.Logs[]> {
     const trainingLog: tfjs.Logs[] = [];
 
@@ -786,8 +784,6 @@ class ResidualNeuralNetwork<
         epochs: quantityOfEpochs,
         // Ensure data is shuffled again before using each time.
         shuffle: true,
-        // Use N% of the data for validation.
-        validationSplit,
       },
     );
 
