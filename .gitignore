@@ -12,6 +12,7 @@ public/dist
 
 ## Development environment
 .direnv/
+.venv/
 
 ## Generated files
 .images/

@@ -15,6 +15,7 @@ import type { ParamsOfRandom } from "@repo/search/Random/Random.js";
 
 import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
 import { formatMap } from "@repo/engine_core/format.js";
+import { AgentGuidedTreeNode } from "@repo/search/AgentGuidedMonteCarloTree/AgentGuidedTreeNode.js";
 import {
   attribute as graphvizAttribute,
   Digraph as GraphvizDigraph,
@@ -127,6 +128,12 @@ const constructGraphvizNode = <
   const state = treeNode.getState();
   const qualityOfMatch = treeNode.getQualityOfMatch();
   const quantityOfVisits = treeNode.getQuantityOfVisits();
+  const qualityOfMoveAttributedByModel = (() => {
+    if (treeNode instanceof AgentGuidedTreeNode) {
+      return treeNode.getQualityOfMoveAttributedByModel();
+    }
+    return null;
+  })();
 
   const game = state.getGame();
   const indexOfPlayer = state.getIndexOfPlayer();
@@ -138,9 +145,13 @@ const constructGraphvizNode = <
   }
   const isFinal = state.isFinal();
 
-  const label = `id: ${id}, visits: ${quantityOfVisits},\nquality: ${
-    qualityOfMatch
-  }, player: ${player.getSymbol()}\nisFinal: ${isFinal ? "true" : "false"}\n${state.toString()}`;
+  const label = `id: ${id}, player: ${player.getSymbol()},\nvisits: ${
+    quantityOfVisits
+  }, quality: ${qualityOfMatch},${
+    qualityOfMoveAttributedByModel === null
+      ? ""
+      : `\nprior: ${qualityOfMoveAttributedByModel},`
+  }\nisFinal: ${isFinal ? "true" : "false"}\n${state.toString()}`;
 
   return new GraphvizNode(id.toString(), {
     ...NODE_ATTRIBUTES,

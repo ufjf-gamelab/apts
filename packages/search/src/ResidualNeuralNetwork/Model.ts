@@ -93,8 +93,9 @@ class Model<
       const encodedState = state.getEncodedState();
       const stateAsTensor: tf.Tensor3D = tf.tensor(encodedState);
 
+      const batchOfStatesAsTensor = stateAsTensor.expandDims();
       const [policy, value] = this.residualNeuralNetwork.predict({
-        batchOfStatesAsTensor: stateAsTensor.expandDims(),
+        batchOfStatesAsTensor,
       });
 
       const squeezedValue: tf.Scalar = value.squeeze();
