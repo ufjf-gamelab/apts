@@ -4,6 +4,7 @@ import { commandToBuildTrainingMemory } from "./buildTrainingMemory/command.js";
 import { commandToConstructModel } from "./constructModel/command.js";
 import { commandToPlayMatch } from "./playMatch/command.js";
 import { commandToPredictQualityOfMoves } from "./predictQualityOfMoves/command.js";
+import { commandToTrainModel } from "./trainModel/command.js";
 
 interface DefinitionOfCommand {
   arguments?: Argument[];
@@ -16,6 +17,7 @@ const definitionsOfCommands: DefinitionOfCommand[] = [
   commandToPlayMatch,
   commandToConstructModel,
   commandToBuildTrainingMemory,
+  commandToTrainModel,
 ];
 
 export type { DefinitionOfCommand };

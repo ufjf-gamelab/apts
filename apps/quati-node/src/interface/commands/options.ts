@@ -1,9 +1,9 @@
+import { parseIntoFloat, parseIntoInt } from "@repo/engine_core/parse.js";
 import { strategiesToSearch } from "@repo/interface/constants.js";
 import { Option } from "commander";
 
 import { keysOfGames } from "../entries/games.js";
 import { keysOfStates } from "../entries/states.js";
-import { parseArgumentIntoFloat, parseArgumentIntoInt } from "../parsing.js";
 
 const EXPLORATION_COEFFICIENT = 0.5;
 const QUANTITY_OF_EXPANSIONS = 10000;
@@ -19,13 +19,13 @@ const commonOptions = {
     "The quantity of expansions to perform on the search.",
   )
     .default(QUANTITY_OF_EXPANSIONS)
-    .argParser(parseArgumentIntoInt),
+    .argParser(parseIntoInt),
   exploration: new Option(
     "-x, --exploration <exploration coefficient>",
     "The exploration coefficient to use on the search.",
   )
     .default(EXPLORATION_COEFFICIENT)
-    .argParser(parseArgumentIntoFloat),
+    .argParser(parseIntoFloat),
   game: new Option(
     "--game <identifier of game>",
     "The identifier name of a game that will be used to architect the model.",
@@ -45,7 +45,7 @@ const commonOptions = {
     "The softening coefficient to calculate the probabilities of each move after the search has completed.",
   )
     .default(SOFTENING_COEFFICIENT)
-    .argParser(parseArgumentIntoFloat),
+    .argParser(parseIntoFloat),
   state: new Option(
     "--state <identifier of state>",
     "The identifier of a state to use as root of the search tree.",

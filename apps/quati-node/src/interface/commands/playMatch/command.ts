@@ -15,7 +15,7 @@ import {
   type KeyOfState,
   selectStateUsingKeyOfState,
 } from "../../entries/states.js";
-import { loadPredictionModel } from "../../loadModel.js";
+import { loadPredictionModel } from "../../load/loadModel.js";
 import { commonOptions } from "../options.js";
 
 const executeAction = async ({

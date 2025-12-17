@@ -9,6 +9,7 @@ import type { ExplorationCoefficient } from "@repo/search/MonteCarloTree/Search.
 import type { SofteningCoefficient } from "@repo/search/qualityOfMove.js";
 import type { TrainingMemory } from "@repo/search/ResidualNeuralNetwork/training.js";
 
+import { parseIntoInt } from "@repo/engine_core/parse.js";
 import { buildTrainingMemory } from "@repo/interface/actions/buildTrainingMemory/action.js";
 import { constructErrorForWhenAgentGuidedSearchHasNotAPredictionModel } from "@repo/interface/constructSearchBasedOnStrategy.js";
 import { Command, Option } from "commander";
@@ -27,11 +28,20 @@ import {
   type KeyOfGame,
   selectGameUsingKeyOfGame,
 } from "../../entries/games.js";
-import { loadPredictionModel } from "../../loadModel.js";
-import { parseArgumentIntoInt } from "../../parsing.js";
+import { loadPredictionModel } from "../../load/loadModel.js";
 import { commonOptions } from "../options.js";
 
 const QUANTITY_OF_ITERATIONS = 500;
+
+interface MetadataOfTrainingMemory {
+  explorationCoefficient: ExplorationCoefficient;
+  keyOfGame: KeyOfGame;
+  metadataOfModel: MetadataOfModel;
+  quantityOfExpansions: Integer;
+  quantityOfIterations: Integer;
+  seed: Seed;
+  softeningCoefficient: SofteningCoefficient;
+}
 
 const processMetadata = ({
   canOverwrite,
@@ -43,18 +53,11 @@ const processMetadata = ({
   quantityOfIterations,
   seed,
   softeningCoefficient,
-}: Pick<
-  Parameters<typeof createWriteStream>[0],
-  "canOverwrite" | "filePath"
-> & {
-  explorationCoefficient: ExplorationCoefficient;
-  keyOfGame: KeyOfGame;
-  metadataOfModel: MetadataOfModel;
-  quantityOfExpansions: Integer;
-  quantityOfIterations: Integer;
-  seed: Seed;
-  softeningCoefficient: SofteningCoefficient;
-}) => {
+}: MetadataOfTrainingMemory &
+  Pick<
+    Parameters<typeof createWriteStream>[0],
+    "canOverwrite" | "filePath"
+  >) => {
   const writeStream = createWriteStream({
     canOverwrite,
     filePath,
@@ -234,15 +237,16 @@ const commandToBuildTrainingMemory = {
       "The quantity of iterations of the self-play process.",
     )
       .default(QUANTITY_OF_ITERATIONS)
-      .argParser(parseArgumentIntoInt),
+      .argParser(parseIntoInt),
     new Option(
       "--announce-progress <quantity of iterations>",
       "The quantity of iterations to announce process of the self-play process.",
-    ).argParser(parseArgumentIntoInt),
+    ).argParser(parseIntoInt),
     commonOptions.softeningCoefficient,
     commonOptions.seed,
     commonOptions.canOverwrite,
   ],
 } satisfies DefinitionOfCommand;
 
+export type { MetadataOfTrainingMemory };
 export { commandToBuildTrainingMemory };

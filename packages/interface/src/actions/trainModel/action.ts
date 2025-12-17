@@ -80,7 +80,6 @@ const trainModel = async <
   });
   processLogs(logs);
 
-  residualNeuralNetwork.summary({ processMessage });
   await residualNeuralNetwork.save({ path, scheme });
 };
 

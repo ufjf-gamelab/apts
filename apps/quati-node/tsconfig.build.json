@@ -6,5 +6,5 @@
   },
   "exclude": ["node_modules", "dist"],
   "extends": "@repo/typescript_config/node.json",
-  "include": ["src"]
+  "include": ["src", "../../packages/engine_core/src/parse.ts"]
 }

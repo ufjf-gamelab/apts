@@ -1,5 +1,6 @@
 import type { Integer, Seed } from "@repo/engine_core/types.js";
 
+import { parseIntoInt } from "@repo/engine_core/parse.js";
 import { constructModel } from "@repo/interface/actions/constructModel/action.js";
 import { Command, Option } from "commander";
 import path from "path";
@@ -16,7 +17,6 @@ import {
   type KeyOfGame,
   selectGameUsingKeyOfGame,
 } from "../../entries/games.js";
-import { parseArgumentIntoInt } from "../../parsing.js";
 import { commonOptions } from "../options.js";
 
 interface MetadataOfModel {
@@ -138,13 +138,13 @@ const commandToConstructModel = {
       "--hidden <quantity of hidden channels>",
       "The quantity of hidden channels to construct the backbone.",
     )
-      .argParser(parseArgumentIntoInt)
+      .argParser(parseIntoInt)
       .makeOptionMandatory(),
     new Option(
       "--residual <quantity of residual blocks>",
       "The quantity of residual blocks to construct the backbone.",
     )
-      .argParser(parseArgumentIntoInt)
+      .argParser(parseIntoInt)
       .makeOptionMandatory(),
     commonOptions.seed,
     commonOptions.canOverwrite,
