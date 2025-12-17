@@ -10,6 +10,10 @@ const QUANTITY_OF_EXPANSIONS = 10000;
 const SOFTENING_COEFFICIENT = 0.25;
 
 const commonOptions = {
+  canOverwrite: new Option(
+    "--overwrite",
+    "Can overwrite the training memory file.",
+  ),
   expansions: new Option(
     "-e, --expansions <quantity of expansions>",
     "The quantity of expansions to perform on the search.",

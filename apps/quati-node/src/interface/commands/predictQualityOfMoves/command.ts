@@ -20,7 +20,7 @@ import {
   type KeyOfState,
   selectStateUsingKeyOfState,
 } from "../../entries/states.js";
-import { loadPredictionModel } from "../../loadPredictionModel.js";
+import { loadPredictionModel } from "../../loadModel.js";
 import { commonOptions } from "../options.js";
 
 const QUANTITY_OF_CHARACTERS_ON_FILE_EXTENSION = 4;
@@ -81,7 +81,7 @@ const executeAction = async ({
   const state = selectStateUsingKeyOfState(keyOfState);
   const game = state.getGame();
 
-  const predictionModel = await (async () => {
+  const predictionModelAndMetadataOrNull = await (async () => {
     if (typeof pathToResidualNeuralNetworkFolderOrUndefined === "undefined") {
       return null;
     }
@@ -114,13 +114,15 @@ const executeAction = async ({
 
   predictQualityOfMoves({
     explorationCoefficient,
-    logMessage: console.info,
-    predictionModel,
+    predictionModel: predictionModelAndMetadataOrNull
+      ? predictionModelAndMetadataOrNull.predictionModel
+      : null,
     processGraphvizGraph: processGraphvizGraph({
       directoryPath: directoryPathOrUndefined,
       fileName,
       shouldConstructGraph,
     }),
+    processMessage: console.info,
     processQualityOfMoves,
     quantityOfExpansions,
     seed,

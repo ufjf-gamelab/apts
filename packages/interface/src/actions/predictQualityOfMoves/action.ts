@@ -1,4 +1,4 @@
-import type { Nullable, Seed } from "@repo/engine_core/types.js";
+import type { Nullable } from "@repo/engine_core/types.js";
 import type { Game } from "@repo/game/Game.js";
 import type { IndexOfMove, Move } from "@repo/game/Move.js";
 import type { Player } from "@repo/game/Player.js";
@@ -8,7 +8,7 @@ import type { State } from "@repo/game/State.js";
 import type { ParamsOfAgentGuidedSearch } from "@repo/search/AgentGuidedMonteCarloTree/AgentGuidedSearch.js";
 import type { ParamsOfSearch } from "@repo/search/MonteCarloTree/Search.js";
 import type { TreeNode } from "@repo/search/MonteCarloTree/TreeNode.js";
-import type { LogMessage } from "@repo/search/types.js";
+import type { ProcessMessage } from "@repo/search/types.js";
 import type { Digraph as GraphvizDigraph } from "ts-graphviz";
 
 import {
@@ -16,7 +16,7 @@ import {
   calculateQualityOfMoves,
   type QualityOfMove,
 } from "@repo/search/qualityOfMove.js";
-import { Random } from "@repo/search/Random/Random.js";
+import { type ParamsOfRandom, Random } from "@repo/search/Random/Random.js";
 
 import type { StrategyToSearch } from "../../constants.js";
 
@@ -55,9 +55,9 @@ const predictQualityOfMoves = <
   >,
 >({
   explorationCoefficient,
-  logMessage,
   predictionModel,
   processGraphvizGraph,
+  processMessage,
   processQualityOfMoves,
   quantityOfExpansions,
   seed,
@@ -95,13 +95,13 @@ const predictQualityOfMoves = <
     Parameters<typeof calculateProbabilityOfPlayingEachMove>[0],
     "softeningCoefficient"
   > &
+  Pick<ParamsOfRandom, "seed"> &
   Pick<ParamsOfSearch, "explorationCoefficient" | "quantityOfExpansions"> & {
-    logMessage: LogMessage;
     processGraphvizGraph: ((graphvizGraph: GraphvizDigraph) => void) | null;
+    processMessage: ProcessMessage;
     processQualityOfMoves: (
       qualitiesOfMoves: ReadonlyMap<IndexOfMove, QualityOfMove>,
     ) => void;
-    seed: Seed;
     shouldReturnProbabilities: boolean;
     strategyToSearch: StrategyToSearch;
   }): void => {
@@ -144,11 +144,11 @@ const predictQualityOfMoves = <
     softeningCoefficient,
   });
 
-  logMessage("Quality of each move:");
+  processMessage("Quality of each move:");
   processQualityOfMoves(qualityOfEachMove);
 
   if (shouldReturnProbabilities) {
-    logMessage("\nProbability of playing each move:");
+    processMessage("\nProbability of playing each move:");
     processQualityOfMoves(probabilityOfPlayingEachMove);
   }
 

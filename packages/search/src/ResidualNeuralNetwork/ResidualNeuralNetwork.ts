@@ -14,7 +14,7 @@ import type * as tfjs from "@tensorflow/tfjs";
 
 import { FIRST_INDEX, INCREMENT_ONE } from "@repo/engine_core/constants.js";
 
-import type { LogMessage } from "../types.js";
+import type { ProcessMessage } from "../types.js";
 
 import { deriveNumericSeed } from "./deriveNumericSeed.js";
 import {
@@ -669,13 +669,13 @@ class ResidualNeuralNetwork<
 
   private static logProgress({
     epoch,
-    logMessage,
     logs,
+    processMessage,
     trainingLog,
   }: {
     epoch: number;
-    logMessage: LogMessage;
     logs: tfjs.Logs;
+    processMessage: ProcessMessage;
     trainingLog: tfjs.Logs[];
   }) {
     let logsString = `Epoch ${epoch}\n`;
@@ -684,7 +684,7 @@ class ResidualNeuralNetwork<
     logsString += `Policy Head Accuracy: ${logs["policyHead_acc"]}\n`;
     logsString += `Value Head Loss: ${logs["valueHead_loss"]}\n`;
     logsString += `Value Head Accuracy: ${logs["valueHead_acc"]}\n`;
-    logMessage(logsString);
+    processMessage(logsString);
     trainingLog.push(logs);
   }
 
@@ -739,24 +739,24 @@ class ResidualNeuralNetwork<
     this.layersModel.setWeights(tensors);
   }
 
-  public summary({ logMessage }: { logMessage: LogMessage }) {
+  public summary({ processMessage }: { processMessage: ProcessMessage }) {
     const LINE_LENGTH = 0;
     const FIRST_POSITION = 0;
-    this.layersModel.summary(LINE_LENGTH, [FIRST_POSITION], logMessage);
+    this.layersModel.summary(LINE_LENGTH, [FIRST_POSITION], processMessage);
   }
 
   public async train({
     batchOfInputs,
     batchOfPolicyOutputs,
     batchOfValueOutputs,
-    logMessage,
+    processMessage,
     quantityOfEpochs,
     sizeOfBatch,
   }: {
     batchOfInputs: tfjs.Tensor4D;
     batchOfPolicyOutputs: tfjs.Tensor2D;
     batchOfValueOutputs: tfjs.Tensor1D;
-    logMessage: LogMessage;
+    processMessage: ProcessMessage;
     quantityOfEpochs: number;
     sizeOfBatch: number;
   }): Promise<tfjs.Logs[]> {
@@ -773,8 +773,8 @@ class ResidualNeuralNetwork<
             if (logs) {
               ResidualNeuralNetwork.logProgress({
                 epoch,
-                logMessage,
                 logs,
+                processMessage,
                 trainingLog,
               });
             }

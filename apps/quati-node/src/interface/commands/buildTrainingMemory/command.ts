@@ -1,12 +1,13 @@
-import type { Integer } from "@repo/engine_core/types.js";
+import type { Integer, Seed } from "@repo/engine_core/types.js";
 import type { Game } from "@repo/game/Game.js";
 import type { Move } from "@repo/game/Move.js";
 import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
+import type { ExplorationCoefficient } from "@repo/search/MonteCarloTree/Search.js";
 import type { SofteningCoefficient } from "@repo/search/qualityOfMove.js";
-import type { TrainingMemory } from "@repo/search/ResidualNeuralNetwork/Trainer.js";
+import type { TrainingMemory } from "@repo/search/ResidualNeuralNetwork/training.js";
 
 import { buildTrainingMemory } from "@repo/interface/actions/buildTrainingMemory/action.js";
 import { constructErrorForWhenAgentGuidedSearchHasNotAPredictionModel } from "@repo/interface/constructSearchBasedOnStrategy.js";
@@ -14,6 +15,7 @@ import { Command, Option } from "commander";
 import path from "path";
 
 import type { DefinitionOfCommand } from "../commands.js";
+import type { MetadataOfModel } from "../constructModel/command.js";
 
 import {
   assertFileNotExists,
@@ -25,21 +27,65 @@ import {
   type KeyOfGame,
   selectGameUsingKeyOfGame,
 } from "../../entries/games.js";
-import { loadPredictionModel } from "../../loadPredictionModel.js";
+import { loadPredictionModel } from "../../loadModel.js";
 import { parseArgumentIntoInt } from "../../parsing.js";
 import { commonOptions } from "../options.js";
 
 const QUANTITY_OF_ITERATIONS = 500;
 
+const processMetadata = ({
+  canOverwrite,
+  explorationCoefficient,
+  filePath,
+  keyOfGame,
+  metadataOfModel,
+  quantityOfExpansions,
+  quantityOfIterations,
+  seed,
+  softeningCoefficient,
+}: Pick<
+  Parameters<typeof createWriteStream>[0],
+  "canOverwrite" | "filePath"
+> & {
+  explorationCoefficient: ExplorationCoefficient;
+  keyOfGame: KeyOfGame;
+  metadataOfModel: MetadataOfModel;
+  quantityOfExpansions: Integer;
+  quantityOfIterations: Integer;
+  seed: Seed;
+  softeningCoefficient: SofteningCoefficient;
+}) => {
+  const writeStream = createWriteStream({
+    canOverwrite,
+    filePath,
+  });
+  writeStream.write(
+    JSON.stringify({
+      explorationCoefficient,
+      keyOfGame,
+      metadataOfModel,
+      quantityOfExpansions,
+      quantityOfIterations,
+      seed,
+      softeningCoefficient,
+    }),
+  );
+};
+
 const processTrainingMemory = ({
   canOverwrite,
   filePath,
   trainingMemory,
-}: NonNullable<Pick<Parameters<typeof createWriteStream>[0], "filePath">> &
-  Pick<Parameters<typeof createWriteStream>[0], "canOverwrite"> & {
-    trainingMemory: TrainingMemory;
-  }) => {
-  const writeStream = createWriteStream({ canOverwrite, filePath });
+}: Pick<
+  Parameters<typeof createWriteStream>[0],
+  "canOverwrite" | "filePath"
+> & {
+  trainingMemory: TrainingMemory;
+}) => {
+  const writeStream = createWriteStream({
+    canOverwrite,
+    filePath,
+  });
   writeStream.write(
     JSON.stringify(trainingMemory, (_, value: number) => {
       if (value === Infinity) {
@@ -79,7 +125,7 @@ const executeAction = async <
   directory: directoryPathOrUndefined,
   expansions: quantityOfExpansions,
   exploration: explorationCoefficient,
-  file: fileNameOrUndefined,
+  folder: folderNameOrUndefined,
   game: keyOfGame,
   iterations: quantityOfIterations,
   model: pathToResidualNeuralNetworkFolder,
@@ -91,7 +137,7 @@ const executeAction = async <
   directory: string | undefined;
   expansions: Integer;
   exploration: number;
-  file: string | undefined;
+  folder: string | undefined;
   game: KeyOfGame;
   iterations: Integer;
   model: string | undefined;
@@ -106,56 +152,62 @@ const executeAction = async <
   const seed = seedOrUndefined ?? Math.random().toString();
   const game = selectGameUsingKeyOfGame(keyOfGame);
 
-  const predictionModel = await loadPredictionModel({
-    game,
-    pathToResidualNeuralNetworkFolder,
-    seed,
+  const { metadata: metadataOfModel, predictionModel } =
+    await loadPredictionModel({
+      game,
+      pathToResidualNeuralNetworkFolder,
+      seed,
+    });
+
+  const folderName =
+    folderNameOrUndefined ??
+    `expansions(${quantityOfExpansions})_exploration(${explorationCoefficient})_softening(${softeningCoefficient})_iterations(${quantityOfIterations})_seed(${seed})`;
+  const sanitizedFolderName = truncateFileName({
+    truncatableSlice: folderName,
   });
-
-  const nameOfModel = predictionModel.getName();
-  const nameOfTrainingMemoryFile =
-    fileNameOrUndefined ??
-    `model(${nameOfModel})_iterations(${quantityOfIterations})_expansions(${quantityOfExpansions})_exploration(${explorationCoefficient})_softening(${softeningCoefficient})_seed(${seed})`;
-
-  const fileName = truncateFileName({
-    suffix: ".json",
-    truncatableSlice: nameOfTrainingMemoryFile,
-  });
-
   const directoryPath =
     typeof directoryPathOrUndefined === "undefined"
-      ? path.join(
-          truncateFileName({
-            truncatableSlice: pathToResidualNeuralNetworkFolder,
-          }),
-          "memories",
-        )
-      : truncateFileName({
-          truncatableSlice: directoryPathOrUndefined,
-        });
+      ? path.join(pathToResidualNeuralNetworkFolder, "memories")
+      : directoryPathOrUndefined;
 
-  await createDirectory({ directoryPath });
-  const fullPath = path.resolve(path.join(directoryPath, fileName));
+  const folderPath = path.resolve(
+    path.join(directoryPath, sanitizedFolderName),
+  );
+
+  const trainingMemoryFilePath = path.join(folderPath, "memory.json");
+  const metadataFilePath = path.join(folderPath, "metadata.json");
   if (!canOverwrite) {
-    assertFileNotExists({
-      filePath: fullPath,
-    });
+    assertFileNotExists({ filePath: trainingMemoryFilePath });
+    assertFileNotExists({ filePath: metadataFilePath });
   }
+  await createDirectory({ directoryPath: folderPath });
 
   buildTrainingMemory({
     explorationCoefficient,
-    logMessage: console.info,
     predictionModel,
+    processMessage: console.info,
     processTrainingMemory: trainingMemory => {
       processTrainingMemory({
         canOverwrite,
-        filePath: fullPath,
+        filePath: trainingMemoryFilePath,
         trainingMemory,
       });
     },
     quantityOfExpansions,
     quantityOfIterations,
     quantityOfIterationsToAnnounceProgress,
+    seed,
+    softeningCoefficient,
+  });
+
+  processMetadata({
+    canOverwrite,
+    explorationCoefficient,
+    filePath: metadataFilePath,
+    keyOfGame,
+    metadataOfModel,
+    quantityOfExpansions,
+    quantityOfIterations,
     seed,
     softeningCoefficient,
   });
@@ -189,7 +241,7 @@ const commandToBuildTrainingMemory = {
     ).argParser(parseArgumentIntoInt),
     commonOptions.softeningCoefficient,
     commonOptions.seed,
-    new Option("--overwrite", "Can overwrite the training memory file."),
+    commonOptions.canOverwrite,
   ],
 } satisfies DefinitionOfCommand;
 

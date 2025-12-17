@@ -4,13 +4,12 @@ import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
+import type { TreeNode } from "@repo/search/MonteCarloTree/TreeNode.js";
+import type { ResidualNeuralNetwork } from "@repo/search/ResidualNeuralNetwork/ResidualNeuralNetwork.js";
 
-import {
-  type ParamsOfResidualNeuralNetwork,
-  ResidualNeuralNetwork,
-} from "@repo/search/ResidualNeuralNetwork/ResidualNeuralNetwork.js";
+import { train } from "@repo/search/ResidualNeuralNetwork/training.js";
 
-const constructModel = async <
+const trainModel = async <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -31,15 +30,24 @@ const constructModel = async <
     GenericSlot,
     GenericState
   >,
+  GenericTreeNode extends TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState,
+    GenericTreeNode
+  >,
 >({
-  game,
-  nameOfModel,
   path,
+  processLogs,
   processMessage,
-  quantityOfHiddenChannels,
-  quantityOfResidualBlocks,
+  quantityOfEpochs,
+  residualNeuralNetwork,
   scheme,
-  seed,
+  sizeOfBatch,
+  trainingMemory,
 }: Pick<
   Parameters<
     ResidualNeuralNetwork<
@@ -54,50 +62,26 @@ const constructModel = async <
   "path" | "scheme"
 > &
   Pick<
-    Parameters<
-      ResidualNeuralNetwork<
-        GenericGame,
-        GenericMove,
-        GenericPlayer,
-        GenericScore,
-        GenericSlot,
-        GenericState
-      >["summary"]
-    >[0],
-    "processMessage"
-  > &
-  Pick<
-    ParamsOfResidualNeuralNetwork<
-      GenericGame,
-      GenericMove,
-      GenericPlayer,
-      GenericScore,
-      GenericSlot,
-      GenericState
-    >,
-    | "game"
-    | "nameOfModel"
-    | "quantityOfHiddenChannels"
-    | "quantityOfResidualBlocks"
-    | "seed"
-  >): Promise<void> => {
-  const residualNeuralNetwork = ResidualNeuralNetwork.create<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >({
-    game,
-    nameOfModel,
-    quantityOfHiddenChannels,
-    quantityOfResidualBlocks,
-    seed,
+    Parameters<typeof train>[0],
+    | "processMessage"
+    | "quantityOfEpochs"
+    | "residualNeuralNetwork"
+    | "sizeOfBatch"
+    | "trainingMemory"
+  > & {
+    processLogs: (logs: Record<string, number>[]) => void;
+  }) => {
+  const logs = await train({
+    processMessage,
+    quantityOfEpochs,
+    residualNeuralNetwork,
+    sizeOfBatch,
+    trainingMemory,
   });
+  processLogs(logs);
 
   residualNeuralNetwork.summary({ processMessage });
   await residualNeuralNetwork.save({ path, scheme });
 };
 
-export { constructModel };
+export { trainModel };

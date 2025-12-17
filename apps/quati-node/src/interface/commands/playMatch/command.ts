@@ -15,7 +15,7 @@ import {
   type KeyOfState,
   selectStateUsingKeyOfState,
 } from "../../entries/states.js";
-import { loadPredictionModel } from "../../loadPredictionModel.js";
+import { loadPredictionModel } from "../../loadModel.js";
 import { commonOptions } from "../options.js";
 
 const executeAction = async ({
@@ -41,7 +41,7 @@ const executeAction = async ({
   const state = selectStateUsingKeyOfState(keyOfState);
   const game = state.getGame();
 
-  const predictionModel = await (async () => {
+  const predictionModelAndMetadataOrNull = await (async () => {
     if (typeof pathToResidualNeuralNetworkFolderOrUndefined === "undefined") {
       return null;
     }
@@ -56,9 +56,11 @@ const executeAction = async ({
   await playMatch({
     explorationCoefficient,
     getInput,
-    logMessage: console.info,
     modeOfPlay,
-    predictionModel,
+    predictionModel: predictionModelAndMetadataOrNull
+      ? predictionModelAndMetadataOrNull.predictionModel
+      : null,
+    processMessage: console.info,
     quantityOfExpansions,
     seed,
     softeningCoefficient,

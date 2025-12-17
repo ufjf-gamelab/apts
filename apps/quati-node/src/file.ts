@@ -75,7 +75,10 @@ type FileOperation = (typeof fileOperations)[keyof typeof fileOperations];
 
 const createReadStream = ({ filePath }: { filePath: string }): ReadStream => {
   try {
-    return createReadStreamFromFs(filePath, { flags: fileOperations.read });
+    return createReadStreamFromFs(filePath, {
+      encoding: "utf8",
+      flags: fileOperations.read,
+    });
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw new InvalidArgumentError(

@@ -1,3 +1,3 @@
-type LogMessage = (message: string) => void;
+type ProcessMessage = (message: string) => void;
 
-export type { LogMessage };
+export type { ProcessMessage };

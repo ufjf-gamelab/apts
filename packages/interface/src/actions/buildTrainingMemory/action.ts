@@ -13,10 +13,9 @@ import {
 } from "@repo/search/AgentGuidedMonteCarloTree/AgentGuidedSearch.js";
 import { type ParamsOfRandom, Random } from "@repo/search/Random/Random.js";
 import {
-  type ParamsOfTrainer,
-  Trainer,
+  buildTrainingMemory as buildTrainingMemoryFromTraining,
   type TrainingMemory,
-} from "@repo/search/ResidualNeuralNetwork/Trainer.js";
+} from "@repo/search/ResidualNeuralNetwork/training.js";
 
 const buildTrainingMemory = <
   GenericGame extends Game<
@@ -50,30 +49,21 @@ const buildTrainingMemory = <
   >,
 >({
   explorationCoefficient,
-  logMessage,
   predictionModel,
+  processMessage,
   processTrainingMemory,
   quantityOfExpansions,
   quantityOfIterations,
   quantityOfIterationsToAnnounceProgress,
   seed,
   softeningCoefficient,
-}: ParamsOfRandom &
-  Pick<
-    Parameters<
-      Trainer<
-        GenericGame,
-        GenericMove,
-        GenericPlayer,
-        GenericScore,
-        GenericSlot,
-        GenericState
-      >["buildTrainingMemory"]
-    >[0],
-    | "logMessage"
-    | "quantityOfIterations"
-    | "quantityOfIterationsToAnnounceProgress"
-  > &
+}: Pick<
+  Parameters<typeof buildTrainingMemoryFromTraining>[0],
+  | "processMessage"
+  | "quantityOfIterations"
+  | "quantityOfIterationsToAnnounceProgress"
+  | "softeningCoefficient"
+> &
   Pick<
     ParamsOfAgentGuidedSearch<
       GenericGame,
@@ -85,21 +75,12 @@ const buildTrainingMemory = <
     >,
     "predictionModel"
   > &
-  Pick<ParamsOfSearch, "explorationCoefficient" | "quantityOfExpansions"> &
-  Pick<
-    ParamsOfTrainer<
-      GenericGame,
-      GenericMove,
-      GenericPlayer,
-      GenericScore,
-      GenericSlot,
-      GenericState
-    >,
-    "softeningCoefficient"
-  > & {
+  Pick<ParamsOfRandom, "seed"> &
+  Pick<ParamsOfSearch, "explorationCoefficient" | "quantityOfExpansions"> & {
     processTrainingMemory: (trainingMemory: TrainingMemory) => void;
   }) => {
   const random = new Random({ seed });
+  const game = predictionModel.getGame();
   const search = new AgentGuidedSearch<
     GenericGame,
     GenericMove,
@@ -114,12 +95,13 @@ const buildTrainingMemory = <
     random,
   });
 
-  const trainer = new Trainer({ search, softeningCoefficient });
-
-  const trainingMemory = trainer.buildTrainingMemory({
-    logMessage,
+  const trainingMemory = buildTrainingMemoryFromTraining({
+    game,
+    processMessage,
     quantityOfIterations,
     quantityOfIterationsToAnnounceProgress,
+    search,
+    softeningCoefficient,
   });
   processTrainingMemory(trainingMemory);
 };
