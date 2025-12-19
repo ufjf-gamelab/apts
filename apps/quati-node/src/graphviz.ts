@@ -1,23 +1,14 @@
-import path from "path";
 import { toFile } from "ts-graphviz/adapter";
 
-import { createDirectory } from "./file.js";
-
 export const generateGraphvizImage = async ({
-  directoryPath: directoryPathOrUndefined,
-  fileName,
+  filePath,
   graphvizDotString,
 }: {
-  directoryPath: string | undefined;
-  fileName: string;
+  filePath: string;
   graphvizDotString: string;
 }): Promise<void> => {
-  const directoryPath = directoryPathOrUndefined ?? "./";
-  await createDirectory({ directoryPath });
-  const fullPath = path.join(directoryPath, fileName);
-
   try {
-    await toFile(graphvizDotString, fullPath, {
+    await toFile(graphvizDotString, filePath, {
       format: "svg",
     });
   } catch (error: unknown) {

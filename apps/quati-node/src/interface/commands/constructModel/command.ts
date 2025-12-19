@@ -20,11 +20,11 @@ import {
 import { commonOptions } from "../options.js";
 
 interface MetadataOfModel {
-  keyOfGame: KeyOfGame;
-  nameOfModel: string;
-  quantityOfHiddenChannels: Integer;
-  quantityOfResidualBlocks: Integer;
-  seed: Seed;
+  readonly keyOfGame: KeyOfGame;
+  readonly nameOfModel: string;
+  readonly quantityOfHiddenChannels: Integer;
+  readonly quantityOfResidualBlocks: Integer;
+  readonly seed: Seed;
 }
 
 const processMetadata = ({
@@ -84,11 +84,7 @@ const executeAction = async ({
   });
   const directoryPath = directoryPathOrUndefined ?? "./";
 
-  const folderPath = path.resolve(
-    path.join(directoryPath, sanitizedFolderName),
-  );
-  await createDirectory({ directoryPath: folderPath });
-
+  const folderPath = path.join(directoryPath, sanitizedFolderName);
   const modelFilePath = path.join(folderPath, "model.json");
   const weightsFilePath = path.join(folderPath, "weights.json");
   const metadataFilePath = path.join(folderPath, "metadata.json");
@@ -97,6 +93,7 @@ const executeAction = async ({
     assertFileNotExists({ filePath: weightsFilePath });
     assertFileNotExists({ filePath: metadataFilePath });
   }
+  await createDirectory({ directoryPath: folderPath });
 
   await constructModel({
     game,

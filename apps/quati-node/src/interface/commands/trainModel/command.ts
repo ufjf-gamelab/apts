@@ -165,14 +165,10 @@ const executeAction = async <
   });
   const directoryPath =
     typeof directoryPathOrUndefined === "undefined"
-      ? path.join(pathToResidualNeuralNetworkFolder, "trained")
+      ? path.join(pathToTrainingMemoryFolder, "trained")
       : directoryPathOrUndefined;
 
-  const folderPath = path.resolve(
-    path.join(directoryPath, sanitizedFolderName),
-  );
-  await createDirectory({ directoryPath: folderPath });
-
+  const folderPath = path.join(directoryPath, sanitizedFolderName);
   const modelFilePath = path.join(folderPath, "model.json");
   const weightsFilePath = path.join(folderPath, "weights.json");
   const metadataFilePath = path.join(folderPath, "metadata.json");
@@ -183,6 +179,7 @@ const executeAction = async <
     assertFileNotExists({ filePath: metadataFilePath });
     assertFileNotExists({ filePath: logsFilePath });
   }
+  await createDirectory({ directoryPath: folderPath });
 
   await trainModel({
     path: folderPath,

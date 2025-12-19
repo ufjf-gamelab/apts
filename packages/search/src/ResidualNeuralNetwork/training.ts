@@ -151,74 +151,6 @@ const convertGameMemoryToTrainingMemory = <
   return trainingMemory;
 };
 
-const train = async <
-  GenericGame extends Game<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >,
-  GenericMove extends Move<GenericMove>,
-  GenericPlayer extends Player<GenericPlayer>,
-  GenericScore extends Score<GenericScore>,
-  GenericSlot extends Slot<GenericSlot>,
-  GenericState extends State<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >,
->({
-  processMessage,
-  quantityOfEpochs,
-  residualNeuralNetwork,
-  sizeOfBatch,
-  trainingMemory,
-}: Pick<
-  Parameters<
-    ResidualNeuralNetwork<
-      GenericGame,
-      GenericMove,
-      GenericPlayer,
-      GenericScore,
-      GenericSlot,
-      GenericState
-    >["train"]
-  >[0],
-  "processMessage" | "quantityOfEpochs" | "sizeOfBatch"
-> & {
-  residualNeuralNetwork: ResidualNeuralNetwork<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >;
-  trainingMemory: TrainingMemory;
-}): Promise<tfjs.Logs[]> => {
-  const { encodedStates, policies, values } = trainingMemory;
-  const batchOfInputs = tf.tensor(encodedStates) as tfjs.Tensor4D;
-  const batchOfPolicyOutputs = tf.tensor(policies) as tfjs.Tensor2D;
-  const batchOfValueOutputs = tf.tensor(values) as tfjs.Tensor1D;
-
-  const trainingLog = await residualNeuralNetwork.train({
-    batchOfInputs,
-    batchOfPolicyOutputs,
-    batchOfValueOutputs,
-    processMessage,
-    quantityOfEpochs,
-    sizeOfBatch,
-  });
-
-  tf.dispose([batchOfInputs, batchOfPolicyOutputs, batchOfValueOutputs]);
-  return trainingLog;
-};
-
 const selfPlay = <
   GenericGame extends Game<
     GenericGame,
@@ -353,6 +285,74 @@ const buildTrainingMemory = ({
 
   processMessage(`Size of memory: ${trainingMemory.encodedStates.length}`);
   return trainingMemory;
+};
+
+const train = async <
+  GenericGame extends Game<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+  GenericMove extends Move<GenericMove>,
+  GenericPlayer extends Player<GenericPlayer>,
+  GenericScore extends Score<GenericScore>,
+  GenericSlot extends Slot<GenericSlot>,
+  GenericState extends State<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >,
+>({
+  processMessage,
+  quantityOfEpochs,
+  residualNeuralNetwork,
+  sizeOfBatch,
+  trainingMemory,
+}: Pick<
+  Parameters<
+    ResidualNeuralNetwork<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >["train"]
+  >[0],
+  "processMessage" | "quantityOfEpochs" | "sizeOfBatch"
+> & {
+  residualNeuralNetwork: ResidualNeuralNetwork<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >;
+  trainingMemory: TrainingMemory;
+}): Promise<tfjs.Logs[]> => {
+  const { encodedStates, policies, values } = trainingMemory;
+  const batchOfInputs = tf.tensor(encodedStates) as tfjs.Tensor4D;
+  const batchOfPolicyOutputs = tf.tensor(policies) as tfjs.Tensor2D;
+  const batchOfValueOutputs = tf.tensor(values) as tfjs.Tensor1D;
+
+  const trainingLog = await residualNeuralNetwork.train({
+    batchOfInputs,
+    batchOfPolicyOutputs,
+    batchOfValueOutputs,
+    processMessage,
+    quantityOfEpochs,
+    sizeOfBatch,
+  });
+
+  tf.dispose([batchOfInputs, batchOfPolicyOutputs, batchOfValueOutputs]);
+  return trainingLog;
 };
 
 export { buildTrainingMemory, train };

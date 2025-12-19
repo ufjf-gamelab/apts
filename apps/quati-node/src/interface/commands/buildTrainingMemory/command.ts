@@ -34,13 +34,13 @@ import { commonOptions } from "../options.js";
 const QUANTITY_OF_ITERATIONS = 500;
 
 interface MetadataOfTrainingMemory {
-  explorationCoefficient: ExplorationCoefficient;
-  keyOfGame: KeyOfGame;
-  metadataOfModel: MetadataOfModel;
-  quantityOfExpansions: Integer;
-  quantityOfIterations: Integer;
-  seed: Seed;
-  softeningCoefficient: SofteningCoefficient;
+  readonly explorationCoefficient: ExplorationCoefficient;
+  readonly keyOfGame: KeyOfGame;
+  readonly metadataOfModel: MetadataOfModel;
+  readonly quantityOfExpansions: Integer;
+  readonly quantityOfIterations: Integer;
+  readonly seed: Seed;
+  readonly softeningCoefficient: SofteningCoefficient;
 }
 
 const processMetadata = ({
@@ -173,10 +173,7 @@ const executeAction = async <
       ? path.join(pathToResidualNeuralNetworkFolder, "memories")
       : directoryPathOrUndefined;
 
-  const folderPath = path.resolve(
-    path.join(directoryPath, sanitizedFolderName),
-  );
-
+  const folderPath = path.join(directoryPath, sanitizedFolderName);
   const trainingMemoryFilePath = path.join(folderPath, "memory.json");
   const metadataFilePath = path.join(folderPath, "metadata.json");
   if (!canOverwrite) {
@@ -229,7 +226,10 @@ const commandToBuildTrainingMemory = {
       "--directory <path of directory>",
       "The path to the directory where the training memory will be created.",
     ),
-    new Option("--file <file name>", "The name of the training memory file."),
+    new Option(
+      "--folder <name of folder>",
+      "The name of the folder that will be created to contain the training memory.",
+    ),
     commonOptions.expansions,
     commonOptions.exploration,
     new Option(

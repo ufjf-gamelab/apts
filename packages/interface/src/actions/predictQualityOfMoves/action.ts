@@ -58,10 +58,10 @@ const predictQualityOfMoves = <
   predictionModel,
   processGraphvizGraph,
   processMessage,
-  processQualityOfMoves,
+  processProbabilityPlayingEachMove: processProbabilityOfEachMove,
+  processQualityOfEachMove,
   quantityOfExpansions,
   seed,
-  shouldReturnProbabilities,
   softeningCoefficient,
   state,
   strategyToSearch,
@@ -99,10 +99,14 @@ const predictQualityOfMoves = <
   Pick<ParamsOfSearch, "explorationCoefficient" | "quantityOfExpansions"> & {
     processGraphvizGraph: ((graphvizGraph: GraphvizDigraph) => void) | null;
     processMessage: ProcessMessage;
-    processQualityOfMoves: (
-      qualitiesOfMoves: ReadonlyMap<IndexOfMove, QualityOfMove>,
+    processProbabilityPlayingEachMove:
+      | ((
+          probabilityOfPlayingEachMove: ReadonlyMap<IndexOfMove, number>,
+        ) => void)
+      | null;
+    processQualityOfEachMove: (
+      qualityOfEachMove: ReadonlyMap<IndexOfMove, QualityOfMove>,
     ) => void;
-    shouldReturnProbabilities: boolean;
     strategyToSearch: StrategyToSearch;
   }): void => {
   const game = state.getGame();
@@ -145,11 +149,11 @@ const predictQualityOfMoves = <
   });
 
   processMessage("Quality of each move:");
-  processQualityOfMoves(qualityOfEachMove);
+  processQualityOfEachMove(qualityOfEachMove);
 
-  if (shouldReturnProbabilities) {
+  if (processProbabilityOfEachMove !== null) {
     processMessage("\nProbability of playing each move:");
-    processQualityOfMoves(probabilityOfPlayingEachMove);
+    processProbabilityOfEachMove(probabilityOfPlayingEachMove);
   }
 
   if (processGraphvizGraph !== null) {

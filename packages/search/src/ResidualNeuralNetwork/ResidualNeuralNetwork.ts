@@ -757,8 +757,8 @@ class ResidualNeuralNetwork<
     batchOfPolicyOutputs: tfjs.Tensor2D;
     batchOfValueOutputs: tfjs.Tensor1D;
     processMessage: ProcessMessage;
-    quantityOfEpochs: number;
-    sizeOfBatch: number;
+    quantityOfEpochs: Integer;
+    sizeOfBatch: Integer;
   }): Promise<tfjs.Logs[]> {
     const trainingLog: tfjs.Logs[] = [];
 
@@ -766,23 +766,21 @@ class ResidualNeuralNetwork<
       batchOfInputs,
       [batchOfPolicyOutputs, batchOfValueOutputs],
       {
-        // Update weights after every N examples.
         batchSize: sizeOfBatch,
         callbacks: {
-          onEpochEnd: (epoch: number, logs?: tfjs.Logs) => {
+          onEpochEnd: (epoch: Integer, logs?: tfjs.Logs) => {
             if (logs) {
               ResidualNeuralNetwork.logProgress({
-                epoch,
+                epoch: epoch + INCREMENT_ONE,
                 logs,
                 processMessage,
                 trainingLog,
               });
+              // TODO: Check if it is possible to save the model partially when epoch ends
             }
           },
         },
-        // Go over the data N times.
         epochs: quantityOfEpochs,
-        // Ensure data is shuffled again before using each time.
         shuffle: true,
       },
     );
