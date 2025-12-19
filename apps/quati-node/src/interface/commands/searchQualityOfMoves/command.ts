@@ -7,7 +7,7 @@ import type {
   SofteningCoefficient,
 } from "@repo/search/qualityOfMove.js";
 
-import { predictQualityOfMoves } from "@repo/interface/actions/predictQualityOfMoves/action.js";
+import { searchQualityOfMoves } from "@repo/interface/actions/searchQualityOfMoves/action.js";
 import { Command, Option } from "commander";
 import path from "path";
 import {
@@ -49,7 +49,7 @@ const processGraphvizGraph = ({
   });
 };
 
-interface MetadataOfPredictQualityOfMoves {
+interface MetadataOfSearchQualityOfMoves {
   readonly explorationCoefficient: ExplorationCoefficient;
   readonly keyOfState: KeyOfState;
   readonly metadataOfModel: MetadataOfModel | null;
@@ -67,7 +67,7 @@ const processMetadata = ({
   quantityOfExpansions,
   seed,
   softeningCoefficient,
-}: MetadataOfPredictQualityOfMoves &
+}: MetadataOfSearchQualityOfMoves &
   Pick<
     Parameters<typeof createWriteStream>[0],
     "canOverwrite" | "filePath"
@@ -174,7 +174,7 @@ const executeAction = async ({
     },
   };
 
-  predictQualityOfMoves({
+  searchQualityOfMoves({
     explorationCoefficient,
     predictionModel: predictionModelAndMetadataOrNull
       ? predictionModelAndMetadataOrNull.predictionModel
@@ -261,9 +261,9 @@ const executeAction = async ({
   }
 };
 
-const commandToPredictQualityOfMoves = {
-  command: new Command("predict-quality")
-    .description("Predict quality of a Monte-Carlo Tree node.")
+const commandToSearchQualityOfMoves = {
+  command: new Command("search-quality")
+    .description("Search quality of a Monte-Carlo Tree node.")
     .action(executeAction),
   options: [
     commonOptions.state,
@@ -293,4 +293,4 @@ const commandToPredictQualityOfMoves = {
   ],
 } satisfies DefinitionOfCommand;
 
-export { commandToPredictQualityOfMoves };
+export { commandToSearchQualityOfMoves };

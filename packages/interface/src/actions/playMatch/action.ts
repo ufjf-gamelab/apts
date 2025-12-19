@@ -12,7 +12,7 @@ import type { Answers, Choice, PromptObject } from "prompts";
 
 import { FIRST_INDEX } from "@repo/engine_core/constants.js";
 import { formatMap } from "@repo/engine_core/format.js";
-import { predictQualityOfMoves } from "@repo/search/qualityOfMove.js";
+import { searchQualityOfMoves } from "@repo/search/qualityOfMove.js";
 import { type ParamsOfRandom, Random } from "@repo/search/Random/Random.js";
 
 import { type ModeOfPlay, modesOfPlay } from "../../constants.js";
@@ -179,7 +179,7 @@ const getIndexOfMoveUsingSearch = <
 }) => {
   const game = state.getGame();
 
-  const qualitiesOfMoves = predictQualityOfMoves({
+  const qualitiesOfMoves = searchQualityOfMoves({
     search,
     state,
   });

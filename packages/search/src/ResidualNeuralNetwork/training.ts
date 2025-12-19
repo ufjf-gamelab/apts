@@ -15,7 +15,7 @@ import type { ProcessMessage } from "../types.js";
 import type { ResidualNeuralNetwork } from "./ResidualNeuralNetwork.js";
 
 import { getQualityOfMatchFromScore } from "../qualityOfMatch.js";
-import { predictQualityOfMoves, type QualityOfMove } from "../qualityOfMove.js";
+import { searchQualityOfMoves, type QualityOfMove } from "../qualityOfMove.js";
 import {
   loadTensorFlowModule,
   type TensorFlowModule,
@@ -189,7 +189,7 @@ const selfPlay = <
   Parameters<Random["pickIndexOfValidMoveConsideringItsQuality"]>[0],
   "softeningCoefficient"
 > &
-  Pick<Parameters<typeof predictQualityOfMoves>[0], "search"> & {
+  Pick<Parameters<typeof searchQualityOfMoves>[0], "search"> & {
     game: GenericGame;
   }): TrainingMemory => {
   const gameMemory: GameMemory<
@@ -205,7 +205,7 @@ const selfPlay = <
 
   let currentState = game.constructInitialState();
   for (;;) {
-    const qualitiesOfMoves = predictQualityOfMoves({
+    const qualitiesOfMoves = searchQualityOfMoves({
       search,
       state: currentState,
     });

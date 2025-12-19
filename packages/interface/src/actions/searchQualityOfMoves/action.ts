@@ -23,7 +23,7 @@ import type { StrategyToSearch } from "../../constants.js";
 import { constructSearchBasedOnStrategy } from "../../constructSearchBasedOnStrategy.js";
 import { constructGraphvizGraph } from "../../graphviz.js";
 
-const predictQualityOfMoves = <
+const searchQualityOfMoves = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -58,7 +58,7 @@ const predictQualityOfMoves = <
   predictionModel,
   processGraphvizGraph,
   processMessage,
-  processProbabilityPlayingEachMove: processProbabilityOfEachMove,
+  processProbabilityPlayingEachMove,
   processQualityOfEachMove,
   quantityOfExpansions,
   seed,
@@ -151,9 +151,9 @@ const predictQualityOfMoves = <
   processMessage("Quality of each move:");
   processQualityOfEachMove(qualityOfEachMove);
 
-  if (processProbabilityOfEachMove !== null) {
+  if (processProbabilityPlayingEachMove !== null) {
     processMessage("\nProbability of playing each move:");
-    processProbabilityOfEachMove(probabilityOfPlayingEachMove);
+    processProbabilityPlayingEachMove(probabilityOfPlayingEachMove);
   }
 
   if (processGraphvizGraph !== null) {
@@ -171,4 +171,4 @@ const predictQualityOfMoves = <
   }
 };
 
-export { predictQualityOfMoves };
+export { searchQualityOfMoves };

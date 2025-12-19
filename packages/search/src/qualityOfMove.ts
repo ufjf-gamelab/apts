@@ -66,7 +66,7 @@ const calculateQualityOfMoves = <
   return qualityOfMoves;
 };
 
-const predictQualityOfMoves = <
+const searchQualityOfMoves = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -210,5 +210,5 @@ export {
   calculateProbabilityOfPlayingEachMove,
   calculateQualityOfMoves,
   MINIMUM_PROBABILITY_OF_PLAYING_MOVE,
-  predictQualityOfMoves,
+  searchQualityOfMoves,
 };
