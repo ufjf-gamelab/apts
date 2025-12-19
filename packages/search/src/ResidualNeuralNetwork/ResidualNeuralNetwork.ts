@@ -512,7 +512,10 @@ class ResidualNeuralNetwork<
         GenericSlot,
         GenericState
       >,
-      "nameOfModel" | "quantityOfHiddenChannels" | "quantityOfResidualBlocks"
+      | "nameOfModel"
+      | "quantityOfHiddenChannels"
+      | "quantityOfResidualBlocks"
+      | "seed"
     >
   > &
     Pick<
@@ -524,7 +527,7 @@ class ResidualNeuralNetwork<
         GenericSlot,
         GenericState
       >,
-      "game" | "seed"
+      "game"
     > & {
       layersModel: null | tfjs.LayersModel;
     }) {
@@ -533,7 +536,8 @@ class ResidualNeuralNetwork<
     if (
       nameOfModel !== null &&
       quantityOfHiddenChannels !== null &&
-      quantityOfResidualBlocks !== null
+      quantityOfResidualBlocks !== null &&
+      seed !== null
     ) {
       this.layersModel = constructResidualNeuralNetworkModel<
         GenericGame,
@@ -636,7 +640,6 @@ class ResidualNeuralNetwork<
   >({
     game,
     layersModel,
-    seed,
   }: Pick<
     ParamsOfResidualNeuralNetwork<
       GenericGame,
@@ -646,7 +649,7 @@ class ResidualNeuralNetwork<
       GenericSlot,
       GenericState
     >,
-    "game" | "seed"
+    "game"
   > & {
     layersModel: tfjs.LayersModel;
   }) {
@@ -663,7 +666,7 @@ class ResidualNeuralNetwork<
       nameOfModel: null,
       quantityOfHiddenChannels: null,
       quantityOfResidualBlocks: null,
-      seed,
+      seed: null,
     });
   }
 

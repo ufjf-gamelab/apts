@@ -7,6 +7,8 @@ import type { State } from "@repo/game/State.js";
 
 import * as tf from "@tensorflow/tfjs";
 
+import type { QualityOfMatch } from "../MonteCarloTree/TreeNode.js";
+import type { QualityOfMove } from "../qualityOfMove.js";
 import type { ResidualNeuralNetwork } from "./ResidualNeuralNetwork.js";
 
 interface ParamsOfModel<
@@ -98,8 +100,8 @@ class PredictionModel<
   }
 
   public predict({ state }: { state: GenericState }): {
-    policy: tf.Tensor1D;
-    value: tf.Scalar;
+    qualitiesOfMoves: QualityOfMove[];
+    qualityOfMatch: QualityOfMatch;
   } {
     return tf.tidy(() => {
       const encodedState = state.getEncodedState();
@@ -110,12 +112,14 @@ class PredictionModel<
         batchOfStatesAsTensor,
       });
 
-      const squeezedValue: tf.Scalar = value.squeeze();
-      const squeezedPolicy: tf.Tensor1D = policy.squeeze();
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+      const qualitiesOfMoves = policy.squeeze().arraySync() as QualityOfMove[];
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+      const qualityOfMatch = value.squeeze().arraySync() as QualityOfMatch;
 
       return {
-        policy: squeezedPolicy,
-        value: squeezedValue,
+        qualitiesOfMoves,
+        qualityOfMatch,
       };
     });
   }

@@ -128,8 +128,6 @@ class AgentGuidedSearch<
       GenericState
     >({ state });
 
-    // TODO: Check if we should use the MCTS search for when asking the probabilities of each move when using, and not training
-
     for (
       let indexOfCurrentExpansion = 0;
       indexOfCurrentExpansion < this.quantityOfExpansions;
@@ -157,16 +155,17 @@ class AgentGuidedSearch<
           qualityOfMatch,
         });
       } else {
-        const { policy, value } = this.predictionModel.predict({
-          state: currentState,
-        });
+        const { qualitiesOfMoves, qualityOfMatch } =
+          this.predictionModel.predict({
+            state: currentState,
+          });
 
         selectedNode.expand({
-          qualitiesOfMoveAttributedByModel: policy.arraySync(),
+          qualitiesOfMoveAttributedByModel: qualitiesOfMoves,
         });
 
         selectedNode.updateQualityOfMatchAndQuantityOfVisitsOnBranch({
-          qualityOfMatch: value.arraySync(),
+          qualityOfMatch,
         });
       }
     }

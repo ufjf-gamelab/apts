@@ -159,7 +159,6 @@ const executeAction = async <
     await loadPredictionModel({
       game,
       pathToResidualNeuralNetworkFolder,
-      seed,
     });
 
   const folderName =

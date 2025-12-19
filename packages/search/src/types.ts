@@ -1,3 +1,3 @@
-type ProcessMessage = (message: string) => void;
+type ProcessMessage = typeof console.log;
 
 export type { ProcessMessage };

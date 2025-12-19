@@ -15,5 +15,6 @@ public/dist
 .venv/
 
 ## Generated files
-.images/
 .models/
+.predictions/
+.searches/

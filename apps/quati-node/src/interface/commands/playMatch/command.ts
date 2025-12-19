@@ -49,7 +49,6 @@ const executeAction = async ({
       game,
       pathToResidualNeuralNetworkFolder:
         pathToResidualNeuralNetworkFolderOrUndefined,
-      seed,
     });
   })();
 

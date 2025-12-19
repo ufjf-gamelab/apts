@@ -15,7 +15,7 @@ import type { ProcessMessage } from "../types.js";
 import type { ResidualNeuralNetwork } from "./ResidualNeuralNetwork.js";
 
 import { getQualityOfMatchFromScore } from "../qualityOfMatch.js";
-import { searchQualityOfMoves, type QualityOfMove } from "../qualityOfMove.js";
+import { type QualityOfMove, searchQualityOfMoves } from "../qualityOfMove.js";
 import {
   loadTensorFlowModule,
   type TensorFlowModule,

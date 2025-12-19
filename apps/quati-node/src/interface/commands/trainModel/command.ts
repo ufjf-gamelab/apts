@@ -156,7 +156,6 @@ const executeAction = async <
     await loadResidualNeuralNetwork({
       game,
       pathToResidualNeuralNetworkFolder,
-      seed,
     });
   const nameOfModel = nameOfModelOrUndefined ?? residualNeuralNetwork.getName();
 

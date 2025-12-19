@@ -1,4 +1,3 @@
-import type { Seed } from "@repo/engine_core/types.js";
 import type { Game } from "@repo/game/Game.js";
 import type { Move } from "@repo/game/Move.js";
 import type { Player } from "@repo/game/Player.js";
@@ -39,11 +38,9 @@ const loadResidualNeuralNetwork = async <
 >({
   game,
   pathToResidualNeuralNetworkFolder,
-  seed,
 }: {
   game: GenericGame;
   pathToResidualNeuralNetworkFolder: string;
-  seed: Seed;
 }) => {
   const metadata = await loadObject<
     GenericGame,
@@ -64,7 +61,6 @@ const loadResidualNeuralNetwork = async <
   const residualNeuralNetwork = ResidualNeuralNetwork.load({
     game,
     layersModel,
-    seed,
   });
 
   return { metadata, residualNeuralNetwork };
@@ -94,16 +90,13 @@ const loadPredictionModel = async <
 >({
   game,
   pathToResidualNeuralNetworkFolder,
-  seed,
 }: {
   game: GenericGame;
   pathToResidualNeuralNetworkFolder: string;
-  seed: Seed;
 }) => {
   const { metadata, residualNeuralNetwork } = await loadResidualNeuralNetwork({
     game,
     pathToResidualNeuralNetworkFolder,
-    seed,
   });
 
   const predictionModel = new PredictionModel<
