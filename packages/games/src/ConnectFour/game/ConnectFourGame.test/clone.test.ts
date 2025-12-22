@@ -1,7 +1,7 @@
 import {
   createDescriptionForTest,
   createDescriptionForTestsOfCloneMethod,
-} from "@repo/engine_core/test.js";
+} from "@repo/core/test.js";
 import { validateClone } from "@repo/game/Game.test/clone.test.js";
 import { expect, test } from "vitest";
 

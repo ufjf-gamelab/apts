@@ -10,8 +10,8 @@ import type { ExpandAllSearch } from "@repo/search/ExpandAllMonteCarloTree/Expan
 import type { ProcessMessage } from "@repo/search/types.js";
 import type { Answers, Choice, PromptObject } from "prompts";
 
-import { FIRST_INDEX } from "@repo/engine_core/constants.js";
-import { formatMap } from "@repo/engine_core/format.js";
+import { FIRST_INDEX } from "@repo/core/constants.js";
+import { formatMap } from "@repo/core/format.js";
 import { searchQualityOfMoves } from "@repo/search/qualityOfMove.js";
 import { type ParamsOfRandom, Random } from "@repo/search/Random/Random.js";
 

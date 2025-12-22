@@ -1,4 +1,4 @@
-import type { Integer, TensorLikeArray } from "@repo/engine_core/types.js";
+import type { Integer, TensorLikeArray } from "@repo/core/types.js";
 
 import type { Game } from "./Game.js";
 import type { Move } from "./Move.js";

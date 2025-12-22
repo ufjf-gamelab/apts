@@ -1,7 +1,7 @@
 {
   "author": "Gabriel Malosto",
   "dependencies": {
-    "@repo/engine_core": "workspace:*",
+    "@repo/core": "workspace:*",
     "@repo/game": "workspace:*",
     "@repo/search": "workspace:*",
     "@ts-graphviz/adapter": "=3.0.4",
@@ -15,8 +15,8 @@
   "devDependencies": {
     "@repo/eslint_config": "workspace:*",
     "@repo/typescript_config": "workspace:*",
-    "@types/node": "^25.0.0",
-    "eslint": "^9.39.1",
+    "@types/node": "^25.0.3",
+    "eslint": "^9.39.2",
     "jiti": "^2.6.1",
     "typescript": "^5.9.3"
   },

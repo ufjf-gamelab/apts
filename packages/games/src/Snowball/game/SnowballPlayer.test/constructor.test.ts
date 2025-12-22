@@ -1,7 +1,7 @@
 import {
   createDescriptionForTest,
   createDescriptionForTestsOfConstructor,
-} from "@repo/engine_core/test.js";
+} from "@repo/core/test.js";
 import { validateConstructor } from "@repo/game/Player.test/constructor.test.js";
 import { expect, test } from "vitest";
 

@@ -1,4 +1,4 @@
-import type { Integer, Seed } from "@repo/engine_core/types.js";
+import type { Integer, Seed } from "@repo/core/types.js";
 import type { Game } from "@repo/game/Game.js";
 import type { Move } from "@repo/game/Move.js";
 import type { Player } from "@repo/game/Player.js";
@@ -6,7 +6,7 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
-import { parseIntoInt } from "@repo/engine_core/parse.js";
+import { parseIntoInt } from "@repo/core/parse.js";
 import { trainModel } from "@repo/interface/actions/trainModel/action.js";
 import { Command, Option } from "commander";
 import path from "path";

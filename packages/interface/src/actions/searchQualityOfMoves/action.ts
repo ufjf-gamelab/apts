@@ -1,4 +1,4 @@
-import type { Nullable } from "@repo/engine_core/types.js";
+import type { Nullable } from "@repo/core/types.js";
 import type { Game } from "@repo/game/Game.js";
 import type { IndexOfMove, Move } from "@repo/game/Move.js";
 import type { Player } from "@repo/game/Player.js";

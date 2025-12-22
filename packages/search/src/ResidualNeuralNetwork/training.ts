@@ -1,4 +1,4 @@
-import type { Integer, TensorLikeArray } from "@repo/engine_core/types.js";
+import type { Integer, TensorLikeArray } from "@repo/core/types.js";
 import type { Game } from "@repo/game/Game.js";
 import type { Move } from "@repo/game/Move.js";
 import type { IndexOfPlayer, Player } from "@repo/game/Player.js";
@@ -7,7 +7,7 @@ import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 import type * as tfjs from "@tensorflow/tfjs";
 
-import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
+import { INCREMENT_ONE } from "@repo/core/constants.js";
 
 import type { TreeNode } from "../MonteCarloTree/TreeNode.js";
 import type { Random } from "../Random/Random.js";

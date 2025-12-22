@@ -1,10 +1,10 @@
-import type { Integer } from "@repo/engine_core/types.js";
+import type { Integer } from "@repo/core/types.js";
 
 import {
   DECREMENT_ONE,
   FIRST_INDEX,
   LAST_INDEX_IS_LENGTH_MINUS_ONE,
-} from "@repo/engine_core/constants.js";
+} from "@repo/core/constants.js";
 import { Move, type ParamsOfMove } from "@repo/game/Move.js";
 
 import type { ConnectFourState } from "./ConnectFourState.js";

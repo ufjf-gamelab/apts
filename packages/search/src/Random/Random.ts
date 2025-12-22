@@ -1,4 +1,4 @@
-import type { Seed } from "@repo/engine_core/types.js";
+import type { Seed } from "@repo/core/types.js";
 import type { IndexOfMove, Move } from "@repo/game/Move.js";
 import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";

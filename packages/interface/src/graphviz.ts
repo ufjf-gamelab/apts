@@ -1,4 +1,4 @@
-import type { Integer } from "@repo/engine_core/types.js";
+import type { Integer } from "@repo/core/types.js";
 import type { Game } from "@repo/game/Game.js";
 import type { IndexOfMove, Move } from "@repo/game/Move.js";
 import type { Player } from "@repo/game/Player.js";
@@ -13,8 +13,8 @@ import type {
 } from "@repo/search/qualityOfMove.js";
 import type { ParamsOfRandom } from "@repo/search/Random/Random.js";
 
-import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
-import { formatMap } from "@repo/engine_core/format.js";
+import { INCREMENT_ONE } from "@repo/core/constants.js";
+import { formatMap } from "@repo/core/format.js";
 import { AgentGuidedTreeNode } from "@repo/search/AgentGuidedMonteCarloTree/AgentGuidedTreeNode.js";
 import {
   attribute as graphvizAttribute,

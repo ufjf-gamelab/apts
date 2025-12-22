@@ -1,4 +1,4 @@
-import type { Integer, Seed } from "@repo/engine_core/types.js";
+import type { Integer, Seed } from "@repo/core/types.js";
 import type { Game } from "@repo/game/Game.js";
 import type { Move } from "@repo/game/Move.js";
 import type { Player } from "@repo/game/Player.js";
@@ -9,7 +9,7 @@ import type { ExplorationCoefficient } from "@repo/search/MonteCarloTree/Search.
 import type { SofteningCoefficient } from "@repo/search/qualityOfMove.js";
 import type { TrainingMemory } from "@repo/search/ResidualNeuralNetwork/training.js";
 
-import { parseIntoInt } from "@repo/engine_core/parse.js";
+import { parseIntoInt } from "@repo/core/parse.js";
 import { buildTrainingMemory } from "@repo/interface/actions/buildTrainingMemory/action.js";
 import { constructErrorForWhenAgentGuidedSearchHasNotAPredictionModel } from "@repo/interface/constructSearchBasedOnStrategy.js";
 import { Command, Option } from "commander";

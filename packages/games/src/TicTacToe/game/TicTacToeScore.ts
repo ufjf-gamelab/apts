@@ -1,8 +1,8 @@
-import type { Integer } from "@repo/engine_core/types.js";
+import type { Integer } from "@repo/core/types.js";
 import type { IndexOfPlayer } from "@repo/game/Player.js";
 
-import { assertNumberIsFinite } from "@repo/engine_core/assert.js";
-import { FIRST_INDEX, INCREMENT_ONE } from "@repo/engine_core/constants.js";
+import { assertNumberIsFinite } from "@repo/core/assert.js";
+import { FIRST_INDEX, INCREMENT_ONE } from "@repo/core/constants.js";
 import { type Points, Score } from "@repo/game/Score.js";
 
 import type { TicTacToeSlot } from "./TicTacToeSlot.js";

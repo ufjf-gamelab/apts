@@ -1,9 +1,9 @@
-import type { Integer } from "@repo/engine_core/types.js";
+import type { Integer } from "@repo/core/types.js";
 import type { IndexOfMove } from "@repo/game/Move.js";
 import type { IndexOfPlayer } from "@repo/game/Player.js";
 import type { Points } from "@repo/game/Score.js";
 
-import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
+import { INCREMENT_ONE } from "@repo/core/constants.js";
 import {
   constructErrorForFinalState,
   constructErrorForInvalidMove,

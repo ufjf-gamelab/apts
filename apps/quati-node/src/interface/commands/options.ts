@@ -1,4 +1,4 @@
-import { parseIntoFloat, parseIntoInt } from "@repo/engine_core/parse.js";
+import { parseIntoFloat, parseIntoInt } from "@repo/core/parse.js";
 import { strategiesToSearch } from "@repo/interface/constants.js";
 import { Option } from "commander";
 

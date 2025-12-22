@@ -5,7 +5,7 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
-import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
+import { createDescriptionForTestsOfMethod } from "@repo/core/test.js";
 import { expect } from "vitest";
 
 import type { TreeNode } from "../TreeNode.js";

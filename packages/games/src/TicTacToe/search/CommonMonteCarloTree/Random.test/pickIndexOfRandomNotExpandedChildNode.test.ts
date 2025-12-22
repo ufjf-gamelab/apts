@@ -1,7 +1,7 @@
 import type { CommonTreeNode } from "@repo/search/CommonMonteCarloTree/CommonTreeNode.js";
 
-import { SIZE_OF_EMPTY_SET } from "@repo/engine_core/constants.js";
-import { createDescriptionForTest } from "@repo/engine_core/test.js";
+import { SIZE_OF_EMPTY_SET } from "@repo/core/constants.js";
+import { createDescriptionForTest } from "@repo/core/test.js";
 import { Random } from "@repo/search/Random/Random.js";
 import {
   createDescriptionForTestOfPickIndexOfRandomNotExpandedChildNode,

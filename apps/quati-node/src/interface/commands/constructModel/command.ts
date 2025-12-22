@@ -1,6 +1,6 @@
-import type { Integer, Seed } from "@repo/engine_core/types.js";
+import type { Integer, Seed } from "@repo/core/types.js";
 
-import { parseIntoInt } from "@repo/engine_core/parse.js";
+import { parseIntoInt } from "@repo/core/parse.js";
 import { constructModel } from "@repo/interface/actions/constructModel/action.js";
 import { Command, Option } from "commander";
 import path from "path";

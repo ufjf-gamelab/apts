@@ -1,4 +1,4 @@
-import type { Integer, Seed } from "@repo/engine_core/types.js";
+import type { Integer, Seed } from "@repo/core/types.js";
 import type { IndexOfMove } from "@repo/game/Move.js";
 import type { StrategyToSearch } from "@repo/interface/constants.js";
 import type { ExplorationCoefficient } from "@repo/search/MonteCarloTree/Search.js";

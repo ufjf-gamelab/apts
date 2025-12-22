@@ -5,7 +5,7 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
-import { INCREMENT_ONE } from "@repo/engine_core/constants.js";
+import { INCREMENT_ONE } from "@repo/core/constants.js";
 
 import { Search } from "../MonteCarloTree/Search.js";
 import { CommonTreeNode } from "./CommonTreeNode.js";

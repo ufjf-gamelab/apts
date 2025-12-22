@@ -1,6 +1,6 @@
 import type { CommonTreeNode } from "@repo/search/CommonMonteCarloTree/CommonTreeNode.js";
 
-import { createDescriptionForTest } from "@repo/engine_core/test.js";
+import { createDescriptionForTest } from "@repo/core/test.js";
 import {
   createDescriptionForTestOfGetQuantityOfExpandedMoves,
   validateGetQuantityOfExpandedMoves,

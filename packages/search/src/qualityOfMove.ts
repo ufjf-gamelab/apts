@@ -5,7 +5,7 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
-import { assertNumberIsFinite } from "@repo/engine_core/assert.js";
+import { assertNumberIsFinite } from "@repo/core/assert.js";
 
 import type { Search } from "./MonteCarloTree/Search.js";
 import type { TreeNode } from "./MonteCarloTree/TreeNode.js";

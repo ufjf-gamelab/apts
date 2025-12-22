@@ -1,8 +1,8 @@
-import { formatArray } from "@repo/engine_core/format.js";
+import { formatArray } from "@repo/core/format.js";
 import {
   createDescriptionForTest,
   createDescriptionForTestsOfMethod,
-} from "@repo/engine_core/test.js";
+} from "@repo/core/test.js";
 import { expect, test } from "vitest";
 
 import type { SnowballScore } from "../SnowballScore.js";

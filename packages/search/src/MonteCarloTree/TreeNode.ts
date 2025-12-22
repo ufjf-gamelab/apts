@@ -1,4 +1,4 @@
-import type { Integer } from "@repo/engine_core/types.js";
+import type { Integer } from "@repo/core/types.js";
 import type { Game } from "@repo/game/Game.js";
 import type { IndexOfMove, Move } from "@repo/game/Move.js";
 import type { IndexOfPlayer, Player } from "@repo/game/Player.js";
@@ -6,12 +6,12 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
-import { assertNumberIsFinite } from "@repo/engine_core/assert.js";
+import { assertNumberIsFinite } from "@repo/core/assert.js";
 import {
   INCREMENT_ONE,
   LENGTH_OF_EMPTY_LIST,
   NOT_INCREMENT,
-} from "@repo/engine_core/constants.js";
+} from "@repo/core/constants.js";
 
 import type { ExplorationCoefficient } from "./Search.js";
 

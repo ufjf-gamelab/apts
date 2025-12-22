@@ -1,8 +1,8 @@
-import type { Integer } from "@repo/engine_core/types.js";
+import type { Integer } from "@repo/core/types.js";
 import type { IndexOfPlayer } from "@repo/game/Player.js";
 import type { IndexOfSlot } from "@repo/game/Slot.js";
 
-import { FIRST_INDEX } from "@repo/engine_core/constants.js";
+import { FIRST_INDEX } from "@repo/core/constants.js";
 
 import { TicTacToeSlot } from "./TicTacToeSlot.js";
 

@@ -1,5 +1,5 @@
-import { formatArray } from "@repo/engine_core/format.js";
-import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
+import { formatArray } from "@repo/core/format.js";
+import { createDescriptionForTestsOfMethod } from "@repo/core/test.js";
 import { expect } from "vitest";
 
 import type { Game } from "../Game.js";

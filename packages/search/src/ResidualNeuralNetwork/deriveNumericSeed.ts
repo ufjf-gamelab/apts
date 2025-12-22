@@ -1,4 +1,4 @@
-import type { Seed } from "@repo/engine_core/types.js";
+import type { Seed } from "@repo/core/types.js";
 
 const FLAG_REPRESENTING_NOT_TO_SET_SEED = 0;
 const HASH_VALUE_TO_RECALCULATE = "1";

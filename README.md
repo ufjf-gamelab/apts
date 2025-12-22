@@ -52,7 +52,7 @@ Each package and app is 100% [TypeScript](https://www.typescriptlang.org/).
 
 - `@repo/typescript_config`: `tsconfig.json`s used throughout the monorepo.
 - `@repo/eslint_config`: shared `eslint` configurations.
-- `@repo/engine_core`: a functionality library shared by both `node` and `web` applications.
+- `@repo/core`: a functionality library shared by both `node` and `web` applications.
 - `@repo/game`: a library to represent abstract games and their rules.
 - `@repo/games`: a collection of game implementations using the `@repo/game` library.
 - `@repo/search`: a library implementing search algorithms using MCTS and ResNet.

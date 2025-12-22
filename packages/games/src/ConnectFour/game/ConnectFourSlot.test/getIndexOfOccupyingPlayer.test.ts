@@ -1,7 +1,7 @@
 import {
   createDescriptionForTest,
   createDescriptionForTestsOfMethod,
-} from "@repo/engine_core/test.js";
+} from "@repo/core/test.js";
 import { expect, test } from "vitest";
 
 import type { ConnectFourSlot } from "../ConnectFourSlot.js";

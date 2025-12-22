@@ -1,4 +1,4 @@
-import type { Char, Integer } from "@repo/engine_core/types.js";
+import type { Char, Integer } from "@repo/core/types.js";
 
 type IndexOfPlayer = Integer;
 

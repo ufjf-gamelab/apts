@@ -3,7 +3,7 @@ import type { IndexOfSlot } from "@repo/game/Slot.js";
 import {
   createDescriptionForTest,
   createDescriptionForTestsOfMethod,
-} from "@repo/engine_core/test.js";
+} from "@repo/core/test.js";
 import { expect, test } from "vitest";
 
 import type { ConnectFourMove } from "../ConnectFourMove.js";

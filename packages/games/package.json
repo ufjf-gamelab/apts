@@ -1,7 +1,7 @@
 {
   "author": "Gabriel Malosto",
   "dependencies": {
-    "@repo/engine_core": "workspace:*",
+    "@repo/core": "workspace:*",
     "@repo/game": "workspace:*",
     "@repo/search": "workspace:*"
   },
@@ -9,11 +9,11 @@
   "devDependencies": {
     "@repo/eslint_config": "workspace:*",
     "@repo/typescript_config": "workspace:*",
-    "@types/node": "^25.0.0",
-    "@vitest/ui": "^4.0.15",
-    "eslint": "^9.39.1",
+    "@types/node": "^25.0.3",
+    "@vitest/ui": "^4.0.16",
+    "eslint": "^9.39.2",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.15"
+    "vitest": "^4.0.16"
   },
   "exports": {
     "./*": {

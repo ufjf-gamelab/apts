@@ -1,6 +1,6 @@
-import type { TensorLikeArray } from "@repo/engine_core/types.js";
+import type { TensorLikeArray } from "@repo/core/types.js";
 
-import { FIRST_INDEX, INCREMENT_ONE } from "@repo/engine_core/constants.js";
+import { FIRST_INDEX, INCREMENT_ONE } from "@repo/core/constants.js";
 import { State } from "@repo/game/State.js";
 
 import type { ConnectFourGame } from "./ConnectFourGame.js";

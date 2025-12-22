@@ -1,7 +1,7 @@
-import type { Integer } from "@repo/engine_core/types.js";
+import type { Integer } from "@repo/core/types.js";
 import type { IndexOfPlayer } from "@repo/game/Player.js";
 
-import { assertNumberIsFinite } from "@repo/engine_core/assert.js";
+import { assertNumberIsFinite } from "@repo/core/assert.js";
 import { type Points, Score } from "@repo/game/Score.js";
 
 import type { SnowballSlot } from "./SnowballSlot.js";

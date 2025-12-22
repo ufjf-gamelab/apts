@@ -1,4 +1,4 @@
-import { createDescriptionForTestsOfMethod } from "@repo/engine_core/test.js";
+import { createDescriptionForTestsOfMethod } from "@repo/core/test.js";
 import { expect } from "vitest";
 
 import type { Score } from "../Score.js";
