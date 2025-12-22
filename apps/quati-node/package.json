@@ -52,5 +52,5 @@
     "preview": "node dist/index.js --"
   },
   "type": "module",
-  "version": "4.2.0"
+  "version": "4.3.0"
 }

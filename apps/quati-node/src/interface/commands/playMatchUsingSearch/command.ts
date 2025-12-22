@@ -1,8 +1,7 @@
 import type { SofteningCoefficient } from "@repo/search/qualityOfMove.js";
 
-import { playMatch } from "@repo/interface/actions/playMatch/action.js";
+import { playMatchUsingSearch } from "@repo/interface/actions/playMatchUsingSearch/action.js";
 import {
-  type ModeOfPlay,
   modesOfPlay,
   type StrategyToSearch,
 } from "@repo/interface/constants.js";
@@ -30,7 +29,9 @@ const executeAction = async ({
 }: {
   expansions: number;
   exploration: number;
-  mode: ModeOfPlay;
+  mode:
+    | typeof modesOfPlay.computerVersusComputer
+    | typeof modesOfPlay.playerVersusComputer;
   model: string;
   seed: string | undefined;
   softening: SofteningCoefficient;
@@ -52,7 +53,7 @@ const executeAction = async ({
     });
   })();
 
-  await playMatch({
+  await playMatchUsingSearch({
     explorationCoefficient,
     getInput,
     modeOfPlay,
@@ -68,13 +69,18 @@ const executeAction = async ({
   });
 };
 
-const commandToPlayMatch = {
-  command: new Command("play-match")
-    .description("Play against agent using Monte-Carlo Tree Search.")
+const commandToPlayMatchUsingSearch = {
+  command: new Command("play-match-using-search")
+    .description("Play match using Monte-Carlo Tree Search.")
     .action(executeAction),
   options: [
     new Option("--mode <game mode>", "The game mode to play.")
-      .choices(Object.values(modesOfPlay))
+      .choices(
+        Object.values([
+          modesOfPlay.computerVersusComputer,
+          modesOfPlay.playerVersusComputer,
+        ]),
+      )
       .makeOptionMandatory(),
     commonOptions.state,
     commonOptions.strategyToSearch,
@@ -86,4 +92,4 @@ const commandToPlayMatch = {
   ],
 } satisfies DefinitionOfCommand;
 
-export { commandToPlayMatch };
+export { commandToPlayMatchUsingSearch };
