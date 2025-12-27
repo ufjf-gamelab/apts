@@ -5,15 +5,13 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
-import { formatMap } from "@repo/core/format.js";
 import { type ParamsOfRandom, Random } from "@repo/search/Random/Random.js";
 
 import { modesOfPlay } from "../../constants.js";
 import { constructSearchBasedOnStrategy } from "../../constructSearchBasedOnStrategy.js";
-import {
-  playMatchInTheModeComputerVersusComputer,
-  playMatchInTheModePlayerVersusComputer,
-} from "../../play/search.js";
+import { playMatchInTheModeComputerVersusComputer } from "../../play/playMatchInTheModeComputerVersusComputer.js";
+import { playMatchInTheModePlayerVersusComputer } from "../../play/playMatchInTheModePlayerVersusComputer.js";
+import { printInformationAboutMatch } from "../../play/printInformationAboutMatch.js";
 
 const playMatchUsingSearch = async <
   GenericGame extends Game<
@@ -128,22 +126,7 @@ const playMatchUsingSearch = async <
     }
   })();
 
-  processMessage(`\n${finalState.toString()}`);
-  processMessage("End of game.");
-  processMessage(
-    `\n${formatMap({
-      map: new Map(
-        finalState
-          .getScore()
-          .getPointsOfEachPlayer()
-          .entries()
-          .map(([indexOfPlayer, points]) => {
-            const player = game.getPlayer({ indexOfPlayer });
-            return [`(${player?.getSymbol()}) ${player?.getName()}`, points];
-          }),
-      ),
-    })}`,
-  );
+  printInformationAboutMatch({ finalState, processMessage });
 };
 
 export { playMatchUsingSearch };

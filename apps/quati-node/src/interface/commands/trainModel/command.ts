@@ -148,7 +148,14 @@ const executeAction = async <
   const game = selectGameUsingKeyOfGame(keyOfGame);
 
   const { metadata: metadataOfTrainingMemory, trainingMemory } =
-    await loadTrainingMemory({
+    await loadTrainingMemory<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >({
       pathToTrainingMemoryFolder,
     });
 

@@ -8,7 +8,6 @@
     "@ts-graphviz/ast": "=3.0.4",
     "@ts-graphviz/common": "=3.0.4",
     "@ts-graphviz/core": "=3.0.4",
-    "@types/prompts": "^2.4.9",
     "ts-graphviz": "=3.0.4"
   },
   "description": "Definition of actions for the engine.",
@@ -40,5 +39,5 @@
     "test:watch": "vitest --watch"
   },
   "type": "module",
-  "version": "0.0.1"
+  "version": "5.0.0"
 }

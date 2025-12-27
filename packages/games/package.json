@@ -35,5 +35,5 @@
     "test:watch": "vitest --watch"
   },
   "type": "module",
-  "version": "0.0.1"
+  "version": "5.0.0"
 }

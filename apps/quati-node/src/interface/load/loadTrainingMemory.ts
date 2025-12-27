@@ -13,8 +13,6 @@ import type { MetadataOfTrainingMemory } from "../commands/buildTrainingMemory/c
 
 import { loadObject } from "./loadObject.js";
 
-const DEFAULT_VALUE_FOR_INVALID_OUTPUTS = 2e-24;
-
 const loadTrainingMemory = async <
   GenericGame extends Game<
     GenericGame,
@@ -65,8 +63,10 @@ const loadTrainingMemory = async <
     pathToFile: path.join(pathToTrainingMemoryFolder, "memory.json"),
     reviver: (_, value: unknown) => {
       if (typeof value === "string") {
-        if (value === "Infinity" || value === "-Infinity") {
-          return DEFAULT_VALUE_FOR_INVALID_OUTPUTS;
+        if (value === "Infinity") {
+          return Infinity;
+        } else if (value === "-Infinity") {
+          return -Infinity;
         }
         return parseIntoFloat(value);
       }

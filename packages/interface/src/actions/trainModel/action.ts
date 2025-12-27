@@ -9,6 +9,8 @@ import type { ResidualNeuralNetwork } from "@repo/search/ResidualNeuralNetwork/R
 
 import { train } from "@repo/search/ResidualNeuralNetwork/training.js";
 
+import { removeInvalidValuesFromTrainingMemory } from "./removeInvalidValuesFromTrainingMemory.js";
+
 const trainModel = async <
   GenericGame extends Game<
     GenericGame,
@@ -47,7 +49,7 @@ const trainModel = async <
   residualNeuralNetwork,
   scheme,
   sizeOfBatch,
-  trainingMemory,
+  trainingMemory: unprocessedTrainingMemory,
 }: Pick<
   Parameters<
     ResidualNeuralNetwork<
@@ -71,6 +73,9 @@ const trainModel = async <
   > & {
     processLogs: (logs: Record<string, number>[]) => void;
   }) => {
+  const trainingMemory = removeInvalidValuesFromTrainingMemory({
+    trainingMemory: unprocessedTrainingMemory,
+  });
   const logs = await train({
     processMessage,
     quantityOfEpochs,

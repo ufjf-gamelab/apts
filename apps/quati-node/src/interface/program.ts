@@ -4,7 +4,7 @@ import { definitionsOfCommands } from "./commands/commands.js";
 
 program
   .name("quati")
-  .version("4.3.0")
+  .version("5.0.0")
   .description(
     "Engine to simulate and create AI models for tabletop games, inspired by the AlphaZero algorithm.",
   );
