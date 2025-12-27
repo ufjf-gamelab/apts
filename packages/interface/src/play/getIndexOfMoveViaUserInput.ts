@@ -5,7 +5,7 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
-import type { Choice, GetInput } from "../input.js";
+import type { Choice, Select } from "../input.js";
 
 const getIndexOfMoveViaUserInput = async <
   GenericGame extends Game<
@@ -30,35 +30,32 @@ const getIndexOfMoveViaUserInput = async <
   >,
 >({
   game,
-  getInput,
   indexesOfValidMoves,
+  select,
 }: {
   game: GenericGame;
-  getInput: GetInput;
   indexesOfValidMoves: ReadonlySet<IndexOfMove>;
+  select: Select<IndexOfMove>;
 }): Promise<IndexOfMove> => {
-  const input = await getInput({
-    choices: indexesOfValidMoves
-      .values()
-      .map((indexOfMove) => {
-        const move = game.getMove({ indexOfMove });
-        if (move === null) {
-          throw new Error("Could not retrieve this move.");
-        }
-        return {
-          description: move.getDescription(),
-          title: move.getTitle(),
-          value: indexOfMove,
-        } as Choice;
-      })
-      .toArray(),
-    message: "Enter a move",
-    name: "indexOfMove",
-    type: "select",
-  });
+  const choices: Choice<IndexOfMove>[] = indexesOfValidMoves
+    .values()
+    .map((indexOfMove) => {
+      const move = game.getMove({ indexOfMove });
+      if (move === null) {
+        throw new Error("Could not retrieve this move.");
+      }
+      return {
+        description: move.getDescription(),
+        name: `(${indexOfMove}) ${move.getTitle()}`,
+        value: indexOfMove,
+      };
+    })
+    .toArray();
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return input["indexOfMove"];
+  return await select({
+    choices,
+    message: "Select a move",
+  });
 };
 
 export { getIndexOfMoveViaUserInput };

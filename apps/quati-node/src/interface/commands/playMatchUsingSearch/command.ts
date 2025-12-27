@@ -1,5 +1,6 @@
 import type { SofteningCoefficient } from "@repo/search/qualityOfMove.js";
 
+import { select } from "@inquirer/prompts";
 import { playMatchUsingSearch } from "@repo/interface/actions/playMatchUsingSearch/action.js";
 import {
   modesOfPlay,
@@ -9,7 +10,6 @@ import { Command, Option } from "commander";
 
 import type { DefinitionOfCommand } from "../commands.js";
 
-import { getInput } from "../../../input.js";
 import {
   type KeyOfState,
   selectStateUsingKeyOfState,
@@ -55,7 +55,6 @@ const executeAction = async ({
 
   await playMatchUsingSearch({
     explorationCoefficient,
-    getInput,
     modeOfPlay,
     predictionModel: predictionModelAndMetadataOrNull
       ? predictionModelAndMetadataOrNull.predictionModel
@@ -63,6 +62,7 @@ const executeAction = async ({
     processMessage: console.info,
     quantityOfExpansions,
     seed,
+    select,
     softeningCoefficient,
     state,
     strategyToSearch,

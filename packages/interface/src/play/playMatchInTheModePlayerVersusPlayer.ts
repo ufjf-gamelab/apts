@@ -31,8 +31,8 @@ const playMatchInTheModePlayerVersusPlayer = async <
     GenericState
   >,
 >({
-  getInput,
   processMessage,
+  select,
   state,
 }: Pick<
   Parameters<
@@ -45,7 +45,7 @@ const playMatchInTheModePlayerVersusPlayer = async <
       GenericState
     >
   >[0],
-  "getInput"
+  "select"
 > & {
   processMessage: ProcessMessage;
   state: GenericState;
@@ -65,8 +65,8 @@ const playMatchInTheModePlayerVersusPlayer = async <
     // eslint-disable-next-line no-await-in-loop
     const indexOfMove = await getIndexOfMoveViaUserInput({
       game,
-      getInput,
       indexesOfValidMoves,
+      select,
     });
 
     currentState = game.play({ indexOfMove, state: currentState });

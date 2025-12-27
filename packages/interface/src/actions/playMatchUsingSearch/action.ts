@@ -36,12 +36,12 @@ const playMatchUsingSearch = async <
   >,
 >({
   explorationCoefficient,
-  getInput,
   modeOfPlay,
   predictionModel,
   processMessage,
   quantityOfExpansions,
   seed,
+  select,
   softeningCoefficient,
   state,
   strategyToSearch,
@@ -72,7 +72,7 @@ const playMatchUsingSearch = async <
         GenericState
       >
     >[0],
-    "getInput" | "processMessage" | "softeningCoefficient" | "state"
+    "processMessage" | "select" | "softeningCoefficient" | "state"
   > &
   Pick<ParamsOfRandom, "seed"> & {
     modeOfPlay:
@@ -112,10 +112,10 @@ const playMatchUsingSearch = async <
       }
       case modesOfPlay.playerVersusComputer: {
         return await playMatchInTheModePlayerVersusComputer({
-          getInput,
           processMessage,
           random,
           search,
+          select,
           softeningCoefficient,
           state,
         });

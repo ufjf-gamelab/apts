@@ -34,11 +34,11 @@ const getIndexOfMove = async <
   >,
 >({
   currentPlayerIsUser,
-  getInput,
   indexesOfValidMoves,
   processMessage,
   random,
   search,
+  select,
   softeningCoefficient,
   state,
 }: Pick<
@@ -70,15 +70,15 @@ const getIndexOfMove = async <
         GenericState
       >
     >[0],
-    "getInput" | "indexesOfValidMoves"
+    "indexesOfValidMoves" | "select"
   > & {
     currentPlayerIsUser: boolean;
   }) => {
   if (currentPlayerIsUser) {
     return await getIndexOfMoveViaUserInput({
       game: state.getGame(),
-      getInput,
       indexesOfValidMoves,
+      select,
     });
   }
   return getIndexOfMoveUsingSearch({
@@ -113,10 +113,10 @@ const playMatchInTheModePlayerVersusComputer = async <
     GenericState
   >,
 >({
-  getInput,
   processMessage,
   random,
   search,
+  select,
   softeningCoefficient,
   state,
 }: Pick<
@@ -130,10 +130,10 @@ const playMatchInTheModePlayerVersusComputer = async <
       GenericState
     >
   >[0],
-  | "getInput"
   | "processMessage"
   | "random"
   | "search"
+  | "select"
   | "softeningCoefficient"
   | "state"
 >) => {
@@ -155,11 +155,11 @@ const playMatchInTheModePlayerVersusComputer = async <
     // eslint-disable-next-line no-await-in-loop
     const indexOfMove = await getIndexOfMove({
       currentPlayerIsUser,
-      getInput,
       indexesOfValidMoves,
       processMessage,
       random,
       search,
+      select,
       softeningCoefficient,
       state: currentState,
     });

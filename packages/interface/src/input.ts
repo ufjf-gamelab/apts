@@ -1,7 +1,12 @@
-import type { Answers, Choice, PromptObject } from "prompts";
+interface Choice<Value> {
+  description?: string;
+  name: string;
+  value: Value;
+}
 
-type GetInput = (
-  questions: PromptObject | PromptObject[],
-) => Promise<Answers<string>>;
+type Select<Value> = (config: {
+  choices: readonly Choice<Value>[];
+  message: string;
+}) => Promise<Value>;
 
-export type { Choice, GetInput };
+export type { Choice, Select };

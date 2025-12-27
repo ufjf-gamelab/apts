@@ -68,7 +68,7 @@ export const config = (tsconfigRootDir: string): Linter.Config[] => [
       "@typescript-eslint/explicit-member-accessibility": "error",
       "@typescript-eslint/explicit-module-boundary-types": "off",
       "@typescript-eslint/no-magic-numbers": [
-        "error",
+        "warn",
         {
           ignoreEnums: true,
           ignoreNumericLiteralTypes: true,

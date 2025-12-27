@@ -1,9 +1,9 @@
+import { select } from "@inquirer/prompts";
 import { playMatchInTheModePlayerVersusPlayer } from "@repo/interface/actions/playMatchInTheModePlayerVersusPlayer/action.js";
 import { Command } from "commander";
 
 import type { DefinitionOfCommand } from "../commands.js";
 
-import { getInput } from "../../../input.js";
 import {
   type KeyOfState,
   selectStateUsingKeyOfState,
@@ -18,8 +18,8 @@ const executeAction = async ({
   const state = selectStateUsingKeyOfState(keyOfState);
 
   await playMatchInTheModePlayerVersusPlayer({
-    getInput,
     processMessage: console.info,
+    select,
     state,
   });
 };

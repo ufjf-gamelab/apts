@@ -23,8 +23,9 @@
       "dependsOn": ["^lint:fix"]
     },
     "preview": {
+      "cache": false,
       "dependsOn": ["build"],
-      "cache": false
+      "persistent": true
     },
     "test": {
       "dependsOn": ["^test"]
@@ -36,5 +37,6 @@
     "transit": {
       "dependsOn": ["^transit"]
     }
-  }
+  },
+  "ui": "tui"
 }

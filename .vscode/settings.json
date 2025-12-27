@@ -61,5 +61,6 @@
     "pnpm-workspace.yaml": true
   },
   "svg.preview.mode": "img",
-  "vitest.maximumConfigs": 16
+  "vitest.maximumConfigs": 16,
+  "errorLens.enabledDiagnosticLevels": ["error", "info"]
 }

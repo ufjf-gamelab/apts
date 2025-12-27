@@ -30,8 +30,8 @@ const playMatchInTheModePlayerVersusPlayer = async <
     GenericState
   >,
 >({
-  getInput,
   processMessage,
+  select,
   state,
 }: Pick<
   Parameters<
@@ -44,15 +44,15 @@ const playMatchInTheModePlayerVersusPlayer = async <
       GenericState
     >
   >[0],
-  "getInput" | "processMessage" | "state"
+  "processMessage" | "select" | "state"
 >): Promise<void> => {
   const game = state.getGame();
   processMessage(`Game: ${game.getName()}`);
 
   const finalState = await (async () =>
     await internalPlayMatchInTheModePlayerVersusPlayer({
-      getInput,
       processMessage,
+      select,
       state,
     }))();
 
