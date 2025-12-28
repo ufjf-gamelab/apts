@@ -70,6 +70,7 @@ class Random {
 
     return indexOfMove;
   }
+
   public pickIndexOfRandomValidMove<
     GenericGame extends Game<
       GenericGame,

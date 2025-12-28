@@ -6,6 +6,7 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
+import { formatObjectWithNotFiniteNumbers } from "@repo/core/format.js";
 import { parseIntoInt } from "@repo/core/parse.js";
 import { trainModel } from "@repo/interface/actions/trainModel/action.js";
 import { Command, Option } from "commander";
@@ -41,17 +42,8 @@ const processLogs = ({
     logs: Record<string, number>[];
   }) => {
   const writeStream = createWriteStream({ canOverwrite, filePath });
-  writeStream.write(
-    JSON.stringify(logs, (_, value: number) => {
-      if (value === Infinity) {
-        return "Infinity";
-      }
-      if (value === -Infinity) {
-        return "-Infinity";
-      }
-      return value;
-    }),
-  );
+  const object = formatObjectWithNotFiniteNumbers({ object: logs });
+  writeStream.write(object);
 };
 
 const processMetadata = ({

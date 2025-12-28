@@ -59,7 +59,7 @@ const calculateQualityOfMoves = <
     .entries()
     .forEach(([indexOfMove, child]) => {
       if (child !== null) {
-        qualityOfMoves[indexOfMove] = child.getQuality();
+        qualityOfMoves[indexOfMove] = child.getQualityOfMove();
       }
     });
 

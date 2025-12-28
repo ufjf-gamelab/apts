@@ -5,8 +5,9 @@ import type {
   SofteningCoefficient,
 } from "@repo/search/qualityOfMove.js";
 
+import { formatObjectWithNotFiniteNumbers } from "@repo/core/format.js";
 import { predictQualityOfMoves } from "@repo/interface/actions/predictQualityOfMoves/action.js";
-import { constructErrorForWhenAgentGuidedSearchHasNotAPredictionModel } from "@repo/interface/constructSearchBasedOnStrategy.js";
+import { constructErrorForWhenPredictionModelHasNotBeenProvided } from "@repo/interface/constructSearchBasedOnStrategy.js";
 import { Command, Option } from "commander";
 import path from "path";
 
@@ -80,8 +81,8 @@ const processPredictions = ({
     canOverwrite,
     filePath,
   });
-  writeStream.write(
-    JSON.stringify({
+  const object = formatObjectWithNotFiniteNumbers({
+    object: {
       probabilityOfPlayingEachMove: probabilityOfPlayingEachMove
         ? Object.fromEntries(probabilityOfPlayingEachMove)
         : null,
@@ -89,8 +90,9 @@ const processPredictions = ({
         ? Object.fromEntries(qualityOfEachMove)
         : null,
       qualityOfMatch,
-    }),
-  );
+    },
+  });
+  writeStream.write(object);
 };
 
 // eslint-disable-next-line max-statements
@@ -117,7 +119,7 @@ const executeAction = async ({
   const game = state.getGame();
 
   if (typeof pathToResidualNeuralNetworkFolderOrUndefined === "undefined") {
-    throw constructErrorForWhenAgentGuidedSearchHasNotAPredictionModel();
+    throw constructErrorForWhenPredictionModelHasNotBeenProvided();
   }
   const { metadata: metadataOfModel, predictionModel } =
     await loadPredictionModel({

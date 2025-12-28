@@ -8,12 +8,11 @@ import type { State } from "@repo/game/State.js";
 import { type ParamsOfRandom, Random } from "@repo/search/Random/Random.js";
 
 import { modesOfPlay } from "../../constants.js";
-import { constructSearchBasedOnStrategy } from "../../constructSearchBasedOnStrategy.js";
 import { printInformationAboutMatch } from "../../play/printInformationAboutMatch.js";
 import { playMatchInTheModeComputerVersusComputer } from "./playMatchInTheModeComputerVersusComputer.js";
 import { playMatchInTheModePlayerVersusComputer } from "./playMatchInTheModePlayerVersusComputer.js";
 
-const playMatchUsingSearch = async <
+const playMatchUsingAgent = async <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -35,19 +34,16 @@ const playMatchUsingSearch = async <
     GenericState
   >,
 >({
-  explorationCoefficient,
   modeOfPlay,
   predictionModel,
   processMessage,
-  quantityOfExpansions,
   seed,
   select,
   softeningCoefficient,
   state,
-  strategyToSearch,
 }: Pick<
   Parameters<
-    typeof constructSearchBasedOnStrategy<
+    typeof playMatchInTheModePlayerVersusComputer<
       GenericGame,
       GenericMove,
       GenericPlayer,
@@ -56,24 +52,12 @@ const playMatchUsingSearch = async <
       GenericState
     >
   >[0],
-  | "explorationCoefficient"
   | "predictionModel"
-  | "quantityOfExpansions"
-  | "strategyToSearch"
+  | "processMessage"
+  | "select"
+  | "softeningCoefficient"
+  | "state"
 > &
-  Pick<
-    Parameters<
-      typeof playMatchInTheModePlayerVersusComputer<
-        GenericGame,
-        GenericMove,
-        GenericPlayer,
-        GenericScore,
-        GenericSlot,
-        GenericState
-      >
-    >[0],
-    "processMessage" | "select" | "softeningCoefficient" | "state"
-  > &
   Pick<ParamsOfRandom, "seed"> & {
     modeOfPlay:
       | typeof modesOfPlay.computerVersusComputer
@@ -85,36 +69,21 @@ const playMatchUsingSearch = async <
   processMessage(`Game: ${game.getName()}`);
 
   const finalState = await (async () => {
-    const search = constructSearchBasedOnStrategy<
-      GenericGame,
-      GenericMove,
-      GenericPlayer,
-      GenericScore,
-      GenericSlot,
-      GenericState
-    >({
-      explorationCoefficient,
-      predictionModel,
-      quantityOfExpansions,
-      random,
-      strategyToSearch,
-    });
-
     switch (modeOfPlay) {
       case modesOfPlay.computerVersusComputer: {
         return playMatchInTheModeComputerVersusComputer({
+          predictionModel,
           processMessage,
           random,
-          search,
           softeningCoefficient,
           state,
         });
       }
       case modesOfPlay.playerVersusComputer: {
         return await playMatchInTheModePlayerVersusComputer({
+          predictionModel,
           processMessage,
           random,
-          search,
           select,
           softeningCoefficient,
           state,
@@ -129,4 +98,4 @@ const playMatchUsingSearch = async <
   printInformationAboutMatch({ finalState, processMessage });
 };
 
-export { playMatchUsingSearch };
+export { playMatchUsingAgent };

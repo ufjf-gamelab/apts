@@ -88,6 +88,7 @@ abstract class Game<
     this.players = players;
     this.slots = slots;
   }
+
   public abstract clone(): GenericGame;
 
   public abstract constructInitialState(): GenericState;

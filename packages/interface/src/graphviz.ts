@@ -399,7 +399,7 @@ const constructGraphvizGraph = <
       graph,
       indexOfPlayedMove,
       parentNode: parentGraphvizNode,
-      qualityOfNode: currentNode.getQuality(),
+      qualityOfNode: currentNode.getQualityOfMove(),
     });
   }
 

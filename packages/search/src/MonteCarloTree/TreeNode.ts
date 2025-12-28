@@ -242,11 +242,6 @@ abstract class TreeNode<
     return this.indexOfPlayedMove;
   }
 
-  public getQuality(): number {
-    // TODO: Try to align exploitation (quantity of visits) with lack of iterations when state is near a final one (when MCTS rarely visits any grandchildren).
-    return assertNumberIsFinite(this.quantityOfVisits);
-  }
-
   public getQualityOfMatch() {
     return this.qualityOfMatch;
   }
@@ -264,6 +259,13 @@ abstract class TreeNode<
       indexOfPlayerWhoPlayedMove: this.indexOfPlayerWhoPlayedMove,
       score,
     });
+  }
+
+  public getQualityOfMove(): number {
+    // TODO: Try to align exploitation (quantity of visits) with lack of iterations when state is near a final one (when MCTS rarely visits any grandchildren).
+    const qualityComponent = this.qualityOfMatch;
+    const visitsComponent = this.quantityOfVisits ** (1 / 4);
+    return assertNumberIsFinite(qualityComponent * visitsComponent);
   }
 
   public getQuantityOfExpandedMoves(): Integer {

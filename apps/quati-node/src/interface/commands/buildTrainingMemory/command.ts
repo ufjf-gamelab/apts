@@ -9,9 +9,10 @@ import type { ExplorationCoefficient } from "@repo/search/MonteCarloTree/Search.
 import type { SofteningCoefficient } from "@repo/search/qualityOfMove.js";
 import type { TrainingMemory } from "@repo/search/ResidualNeuralNetwork/training.js";
 
+import { formatObjectWithNotFiniteNumbers } from "@repo/core/format.js";
 import { parseIntoInt } from "@repo/core/parse.js";
 import { buildTrainingMemory } from "@repo/interface/actions/buildTrainingMemory/action.js";
-import { constructErrorForWhenAgentGuidedSearchHasNotAPredictionModel } from "@repo/interface/constructSearchBasedOnStrategy.js";
+import { constructErrorForWhenPredictionModelHasNotBeenProvided } from "@repo/interface/constructSearchBasedOnStrategy.js";
 import { Command, Option } from "commander";
 import path from "path";
 
@@ -89,17 +90,10 @@ const processTrainingMemory = ({
     canOverwrite,
     filePath,
   });
-  writeStream.write(
-    JSON.stringify(trainingMemory, (_, value: number) => {
-      if (value === Infinity) {
-        return "Infinity";
-      }
-      if (value === -Infinity) {
-        return "-Infinity";
-      }
-      return value;
-    }),
-  );
+  const stringifiedTrainingMemory = formatObjectWithNotFiniteNumbers({
+    object: trainingMemory,
+  });
+  writeStream.write(stringifiedTrainingMemory);
 };
 
 const executeAction = async <
@@ -149,7 +143,7 @@ const executeAction = async <
   softening: SofteningCoefficient;
 }): Promise<void> => {
   if (typeof pathToResidualNeuralNetworkFolder === "undefined") {
-    throw constructErrorForWhenAgentGuidedSearchHasNotAPredictionModel();
+    throw constructErrorForWhenPredictionModelHasNotBeenProvided();
   }
 
   const seed = seedOrUndefined ?? Math.random().toString();

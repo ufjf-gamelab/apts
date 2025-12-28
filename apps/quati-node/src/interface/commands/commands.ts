@@ -3,6 +3,7 @@ import type { Argument, Command, Option } from "commander";
 import { commandToBuildTrainingMemory } from "./buildTrainingMemory/command.js";
 import { commandToConstructModel } from "./constructModel/command.js";
 import { commandToPlayMatchInTheModePlayerVersusPlayer } from "./playMatchInTheModePlayerVersusPlayer/command.js";
+import { commandToPlayMatchUsingAgent } from "./playMatchUsingAgent/command.js";
 import { commandToPlayMatchUsingSearch } from "./playMatchUsingSearch/command.js";
 import { commandToPredictQualityOfMoves } from "./predictQualityOfMoves/command.js";
 import { commandToSearchQualityOfMoves } from "./searchQualityOfMoves/command.js";
@@ -17,6 +18,7 @@ interface DefinitionOfCommand {
 const definitionsOfCommands: DefinitionOfCommand[] = [
   commandToSearchQualityOfMoves,
   commandToPlayMatchUsingSearch,
+  commandToPlayMatchUsingAgent,
   commandToPredictQualityOfMoves,
   commandToPlayMatchInTheModePlayerVersusPlayer,
   commandToConstructModel,

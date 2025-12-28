@@ -7,7 +7,7 @@ import type { State } from "@repo/game/State.js";
 
 import type { Choice, Select } from "../input.js";
 
-const getIndexOfMoveViaUserInput = async <
+const getIndexOfMoveUsingUserInput = async <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -58,4 +58,4 @@ const getIndexOfMoveViaUserInput = async <
   });
 };
 
-export { getIndexOfMoveViaUserInput };
+export { getIndexOfMoveUsingUserInput };

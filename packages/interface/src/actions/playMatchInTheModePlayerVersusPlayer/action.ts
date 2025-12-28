@@ -5,8 +5,8 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
-import { playMatchInTheModePlayerVersusPlayer as internalPlayMatchInTheModePlayerVersusPlayer } from "../../play/playMatchInTheModePlayerVersusPlayer.js";
 import { printInformationAboutMatch } from "../../play/printInformationAboutMatch.js";
+import { playMatchInTheModePlayerVersusPlayer as internalPlayMatchInTheModePlayerVersusPlayer } from "./playMatchInTheModePlayerVersusPlayer.js";
 
 const playMatchInTheModePlayerVersusPlayer = async <
   GenericGame extends Game<

@@ -6,8 +6,8 @@ import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 import type { ProcessMessage } from "@repo/search/types.js";
 
-import { getIndexOfMoveViaUserInput } from "./getIndexOfMoveViaUserInput.js";
-import { printInformationAboutCurrentTurn } from "./printInformationAboutCurrentTurn.js";
+import { getIndexOfMoveUsingUserInput } from "../../play/getIndexOfMoveUsingUserInput.js";
+import { printInformationAboutCurrentTurn } from "../../play/printInformationAboutCurrentTurn.js";
 
 const playMatchInTheModePlayerVersusPlayer = async <
   GenericGame extends Game<
@@ -36,7 +36,7 @@ const playMatchInTheModePlayerVersusPlayer = async <
   state,
 }: Pick<
   Parameters<
-    typeof getIndexOfMoveViaUserInput<
+    typeof getIndexOfMoveUsingUserInput<
       GenericGame,
       GenericMove,
       GenericPlayer,
@@ -63,7 +63,7 @@ const playMatchInTheModePlayerVersusPlayer = async <
     });
 
     // eslint-disable-next-line no-await-in-loop
-    const indexOfMove = await getIndexOfMoveViaUserInput({
+    const indexOfMove = await getIndexOfMoveUsingUserInput({
       game,
       indexesOfValidMoves,
       select,

@@ -65,8 +65,12 @@ const loadTrainingMemory = async <
       if (typeof value === "string") {
         if (value === "Infinity") {
           return Infinity;
-        } else if (value === "-Infinity") {
+        }
+        if (value === "-Infinity") {
           return -Infinity;
+        }
+        if (value === "NaN") {
+          return Number.NaN;
         }
         return parseIntoFloat(value);
       }

@@ -14,4 +14,18 @@ const parseIntoFloat = (value: string) => {
   return parsedValue;
 };
 
-export { parseIntoFloat, parseIntoInt };
+const parseObjectWithNotFiniteNumbers = ({ object }: { object: object }) =>
+  JSON.stringify(object, (_, value: number) => {
+    if (value === Infinity) {
+      return "Infinity";
+    }
+    if (value === -Infinity) {
+      return "-Infinity";
+    }
+    if (Number.isNaN(value)) {
+      return "NaN";
+    }
+    return value;
+  });
+
+export { parseIntoFloat, parseIntoInt, parseObjectWithNotFiniteNumbers };

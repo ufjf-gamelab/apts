@@ -7,9 +7,9 @@ import type { State } from "@repo/game/State.js";
 
 import { FIRST_INDEX } from "@repo/core/constants.js";
 
-import { getIndexOfMoveViaUserInput } from "./getIndexOfMoveViaUserInput.js";
-import { printInformationAboutCurrentTurn } from "./printInformationAboutCurrentTurn.js";
-import { getIndexOfMoveUsingSearch } from "./search.js";
+import { getIndexOfMoveUsingUserInput } from "../../play/getIndexOfMoveUsingUserInput.js";
+import { printInformationAboutCurrentTurn } from "../../play/printInformationAboutCurrentTurn.js";
+import { getIndexOfMoveUsingSearch } from "./getIndexOfMoveUsingSearch.js";
 
 const getIndexOfMove = async <
   GenericGame extends Game<
@@ -61,7 +61,7 @@ const getIndexOfMove = async <
 > &
   Pick<
     Parameters<
-      typeof getIndexOfMoveViaUserInput<
+      typeof getIndexOfMoveUsingUserInput<
         GenericGame,
         GenericMove,
         GenericPlayer,
@@ -75,7 +75,7 @@ const getIndexOfMove = async <
     currentPlayerIsUser: boolean;
   }) => {
   if (currentPlayerIsUser) {
-    return await getIndexOfMoveViaUserInput({
+    return await getIndexOfMoveUsingUserInput({
       game: state.getGame(),
       indexesOfValidMoves,
       select,

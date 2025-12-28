@@ -15,8 +15,8 @@ import { ExpandAllSearch } from "@repo/search/ExpandAllMonteCarloTree/ExpandAllS
 
 import type { StrategyToSearch } from "./constants.js";
 
-const constructErrorForWhenAgentGuidedSearchHasNotAPredictionModel = () =>
-  new Error("Agent-guided search requires a model.");
+const constructErrorForWhenPredictionModelHasNotBeenProvided = () =>
+  new Error("A prediction model has not been provided.");
 
 type ParamsOfConstructSearchBasedOnStrategy<
   GenericGame extends Game<
@@ -94,7 +94,7 @@ const constructSearchBasedOnStrategy = <
   switch (strategyToSearch) {
     case "agentGuided": {
       if (predictionModel === null) {
-        throw constructErrorForWhenAgentGuidedSearchHasNotAPredictionModel();
+        throw constructErrorForWhenPredictionModelHasNotBeenProvided();
       }
       return new AgentGuidedSearch<
         GenericGame,
@@ -137,6 +137,6 @@ const constructSearchBasedOnStrategy = <
 };
 
 export {
-  constructErrorForWhenAgentGuidedSearchHasNotAPredictionModel,
+  constructErrorForWhenPredictionModelHasNotBeenProvided,
   constructSearchBasedOnStrategy,
 };

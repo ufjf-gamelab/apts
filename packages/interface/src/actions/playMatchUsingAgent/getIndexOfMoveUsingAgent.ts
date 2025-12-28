@@ -4,16 +4,11 @@ import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
-import type { AgentGuidedSearch } from "@repo/search/AgentGuidedMonteCarloTree/AgentGuidedSearch.js";
-import type { CommonSearch } from "@repo/search/CommonMonteCarloTree/CommonSearch.js";
-import type { ExpandAllSearch } from "@repo/search/ExpandAllMonteCarloTree/ExpandAllSearch.js";
 import type { Random } from "@repo/search/Random/Random.js";
+import type { PredictionModel } from "@repo/search/ResidualNeuralNetwork/PredictionModel.js";
 import type { ProcessMessage } from "@repo/search/types.js";
 
-import { searchQualityOfMoves } from "@repo/search/qualityOfMove.js";
-
-
-const getIndexOfMoveUsingSearch = <
+const getIndexOfMoveUsingAgent = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -36,9 +31,9 @@ const getIndexOfMoveUsingSearch = <
   >,
 >({
   indexesOfValidMoves,
+  predictionModel,
   processMessage,
   random,
-  search,
   softeningCoefficient,
   state,
 }: Pick<
@@ -46,39 +41,21 @@ const getIndexOfMoveUsingSearch = <
   "softeningCoefficient"
 > & {
   indexesOfValidMoves: ReadonlySet<IndexOfMove>;
+  predictionModel: PredictionModel<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >;
   processMessage: ProcessMessage;
   random: Random;
-  search:
-    | AgentGuidedSearch<
-        GenericGame,
-        GenericMove,
-        GenericPlayer,
-        GenericScore,
-        GenericSlot,
-        GenericState
-      >
-    | CommonSearch<
-        GenericGame,
-        GenericMove,
-        GenericPlayer,
-        GenericScore,
-        GenericSlot,
-        GenericState
-      >
-    | ExpandAllSearch<
-        GenericGame,
-        GenericMove,
-        GenericPlayer,
-        GenericScore,
-        GenericSlot,
-        GenericState
-      >;
   state: GenericState;
 }) => {
   const game = state.getGame();
 
-  const qualitiesOfMoves = searchQualityOfMoves({
-    search,
+  const { qualitiesOfMoves } = predictionModel.predict({
     state,
   });
 
@@ -95,6 +72,4 @@ const getIndexOfMoveUsingSearch = <
   return indexOfPickedMove;
 };
 
-
-
-export { getIndexOfMoveUsingSearch };
+export { getIndexOfMoveUsingAgent };
