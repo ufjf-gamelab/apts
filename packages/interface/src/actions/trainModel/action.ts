@@ -7,7 +7,10 @@ import type { State } from "@repo/game/State.js";
 import type { TreeNode } from "@repo/search/MonteCarloTree/TreeNode.js";
 import type { ResidualNeuralNetwork } from "@repo/search/ResidualNeuralNetwork/ResidualNeuralNetwork.js";
 
-import { train } from "@repo/search/ResidualNeuralNetwork/training.js";
+import {
+  type Logs,
+  train,
+} from "@repo/search/ResidualNeuralNetwork/training.js";
 
 import { removeInvalidValuesFromTrainingMemory } from "./removeInvalidValuesFromTrainingMemory.js";
 
@@ -43,7 +46,7 @@ const trainModel = async <
   >,
 >({
   path,
-  processLogs,
+  processArrayOfLogs,
   processMessage,
   quantityOfEpochs,
   residualNeuralNetwork,
@@ -64,26 +67,43 @@ const trainModel = async <
   "path" | "scheme"
 > &
   Pick<
-    Parameters<typeof train>[0],
+    Parameters<
+      typeof train<
+        GenericGame,
+        GenericMove,
+        GenericPlayer,
+        GenericScore,
+        GenericSlot,
+        GenericState
+      >
+    >[0],
     | "processMessage"
     | "quantityOfEpochs"
     | "residualNeuralNetwork"
     | "sizeOfBatch"
     | "trainingMemory"
   > & {
-    processLogs: (logs: Record<string, number>[]) => void;
+    processArrayOfLogs: (arrayOfLogs: Logs[]) => void;
   }) => {
   const trainingMemory = removeInvalidValuesFromTrainingMemory({
     trainingMemory: unprocessedTrainingMemory,
   });
-  const logs = await train({
+  processMessage(`Size of training memory: ${trainingMemory.values.length}`);
+  const arrayOfLogs = await train<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >({
     processMessage,
     quantityOfEpochs,
     residualNeuralNetwork,
     sizeOfBatch,
     trainingMemory,
   });
-  processLogs(logs);
+  processArrayOfLogs(arrayOfLogs);
 
   await residualNeuralNetwork.save({ path, scheme });
 };

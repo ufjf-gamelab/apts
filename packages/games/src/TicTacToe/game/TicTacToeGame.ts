@@ -1,4 +1,3 @@
-import type { Integer } from "@repo/core/types.js";
 import type { IndexOfMove } from "@repo/game/Move.js";
 import type { IndexOfPlayer } from "@repo/game/Player.js";
 import type { Points } from "@repo/game/Score.js";
@@ -18,6 +17,8 @@ const ADVANCE_TURN = INCREMENT_ONE;
 const INDEX_OF_FIRST_PLAYER: IndexOfPlayer = 0;
 
 const AMOUNT_OF_POINTS_TO_FINISH_MATCH: Points = 1;
+
+const QUANTITY_OF_CHANNELS = 4;
 
 const constructErrorForFinalState = ({
   indexOfMove,
@@ -75,12 +76,16 @@ class TicTacToeGame extends Game<
   }
 
   // eslint-disable-next-line @typescript-eslint/class-methods-use-this
-  public override getQuantityOfColumns(): Integer {
+  public override getQuantityOfChannels() {
+    return QUANTITY_OF_CHANNELS;
+  }
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  public override getQuantityOfColumns() {
     return QUANTITY_OF_COLUMNS;
   }
 
   // eslint-disable-next-line @typescript-eslint/class-methods-use-this
-  public override getQuantityOfRows(): Integer {
+  public override getQuantityOfRows() {
     return QUANTITY_OF_ROWS;
   }
 

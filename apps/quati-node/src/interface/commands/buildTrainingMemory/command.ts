@@ -157,7 +157,7 @@ const executeAction = async <
 
   const folderName =
     folderNameOrUndefined ??
-    `expansions(${quantityOfExpansions})_exploration(${explorationCoefficient})_softening(${softeningCoefficient})_iterations(${quantityOfIterations})_seed(${seed})`;
+    `expansions[${quantityOfExpansions}]_exploration[${explorationCoefficient}]_softening[${softeningCoefficient}]_iterations[${quantityOfIterations}]_seed[${seed}]`;
   const sanitizedFolderName = truncateFileName({
     truncatableSlice: folderName,
   });

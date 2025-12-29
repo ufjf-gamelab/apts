@@ -24,8 +24,8 @@ import {
 
 const tf: TensorFlowModule = await loadTensorFlowModule();
 
-const QUANTITY_OF_INPUT_CHANNELS = 3;
 const QUANTITY_OF_INPUT_CHANNELS_ON_POLICY_HEAD = 32;
+const QUANTITY_OF_INPUT_CHANNELS_ON_VALUE_HEAD = 3;
 
 const SIZE_OF_CONVOLUTIONAL_WINDOW = 3;
 
@@ -143,12 +143,14 @@ const constructAdapterBlockFromInputTensorToBackbone = <
   kernelInitializer,
   quantityOfColumns,
   quantityOfHiddenChannels,
+  quantityOfInputChannels,
   quantityOfRows,
 }: {
   inputTensor: tfjs.SymbolicTensor;
   kernelInitializer: KernelInitializer;
   quantityOfColumns: Integer;
   quantityOfHiddenChannels: Integer;
+  quantityOfInputChannels: Integer;
   quantityOfRows: Integer;
 }) => {
   const initialBlock = tf.sequential({
@@ -162,7 +164,7 @@ const constructAdapterBlockFromInputTensorToBackbone = <
         inputShape: [
           quantityOfRows,
           quantityOfColumns,
-          QUANTITY_OF_INPUT_CHANNELS,
+          quantityOfInputChannels,
         ],
       }),
       tf.layers.batchNormalization(paramsOfBatchNormalization),
@@ -259,7 +261,7 @@ const constructValueHead = <
     layers: [
       tf.layers.conv2d({
         ...getParamsOfConvolution({
-          filters: QUANTITY_OF_INPUT_CHANNELS,
+          filters: QUANTITY_OF_INPUT_CHANNELS_ON_VALUE_HEAD,
           kernelInitializer,
           kernelSize: SIZE_OF_CONVOLUTIONAL_WINDOW,
         }),
@@ -399,13 +401,14 @@ const constructResidualNeuralNetworkModel = <
     seed: numericSeed,
   });
 
+  const quantityOfInputChannels = game.getQuantityOfChannels();
   const quantityOfRows = game.getQuantityOfRows();
   const quantityOfColumns = game.getQuantityOfColumns();
   const quantityOfMoves = game.getQuantityOfMoves();
 
   const inputTensor = tf.input({
     name: "input",
-    shape: [quantityOfRows, quantityOfColumns, QUANTITY_OF_INPUT_CHANNELS],
+    shape: [quantityOfRows, quantityOfColumns, quantityOfInputChannels],
   });
 
   let currentBackboneTensor = constructAdapterBlockFromInputTensorToBackbone({
@@ -413,6 +416,7 @@ const constructResidualNeuralNetworkModel = <
     kernelInitializer: heNormalInitializer,
     quantityOfColumns,
     quantityOfHiddenChannels,
+    quantityOfInputChannels,
     quantityOfRows,
   });
 

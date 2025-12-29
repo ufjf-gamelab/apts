@@ -18,6 +18,7 @@ const indexOfChannelForEachPlayer = {
   channelOfEmptySlot: 2,
   channelOfFirstPlayer: 0,
   channelOfSecondPlayer: 1,
+  channelThatDefinesCurrentPlayer: 3,
 } as const;
 
 class SnowballState extends State<
@@ -36,7 +37,6 @@ class SnowballState extends State<
       slots: this.getSlots(),
     });
   }
-
   public override getEncodedState(): TensorLikeArray {
     const encodedState: number[][][] = [];
 
@@ -66,9 +66,10 @@ class SnowballState extends State<
           VALUE_OF_NOT_FILLED_PIXEL,
           VALUE_OF_NOT_FILLED_PIXEL,
           VALUE_OF_NOT_FILLED_PIXEL,
+          VALUE_OF_NOT_FILLED_PIXEL,
         ];
-        const indexOfOccupyingPlayer = slot.getIndexOfOccupyingPlayer();
 
+        const indexOfOccupyingPlayer = slot.getIndexOfOccupyingPlayer();
         if (indexOfOccupyingPlayer === null) {
           channels[indexOfChannelForEachPlayer.channelOfEmptySlot] =
             VALUE_OF_FILLED_PIXEL;
@@ -79,6 +80,13 @@ class SnowballState extends State<
           channels[indexOfChannelForEachPlayer.channelOfSecondPlayer] =
             VALUE_OF_FILLED_PIXEL;
         }
+
+        const valueInCurrentPlayerChannel =
+          this.getIndexOfPlayer() === INDEX_OF_FIRST_PLAYER
+            ? VALUE_OF_FILLED_PIXEL
+            : VALUE_OF_NOT_FILLED_PIXEL;
+        channels[indexOfChannelForEachPlayer.channelThatDefinesCurrentPlayer] =
+          valueInCurrentPlayerChannel;
 
         encodedRow.push(channels);
       }

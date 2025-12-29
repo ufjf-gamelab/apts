@@ -141,15 +141,17 @@ abstract class Game<
     return this.players;
   }
 
+  public abstract getQuantityOfChannels(): Integer;
+
   public abstract getQuantityOfColumns(): Integer;
 
   public getQuantityOfMoves() {
     return this.moves.length;
   }
-
   public getQuantityOfPlayers() {
     return this.players.length;
   }
+
   public abstract getQuantityOfRows(): Integer;
 
   public getQuantityOfSlots() {

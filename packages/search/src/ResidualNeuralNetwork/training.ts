@@ -287,6 +287,8 @@ const buildTrainingMemory = ({
   return trainingMemory;
 };
 
+type Logs = tfjs.Logs;
+
 const train = async <
   GenericGame extends Game<
     GenericGame,
@@ -336,7 +338,7 @@ const train = async <
     GenericState
   >;
   trainingMemory: TrainingMemory;
-}): Promise<tfjs.Logs[]> => {
+}): Promise<Logs[]> => {
   const { encodedStates, policies, values } = trainingMemory;
   const batchOfInputs = tf.tensor(encodedStates) as tfjs.Tensor4D;
   const batchOfPolicyOutputs = tf.tensor(policies) as tfjs.Tensor2D;
@@ -355,4 +357,5 @@ const train = async <
   return trainingLog;
 };
 
+export type { Logs };
 export { buildTrainingMemory, train };

@@ -94,21 +94,29 @@ const loadPredictionModel = async <
   game: GenericGame;
   pathToResidualNeuralNetworkFolder: string;
 }) => {
-  const { metadata, residualNeuralNetwork } = await loadResidualNeuralNetwork({
-    game,
-    pathToResidualNeuralNetworkFolder,
-  });
+  try {
+    const { metadata, residualNeuralNetwork } = await loadResidualNeuralNetwork(
+      {
+        game,
+        pathToResidualNeuralNetworkFolder,
+      },
+    );
 
-  const predictionModel = new PredictionModel<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >({ residualNeuralNetwork });
+    const predictionModel = new PredictionModel<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >({ residualNeuralNetwork });
 
-  return { metadata, predictionModel };
+    return { metadata, predictionModel };
+  } catch (error) {
+    throw new Error("Could not load the prediction model.", {
+      cause: error,
+    });
+  }
 };
 
 export { loadPredictionModel, loadResidualNeuralNetwork };

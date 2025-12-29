@@ -24,6 +24,8 @@ const INDEX_OF_FIRST_PLAYER: IndexOfPlayer = 0;
 const AMOUNT_OF_POINTS_TO_FINISH_MATCH: Points = 15;
 const AMOUNT_OF_SLOTS_TO_FINISH_MATCH: Integer = 49;
 
+const QUANTITY_OF_CHANNELS = 4;
+
 class SnowballGame extends Game<
   SnowballGame,
   SnowballMove,
@@ -70,6 +72,11 @@ class SnowballGame extends Game<
     const currentIndexOfPlayer = state.getIndexOfPlayer();
     const quantityOfPlayers = this.getPlayers().length;
     return (currentIndexOfPlayer + ADVANCE_TURN) % quantityOfPlayers;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  public override getQuantityOfChannels() {
+    return QUANTITY_OF_CHANNELS;
   }
 
   // eslint-disable-next-line @typescript-eslint/class-methods-use-this

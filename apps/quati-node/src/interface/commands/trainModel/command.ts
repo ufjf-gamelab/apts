@@ -5,6 +5,7 @@ import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
+import type { Logs } from "@repo/search/ResidualNeuralNetwork/training.js";
 
 import { formatObjectWithNotFiniteNumbers } from "@repo/core/format.js";
 import { parseIntoInt } from "@repo/core/parse.js";
@@ -33,16 +34,25 @@ import { commonOptions } from "../options.js";
 const QUANTITY_OF_EPOCHS = 4;
 const SIZE_OF_BATCH = 64;
 
-const processLogs = ({
+const processArrayOfLogs = ({
+  arrayOfLogs,
   canOverwrite,
   filePath,
-  logs,
 }: NonNullable<Pick<Parameters<typeof createWriteStream>[0], "filePath">> &
   Pick<Parameters<typeof createWriteStream>[0], "canOverwrite"> & {
-    logs: Record<string, number>[];
+    arrayOfLogs: Logs[];
   }) => {
   const writeStream = createWriteStream({ canOverwrite, filePath });
-  const object = formatObjectWithNotFiniteNumbers({ object: logs });
+  const recordOfLogs = arrayOfLogs.reduce<Record<string, Logs>>(
+    (accumulator, logs, indexOfLogs) => {
+      accumulator[indexOfLogs] = logs;
+      return accumulator;
+    },
+    {},
+  );
+  const object = formatObjectWithNotFiniteNumbers({
+    object: recordOfLogs,
+  });
   writeStream.write(object);
 };
 
@@ -136,9 +146,6 @@ const executeAction = async <
     );
   }
 
-  const seed = seedOrUndefined ?? Math.random().toString();
-  const game = selectGameUsingKeyOfGame(keyOfGame);
-
   const { metadata: metadataOfTrainingMemory, trainingMemory } =
     await loadTrainingMemory<
       GenericGame,
@@ -151,12 +158,18 @@ const executeAction = async <
       pathToTrainingMemoryFolder,
     });
 
+  const game = selectGameUsingKeyOfGame(keyOfGame);
+
   const { metadata: metadataOfModel, residualNeuralNetwork } =
     await loadResidualNeuralNetwork({
       game,
       pathToResidualNeuralNetworkFolder,
     });
-  const nameOfModel = nameOfModelOrUndefined ?? residualNeuralNetwork.getName();
+
+  const time = Date.now().toString();
+  const nameOfModel =
+    nameOfModelOrUndefined ??
+    `${residualNeuralNetwork.getName()}_time[${time}]`;
 
   const sanitizedFolderName = truncateFileName({
     truncatableSlice: nameOfModel,
@@ -181,11 +194,11 @@ const executeAction = async <
 
   await trainModel({
     path: folderPath,
-    processLogs: logs => {
-      processLogs({
+    processArrayOfLogs: arrayOfLogs => {
+      processArrayOfLogs({
+        arrayOfLogs,
         canOverwrite,
         filePath: logsFilePath,
-        logs,
       });
     },
     processMessage: console.info,
@@ -195,6 +208,8 @@ const executeAction = async <
     sizeOfBatch,
     trainingMemory,
   });
+
+  const seed = seedOrUndefined ?? Math.random().toString();
 
   processMetadata({
     canOverwrite,

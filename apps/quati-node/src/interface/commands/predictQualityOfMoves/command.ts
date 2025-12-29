@@ -161,8 +161,8 @@ const executeAction = async ({
     const folderName =
       typeof folderNameOrUndefined === "undefined"
         ? truncateFileName({
-            prefix: "state(",
-            suffix: `)_softening(${softeningCoefficient})`,
+            prefix: "state[",
+            suffix: `]_softening[${softeningCoefficient}]`,
             truncatableSlice: keyOfState,
           })
         : folderNameOrUndefined;
