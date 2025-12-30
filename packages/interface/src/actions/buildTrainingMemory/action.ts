@@ -13,9 +13,9 @@ import {
 } from "@repo/search/AgentGuidedMonteCarloTree/AgentGuidedSearch.js";
 import { type ParamsOfRandom, Random } from "@repo/search/Random/Random.js";
 import {
-  buildTrainingMemory as buildTrainingMemoryFromTraining,
+  buildTrainingMemory as buildTrainingMemoryFromResidualNeuralNetwork,
   type TrainingMemory,
-} from "@repo/search/ResidualNeuralNetwork/training.js";
+} from "@repo/search/ResidualNeuralNetwork/memory.js";
 
 const buildTrainingMemory = <
   GenericGame extends Game<
@@ -58,7 +58,7 @@ const buildTrainingMemory = <
   seed,
   softeningCoefficient,
 }: Pick<
-  Parameters<typeof buildTrainingMemoryFromTraining>[0],
+  Parameters<typeof buildTrainingMemoryFromResidualNeuralNetwork>[0],
   | "processMessage"
   | "quantityOfIterations"
   | "quantityOfIterationsToAnnounceProgress"
@@ -95,7 +95,7 @@ const buildTrainingMemory = <
     random,
   });
 
-  const trainingMemory = buildTrainingMemoryFromTraining({
+  const trainingMemory = buildTrainingMemoryFromResidualNeuralNetwork({
     game,
     processMessage,
     quantityOfIterations,

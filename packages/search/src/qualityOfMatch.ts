@@ -37,6 +37,10 @@ const getQualityOfMatchFromScore = <
   indexOfPlayerWhoPlayedMove: IndexOfPlayer | null;
   score: Score<GenericScore>;
 }): QualityOfMatch => {
+  if (indexOfPlayerWhoPlayedMove === null) {
+    return MINIMUM_POINTS_OF_PLAYER;
+  }
+
   let pointsOfOpponentPlayerWithMostPoints = MINIMUM_POINTS_OF_PLAYER;
   let pointsOfPlayerWhoPlayedMove = MINIMUM_POINTS_OF_PLAYER;
 
@@ -50,6 +54,10 @@ const getQualityOfMatchFromScore = <
         pointsOfOpponentPlayerWithMostPoints = pointsOfPlayer;
       }
     });
+
+  if (!(pointsOfPlayerWhoPlayedMove > MINIMUM_POINTS_OF_PLAYER)) {
+    throw Error("Could not retrieve the points of the player who played move.");
+  }
 
   if (!(pointsOfOpponentPlayerWithMostPoints > MINIMUM_POINTS_OF_PLAYER)) {
     throw Error(

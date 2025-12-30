@@ -4,7 +4,7 @@ import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
-import type { TrainingMemory } from "@repo/search/ResidualNeuralNetwork/training.js";
+import type { TrainingMemory } from "@repo/search/ResidualNeuralNetwork/memory.js";
 
 import { parseIntoFloat } from "@repo/core/parse.js";
 import path from "path";

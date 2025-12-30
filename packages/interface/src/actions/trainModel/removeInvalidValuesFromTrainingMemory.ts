@@ -1,5 +1,5 @@
 import type { TensorLikeArray } from "@repo/core/types.js";
-import type { TrainingMemory } from "@repo/search/ResidualNeuralNetwork/training.js";
+import type { TrainingMemory } from "@repo/search/ResidualNeuralNetwork/memory.js";
 
 const DEFAULT_VALUE_FOR_INFINITE_VALUE = 0;
 const DEFAULT_VALUE_FOR_NOT_A_NUMBER = 0;

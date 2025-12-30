@@ -23,7 +23,6 @@
       "dependsOn": ["^lint:fix"]
     },
     "preview": {
-      "cache": false,
       "dependsOn": ["build"],
       "persistent": true
     },

@@ -7,7 +7,7 @@ import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 import type { ExplorationCoefficient } from "@repo/search/MonteCarloTree/Search.js";
 import type { SofteningCoefficient } from "@repo/search/qualityOfMove.js";
-import type { TrainingMemory } from "@repo/search/ResidualNeuralNetwork/training.js";
+import type { TrainingMemory } from "@repo/search/ResidualNeuralNetwork/memory.js";
 
 import { formatObjectWithNotFiniteNumbers } from "@repo/core/format.js";
 import { parseIntoInt } from "@repo/core/parse.js";

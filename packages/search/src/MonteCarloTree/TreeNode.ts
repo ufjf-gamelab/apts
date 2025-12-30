@@ -262,7 +262,7 @@ abstract class TreeNode<
   }
 
   public getQualityOfMove(): number {
-    // FUTURE: Try to align exploitation (quantity of visits) with lack of iterations when state is near a final one (when MCTS rarely visits any grandchildren).
+    // TODO: Try to align exploitation (quantity of visits) with lack of iterations when state is near a final one (when MCTS rarely visits any grandchildren).
     const qualityComponent = this.qualityOfMatch;
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const visitsComponent = this.quantityOfVisits ** (1 / 4);
