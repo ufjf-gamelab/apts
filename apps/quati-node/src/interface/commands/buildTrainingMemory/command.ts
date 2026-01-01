@@ -6,11 +6,15 @@ import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 import type { ExplorationCoefficient } from "@repo/search/MonteCarloTree/Search.js";
+import type { TreeNode } from "@repo/search/MonteCarloTree/TreeNode.js";
 import type { SofteningCoefficient } from "@repo/search/qualityOfMove.js";
-import type { TrainingMemory } from "@repo/search/ResidualNeuralNetwork/memory.js";
+import type {
+  MemoryOfMatch,
+  TrainingMemory,
+} from "@repo/search/ResidualNeuralNetwork/memory.js";
 
-import { formatObjectWithNotFiniteNumbers } from "@repo/core/format.js";
 import { parseIntoInt } from "@repo/core/parse.js";
+import { applyAllReplacers } from "@repo/core/replacers.js";
 import { buildTrainingMemory } from "@repo/interface/actions/buildTrainingMemory/action.js";
 import { constructErrorForWhenPredictionModelHasNotBeenProvided } from "@repo/interface/constructSearchBasedOnStrategy.js";
 import { Command, Option } from "commander";
@@ -76,6 +80,24 @@ const processMetadata = ({
   );
 };
 
+const processMemoryOfMatches = ({
+  canOverwrite,
+  filePath,
+  memoryOfMatches,
+}: Pick<
+  Parameters<typeof createWriteStream>[0],
+  "canOverwrite" | "filePath"
+> & {
+  memoryOfMatches: MemoryOfMatch[];
+}) => {
+  const writeStream = createWriteStream({
+    canOverwrite,
+    filePath,
+  });
+  const content = JSON.stringify(memoryOfMatches, applyAllReplacers);
+  writeStream.write(content);
+};
+
 const processTrainingMemory = ({
   canOverwrite,
   filePath,
@@ -90,10 +112,8 @@ const processTrainingMemory = ({
     canOverwrite,
     filePath,
   });
-  const stringifiedTrainingMemory = formatObjectWithNotFiniteNumbers({
-    object: trainingMemory,
-  });
-  writeStream.write(stringifiedTrainingMemory);
+  const content = JSON.stringify(trainingMemory, applyAllReplacers);
+  writeStream.write(content);
 };
 
 const executeAction = async <
@@ -116,6 +136,15 @@ const executeAction = async <
     GenericScore,
     GenericSlot,
     GenericState
+  >,
+  GenericTreeNode extends TreeNode<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState,
+    GenericTreeNode
   >,
 >({
   announceProgress: quantityOfIterationsToAnnounceProgress,
@@ -147,10 +176,18 @@ const executeAction = async <
   }
 
   const seed = seedOrUndefined ?? Math.random().toString();
-  const game = selectGameUsingKeyOfGame(keyOfGame);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+  const game = selectGameUsingKeyOfGame(keyOfGame) as unknown as GenericGame;
 
   const { metadata: metadataOfModel, predictionModel } =
-    await loadPredictionModel({
+    await loadPredictionModel<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >({
       game,
       pathToResidualNeuralNetworkFolder,
     });
@@ -167,17 +204,34 @@ const executeAction = async <
       : directoryPathOrUndefined;
 
   const folderPath = path.join(directoryPath, sanitizedFolderName);
-  const trainingMemoryFilePath = path.join(folderPath, "memory.json");
+  const memoryOfMatchesFilePath = path.join(folderPath, "memoryOfMatches.json");
+  const trainingMemoryFilePath = path.join(folderPath, "trainingMemory.json");
   const metadataFilePath = path.join(folderPath, "metadata.json");
   if (!canOverwrite) {
+    assertFileNotExists({ filePath: memoryOfMatchesFilePath });
     assertFileNotExists({ filePath: trainingMemoryFilePath });
     assertFileNotExists({ filePath: metadataFilePath });
   }
   await createDirectory({ directoryPath: folderPath });
 
-  buildTrainingMemory({
+  buildTrainingMemory<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState,
+    GenericTreeNode
+  >({
     explorationCoefficient,
     predictionModel,
+    processMemoryOfMatches: memoryOfMatches => {
+      processMemoryOfMatches({
+        canOverwrite,
+        filePath: memoryOfMatchesFilePath,
+        memoryOfMatches,
+      });
+    },
     processMessage: console.info,
     processTrainingMemory: trainingMemory => {
       processTrainingMemory({

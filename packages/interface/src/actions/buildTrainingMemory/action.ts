@@ -13,7 +13,9 @@ import {
 } from "@repo/search/AgentGuidedMonteCarloTree/AgentGuidedSearch.js";
 import { type ParamsOfRandom, Random } from "@repo/search/Random/Random.js";
 import {
-  buildTrainingMemory as buildTrainingMemoryFromResidualNeuralNetwork,
+  buildMemoryOfMatches,
+  convertMemoryOfMatchesToTrainingMemory,
+  type MemoryOfMatch,
   type TrainingMemory,
 } from "@repo/search/ResidualNeuralNetwork/memory.js";
 
@@ -50,6 +52,7 @@ const buildTrainingMemory = <
 >({
   explorationCoefficient,
   predictionModel,
+  processMemoryOfMatches,
   processMessage,
   processTrainingMemory,
   quantityOfExpansions,
@@ -58,7 +61,7 @@ const buildTrainingMemory = <
   seed,
   softeningCoefficient,
 }: Pick<
-  Parameters<typeof buildTrainingMemoryFromResidualNeuralNetwork>[0],
+  Parameters<typeof buildMemoryOfMatches>[0],
   | "processMessage"
   | "quantityOfIterations"
   | "quantityOfIterationsToAnnounceProgress"
@@ -77,6 +80,7 @@ const buildTrainingMemory = <
   > &
   Pick<ParamsOfRandom, "seed"> &
   Pick<ParamsOfSearch, "explorationCoefficient" | "quantityOfExpansions"> & {
+    processMemoryOfMatches: (memoryOfMatches: MemoryOfMatch[]) => void;
     processTrainingMemory: (trainingMemory: TrainingMemory) => void;
   }) => {
   const random = new Random({ seed });
@@ -95,13 +99,26 @@ const buildTrainingMemory = <
     random,
   });
 
-  const trainingMemory = buildTrainingMemoryFromResidualNeuralNetwork({
+  const memoryOfMatches = buildMemoryOfMatches<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState,
+    GenericTreeNode
+  >({
     game,
     processMessage,
     quantityOfIterations,
     quantityOfIterationsToAnnounceProgress,
     search,
     softeningCoefficient,
+  });
+  processMemoryOfMatches(memoryOfMatches);
+
+  const trainingMemory = convertMemoryOfMatchesToTrainingMemory({
+    memoryOfMatches,
   });
   processTrainingMemory(trainingMemory);
 };

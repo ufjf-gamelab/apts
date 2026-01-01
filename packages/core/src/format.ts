@@ -1,19 +1,8 @@
-const formatNotFiniteNumber = ({ value }: { value: unknown }) => {
-  if (value === Infinity) {
-    return "Infinity";
-  }
-  if (value === -Infinity) {
-    return "-Infinity";
-  }
-  if (Number.isNaN(value)) {
-    return "NaN";
-  }
-  return value;
-};
+import { replaceNotFiniteNumberByItsStringRepresentation } from "./replacers.js";
 
 const formatEntry = ([key, value]: [PropertyKey, unknown]) =>
   `${JSON.stringify(key)}: ${JSON.stringify(value, (_, internalValue: number) =>
-    formatNotFiniteNumber({ value: internalValue }),
+    replaceNotFiniteNumberByItsStringRepresentation(_, internalValue),
   )}`;
 
 const joinEntries = ({ entries }: { entries: string[] }) =>
@@ -32,14 +21,4 @@ const formatRecord = ({ record }: { record: Record<PropertyKey, unknown> }) => {
   return joinEntries({ entries });
 };
 
-const formatObjectWithNotFiniteNumbers = ({ object }: { object: object }) =>
-  JSON.stringify(object, (_, value: number) =>
-    formatNotFiniteNumber({ value }),
-  );
-
-export {
-  formatArray,
-  formatMap,
-  formatObjectWithNotFiniteNumbers,
-  formatRecord,
-};
+export { formatArray, formatMap, formatRecord };

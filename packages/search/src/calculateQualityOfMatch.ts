@@ -1,7 +1,7 @@
 import type { Game } from "@repo/game/Game.js";
 import type { Move } from "@repo/game/Move.js";
 import type { IndexOfPlayer, Player } from "@repo/game/Player.js";
-import type { Score } from "@repo/game/Score.js";
+import type { PointsOfEachPlayer, Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 
@@ -9,7 +9,7 @@ import type { QualityOfMatch } from "./MonteCarloTree/TreeNode.js";
 
 const MINIMUM_POINTS_OF_PLAYER = Number.NEGATIVE_INFINITY;
 
-const getQualityOfMatchFromScore = <
+const calculateQualityOfMatch = <
   GenericGame extends Game<
     GenericGame,
     GenericMove,
@@ -32,10 +32,10 @@ const getQualityOfMatchFromScore = <
   >,
 >({
   indexOfPlayerWhoPlayedMove,
-  score,
+  pointsOfEachPlayer,
 }: {
   indexOfPlayerWhoPlayedMove: IndexOfPlayer | null;
-  score: Score<GenericScore>;
+  pointsOfEachPlayer: PointsOfEachPlayer;
 }): QualityOfMatch => {
   if (indexOfPlayerWhoPlayedMove === null) {
     return MINIMUM_POINTS_OF_PLAYER;
@@ -44,16 +44,13 @@ const getQualityOfMatchFromScore = <
   let pointsOfOpponentPlayerWithMostPoints = MINIMUM_POINTS_OF_PLAYER;
   let pointsOfPlayerWhoPlayedMove = MINIMUM_POINTS_OF_PLAYER;
 
-  score
-    .getPointsOfEachPlayer()
-    .entries()
-    .forEach(([indexOfPlayer, pointsOfPlayer]) => {
-      if (indexOfPlayer === indexOfPlayerWhoPlayedMove) {
-        pointsOfPlayerWhoPlayedMove = pointsOfPlayer;
-      } else if (pointsOfPlayer > pointsOfOpponentPlayerWithMostPoints) {
-        pointsOfOpponentPlayerWithMostPoints = pointsOfPlayer;
-      }
-    });
+  pointsOfEachPlayer.entries().forEach(([indexOfPlayer, pointsOfPlayer]) => {
+    if (indexOfPlayer === indexOfPlayerWhoPlayedMove) {
+      pointsOfPlayerWhoPlayedMove = pointsOfPlayer;
+    } else if (pointsOfPlayer > pointsOfOpponentPlayerWithMostPoints) {
+      pointsOfOpponentPlayerWithMostPoints = pointsOfPlayer;
+    }
+  });
 
   if (!(pointsOfPlayerWhoPlayedMove > MINIMUM_POINTS_OF_PLAYER)) {
     throw Error("Could not retrieve the points of the player who played move.");
@@ -68,4 +65,4 @@ const getQualityOfMatchFromScore = <
   return pointsOfPlayerWhoPlayedMove - pointsOfOpponentPlayerWithMostPoints;
 };
 
-export { getQualityOfMatchFromScore };
+export { calculateQualityOfMatch };

@@ -5,7 +5,7 @@ import type {
   SofteningCoefficient,
 } from "@repo/search/qualityOfMove.js";
 
-import { formatObjectWithNotFiniteNumbers } from "@repo/core/format.js";
+import { applyAllReplacers } from "@repo/core/replacers.js";
 import { predictQualityOfMoves } from "@repo/interface/actions/predictQualityOfMoves/action.js";
 import { constructErrorForWhenPredictionModelHasNotBeenProvided } from "@repo/interface/constructSearchBasedOnStrategy.js";
 import { Command, Option } from "commander";
@@ -48,13 +48,15 @@ const processMetadata = ({
     canOverwrite,
     filePath,
   });
-  writeStream.write(
-    JSON.stringify({
+  const content = JSON.stringify(
+    {
       keyOfState,
       metadataOfModel,
       softeningCoefficient,
-    }),
+    },
+    applyAllReplacers,
   );
+  writeStream.write(content);
 };
 
 interface Predictions {
@@ -81,8 +83,8 @@ const processPredictions = ({
     canOverwrite,
     filePath,
   });
-  const object = formatObjectWithNotFiniteNumbers({
-    object: {
+  const content = JSON.stringify(
+    {
       probabilityOfPlayingEachMove: probabilityOfPlayingEachMove
         ? Object.fromEntries(probabilityOfPlayingEachMove)
         : null,
@@ -91,8 +93,9 @@ const processPredictions = ({
         : null,
       qualityOfMatch,
     },
-  });
-  writeStream.write(object);
+    applyAllReplacers,
+  );
+  writeStream.write(content);
 };
 
 // eslint-disable-next-line max-statements
@@ -213,15 +216,15 @@ const commandToPredictQualityOfMoves = {
     commonOptions.softeningCoefficient,
     new Option(
       "--export",
-      "Whether to output files related to the search: predictions and metadata.",
+      "Whether to output files related to the prediction: predictions and metadata.",
     ).default(false),
     new Option(
       "--directory <path of directory>",
-      "The path to the directory where the files related to the search will be created.",
+      "The path to the directory where the files related to the prediction will be created.",
     ),
     new Option(
       "--folder <name of folder>",
-      "The name of the folder that will be created to contain the files related to the search.",
+      "The name of the folder that will be created to contain the files related to the prediction.",
     ),
     new Option(
       "--probabilities",

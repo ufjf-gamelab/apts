@@ -5,10 +5,12 @@ import type { IndexOfPlayer } from "./Player.js";
 type IndexOfScore = Integer;
 
 interface ParamsOfScore {
-  readonly pointsOfEachPlayer: ReadonlyMap<IndexOfPlayer, Points>;
+  readonly pointsOfEachPlayer: PointsOfEachPlayer;
 }
 
 type Points = number;
+
+type PointsOfEachPlayer = ReadonlyMap<IndexOfPlayer, Points>;
 
 abstract class Score<GenericScore extends Score<GenericScore>> {
   private readonly pointsOfEachPlayer: ParamsOfScore["pointsOfEachPlayer"];
@@ -44,5 +46,5 @@ abstract class Score<GenericScore extends Score<GenericScore>> {
   }
 }
 
-export type { IndexOfScore, ParamsOfScore, Points };
+export type { IndexOfScore, ParamsOfScore, Points, PointsOfEachPlayer };
 export { Score };

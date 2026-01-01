@@ -7,8 +7,8 @@ import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 import type { Logs } from "@repo/search/ResidualNeuralNetwork/training.js";
 
-import { formatObjectWithNotFiniteNumbers } from "@repo/core/format.js";
 import { parseIntoInt } from "@repo/core/parse.js";
+import { applyAllReplacers } from "@repo/core/replacers.js";
 import { trainModel } from "@repo/interface/actions/trainModel/action.js";
 import { Command, Option } from "commander";
 import path from "path";
@@ -50,10 +50,8 @@ const processArrayOfLogs = ({
     },
     {},
   );
-  const object = formatObjectWithNotFiniteNumbers({
-    object: recordOfLogs,
-  });
-  writeStream.write(object);
+  const content = JSON.stringify(recordOfLogs, applyAllReplacers);
+  writeStream.write(content);
 };
 
 const processMetadata = ({

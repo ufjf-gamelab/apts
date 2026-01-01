@@ -15,7 +15,7 @@ import {
 
 import type { ExplorationCoefficient } from "./Search.js";
 
-import { getQualityOfMatchFromScore } from "../qualityOfMatch.js";
+import { calculateQualityOfMatch } from "../calculateQualityOfMatch.js";
 
 type QualityOfMatch = number;
 
@@ -255,9 +255,9 @@ abstract class TreeNode<
       // The root should not have its quality calculated
       return MINIMUM_QUALITY_OF_MATCH;
     }
-    return getQualityOfMatchFromScore({
+    return calculateQualityOfMatch({
       indexOfPlayerWhoPlayedMove: this.indexOfPlayerWhoPlayedMove,
-      score,
+      pointsOfEachPlayer: score.getPointsOfEachPlayer(),
     });
   }
 

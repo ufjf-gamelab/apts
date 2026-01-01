@@ -1,5 +1,3 @@
-import type { TensorLikeArray } from "@repo/core/types.js";
-
 import { FIRST_INDEX, INCREMENT_ONE } from "@repo/core/constants.js";
 import { State } from "@repo/game/State.js";
 
@@ -37,8 +35,7 @@ class TicTacToeState extends State<
       slots: this.getSlots(),
     });
   }
-
-  public override getEncodedState(): TensorLikeArray {
+  public override getEncodedState() {
     const encodedState: number[][][] = [];
 
     for (
@@ -82,12 +79,8 @@ class TicTacToeState extends State<
             VALUE_OF_FILLED_PIXEL;
         }
 
-        const valueInCurrentPlayerChannel =
-          this.getIndexOfPlayer() === INDEX_OF_FIRST_PLAYER
-            ? VALUE_OF_FILLED_PIXEL
-            : VALUE_OF_NOT_FILLED_PIXEL;
         channels[indexOfChannelForEachPlayer.channelThatDefinesCurrentPlayer] =
-          valueInCurrentPlayerChannel;
+          this.getIndexOfPlayer();
 
         encodedRow.push(channels);
       }

@@ -7,6 +7,8 @@ import type { Score } from "./Score.js";
 
 import { type IndexOfSlot, Slot } from "./Slot.js";
 
+type EncodedState = TensorLikeArray;
+
 type IndexOfState = Integer;
 
 interface ParamsOfState<
@@ -121,7 +123,7 @@ abstract class State<
 
   public abstract clone(): GenericState;
 
-  public abstract getEncodedState(): TensorLikeArray;
+  public abstract getEncodedState(): EncodedState;
 
   public getGame() {
     return this.game;
@@ -168,5 +170,5 @@ abstract class State<
   public abstract toString(): string;
 }
 
-export type { IndexOfState, ParamsOfState };
+export type { EncodedState, IndexOfState, ParamsOfState };
 export { State };
