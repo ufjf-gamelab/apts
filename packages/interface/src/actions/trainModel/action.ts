@@ -53,6 +53,7 @@ const trainModel = async <
   scheme,
   sizeOfBatch,
   trainingMemory: unprocessedTrainingMemory,
+  valueToReplaceInfinity,
 }: Pick<
   Parameters<
     ResidualNeuralNetwork<
@@ -66,6 +67,10 @@ const trainModel = async <
   >[0],
   "path" | "scheme"
 > &
+  Pick<
+    Parameters<typeof removeInvalidValuesFromTrainingMemory>[0],
+    "valueToReplaceInfinity"
+  > &
   Pick<
     Parameters<
       typeof train<
@@ -87,6 +92,7 @@ const trainModel = async <
   }) => {
   const trainingMemory = removeInvalidValuesFromTrainingMemory({
     trainingMemory: unprocessedTrainingMemory,
+    valueToReplaceInfinity,
   });
   processMessage(`Size of training memory: ${trainingMemory.values.length}`);
   const arrayOfLogs = await train<

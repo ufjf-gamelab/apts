@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "@inquirer/prompts": "^8.1.0",
-    "@paralleldrive/cuid2": "^3.0.4",
+    "@paralleldrive/cuid2": "^3.0.6",
     "@repo/core": "workspace:*",
     "@repo/game": "workspace:*",
     "@repo/games": "workspace:*",

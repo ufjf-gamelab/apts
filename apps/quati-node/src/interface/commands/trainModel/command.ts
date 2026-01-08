@@ -1,4 +1,4 @@
-import type { Integer, Seed } from "@repo/core/types.js";
+import type { Integer } from "@repo/core/types.js";
 import type { Game } from "@repo/game/Game.js";
 import type { Move } from "@repo/game/Move.js";
 import type { Player } from "@repo/game/Player.js";
@@ -7,9 +7,10 @@ import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
 import type { Logs } from "@repo/search/ResidualNeuralNetwork/training.js";
 
-import { parseIntoInt } from "@repo/core/parse.js";
+import { parseIntoFloat, parseIntoInt } from "@repo/core/parse.js";
 import { applyAllReplacers } from "@repo/core/replacers.js";
 import { trainModel } from "@repo/interface/actions/trainModel/action.js";
+import { DEFAULT_VALUE_FOR_INFINITE_VALUE } from "@repo/interface/actions/trainModel/removeInvalidValuesFromTrainingMemory.js";
 import { Command, Option } from "commander";
 import path from "path";
 
@@ -61,7 +62,6 @@ const processMetadata = ({
   metadataOfModel,
   metadataOfTrainingMemory,
   quantityOfEpochs,
-  seed,
   sizeOfBatch,
 }: Pick<
   Parameters<typeof createWriteStream>[0],
@@ -71,7 +71,6 @@ const processMetadata = ({
   metadataOfModel: MetadataOfModel;
   metadataOfTrainingMemory: MetadataOfTrainingMemory;
   quantityOfEpochs: Integer;
-  seed: Seed;
   sizeOfBatch: Integer;
 }) => {
   const writeStream = createWriteStream({
@@ -84,7 +83,6 @@ const processMetadata = ({
       metadataOfModel,
       metadataOfTrainingMemory,
       quantityOfEpochs,
-      seed,
       sizeOfBatch,
     }),
   );
@@ -116,33 +114,28 @@ const executeAction = async <
   batch: sizeOfBatch,
   directory: directoryPathOrUndefined,
   epochs: quantityOfEpochs,
+  folder: nameOfModelOrUndefined,
   game: keyOfGame,
-  memory: pathToTrainingMemoryFolder,
-  model: pathToResidualNeuralNetworkFolder,
-  name: nameOfModelOrUndefined,
+  infinity: valueToReplaceInfinity,
+  memory: pathToTrainingMemoryFolderOrUndefined,
+  model: pathToResidualNeuralNetworkFolderOrUndefined,
   overwrite: canOverwrite,
-  seed: seedOrUndefined,
 }: {
   batch: Integer;
   directory: string | undefined;
   epochs: Integer;
+  folder: string | undefined;
   game: KeyOfGame;
+  infinity: number;
   memory: string | undefined;
   model: string | undefined;
-  name: string | undefined;
   overwrite: boolean;
-  seed: string | undefined;
 }): Promise<void> => {
-  if (typeof pathToResidualNeuralNetworkFolder === "undefined") {
-    throw new Error(
-      "To train a model, it is necessary to inform the path of the architecture of the model.",
-    );
-  }
-  if (typeof pathToTrainingMemoryFolder === "undefined") {
-    throw new Error(
-      "To train a model, it is necessary to inform the path of the training memory.",
-    );
-  }
+  const pathToTrainingMemoryFolder =
+    pathToTrainingMemoryFolderOrUndefined ?? path.resolve(".");
+  const pathToResidualNeuralNetworkFolder =
+    pathToResidualNeuralNetworkFolderOrUndefined ??
+    path.dirname(path.dirname(path.resolve(pathToTrainingMemoryFolder)));
 
   const { metadata: metadataOfTrainingMemory, trainingMemory } =
     await loadTrainingMemory<
@@ -167,7 +160,7 @@ const executeAction = async <
   const time = Date.now().toString();
   const nameOfModel =
     nameOfModelOrUndefined ??
-    `${residualNeuralNetwork.getName()}_time[${time}]`;
+    `${residualNeuralNetwork.getName()}_infinity[${valueToReplaceInfinity.toExponential()}]_time[${time}]`;
 
   const sanitizedFolderName = truncateFileName({
     truncatableSlice: nameOfModel,
@@ -205,9 +198,8 @@ const executeAction = async <
     scheme: "file",
     sizeOfBatch,
     trainingMemory,
+    valueToReplaceInfinity,
   });
-
-  const seed = seedOrUndefined ?? Math.random().toString();
 
   processMetadata({
     canOverwrite,
@@ -216,7 +208,6 @@ const executeAction = async <
     metadataOfModel,
     metadataOfTrainingMemory,
     quantityOfEpochs,
-    seed,
     sizeOfBatch,
   });
 };
@@ -237,7 +228,7 @@ const commandToTrainModel = {
       "The path to the directory in which will be created the folder that will contain the architecture and the weights of the trained model.",
     ),
     new Option(
-      "--name <name of folder>",
+      "--folder <name of folder>",
       "The name of the folder that will be created to contain the architecture and the weights of the trained model.",
     ),
     new Option(
@@ -252,7 +243,12 @@ const commandToTrainModel = {
     )
       .default(QUANTITY_OF_EPOCHS)
       .argParser(parseIntoInt),
-    commonOptions.seed,
+    new Option(
+      "--infinity <value to replace infinity>",
+      "Value to be used to replace infinity values on memory.",
+    )
+      .default(DEFAULT_VALUE_FOR_INFINITE_VALUE)
+      .argParser(parseIntoFloat),
     new Option("--overwrite", "Can overwrite the training memory file."),
   ],
 } satisfies DefinitionOfCommand;

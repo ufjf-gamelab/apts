@@ -10,7 +10,6 @@ import { assertNumberIsFinite } from "@repo/core/assert.js";
 import type { QualityOfMove } from "../qualityOfMove.js";
 
 import {
-  DEFAULT_QUANTITY_OF_VISITS,
   type ParamsOfTreeNode,
   type ParamsOfTreeNodeForPrivateConstructor,
   TreeNode,
@@ -18,7 +17,7 @@ import {
 
 const DEFAULT_EXPLOITATION = 0;
 const DEFAULT_EXPLORATION = 0;
-const GUARANTEE_THE_DENOMINATOR_IS_AT_LEAST_ONE = 1;
+const ENSURE_THE_DENOMINATOR_IS_AT_LEAST_ONE = 1;
 
 type ParamsOfAgentGuidedTreeNode<
   GenericGame extends Game<
@@ -219,20 +218,16 @@ class AgentGuidedTreeNode<
     >;
   }): number {
     const qualityOfMatchOfChildNode = childNode.getQualityOfMatch();
-    const quantityOfVisitsToChildNode = childNode.getQuantityOfVisits();
-
-    if (quantityOfVisitsToChildNode === DEFAULT_QUANTITY_OF_VISITS) {
-      return DEFAULT_EXPLOITATION;
-    }
 
     const exploitation = assertNumberIsFinite(
-      qualityOfMatchOfChildNode / quantityOfVisitsToChildNode,
+      qualityOfMatchOfChildNode,
       DEFAULT_EXPLOITATION,
     );
 
     return exploitation;
   }
 
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
   public override calculateExplorationComponentOfFitness({
     childNode,
     explorationCoefficient,
@@ -247,7 +242,6 @@ class AgentGuidedTreeNode<
     >;
     explorationCoefficient: number;
   }): number {
-    const quantityOfVisitsToCurrentNode = this.getQuantityOfVisits();
     const quantityOfVisitsToChildNode = childNode.getQuantityOfVisits();
 
     const qualityOfMoveAttributedByModel =
@@ -258,14 +252,14 @@ class AgentGuidedTreeNode<
       );
     }
 
-    const numerator = Math.sqrt(quantityOfVisitsToCurrentNode);
+    const numerator = qualityOfMoveAttributedByModel;
     const denominator =
-      GUARANTEE_THE_DENOMINATOR_IS_AT_LEAST_ONE + quantityOfVisitsToChildNode;
+      quantityOfVisitsToChildNode + ENSURE_THE_DENOMINATOR_IS_AT_LEAST_ONE;
+
     const componentOfNodeAttributes = numerator / denominator;
+
     const exploration = assertNumberIsFinite(
-      explorationCoefficient *
-        qualityOfMoveAttributedByModel *
-        componentOfNodeAttributes,
+      explorationCoefficient * componentOfNodeAttributes,
       DEFAULT_EXPLORATION,
     );
 

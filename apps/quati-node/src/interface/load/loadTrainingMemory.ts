@@ -61,7 +61,7 @@ const loadTrainingMemory = async <
       GenericState,
       TrainingMemory
     >({
-      pathToFile: path.join(pathToTrainingMemoryFolder, "memory.json"),
+      pathToFile: path.join(pathToTrainingMemoryFolder, "trainingMemory.json"),
       reviver: (_, value: unknown) => {
         if (typeof value === "string") {
           if (value === "Infinity") {

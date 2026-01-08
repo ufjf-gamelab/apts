@@ -57,17 +57,17 @@ const processMetadata = ({
 
 const executeAction = async ({
   directory: directoryPathOrUndefined,
+  folder: nameOfModelOrUndefined,
   game: keyOfGame,
   hidden: quantityOfHiddenChannels,
-  name: nameOfModelOrUndefined,
   overwrite: canOverwrite,
   residual: quantityOfResidualBlocks,
   seed: seedOrUndefined,
 }: {
   directory: string | undefined;
+  folder: string | undefined;
   game: KeyOfGame;
   hidden: Integer;
-  name: string | undefined;
   overwrite: boolean;
   residual: Integer;
   seed: string | undefined;
@@ -128,7 +128,7 @@ const commandToConstructModel = {
       "The path to the directory in which will be created the folder that will contain the architecture and the weights of the outputted model.",
     ),
     new Option(
-      "--name <name of folder>",
+      "--folder <name of folder>",
       "The name of the folder that will be created to contain the architecture and the weights of the outputted model.",
     ),
     new Option(

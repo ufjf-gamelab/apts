@@ -707,12 +707,6 @@ class ResidualNeuralNetwork<
   //   this.layersModel.dispose();
   // }
 
-  // public getWeights(): TensorLikeArray[] {
-  //   return this.layersModel
-  //     .getWeights()
-  //     .map((weight: tfjs.Tensor) => weight.arraySync());
-  // }
-
   public predict({
     batchOfStatesAsTensor,
   }: {

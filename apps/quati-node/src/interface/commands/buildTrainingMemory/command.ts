@@ -16,7 +16,6 @@ import type {
 import { parseIntoInt } from "@repo/core/parse.js";
 import { applyAllReplacers } from "@repo/core/replacers.js";
 import { buildTrainingMemory } from "@repo/interface/actions/buildTrainingMemory/action.js";
-import { constructErrorForWhenPredictionModelHasNotBeenProvided } from "@repo/interface/constructSearchBasedOnStrategy.js";
 import { Command, Option } from "commander";
 import path from "path";
 
@@ -154,7 +153,7 @@ const executeAction = async <
   folder: folderNameOrUndefined,
   game: keyOfGame,
   iterations: quantityOfIterations,
-  model: pathToResidualNeuralNetworkFolder,
+  model: pathToResidualNeuralNetworkFolderOrUndefined,
   overwrite: canOverwrite,
   seed: seedOrUndefined,
   softening: softeningCoefficient,
@@ -171,9 +170,8 @@ const executeAction = async <
   seed: string | undefined;
   softening: SofteningCoefficient;
 }): Promise<void> => {
-  if (typeof pathToResidualNeuralNetworkFolder === "undefined") {
-    throw constructErrorForWhenPredictionModelHasNotBeenProvided();
-  }
+  const pathToResidualNeuralNetworkFolder =
+    pathToResidualNeuralNetworkFolderOrUndefined ?? path.resolve(".");
 
   const seed = seedOrUndefined ?? Math.random().toString();
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion

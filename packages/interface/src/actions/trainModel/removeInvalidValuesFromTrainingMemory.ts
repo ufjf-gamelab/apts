@@ -6,12 +6,18 @@ const DEFAULT_VALUE_FOR_NOT_A_NUMBER = 0;
 
 type TensorArray = Exclude<TensorLikeArray, number>;
 
-const parseIntoValidValue = ({ value }: { value: number }) => {
+const parseIntoValidValue = ({
+  value,
+  valueToReplaceInfinity = DEFAULT_VALUE_FOR_INFINITE_VALUE,
+}: {
+  value: number;
+  valueToReplaceInfinity?: number | undefined;
+}) => {
   if (value === Infinity) {
-    return DEFAULT_VALUE_FOR_INFINITE_VALUE;
+    return valueToReplaceInfinity;
   }
   if (value === -Infinity) {
-    return -DEFAULT_VALUE_FOR_INFINITE_VALUE;
+    return -valueToReplaceInfinity;
   }
   if (Number.isNaN(value)) {
     return DEFAULT_VALUE_FOR_NOT_A_NUMBER;
@@ -21,11 +27,12 @@ const parseIntoValidValue = ({ value }: { value: number }) => {
 
 const parseTensorLikeArray = ({
   value,
-}: {
+  valueToReplaceInfinity,
+}: Pick<Parameters<typeof parseIntoValidValue>[0], "valueToReplaceInfinity"> & {
   value: TensorLikeArray;
 }): TensorLikeArray => {
   if (!Array.isArray(value)) {
-    return parseIntoValidValue({ value });
+    return parseIntoValidValue({ value, valueToReplaceInfinity });
   }
 
   const root: TensorLikeArray = [];
@@ -57,7 +64,8 @@ const parseTensorLikeArray = ({
 
 const removeInvalidValuesFromTrainingMemory = ({
   trainingMemory: unprocessedTrainingMemory,
-}: {
+  valueToReplaceInfinity,
+}: Pick<Parameters<typeof parseIntoValidValue>[0], "valueToReplaceInfinity"> & {
   trainingMemory: TrainingMemory;
 }) => {
   const {
@@ -68,13 +76,18 @@ const removeInvalidValuesFromTrainingMemory = ({
 
   const processedEncodedStates = unprocessedEncodedStates.map(
     (arrayOfEncodedStates) =>
-      parseTensorLikeArray({ value: arrayOfEncodedStates }),
+      parseTensorLikeArray({
+        value: arrayOfEncodedStates,
+        valueToReplaceInfinity,
+      }),
   );
   const processedPolicies = unprocessedPolicies.map((arrayOfPolicies) =>
-    arrayOfPolicies.map((value) => parseIntoValidValue({ value })),
+    arrayOfPolicies.map((value) =>
+      parseIntoValidValue({ value, valueToReplaceInfinity }),
+    ),
   );
   const processedValues = unprocessedValues.map((value) =>
-    parseIntoValidValue({ value }),
+    parseIntoValidValue({ value, valueToReplaceInfinity }),
   );
 
   return {
@@ -84,4 +97,7 @@ const removeInvalidValuesFromTrainingMemory = ({
   };
 };
 
-export { removeInvalidValuesFromTrainingMemory };
+export {
+  DEFAULT_VALUE_FOR_INFINITE_VALUE,
+  removeInvalidValuesFromTrainingMemory,
+};
