@@ -1,0 +1,33 @@
+@startuml modules
+
+' left to right direction
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+package external{
+  component "ts-graphviz"
+  component tensorflow
+}
+"ts-graphviz" -[hidden]- tensorflow
+
+component core
+component game
+component search
+component games
+component interface
+
+game -up-> core
+
+games -up-> core
+games -up-> game
+games -left-> search
+
+search -up-> core
+search -up-> game
+search -left-> tensorflow
+
+interface -up-> core
+interface -up-> game
+interface -left-> search
+interface -left-> "ts-graphviz"
