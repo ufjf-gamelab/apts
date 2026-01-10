@@ -1,0 +1,46 @@
+@startuml types_diagram_of_package_game
+
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam PackageBorderColor transparent
+skinparam PackageBackgroundColor #EEEEEE
+skinparam defaultFontName "Atkinson Hyperlegible Next"
+
+hide empty members
+
+!function $type($name)
+!return "struct " + $name + " << (T,lavender) >>"
+!endfunction
+
+
+package Primitive{
+  $type(number)
+}
+
+$type(EncodedState) {
+  N-dimensional\nmatrix of numbers
+}
+number <-left- EncodedState 
+
+$type(Points) 
+Points -right-|> number
+
+$type(Integer) 
+number <|-down- Integer
+
+$type(IndexOfPlayer) 
+Integer <|-right- IndexOfPlayer
+
+$type(IndexOfSlot) 
+Integer <|-down- IndexOfSlot
+
+$type(IndexOfMove) 
+IndexOfMove -left-|> Integer 
+
+$type(PointsOfEachPlayer) {
+  Map<IndexOfPlayer, Points>
+}
+Points <-- PointsOfEachPlayer
+PointsOfEachPlayer --> IndexOfPlayer
+
+@enduml

@@ -10,6 +10,7 @@ hide empty members
 !return "struct " + $name + " << (T,lavender) >>"
 !endfunction
 
+
 abstract class Slot {
   ' + {static} getSlot( {\n    indexOfSlot: IndexOfSlot;\n    slots: Slot[]\n  } ) : Slot | null
 }
@@ -18,7 +19,7 @@ abstract class Score {
   - pointsOfEachPlayer: PointsOfEachPlayer
 
   ' + getPointsOfEachPlayer(): this.pointsOfEachPlayer
-  + getPointsOfPlayer( { indexOfPlayer: IndexOfPlayer } ) : Points
+  + getPointsOfPlayer( {\n    indexOfPlayer: IndexOfPlayer\n  } ) : Points
   ' # getQuantityOfPlayers() : Integer
 }
 
@@ -46,16 +47,15 @@ abstract class Game {
   --
   + getMove( { indexOfMove: IndexOfMove } ) : Move | null
   + getPlayer( { indexOfPlayer: IndexOfPlayer } ) : Player | null
-  + getSlot( { indexOfSlot: IndexOfSlot } ) : Slot | null
-  ..
-  + {abstract} getQuantityOfColumns() : Integer
+  .. abstract ..
   + {abstract} getQuantityOfRows() : Integer
+  + {abstract} getQuantityOfColumns() : Integer
   + {abstract} getQuantityOfChannels() : Integer
-  + {abstract} getIndexesOfValidMoves() : Set<IndexOfMove>
-  + {abstract} getIndexOfNextPlayer() : IndexOfPlayer
   + {abstract} constructInitialState() : State
-  + {abstract} isFinal( { state: State } ) : boolean
+  + {abstract} getIndexesOfValidMoves( { state: State } ) : Set<IndexOfMove>
+  + {abstract} getIndexOfNextPlayer( { state: State } ) : IndexOfPlayer
   + {abstract} play( { indexOfMove: IndexOfMove; state: State } ) : State
+  + {abstract} isFinal( { state: State } ) : boolean
 }
 Game -up-> Move
 Game -up-> Player
@@ -65,8 +65,10 @@ abstract class State {
   - game: Game
   - indexOfPlayer: IndexOfPlayer
   - score: Score
-  - slots: Slots
-
+  - slots: Slot[]
+  --
+  + getSlot( { indexOfSlot: IndexOfSlot } ) : Slot | null
+  .. abstract ..
   + {abstract} getEncodedState() : EncodedState
 }
 State -right-> Slot

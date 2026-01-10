@@ -6,6 +6,7 @@ skinparam componentStyle rectangle
 skinparam packageStyle rectangle
 skinparam defaultFontName "Atkinson Hyperlegible Next"
 
+
 package external{
   component "ts-graphviz"
   component tensorflow
@@ -32,3 +33,5 @@ interface -up-> core
 interface -up-> game
 interface -left-> search
 interface -left-> "ts-graphviz"
+
+@enduml

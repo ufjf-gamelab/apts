@@ -1,0 +1,27 @@
+@startuml types_diagram_of_package_core
+
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam PackageBorderColor transparent
+skinparam PackageBackgroundColor #EEEEEE
+skinparam defaultFontName "Atkinson Hyperlegible Next"
+
+hide empty members
+
+!function $type($name)
+!return "struct " + $name + " << (T,lavender) >>"
+!endfunction
+
+
+package Primitive{
+  $type(number)
+  $type(string)
+}
+
+$type(Char)
+Char -right-|> string
+
+$type(Integer) 
+number <|-right- Integer
+
+@enduml

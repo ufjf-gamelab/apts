@@ -1,0 +1,26 @@
+@startuml simplified_class_diagram_of_class_random
+
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam PackageBorderColor transparent
+skinparam PackageBackgroundColor #EEEEEE
+skinparam defaultFontName "Atkinson Hyperlegible Next"
+
+hide empty members
+
+!function $type($name)
+!return "struct " + $name + " << (T,lavender) >>"
+!endfunction
+
+
+class Random {
+  - seed: string
+  --
+  + pickIndexOfRandomNotExpandedChildNode( {\n    treeNode: TreeNode\n  } ) : IndexOfMove
+
+  + pickIndexOfRandomValidMove( {\n    state: State\n  } ) : IndexOfMove
+
+  + pickIndexOfValidMoveConsideringItsQuality( {\n    indexesOfValidMoves: Set<IndexOfMove>;\n    qualitiesOfMoves: QualityOfMove[];\n    softeningCoefficient: SofteningCoefficient\n  } ) : IndexOfMove
+}
+
+@enduml

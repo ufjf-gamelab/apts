@@ -1,0 +1,32 @@
+@startuml types_diagram_of_package_search
+
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam PackageBorderColor transparent
+skinparam PackageBackgroundColor #EEEEEE
+skinparam defaultFontName "Atkinson Hyperlegible Next"
+
+hide empty members
+
+!function $type($name)
+!return "struct " + $name + " << (T,lavender) >>"
+!endfunction
+
+
+package Primitive{
+  $type(number)
+}
+
+$type(QualityOfMatch)
+number <|-left- QualityOfMatch
+
+$type(QualityOfMove)
+number <|-right- QualityOfMove
+
+$type(ExplorationCoefficient)
+number <|-down- ExplorationCoefficient
+
+$type(SofteningCoefficient)
+number <|-down- SofteningCoefficient
+
+@enduml
