@@ -1,0 +1,76 @@
+@startuml simplified_class_diagram_of_package_game
+
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+hide empty members
+skinparam defaultFontName "Atkinson Hyperlegible Next"
+
+!function $type($name)
+!return "struct " + $name + " << (T,lavender) >>"
+!endfunction
+
+abstract class Slot {
+  ' + {static} getSlot( {\n    indexOfSlot: IndexOfSlot;\n    slots: Slot[]\n  } ) : Slot | null
+}
+
+abstract class Score {
+  - pointsOfEachPlayer: PointsOfEachPlayer
+
+  ' + getPointsOfEachPlayer(): this.pointsOfEachPlayer
+  + getPointsOfPlayer( { indexOfPlayer: IndexOfPlayer } ) : Points
+  ' # getQuantityOfPlayers() : Integer
+}
+
+abstract class Move {
+  - title: string
+  - description: string
+
+  ' + getTitle(): this.title
+  ' + getDescription(): this.description
+}
+
+abstract class Player {
+  - name: string
+  - symbol: Char
+
+  ' + getName(): this.name
+  ' + getSymbol(): this.symbol
+}
+
+abstract class Game {
+  - name: string
+  - moves: Move[]
+  - players: Player[]
+  - slots: Slot[]
+  --
+  + getMove( { indexOfMove: IndexOfMove } ) : Move | null
+  + getPlayer( { indexOfPlayer: IndexOfPlayer } ) : Player | null
+  + getSlot( { indexOfSlot: IndexOfSlot } ) : Slot | null
+  ..
+  + {abstract} getQuantityOfColumns() : Integer
+  + {abstract} getQuantityOfRows() : Integer
+  + {abstract} getQuantityOfChannels() : Integer
+  + {abstract} getIndexesOfValidMoves() : Set<IndexOfMove>
+  + {abstract} getIndexOfNextPlayer() : IndexOfPlayer
+  + {abstract} constructInitialState() : State
+  + {abstract} isFinal( { state: State } ) : boolean
+  + {abstract} play( { indexOfMove: IndexOfMove; state: State } ) : State
+}
+Game -up-> Move
+Game -up-> Player
+Game -left-> Slot
+
+abstract class State {
+  - game: Game
+  - indexOfPlayer: IndexOfPlayer
+  - score: Score
+  - slots: Slots
+
+  + {abstract} getEncodedState() : EncodedState
+}
+State -right-> Slot
+State -up-> Score
+State -right-> Game
+
+@enduml

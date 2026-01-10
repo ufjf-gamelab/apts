@@ -1,0 +1,50 @@
+@startuml types_diagram
+
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+hide empty members
+skinparam defaultFontName "Atkinson Hyperlegible Next"
+
+!function $type($name)
+!return "struct " + $name + " << (T,lavender) >>"
+!endfunction
+
+' package Types {
+
+  package Primitive{
+    $type(number)
+    $type(string)
+  }
+
+  string -[hidden] number
+
+  $type(Char)
+  string <.down. Char
+
+  $type(Points) 
+  number <.. Points
+
+  $type(Integer) 
+  number <.right.. Integer
+
+  $type(IndexOfPlayer) 
+  Integer <.down. IndexOfPlayer
+
+  $type(IndexOfSlot) 
+  IndexOfSlot ..> Integer
+
+  $type(PointsOfEachPlayer) {
+    Map<IndexOfPlayer, Points>
+  }
+  Points <-- PointsOfEachPlayer
+  PointsOfEachPlayer -right-> IndexOfPlayer 
+
+  $type(EncodedState) {
+    N-dimensional\nmatrix of numbers
+  }
+  number <-down- EncodedState
+
+' }
+
+@enduml

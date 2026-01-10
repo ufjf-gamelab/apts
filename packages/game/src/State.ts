@@ -1,4 +1,4 @@
-import type { Integer, TensorLikeArray } from "@repo/core/types.js";
+import type { TensorLikeArray } from "@repo/core/types.js";
 
 import type { Game } from "./Game.js";
 import type { Move } from "./Move.js";
@@ -8,8 +8,6 @@ import type { Score } from "./Score.js";
 import { type IndexOfSlot, Slot } from "./Slot.js";
 
 type EncodedState = TensorLikeArray;
-
-type IndexOfState = Integer;
 
 interface ParamsOfState<
   GenericGame extends Game<
@@ -170,5 +168,5 @@ abstract class State<
   public abstract toString(): string;
 }
 
-export type { EncodedState, IndexOfState, ParamsOfState };
+export type { EncodedState, ParamsOfState };
 export { State };
