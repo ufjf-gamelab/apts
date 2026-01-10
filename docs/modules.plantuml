@@ -1,9 +1,10 @@
 @startuml modules
 
 ' left to right direction
+skinparam linetype ortho
 skinparam componentStyle rectangle
 skinparam packageStyle rectangle
-skinparam linetype ortho
+skinparam defaultFontName "Atkinson Hyperlegible Next"
 
 package external{
   component "ts-graphviz"

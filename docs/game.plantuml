@@ -1,10 +1,10 @@
 @startuml simplified_class_diagram_of_package_game
 
-skinparam packageStyle rectangle
 skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam defaultFontName "Atkinson Hyperlegible Next"
 
 hide empty members
-skinparam defaultFontName "Atkinson Hyperlegible Next"
 
 !function $type($name)
 !return "struct " + $name + " << (T,lavender) >>"
