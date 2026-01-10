@@ -1,4 +1,4 @@
-@startuml modules
+@startuml modules_diagram
 
 ' left to right direction
 skinparam linetype ortho
