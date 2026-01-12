@@ -1,0 +1,33 @@
+@startuml simplified_class_diagram_of_package_games
+
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam defaultFontName "Atkinson Hyperlegible Next"
+
+hide empty members
+
+left to right direction
+
+!function $type($name)
+!return "struct " + $name + " << (T,lavender) >>"
+!endfunction
+
+
+$type(ConnectFourShape) {
+  direction: "horizontal" | "principalDiagonal" | "secondaryDiagonal" | "vertical";
+  size: Integer;
+}
+
+class ConnectFourSlot {
+  - indexOfOccupyingPlayer: IndexOfPlayer | null
+}
+
+class ConnectFourMove {
+  - indexOfColumnInWhichPlacePiece: Integer
+  + getIndexOfSlotInWhichPlacePiece( { state: State } ): IndexOfSlot | null
+}
+
+ConnectFourShape -[hidden] ConnectFourSlot
+ConnectFourSlot -[hidden] ConnectFourMove
+
+@enduml
