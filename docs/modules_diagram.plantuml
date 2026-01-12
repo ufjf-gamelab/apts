@@ -3,7 +3,10 @@
 ' left to right direction
 skinparam linetype ortho
 skinparam componentStyle rectangle
+skinparam linetype ortho
 skinparam packageStyle rectangle
+skinparam PackageBorderColor transparent
+skinparam PackageBackgroundColor #EEEEEE
 skinparam defaultFontName "Atkinson Hyperlegible Next"
 
 

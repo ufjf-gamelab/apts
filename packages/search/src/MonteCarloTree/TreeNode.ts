@@ -218,6 +218,7 @@ abstract class TreeNode<
     );
   }
 
+  // TODO: possibly remove this method, as it looks to be not necessary
   public getChildNode({
     indexOfChildNode,
   }: {

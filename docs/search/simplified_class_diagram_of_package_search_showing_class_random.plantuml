@@ -1,4 +1,4 @@
-@startuml simplified_class_diagram_of_class_random
+@startuml simplified_class_diagram_of_package_search_showing_class_random
 
 skinparam linetype ortho
 skinparam packageStyle rectangle

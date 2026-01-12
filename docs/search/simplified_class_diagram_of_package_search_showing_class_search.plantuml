@@ -1,0 +1,29 @@
+@startuml simplified_class_diagram_of_package_search_showing_class_search
+
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam PackageBorderColor transparent
+skinparam PackageBackgroundColor #EEEEEE
+skinparam defaultFontName "Atkinson Hyperlegible Next"
+
+hide empty members
+
+' left to right direction
+
+!function $type($name)
+!return "struct " + $name + " << (T,lavender) >>"
+!endfunction
+
+
+abstract class Search {
+  # explorationCoefficient: ExplorationCoefficient
+  # quantityOfExpansions: Integer
+  # random: Random
+  ..abstract..
+  + {abstract} expandTree( { state: State } ) : TreeNode
+  + {abstract} selectNextNode( { rootNode: TreeNode } ) : TreeNode
+  + {abstract} simulateMatch( { state: State } ) : Score
+}
+
+
+@enduml

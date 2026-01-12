@@ -1,0 +1,46 @@
+@startuml simplified_class_diagram_of_package_search_showing_class_tree_node
+
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam PackageBorderColor transparent
+skinparam PackageBackgroundColor #EEEEEE
+skinparam defaultFontName "Atkinson Hyperlegible Next"
+
+hide empty members
+
+' left to right direction
+
+!function $type($name)
+!return "struct " + $name + " << (T,lavender) >>"
+!endfunction
+
+
+abstract class TreeNode {
+  # state: State
+  - indexOfPlayedMove: IndexOfMove |null
+  - indexOfPlayerWhoPlayedMove: IndexOfPlayer |null
+  - parentNode: TreeNode | null
+  # childrenNodes: Map<IndexOfMove, TreeNode | null>
+  - qualityOfVisits: Integer
+  - qualityOfMatch: QualityOfMatch
+
+  --
+  + getQualityOfMatchFromScore( { score: Score } ) : QualityOfMatch
+
+  + updateQualityOfMatchAndQuantityOfVisitsOnBranch( {\n    qualityOfMatch: QualityOfMatch } ) : void
+
+  + selectBestChildNode( {\n    explorationCoefficient: ExplorationCoefficient } ) : TreeNode | null
+
+  + calculateFitnessOfChildNode( {\n    childNode: TreeNode, explorationCoefficient: ExplorationCoefficient } ) : number
+
+  + getQualityOfMove(): QualityOfMove
+
+  ..abstract..
+  + {abstract} calculateExploitationComponentOfFitness( { childNode: TreeNode } ) : number
+
+  + {abstract} calculateExplorationComponentOfFitness( {\n    childNode: TreeNode, explorationCoefficient: ExplorationCoefficient } ) : number
+}
+TreeNode -->TreeNode
+
+
+@enduml

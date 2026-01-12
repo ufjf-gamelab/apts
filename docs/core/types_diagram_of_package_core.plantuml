@@ -13,7 +13,7 @@ hide empty members
 !endfunction
 
 
-package Primitive{
+package primitive {
   $type(number)
   $type(string)
 }

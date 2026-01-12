@@ -160,6 +160,8 @@ class AgentGuidedSearch<
             state: currentState,
           });
 
+        // TODO: maybe we should use softmax here
+
         selectedNode.expand({
           qualitiesOfMoveAttributedByModel: qualitiesOfMoves,
         });
