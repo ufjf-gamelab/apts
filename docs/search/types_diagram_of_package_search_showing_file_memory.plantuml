@@ -1,0 +1,41 @@
+@startuml types_diagram_of_package_search_showing_file_memory
+
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam PackageBorderColor transparent
+skinparam PackageBackgroundColor #EEEEEE
+skinparam defaultFontName "Atkinson Hyperlegible Next"
+
+hide empty members
+
+left to right direction
+
+!function $type($name)
+!return "struct " + $name + " << (T,lavender) >>"
+!endfunction
+
+
+$type(MemoryOfTurn) {
+  encodedState: EncodedState
+  indexOfPlayer: IndexOfPlayer
+  indexOfPlayerWhoPlayedMove: IndexOfPlayer | null
+  qualitiesOfMoves: QualityOfMove[]
+  indexOfPickedMove: IndexOfMove;
+}
+
+$type(MemoryOfMatch) {
+  finalPointsOfEachPlayer: PointsOfEachPlayer
+  memoryOfTurns: MemoryOfTurn[]
+}
+MemoryOfMatch -left-> MemoryOfTurn
+
+$type(TrainingMemory) {
+  encodedStates: EncodedState[]
+  policies: number[][]
+  values: number[]
+}
+
+TrainingMemory -[hidden]up- MemoryOfTurn
+
+
+@enduml

@@ -77,9 +77,10 @@ const executeAction = async ({
 
   const nameOfModel =
     nameOfModelOrUndefined ??
-    `game[${keyOfGame}]_hidden[${quantityOfHiddenChannels}]_residual[${quantityOfResidualBlocks}]_seed[${seed}]`;
+    `game[${keyOfGame}]_hidden[${quantityOfHiddenChannels}]_residual[${quantityOfResidualBlocks}]`;
 
   const sanitizedFolderName = truncateFileName({
+    suffix: `_seed[${seed}]`,
     truncatableSlice: nameOfModel,
   });
   const directoryPath = directoryPathOrUndefined ?? "./";

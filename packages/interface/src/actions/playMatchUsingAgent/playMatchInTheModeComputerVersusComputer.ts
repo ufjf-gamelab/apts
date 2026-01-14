@@ -1,9 +1,16 @@
 import type { Game } from "@repo/game/Game.js";
 import type { Move } from "@repo/game/Move.js";
-import type { Player } from "@repo/game/Player.js";
+import type { IndexOfPlayer, Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
+import type {
+  MemoryOfMatch,
+  MemoryOfTurn,
+} from "@repo/search/ResidualNeuralNetwork/memory.js";
+import type { PredictionModel } from "@repo/search/ResidualNeuralNetwork/PredictionModel.js";
+
+import { FIRST_INDEX } from "@repo/core/constants.js";
 
 import { printInformationAboutCurrentTurn } from "../../play/printInformationAboutCurrentTurn.js";
 import { getIndexOfMoveUsingAgent } from "./getIndexOfMoveUsingAgent.js";
@@ -30,9 +37,10 @@ const playMatchInTheModeComputerVersusComputer = <
     GenericState
   >,
 >({
-  predictionModel,
+  firstPredictionModel,
   processMessage,
   random,
+  secondPredictionModel,
   softeningCoefficient,
   state,
 }: Pick<
@@ -46,38 +54,82 @@ const playMatchInTheModeComputerVersusComputer = <
       GenericState
     >
   >[0],
-  | "predictionModel"
-  | "processMessage"
-  | "random"
-  | "softeningCoefficient"
-  | "state"
->) => {
+  "processMessage" | "random" | "softeningCoefficient" | "state"
+> & {
+  firstPredictionModel: PredictionModel<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >;
+  secondPredictionModel: PredictionModel<
+    GenericGame,
+    GenericMove,
+    GenericPlayer,
+    GenericScore,
+    GenericSlot,
+    GenericState
+  >;
+}): {
+  finalState: GenericState;
+  memoryOfMatch: MemoryOfMatch;
+} => {
   const game = state.getGame();
+
+  const memoryOfTurns: MemoryOfTurn[] = [];
 
   let gameHasEnded = false;
   let currentState = state;
+  let indexOfPlayerWhoPlayedMove: IndexOfPlayer | null = null;
 
   while (!gameHasEnded) {
     printInformationAboutCurrentTurn({ processMessage, state: currentState });
+
+    const currentPredictionModel =
+      currentState.getIndexOfPlayer() === FIRST_INDEX
+        ? firstPredictionModel
+        : secondPredictionModel;
 
     const indexesOfValidMoves = game.getIndexesOfValidMoves({
       state: currentState,
     });
 
+    const { qualitiesOfMoves } = currentPredictionModel.predict({
+      state: currentState,
+    });
+
     const indexOfMove = getIndexOfMoveUsingAgent({
       indexesOfValidMoves,
-      predictionModel,
       processMessage,
+      qualitiesOfMoves,
       random,
       softeningCoefficient,
       state: currentState,
     });
 
+    memoryOfTurns.push({
+      encodedState: currentState.getEncodedState(),
+      indexOfPickedMove: indexOfMove,
+      indexOfPlayer: currentState.getIndexOfPlayer(),
+      indexOfPlayerWhoPlayedMove,
+      qualitiesOfMoves,
+      stateAsString: state.toString(),
+    });
+
     currentState = game.play({ indexOfMove, state: currentState });
+    indexOfPlayerWhoPlayedMove = currentState.getIndexOfPlayer();
     gameHasEnded = currentState.isFinal();
   }
 
-  return currentState;
+  return {
+    finalState: currentState,
+    memoryOfMatch: {
+      finalPointsOfEachPlayer: currentState.getScore().getPointsOfEachPlayer(),
+      memoryOfTurns,
+    },
+  };
 };
 
 export { playMatchInTheModeComputerVersusComputer };

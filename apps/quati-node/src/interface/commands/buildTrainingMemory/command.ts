@@ -267,14 +267,6 @@ const commandToBuildTrainingMemory = {
   options: [
     commonOptions.game,
     commonOptions.modelPath,
-    new Option(
-      "--directory <path of directory>",
-      "The path to the directory where the training memory will be created.",
-    ),
-    new Option(
-      "--folder <name of folder>",
-      "The name of the folder that will be created to contain the training memory.",
-    ),
     commonOptions.expansions,
     commonOptions.exploration,
     new Option(
@@ -289,6 +281,14 @@ const commandToBuildTrainingMemory = {
     ).argParser(parseIntoInt),
     commonOptions.softeningCoefficient,
     commonOptions.seed,
+    new Option(
+      "--directory <path of directory>",
+      "The path to the directory where the training memory will be created.",
+    ),
+    new Option(
+      "--folder <name of folder>",
+      "The name of the folder that will be created to contain the training memory.",
+    ),
     commonOptions.canOverwrite,
   ],
 } satisfies DefinitionOfCommand;

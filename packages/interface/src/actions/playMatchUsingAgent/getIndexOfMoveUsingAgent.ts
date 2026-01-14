@@ -4,8 +4,8 @@ import type { Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
+import type { QualityOfMove } from "@repo/search/qualityOfMove.js";
 import type { Random } from "@repo/search/Random/Random.js";
-import type { PredictionModel } from "@repo/search/ResidualNeuralNetwork/PredictionModel.js";
 import type { ProcessMessage } from "@repo/search/types.js";
 
 const getIndexOfMoveUsingAgent = <
@@ -31,8 +31,8 @@ const getIndexOfMoveUsingAgent = <
   >,
 >({
   indexesOfValidMoves,
-  predictionModel,
   processMessage,
+  qualitiesOfMoves,
   random,
   softeningCoefficient,
   state,
@@ -41,23 +41,12 @@ const getIndexOfMoveUsingAgent = <
   "softeningCoefficient"
 > & {
   indexesOfValidMoves: ReadonlySet<IndexOfMove>;
-  predictionModel: PredictionModel<
-    GenericGame,
-    GenericMove,
-    GenericPlayer,
-    GenericScore,
-    GenericSlot,
-    GenericState
-  >;
   processMessage: ProcessMessage;
+  qualitiesOfMoves: QualityOfMove[];
   random: Random;
   state: GenericState;
 }) => {
   const game = state.getGame();
-
-  const { qualitiesOfMoves } = predictionModel.predict({
-    state,
-  });
 
   const indexOfPickedMove = random.pickIndexOfValidMoveConsideringItsQuality({
     indexesOfValidMoves,

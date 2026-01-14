@@ -1,6 +1,6 @@
 import type { Integer, MutableArray } from "@repo/core/types.js";
 import type { Game } from "@repo/game/Game.js";
-import type { Move } from "@repo/game/Move.js";
+import type { IndexOfMove, Move } from "@repo/game/Move.js";
 import type { IndexOfPlayer, Player } from "@repo/game/Player.js";
 import type { PointsOfEachPlayer, Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
@@ -23,6 +23,7 @@ interface MemoryOfMatch {
 
 interface MemoryOfTurn {
   readonly encodedState: EncodedState;
+  readonly indexOfPickedMove: IndexOfMove;
   readonly indexOfPlayer: IndexOfPlayer;
   readonly indexOfPlayerWhoPlayedMove: IndexOfPlayer | null;
   readonly qualitiesOfMoves: readonly QualityOfMove[];
@@ -68,6 +69,7 @@ const convertMemoryOfMatchesToTrainingMemory = ({
   };
 };
 
+// TODO: receiving the game here is not necessary, because it  is possible to retrieve it from the search
 const buildMemoryOfMatch = <
   GenericGame extends Game<
     GenericGame,
@@ -127,21 +129,24 @@ const buildMemoryOfMatch = <
       search,
       state: currentState,
     });
-    memoryOfTurns.push({
-      encodedState: currentState.getEncodedState(),
-      indexOfPlayer: currentState.getIndexOfPlayer(),
-      indexOfPlayerWhoPlayedMove,
-      qualitiesOfMoves,
-      stateAsString: currentState.toString(),
-    });
 
     const indexesOfValidMoves = game.getIndexesOfValidMoves({
       state: currentState,
     });
+
     const indexOfPickedMove = random.pickIndexOfValidMoveConsideringItsQuality({
       indexesOfValidMoves,
       qualitiesOfMoves,
       softeningCoefficient,
+    });
+
+    memoryOfTurns.push({
+      encodedState: currentState.getEncodedState(),
+      indexOfPickedMove,
+      indexOfPlayer: currentState.getIndexOfPlayer(),
+      indexOfPlayerWhoPlayedMove,
+      qualitiesOfMoves,
+      stateAsString: currentState.toString(),
     });
 
     const nextState = game.play({
@@ -258,5 +263,5 @@ const buildMemoryOfMatches = <
   return memoryOfMatches;
 };
 
-export type { MemoryOfMatch, TrainingMemory };
+export type { MemoryOfMatch, MemoryOfTurn, TrainingMemory };
 export { buildMemoryOfMatches, convertMemoryOfMatchesToTrainingMemory };

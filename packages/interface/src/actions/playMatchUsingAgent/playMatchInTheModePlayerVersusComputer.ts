@@ -1,9 +1,15 @@
 import type { Game } from "@repo/game/Game.js";
-import type { Move } from "@repo/game/Move.js";
-import type { Player } from "@repo/game/Player.js";
+import type { IndexOfMove, Move } from "@repo/game/Move.js";
+import type { IndexOfPlayer, Player } from "@repo/game/Player.js";
 import type { Score } from "@repo/game/Score.js";
 import type { Slot } from "@repo/game/Slot.js";
 import type { State } from "@repo/game/State.js";
+import type { QualityOfMove } from "@repo/search/qualityOfMove.js";
+import type {
+  MemoryOfMatch,
+  MemoryOfTurn,
+} from "@repo/search/ResidualNeuralNetwork/memory.js";
+import type { PredictionModel } from "@repo/search/ResidualNeuralNetwork/PredictionModel.js";
 
 import { FIRST_INDEX } from "@repo/core/constants.js";
 
@@ -53,7 +59,6 @@ const getIndexOfMove = async <
     >
   >[0],
   | "indexesOfValidMoves"
-  | "predictionModel"
   | "processMessage"
   | "random"
   | "softeningCoefficient"
@@ -73,22 +78,46 @@ const getIndexOfMove = async <
     "indexesOfValidMoves" | "select"
   > & {
     currentPlayerIsUser: boolean;
-  }) => {
+    predictionModel: PredictionModel<
+      GenericGame,
+      GenericMove,
+      GenericPlayer,
+      GenericScore,
+      GenericSlot,
+      GenericState
+    >;
+  }): Promise<{
+  indexOfMove: IndexOfMove;
+  qualitiesOfMoves: QualityOfMove[];
+}> => {
+  const { qualitiesOfMoves } = predictionModel.predict({
+    state,
+  });
+
+  // eslint-disable-next-line init-declarations
+  let indexOfMove: IndexOfMove;
+
   if (currentPlayerIsUser) {
-    return await getIndexOfMoveUsingUserInput({
+    indexOfMove = await getIndexOfMoveUsingUserInput({
       game: state.getGame(),
       indexesOfValidMoves,
       select,
     });
+  } else {
+    indexOfMove = getIndexOfMoveUsingAgent({
+      indexesOfValidMoves,
+      processMessage,
+      qualitiesOfMoves,
+      random,
+      softeningCoefficient,
+      state,
+    });
   }
-  return getIndexOfMoveUsingAgent({
-    indexesOfValidMoves,
-    predictionModel,
-    processMessage,
-    random,
-    softeningCoefficient,
-    state,
-  });
+
+  return {
+    indexOfMove,
+    qualitiesOfMoves,
+  };
 };
 
 const playMatchInTheModePlayerVersusComputer = async <
@@ -136,24 +165,31 @@ const playMatchInTheModePlayerVersusComputer = async <
   | "select"
   | "softeningCoefficient"
   | "state"
->) => {
+>): Promise<{
+  finalState: GenericState;
+  memoryOfMatch: MemoryOfMatch;
+}> => {
   const game = state.getGame();
+
+  const memoryOfTurns: MemoryOfTurn[] = [];
 
   let gameHasEnded = false;
   let currentState = state;
+  let indexOfPlayerWhoPlayedMove: IndexOfPlayer | null = null;
   // eslint-disable-next-line init-declarations
   let currentPlayerIsUser;
 
   while (!gameHasEnded) {
-    currentPlayerIsUser = currentState.getIndexOfPlayer() === FIRST_INDEX;
     printInformationAboutCurrentTurn({ processMessage, state: currentState });
+
+    currentPlayerIsUser = currentState.getIndexOfPlayer() === FIRST_INDEX;
 
     const indexesOfValidMoves = game.getIndexesOfValidMoves({
       state: currentState,
     });
 
     // eslint-disable-next-line no-await-in-loop
-    const indexOfMove = await getIndexOfMove({
+    const { indexOfMove, qualitiesOfMoves } = await getIndexOfMove({
       currentPlayerIsUser,
       indexesOfValidMoves,
       predictionModel,
@@ -164,11 +200,27 @@ const playMatchInTheModePlayerVersusComputer = async <
       state: currentState,
     });
 
+    memoryOfTurns.push({
+      encodedState: currentState.getEncodedState(),
+      indexOfPickedMove: indexOfMove,
+      indexOfPlayer: currentState.getIndexOfPlayer(),
+      indexOfPlayerWhoPlayedMove,
+      qualitiesOfMoves,
+      stateAsString: state.toString(),
+    });
+
     currentState = game.play({ indexOfMove, state: currentState });
+    indexOfPlayerWhoPlayedMove = currentState.getIndexOfPlayer();
     gameHasEnded = currentState.isFinal();
   }
 
-  return currentState;
+  return {
+    finalState: currentState,
+    memoryOfMatch: {
+      finalPointsOfEachPlayer: currentState.getScore().getPointsOfEachPlayer(),
+      memoryOfTurns,
+    },
+  };
 };
 
 export { playMatchInTheModePlayerVersusComputer };

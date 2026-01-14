@@ -228,7 +228,7 @@ const commandToPredictQualityOfMoves = {
     ),
     new Option(
       "--probabilities",
-      "Whether to calculate the probabilities of each move  by applying softmax.",
+      "Whether to calculate the probabilities of each move by applying softmax.",
     ).default(false),
     commonOptions.canOverwrite,
   ],

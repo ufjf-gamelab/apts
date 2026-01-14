@@ -158,11 +158,10 @@ const executeAction = async <
     });
 
   const time = Date.now().toString();
-  const nameOfModel =
-    nameOfModelOrUndefined ??
-    `${residualNeuralNetwork.getName()}_infinity[${valueToReplaceInfinity.toExponential()}]_time[${time}]`;
+  const nameOfModel = nameOfModelOrUndefined ?? residualNeuralNetwork.getName();
 
   const sanitizedFolderName = truncateFileName({
+    suffix: `_infinity[${valueToReplaceInfinity.toExponential()}]_time[${time}]`,
     truncatableSlice: nameOfModel,
   });
   const directoryPath =
