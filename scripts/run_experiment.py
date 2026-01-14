@@ -9,7 +9,6 @@ import hashlib
 import json
 import subprocess
 import sys
-import time
 from pathlib import Path
 
 
@@ -164,6 +163,7 @@ def main():
     
     # Run experiment for each seed
     failed_seeds = []
+    
     for seed in range(args.start_seed, args.end_seed + 1):
         cmd = build_command(config, experiment_dir, seed)
         
@@ -177,6 +177,7 @@ def main():
             if result.returncode != 0:
                 print(f"Warning: Seed {seed} failed with exit code {result.returncode}", file=sys.stderr)
                 failed_seeds.append(seed)
+        
         except FileNotFoundError:
             print("Error: 'quati' command not found", file=sys.stderr)
             sys.exit(1)
