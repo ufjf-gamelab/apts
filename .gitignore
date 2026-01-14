@@ -12,10 +12,11 @@ public/dist
 
 ## Development environment
 .direnv/
-.venv/
+venv/
 
 ## Generated files
+.experiment/
+.matches/
 .models/
 .predictions/
 .searches/
-.matches/

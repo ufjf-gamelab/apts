@@ -115,7 +115,7 @@ const playMatchInTheModeComputerVersusComputer = <
       indexOfPlayer: currentState.getIndexOfPlayer(),
       indexOfPlayerWhoPlayedMove,
       qualitiesOfMoves,
-      stateAsString: state.toString(),
+      stateAsString: currentState.toString(),
     });
 
     currentState = game.play({ indexOfMove, state: currentState });
