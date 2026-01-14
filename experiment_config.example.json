@@ -1,0 +1,10 @@
+{
+  "export": true,
+  "overwrite": true,
+  "mode": "cvc",
+  "softening": 1,
+  "directory": "~/dev/apts/.experiments/",
+  "state": "gameIsConnectFourAndAllSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer",
+  "first_model": "~/dev/apts/.models/game[connectFour]_hidden[128]_residual[8]_seed[1]/memories/expansions[512]_exploration[1.4]_softening[1]_iterations[512]_seed[1]/trained/game[connectFour]_hidden[128]_residual[8]_seed[1]_infinity[2e+12]_time[1768021461483]",
+  "second_model": "~/dev/apts/.models/game[connectFour]_hidden[128]_residual[8]_seed[1]/memories/expansions[512]_exploration[1.4]_softening[1]_iterations[512]_seed[1]/trained/game[connectFour]_hidden[128]_residual[8]_seed[1]_infinity[0e+0]_time[1768093130020]"
+}

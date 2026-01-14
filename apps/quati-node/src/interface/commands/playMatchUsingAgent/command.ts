@@ -133,6 +133,7 @@ const processMemoryOfMatch = ({
 // eslint-disable-next-line max-statements
 const executeAction = async ({
   directory: directoryPath,
+  display: shouldDisplay,
   export: shouldExport,
   firstModel: pathToFirstResidualNeuralNetworkFolderOrUndefined,
   folder: folderNameOrUndefined,
@@ -144,6 +145,7 @@ const executeAction = async ({
   state: keyOfState,
 }: {
   directory: string;
+  display: string;
   export: boolean;
   firstModel: string | undefined;
   folder: string | undefined;
@@ -241,7 +243,11 @@ const executeAction = async ({
     firstPredictionModel,
     modeOfPlay,
     processMemoryOfMatch: contentOfProcessMemoryOfMatch,
-    processMessage: console.info,
+    processMessage: shouldDisplay
+      ? console.info
+      : () => {
+          /* empty */
+        },
     secondPredictionModel,
     seed,
     select,
@@ -274,6 +280,10 @@ const commandToPlayMatchUsingAgent = {
     ),
     commonOptions.softeningCoefficient,
     commonOptions.seed,
+    new Option(
+      "--no-display",
+      "Whether to disable display information about the match on the screen.",
+    ).default(true),
     new Option(
       "--export",
       "Whether to output files of the memory of match.",

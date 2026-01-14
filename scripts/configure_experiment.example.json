@@ -1,0 +1,10 @@
+{
+  "export": true,
+  "overwrite": true,
+  "mode": "cvc",
+  "softening": 1,
+  "directory": "./.experiment/",
+  "state": "gameIsConnectFourAndAllSlotsAreEmptyAndAliceHas0PointsAndBrunoHas0PointsAndAliceIsTheCurrentPlayer",
+  "first_model": "./.models/game[connectFour]_hidden[128]_residual[8]_seed[1]/memories/expansions[512]_exploration[1.4]_softening[1]_iterations[512]_seed[1]/trained/game[connectFour]_hidden[128]_residual[8]_seed[1]_infinity[0e+0]_time[1768068147973]/memories/expansions[512]_exploration[1.4]_softening[1]_iterations[512]_seed[1]/trained/game[connectFour]_hidden[128]_residual[8]_seed[1]_infinity[0e+0]_time[1768080915569]/memories/expansions[512]_exploration[1.4]_softening[1]_iterations[512]_seed[1]/trained/game[connectFour]_hidden[128]_residual[8]_seed[1]_infinity[0e+0]_time[1768086030822]/memories/expansions[512]_exploration[1.4]_softening[1]_iterations[512]_seed[1]/trained/game[connectFour]_hidden[128]_residual[8]_seed[1]_infinity[0e+0]_time[1768093130020]",
+  "second_model": "./.models/game[connectFour]_hidden[128]_residual[8]_seed[1]/memories/expansions[512]_exploration[1.4]_softening[1]_iterations[512]_seed[1]/trained/game[connectFour]_hidden[128]_residual[8]_seed[1]_infinity[0e+0]_time[1768068147973]/memories/expansions[512]_exploration[1.4]_softening[1]_iterations[512]_seed[1]/trained/game[connectFour]_hidden[128]_residual[8]_seed[1]_infinity[0e+0]_time[1768080915569]/memories/expansions[512]_exploration[1.4]_softening[1]_iterations[512]_seed[1]/trained/game[connectFour]_hidden[128]_residual[8]_seed[1]_infinity[0e+0]_time[1768086030822]/memories/expansions[512]_exploration[1.4]_softening[1]_iterations[512]_seed[1]/trained/game[connectFour]_hidden[128]_residual[8]_seed[1]_infinity[0e+0]_time[1768093130020]"
+}
