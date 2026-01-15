@@ -18,8 +18,16 @@ def find_all_logs(root_dir: Path) -> List[Path]:
     return list(root_dir.rglob("logs.json"))
 
 
-def extract_epoch_15_metrics(log_file: Path) -> Tuple[float, float] | None:
-    """Extract policyHead_acc and valueHead_acc from epoch 15."""
+def calculate_depth(path: Path) -> int:
+    """Calculate the depth of a model in the training tree.
+    
+    Depth is determined by counting 'trained' folders in the path.
+    """
+    return str(path).count('/trained/')
+
+
+def extract_epoch_15_metrics(log_file: Path) -> Tuple[float, float, int] | None:
+    """Extract policyHead_acc, valueHead_acc from epoch 15, and calculate depth."""
     try:
         with open(log_file, 'r') as f:
             data = json.load(f)
@@ -36,7 +44,9 @@ def extract_epoch_15_metrics(log_file: Path) -> Tuple[float, float] | None:
             print(f"Warning: Missing metrics in {log_file}", file=sys.stderr)
             return None
         
-        return (float(policy_acc), float(value_acc))
+        depth = calculate_depth(log_file.parent)
+        
+        return (float(policy_acc), float(value_acc), depth)
     
     except json.JSONDecodeError as e:
         print(f"Error parsing {log_file}: {e}", file=sys.stderr)
@@ -46,7 +56,7 @@ def extract_epoch_15_metrics(log_file: Path) -> Tuple[float, float] | None:
         return None
 
 
-def analyze_logs(root_dir: Path) -> Dict[str, Tuple[float, float]]:
+def analyze_logs(root_dir: Path) -> Dict[str, Tuple[float, float, int]]:
     """Scan all logs and extract metrics indexed by folder path."""
     results = {}
     
@@ -65,14 +75,14 @@ def analyze_logs(root_dir: Path) -> Dict[str, Tuple[float, float]]:
     return results
 
 
-def write_ranked_list(output_file: Path, ranked_paths: List[Tuple[str, float, float]], metric_name: str):
+def write_ranked_list(output_file: Path, ranked_paths: List[Tuple[str, float, float, int]], metric_name: str):
     """Write ranked list to CSV file."""
     with open(output_file, 'w', newline='') as f:
         writer = csv.writer(f)
-        writer.writerow(['rank', 'folder_path', 'policy_acc', 'value_acc'])
+        writer.writerow(['rank', 'folder_path', 'policy_acc', 'value_acc', 'depth'])
         
-        for rank, (path, policy_acc, value_acc) in enumerate(ranked_paths, 1):
-            writer.writerow([rank, path, f"{policy_acc:.6f}", f"{value_acc:.6f}"])
+        for rank, (path, policy_acc, value_acc, depth) in enumerate(ranked_paths, 1):
+            writer.writerow([rank, path, f"{policy_acc:.6f}", f"{value_acc:.6f}", depth])
 
 
 def main():
@@ -116,14 +126,14 @@ def main():
     
     # Sort by policy accuracy (descending), then by value accuracy (descending) as tiebreaker
     sorted_by_policy = sorted(
-        [(path, policy, value) for path, (policy, value) in results.items()],
-        key=lambda x: (-x[1], -x[2], x[0]),
+        [(path, policy, value, depth) for path, (policy, value, depth) in results.items()],
+        key=lambda x: (-x[1], -x[2], x[3], x[0]),
     )
     
     # Sort by value accuracy (descending), then by policy accuracy (descending) as tiebreaker
     sorted_by_value = sorted(
-        [(path, policy, value) for path, (policy, value) in results.items()],
-        key=lambda x: (-x[2], -x[1], x[0]),
+        [(path, policy, value, depth) for path, (policy, value, depth) in results.items()],
+        key=lambda x: (-x[2], -x[1], x[3], x[0]),
     )
     
     # Write output files
@@ -139,12 +149,12 @@ def main():
     
     # Print top 5 for each metric
     print(f"\nTop 5 by policy accuracy:")
-    for i, (path, policy, value) in enumerate(sorted_by_policy[:5], 1):
-        print(f"  {i}. {policy:.6f} - {path}")
+    for i, (path, policy, value, depth) in enumerate(sorted_by_policy[:5], 1):
+        print(f"  {i}. {policy:.6f} (depth {depth}) - {path}")
     
     print(f"\nTop 5 by value accuracy:")
-    for i, (path, policy, value) in enumerate(sorted_by_value[:5], 1):
-        print(f"  {i}. {value:.6f} - {path}")
+    for i, (path, policy, value, depth) in enumerate(sorted_by_value[:5], 1):
+        print(f"  {i}. {value:.6f} (depth {depth}) - {path}")
 
 
 if __name__ == "__main__":

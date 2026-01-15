@@ -124,8 +124,8 @@ def calculate_aggregate_statistics(all_metrics: list[dict]) -> dict:
     
     # Win rate by game length buckets
     length_buckets = {
-        "very_short": {"range": "< 20 turns", "player_0": 0, "player_1": 0, "draws": 0, "count": 0},
-        "short": {"range": "20-30 turns", "player_0": 0, "player_1": 0, "draws": 0, "count": 0},
+        "very_short": {"range": "<= 20 turns", "player_0": 0, "player_1": 0, "draws": 0, "count": 0},
+        "short": {"range": "21-30 turns", "player_0": 0, "player_1": 0, "draws": 0, "count": 0},
         "medium": {"range": "31-40 turns", "player_0": 0, "player_1": 0, "draws": 0, "count": 0},
         "long": {"range": "> 40 turns", "player_0": 0, "player_1": 0, "draws": 0, "count": 0}
     }
@@ -134,7 +134,7 @@ def calculate_aggregate_statistics(all_metrics: list[dict]) -> dict:
         turns = m.get("turn_count", 0)
         winner = m.get("winner")
         
-        if turns < 20:
+        if turns <= 20:
             bucket = "very_short"
         elif turns <= 30:
             bucket = "short"
@@ -192,9 +192,9 @@ def print_statistics_summary(stats: dict):
     print()
     print("Win Statistics:")
     ws = stats['win_statistics']
-    print(f"  Player 0: {ws['player_0_wins']} wins ({ws['player_0_win_rate']:.1%})")
-    print(f"  Player 1: {ws['player_1_wins']} wins ({ws['player_1_win_rate']:.1%})")
-    print(f"  Draws:    {ws['draws']} ({ws['draw_rate']:.1%})")
+    print(f"  Player 0:\t{ws['player_0_wins']} wins\t({ws['player_0_win_rate']:.1%})")
+    print(f"  Player 1:\t{ws['player_1_wins']} wins\t({ws['player_1_win_rate']:.1%})")
+    print(f"  Draws:\t{ws['draws']}\t({ws['draw_rate']:.1%})")
     print()
     print("Game Length:")
     gl = stats['game_length_statistics']

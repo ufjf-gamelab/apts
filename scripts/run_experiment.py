@@ -155,8 +155,15 @@ def main():
     if not args.dry_run:
         experiment_dir.mkdir(parents=True, exist_ok=True)
         print(f"Created experiment directory: {experiment_dir}")
+        
+        # Save parameters to file
+        parameters_file = experiment_dir / "parameters.json"
+        with open(parameters_file, 'w') as f:
+            json.dump(config, f, indent=2)
+        print(f"Saved parameters to: {parameters_file}")
     else:
         print(f"Would create experiment directory: {experiment_dir}")
+        print(f"Would save parameters to: {experiment_dir / 'parameters.json'}")
     
     print(f"Running seeds {args.start_seed} to {args.end_seed}")
     print()
