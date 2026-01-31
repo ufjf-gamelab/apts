@@ -15,6 +15,25 @@ hide empty members
 !endfunction
 
 
+' abstract class TreeNode {
+'   # state: State
+'   - indexOfPlayedMove: IndexOfMove |null
+'   - indexOfPlayerWhoPlayedMove: IndexOfPlayer |null
+'   - parentNode: TreeNode | null
+'   # childrenNodes: Map<IndexOfMove, TreeNode | null>
+'   - qualityOfVisits: Integer
+'   - qualityOfMatch: QualityOfMatch
+'   --
+'   + getQualityOfMatchFromScore( { score: Score } ) : QualityOfMatch
+'   + updateQualityOfMatchAndQuantityOfVisitsOnBranch( { qualityOfMatch: QualityOfMatch } ) : void
+'   + selectBestChildNode( { explorationCoefficient: ExplorationCoefficient } ) : TreeNode | null
+'   + calculateFitnessOfChildNode( { childNode: TreeNode, explorationCoefficient: ExplorationCoefficient } ) : number
+'   + getQualityOfMove(): QualityOfMove
+'   ..abstract..
+'   + {abstract} calculateExploitationComponentOfFitness( { childNode: TreeNode } ) : number
+'   + {abstract} calculateExplorationComponentOfFitness( { childNode: TreeNode, explorationCoefficient: ExplorationCoefficient } ) : number
+' }
+
 abstract class TreeNode {
   # state: State
   - indexOfPlayedMove: IndexOfMove |null

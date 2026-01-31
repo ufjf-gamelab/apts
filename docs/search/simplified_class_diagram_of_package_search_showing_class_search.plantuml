@@ -25,5 +25,4 @@ abstract class Search {
   + {abstract} simulateMatch( { state: State } ) : Score
 }
 
-
 @enduml

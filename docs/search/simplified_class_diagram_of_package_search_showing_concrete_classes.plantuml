@@ -1,0 +1,40 @@
+@startuml simplified_class_diagram_of_package_search_showing_concrete_classes
+
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam PackageBorderColor transparent
+skinparam PackageBackgroundColor #EEEEEE
+skinparam defaultFontName "Atkinson Hyperlegible Next"
+
+hide empty members
+
+' left to right direction
+
+!function $type($name)
+!return "struct " + $name + " << (T,lavender) >>"
+!endfunction
+
+abstract class TreeNode
+abstract class Search
+
+class CommonTreeNode{
+  + expand({ indexOfMove: IndexOfMove }): CommonTreeNode
+}
+TreeNode <|-up- CommonTreeNode
+
+class CommonSearch {
+}
+Search <|-up- CommonSearch
+
+class AgentGuidedTreeNode {
+  - qualityOfMoveAttributedByModel: null | QualityOfMove
+  + expand({ qualitiesOfMoveAttributedByModel: QualityOfMove[] }):\n    Map<IndexOfMove,AgentGuidedTreeNode>
+}
+TreeNode <|-- AgentGuidedTreeNode
+
+class AgentGuidedSearch {
+  - predictionModel: PredictionModel
+}
+Search <|-- AgentGuidedSearch
+
+@enduml
