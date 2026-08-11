@@ -2,6 +2,11 @@ packages:
   - apps/*
   - packages/*
 
+allowBuilds:
+  '@tensorflow/tfjs-node': false
+  core-js: false
+  esbuild: false
+
 onlyBuiltDependencies:
   - core-js
   - edgedriver
