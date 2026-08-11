@@ -3,8 +3,8 @@
     "@types/node": "^25.0.8",
     "eslint": "^9.39.2",
     "prettier": "^3.7.4",
-    "turbo": "^2.7.4",
-    "vitest": "^4.0.17"
+    "turbo": "^2.10.9",
+    "vitest": "^4.1.10"
   },
   "engines": {
     "node": "=22"
